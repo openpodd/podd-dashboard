@@ -5,7 +5,8 @@ angular.module('poddDashboardApp')
 
 .factory('map', function () {
 
-    var map, iconRed, iconBlue,
+    var map, iconRed, iconBlue, iconRadar,
+        radarMarkerLayer, villageMarkerLayer,
         villages = {},
         center = [13.791177699, 100.58814079],
         zoomLevel = 15,
@@ -27,6 +28,10 @@ angular.module('poddDashboardApp')
 
     L.tileLayer(tileLayerURL).addTo(map);
 
+    // Group marker for better management.
+    radarMarkerLayer = new L.layerGroup().addTo(map);
+    villageMarkerLayer = new L.layerGroup().addTo(map);
+
     L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
     iconRed = L.AwesomeMarkers.icon({
         icon: 'home',
@@ -37,21 +42,44 @@ angular.module('poddDashboardApp')
         markerColor: 'blue'
     });
 
+    // Make radar, wink wink!
+    iconRadar = L.divIcon({
+        className: 'radar-wink-wrapper',
+        iconSize: [ 100, 100 ],
+        iconAnchor: [ 50, 50 ],
+        html: '<div class="radar-wink"></div>'
+    });
+
     map.customActions = {
         setVillages: function setMarkers(items) {
             items = items.length ? items : [ items ];
 
             items.forEach(function (item) {
-                var village = villages[item.id];
+                var village = villages[item.id],
+                    location = [ item.location[1], item.location[0] ];
 
                 if (village) {
-                    map.removeLayer(village);
+                    villageMarkerLayer.removeLayer(village);
                 }
 
-                villages[item.id] = L.marker([item.location[1], item.location[0]], {
+                village = villages[item.id] = L.marker(location, {
                     icon: getIconByStatus(item)
-                }).addTo(map);
+                }).addTo(villageMarkerLayer);
             });
+        },
+
+        wink: function wink(location, timeout) {
+            radarMarkerLayer.clearLayers();
+
+            var radarMaker = L.marker(location, {
+                icon: iconRadar,
+                zIndexOffset: -10
+            })
+            .addTo(radarMarkerLayer);
+
+            setTimeout(function () {
+                radarMarkerLayer.clearLayers();
+            }, timeout);
         }
     };
 
