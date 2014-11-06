@@ -1,0 +1,38 @@
+[
+    {
+        "id": 73343,
+        "reportId": 123,
+        "reportedBy": "นายสมจิต จงจองหอ",
+        "guid": "09d09djjjkdf09df0dfdfdfdf",
+        "reportTypeId": 11,
+        "reportTypeName": "sick/death",
+        "startDate": "2014-09-01",
+        "administrationAreaId": 34343,
+        "remark": "xxxxxxxxxxxxxx",
+        "formData": [
+            {
+                "name": "animalType",
+                "value": "ไก่"
+            }
+        ],
+        "negative": true
+    },
+    {
+        "id": 73344,
+        "reportId": 124,
+        "reportedBy": "นางสว่าง ไสวเหลือเกิน",
+        "guid": "ab90298fe993029c0e",
+        "reportTypeId": 11,
+        "date": "2014-10-06 18:00:30 +07:00",
+        "startDate": "2014-10-06",
+        "administrationAreaId": 34370,
+        "remark": "xxxxxxxxxxxxxx",
+        "formData": [
+            {
+                "name": "animalType",
+                "value": "ไก่"
+            }
+        ],
+        "negative": false
+    }
+]

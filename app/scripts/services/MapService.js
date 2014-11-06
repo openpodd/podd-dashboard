@@ -3,85 +3,99 @@
 
 angular.module('poddDashboardApp')
 
-.factory('map', function () {
+.factory('map', function ($rootScope) {
 
-    var map, iconRed, iconBlue, iconRadar,
-        radarMarkerLayer, villageMarkerLayer,
-        villages = {},
+    var map,
         center = [13.791177699, 100.58814079],
         zoomLevel = 15,
         tileLayerURL = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
 
-    function getIconByStatus(village) {
+    function Map(leaflet) {
+        this.leaflet = leaflet;
+        this.container = $( this.leaflet.getContainer() );
+
+        this.tileLayer = L.tileLayer(tileLayerURL).addTo(this.leaflet);
+
+        // Group marker for better management.
+        this.radarMarkerLayer = new L.layerGroup().addTo(this.leaflet);
+        this.villageMarkerLayer = new L.layerGroup().addTo(this.leaflet);
+
+        this.villages = {};
+
+        L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
+        this.iconRed = L.AwesomeMarkers.icon({
+            icon: 'home',
+            markerColor: 'red'
+        });
+        this.iconBlue = L.AwesomeMarkers.icon({
+            icon: 'home',
+            markerColor: 'blue'
+        });
+
+        // Make radar, wink wink!
+        this.iconRadar = L.divIcon({
+            className: 'radar-wink-wrapper',
+            iconSize: [ 160, 160 ],
+            iconAnchor: [ 80, 80 ],
+            html: '<div class="radar-wink"></div>'
+        });
+    };
+
+    Map.prototype.getIconByStatus = function getIconByStatus(village) {
         if (village.negative > village.positive) {
-            return iconRed;
+            return this.iconRed;
         }
         else {
-            return iconBlue;
-        }
-    }
-
-    // Setup map.
-    map = L
-        .map('map')
-        .setView(center, zoomLevel);
-
-    L.tileLayer(tileLayerURL).addTo(map);
-
-    // Group marker for better management.
-    radarMarkerLayer = new L.layerGroup().addTo(map);
-    villageMarkerLayer = new L.layerGroup().addTo(map);
-
-    L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
-    iconRed = L.AwesomeMarkers.icon({
-        icon: 'home',
-        markerColor: 'red'
-    });
-    iconBlue = L.AwesomeMarkers.icon({
-        icon: 'home',
-        markerColor: 'blue'
-    });
-
-    // Make radar, wink wink!
-    iconRadar = L.divIcon({
-        className: 'radar-wink-wrapper',
-        iconSize: [ 160, 160 ],
-        iconAnchor: [ 80, 80 ],
-        html: '<div class="radar-wink"></div>'
-    });
-
-    map.customActions = {
-        setVillages: function setMarkers(items) {
-            items = items.length ? items : [ items ];
-
-            items.forEach(function (item) {
-                var village = villages[item.id],
-                    location = [ item.location[1], item.location[0] ];
-
-                if (village) {
-                    villageMarkerLayer.removeLayer(village);
-                }
-
-                village = villages[item.id] = L.marker(location, {
-                    icon: getIconByStatus(item)
-                }).addTo(villageMarkerLayer);
-            });
-        },
-
-        wink: function wink(location, timeout) {
-            radarMarkerLayer.clearLayers();
-
-            var radarMarker = L.marker(location, {
-                icon: iconRadar,
-                zIndexOffset: -10
-            })
-            .addTo(radarMarkerLayer);
-
-            setTimeout(function () {
-                radarMarkerLayer.removeLayer(radarMarker);
-            }, timeout);
+            return this.iconBlue;
         }
     };
+
+    Map.prototype.setVillages = function setMarkers(items) {
+        var self = this;
+
+        items = items.length ? items : [ items ];
+
+        items.forEach(function (item) {
+            var village = self.villages[item.id],
+                location = [ item.location[1], item.location[0] ];
+
+            if (village) {
+                self.villageMarkerLayer.removeLayer(village);
+            }
+
+            village = self.villages[item.id] = L.marker(location, {
+                icon: self.getIconByStatus(item)
+            }).addTo(self.villageMarkerLayer);
+
+            village.on('click', function (eventObject) {
+                self.container.trigger('clicked:village', item);
+            });
+        });
+    };
+
+    Map.prototype.wink = function wink(location, timeout) {
+        var self = this;
+
+        self.radarMarkerLayer.clearLayers();
+
+        var radarMarker = L.marker(location, {
+            icon: self.iconRadar,
+            zIndexOffset: -10
+        })
+        .addTo(self.radarMarkerLayer);
+
+        setTimeout(function () {
+            self.radarMarkerLayer.removeLayer(radarMarker);
+        }, timeout);
+    };
+
+    Map.prototype.onClickVillage = function onClickVillage(cb) {
+        this.container.on('clicked:village', cb);
+    };
+
+
+    // Setup map.
+    map = new Map( L.map('map').setView(center, zoomLevel) );
 
     return map;
 });
