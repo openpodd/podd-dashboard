@@ -18,6 +18,35 @@ angular.module('poddDashboardApp')
         console.log('clicked on village', data);
 
         reports.get({ administrationAreas: [ 1, 2, 3 ] }).$promise.then(function (items) {
+
+            // Mock it ~
+            var _first = items[0],
+                _secon = items[1],
+                _third = items[2];
+            _first.startDate = new Date();
+            _secon.startDate = new Date();
+            _third.startDate = new Date((new Date()).getTime() - (86400 * 20 * 1000)); // 20 days
+
+            $scope.recentReports = [];
+            $scope.olderReports = [];
+
+            var threshold = new Date((new Date()).getTime() - (86400 * 14 * 1000));
+            threshold.setHours(0);
+            threshold.setMinutes(0);
+            threshold.setSeconds(0);
+            threshold.setMilliseconds(0);
+
+            items.forEach(function (item) {
+                // Filter for last 2 weeks
+                if (item.startDate > threshold) {
+                    $scope.recentReports.push(item);
+                }
+                // Filter for the older
+                else {
+                    $scope.olderReports.push(item);
+                }
+            });
+
             $scope.reports = items;
         });
     });

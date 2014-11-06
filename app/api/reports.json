@@ -34,5 +34,23 @@
             }
         ],
         "negative": false
+    },
+    {
+        "id": 73345,
+        "reportId": 124,
+        "reportedBy": "นายอ้อมกอด รักกินไม่ได้",
+        "guid": "ab90298fe993029c0e",
+        "reportTypeId": 11,
+        "date": "2014-10-06 18:00:30 +07:00",
+        "startDate": "2014-10-06",
+        "administrationAreaId": 34370,
+        "remark": "xxxxxxxxxxxxxx",
+        "formData": [
+            {
+                "name": "animalType",
+                "value": "ไก่"
+            }
+        ],
+        "negative": false
     }
 ]
