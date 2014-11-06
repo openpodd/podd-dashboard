@@ -71,7 +71,7 @@ angular.module('poddDashboardApp')
         wink: function wink(location, timeout) {
             radarMarkerLayer.clearLayers();
 
-            var radarMaker = L.marker(location, {
+            var radarMarker = L.marker(location, {
                 icon: iconRadar,
                 zIndexOffset: -10
             })
