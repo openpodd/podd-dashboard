@@ -45,8 +45,8 @@ angular.module('poddDashboardApp')
     // Make radar, wink wink!
     iconRadar = L.divIcon({
         className: 'radar-wink-wrapper',
-        iconSize: [ 100, 100 ],
-        iconAnchor: [ 50, 50 ],
+        iconSize: [ 160, 160 ],
+        iconAnchor: [ 80, 80 ],
         html: '<div class="radar-wink"></div>'
     });
 
@@ -78,7 +78,7 @@ angular.module('poddDashboardApp')
             .addTo(radarMarkerLayer);
 
             setTimeout(function () {
-                radarMarkerLayer.clearLayers();
+                radarMarkerLayer.removeLayer(radarMarker);
             }, timeout);
         }
     };
