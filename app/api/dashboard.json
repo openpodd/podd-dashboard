@@ -1,0 +1,46 @@
+[
+  {
+    "id": 134,
+    "name": "หมู่บ้านสันปง",
+    "location": [100.5881, 13.7911],
+    "positive": 1,
+    "negative": 4,
+    "positiveCases": [
+        {
+            "id": 343,
+            "reportBy": "นายประกอบ มุ่งดี",
+            "reportDate": "2012-10-09T10:00:00+07:00"
+        }
+    ],
+    "negativeCases": [
+        {
+            "id": 343,
+            "reportBy": "นายประกอบ มุ่งดี",
+            "reportDate": "2012-10-09T10:00:00+07:00",
+            "eventTypeName": "sick/death"
+        }
+    ]
+  },
+  {
+    "id": 135,
+    "name": "หมู่บ้านสันทราย",
+    "location": [100.5830, 13.7925],
+    "positive": 9,
+    "negative": 2,
+    "positiveCases": [
+        {
+            "id": 343,
+            "reportBy": "นายประกอบ มุ่งดี",
+            "reportDate": "2012-10-09T10:00:00+07:00"
+        }
+    ],
+    "negativeCases": [
+        {
+            "id": 343,
+            "reportBy": "นายประกอบ มุ่งดี",
+            "reportDate": "2012-10-09T10:00:00+07:00",
+            "eventTypeName": "sick/death"
+        }
+    ]
+  }
+]

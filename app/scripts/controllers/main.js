@@ -1,17 +1,16 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name poddDashboardApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the poddDashboardApp
- */
 angular.module('poddDashboardApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+
+.controller('MainCtrl', function ($scope, dashboard, streaming, map) {
+
+    dashboard.get().$promise.then(function (villagesStatus) {
+        map.customActions.setVillages(villagesStatus);
+    });
+
+    streaming.on('villageStatus', function (data) {
+        console.log('got new village data:', data);
+        map.customActions.setVillages(data);
+    });
+
+});

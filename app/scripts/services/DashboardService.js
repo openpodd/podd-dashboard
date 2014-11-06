@@ -1,0 +1,18 @@
+'use strict';
+
+angular.module('poddDashboardApp')
+
+.factory('dashboard', function ($resource) {
+    var resource = $resource('/api/dashboard.json', {}, {
+        get: { isArray: true }
+    });
+
+    return resource;
+})
+
+.factory('streaming', function () {
+    return io.connect('localhost:8888')
+        .on('connect', function () {
+            console.log('connected');
+        });
+});

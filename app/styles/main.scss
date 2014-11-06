@@ -1,5 +1,6 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 // bower:scss
+@import "bootstrap-sass-official/assets/stylesheets/bootstrap.scss";
 // endbower
 
 .browsehappy {
@@ -87,5 +88,16 @@ body {
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
+  }
+}
+
+/* ------------------------ */
+#map {
+  width: 100%;
+  height: 300px;
+
+  .awesome-marker i {
+    font-size: 22px;
+    margin-top: 6px;
   }
 }

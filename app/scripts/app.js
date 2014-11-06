@@ -10,6 +10,7 @@
  */
 angular
   .module('poddDashboardApp', [
+    'ngResource',
     'ngAnimate',
     'ngCookies',
     'ngResource',
