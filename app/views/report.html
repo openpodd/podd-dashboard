@@ -1,0 +1,56 @@
+<div class="modal report-modal" role="dialog" aria-hidden="true" ng-controller="ReportViewCtrl">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+        <h1>Report #{{ $parent.report.id }}</h1>
+
+        <div class="row">
+
+          <div class="col-md-8 report-details">
+
+            <div class="row"><div class="col-md-12 text-center report-images">
+            </div></div><!-- end .report-images -->
+
+            <div class="row"><div class="col-md-12 report-meta">
+              <dl>
+                <dt>Submitted date</dt>
+                <dd>{{ $parent.report.startDate }}</dd>
+
+                <dt>By</dt>
+                <dd>{{ $parent.report.reportedBy }}</dd>
+            </div></div><!-- end .report-meta -->
+
+            <div class="row"><div class="col-md-12 report-fields">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Question</th>
+                    <th>Answer</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr ng-repeat="field in $parent.report.formData">
+                    <td ng-bind="field.name"></td>
+                    <td ng-bind="field.value"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div></div><!-- end .report-fields -->
+
+          </div><!-- end .report-details -->
+
+          <!-- split detail and comments here -->
+
+          <div class="col-md-4 report-comments">
+
+            <div ng-include="'/views/comments.html'"></div>
+
+          </div><!-- end .report-comments -->
+
+        </div>
+
+      </div><!-- end .row -->
+    </div>
+  </div>
+</div>

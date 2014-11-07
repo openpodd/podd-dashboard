@@ -2,7 +2,7 @@
 
 angular.module('poddDashboardApp')
 
-.controller('MainCtrl', function ($scope, dashboard, streaming, map, reports) {
+.controller('MainCtrl', function ($scope, $modal, dashboard, streaming, map, Reports, ReportModal) {
 
     dashboard.get().$promise.then(function (villagesStatus) {
         map.setVillages(villagesStatus);
@@ -17,7 +17,7 @@ angular.module('poddDashboardApp')
     map.onClickVillage(function (event, data) {
         console.log('clicked on village', data);
 
-        reports.get({ administrationAreas: [ 1, 2, 3 ] }).$promise.then(function (items) {
+        Reports.list({ administrationAreas: [ 1, 2, 3 ] }).$promise.then(function (items) {
 
             // Mock it ~
             var _first = items[0],
@@ -53,6 +53,23 @@ angular.module('poddDashboardApp')
 
     $scope.closeReportList = function () {
         $scope.reports = null;
+    };
+
+    $scope.initReportModal = function () {
+        ReportModal.init();
+
+        ReportModal.on('shown.bs.modal', function () {
+            ReportModal.setImages($scope.report.images);
+        });
+    };
+
+    $scope.viewReport = function (reportId) {
+        Reports.get({ reportId: reportId }).$promise.then(function (data) {
+            console.log('loaded report data', data);
+
+            $scope.report = data;
+            ReportModal.show();
+        });
     };
 
 });

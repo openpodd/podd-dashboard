@@ -5,7 +5,7 @@
 
   <div id="recent-reports">
     <h3>Recent</h3>
-    
+
     <table class="table table-striped">
       <thead>
         <tr>
@@ -13,6 +13,7 @@
           <th>Submitted</th>
           <th>Status</th>
           <th>Reporter</th>
+          <th>Details</th>
         </tr>
       </thead>
 
@@ -22,6 +23,9 @@
           <td ng-bind="report.startDate"></td>
           <td ng-bind="report.negative"></td>
           <td ng-bind="report.reportedBy"></td>
+          <td>
+            <a class="btn" ng-click="viewReport(report.id)"><i class="fa fa-file-text-o" /></a>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -51,3 +55,5 @@
     </table>
   </div>
 </div>
+
+<div ng-include="'/views/report.html'" onload="initReportModal()"></div>

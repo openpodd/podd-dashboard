@@ -1,0 +1,55 @@
+{
+    "id": 73343,
+    "reportId": 123,
+    "guid": "09d09djjjkdf09df0dfdfdfdf",
+    "reportedBy": "นายสมจิต จงจองหอ",
+    "reportTypeId": 11,
+    "date": "2014-09-01 10:00:30 +07:00",
+    "startDate": "2014-09-01",
+    "administrationAreaId": 34343,
+    "remark": "xxxxxxxxxxxxxx",
+    "images": [
+        {
+            "imageUrl": "http://placepuppy.it/500/300",
+            "thumbnailUrl": "http://placepuppy.it/100/60",
+            "note": "fever"
+        },
+        {
+            "imageUrl": "http://placepuppy.it/600/300",
+            "thumbnailUrl": "http://placepuppy.it/120/60",
+            "note": "death"
+        }
+    ],
+    "formData": [
+        {
+            "name": "animalType",
+            "value": "ไก่"
+        },
+        {
+
+            "name": "animalGroup",
+            "value": "สัตว์เลี้ยง"
+        },
+        {
+            "name": "symptom",
+            "value": "cough,fever,pain"
+        },
+        {
+            "name": "sickCount",
+            "value": "4"
+        },
+        {
+            "name": "deathCount",
+            "value": "4"
+        },
+        {
+            "name": "totalCount",
+            "value": "12"
+        },
+        {
+            "name": "nearByCount",
+            "value": "1"
+        }
+    ],
+    "negative": true
+}
