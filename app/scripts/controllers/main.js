@@ -2,7 +2,7 @@
 
 angular.module('poddDashboardApp')
 
-.controller('MainCtrl', function ($scope, dashboard, streaming, map, Reports, ReportModal) {
+.controller('MainCtrl', function ($scope, dashboard, streaming, map, Reports, ReportModal, Comments) {
 
     dashboard.get().$promise.then(function (villagesStatus) {
         map.setVillages(villagesStatus);
@@ -70,6 +70,8 @@ angular.module('poddDashboardApp')
             $scope.report = data;
             ReportModal.show();
         });
+
+        $scope.reportComments = Comments.list({ reportId: reportId });
     };
 
 });
