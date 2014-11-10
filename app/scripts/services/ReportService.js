@@ -9,7 +9,7 @@ angular.module('poddDashboardApp')
         if (!modal || !modal.length) {
             modal = $('.report-modal');
             slide = $('.report-images', modal);
-            slick = slide.slick({ fade: true });
+            slick = slide.slick();
         }
     }
 
@@ -21,10 +21,7 @@ angular.module('poddDashboardApp')
         },
         clearImages: function clearImages() {
             init();
-
-            $('.slick-slide', slide).each(function (index, item) {
-                slick.slickRemove($(this).attr('index'));
-            });
+            slide.html('');
 
             return this;
         },
@@ -32,10 +29,11 @@ angular.module('poddDashboardApp')
             this.clearImages();
 
             images.forEach(function (image) {
-                slick.slickAdd('<div><img src="' + image.imageUrl + '" /></div>');
+                slide.append('<div><img src="' + image.imageUrl + '" /></div>');
             });
 
-            return this;
+            slick.unslick();
+            slick.getSlick().refresh();
         },
         show: function () {
             init();

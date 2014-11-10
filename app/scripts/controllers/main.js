@@ -2,7 +2,7 @@
 
 angular.module('poddDashboardApp')
 
-.controller('MainCtrl', function ($scope, $modal, dashboard, streaming, map, Reports, ReportModal) {
+.controller('MainCtrl', function ($scope, dashboard, streaming, map, Reports, ReportModal) {
 
     dashboard.get().$promise.then(function (villagesStatus) {
         map.setVillages(villagesStatus);
