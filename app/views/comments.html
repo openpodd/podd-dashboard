@@ -2,10 +2,9 @@
 
 <div class="comment-list">
   <ul class="list-unstyled">
-    <li>Comment #10</li>
-    <li>Comment #9</li>
-    <li>Comment #8</li>
-    <li>Comment #7</li>
+    <li ng-repeat="comment in $parent.reportComments">
+      {{ comment.message }}
+    </li>
   </ul>
 </div>
 
