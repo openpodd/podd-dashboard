@@ -1,20 +1,23 @@
-<h3>Comments</h3>
+<div class="comments-wrapper" ng-controller="CommentsCtrl">
+  <h3>Comments</h3>
 
-<div class="comment-list">
-  <ul class="list-unstyled">
-    <li ng-repeat="comment in $parent.reportComments">
-      {{ comment.message }}
-    </li>
-  </ul>
-</div>
+  <div class="comment-list">
+    <ul class="list-unstyled">
+      <li ng-repeat="comment in comments">
+        {{ comment.message | htmlToPlainText }}
+      </li>
+    </ul>
+  </div>
 
-<div class="comment-form">
-  <form role="form">
+  <div class="comment-form">
+    <form role="form" ng-submit="comment();">
 
-    <div clas="form-group">
-      <textarea class="form-control" placeholder="Your comment here"></textarea>
-    </div>
+      <div clas="form-group">
+        <textarea ng-model="message" required class="form-control"
+                  placeholder="Your comment here"></textarea>
+      </div>
 
-    <button type="submit" class="btn btn-default">Submit</button>
-  </form>
+      <button type="submit" class="btn btn-default" ng-disabled="!message || submitting">Submit</button>
+    </form>
+  </div>
 </div>

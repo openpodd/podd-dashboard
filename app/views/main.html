@@ -3,7 +3,7 @@
 <div class="reports-list" ng-show="reports">
   <div class="btn btn-warning pull-right close-list" ng-click="closeReportList()">X</div>
 
-  <div id="recent-reports">
+  <div id="recent-reports" ng-show="recentReports">
     <h3>Recent</h3>
 
     <table class="table table-striped">
@@ -20,9 +20,9 @@
       <tbody>
         <tr ng-repeat="report in recentReports track by report.id" id="report-{{ report.id }}">
           <td ng-bind="report.id"></td>
-          <td ng-bind="report.startDate"></td>
+          <td ng-bind="report.incidentDate"></td>
           <td ng-bind="report.negative"></td>
-          <td ng-bind="report.reportedBy"></td>
+          <td ng-bind="report.createdByName"></td>
           <td>
             <a class="btn" ng-click="viewReport(report.id)"><i class="fa fa-file-text-o" /></a>
           </td>
@@ -31,7 +31,7 @@
     </table>
   </div>
 
-  <div id="older-reports">
+  <div id="older-reports" ng-show="olderReports">
     <h3>Older</h3>
 
     <table class="table table-striped">
@@ -47,9 +47,9 @@
       <tbody>
         <tr ng-repeat="report in olderReports track by report.id" id="report-{{ report.id }}">
           <td ng-bind="report.id"></td>
-          <td ng-bind="report.startDate"></td>
+          <td ng-bind="report.incidentDate"></td>
           <td ng-bind="report.negative"></td>
-          <td ng-bind="report.reportedBy"></td>
+          <td ng-bind="report.createdByName"></td>
         </tr>
       </tbody>
     </table>
