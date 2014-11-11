@@ -1,0 +1,57 @@
+ <div class="reports-list" ng-show="reports">
+  <div class="btn btn-warning pull-right close-list" ng-click="closeReportList()">X</div>
+
+  <div id="recent-reports">
+    <h3>Recent</h3>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Submitted</th>
+          <th>Status</th>
+          <th>Reporter</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr ng-repeat="report in recentReports track by report.id" id="report-{{ report.id }}">
+          <td ng-bind="report.id"></td>
+          <td ng-bind="report.startDate"></td>
+          <td ng-bind="report.negative"></td>
+          <td ng-bind="report.reportedBy"></td>
+          <td>
+            <a class="btn" ng-click="viewReport(report.id)"><i class="fa fa-file-text-o" /></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="older-reports">
+    <h3>Older</h3>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Submitted</th>
+          <th>Status</th>
+          <th>Reporter</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr ng-repeat="report in olderReports track by report.id" id="report-{{ report.id }}">
+          <td ng-bind="report.id"></td>
+          <td ng-bind="report.startDate"></td>
+          <td ng-bind="report.negative"></td>
+          <td ng-bind="report.reportedBy"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div ng-include="'/views/report.html'" onload="initReportModal()"></div>
