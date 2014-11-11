@@ -2,7 +2,8 @@
 
 angular.module('poddDashboardApp')
 
-.controller('MainCtrl', function ($scope, dashboard, streaming, map, Reports, ReportModal, Comments) {
+.controller('MainCtrl', function ($scope, dashboard, streaming, map, Reports, ReportModal, Auth) {
+    Auth.login(config.username, config.password);
 
     dashboard.get().$promise.then(function (villagesStatus) {
         map.setVillages(villagesStatus);
@@ -10,22 +11,21 @@ angular.module('poddDashboardApp')
 
     streaming.on('villageStatus', function (data) {
         console.log('got new village data:', data);
+        var location = [
+            data.location.coordinates[1],
+            data.location.coordinates[0]
+        ];
+
         map.setVillages(data);
-        map.wink([ data.location[1], data.location[0] ], 10000);
+        map.wink(location, 10000);
     });
 
     map.onClickVillage(function (event, data) {
         console.log('clicked on village', data);
 
-        Reports.list({ administrationAreas: [ 1, 2, 3 ] }).$promise.then(function (items) {
+        var query = { administrationArea: data.id };
 
-            // Mock it ~
-            var _first = items[0],
-                _secon = items[1],
-                _third = items[2];
-            _first.startDate = new Date();
-            _secon.startDate = new Date();
-            _third.startDate = new Date((new Date()).getTime() - (86400 * 20 * 1000)); // 20 days
+        Reports.list(query).$promise.then(function (items) {
 
             $scope.recentReports = [];
             $scope.olderReports = [];
@@ -38,7 +38,7 @@ angular.module('poddDashboardApp')
 
             items.forEach(function (item) {
                 // Filter for last 2 weeks
-                if (item.startDate > threshold) {
+                if ((new Date(item.incidentDate)) > threshold) {
                     $scope.recentReports.push(item);
                 }
                 // Filter for the older
@@ -67,11 +67,23 @@ angular.module('poddDashboardApp')
         Reports.get({ reportId: reportId }).$promise.then(function (data) {
             console.log('loaded report data', data);
 
+            var tmpFormData = [], index;
+            if (data.formData && !data.formData.forEach) {
+                for (index in data.formData) {
+                    if (data.formData.hasOwnProperty(index)) {
+                        tmpFormData.push({
+                            name: index,
+                            value: data.formData[index]
+                        });
+                    }
+                }
+                data.formData = tmpFormData;
+            }
+
             $scope.report = data;
+
             ReportModal.show();
         });
-
-        $scope.reportComments = Comments.list({ reportId: reportId });
     };
 
 });
