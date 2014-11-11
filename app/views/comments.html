@@ -3,7 +3,7 @@
 
   <div class="comment-list">
     <ul class="list-unstyled">
-      <li ng-repeat="comment in comments">
+      <li ng-repeat="comment in comments | orderBy:'createdAt' ">
         {{ comment.message | htmlToPlainText }}
       </li>
     </ul>
