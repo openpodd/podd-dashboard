@@ -23,3 +23,67 @@
 //        -webkit-animation: fadeOutRight .5s .2s alternate forwards;
 //    }
 }
+
+.report-modal{
+    
+    .modal-content{
+        padding: 15px;
+        background-color: #3c3c3c;
+        color: #909090;
+    }
+    
+    h1, h2, h3, dt{
+        color: #fff;
+    }
+    
+    .modal-title{
+        font-size: 24px;
+        margin: 10px 0px 20px;
+    }
+    .modal-subtitle{
+        font-size: 20px;
+        margin: 0 0 10px;
+    }
+}
+
+
+.comment-list{
+    .form-group{
+        margin-bottom: 1em;
+    }
+}
+.comment-meta{
+    font-size: .75em;
+}
+.comment-post{
+    color: #fff;
+}
+.comment-item{
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #5E5E5E ;
+}
+.comment-title{
+    font-size: 1.5em;
+    margin-bottom: 1em;
+}
+.btn-post{
+    margin-top: 1em;
+}
+
+
+.report-image{
+    margin: 1.5em 0;
+    
+    .list-inline{
+        margin-top: 1em;
+        margin-bottom: 0;
+        
+        li{
+            margin-bottom: 10px;
+        }
+    }
+}
+.report-view{
+    background-color: #1a1a1a;
+}

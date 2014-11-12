@@ -57,6 +57,10 @@
     tr > td:first-child, tr > th:first-child{
         padding-left: 20px;
     }
+    
+    .btn:hover{
+        color: #e7e7e7;
+    }
 }
 .pd-table-title{
     color: #fff;
@@ -64,4 +68,18 @@
     margin-bottom: 15px;
     font-size: 24px;
     font-family: ThaiSansNeueRegular;
+}
+
+.modal-dialog{
+    z-index: 1041;
+}
+
+.pd-dl-horizontal {
+    dt{
+        text-align: left !important;
+    }
+    
+    dd{
+        margin-bottom: 10px;
+    }
 }
