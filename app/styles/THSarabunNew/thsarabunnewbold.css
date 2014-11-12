@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'THSarabunNewBold';
+    src: url('thsarabunnewbold.eot');
+    src: url('thsarabunnewbold.eot') format('embedded-opentype'),
+         url('thsarabunnewbold.woff') format('woff'),
+         url('thsarabunnewbold.ttf') format('truetype'),
+         url('thsarabunnewbold.svg#THSarabunNewBold') format('svg');
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: THSarabunNewBold;
+}
+
+.webfont {
+	font-family: THSarabunNewBold;
+}
