@@ -23,6 +23,12 @@ angular.module('poddDashboardApp')
 
         var query = { administrationArea: data.id };
 
+        // set center to this marker.
+        map.leaflet.panTo([
+            data.location.coordinates[1],
+            data.location.coordinates[0]
+        ]);
+
         Reports.list(query).$promise.then(function (items) {
 
             $scope.recentReports = [];
