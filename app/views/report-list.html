@@ -43,6 +43,7 @@
           <th>Date</th>
           <th>Status</th>
           <th>Reporter</th>
+          <th>Details</th>
         </tr>
       </thead>
 
@@ -52,6 +53,9 @@
           <td ng-bind="report.incidentDate"></td>
           <td ng-bind="report.negative"></td>
           <td ng-bind="report.createdByName"></td>
+          <td>
+            <a class="btn" ng-click="viewReport(report.id)"><i class="fa fa-file-text-o" /></a>
+          </td>
         </tr>
       </tbody>
     </table>
