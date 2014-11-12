@@ -32,6 +32,12 @@
         color: #222;
         font-size: 22px;
     }
+    
+    i:hover{
+        cursor: pointer;
+        color: #ccc;
+        margin-top: 5px;
+    }
 }
 
 .badge-good{ background-color: #5cb85c; }
