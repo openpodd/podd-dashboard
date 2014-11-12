@@ -30,15 +30,16 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     
-<div class="pd-section-left">
-    <div class="pd-container">
+<div class="pd-section-left" ng-show="isShowNav">
+<!--   <div ng-init="isShowNav = true"></div>-->
+    <div class="pd-container" >
         <h1 class="pd-logo">poddDashboard</h1>
         <ul class="pd-nav-list">
             <li class="pd-nav-item"><a ng-href="#/about">เกี่ยวกับเรา</a></li>
             <li class="pd-nav-item"><a ng-href="#">ติดต่อเรา</a></li>
         </ul>
-        <a href="#" class="pd-nav-toggle"><i class="fa fa-bars fa-size-24"></i></a>
     </div>
+    
 <!--
     <svg id="svg-image-blur">
         <filter id="blur-effect-1">
@@ -48,91 +49,11 @@
 -->
 </div>
 
+<div class="pd-nav-toggle" ng-click="isShowNav=!isShowNav"><i class="fa fa-bars fa-size-24"></i></div>
+
 <div class="pd-main">
     <div ng-view=""></div>
 </div>
-
-<!--
-<div class="pd-sidebar-right">
-    <div class="pd-sidebar-title clearfix">
-        <h2 class="pull-left"><i class="fa fa-map-marker pull-left"></i>ตำบลนครนายก อำเภอเมือง จังหวัดนครนายก</h2>
-        <a href= "#"><i class="fa fa-times pull-right"></i></a>
-    </div>
-    
-    <h3 class="pd-table-title">รายงานล่าสุด (ภายใน 2 อาทิตย์)</h3>
-    <table class="table table-striped pd-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Date</th>
-          <th>Status</th>
-          <th>Reporter</th>
-          <th>Detail</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>17328</td>
-          <td>31 Nov 14, 24:52</td>
-          <td><span class="badge badge-good">Good</span></td>
-          <td>ฉัตรชัย ทุติยานนท์</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>23847</td>
-          <td>31 Nov 14, 24:52</td>
-          <td><span class="badge badge-good">Good</span></td>
-          <td>ฉัตรชัย ทุติยานนท์</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>31193</td>
-          <td>31 Nov 14, 24:52</td>
-          <td><span class="badge badge-bad">Bad</span></td>
-          <td>ฉัตรชัย ทุติยานนท์</td>
-          <td>@mdo</td>
-        </tr>
-      </tbody>
-    </table>
-    
-    <h3 class="pd-table-title">รายงานย้อนหลัง</h3>
-    <table class="table table-striped pd-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Date</th>
-          <th>Status</th>
-          <th>Reporter</th>
-          <th>Detail</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>17328</td>
-          <td>31 Nov 14, 24:52</td>
-          <td><span class="badge badge-good">Good</span></td>
-          <td>ฉัตรชัย ทุติยานนท์</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>23847</td>
-          <td>31 Nov 14, 24:52</td>
-          <td><span class="badge badge-good">Good</span></td>
-          <td>ฉัตรชัย ทุติยานนท์</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>31193</td>
-          <td>31 Nov 14, 24:52</td>
-          <td><span class="badge badge-bad">Bad</span></td>
-          <td>ฉัตรชัย ทุติยานนท์</td>
-          <td>@mdo</td>
-        </tr>
-      </tbody>
-    </table>
-    
-</div>
--->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
