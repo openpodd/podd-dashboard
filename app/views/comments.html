@@ -5,9 +5,9 @@
     <ul class="list-unstyled">
       <li class="comment-item" ng-repeat="comment in comments | orderBy:'createdAt' ">
         <p class="comment-post">{{ comment.message | htmlToPlainText }}</p>
-        
+
         <div class="comment-meta">
-            <span class="">วันที่ : {{ comment.createdAt }}</span>
+            <span class="">เมื่อ : {{ comment.createdAt | amDateFormat: 'dddd D MMMM YYYY เวลา HH:mm' }}</span>
             <span class="">โดย : {{ comment.createdBy }}</span>
       </li>
     </ul>
