@@ -1,27 +1,65 @@
-//.podd-logo{
-//    width: 220px;
-//    height: 52px;
-//    overflow: hidden;
-//    margin: 0;
-//    text-indent: -999em;
-//    background: url(../images/logo.png);
-//}
-//
-//.podd-nav{
-//    margin: 10px 0 0 30px;
-//
-//    > li{
-//        &.active > a{
-//            background-color: #1c3a55;
-//        }
-//        
-//        > a{
-//            color: #1c3a55;
-//            padding: 5px 10px;
-//        }
-//    }
-//}
-//
-//.navbar-toggle{
-//    display: block;
-//}
+@import "mixin";
+
+.pd-logo{
+    width: 106px;
+    height: 25px;
+    overflow: hidden;
+    margin: 0 auto 15px;
+    text-indent: -999em;
+    background: url("../images/logo.png");
+    
+    @include image-2x('../images/logo@2x.png', 106px, 25px);
+}
+
+.fa-size-18{ font-size: 18px; }
+.fa-size-22{ font-size: 22px; }
+.fa-size-24{ font-size: 24px; }
+.fa-size-26{ font-size: 26px; }
+.fa-size-32{ font-size: 32px; }
+
+.pd-sidebar-title{
+    padding: 10px 15px;
+    background-color: #303030;
+    
+    h2{
+        margin: 0;
+        color: #fff;
+        font-size: 22px;
+    }
+    
+    .fa-times{
+        color: #222;
+        font-size: 22px;
+    }
+}
+
+.badge-good{ background-color: #5cb85c; }
+.badge-bad{ background-color: #d2322d; }
+
+.pd-table{
+    > thead > tr{
+        background-color: #494949;
+        
+        > th{
+            color: #fff;
+            border-bottom: none;
+        }
+    } 
+    > tbody > tr > td{
+        border: none;
+    }
+    
+    > tbody > tr:nth-child(odd) > td{
+        background-color: #353535;
+    }
+    
+    tr > td:first-child, tr > th:first-child{
+        padding-left: 20px;
+    }
+}
+.pd-table-title{
+    color: #fff;
+    padding-left: 20px;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
