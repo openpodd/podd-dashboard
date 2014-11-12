@@ -1,3 +1,4 @@
+/*global $:true */
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -50,13 +51,10 @@ angular.module('poddDashboardApp')
 })
 
 .factory('Reports', function ($resource) {
-    var resource = $resource('/api/reports.json/:reportId', {}, {
+    var resource = $resource(config.host + '/reports/:reportId', {}, {
         list: {
             method: 'GET',
             isArray: true
-        },
-        get: {
-            url: '/api/reports/:reportId.json'
         }
     });
 

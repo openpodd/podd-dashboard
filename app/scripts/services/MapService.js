@@ -17,8 +17,8 @@ angular.module('poddDashboardApp')
         this.tileLayer = L.tileLayer(tileLayerURL).addTo(this.leaflet);
 
         // Group marker for better management.
-        this.radarMarkerLayer = new L.layerGroup().addTo(this.leaflet);
-        this.villageMarkerLayer = new L.layerGroup().addTo(this.leaflet);
+        this.radarMarkerLayer = new L.featureGroup().addTo(this.leaflet);
+        this.villageMarkerLayer = new L.featureGroup().addTo(this.leaflet);
 
         this.villages = {};
 
@@ -57,7 +57,10 @@ angular.module('poddDashboardApp')
 
         items.forEach(function (item) {
             var village = self.villages[item.id],
-                location = [ item.location[1], item.location[0] ];
+                location = [
+                  item.location.coordinates[1],
+                  item.location.coordinates[0]
+                ];
 
             if (village) {
                 self.villageMarkerLayer.removeLayer(village);
@@ -71,6 +74,8 @@ angular.module('poddDashboardApp')
                 self.container.trigger('clicked:village', item);
             });
         });
+
+        self.leaflet.fitBounds(self.villageMarkerLayer.getBounds());
     };
 
     Map.prototype.wink = function wink(location, timeout) {
