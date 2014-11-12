@@ -63,19 +63,60 @@ angular.module('poddDashboardApp')
                 ];
 
             if (village) {
-                self.villageMarkerLayer.removeLayer(village);
+                self.villageMarkerLayer.removeLayer(village.marker);
             }
 
-            village = self.villages[item.id] = L.marker(location, {
+            village = self.villages[item.id] = item;
+
+            village.marker = L.marker(location, {
                 icon: self.getIconByStatus(item)
             }).addTo(self.villageMarkerLayer);
 
-            village.on('click', function (eventObject) {
+            village.marker.on('click', function (eventObject) {
                 self.container.trigger('clicked:village', item);
             });
         });
 
         self.leaflet.fitBounds(self.villageMarkerLayer.getBounds());
+    };
+
+    Map.prototype.addReport = function addReport(report, toWink) {
+        var self = this,
+            location,
+            village = self.villages[ report.administrationAreaId ];
+
+        if (village) {
+            if (report.negative) {
+                village.negative += 1;
+                village.negativeCases.push({
+                    id: report.id,
+                    createdBy: report.createdByName,
+                    date: report.date,
+                    incidentDate: report.incidentDate,
+                    eventTypeName: report.reportTypeName
+                });
+            }
+            else {
+                village.positive += 1;
+                village.positiveCases.push({
+                    id: report.id,
+                    createdBy: report.createdByName,
+                    date: report.date,
+                    incidentDate: report.incidentDate,
+                    eventTypeName: report.reportTypeName
+                });
+            }
+
+            self.setVillages([ village ]);
+
+            if (toWink) {
+                location = [
+                    village.location.coordinates[1],
+                    village.location.coordinates[0]
+                ];
+                self.wink(location, 10000);
+            }
+        }
     };
 
     Map.prototype.wink = function wink(location, timeout) {

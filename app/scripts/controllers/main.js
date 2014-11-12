@@ -8,19 +8,14 @@ angular.module('poddDashboardApp')
 
     Auth.login(config.username, config.password);
 
-    dashboard.get().$promise.then(function (villagesStatus) {
-        map.setVillages(villagesStatus);
+    dashboard.get().$promise.then(function (villages) {
+        map.setVillages(villages);
     });
 
     streaming.on('villageStatus', function (data) {
         console.log('got new village data:', data);
-        var location = [
-            data.location.coordinates[1],
-            data.location.coordinates[0]
-        ];
 
-        map.setVillages(data);
-        map.wink(location, 10000);
+        map.addReport(data, true);
     });
 
     map.onClickVillage(function (event, data) {
