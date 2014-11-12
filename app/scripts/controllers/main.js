@@ -46,11 +46,15 @@ angular.module('poddDashboardApp')
             });
 
             $scope.reports = items;
+            $scope.showReportList = true;
         });
     });
 
     $scope.closeReportList = function () {
         $scope.reports = null;
+        $scope.recentReports = null;
+        $scope.olderReports = null;
+        $scope.showReportList = false;
     };
 
     $scope.initReportModal = function () {
