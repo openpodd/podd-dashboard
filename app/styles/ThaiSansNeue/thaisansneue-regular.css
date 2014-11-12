@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'ThaiSansNeueRegular';
+    src: url('thaisansneue-regular.eot');
+    src: url('thaisansneue-regular.eot') format('embedded-opentype'),
+         url('thaisansneue-regular.woff') format('woff'),
+         url('thaisansneue-regular.ttf') format('truetype'),
+         url('thaisansneue-regular.svg#ThaiSansNeueRegular') format('svg');
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: ThaiSansNeueRegular;
+}
+
+.webfont {
+	font-family: ThaiSansNeueRegular;
+}

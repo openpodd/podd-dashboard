@@ -9,6 +9,10 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/slick.js/slick/slick.css" />
+    <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -17,7 +21,8 @@
     <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.css">
     <link rel="stylesheet" href="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css">
 
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="bower_components/slidebars/distribution/0.10.2/slidebars.css" />
+    <link rel="stylesheet" href="styles/app.css">
     <!-- endbuild -->
   </head>
   <body ng-app="poddDashboardApp">
@@ -25,22 +30,109 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <!-- Add your site or application content here -->
-    <div class="container">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Home</a></li>
+<div class="pd-section-left">
+    <div class="pd-container">
+        <h1 class="pd-logo">poddDashboard</h1>
+        <ul class="pd-nav-list">
+            <li class="pd-nav-item"><a ng-href="#/about">เกี่ยวกับเรา</a></li>
+            <li class="pd-nav-item"><a ng-href="#">ติดต่อเรา</a></li>
         </ul>
-        <h3 class="text-muted">poddDashboard</h3>
-      </div>
+        <a href="#" class="pd-nav-toggle"><i class="fa fa-bars fa-size-24"></i></a>
+    </div>
+<!--
+    <svg id="svg-image-blur">
+        <filter id="blur-effect-1">
+            <feGaussianBlur stdDeviation="2" />
+        </filter>
+    </svg>
+-->
+</div>
 
-      <div ng-view=""></div>
+<div class="pd-main">
+    <div ng-view=""></div>
+</div>
 
-      <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
-      </div>
+<!--
+<div class="pd-sidebar-right">
+    <div class="pd-sidebar-title clearfix">
+        <h2 class="pull-left"><i class="fa fa-map-marker pull-left"></i>ตำบลนครนายก อำเภอเมือง จังหวัดนครนายก</h2>
+        <a href= "#"><i class="fa fa-times pull-right"></i></a>
     </div>
 
+    <h3 class="pd-table-title">รายงานล่าสุด (ภายใน 2 อาทิตย์)</h3>
+    <table class="table table-striped pd-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Reporter</th>
+          <th>Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>17328</td>
+          <td>31 Nov 14, 24:52</td>
+          <td><span class="badge badge-good">Good</span></td>
+          <td>ฉัตรชัย ทุติยานนท์</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <td>23847</td>
+          <td>31 Nov 14, 24:52</td>
+          <td><span class="badge badge-good">Good</span></td>
+          <td>ฉัตรชัย ทุติยานนท์</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <td>31193</td>
+          <td>31 Nov 14, 24:52</td>
+          <td><span class="badge badge-bad">Bad</span></td>
+          <td>ฉัตรชัย ทุติยานนท์</td>
+          <td>@mdo</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="pd-table-title">รายงานย้อนหลัง</h3>
+    <table class="table table-striped pd-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Reporter</th>
+          <th>Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>17328</td>
+          <td>31 Nov 14, 24:52</td>
+          <td><span class="badge badge-good">Good</span></td>
+          <td>ฉัตรชัย ทุติยานนท์</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <td>23847</td>
+          <td>31 Nov 14, 24:52</td>
+          <td><span class="badge badge-good">Good</span></td>
+          <td>ฉัตรชัย ทุติยานนท์</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <td>31193</td>
+          <td>31 Nov 14, 24:52</td>
+          <td><span class="badge badge-bad">Bad</span></td>
+          <td>ฉัตรชัย ทุติยานนท์</td>
+          <td>@mdo</td>
+        </tr>
+      </tbody>
+    </table>
+
+</div>
+-->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>

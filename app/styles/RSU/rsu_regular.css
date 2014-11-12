@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'RSURegular';
+    src: url('rsu_regular.eot');
+    src: url('rsu_regular.eot') format('embedded-opentype'),
+         url('rsu_regular.woff') format('woff'),
+         url('rsu_regular.ttf') format('truetype'),
+         url('rsu_regular.svg#RSURegular') format('svg');
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: RSURegular;
+}
+
+.webfont {
+	font-family: RSURegular;
+}
