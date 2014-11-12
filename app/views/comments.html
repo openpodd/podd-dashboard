@@ -5,6 +5,14 @@
     <ul class="list-unstyled">
       <li ng-repeat="comment in comments | orderBy:'createdAt' ">
         {{ comment.message | htmlToPlainText }}
+
+        <div class="comment-meta">
+          <dl>
+            <dt>Submitted</dt>
+            <dd>{{ comment.createdAt }}</dd>
+            <dt>Author</dt>
+            <dd>{{ comment.createdBy }}</dd>
+        </div>
       </li>
     </ul>
   </div>
