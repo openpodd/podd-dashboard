@@ -32,6 +32,12 @@
         color: #222;
         font-size: 22px;
     }
+    
+    i:hover{
+        cursor: pointer;
+        color: #ccc;
+        margin-top: 5px;
+    }
 }
 
 .badge-good{ background-color: #5cb85c; }
@@ -57,6 +63,10 @@
     tr > td:first-child, tr > th:first-child{
         padding-left: 20px;
     }
+    
+    .btn:hover{
+        color: #e7e7e7;
+    }
 }
 .pd-table-title{
     color: #fff;
@@ -64,4 +74,18 @@
     margin-bottom: 15px;
     font-size: 24px;
     font-family: ThaiSansNeueRegular;
+}
+
+.modal-dialog{
+    z-index: 1041;
+}
+
+.pd-dl-horizontal {
+    dt{
+        text-align: left !important;
+    }
+    
+    dd{
+        margin-bottom: 10px;
+    }
 }
