@@ -3,7 +3,7 @@
 
 angular.module('poddDashboardApp')
 
-.factory('map', function ($rootScope) {
+.factory('Map', function ($rootScope) {
 
     var map,
         center = [13.791177699, 100.58814079],
@@ -100,7 +100,9 @@ angular.module('poddDashboardApp')
 
 
     // Setup map.
-    map = new Map( L.map('map').setView(center, zoomLevel) );
+    map = function () {
+        return new Map( L.map('map').setView(center, zoomLevel) );
+    };
 
     return map;
 });

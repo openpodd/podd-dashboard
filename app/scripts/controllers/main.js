@@ -2,7 +2,10 @@
 
 angular.module('poddDashboardApp')
 
-.controller('MainCtrl', function ($scope, dashboard, streaming, map, Reports, ReportModal, Auth) {
+.controller('MainCtrl', function ($scope, dashboard, streaming, Map, Reports, ReportModal, Auth) {
+    console.log('IN MainCtrl');
+    var map = Map();
+
     Auth.login(config.username, config.password);
 
     dashboard.get().$promise.then(function (villagesStatus) {
