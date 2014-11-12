@@ -51,7 +51,7 @@ angular.module('poddDashboardApp')
     };
 
     Map.prototype.setVillages = function setMarkers(items) {
-        var self = this;
+        var self = this, bounds;
 
         items = items.length ? items : [ items ];
 
@@ -77,7 +77,9 @@ angular.module('poddDashboardApp')
             });
         });
 
-        self.leaflet.fitBounds(self.villageMarkerLayer.getBounds());
+        bounds = self.villageMarkerLayer.getBounds();
+        bounds.pad(5);
+        self.leaflet.fitBounds(bounds);
     };
 
     Map.prototype.addReport = function addReport(report, toWink) {
