@@ -1,18 +1,14 @@
 <div class="comments-wrapper" ng-controller="CommentsCtrl">
-  <h3>Comments</h3>
+  <h3 class="comment-title"><i class="fa fa-comments"></i> ความคิดเห็น</h3>
 
   <div class="comment-list">
     <ul class="list-unstyled">
-      <li ng-repeat="comment in comments | orderBy:'createdAt' ">
-        {{ comment.message | htmlToPlainText }}
+      <li class="comment-item" ng-repeat="comment in comments | orderBy:'createdAt' ">
+        <p class="comment-post">{{ comment.message | htmlToPlainText }}</p>
 
         <div class="comment-meta">
-          <dl>
-            <dt>Submitted</dt>
-            <dd>{{ comment.createdAt }}</dd>
-            <dt>Author</dt>
-            <dd>{{ comment.createdBy }}</dd>
-        </div>
+            <span class="">เมื่อ : {{ comment.createdAt | amDateFormat: 'dddd D MMMM YYYY เวลา HH:mm' }}</span>
+            <span class="">โดย : {{ comment.createdBy }}</span>
       </li>
     </ul>
   </div>
@@ -25,7 +21,7 @@
                   placeholder="Your comment here"></textarea>
       </div>
 
-      <button type="submit" class="btn btn-default" ng-disabled="!message || submitting">Submit</button>
+      <button type="submit" class="btn btn-default pull-right btn-post" ng-disabled="!message || submitting">Comment</button>
     </form>
   </div>
 </div>

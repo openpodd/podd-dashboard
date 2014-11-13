@@ -48,7 +48,8 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'angularMoment'
   ])
 
   .factory('addTrailingSlashInterceptor', function ($q) {

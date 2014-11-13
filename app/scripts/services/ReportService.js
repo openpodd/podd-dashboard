@@ -4,13 +4,11 @@
 angular.module('poddDashboardApp')
 
 .factory('ReportModal', function () {
-    var modal, slide, slick;
+    var modal;
 
     function init() {
         if (!modal || !modal.length) {
             modal = $('.report-modal');
-            slide = $('.report-images', modal);
-            slick = slide.slick();
         }
     }
 
@@ -19,22 +17,6 @@ angular.module('poddDashboardApp')
 
         getElement: function getElement() {
             return modal;
-        },
-        clearImages: function clearImages() {
-            init();
-            slide.html('');
-
-            return this;
-        },
-        setImages: function setImages(images) {
-            this.clearImages();
-
-            images.forEach(function (image) {
-                slide.append('<div><img src="' + image.imageUrl + '" /></div>');
-            });
-
-            slick.unslick();
-            slick.getSlick().refresh();
         },
         show: function () {
             init();

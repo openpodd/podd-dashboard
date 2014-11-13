@@ -6,25 +6,26 @@ angular.module('poddDashboardApp')
     console.log('IN MainCtrl');
     var map = Map();
 
-    dashboard.get().$promise.then(function (villagesStatus) {
-        map.setVillages(villagesStatus);
+    dashboard.get().$promise.then(function (villages) {
+        map.setVillages(villages);
     });
 
     streaming.on('villageStatus', function (data) {
         console.log('got new village data:', data);
-        var location = [
-            data.location.coordinates[1],
-            data.location.coordinates[0]
-        ];
 
-        map.setVillages(data);
-        map.wink(location, 10000);
+        map.addReport(data, true);
     });
 
     map.onClickVillage(function (event, data) {
         console.log('clicked on village', data);
 
         var query = { administrationArea: data.id };
+
+        // set center to this marker.
+        map.leaflet.panTo([
+            data.location.coordinates[1],
+            data.location.coordinates[0]
+        ]);
 
         Reports.list(query).$promise.then(function (items) {
 
@@ -49,19 +50,19 @@ angular.module('poddDashboardApp')
             });
 
             $scope.reports = items;
+            $scope.showReportList = true;
         });
     });
 
     $scope.closeReportList = function () {
         $scope.reports = null;
+        $scope.recentReports = null;
+        $scope.olderReports = null;
+        $scope.showReportList = false;
     };
 
     $scope.initReportModal = function () {
         ReportModal.init();
-
-        ReportModal.on('shown.bs.modal', function () {
-            ReportModal.setImages($scope.report.images);
-        });
     };
 
     $scope.viewReport = function (reportId) {

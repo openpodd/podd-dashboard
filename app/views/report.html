@@ -2,30 +2,53 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 
-        <h1>Report #{{ $parent.report.id }}</h1>
+        <h1 class="modal-title">Report #{{ $parent.report.id }}</h1>
+        <h2 class="pull-left modal-subtitle"><i class="fa fa-map-marker pull-left"></i>ตำบลนครนายก อำเภอเมือง จังหวัดนครนายก</h2>
 
         <div class="row">
 
-          <div class="col-md-8 report-details">
-
-            <div class="row"><div class="col-md-12 text-center report-images">
-            </div></div><!-- end .report-images -->
+          <div class="col-md-7 report-details">
+            <div class="row">
+<!--                <div class="col-md-12 text-center "></div>-->               
+               
+               <div class="col-md-12">
+                    <div class="report-image clearfix">
+                        <div class="text-center report-view">
+                           <img src="http://placehold.it/400x350" />
+                        </div>
+                        <ul class="list-unstyled list-inline">
+                            <li><img src="http://placehold.it/50x50"/></li>
+                            <li><img src="http://placehold.it/50x50"/></li>
+                            <li><img src="http://placehold.it/50x50"/></li>
+                            <li><img src="http://placehold.it/50x50"/></li>
+                            <li><img src="http://placehold.it/50x50"/></li>
+                            <li><img src="http://placehold.it/50x50"/></li>
+                            <li><img src="http://placehold.it/50x50"/></li>
+                            <li><img src="http://placehold.it/50x50"/></li>
+                            <li><img src="http://placehold.it/50x50"/></li>
+                            <li><img src="http://placehold.it/50x50"/></li>
+                            <li><img src="http://placehold.it/50x50"/></li>
+                        </ul>
+                    </div> <!-- end of report-images -->
+               </div>
+               
+            </div><!-- end .report-images -->
 
             <div class="row"><div class="col-md-12 report-meta">
-              <dl>
-                <dt>Submitted date</dt>
+              <dl class="dl-horizontal pd-dl-horizontal">
+                <dt>วันที่รายงาน</dt>
                 <dd>{{ $parent.report.incidentDate }}</dd>
 
-                <dt>By</dt>
+                <dt>โดย</dt>
                 <dd>{{ $parent.report.createdBy }}</dd>
             </div></div><!-- end .report-meta -->
 
             <div class="row"><div class="col-md-12 report-fields">
-              <table class="table table-striped">
+              <table class="table table-striped pd-table">
                 <thead>
                   <tr>
-                    <th>Question</th>
-                    <th>Answer</th>
+                    <th>คำถาม</th>
+                    <th>คำตอบ</th>
                   </tr>
                 </thead>
 
@@ -42,7 +65,7 @@
 
           <!-- split detail and comments here -->
 
-          <div class="col-md-4 report-comments">
+          <div class="col-md-5 report-comments">
 
             <div ng-include="'/views/comments.html'"></div>
 

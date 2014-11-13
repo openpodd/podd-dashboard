@@ -19,31 +19,31 @@ var producer = redis.createClient(),
     consumer = redis.createClient();
 
 // Randomly generate village status.
-Fiber(function () {
-    var i = 0, positive, negative, index, data;
-
-    for (;;i++) {
-        // Prepare data.
-        positive = parseInt(Math.random() * 100);
-        negative = parseInt(Math.random() * 100);
-
-        index = parseInt(Math.random() * 10) % 2;
-        data = dataset[index];
-        data.positive = positive;
-        data.negative = negative;
-
-        producer.publish('village:status', JSON.stringify(data));
-
-        sleep(10000 * Math.random());
-    }
-}).run();
+// Fiber(function () {
+//     var i = 0, positive, negative, index, data;
+//
+//     for (;;i++) {
+//         // Prepare data.
+//         positive = parseInt(Math.random() * 100);
+//         negative = parseInt(Math.random() * 100);
+//
+//         index = parseInt(Math.random() * 10) % 2;
+//         data = dataset[index];
+//         data.positive = positive;
+//         data.negative = negative;
+//
+//         producer.publish('village:status', JSON.stringify(data));
+//
+//         sleep(10000 * Math.random());
+//     }
+// }).run();
 
 consumer.on('message', function (channel, message) {
     for (i in io.sockets.connected) {
-        io.sockets.connected[i].emit('villageStatus', JSON.parse(message));
+        io.sockets.connected[i].emit('villageStatus', message);
     }
 });
-consumer.subscribe('village:status');
+consumer.subscribe('report:new');
 
 io.on('connection', function (socket) {
     console.log('client connected id:', socket.conn.id,
