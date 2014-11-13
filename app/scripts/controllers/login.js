@@ -2,14 +2,14 @@
 
 angular.module('poddDashboardApp')
 
-.controller('LoginCtrl', function ($scope, $http, shared, Auth) {
+.controller('LoginCtrl', function ($scope, $http, shared, Auth, $location) {
     $scope.username = '';
     $scope.password = '';
     $scope.shared = shared;
 
     $scope.$watch('shared.loggedIn', function(newValue, oldValue) {
         if (newValue) {
-            window.location = '#/';
+            $location.url('/');
         }
     });
 
@@ -30,13 +30,15 @@ angular.module('poddDashboardApp')
     };
 
     $scope.submit = function () {
-        if (!$scope.validate()) return;
+        if (!$scope.validate()) {
+            return;
+        }
 
         Auth.login($scope.username, $scope.password, function (err) {
             if (err) {
                 $scope.invalidLogin = true;
             } else {
-                window.location.href = '/#/';
+                $location.url('/');
             }
         });
     };

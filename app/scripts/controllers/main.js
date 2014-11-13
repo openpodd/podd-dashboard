@@ -3,9 +3,12 @@
 angular.module('poddDashboardApp')
 
 .controller('MainCtrl', function ($scope, dashboard, streaming,
-                                  Map, Reports, ReportModal, shared) {
+                                  Map, Reports, ReportModal, shared, Auth) {
 
     console.log('IN MainCtrl');
+
+    Auth.requireLogin($scope);
+
     var map = Map();
 
     dashboard.get().$promise.then(function (villages) {
