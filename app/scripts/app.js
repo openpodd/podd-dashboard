@@ -87,6 +87,12 @@ angular
     };
   })
 
+  .factory('shared', function() {
+    return {
+      loggedIn: $.cookie('token') ? true : false
+    };
+  })
+
   .config(function ($routeProvider, $httpProvider) {
     $httpProvider.interceptors.push('addTrailingSlashInterceptor');
 
@@ -95,6 +101,10 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
         controllerAs: 'mainctrl'
+      })
+      .when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'LoginCtrl'
       })
       .when('/about', {
         templateUrl: 'views/about.html',
