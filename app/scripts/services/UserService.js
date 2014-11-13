@@ -3,7 +3,7 @@
 angular.module('poddDashboardApp')
 
 .factory('User', function ($resource) {
-    return $resource(config.host + '/api-token-auth/', {}, {
+    return $resource(config.API_BASEPATH + '/api-token-auth/', {}, {
         login: {
             method: 'POST'
         }

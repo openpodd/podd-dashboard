@@ -3,7 +3,7 @@
 angular.module('poddDashboardApp')
 
 .factory('Comments', function ($resource) {
-    return $resource(config.host + '/reportComments/', {}, {
+    return $resource(config.API_BASEPATH + '/reportComments/', {}, {
         list: {
             method: 'GET',
             isArray: true

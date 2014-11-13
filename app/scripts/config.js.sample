@@ -1,8 +1,3 @@
 var config = {
-    host: 'http://localhost:8000',
-
-    username: 'A',
-    password: '1234'
+    API_BASEPATH: 'http://localhost:8000'
 };
-
-var API_BASEPATH = 'http://10.0.1.26:8000/';
