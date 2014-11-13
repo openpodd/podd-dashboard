@@ -2,11 +2,12 @@
 
 angular.module('poddDashboardApp')
 
-.controller('MenuCtrl', function ($scope, $http, shared) {
+.controller('MenuCtrl', function ($scope, $http, shared, $location) {
     $scope.shared = shared;
 
     $scope.logout = function () {
         $scope.shared.loggedIn = false;
-        $.removeCookie('accessToken');
-    }
+        shared.loggedIn = false;
+        $.removeCookie('token');
+    };
 });

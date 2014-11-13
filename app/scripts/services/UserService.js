@@ -10,7 +10,7 @@ angular.module('poddDashboardApp')
     });
 })
 
-.factory('Auth', function (User, shared) {
+.factory('Auth', function (User, shared, $interval, $location) {
     return {
         login: function (username, password, cb) {
             if (!$.cookie('token')) {
@@ -23,6 +23,29 @@ angular.module('poddDashboardApp')
                     cb(err);
                 });
             }
+        },
+
+        verify: function () {
+            if ( ! $.cookie('token') ) {
+                shared.loggedIn = false;
+            }
+        },
+
+        requireLogin: function ($scope) {
+            var self = this;
+
+            // Loop check
+            var promise = $interval(function () {
+                self.verify();
+
+                if (!shared.loggedIn) {
+                    $location.url('/login');
+                }
+            }, 1000);
+
+            $scope.$on('$destroy', function () {
+                $interval.cancel(promise);
+            });
         }
     };
 })
