@@ -87,7 +87,9 @@ angular
   })
 
   .factory('shared', function() {
-    return {}
+    return {
+      loggedIn: $.cookie('token') ? true : false
+    };
   })
 
   .config(function ($routeProvider, $httpProvider) {

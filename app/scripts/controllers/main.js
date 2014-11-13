@@ -6,8 +6,6 @@ angular.module('poddDashboardApp')
     console.log('IN MainCtrl');
     var map = Map();
 
-    Auth.login(config.username, config.password);
-
     dashboard.get().$promise.then(function (villagesStatus) {
         map.setVillages(villagesStatus);
     });

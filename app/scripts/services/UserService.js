@@ -10,12 +10,17 @@ angular.module('poddDashboardApp')
     });
 })
 
-.factory('Auth', function (User) {
+.factory('Auth', function (User, shared) {
     return {
-        login: function (username, password) {
+        login: function (username, password, cb) {
             if (!$.cookie('token')) {
                 User.login({ username: username, password: password }).$promise.then(function (res) {
                     $.cookie('token', res.token);
+                    shared.loggedIn = true;
+
+                    cb(null, res);
+                }).catch(function (err) {
+                    cb(err);
                 });
             }
         }

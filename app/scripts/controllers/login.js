@@ -2,7 +2,7 @@
 
 angular.module('poddDashboardApp')
 
-.controller('LoginCtrl', function ($scope, $http, shared) {
+.controller('LoginCtrl', function ($scope, $http, shared, Auth) {
     var url = API_BASEPATH + 'api-token-auth/';
     $scope.username = '';
     $scope.password = '';
@@ -33,19 +33,12 @@ angular.module('poddDashboardApp')
     $scope.submit = function () {
         if (!$scope.validate()) return;
 
-        var params = {
-            username: $scope.username,
-            password: $scope.password,
-        }
-        $http.post(url, params)
-            .success(function (resp, status) {
-                $.cookie('accessToken', resp.token);
-                $scope.shared.loggedIn = true;
-
-                window.location.href = '/#/';
-            })
-            .error(function (resp, status) {
+        Auth.login($scope.username, $scope.password, function (err) {
+            if (err) {
                 $scope.invalidLogin = true;
-            });
+            } else {
+                window.location.href = '/#/';
+            }
+        });
     };
 });
