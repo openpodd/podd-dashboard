@@ -1,14 +1,33 @@
-<div class="row report-filter">
+<div class="row report-filter" ng-controller="FilterCtrl">
   <div class="col-lg-12">
 
-    <form role="form">
+    <form role="form" ng-submit="search()">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="eg. animal_type:&quot;ไก่&quot; sick_num__gt:10">
+        <input ng-model="query" type="text" class="form-control"
+               placeholder="eg. animal_type:&quot;ไก่&quot; sick_num__gt:10">
+
         <span class="input-group-btn">
           <button class="btn btn-default" type="button">Filter</button>
         </span>
       </div>
     </form>
+    
+    <div class="filter-result" ng-show="results">
+      <ul>
+        <li ng-repeat="item in results">
+
+          <div class="filter-result-village">
+            <div class="village-name">{{ item.name }}</div>
+
+            <div class="village-location">
+              <span class="latitude">{{ item.location.coordinates[1] }}</span>
+              <span class="longitude">{{ item.location.coordinate[0] }}</span>
+            </div>
+          </div>
+
+        </li>
+      </ul>
+    </div>
 
   </div>
 </div>
