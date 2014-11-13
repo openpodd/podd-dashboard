@@ -4,3 +4,5 @@ var config = {
     username: 'A',
     password: '1234'
 };
+
+var API_BASEPATH = 'http://10.0.1.26:8000/';
