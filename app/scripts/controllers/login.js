@@ -8,6 +8,12 @@ angular.module('poddDashboardApp')
     $scope.password = '';
     $scope.shared = shared;
 
+    $scope.$watch('shared.loggedIn', function(newValue, oldValue) {
+        if (newValue) {
+            window.location = '#/';
+        }
+    });
+
     $scope.validate = function () {
         $scope.invalidUsername = false;
         $scope.invalidPasswordLength = false;
