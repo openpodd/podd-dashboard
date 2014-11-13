@@ -2,12 +2,22 @@
 
 angular.module('poddDashboardApp')
 
-.controller('MainCtrl', function ($scope, dashboard, streaming, Map, Reports, ReportModal, Auth) {
+.controller('MainCtrl', function ($scope, dashboard, streaming,
+                                  Map, Reports, ReportModal, shared) {
+
     console.log('IN MainCtrl');
     var map = Map();
 
     dashboard.get().$promise.then(function (villages) {
         map.setVillages(villages);
+        // Because every available village for this user is returned even there
+        // is no report. We can use this variable to keep which village
+        // current logged-in user can access.
+        shared.villages = {};
+
+        villages.forEach(function (item) {
+            shared.villages[ item.id ] = item;
+        });
     });
 
     streaming.on('villageStatus', function (data) {

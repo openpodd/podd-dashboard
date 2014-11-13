@@ -8,26 +8,40 @@
                placeholder="ตัวอย่าง. animal_type:&quot;ไก่&quot; sick_num__gt:10">
 
         <span class="input-group-btn">
-          <button class="btn btn-default pd-btn-search" type="button"><i class="fa fa-search fa-size-22"></i><button>
+          <button class="btn btn-default pd-btn-search" type="submit"><i class="fa fa-search fa-size-22"></i><button>
         </span>
       </div>
     </form>
 
-    <div class="filter-result" ng-show="results">
-      <ul>
-        <li ng-repeat="item in results">
+    <div class="filter-result" ng-show="willShowResult">
+      <div class="filter-loading" ng-show="loading">
+          กำลังค้นหา &hellip;
+      </div>
+
+      <div class="filter-error" ng-show="error">
+          เกิดข้อผิดพลาด
+      </div>
+
+      <div class="filter-empty" ng-show="!loading && results.length === 0">
+          ไม่พบผลการค้นหาที่กำหนด
+      </div>
+
+      <ul ng-show="!loading && results">
+        <li ng-repeat="item in results" ng-click="triggerVillageClick(item)">
 
           <div class="filter-result-village">
             <div class="village-name">{{ item.name }}</div>
 
             <div class="village-location">
-              <span class="latitude">{{ item.location.coordinates[1] }}</span>
-              <span class="longitude">{{ item.location.coordinate[0] }}</span>
+              <span class="latitude">{{ item.location.coordinates[1] }}</span> ,
+              <span class="longitude">{{ item.location.coordinates[0] }}</span>
             </div>
           </div>
 
         </li>
       </ul>
+
+      <buttom class="btn btn-default" ng-click="closeResult()">ปิด</button>
     </div>
 
 </div>
