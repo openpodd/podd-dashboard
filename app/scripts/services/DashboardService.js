@@ -3,7 +3,7 @@
 angular.module('poddDashboardApp')
 
 .factory('dashboard', function ($resource) {
-    var resource = $resource(config.host + '/dashboard/villages/', {}, {
+    var resource = $resource(config.API_BASEPATH + '/dashboard/villages/', {}, {
         get: { isArray: true }
     });
 

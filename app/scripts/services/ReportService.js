@@ -33,7 +33,7 @@ angular.module('poddDashboardApp')
 })
 
 .factory('Reports', function ($resource) {
-    var resource = $resource(config.host + '/reports/:reportId', {}, {
+    var resource = $resource(config.API_BASEPATH + '/reports/:reportId', {}, {
         list: {
             method: 'GET',
             isArray: true
