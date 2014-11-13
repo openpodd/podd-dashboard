@@ -1,13 +1,13 @@
 @import "mixin";
 
 .pd-logo{
-    width: 106px;
-    height: 25px;
     overflow: hidden;
     margin: 0 auto 15px;
-    text-indent: -999em;
+    width: 106px;
+    height: 25px;
     background: url("../images/logo.png");
-    
+    text-indent: -999em;
+
     @include image-2x('../images/logo@2x.png', 106px, 25px);
 }
 
@@ -20,25 +20,21 @@
 .pd-sidebar-title{
     padding: 10px 15px;
     background-color: #303030;
-    
     h2{
         margin: 0;
         color: #fff;
         font-size: 26px;
         font-family: ThaiSansNeueRegular;
     }
-    
     .fa-times{
         color: #222;
         font-size: 22px;
     }
-    
     i{
         margin-top: 5px;
-        
         &:hover{
-                cursor: pointer;
         color: #ccc;
+                cursor: pointer;
         }
     }
 }
@@ -49,32 +45,28 @@
 .pd-table{
     > thead > tr{
         background-color: #494949;
-        
         > th{
-            color: #fff;
             border-bottom: none;
+            color: #fff;
         }
     } 
     > tbody > tr > td{
         border: none;
     }
-    
     > tbody > tr:nth-child(odd) > td{
         background-color: #353535;
     }
-    
     tr > td:first-child, tr > th:first-child{
         padding-left: 20px;
     }
-    
     .btn:hover{
         color: #e7e7e7;
     }
 }
 .pd-table-title{
-    color: #fff;
-    padding-left: 20px;
     margin-bottom: 15px;
+    padding-left: 20px;
+    color: #fff;
     font-size: 24px;
     font-family: ThaiSansNeueRegular;
 }
@@ -87,8 +79,44 @@
     dt{
         text-align: left !important;
     }
-    
     dd{
         margin-bottom: 10px;
+    }
+}
+
+
+.report-filter{
+    position: absolute;
+    top: 13px;
+    right: 0;
+    left: 0;
+    margin: auto;
+    width: 700px;
+    .form-control{
+        padding: 15px 20px;
+        height: 50px;
+        border: none;
+        box-shadow:0 2px 6px rgba(0,0,0,0.3),0 4px 15px -5px rgba(0,0,0,0.0);
+        font-size: 1.5em;
+    }
+}
+.pd-btn-search{
+    margin-left: 0;
+    width: 120px;
+    height: 50px;
+    border: 0;
+    border-radius: 0 2px 2px 0;
+    background-color: #4d90fe;
+    background-image: -webkit-linear-gradient(top,#4d90fe,#4787ed);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    color: #fff;
+    vertical-align: top;
+    text-align: center;
+    -webkit-transition: margin-left 200ms ease-out 0;
+    transition: margin-left 200ms ease-out 0;
+    
+    &:hover{
+        background-color: #357ae8;
+        background-image: -webkit-linear-gradient(top,#4d90fe,#357ae8);
     }
 }
