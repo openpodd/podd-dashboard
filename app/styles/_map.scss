@@ -38,7 +38,8 @@
 
 //Controller
 .leaflet-top.leaflet-left{
-    top: 5px;
-    right: 15px;
-    left: auto;
+    top: auto;
+    bottom: 15px;
+//    right: 15px;
+    left: 10px;
 }
