@@ -25,9 +25,11 @@ angular.module('poddDashboardApp')
                 matchedVillages = {};
 
             data.forEach(function (item) {
-                if ( ! matchedVillages[ item.administrationAreaId ] ) {
+                var village = shared.villages[ item.administrationAreaId ];
+
+                if ( ! matchedVillages[ village.id ] ) {
                     matchedVillages[ item.administrationAreaId ] = true;
-                    results.push(shared.villages[ item.administrationAreaId ]);
+                    results.push(village);
                 }
             });
 
