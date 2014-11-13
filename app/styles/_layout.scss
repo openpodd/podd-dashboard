@@ -24,10 +24,10 @@
     &.ng-hide-add {}
 }
 
-body > .pd-section-left{
+.pd-section-nav > .pd-section-left{
     left: 0;
 }
-body > .pd-section-left.ng-hide{
+.pd-section-nav > .pd-section-left.ng-hide{
     left: -150px;
 }
 

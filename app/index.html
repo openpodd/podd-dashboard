@@ -29,28 +29,31 @@
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    
-<div class="pd-section-left" ng-show="isShowNav">
-<!--   <div ng-init="isShowNav = true"></div>-->
-    <div class="pd-container" >
-        <h1 class="pd-logo">poddDashboard</h1>
-        <ul class="pd-nav-list">
-            <li class="pd-nav-item"><a ng-href="#/about">เกี่ยวกับเรา</a></li>
-            <li class="pd-nav-item"><a ng-href="#">ติดต่อเรา</a></li>
-            <li class="pd-nav-item"><a ng-href="#/login">เข้าสู่ระบบ</a></li>
-        </ul>
-    </div>
-    
-<!--
-    <svg id="svg-image-blur">
-        <filter id="blur-effect-1">
-            <feGaussianBlur stdDeviation="2" />
-        </filter>
-    </svg>
--->
-</div>
 
-<div class="pd-nav-toggle" ng-click="isShowNav=!isShowNav"><i class="fa fa-bars fa-size-24"></i></div>
+<div class="pd-section-nav" ng-controller="MenuCtrl">
+    <div class="pd-section-left" ng-show="isShowNav">
+    <!--   <div ng-init="isShowNav = true"></div>-->
+        <div class="pd-container" >
+            <h1 class="pd-logo">poddDashboard</h1>
+            <ul class="pd-nav-list">
+                <li class="pd-nav-item"><a ng-href="#/about">เกี่ยวกับเรา</a></li>
+                <li class="pd-nav-item"><a ng-href="#">ติดต่อเรา</a></li>
+                <li ng-hide="shared.loggedIn" class="pd-nav-item" ng-cloak><a ng-href="#/login" ng-click="isShowNav=!isShowNav">เข้าสู่ระบบ</a></li>
+                <li ng-show="shared.loggedIn" class="pd-nav-item" ng-cloak><a ng-href="#/" ng-click="isShowNav=!isShowNav;logout();">ออกจากระบบ</a></li>
+            </ul>
+        </div>
+
+    <!--
+        <svg id="svg-image-blur">
+            <filter id="blur-effect-1">
+                <feGaussianBlur stdDeviation="2" />
+            </filter>
+        </svg>
+    -->
+    </div>
+
+    <div class="pd-nav-toggle" ng-click="isShowNav=!isShowNav"><i class="fa fa-bars fa-size-24"></i></div>
+</div>
 
 <div class="pd-main">
     <div ng-view=""></div>
@@ -117,6 +120,7 @@
         <script src="scripts/services/CommentService.js"></script>
         <script src="scripts/services/UserService.js"></script>
         <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/menu.js"></script>
         <script src="scripts/controllers/report.js"></script>
         <script src="scripts/controllers/comment.js"></script>
         <script src="scripts/controllers/about.js"></script>

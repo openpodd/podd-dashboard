@@ -2,10 +2,11 @@
 
 angular.module('poddDashboardApp')
 
-.controller('LoginCtrl', function ($scope, $http) {
+.controller('LoginCtrl', function ($scope, $http, shared) {
     var url = API_BASEPATH + 'api-token-auth/';
     $scope.username = '';
     $scope.password = '';
+    $scope.shared = shared;
 
     $scope.validate = function () {
         $scope.invalidUsername = false;
@@ -32,6 +33,9 @@ angular.module('poddDashboardApp')
         }
         $http.post(url, params)
             .success(function (resp, status) {
+                $.cookie('accessToken', resp.token);
+                $scope.shared.loggedIn = true;
+
                 window.location.href = '/#/';
             })
             .error(function (resp, status) {

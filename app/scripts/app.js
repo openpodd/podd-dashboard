@@ -86,6 +86,10 @@ angular
     };
   })
 
+  .factory('shared', function() {
+    return {}
+  })
+
   .config(function ($routeProvider, $httpProvider) {
     $httpProvider.interceptors.push('addTrailingSlashInterceptor');
 
