@@ -1,8 +1,12 @@
-<div class="reports-list pd-sidebar-right" ng-show="reports">
+<div class="reports-list pd-sidebar-right" ng-show="showReportList">
     <div class="pd-sidebar-title clearfix">
         <h2 class="pull-left"><i class="fa fa-map-marker pull-left"></i>ตำบลนครนายก อำเภอเมือง จังหวัดนครนายก</h2>
         <i class="fa fa-times pull-right" ng-click="closeReportList()"></i>
     </div>
+
+  <div id="reports-empty" ng-hide="reports">
+    ยังไม่พบการรายงาน
+  </div>
 
   <div id="recent-reports" ng-show="recentReports">
     <h3 class="pd-table-title">รายงานล่าสุด (ภายใน 2 อาทิตย์)</h3>
@@ -23,7 +27,7 @@
           <td ng-bind="report.incidentDate"></td>
           <td>
              <span ng-show="report.negative" class="badge badge-bad">Bad</span>
-             <span ng-hide="report.negative" class="badge badge-good">Good</span> 
+             <span ng-hide="report.negative" class="badge badge-good">Good</span>
           </td>
           <td ng-bind="report.createdByName"></td>
           <td>
