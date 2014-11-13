@@ -65,10 +65,6 @@ angular.module('poddDashboardApp')
 
     $scope.initReportModal = function () {
         ReportModal.init();
-
-        ReportModal.on('shown.bs.modal', function () {
-            ReportModal.setImages($scope.report.images);
-        });
     };
 
     $scope.viewReport = function (reportId) {
