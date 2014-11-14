@@ -53,7 +53,7 @@ angular.module('poddDashboardApp')
     Map.prototype.setVillages = function setMarkers(items) {
         var self = this, bounds;
 
-        items = items.length ? items : [ items ];
+        items = items.forEach ? items : [ items ];
 
         items.forEach(function (item) {
             var village = self.villages[item.id],
@@ -77,9 +77,16 @@ angular.module('poddDashboardApp')
             });
         });
 
-        bounds = self.villageMarkerLayer.getBounds();
-        bounds.pad(5);
-        self.leaflet.fitBounds(bounds);
+        // Prevent error when villages is empty array.
+        if (items.length) {
+            bounds = self.villageMarkerLayer.getBounds();
+            bounds.pad(5);
+            self.leaflet.fitBounds(bounds);
+        }
+    };
+
+    Map.prototype.clearVillages = function clearVillages() {
+        this.villageMarkerLayer.clearLayers();
     };
 
     Map.prototype.addReport = function addReport(report, toWink) {

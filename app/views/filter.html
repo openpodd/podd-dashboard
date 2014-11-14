@@ -22,12 +22,13 @@
           เกิดข้อผิดพลาด
       </div>
 
-      <div class="filter-empty" ng-show="!loading && results.length === 0">
+      <div class="filter-empty" ng-show="empty">
           ไม่พบผลการค้นหาที่กำหนด
       </div>
 
-      <ul ng-show="!loading && results">
-        <li ng-repeat="item in results" ng-click="triggerVillageClick(item)">
+      <ul class="list-unstyled filter-result-list" ng-hide="1">
+        <li ng-repeat="item in results" ng-click="triggerVillageClick(item)"
+            class="filter-result-item">
 
           <div class="filter-result-village">
             <div class="village-name">{{ item.name }}</div>
@@ -41,7 +42,7 @@
         </li>
       </ul>
 
-      <buttom class="btn btn-default" ng-click="closeResult()">ปิด</button>
+      <!-- <buttom class="btn btn-default" ng-click="closeResult()">ปิด</button> -->
     </div>
 
 </div>
