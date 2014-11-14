@@ -1,3 +1,5 @@
 var config = {
-    API_BASEPATH: 'http://localhost:8000'
+    API_BASEPATH: 'http://localhost:8000',
+
+    SOCKETIO_BASEPATH: 'http://localhost:8888'
 };

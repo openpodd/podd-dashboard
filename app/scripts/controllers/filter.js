@@ -4,6 +4,12 @@ angular.module('poddDashboardApp')
 
 .controller('FilterCtrl', function ($scope, Search, shared) {
 
+    $scope.$on('filter:clearQuery', function (willClear) {
+        if (willClear) {
+            $scope.query = '';
+        }
+    });
+
     $scope.search = function () {
         console.log('Will search with query', $scope.query);
 
@@ -12,6 +18,8 @@ angular.module('poddDashboardApp')
         }
 
         $scope.loading = true;
+        $scope.empty = false;
+        $scope.error = false;
         // show result box.
         $scope.willShowResult = true;
 
@@ -34,6 +42,15 @@ angular.module('poddDashboardApp')
             });
 
             $scope.results = results;
+            shared.filterResults = results;
+
+            if (results.length === 0) {
+                $scope.empty = true;
+            }
+            else {
+                $scope.empty = false;
+                $scope.willShowResult = false;
+            }
 
         }).catch(function () {
             $scope.loading = false;

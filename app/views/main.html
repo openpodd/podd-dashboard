@@ -2,6 +2,6 @@
 
 <div ng-include="'/views/report-list.html'" class="section-report"></div>
 
-<div ng-include="'/views/filter.html'" class="section-fitlter"></div>
+<div ng-include="'/views/filter.html'" class="section-filter" ng-show="shared.filterMode"></div>
 
 <div ng-include="'/views/report.html'" onload="initReportModal()"></div>
