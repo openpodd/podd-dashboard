@@ -94,6 +94,10 @@ angular.module('poddDashboardApp')
             location,
             village = self.villages[ report.administrationAreaId ];
 
+            console.log('report', report);
+            console.log('villages', self.villages);
+            console.log('village', self.village);
+
         if (village) {
             if (report.negative) {
                 village.negative += 1;

@@ -6,36 +6,36 @@
 //    right:0;
 //    background: rgba(255, 255, 255, .9);
 //    height: 100%;
-//    
+//
 //    padding: 20px;
-//    
+//
 //    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
 //    border-left: 1px solid rgba(0, 0, 0, 0.1);
-//    
+//
 //    overflow: hidden;
-    
+
 //    &.ng-hide-remove {
 //        -webkit-animation: fadeInRight .5s .2s alternate forwards;
 //        opacity: 0;
 //    }
-//    
+//
 //    &.ng-hide-add{
 //        -webkit-animation: fadeOutRight .5s .2s alternate forwards;
 //    }
 }
 
 .report-modal{
-    
+
     .modal-content{
         padding: 15px;
         background-color: #3c3c3c;
         color: #909090;
     }
-    
+
     h1, h2, h3, dt{
         color: #fff;
     }
-    
+
     .modal-title{
         font-size: 24px;
         margin: 10px 0px 20px;
@@ -75,16 +75,27 @@
 
 .report-image{
     margin: 1.5em 0;
-    
+
     .list-inline{
         margin-top: 1em;
         margin-bottom: 0;
-        
+
         li{
             margin-bottom: 10px;
         }
     }
 }
+
 .report-view{
     background-color: #1a1a1a;
+
+    img {
+        max-width: 100%;
+    }
+}
+
+.report-thumbnails {
+    img {
+        max-width: 70px;
+    }
 }

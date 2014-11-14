@@ -29,6 +29,10 @@ angular.module('poddDashboardApp')
     streaming.on('villageStatus', function (data) {
         console.log('got new village data:', data);
 
+        if (typeof data === 'string') {
+            data = JSON.parse(data);
+        }
+
         map.addReport(data, true);
     });
 
