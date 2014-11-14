@@ -48,6 +48,7 @@
     z-index: 999;
     color: #909090;
     background-color: #3c3c3c;
+    overflow-y: scroll;
     
     &.ng-hide-remove {
         -webkit-animation: fadeInRight .5s .2s alternate forwards;
