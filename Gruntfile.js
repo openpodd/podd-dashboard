@@ -361,6 +361,14 @@ module.exports = function (grunt) {
           dest: '<%= yeoman.dist %>'
         }, {
           expand: true,
+          cwd: '.',
+          dest: '<%= yeoman.dist %>',
+          src: [
+            'bower_components/leaflet/dist/**/*',
+            'bower_components/Leaflet.awesome-markers/**/*',
+          ]
+        }, {
+          expand: true,
           cwd: 'app',
           dest: '<%= yeoman.dist %>',
           src: [
