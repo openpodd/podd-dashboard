@@ -2,8 +2,10 @@
 
 angular.module('poddDashboardApp')
 
-.controller('MainCtrl', function ($scope, dashboard, streaming,
-                                  Map, Reports, ReportModal, shared, Auth) {
+.controller('MainCtrl', [
+    '$scope', 'dashboard', 'streaming', 'Map', 'Reports', 'ReportModal',
+    'shared', 'Auth', function ($scope, dashboard, streaming,
+                                Map, Reports, ReportModal, shared, Auth) {
 
     console.log('IN MainCtrl');
 
@@ -153,4 +155,4 @@ angular.module('poddDashboardApp')
         }
     });
 
-});
+}]);
