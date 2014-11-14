@@ -37,6 +37,9 @@ angular.module('poddDashboardApp')
 
         var query = { administrationArea: data.id };
 
+        // set current village
+        $scope.currentVillage = data;
+
         // set center to this marker.
         map.leaflet.panTo([
             data.location.coordinates[1],
