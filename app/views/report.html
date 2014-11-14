@@ -9,29 +9,22 @@
 
           <div class="col-md-7 report-details">
             <div class="row">
-<!--                <div class="col-md-12 text-center "></div>-->               
-               
-               <div class="col-md-12">
+<!--                <div class="col-md-12 text-center "></div>-->
+
+               <div class="col-md-12" ng-show="$parent.report.images">
                     <div class="report-image clearfix">
                         <div class="text-center report-view">
-                           <img src="http://placehold.it/400x350" />
+                           <img ng-src="{{ activeImage.imageUrl }}" />
                         </div>
                         <ul class="list-unstyled list-inline">
-                            <li><img src="http://placehold.it/50x50"/></li>
-                            <li><img src="http://placehold.it/50x50"/></li>
-                            <li><img src="http://placehold.it/50x50"/></li>
-                            <li><img src="http://placehold.it/50x50"/></li>
-                            <li><img src="http://placehold.it/50x50"/></li>
-                            <li><img src="http://placehold.it/50x50"/></li>
-                            <li><img src="http://placehold.it/50x50"/></li>
-                            <li><img src="http://placehold.it/50x50"/></li>
-                            <li><img src="http://placehold.it/50x50"/></li>
-                            <li><img src="http://placehold.it/50x50"/></li>
-                            <li><img src="http://placehold.it/50x50"/></li>
+                            <li ng-repeat="image in $parent.report.images"
+                                ng-click="setActiveImage(image)">
+                              <img ng-src="{{ image.thumbnailUrl }}"/>
+                            </li>
                         </ul>
                     </div> <!-- end of report-images -->
                </div>
-               
+
             </div><!-- end .report-images -->
 
             <div class="row"><div class="col-md-12 report-meta">

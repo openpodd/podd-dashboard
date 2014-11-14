@@ -29,8 +29,9 @@
         <div class="pd-container" >
             <h1 class="pd-logo">poddDashboard</h1>
             <ul class="pd-nav-list">
+                <li class="pd-nav-item"><a ng-href="#/">เฝ้าระวัง</a></li>
                 <li class="pd-nav-item"><a ng-href="#/about">เกี่ยวกับเรา</a></li>
-                <li class="pd-nav-item"><a ng-href="#">ติดต่อเรา</a></li>
+                <li class="pd-nav-item"><a ng-href="#/contact">ติดต่อเรา</a></li>
                 <li ng-hide="shared.loggedIn" class="pd-nav-item" ng-cloak><a ng-href="#/login" ng-click="isShowNav=!isShowNav">เข้าสู่ระบบ</a></li>
                 <li ng-show="shared.loggedIn" class="pd-nav-item" ng-cloak><a ng-href="#/" ng-click="isShowNav=!isShowNav;logout();">ออกจากระบบ</a></li>
             </ul>
