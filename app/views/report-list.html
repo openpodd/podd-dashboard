@@ -19,11 +19,12 @@
           <th>Date</th>
           <th>Status</th>
           <th>Reporter</th>
+          <th></th>
         </tr>
       </thead>
 
       <tbody>
-        <tr ng-repeat="report in recentReports track by report.id" id="report-{{ report.id }}" ng-click="viewReport(report.id)">
+        <tr ng-repeat="report in recentReports track by report.id" id="report-{{ report.id }}" ng-click="onClickReport(report)">
           <td ng-bind="report.id"></td>
           <td ng-bind="report.incidentDate"></td>
           <td>
@@ -31,6 +32,9 @@
              <span ng-hide="report.negative" class="badge badge-good">Good</span>
           </td>
           <td ng-bind="report.createdByName"></td>
+          <td>
+            <i class="fa fa-certificate report-new-icon" ng-show="report.isNew"></i>
+          </td>
         </tr>
       </tbody>
     </table>

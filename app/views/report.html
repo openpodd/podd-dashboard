@@ -8,9 +8,14 @@
 
           <div class="col-md-7 report-details">
             <div class="row">
+              <div class="col-md-12">
+                <h2 class="pull-left modal-subtitle">
+                  <i class="fa fa-map-marker pull-left"></i> {{ currentVillage.address }}
+                </h2>
+              </div>
+            </div>
+            <div class="row">
 <!--                <div class="col-md-12 text-center "></div>-->
-
-                <h2 class="pull-left modal-subtitle"><i class="fa fa-map-marker pull-left"></i> {{ currentVillage.address }}</h2>
 
                 <div class="col-md-12" ng-show="$parent.report.images">
                     <div class="report-image clearfix">

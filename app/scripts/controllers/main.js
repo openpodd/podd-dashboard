@@ -33,7 +33,23 @@ angular.module('poddDashboardApp')
             data = JSON.parse(data);
         }
 
+        // QUICK FIX
+        data.createdByName = data.createdByName || data.createdBy;
+        data.isNew = true;
         map.addReport(data, true);
+        $scope.recentReports.splice(0, 0, data);
+    });
+
+    streaming.on('newReportImage', function (data) {
+        console.log('got new report image:', data);
+
+        var exists = $scope.report.images.some(function (item) {
+            return item.id === data.id;
+        });
+
+        if (!exists && $scope.report.id === data.reportId) {
+            $scope.report.images.push(data);
+        }
     });
 
     map.onClickVillage(function (event, data) {
@@ -86,6 +102,11 @@ angular.module('poddDashboardApp')
 
     $scope.initReportModal = function () {
         ReportModal.init();
+    };
+
+    $scope.onClickReport = function (report) {
+        $scope.viewReport(report.id);
+        report.isNew = false;
     };
 
     $scope.viewReport = function (reportId) {
