@@ -59,8 +59,10 @@
     tr > td:first-child, tr > th:first-child{
         padding-left: 20px;
     }
-    .btn-detail:hover{
-        color: #e7e7e7;
+    > tbody > tr:hover {
+        color: lighten(#909090, 30%);
+        // font-weight: bold;
+        cursor: pointer;
     }
 }
 .pd-table-title{
