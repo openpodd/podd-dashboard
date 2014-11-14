@@ -49,7 +49,6 @@
           <th>Date</th>
           <th>Status</th>
           <th>Reporter</th>
-          <th>Details</th>
         </tr>
       </thead>
 
@@ -62,9 +61,6 @@
             <span ng-hide="report.negative" class="badge badge-good">Good</span>
           </td>
           <td ng-bind="report.createdByName"></td>
-          <td>
-            <a class="btn-detail" ng-click="viewReport(report.id)"><i class="fa fa-file-text-o" /></a>
-          </td>
         </tr>
       </tbody>
     </table>
