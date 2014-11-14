@@ -34,7 +34,16 @@ angular.module('poddDashboardApp')
             return;
         }
 
+        // Workaround to avoid Django CSRF token checking.
+        var csrftoken = $.cookie('csrftoken'),
+            sessionid = $.cookie('sessionid');
+        $.removeCookie('csrftoken');
+        $.removeCookie('sessionid');
+
         Auth.login($scope.username, $scope.password, function (err) {
+            $.cookie('csrftoken', csrftoken);
+            $.cookie('sessionid', sessionid);
+
             if (err) {
                 $scope.invalidLogin = true;
             } else {
