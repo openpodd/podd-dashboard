@@ -125,14 +125,26 @@
 }
 
 .login{
+//    position: absolute;
+//    top: 0;
+//    left: 0;
+//    right: 0;
+//    bottom: 0;
+//    width: 320px;
+//    margin: auto;
+//    height: 390px;
+    
+//    width: 320px;
+//    margin: 150px auto 0 auto;
+    
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    width: 320px;
     margin: auto;
-//    height: 390px;
+    width: 315px;
+    max-height: 400px;
 }
 
 .login-page{
@@ -141,7 +153,7 @@
 .login{
     background-color: #fff;
     padding: 30px;
-    height: 270px;
+//    height: 270px;
     // @include box-shadow(0px 0px 15px #000);
     
     .alert{
@@ -171,7 +183,7 @@
 
 .form-group{
     .alert{
-        padding: 5px 15px;
+        padding: 5px 12px;
         margin-top: 10px !important;
         margin-bottom: 0;
     }
@@ -181,6 +193,3 @@
     width: 100%;
 }
 
-body{
-    background: url('../images/bg.jpg');
-}
