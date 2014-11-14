@@ -11,7 +11,7 @@ angular.module('poddDashboardApp')
 })
 
 .factory('streaming', function () {
-    return io.connect('localhost:8888')
+    return io.connect(config.SOCKETIO_BASEPATH)
         .on('connect', function () {
             console.log('connected');
         });
