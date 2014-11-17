@@ -114,6 +114,10 @@ angular.module('poddDashboardApp')
 
     $scope.initReportModal = function () {
         ReportModal.init();
+
+        ReportModal.on('hide.bs.modal', function () {
+            $scope.report = null;
+        });
     };
 
     $scope.onClickReport = function (report) {

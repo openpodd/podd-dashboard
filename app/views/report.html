@@ -22,7 +22,11 @@
                 <div class="col-md-12" ng-show="$parent.report.images">
                     <div class="report-image clearfix">
                         <div class="text-center report-view">
-                           <img ng-src="{{ activeImage.imageUrl }}" />
+                            <img ng-src="{{ activeImage.imageUrl }}"
+                                 show-image-loader mask=".image-mask" />
+                            <div class="image-mask">
+                              <span class="image-mask-text">Loading &hellip;</span>
+                            </div>
                         </div>
                         <ul class="list-unstyled list-inline report-thumbnails">
                             <li ng-repeat="image in $parent.report.images"
