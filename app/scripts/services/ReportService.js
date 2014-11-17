@@ -9,6 +9,10 @@ angular.module('poddDashboardApp')
     function init() {
         if (!modal || !modal.length) {
             modal = $('.report-modal');
+            modal.modal({
+                show: false,
+                keyboard: true
+            });
         }
     }
 
@@ -21,6 +25,11 @@ angular.module('poddDashboardApp')
         show: function () {
             init();
             modal.modal('show');
+
+            return this;
+        },
+        close: function () {
+            modal.modal('hide');
 
             return this;
         },

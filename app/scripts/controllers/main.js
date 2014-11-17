@@ -144,6 +144,10 @@ angular.module('poddDashboardApp')
         });
     };
 
+    $scope.closeModal = function () {
+        ReportModal.close();
+    };
+
     // Watch to turn on filter mode.
     $scope.shared = shared;
     $scope.$watch('shared.filterMode', function (newValue) {
