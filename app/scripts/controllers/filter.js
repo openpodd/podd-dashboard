@@ -10,6 +10,10 @@ angular.module('poddDashboardApp')
         }
     });
 
+    $scope.$watch('query', function (newValue) {
+        shared.filterQuery = newValue;
+    });
+
     $scope.search = function () {
         console.log('Will search with query', $scope.query);
 

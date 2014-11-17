@@ -4,8 +4,8 @@ angular.module('poddDashboardApp')
 
 .controller('MainCtrl', [
     '$scope', 'dashboard', 'streaming', 'Map', 'Reports', 'ReportModal',
-    'shared', 'Auth', function ($scope, dashboard, streaming,
-                                Map, Reports, ReportModal, shared, Auth) {
+    'shared', 'Auth', 'Search', function ($scope, dashboard, streaming,
+                                Map, Reports, ReportModal, shared, Auth, Search) {
 
     console.log('IN MainCtrl');
 
@@ -57,7 +57,8 @@ angular.module('poddDashboardApp')
     map.onClickVillage(function (event, data) {
         console.log('clicked on village', data);
 
-        var query = { administrationArea: data.id };
+        var query,
+            searcher;
 
         // set current village
         $scope.currentVillage = data;
@@ -68,7 +69,16 @@ angular.module('poddDashboardApp')
             data.location.coordinates[0]
         ]);
 
-        Reports.list(query).$promise.then(function (items) {
+        if (shared.filterMode) {
+            query = { q: shared.filterQuery };
+            searcher = Search.query;
+        }
+        else {
+            query = { administrationArea: data.id };
+            searcher = Reports.list;
+        }
+
+        searcher(query).$promise.then(function (items) {
 
             $scope.recentReports = [];
             $scope.olderReports = [];
