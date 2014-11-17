@@ -35,4 +35,24 @@ angular.module('poddDashboardApp')
             });
         }
     };
+})
+
+.directive('setMenuActive', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var selector = '> *', children;
+
+            if (attrs.childrenselector) {
+              selector = attrs.childrenselector;
+            }
+
+            children = $(selector, element);
+
+            children.click(function () {
+                children.removeClass('active active-menu');
+                $(this).addClass('active active-menu');
+            });
+        }
+    };
 });
