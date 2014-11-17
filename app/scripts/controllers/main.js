@@ -11,6 +11,10 @@ angular.module('poddDashboardApp')
 
     Auth.requireLogin($scope);
 
+    // set menu active manually.
+    $('.pd-nav-list > li').removeClass('active active-menu');
+    $('.pd-nav-list > li').eq(0).addClass('active active-menu');
+
     var map = Map();
 
     function refreshDashboard() {
