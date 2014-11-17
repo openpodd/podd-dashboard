@@ -2,7 +2,7 @@
 
 angular.module('poddDashboardApp')
 
-.controller('MenuCtrl', function ($scope, $http, shared, $location) {
+.controller('MenuCtrl', function ($scope, $http, shared, $location, Menu) {
     $scope.shared = shared;
 
     $scope.logout = function () {
@@ -11,9 +11,11 @@ angular.module('poddDashboardApp')
         $.removeCookie('token');
     };
 
-    $scope.setActiveMenu = function (event) {
-        console.log(event.target);
-        $(event.target).parent().find('> *').removeClass('active-menu');
-        $(event.target).addClass('active-menu');
+    $scope.setActiveMenu = function (name) {
+        Menu.setActiveMenu(name);
+    };
+
+    $scope.isActiveMenu = function (name) {
+        return Menu.isActiveMenu(name);
     };
 });

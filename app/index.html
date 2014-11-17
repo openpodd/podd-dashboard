@@ -28,23 +28,21 @@
     <!--   <div ng-init="isShowNav = true"></div>-->
         <div class="pd-container" >
             <h1 class="pd-logo">poddDashboard</h1>
-            <ul class="pd-nav-list" set-menu-active>
-                <li class="pd-nav-item">
+            <ul class="pd-nav-list">
+                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('home') }"
+                    ng-click="setActiveMenu('home')">
                   <a ng-href="#/" ng-click="shared.filterMode = false">เฝ้าระวัง</a>
                 </li>
-                <li class="pd-nav-item">
+                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('filter') }"
+                    ng-click="setActiveMenu('filter')">
                   <a ng-href="#/" ng-click="shared.filterMode = true">ค้นหา</a>
                 </li>
-                <li class="pd-nav-item">
-                  <a ng-href="#/about">เกี่ยวกับเรา</a>
-                </li>
-                <li class="pd-nav-item">
-                  <a ng-href="#/contact">ติดต่อเรา</a>
-                </li>
-                <li ng-hide="shared.loggedIn" class="pd-nav-item" ng-cloak>
+                <li ng-hide="shared.loggedIn" class="pd-nav-item" ng-cloak
+                    ng-class="{ 'active active-menu':isActiveMenu('login') }">
                   <a ng-href="#/login" ng-click="isShowNav=!isShowNav">เข้าสู่ระบบ</a>
                 </li>
-                <li ng-show="shared.loggedIn" class="pd-nav-item" ng-cloak>
+                <li ng-show="shared.loggedIn" class="pd-nav-item" ng-cloak
+                    ng-class="{ 'active active-menu':isActiveMenu('logout') }">
                   <a ng-href="#/" ng-click="isShowNav=!isShowNav;logout();">ออกจากระบบ</a>
                 </li>
             </ul>
@@ -126,6 +124,7 @@
         <script src="scripts/services/CommentService.js"></script>
         <script src="scripts/services/UserService.js"></script>
         <script src="scripts/services/FilterService.js"></script>
+        <script src="scripts/services/MenuService.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/menu.js"></script>
         <script src="scripts/controllers/report.js"></script>

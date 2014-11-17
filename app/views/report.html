@@ -30,7 +30,8 @@
                         </div>
                         <ul class="list-unstyled list-inline report-thumbnails">
                             <li ng-repeat="image in $parent.report.images"
-                                ng-click="setActiveImage(image)">
+                                ng-click="setActiveImage(image)"
+                                ng-class="{ 'active active-image':isActiveImage(image) }">
                               <img ng-src="{{ image.thumbnailUrl }}"/>
                             </li>
                         </ul>

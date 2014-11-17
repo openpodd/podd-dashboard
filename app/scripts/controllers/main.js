@@ -4,16 +4,15 @@ angular.module('poddDashboardApp')
 
 .controller('MainCtrl', [
     '$scope', 'dashboard', 'streaming', 'Map', 'Reports', 'ReportModal',
-    'shared', 'Auth', 'Search', function ($scope, dashboard, streaming,
-                                Map, Reports, ReportModal, shared, Auth, Search) {
+    'shared', 'Auth', 'Search', 'Menu',
+    function ($scope, dashboard, streaming,
+              Map, Reports, ReportModal, shared, Auth, Search, Menu) {
 
     console.log('IN MainCtrl');
 
     Auth.requireLogin($scope);
 
-    // set menu active manually.
-    $('.pd-nav-list > li').removeClass('active active-menu');
-    $('.pd-nav-list > li').eq(0).addClass('active active-menu');
+    Menu.setActiveMenu('home');
 
     var map = Map();
 
