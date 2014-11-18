@@ -4,12 +4,15 @@ angular.module('poddDashboardApp')
 
 .controller('MainCtrl', [
     '$scope', 'dashboard', 'streaming', 'Map', 'Reports', 'ReportModal',
-    'shared', 'Auth', 'Search', function ($scope, dashboard, streaming,
-                                Map, Reports, ReportModal, shared, Auth, Search) {
+    'shared', 'Auth', 'Search', 'Menu',
+    function ($scope, dashboard, streaming,
+              Map, Reports, ReportModal, shared, Auth, Search, Menu) {
 
     console.log('IN MainCtrl');
 
     Auth.requireLogin($scope);
+
+    Menu.setActiveMenu('home');
 
     var map = Map();
 
@@ -28,12 +31,10 @@ angular.module('poddDashboardApp')
     }
     refreshDashboard();
 
-    streaming.on('villageStatus', function (data) {
+    streaming.on('report:new', function (data) {
         console.log('got new village data:', data);
 
-        if (typeof data === 'string') {
-            data = JSON.parse(data);
-        }
+        data = angular.fromJson(data);
 
         // QUICK FIX
         data.createdByName = data.createdByName || data.createdBy;
@@ -114,6 +115,10 @@ angular.module('poddDashboardApp')
 
     $scope.initReportModal = function () {
         ReportModal.init();
+
+        ReportModal.on('hide.bs.modal', function () {
+            $scope.report = null;
+        });
     };
 
     $scope.onClickReport = function (report) {
@@ -142,6 +147,10 @@ angular.module('poddDashboardApp')
 
             ReportModal.show();
         });
+    };
+
+    $scope.closeModal = function () {
+        ReportModal.close();
     };
 
     // Watch to turn on filter mode.

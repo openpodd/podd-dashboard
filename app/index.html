@@ -24,30 +24,43 @@
     <![endif]-->
 
 <div class="pd-section-nav" ng-controller="MenuCtrl">
-    <div class="pd-section-left" ng-show="isShowNav">
+    <div class="pd-section-left">
     <!--   <div ng-init="isShowNav = true"></div>-->
         <div class="pd-container" >
-            <h1 class="pd-logo">poddDashboard</h1>
+           <img src="images/logo-small.png" alt="" class="logo"/>
             <ul class="pd-nav-list">
-                <li class="pd-nav-item"><a ng-href="#/" ng-click="shared.filterMode = false">เฝ้าระวัง</a></li>
-                <li class="pd-nav-item"><a ng-href="#/" ng-click="shared.filterMode = true">ค้นหา</a></li>
-                <li class="pd-nav-item"><a ng-href="#/about">เกี่ยวกับเรา</a></li>
-                <li class="pd-nav-item"><a ng-href="#/contact">ติดต่อเรา</a></li>
-                <li ng-hide="shared.loggedIn" class="pd-nav-item" ng-cloak><a ng-href="#/login" ng-click="isShowNav=!isShowNav">เข้าสู่ระบบ</a></li>
-                <li ng-show="shared.loggedIn" class="pd-nav-item" ng-cloak><a ng-href="#/" ng-click="isShowNav=!isShowNav;logout();">ออกจากระบบ</a></li>
+                <li class="pd-nav-item pd-nav-title">เมนู</li>
+                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('home') }"
+                    ng-click="setActiveMenu('home')">
+                  <a ng-href="#/" ng-click="shared.filterMode = false">
+                  <i class="fa fa-map-marker fa-size-22"></i>
+                  <span class="pd-nav-text">เฝ้าระวัง</span></a>
+                </li>
+                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('filter') }"
+                    ng-click="setActiveMenu('filter')">
+                  <a ng-href="#/" ng-click="shared.filterMode = true">
+                  <i class="fa fa-search fa-size-18"></i>
+                  <span class="pd-nav-text">ค้นหา</span></a>
+                </li>
+                <li ng-hide="shared.loggedIn" class="pd-nav-item" ng-cloak
+                    ng-class="{ 'active active-menu':isActiveMenu('login') }">
+                  <a ng-href="#/login" ng-click="isShowNav=!isShowNav">
+                  <i class="fa fa-sign-in"></i>
+                  <span class="pd-nav-text">เข้าสู่ระบบ</span></a>
+                </li>
+                <li ng-show="shared.loggedIn" class="pd-nav-item" ng-cloak
+                    ng-class="{ 'active active-menu':isActiveMenu('logout') }">
+                    
+                  <a ng-href="#/" ng-click="isShowNav=!isShowNav;logout();">
+                  <i class="fa fa-sign-out fa-size-18"></i>
+                  <span class="pd-nav-text">ออกจากระบบ</span></a>
+                </li>
+<!--                <i class="fa fa-bell fa-size-22"></i>-->
             </ul>
         </div>
-
-    <!--
-        <svg id="svg-image-blur">
-            <filter id="blur-effect-1">
-                <feGaussianBlur stdDeviation="2" />
-            </filter>
-        </svg>
-    -->
     </div>
 
-    <div class="pd-nav-toggle" ng-click="isShowNav=!isShowNav"><i class="fa fa-bars fa-size-24"></i></div>
+<!--    <div class="pd-nav-toggle" ng-click="isShowNav=!isShowNav"><i class="fa fa-bars fa-size-24"></i></div>-->
 </div>
 
 <div ng-view="" class="pd-main"></div>
@@ -106,14 +119,17 @@
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/fixed.js"></script>
         <script src="scripts/config.js"></script>
         <script src="scripts/app.js"></script>
+        <script src="scripts/directives/common.js"></script>
         <script src="scripts/services/DashboardService.js"></script>
         <script src="scripts/services/ReportService.js"></script>
         <script src="scripts/services/MapService.js"></script>
         <script src="scripts/services/CommentService.js"></script>
         <script src="scripts/services/UserService.js"></script>
         <script src="scripts/services/FilterService.js"></script>
+        <script src="scripts/services/MenuService.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/menu.js"></script>
         <script src="scripts/controllers/report.js"></script>

@@ -87,10 +87,34 @@
 }
 
 .report-view{
+    position: relative;
     background-color: #1a1a1a;
+    min-height: 200px;
 
     img {
         max-width: 100%;
+    }
+
+    &.your-child-is-working {
+        img: {
+            opacity: 0;
+        }
+    }
+
+    .image-mask {
+        display: none;
+    }
+
+    .image-mask.image-loader-progress {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        background-color: black;
+        opacity: .8;
     }
 }
 

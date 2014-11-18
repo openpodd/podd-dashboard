@@ -38,8 +38,8 @@
 
 //Controller
 .leaflet-top.leaflet-left{
-    top: auto;
-    bottom: 15px;
-//    right: 15px;
-    left: 10px;
+    top: 250px;
+    left: 13px;
+    
+    animation: fadeInLeft 1s 1s alternate backwards;
 }

@@ -3,16 +3,16 @@
 }
 
 .pd-section-left{
-    @include box-shadow(1px 1px 4px #ccc);
-    position: absolute;
-    top: 0px;
-    left: -150px;
-    width: 150px;
-    height: 100%;
-    z-index: 999;
-    padding: 15px 15px;
-    background: rgba(255,255,255, 0.7);
-    
+//    @include box-shadow(1px 1px 4px #ccc);
+//    position: absolute;
+//    top: 0px;
+//    left: -150px;
+//    width: 150px;
+//    height: 100%;
+//    z-index: 999;
+//    padding: 15px 15px;
+//    background: rgba(255,255,255, 0.7);
+        
     transition: all 0.5s ease;
     -webkit-transition: all 0.5s ease;
     -ms-transition: all 0.5s ease;
@@ -22,20 +22,6 @@
     
     &.ng-hide-remove {}
     &.ng-hide-add {}
-}
-
-.pd-section-nav > .pd-section-left{
-    left: 0;
-}
-.pd-section-nav > .pd-section-left.ng-hide{
-    left: -150px;
-}
-
-.pd-section-left + .pd-nav-toggle{
-    left: 150px;
-}
-.pd-section-left.ng-hide + .pd-nav-toggle{
-    left: 0;
 }
 
 .pd-sidebar-right{

@@ -2,10 +2,12 @@
 
 angular.module('poddDashboardApp')
 
-.controller('LoginCtrl', function ($scope, $http, shared, Auth, $location) {
+.controller('LoginCtrl', function ($scope, $http, shared, Auth, $location, Menu) {
     $scope.username = '';
     $scope.password = '';
     $scope.shared = shared;
+
+    Menu.setActiveMenu('login');
 
     $scope.$watch('shared.loggedIn', function(newValue, oldValue) {
         if (newValue) {
