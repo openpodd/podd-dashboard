@@ -17,7 +17,7 @@
               </div>
             </div>
             <div class="row">
-                <div class="col-md-12" ng-show="$parent.report.images.length">
+                <div class="col-md-12" ng-if="$parent.report.images.length">
                     <div class="report-image clearfix">
                         <div class="text-center report-view">
                             <img ng-src="{{ activeImage.imageUrl }}"
