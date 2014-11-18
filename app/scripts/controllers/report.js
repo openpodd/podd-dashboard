@@ -8,6 +8,8 @@ angular.module('poddDashboardApp')
 
     $scope.$parent.$watch('report', function (newValue) {
         if (newValue) {
+            $scope.userAlreadyClickImage = false;
+
             if ( $scope.$parent.report.images.length ) {
                 $scope.activeImage = $scope.$parent.report.images[0];
             }
