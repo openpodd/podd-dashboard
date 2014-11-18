@@ -43,10 +43,18 @@
             <div class="row"><div class="col-md-12 report-meta">
               <dl class="dl-horizontal pd-dl-horizontal">
                 <dt>วันที่รายงาน</dt>
-                <dd>{{ $parent.report.incidentDate }}</dd>
+                <dd>{{ $parent.report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</dd>
+
+                <dt>วันที่เกิดเหตุ</dt>
+                <dd>{{ $parent.report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</dd>
+
+                <dt>ประเภทรายงาน</dt>
+                <dd>{{ $parent.report.reportTypeName }}</dd>
 
                 <dt>โดย</dt>
-                <dd>{{ $parent.report.createdBy }}</dd>
+                <dd>
+                  {{ $parent.report.createdBy }}
+                </dd>
             </div></div><!-- end .report-meta -->
 
             <div class="row"><div class="col-md-12 report-fields">

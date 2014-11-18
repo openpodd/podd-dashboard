@@ -15,18 +15,20 @@
     <table class="table table-striped pd-table">
       <thead>
         <tr>
-         <th>ID</th>
-          <th>Date</th>
-          <th>Status</th>
-          <th>Reporter</th>
+          <th>วันที่รายงาน</th>
+          <th>วันที่เกิดเหตุ</th>
+          <th>ประเภท</th>
+          <th>สถานะ</th>
+          <th>ผู้รายงาน</th>
           <th></th>
         </tr>
       </thead>
 
       <tbody>
         <tr ng-repeat="report in recentReports track by report.id" id="report-{{ report.id }}" ng-click="onClickReport(report)">
-          <td ng-bind="report.id"></td>
-          <td ng-bind="report.incidentDate"></td>
+          <td ng-bind="report.date | amDateFormat:'D MMM YYYY HH:mm'"></td>
+          <td ng-bind="report.incidentDate | amDateFormat:'D MMM YYYY'"></td>
+          <td ng-bind="report.reportTypeName"></td>
           <td>
              <span ng-show="report.negative" class="badge badge-bad">Bad</span>
              <span ng-hide="report.negative" class="badge badge-good">Good</span>
@@ -45,20 +47,22 @@
     <table class="table table-striped pd-table">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Date</th>
-          <th>Status</th>
-          <th>Reporter</th>
+          <th>วันที่รายงาน</th>
+          <th>วันที่เกิดเหตุ</th>
+          <th>ประเภท</th>
+          <th>สถานะ</th>
+          <th>ผู้รายงาน</th>
         </tr>
       </thead>
 
       <tbody>
         <tr ng-repeat="report in olderReports track by report.id" id="report-{{ report.id }}">
-          <td ng-bind="report.id"></td>
-          <td ng-bind="report.incidentDate"></td>
+          <td ng-bind="report.date | amDateFormat:'D MMM YYYY HH:mm'"></td>
+          <td ng-bind="report.incidentDate | amDateFormat:'D MMM YYYY'"></td>
+          <td ng-bind="report.reportTypeName"></td>
           <td>
-            <span ng-show="report.negative" class="badge badge-bad">Bad</span>
-            <span ng-hide="report.negative" class="badge badge-good">Good</span>
+             <span ng-show="report.negative" class="badge badge-bad">Bad</span>
+             <span ng-hide="report.negative" class="badge badge-good">Good</span>
           </td>
           <td ng-bind="report.createdByName"></td>
         </tr>
