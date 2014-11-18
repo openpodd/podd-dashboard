@@ -31,22 +31,30 @@
 .pd-sidebar-title{
     padding: 10px 15px;
     background-color: #303030;
+    
     h2{
         margin: 0;
+        width: 470px;
         color: #fff;
-        font-size: 26px;
+        font-size: 1.85em;
         font-family: ThaiSansNeueRegular;
     }
     .fa-times{
         color: #808080;
         font-size: 22px;
     }
-    i{
+    .fa-times{
         margin-top: 5px;
         &:hover{
-        color: #ccc;
-                cursor: pointer;
+            color: #ccc;
+            cursor: pointer;
         }
+    }
+    .fa-map-marker{
+        color: #FFF200;
+        margin-right: 15px;
+        margin-left: 5px;
+        margin-top: 5px;
     }
 }
 
@@ -75,12 +83,17 @@
         // font-weight: bold;
         cursor: pointer;
     }
+    tr:hover{
+        td{
+            background-color: #444 !important;
+        }
+    }
 }
 .pd-table-title{
     margin-bottom: 15px;
     padding-left: 20px;
     color: #fff;
-    font-size: 24px;
+    font-size: 1.7em;
     font-family: ThaiSansNeueRegular;
 }
 
