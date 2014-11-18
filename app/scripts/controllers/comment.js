@@ -2,7 +2,7 @@
 
 angular.module('poddDashboardApp')
 
-.controller('CommentsCtrl', function ($scope, Comments) {
+.controller('CommentsCtrl', function ($scope, Comments, streaming) {
 
     function refreshComments() {
         $scope.comments = Comments.list({ reportId: $scope.$parent.report.id });
@@ -31,8 +31,16 @@ angular.module('poddDashboardApp')
 
         Comments.post(data).$promise.then(function (newComment) {
             reset();
-
-            $scope.comments.push(newComment);
         });
     };
+
+    streaming.on('report:comment:new', function (data) {
+        console.log('got new comment', data);
+
+        data = angular.fromJson(data);
+
+        if (data.reportId === $scope.$parent.report.id) {
+            $scope.comments.push(data);
+        }
+    });
 });
