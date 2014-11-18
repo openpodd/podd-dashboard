@@ -20,7 +20,8 @@
     "jquery-cookie": "~1.4.1",
     "animate.css": "~3.2.0",
     "angular-moment": "~0.8.2",
-    "moment": "~2.8.3"
+    "moment": "~2.8.3",
+    "ment.io": "~0.9.15"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",
