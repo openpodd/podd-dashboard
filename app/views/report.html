@@ -17,9 +17,7 @@
               </div>
             </div>
             <div class="row">
-<!--                <div class="col-md-12 text-center "></div>-->
-
-                <div class="col-md-12" ng-show="$parent.report.images">
+                <div class="col-md-12" ng-show="$parent.report.images.length">
                     <div class="report-image clearfix">
                         <div class="text-center report-view">
                             <img ng-src="{{ activeImage.imageUrl }}"
@@ -30,7 +28,7 @@
                         </div>
                         <ul class="list-unstyled list-inline report-thumbnails">
                             <li ng-repeat="image in $parent.report.images"
-                                ng-click="setActiveImage(image)"
+                                ng-click="clickThumbnail(image)"
                                 ng-class="{ 'active active-image':isActiveImage(image) }">
                               <img ng-src="{{ image.thumbnailUrl }}"/>
                             </li>
