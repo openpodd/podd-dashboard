@@ -35,4 +35,10 @@ angular.module('poddDashboardApp')
             });
         }
     };
+})
+
+.filter('renderMention', function () {
+    return function (text) {
+        return text.replace(/\@\[(\w+)\]/g, '<span class="label label-info">@$1</span>');
+    };
 });

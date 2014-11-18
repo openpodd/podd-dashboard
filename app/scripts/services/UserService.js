@@ -6,6 +6,11 @@ angular.module('poddDashboardApp')
     return $resource(config.API_BASEPATH + '/api-token-auth/', {}, {
         login: {
             method: 'POST'
+        },
+        search: {
+            url: config.API_BASEPATH + '/users/search/',
+            method: 'GET',
+            isArray: true
         }
     });
 })
