@@ -1,3 +1,5 @@
+'use strict';
+
 var io = require('socket.io')(8888),
     Fiber = require('fibers'),
     sleep = function sleep(ms) {
@@ -39,11 +41,14 @@ var producer = redis.createClient(),
 // }).run();
 
 consumer.on('message', function (channel, message) {
+    console.log('New upcoming message from channel: /', channel, '/');
+    var i;
+
     for (i in io.sockets.connected) {
-        io.sockets.connected[i].emit('villageStatus', message);
+        io.sockets.connected[i].emit(channel, message);
     }
 });
-consumer.subscribe('report:new');
+consumer.subscribe('report:new', 'report:comment:new');
 
 io.on('connection', function (socket) {
     console.log('client connected id:', socket.conn.id,

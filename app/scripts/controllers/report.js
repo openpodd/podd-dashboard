@@ -16,4 +16,5 @@ angular.module('poddDashboardApp')
     $scope.isActiveImage = function (image) {
         return $scope.activeImage == image;
     };
+
 });

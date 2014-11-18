@@ -31,12 +31,10 @@ angular.module('poddDashboardApp')
     }
     refreshDashboard();
 
-    streaming.on('villageStatus', function (data) {
+    streaming.on('report:new', function (data) {
         console.log('got new village data:', data);
 
-        if (typeof data === 'string') {
-            data = JSON.parse(data);
-        }
+        data = angular.fromJson(data);
 
         // QUICK FIX
         data.createdByName = data.createdByName || data.createdBy;

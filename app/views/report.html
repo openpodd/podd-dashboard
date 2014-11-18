@@ -52,9 +52,11 @@
                 <dd>{{ $parent.report.reportTypeName }}</dd>
 
                 <dt>โดย</dt>
-                <dd>
-                  {{ $parent.report.createdBy }}
-                </dd>
+                <dd>{{ $parent.report.createdBy }}</dd>
+
+                <dt ng-show="$parent.report.createdByContact">ติดต่อ</dt>
+                <dd ng-show="$parent.report.createdByContact">{{ $parent.report.createdByContact }}</dd>
+
             </div></div><!-- end .report-meta -->
 
             <div class="row"><div class="col-md-12 report-fields">
