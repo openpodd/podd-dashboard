@@ -9,10 +9,6 @@ angular.module('poddDashboardApp')
     function init() {
         if (!modal || !modal.length) {
             modal = $('.report-modal');
-            modal.modal({
-                show: false,
-                keyboard: true
-            });
         }
     }
 
