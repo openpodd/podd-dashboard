@@ -56,7 +56,6 @@ angular.module('poddDashboardApp')
     // Quick fix, don't know why modal keyup doesn't work. Ment.io is the first
     // priority suspect.
     $(document).on('keyup', function (event) {
-        console.log(event);
         event.which == 27 && ReportModal.close();
     });
 
