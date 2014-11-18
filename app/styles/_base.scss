@@ -10,6 +10,17 @@
 
     @include image-2x('../images/logo@2x.png', 106px, 25px);
 }
+.logo{
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    z-index: 99;
+    width: 30px;
+    height: 23px;
+    background: url("../images/logo-small.png");
+    @include image-2x('../images/logo-small@2x.png', 30px, 23px);
+    animation: fadeInLeft 1s 1s alternate backwards;
+}
 
 .fa-size-18{ font-size: 18px; }
 .fa-size-22{ font-size: 22px; }
