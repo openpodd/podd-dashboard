@@ -264,6 +264,7 @@
     background-color: #eee;
     @include box-shadow(0px 0px 5px #505050);
     border-radius: 0 5px 5px 5px;
+    overflow: hidden;
     
     ul{
         list-style: none;

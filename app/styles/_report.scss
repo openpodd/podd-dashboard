@@ -95,8 +95,9 @@
     word-break: break-all;
 
     .label{
+        display: inline-block;
         font-size: 14px;
-        margin: 0 5px 0 0;
+        margin: 5px 5px 0 0;
         background-color: #0074d9;
     }
 }
