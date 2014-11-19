@@ -28,7 +28,7 @@ angular.module('poddDashboardApp')
 
         var data = {
             reportId: $scope.$parent.report.id,
-            message: $scope.message.replace(/\@(\w+)/, '@[$1]')
+            message: $scope.message.replace(/\@(\w+)/g, '@[$1]')
         };
 
         Comments.post(data).$promise.then(function (newComment) {
