@@ -24,6 +24,8 @@ angular.module('poddDashboardApp')
         $scope.loading = true;
         $scope.empty = false;
         $scope.error = false;
+
+        shared.filteredReports = {};
         // show result box.
         $scope.willShowResult = true;
 
@@ -38,6 +40,9 @@ angular.module('poddDashboardApp')
 
             data.forEach(function (item) {
                 var village = shared.villages[ item.administrationAreaId ];
+
+                // Append in filtered reports list
+                shared.filteredReports[item.id] = item;
 
                 if ( ! matchedVillages[ village.id ] ) {
                     matchedVillages[ item.administrationAreaId ] = true;

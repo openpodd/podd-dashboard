@@ -40,7 +40,9 @@ angular.module('poddDashboardApp')
         data.createdByName = data.createdByName || data.createdBy;
         data.isNew = true;
 
-        map.addReport(data, true, 0, true);
+        if ( ! shared.filterMode ) {
+            map.addReport(data, true, 0, true);
+        }
 
         // keep track of which is new.
         shared.newReportQueue[data.id] = data;
@@ -64,7 +66,10 @@ angular.module('poddDashboardApp')
                     item.isNew = true;
                     shared.newReportQueue[data.id] = item;
                 }
-                map.addReport(item, true, 0, true);
+
+                if ( ! shared.filterMode ) {
+                    map.addReport(data, true, 0, true);
+                }
 
                 return false;
             });
@@ -77,7 +82,9 @@ angular.module('poddDashboardApp')
             };
 
             shared.newReportQueue[mimicReport.id] = mimicReport;
-            map.addReport(mimicReport, true, 0, true);
+            if ( ! shared.filterMode ) {
+                map.addReport(data, true, 0, true);
+            }
         }
     });
 
