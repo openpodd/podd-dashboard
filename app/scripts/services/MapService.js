@@ -31,6 +31,10 @@ angular.module('poddDashboardApp')
             icon: 'home',
             markerColor: 'blue'
         });
+        this.iconGrey = L.AwesomeMarkers.icon({
+            icon: 'home',
+            markerColor: 'cadetblue'
+        });
 
         // Make radar, wink wink!
         this.iconRadar = L.divIcon({
@@ -39,18 +43,21 @@ angular.module('poddDashboardApp')
             iconAnchor: [ 80, 80 ],
             html: '<div class="radar-wink"></div>'
         });
-    };
+    }
 
     Map.prototype.getIconByStatus = function getIconByStatus(village) {
-        if (village.negative > village.positive) {
+        if (village.negative > 0) {
             return this.iconRed;
         }
-        else {
+        else if ( (village.positive + village.negative) > 0 ) {
             return this.iconBlue;
+        }
+        else {
+            return this.iconGrey;
         }
     };
 
-    Map.prototype.setVillages = function setMarkers(items) {
+    Map.prototype.setVillages = function setVillages(items, dontFitBound) {
         var self = this, bounds;
 
         items = items.forEach ? items : [ items ];
@@ -69,7 +76,8 @@ angular.module('poddDashboardApp')
             village = self.villages[item.id] = item;
 
             village.marker = L.marker(location, {
-                icon: self.getIconByStatus(item)
+                icon: self.getIconByStatus(item),
+                riseOnHover: true,
             }).addTo(self.villageMarkerLayer);
 
             village.marker.on('click', function (eventObject) {
@@ -78,7 +86,7 @@ angular.module('poddDashboardApp')
         });
 
         // Prevent error when villages is empty array.
-        if (items.length) {
+        if (items.length && !dontFitBound) {
             bounds = self.villageMarkerLayer.getBounds();
             bounds.pad(5);
             self.leaflet.fitBounds(bounds);
@@ -87,16 +95,13 @@ angular.module('poddDashboardApp')
 
     Map.prototype.clearVillages = function clearVillages() {
         this.villageMarkerLayer.clearLayers();
+        this.unwinkAll();
     };
 
-    Map.prototype.addReport = function addReport(report, toWink) {
+    Map.prototype.addReport = function addReport(report, toWink, winkTimeout, unwinkOnClick) {
         var self = this,
             location,
             village = self.villages[ report.administrationAreaId ];
-
-            console.log('report', report);
-            console.log('villages', self.villages);
-            console.log('village', self.village);
 
         if (village) {
             if (report.negative) {
@@ -127,7 +132,19 @@ angular.module('poddDashboardApp')
                     village.location.coordinates[1],
                     village.location.coordinates[0]
                 ];
-                self.wink(location, 10000);
+
+                // if already has `wink` marker, clear it first.
+                if (village.radarMarker) {
+                    self.unwink(village.radarMarker);
+                }
+
+                village.radarMarker = self.wink(location, winkTimeout || 0);
+
+                if (unwinkOnClick) {
+                    village.marker.on('click', function () {
+                        self.unwink(village.radarMarker);
+                    });
+                }
             }
         }
     };
@@ -135,17 +152,27 @@ angular.module('poddDashboardApp')
     Map.prototype.wink = function wink(location, timeout) {
         var self = this;
 
-        self.radarMarkerLayer.clearLayers();
-
         var radarMarker = L.marker(location, {
             icon: self.iconRadar,
             zIndexOffset: -10
         })
         .addTo(self.radarMarkerLayer);
 
-        setTimeout(function () {
-            self.radarMarkerLayer.removeLayer(radarMarker);
-        }, timeout);
+        if (timeout) {
+            setTimeout(function () {
+                self.radarMarkerLayer.removeLayer(radarMarker);
+            }, timeout);
+        }
+
+        return radarMarker;
+    };
+
+    Map.prototype.unwink = function unwink(radarMarker) {
+        this.radarMarkerLayer.removeLayer(radarMarker);
+    };
+
+    Map.prototype.unwinkAll = function unwink(radarMarker) {
+        this.radarMarkerLayer.clearLayers();
     };
 
     Map.prototype.onClickVillage = function onClickVillage(cb) {

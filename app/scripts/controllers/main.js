@@ -40,12 +40,16 @@ angular.module('poddDashboardApp')
         data.createdByName = data.createdByName || data.createdBy;
         data.isNew = true;
 
-        map.addReport(data, true);
+        if ( ! shared.filterMode ) {
+            map.addReport(data, true, 0, true);
+        }
 
         // keep track of which is new.
         shared.newReportQueue[data.id] = data;
         // update current list view.
-        $scope.recentReports.splice(0, 0, data);
+        if ($scope.recentReports) {
+            $scope.recentReports.splice(0, 0, data);
+        }
     });
 
     streaming.on('report:image:new', function (data) {
@@ -62,7 +66,10 @@ angular.module('poddDashboardApp')
                     item.isNew = true;
                     shared.newReportQueue[data.id] = item;
                 }
-                map.addReport(item, true);
+
+                if ( ! shared.filterMode ) {
+                    map.addReport(data, true, 0, true);
+                }
 
                 return false;
             });
@@ -75,7 +82,9 @@ angular.module('poddDashboardApp')
             };
 
             shared.newReportQueue[mimicReport.id] = mimicReport;
-            map.addReport(mimicReport, true);
+            if ( ! shared.filterMode ) {
+                map.addReport(data, true, 0, true);
+            }
         }
     });
 
@@ -95,7 +104,9 @@ angular.module('poddDashboardApp')
         ]);
 
         if (shared.filterMode) {
-            query = { q: shared.filterQuery };
+            query = {
+                q: 'administrationArea:' + data.id + ' AND ' + shared.filterQuery
+            };
             searcher = Search.query;
         }
         else {
@@ -200,6 +211,7 @@ angular.module('poddDashboardApp')
     $scope.$watch('shared.filterResults', function (newValue) {
         if (newValue) {
             $scope.showReportList = false;
+            map.clearVillages();
             map.setVillages(newValue);
         }
     });
