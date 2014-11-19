@@ -39,19 +39,43 @@ angular.module('poddDashboardApp')
         // QUICK FIX
         data.createdByName = data.createdByName || data.createdBy;
         data.isNew = true;
+
         map.addReport(data, true);
+
+        // keep track of which is new.
+        shared.newReportQueue[data.id] = data;
+        // update current list view.
         $scope.recentReports.splice(0, 0, data);
     });
 
-    streaming.on('newReportImage', function (data) {
-        console.log('got new report image:', data);
+    streaming.on('report:image:new', function (data) {
+        console.log('got new report image (in main.js)', data);
 
-        var exists = $scope.report.images.some(function (item) {
-            return item.id === data.id;
-        });
+        var mimicReport;
 
-        if (!exists && $scope.report.id === data.reportId) {
-            $scope.report.images.push(data);
+        data = angular.fromJson(data);
+
+        // Loop through existing reports list and update data.
+        if ($scope.reports) {
+            $scope.reports.forEach(function (item) {
+                if (item.id === data.report) {
+                    item.isNew = true;
+                    shared.newReportQueue[data.id] = item;
+                }
+                map.addReport(item, true);
+
+                return false;
+            });
+        }
+        else {
+            // Mimic report object just for map to know.
+            mimicReport = {
+                id: data.report,
+                administrationAreaId: data.administrationAreaId
+            };
+
+            shared.newReportQueue[mimicReport.id] = mimicReport;
+            map.addReport(mimicReport, true);
         }
     });
 
@@ -99,6 +123,11 @@ angular.module('poddDashboardApp')
                 else {
                     $scope.olderReports.push(item);
                 }
+
+                // Check if it is new report and add flag 'isNew'
+                if (shared.newReportQueue[item.id]) {
+                    item.isNew = true;
+                }
             });
 
             $scope.reports = items;
@@ -124,6 +153,7 @@ angular.module('poddDashboardApp')
     $scope.onClickReport = function (report) {
         $scope.viewReport(report.id);
         report.isNew = false;
+        delete shared.newReportQueue[report.id];
     };
 
     $scope.viewReport = function (reportId) {

@@ -91,7 +91,8 @@ angular
 
   .factory('shared', function() {
     return {
-      loggedIn: $.cookie('token') ? true : false
+      loggedIn: $.cookie('token') ? true : false,
+      newReportQueue: {}
     };
   })
 
