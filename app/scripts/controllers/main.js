@@ -39,7 +39,12 @@ angular.module('poddDashboardApp')
         // QUICK FIX
         data.createdByName = data.createdByName || data.createdBy;
         data.isNew = true;
+
         map.addReport(data, true);
+
+        // keep track of which is new.
+        shared.newReportQueue[data.id] = data;
+        // update current list view.
         $scope.recentReports.splice(0, 0, data);
     });
 
@@ -49,14 +54,17 @@ angular.module('poddDashboardApp')
         data = angular.fromJson(data);
 
         // Loop through existing reports list and update data.
-        $scope.reports.forEach(function (item) {
-            if (item.id === data.report) {
-                item.isNew = true;
-            }
-            map.addReport(item, true);
+        if ($scope.reports) {
+            $scope.reports.forEach(function (item) {
+                if (item.id === data.report) {
+                    item.isNew = true;
+                    shared.newReportQueue[data.id] = item;
+                }
+                map.addReport(item, true);
 
-            return false;
-        });
+                return false;
+            });
+        }
     });
 
     map.onClickVillage(function (event, data) {
@@ -103,6 +111,11 @@ angular.module('poddDashboardApp')
                 else {
                     $scope.olderReports.push(item);
                 }
+
+                // Check if it is new report and add flag 'isNew'
+                if (shared.newReportQueue[item.id]) {
+                    item.isNew = true;
+                }
             });
 
             $scope.reports = items;
@@ -128,6 +141,7 @@ angular.module('poddDashboardApp')
     $scope.onClickReport = function (report) {
         $scope.viewReport(report.id);
         report.isNew = false;
+        delete shared.newReportQueue[report.id];
     };
 
     $scope.viewReport = function (reportId) {
