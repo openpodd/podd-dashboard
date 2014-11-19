@@ -22,6 +22,14 @@
 //    &.ng-hide-add{
 //        -webkit-animation: fadeOutRight .5s .2s alternate forwards;
 //    }
+    
+    
+    
+    &.ng-hide-add{
+        #reports-empty{
+            display: none;
+        }
+    }
 }
 
 .report-modal{
