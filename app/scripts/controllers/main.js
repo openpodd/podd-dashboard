@@ -51,6 +51,8 @@ angular.module('poddDashboardApp')
     streaming.on('report:image:new', function (data) {
         console.log('got new report image (in main.js)', data);
 
+        var mimicReport;
+
         data = angular.fromJson(data);
 
         // Loop through existing reports list and update data.
@@ -64,6 +66,16 @@ angular.module('poddDashboardApp')
 
                 return false;
             });
+        }
+        else {
+            // Mimic report object just for map to know.
+            mimicReport = {
+                id: data.report,
+                administrationAreaId: data.administrationAreaId
+            };
+
+            shared.newReportQueue[mimicReport.id] = mimicReport;
+            map.addReport(mimicReport, true);
         }
     });
 
