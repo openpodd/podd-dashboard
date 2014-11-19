@@ -18,9 +18,14 @@ angular.module('poddDashboardApp')
         getElement: function getElement() {
             return modal;
         },
-        show: function () {
+        show: function (options) {
             init();
-            modal.modal('show');
+
+            options = options || {};
+
+            setTimeout(function () {
+                modal.modal('show');
+            }, options.delay || 100);
 
             return this;
         },
