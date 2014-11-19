@@ -22,11 +22,18 @@
     animation: fadeInLeft 1s 1s alternate backwards;
 }
 
+.fa-size-14{ font-size: 14px; }
+.fa-size-16{ font-size: 16px; }
 .fa-size-18{ font-size: 18px; }
 .fa-size-22{ font-size: 22px; }
 .fa-size-24{ font-size: 24px; }
 .fa-size-26{ font-size: 26px; }
 .fa-size-32{ font-size: 32px; }
+
+.icon-yellow{
+    color: #FFF200;
+    margin: 5px 15px 0 5px;
+}
 
 .pd-sidebar-title{
     padding: 10px 15px;
@@ -34,7 +41,7 @@
     
     h2{
         margin: 0;
-        width: 470px;
+        width: 450px;
         color: #fff;
         font-size: 1.85em;
         font-family: ThaiSansNeueRegular;
@@ -259,5 +266,32 @@
     li{
         padding: 11px;
         border-bottom: 1px solid #dadada;
+        background-color: #eee;
+        
+        &.read{
+            background-color: #fff;
+        }
+    }
+}
+
+.section-filter{
+    position: absolute;
+    top: 0px;
+    right: 0;
+    left: 0;
+    margin: auto;
+    width: 700px;
+    
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    
+    &.ng-hide-remove{
+        top: -100px;
+    }
+    
+    &.ng-hide{
+        top: -100px;
     }
 }

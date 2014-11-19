@@ -27,9 +27,11 @@
 .report-modal{
 
     .modal-content{
-        padding: 15px;
         background-color: #3c3c3c;
         color: #909090;
+    }
+    .modal-inner{
+        padding: 15px;
     }
 
     h1, h2, h3, dt{
@@ -38,7 +40,10 @@
 
     .modal-title{
         font-size: 24px;
-        margin: 10px 0px 20px;
+        margin: 0;
+        padding: 15px;
+        background-color: #303030;
+        border-radius: 5px 5px 0 0;
     }
     .modal-subtitle{
         font-size: 1.9em;
@@ -53,6 +58,9 @@
     
     .fa-times{
         font-size: 1.6em;
+        position: absolute;
+        top: 20px;
+        right: 15px;
         
         &:hover{
             cursor: pointer;
@@ -73,6 +81,12 @@
 .comment-post{
     color: #fff;
     word-break: break-all;
+    
+    .label{
+        font-size: 14px;
+        margin: 0 5px 0 0;
+        background-color: #0074d9;
+    }
 }
 .comment-item{
     padding-bottom: 15px;
@@ -95,6 +109,14 @@
     margin-top: 1em;
 }
 
+
+.comment-form{
+    margin-bottom: 2em;
+    
+    textarea{
+        height: 70px;
+    }
+}
 
 .report-image{
     margin: 0 0 1.5em;
