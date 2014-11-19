@@ -43,16 +43,20 @@ angular.module('poddDashboardApp')
         $scope.recentReports.splice(0, 0, data);
     });
 
-    streaming.on('newReportImage', function (data) {
-        console.log('got new report image:', data);
+    streaming.on('report:image:new', function (data) {
+        console.log('got new report image (in main.js)', data);
 
-        var exists = $scope.report.images.some(function (item) {
-            return item.id === data.id;
+        data = angular.fromJson(data);
+
+        // Loop through existing reports list and update data.
+        $scope.reports.forEach(function (item) {
+            if (item.id === data.report) {
+                item.isNew = true;
+            }
+            map.addReport(item, true);
+
+            return false;
         });
-
-        if (!exists && $scope.report.id === data.reportId) {
-            $scope.report.images.push(data);
-        }
     });
 
     map.onClickVillage(function (event, data) {
