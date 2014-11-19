@@ -95,6 +95,7 @@ angular.module('poddDashboardApp')
 
     Map.prototype.clearVillages = function clearVillages() {
         this.villageMarkerLayer.clearLayers();
+        this.unwinkAll();
     };
 
     Map.prototype.addReport = function addReport(report, toWink, winkTimeout, unwinkOnClick) {
@@ -168,6 +169,10 @@ angular.module('poddDashboardApp')
 
     Map.prototype.unwink = function unwink(radarMarker) {
         this.radarMarkerLayer.removeLayer(radarMarker);
+    };
+
+    Map.prototype.unwinkAll = function unwink(radarMarker) {
+        this.radarMarkerLayer.clearLayers();
     };
 
     Map.prototype.onClickVillage = function onClickVillage(cb) {
