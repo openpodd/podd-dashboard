@@ -2,12 +2,14 @@
 
 angular.module('poddDashboardApp')
 
-.controller('ReportViewCtrl', function ($scope, streaming) {
+.controller('ReportViewCtrl', function ($scope, streaming, ReportModal) {
 
     $scope.userAlreadyClickImage = false;
 
     $scope.$parent.$watch('report', function (newValue) {
         if (newValue) {
+            $scope.userAlreadyClickImage = false;
+
             if ( $scope.$parent.report.images.length ) {
                 $scope.activeImage = $scope.$parent.report.images[0];
             }
@@ -50,5 +52,12 @@ angular.module('poddDashboardApp')
             }
         }
     });
+
+    // Quick fix, don't know why modal keyup doesn't work. Ment.io is the first
+    // priority suspect.
+    $(document).on('keyup', function (event) {
+        event.which == 27 && ReportModal.close();
+    });
+
 
 });

@@ -179,3 +179,44 @@
 .report-new-icon {
     color: #e91e63;
 }
+
+mentio-menu {
+    z-index: 9999 !important;
+
+    .menu-highlighted {
+        background-color: yellow;
+    }
+
+    .list-group-item.active {
+        background-color: #f5f5f5;
+    }
+
+    .user-search:hover {
+        cursor: pointer;
+    }
+
+    .user-search {
+        .list-group-item-heading, .list-group-item-text {
+            margin-left: 10px;
+        }
+
+        .list-group-item.active {
+            color: #fff;
+            background-color: #428bca;
+            border-color: #428bca;
+        }
+
+        .list-group-item.active .text-muted {
+            color: #ccc;
+        }
+
+        .list-group-item.active .text-primary {
+            color: #fff;
+        }
+
+        .list-group-item {
+            padding: 5px;
+        }
+    }
+
+}

@@ -2,12 +2,12 @@
 
 angular.module('poddDashboardApp')
 
-.controller('CommentsCtrl', function ($scope, Comments, Users, streaming) {
+.controller('CommentsCtrl', function ($scope, Comments, User, streaming) {
 
+    console.log('init comment ctrl');
 
     function refreshComments() {
         $scope.comments = Comments.list({ reportId: $scope.$parent.report.id });
-        $scope.listuser = Users.list();
     }
 
     function reset() {
@@ -28,7 +28,7 @@ angular.module('poddDashboardApp')
 
         var data = {
             reportId: $scope.$parent.report.id,
-            message: $scope.message
+            message: $scope.message.replace(/\@(\w+)/, '@[$1]')
         };
 
         Comments.post(data).$promise.then(function (newComment) {
@@ -38,17 +38,13 @@ angular.module('poddDashboardApp')
 
 
     $scope.searchUser = function(term) {
-        var list = [];
-        angular.forEach($scope.listuser, function(item) {
-            if (item.username.toUpperCase().indexOf(term.toUpperCase()) >= 0) {
-                list.push(item);
-            }
+        return User.search({ username: term }).$promise.then(function (data) {
+            $scope.users = data;
         });
-        $scope.users = list;
     };
 
     $scope.getUserText = function(item) {
-        return '@' + item.username;
+        return '@[<i>' + item.username + '</i>]';
     };
 
     $scope.getUserTextRaw = function(item) {

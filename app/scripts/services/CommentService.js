@@ -12,13 +12,4 @@ angular.module('poddDashboardApp')
             method: 'POST'
         }
     });
-})
-
-.factory('Users', function ($resource) {
-    return $resource('/api/users.json', {}, {
-        list: {
-            method: 'GET',
-            isArray: true
-        }
-    });
 });

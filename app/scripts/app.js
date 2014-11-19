@@ -59,7 +59,8 @@ angular
       /\/reports/,
       /\/reportType/,
       /\/dashboard/,
-      /\/reportComments/
+      /\/reportComments/,
+      /\/users\/search/
     ];
 
     function matchAPIUrls(url) {
