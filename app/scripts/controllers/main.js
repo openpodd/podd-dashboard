@@ -97,7 +97,9 @@ angular.module('poddDashboardApp')
         ]);
 
         if (shared.filterMode) {
-            query = { q: shared.filterQuery };
+            query = {
+                q: 'administrationArea:' + data.id + ' AND ' + shared.filterQuery
+            };
             searcher = Search.query;
         }
         else {
@@ -202,6 +204,7 @@ angular.module('poddDashboardApp')
     $scope.$watch('shared.filterResults', function (newValue) {
         if (newValue) {
             $scope.showReportList = false;
+            map.clearVillages();
             map.setVillages(newValue);
         }
     });
