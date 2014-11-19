@@ -37,7 +37,7 @@ angular.module('poddDashboardApp')
 
         data = angular.fromJson(data);
 
-        if (data.report === $scope.$parent.report.id) {
+        if ($scope.$parent.report && data.report === $scope.$parent.report.id) {
             data.isNew = true;
             $scope.$parent.report.images.splice(0, 0, data);
 
