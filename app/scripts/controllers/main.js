@@ -52,12 +52,21 @@ angular.module('poddDashboardApp')
 
         data = angular.fromJson(data);
 
+        var toWink = true,
+            isNew = true;
+
+        // Don't wink if it is old report.
+        if ( ! isRecentReport(data) ) {
+            toWink = false;
+            isNew = false;
+        }
+
         // QUICK FIX
         data.createdByName = data.createdByName || data.createdBy;
-        data.isNew = true;
+        data.isNew = isNew;
 
         if ( ! shared.filterMode ) {
-            map.addReport(data, true, 0, true);
+            map.addReport(data, toWink, 0, true);
         }
 
         // keep track of which is new.
@@ -91,7 +100,11 @@ angular.module('poddDashboardApp')
             // Don't mark as new report as well (in same condition above).
             isNew = false;
         }
-
+        // Don't wink if it is old report.
+        if ( ! isRecentReport(data) ) {
+            toWink = false;
+            isNew = false;
+        }
 
         // Loop through existing reports list and update data.
         if ($scope.reports) {
@@ -173,7 +186,7 @@ angular.module('poddDashboardApp')
             $scope.showReportList = true;
         });
     });
-    
+
     $scope.closeReportList = function () {
         $scope.reports = null;
         $scope.recentReports = null;
