@@ -1,4 +1,7 @@
 <div class="notification-block" ng-controller="NotificationsCtrl">
+    <ul id="notifications-empty" ng-hide="notifications">
+        <li class="read" >ยังไม่พบการแจ้งเตือน</li>
+    </ul>
     <ul ng-repeat="notification in notifications | orderBy:'-createdAt' ">
         <li class="read" ng-click="onClickNotifiction(notification)" ng-show="notification.isNotified">
             {{ notification.mentioner }} mention to you on report# {{ notification.reportId }}</br>
