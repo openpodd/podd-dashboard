@@ -274,7 +274,6 @@
         padding: 0;
     }
     li{
-        padding: 7px 12px;
         border-bottom: 1px solid #dadada;
         background-color: #eee;
 
@@ -288,6 +287,11 @@
 
         .fa-comment{
             margin-right: 5px;
+        }
+        
+        a{
+            padding: 7px 12px;
+            display: block;
         }
     }
 }
