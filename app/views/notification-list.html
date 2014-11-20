@@ -2,23 +2,15 @@
     <ul id="notifications-empty" ng-hide="notifications">
         <li class="read" >ยังไม่พบการแจ้งเตือน</li>
     </ul>
-    <ul ng-repeat="notification in notifications | orderBy:'-createdAt' ">
-        <li class="read" ng-click="onClickNotifiction(notification)" ng-show="notification.isNotified">
-           <a href="">
-            {{ notification.mentioner }} mention to you on report# {{ notification.reportId }}
-            <div class="time">
-                <i class="fa fa-comment fa-size-14"></i>
-                เมื่อ <span am-time-ago="notification.createdAt"></span>
-            </div>
+    <ul>
+        <li ng-class="{'read': notification.isNotified}" ng-repeat="notification in notifications | orderBy:'-createdAt' " ng-click="onClickNotification(notification)">
+            <a href="">
+                {{ notification.mentioner }} mention to you on report# {{ notification.reportId }}
+                <div class="time">
+                    <i class="fa fa-comment fa-size-14"></i>
+                    เมื่อ <span am-time-ago="notification.createdAt"></span>
+                </div>
             </a>
-        </li>
-        <li ng-click="onClickNotifiction(notification)" ng-show="!notification.isNotified">
-           <a href="">
-               {{ notification.mentioner }} mention to you on report# {{ notification.reportId }}
-            <div class="time">
-                <i class="fa fa-comment fa-size-14"></i>
-                เมื่อ <span am-time-ago="notification.createdAt"></span>
-            </div></a>
         </li>
     </ul>
 </div>

@@ -7,19 +7,21 @@ angular.module('poddDashboardApp')
     $scope.shared = shared;
     $scope.unread = 0;
     function refreshNotifications() {
+        $scope.unread = 0;
         Mentions.get().$promise.then(function (mentions) {
             $scope.notifications = [];
             mentions.forEach(function (item) {
                 $scope.notifications.push(item);
                 if(!item.isNotified) $scope.unread++;
             });
+            checkunread();
         });
-        checkunread();
     }
 
     refreshNotifications();
 
-    $scope.onClickNotifiction = function(mention){
+    $scope.onClickNotification = function(mention){
+        console.log('dddddddddd');
         if(!mention.isNotified){
             var data = {
                 mentionId: mention.id,
@@ -29,7 +31,7 @@ angular.module('poddDashboardApp')
                 mention.isNotified = true;
             });
             $scope.unread--;
-            $scope.checkunread();
+            checkunread();
         }
 
         $scope.shared.reportWatchId = mention.reportId;
@@ -38,8 +40,11 @@ angular.module('poddDashboardApp')
     }
 
    function checkunread(){
-        if($scope.unread <= 0 )
+        console.log('---------------------',$scope.unread);
+        if($scope.unread <= 0)
             $('.alert-dotted').addClass('hide');
+        else 
+            $('.alert-dotted').removeClass('hide');
     }
 
     streaming.on('mention:new', function (data) {
