@@ -32,24 +32,56 @@ angular.module('poddDashboardApp')
 
     refreshDashboard();
 
+    function isRecentReport(report) {
+        var threshold = new Date((new Date()).getTime() - (86400 * 14 * 1000));
+        threshold.setHours(0);
+        threshold.setMinutes(0);
+        threshold.setSeconds(0);
+        threshold.setMilliseconds(0);
+
+        if ((new Date(report.date)) > threshold) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     streaming.on('report:new', function (data) {
         console.log('got new village data:', data);
 
         data = angular.fromJson(data);
 
+        var toWink = true,
+            isNew = true;
+
+        // Don't wink if it is old report.
+        if ( ! isRecentReport(data) ) {
+            toWink = false;
+            isNew = false;
+        }
+
         // QUICK FIX
         data.createdByName = data.createdByName || data.createdBy;
-        data.isNew = true;
+        data.isNew = isNew;
 
         if ( ! shared.filterMode ) {
-            map.addReport(data, true, 0, true);
+            map.addReport(data, toWink, 0, true);
         }
 
         // keep track of which is new.
         shared.newReportQueue[data.id] = data;
-        // update current list view.
-        if ($scope.recentReports) {
-            $scope.recentReports.splice(0, 0, data);
+        // update current list view if match the current village viewing.
+        // TODO: fix angular Array.push mystery that not update
+        // NOTE: $digest() does not help
+        if (data.administrationAreaId === $scope.currentVillage.id) {
+            if ( isRecentReport(data) ) {
+                $scope.recentReports.splice(0, 0, data);
+            }
+            else {
+                $scope.olderReports.splice(0, 0, data);
+            }
+            $scope.reports = [].concat($scope.recentReports, $scope.olderReports);
         }
     });
 
@@ -68,20 +100,25 @@ angular.module('poddDashboardApp')
             // Don't mark as new report as well (in same condition above).
             isNew = false;
         }
+        // Don't wink if it is old report.
+        if ( ! isRecentReport(data) ) {
+            toWink = false;
+            isNew = false;
+        }
 
         // Loop through existing reports list and update data.
         if ($scope.reports) {
             $scope.reports.forEach(function (item) {
                 if (item.id === data.report) {
                     item.isNew = isNew;
-                    shared.newReportQueue[data.id] = item;
+                    if (isNew) {
+                        shared.newReportQueue[data.id] = item;
+                    }
                 }
 
                 if ( ! shared.filterMode ) {
                     map.addReport(data, toWink, 0, true);
                 }
-
-                return false;
             });
         }
         else {
@@ -129,15 +166,9 @@ angular.module('poddDashboardApp')
             $scope.recentReports = [];
             $scope.olderReports = [];
 
-            var threshold = new Date((new Date()).getTime() - (86400 * 14 * 1000));
-            threshold.setHours(0);
-            threshold.setMinutes(0);
-            threshold.setSeconds(0);
-            threshold.setMilliseconds(0);
-
             items.forEach(function (item) {
                 // Filter for last 2 weeks
-                if ((new Date(item.incidentDate)) > threshold) {
+                if ( isRecentReport(item) ) {
                     $scope.recentReports.push(item);
                 }
                 // Filter for the older
@@ -155,7 +186,7 @@ angular.module('poddDashboardApp')
             $scope.showReportList = true;
         });
     });
-    
+
     $scope.closeReportList = function () {
         $scope.reports = null;
         $scope.recentReports = null;
