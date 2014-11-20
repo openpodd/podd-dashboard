@@ -302,3 +302,40 @@
         top: -100px;
     }
 }
+
+@-webkit-keyframes bg-opacity {
+  0% {
+    background-color: transparent;
+  }
+
+  50% {
+    background-color: rgb(195, 70, 70);
+  }
+
+  100% {
+    background-color: rgb(195, 70, 70);
+  }
+}
+
+@keyframes bg-opacity {
+  0% {
+    background-color: transparent;
+  }
+
+  50% {
+    background-color: rgb(195, 70, 70);
+  }
+
+  100% {
+    background-color: rgb(195, 70, 70);
+  }
+}
+
+.blink{
+    animation: pulse .5s .5s alternate forwards , bg-opacity .8s;
+    background-color: rgb(195, 70, 70);
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+}
