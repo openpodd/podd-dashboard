@@ -49,7 +49,6 @@ angular.module('poddDashboardApp')
         data = angular.fromJson(data);
 
         if ($scope.$parent.report && data.report === $scope.$parent.report.id) {
-            data.isNew = true;
             $scope.$parent.report.images.splice(0, 0, data);
 
             // set as active image if this is the first one, or user has not

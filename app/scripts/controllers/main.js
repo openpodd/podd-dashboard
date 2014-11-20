@@ -55,20 +55,29 @@ angular.module('poddDashboardApp')
     streaming.on('report:image:new', function (data) {
         console.log('got new report image (in main.js)', data);
 
-        var mimicReport;
+        var mimicReport,
+            toWink = true,
+            isNew = true;
 
         data = angular.fromJson(data);
+
+        // Don't wink if user are currently watch at report details.
+        if ($scope.report && $scope.report.id === data.report) {
+            toWink = false;
+            // Don't mark as new report as well (in same condition above).
+            isNew = false;
+        }
 
         // Loop through existing reports list and update data.
         if ($scope.reports) {
             $scope.reports.forEach(function (item) {
                 if (item.id === data.report) {
-                    item.isNew = true;
+                    item.isNew = isNew;
                     shared.newReportQueue[data.id] = item;
                 }
 
                 if ( ! shared.filterMode ) {
-                    map.addReport(data, true, 0, true);
+                    map.addReport(data, toWink, 0, true);
                 }
 
                 return false;
@@ -83,7 +92,7 @@ angular.module('poddDashboardApp')
 
             shared.newReportQueue[mimicReport.id] = mimicReport;
             if ( ! shared.filterMode ) {
-                map.addReport(data, true, 0, true);
+                map.addReport(data, toWink, 0, true);
             }
         }
     });
