@@ -4,18 +4,21 @@
     </ul>
     <ul ng-repeat="notification in notifications | orderBy:'-createdAt' ">
         <li class="read" ng-click="onClickNotifiction(notification)" ng-show="notification.isNotified">
-            {{ notification.mentioner }} mention to you on report# {{ notification.reportId }}</br>
-            <span class="">
+           <a href="">
+            {{ notification.mentioner }} mention to you on report# {{ notification.reportId }}
+            <div class="time">
                 <i class="fa fa-comment fa-size-14"></i>
-                <span class="">เมื่อ <span am-time-ago="notification.createdAt"></span></span>
-            </span>
+                เมื่อ <span am-time-ago="notification.createdAt"></span>
+            </div>
+            </a>
         </li>
         <li ng-click="onClickNotifiction(notification)" ng-show="!notification.isNotified">
-            {{ notification.mentioner }} mention to you on report# {{ notification.reportId }}</br>
-            <span class="">
+           <a href="">
+               {{ notification.mentioner }} mention to you on report# {{ notification.reportId }}
+            <div class="time">
                 <i class="fa fa-comment fa-size-14"></i>
-                <span class="">เมื่อ <span am-time-ago="notification.createdAt"></span></span>
-            </span>
+                เมื่อ <span am-time-ago="notification.createdAt"></span>
+            </div></a>
         </li>
     </ul>
 </div>

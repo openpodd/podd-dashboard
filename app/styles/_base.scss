@@ -278,6 +278,14 @@
         &.read{
             background-color: #fff;
         }
+        
+        &:hover{
+            background-color: #ececec;
+        }
+        
+        .fa-comment{
+            margin-right: 5px;
+        }
     }
 }
 
@@ -340,4 +348,7 @@
     -moz-transition: all 0.3s ease;
 }
 
-
+.time{
+    font-size: 14px;
+    margin-top: 5px;
+}
