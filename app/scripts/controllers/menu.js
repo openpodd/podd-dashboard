@@ -2,7 +2,7 @@
 
 angular.module('poddDashboardApp')
 
-.controller('MenuCtrl', function ($scope, $http, shared, $location, Menu) {
+.controller('MenuCtrl', function ($scope, $http, shared, $location, Menu, Mentions) {
     $scope.shared = shared;
 
     $scope.logout = function () {
@@ -18,4 +18,5 @@ angular.module('poddDashboardApp')
     $scope.isActiveMenu = function (name) {
         return Menu.isActiveMenu(name);
     };
+
 });

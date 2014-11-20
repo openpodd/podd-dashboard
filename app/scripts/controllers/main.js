@@ -4,9 +4,9 @@ angular.module('poddDashboardApp')
 
 .controller('MainCtrl', [
     '$scope', 'dashboard', 'streaming', 'Map', 'Reports', 'ReportModal',
-    'shared', 'Auth', 'Search', 'Menu',
+    'shared', 'Auth', 'Search', 'Menu', 'Mentions',
     function ($scope, dashboard, streaming,
-              Map, Reports, ReportModal, shared, Auth, Search, Menu) {
+              Map, Reports, ReportModal, shared, Auth, Search, Menu, Mentions) {
 
     console.log('IN MainCtrl');
 
@@ -29,6 +29,7 @@ angular.module('poddDashboardApp')
             });
         });
     }
+
     refreshDashboard();
 
     streaming.on('report:new', function (data) {
@@ -134,7 +135,7 @@ angular.module('poddDashboardApp')
             $scope.showReportList = true;
         });
     });
-
+    
     $scope.closeReportList = function () {
         $scope.reports = null;
         $scope.recentReports = null;
@@ -202,6 +203,13 @@ angular.module('poddDashboardApp')
             $scope.showReportList = false;
             map.setVillages(newValue);
         }
+    });
+
+    $scope.$watch('shared.reportWatchId', function (newValue) {
+        if (newValue) {
+            $scope.viewReport(newValue);
+        }
+        shared.reportWatchId = '';
     });
 
 }]);
