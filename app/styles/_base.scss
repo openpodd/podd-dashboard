@@ -324,11 +324,11 @@
   }
 
   50% {
-    background-color: rgb(195, 70, 70);
+    background-color: #333;
   }
 
   100% {
-    background-color: rgb(195, 70, 70);
+    background-color: #333;
   }
 }
 
@@ -338,17 +338,17 @@
   }
 
   50% {
-    background-color: rgb(195, 70, 70);
+    background-color: #333;
   }
 
   100% {
-    background-color: rgb(195, 70, 70);
+    background-color: #333;
   }
 }
 
 .blink{
     animation: pulse .5s .5s alternate forwards , bg-opacity .8s;
-    background-color: rgb(195, 70, 70);
+    background-color: #333;
     transition: all 0.3s ease;
     -webkit-transition: all 0.3s ease;
     -ms-transition: all 0.3s ease;
