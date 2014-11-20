@@ -2,6 +2,17 @@
 
 angular.module('poddDashboardApp')
 
+.run(function ($templateCache, ReportType) {
+    ReportType.query().$promise.then(function (reportTypes) {
+        reportTypes.forEach(function (item) {
+            // Loop to get each templates.
+            ReportType.get({ id: item.id }).$promise.then(function (reportType) {
+                $templateCache.put('reportType-' + item.id + '.html', reportType.template);
+            });
+        });
+    });
+})
+
 .controller('ReportViewCtrl', function ($scope, streaming, ReportModal) {
 
     $scope.userAlreadyClickImage = false;
@@ -38,7 +49,6 @@ angular.module('poddDashboardApp')
         data = angular.fromJson(data);
 
         if ($scope.$parent.report && data.report === $scope.$parent.report.id) {
-            data.isNew = true;
             $scope.$parent.report.images.splice(0, 0, data);
 
             // set as active image if this is the first one, or user has not

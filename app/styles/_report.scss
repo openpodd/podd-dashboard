@@ -95,14 +95,14 @@
     word-break: break-all;
 
     .label{
+        display: inline-block;
         font-size: 14px;
-        margin: 0 5px 0 0;
+        margin: 5px 5px 0 0;
         background-color: #0074d9;
     }
 }
 .comment-item{
-    padding-bottom: 15px;
-    margin-bottom: 15px;
+    padding: 15px 5px;
     border-bottom: 1px solid #5E5E5E ;
 }
 .comment-title{
@@ -110,6 +110,7 @@
     margin-bottom: 1em;
     font-family: ThaiSansNeueRegular;
     color: #FFF200;
+    margin-top: 0;
 
     .fa-comments{
         color: #FFF200;
@@ -257,4 +258,29 @@ mentio-menu {
 
 #recent-reports{
 //    margin-top: 70px;
+}
+
+.report-fields{
+    .nav-tabs > {
+        border-bottom: 1px solid #888888;
+        
+        li{
+            > a{
+                margin-right: 5px;
+                color: #fff;
+                
+                &:hover{
+                    color: #2A2A2A;
+                    background-color: #FFFFFF;
+                    cursor: pointer;
+                }
+            }
+            
+            &.active > a{
+                color: #2A2A2A;
+                background-color: #FFFFFF;
+                border: none;
+            }
+        }
+    }
 }

@@ -3,6 +3,10 @@
 
 angular.module('poddDashboardApp')
 
+.factory('ReportType', function ($resource) {
+    return $resource(config.API_BASEPATH + '/reportTypes/:id');
+})
+
 .factory('ReportModal', function () {
     var modal;
 

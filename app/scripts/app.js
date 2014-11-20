@@ -51,6 +51,7 @@ angular
     'ngTouch',
     'angularMoment',
     'mentio',
+    'ui.bootstrap'
   ])
 
   .factory('addTrailingSlashInterceptor', function ($q) {

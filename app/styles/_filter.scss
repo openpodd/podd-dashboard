@@ -14,3 +14,47 @@
         overflow: hidden;
     }
 }
+
+.filter-help {
+    position: absolute;
+
+    background-color: rgb(255, 255, 255);
+    border-radius: 2px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    font-size: 15px;
+    display: block;
+    margin-top: 10px;
+    
+    width: 699px;
+    padding: 10px 20px;
+    
+    .fa-info-circle{
+        margin-right: 10px;
+    }
+    h4{
+        font-size: 16px;
+    }
+}
+
+.btn-info-search{
+    height: 38px;
+    border: 1px solid #DDD;
+    background-color: #eee;
+    z-index: 99;
+    margin-right: 0;
+    
+    &:hover{
+        background-color: #d5d5d5;
+        border-color: #cfcfcf;
+        z-index: 99 !important;
+    }
+}
+
+.filter-list-help{
+    font-size: 14px;
+
+    > li{
+        margin-bottom: 10px;
+    }
+}

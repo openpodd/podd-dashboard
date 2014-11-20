@@ -37,6 +37,26 @@ angular.module('poddDashboardApp')
     };
 })
 
+.directive('blink', function ($timeout) {
+    return {
+        strict: 'A',
+        scope: {
+            blink: '='
+        },
+        link: function (scope, element, attr) {
+            scope.$watch('blink', function (newValue) {
+                if (newValue) {
+                    element.addClass('blink');
+
+                    $timeout(function () {
+                        element.removeClass('blink');
+                    }, 1000);
+                }
+            });
+        }
+    };
+})
+
 .filter('renderMention', function () {
     return function (text) {
         return text.replace(/\@\[(\w+)\]/g, '<span class="label label-info">@$1</span>');

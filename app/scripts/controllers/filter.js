@@ -7,6 +7,11 @@ angular.module('poddDashboardApp')
     $scope.$on('filter:clearQuery', function (willClear) {
         if (willClear) {
             $scope.query = '';
+            $scope.willShowResult = false;
+            $scope.loading = false;
+            $scope.empty = false;
+            $scope.error = false;
+            $scope.help = false;
         }
     });
 
@@ -17,6 +22,8 @@ angular.module('poddDashboardApp')
     $scope.search = function () {
         console.log('Will search with query', $scope.query);
 
+        $scope.closeHelp();
+
         if ($scope.loading) {
             return;
         }
@@ -24,6 +31,8 @@ angular.module('poddDashboardApp')
         $scope.loading = true;
         $scope.empty = false;
         $scope.error = false;
+
+        shared.filteredReports = {};
         // show result box.
         $scope.willShowResult = true;
 
@@ -38,6 +47,9 @@ angular.module('poddDashboardApp')
 
             data.forEach(function (item) {
                 var village = shared.villages[ item.administrationAreaId ];
+
+                // Append in filtered reports list
+                shared.filteredReports[item.id] = item;
 
                 if ( ! matchedVillages[ village.id ] ) {
                     matchedVillages[ item.administrationAreaId ] = true;
@@ -69,6 +81,14 @@ angular.module('poddDashboardApp')
 
     $scope.closeResult = function () {
         $scope.willShowResult = false;
+    };
+
+    $scope.toggleHelp = function () {
+        $scope.help = !$scope.help;
+    };
+
+    $scope.closeHelp = function () {
+        $scope.help = false;
     };
 
 });
