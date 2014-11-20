@@ -53,12 +53,13 @@ angular.module('poddDashboardApp')
 
     streaming.on('report:comment:new', function (data) {
         console.log('got new comment', data);
-
         data = angular.fromJson(data);
 
-        if (data.reportId === $scope.$parent.report.id) {
-            data.isNew = true;
-            $scope.comments.push(data);
+        if($scope.$parent.report){
+            if (data.reportId === $scope.$parent.report.id) {
+                data.isNew = true;
+                $scope.comments.push(data);
+            }
         }
     });
 });

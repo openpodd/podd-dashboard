@@ -53,20 +53,7 @@
                         <i class="fa fa-bell fa-size-18"></i>
                         <span class="alert-dotted">5</span>
                     </span>
-                    <div class="notification-block">
-                        <ul>
-                            <li class="read"><a href="#">@keng mention to you on report#59 </br>
-                            <span class=""><i class="fa fa-comment fa-size-14"></i> November 17 at 10:18pm</span></a></li>
-                            <li><a href="#">@keng mention to you on report#59 </br>
-                            <span class=""><i class="fa fa-comment fa-size-14"></i> November 17 at 10:18pm</span></a></li>
-                            <li class="read"><a href="#">@keng mention to you on report#59  </br>
-                            <span class=""><i class="fa fa-comment fa-size-14"></i> November 17 at 10:18pm</span></a></li>
-                            <li><a href="#">@keng mention to you on report#59 </br>
-                            <span class=""><i class="fa fa-comment fa-size-14"></i> November 17 at 10:18pm</span></a></li>
-                            <li><a href="#">@keng mention to you on report#59 </br>
-                            <span class=""><i class="fa fa-comment fa-size-14"></i> November 17 at 10:18pm</span></a></li>
-                        </ul>
-                    </div>
+                    <div ng-include src="'views/notification-list.html'"></div>
                 </li>
                 <li ng-show="shared.loggedIn" class="pd-nav-item" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('logout') }">
@@ -144,6 +131,7 @@
         <script src="scripts/directives/common.js"></script>
         <script src="scripts/directives/report.js"></script>
         <script src="scripts/services/DashboardService.js"></script>
+        <script src="scripts/services/MentionService.js"></script>
         <script src="scripts/services/ReportService.js"></script>
         <script src="scripts/services/MapService.js"></script>
         <script src="scripts/services/CommentService.js"></script>
@@ -157,6 +145,7 @@
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/filter.js"></script>
         <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/controllers/notification.js"></script>
         <!-- endbuild -->
 </body>
 </html>

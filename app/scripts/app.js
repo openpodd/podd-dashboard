@@ -60,6 +60,8 @@ angular
       /\/reports/,
       /\/reportType/,
       /\/dashboard/,
+      /\/notifications/,
+      /\/notification\/seen/,
       /\/reportComments/,
       /\/users\/search/
     ];

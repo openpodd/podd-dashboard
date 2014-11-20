@@ -45,10 +45,11 @@ consumer.on('message', function (channel, message) {
     var i;
 
     for (i in io.sockets.connected) {
+        console.log('---------', io.sockets.connected[i]);
         io.sockets.connected[i].emit(channel, message);
     }
 });
-consumer.subscribe('report:new', 'report:comment:new', 'report:image:new');
+consumer.subscribe('report:new', 'report:comment:new', 'report:image:new', 'mention:new');
 
 io.on('connection', function (socket) {
     console.log('client connected id:', socket.conn.id,

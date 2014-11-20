@@ -21,6 +21,7 @@ angular.module('poddDashboardApp')
             if (!$.cookie('token')) {
                 User.login({ username: username, password: password }).$promise.then(function (res) {
                     $.cookie('token', res.token);
+                    $.cookie('userid', res.id);
                     shared.loggedIn = true;
 
                     cb(null, res);
