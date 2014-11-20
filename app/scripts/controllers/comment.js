@@ -57,6 +57,7 @@ angular.module('poddDashboardApp')
         data = angular.fromJson(data);
 
         if (data.reportId === $scope.$parent.report.id) {
+            data.isNew = true;
             $scope.comments.push(data);
         }
     });
