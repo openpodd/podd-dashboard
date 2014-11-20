@@ -33,4 +33,14 @@ angular.module('poddDashboardApp')
         shared.reportWatchId = mention.reportId;
 
     }
+
+    streaming.on('mention:new', function (data) {
+        console.log('got new notification', data, $.cookie('userid'));
+
+        data = angular.fromJson(data);
+
+        if (data.mentioneeId == $.cookie('userid')) {
+            refreshNotifications()
+        }
+    });
 });
