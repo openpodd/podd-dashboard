@@ -242,8 +242,8 @@
 .alert-dotted{
     position: absolute;
     display: block;
-    top: -5px;
-    right: -5px;
+    top: 9px;
+    right: 6px;
     width: 12px;
     height: 12px;
     text-indent: -999em;
@@ -292,7 +292,21 @@
         a{
             padding: 7px 12px;
             display: block;
+            
+            &:hover{
+                text-decoration: none;
+            }
         }
+    }
+}
+
+#notifications-empty{
+    padding: 11px 10px;
+    
+    li{
+        border: none;
+        background: #eee !important;
+        border-radius: 0 5px 5px 0;
     }
 }
 
