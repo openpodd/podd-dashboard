@@ -29,27 +29,27 @@
         <div class="pd-container" >
            <img src="images/logo-small.png" alt="" class="logo"/>
             <ul class="pd-nav-list">
-                <li class="pd-nav-item pd-nav-title">เมนู</li>
+                <li class="pd-nav-item pd-nav-title"><span class="pd-nav-title">เมนู</span></li>
                 <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('home') }"
                     ng-click="setActiveMenu('home')">
-                  <a ng-href="#/" ng-click="shared.filterMode = false">
+                  <a ng-href="#/" ng-click="shared.filterMode = false" class="pd-nav-icon">
                   <i class="fa fa-map-marker fa-size-22"></i>
                   <span class="pd-nav-text">เฝ้าระวัง</span></a>
                 </li>
                 <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('filter') }"
                     ng-click="setActiveMenu('filter')">
-                  <a ng-href="#/" ng-click="shared.filterMode = true">
+                  <a ng-href="#/" ng-click="shared.filterMode = true" class="pd-nav-icon">
                   <i class="fa fa-search fa-size-18"></i>
                   <span class="pd-nav-text">ค้นหา</span></a>
                 </li>
                 <li ng-hide="shared.loggedIn" class="pd-nav-item" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('login') }">
-                  <a ng-href="#/login" ng-click="isShowNav=!isShowNav">
+                  <a ng-href="#/login" ng-click="isShowNav=!isShowNav" class="pd-nav-icon">
                   <i class="fa fa-sign-in"></i>
                   <span class="pd-nav-text">เข้าสู่ระบบ</span></a>
                 </li>
                 <li class="pd-nav-item">
-                    <span class="icon-bell">
+                    <span class="icon-bell pd-nav-icon">
                         <i class="fa fa-bell fa-size-18"></i>
                         <span class="alert-dotted">5</span>
                     </span>
@@ -58,7 +58,7 @@
                 <li ng-show="shared.loggedIn" class="pd-nav-item" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('logout') }">
 
-                  <a ng-href="#/" ng-click="isShowNav=!isShowNav;logout();">
+                  <a ng-href="#/" ng-click="isShowNav=!isShowNav;logout();" class="pd-nav-icon">
                   <i class="fa fa-sign-out fa-size-18"></i>
                   <span class="pd-nav-text">ออกจากระบบ</span></a>
                 </li>
