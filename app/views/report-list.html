@@ -25,7 +25,9 @@
       </thead>
 
       <tbody>
-        <tr ng-repeat="report in recentReports | orderBy:'-date' " id="report-{{ report.id }}" ng-click="onClickReport(report)">
+        <tr ng-repeat="report in recentReports | orderBy:'-date' " id="report-{{ report.id }}"
+            ng-click="onClickReport(report)"
+            ng-class="{ 'report-positive': !report.negative }">
           <td ng-bind="report.date | amDateFormat:'D MMM YYYY HH:mm'"></td>
           <td ng-bind="report.incidentDate | amDateFormat:'D MMM YYYY'"></td>
           <td ng-bind="report.reportTypeName"></td>
@@ -56,7 +58,9 @@
       </thead>
 
       <tbody>
-        <tr ng-repeat="report in olderReports | orderBy:'-date' " id="report-{{ report.id }}">
+        <tr ng-repeat="report in olderReports | orderBy:'-date' " id="report-{{ report.id }}"
+            ng-click="onClickReport(report)"
+            ng-class="{ 'report-positive': !report.negative }">
           <td ng-bind="report.date | amDateFormat:'D MMM YYYY HH:mm'"></td>
           <td ng-bind="report.incidentDate | amDateFormat:'D MMM YYYY'"></td>
           <td ng-bind="report.reportTypeName"></td>

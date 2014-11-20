@@ -38,13 +38,13 @@
 .pd-sidebar-title{
     padding: 10px 15px;
     background-color: #303030;
-    
+
 //    position: fixed;
 //    width: 530px;
 //    z-index: 999;
 //    top: 0;
 //    right: 0;
-    
+
     h2{
         margin: 0;
         width: 450px;
@@ -81,7 +81,7 @@
             border-bottom: none;
             color: #fff;
         }
-    } 
+    }
     > tbody > tr > td{
         border: none;
     }
@@ -95,6 +95,9 @@
         color: lighten(#909090, 30%);
         // font-weight: bold;
         cursor: pointer;
+    }
+    > tbody > tr.report-positive:hover {
+        cursor: default;
     }
     tr:hover{
         td{
@@ -154,7 +157,7 @@
     text-align: center;
     -webkit-transition: margin-left 200ms ease-out 0;
     transition: margin-left 200ms ease-out 0;
-    
+
     &:hover{
         background-color: #357ae8;
         background-image: -webkit-linear-gradient(top,#4d90fe,#357ae8);
@@ -170,10 +173,10 @@
 //    width: 320px;
 //    margin: auto;
 //    height: 390px;
-    
+
 //    width: 320px;
 //    margin: 150px auto 0 auto;
-    
+
     position: absolute;
     top: 0;
     left: 0;
@@ -192,7 +195,7 @@
     padding: 30px;
 //    height: 270px;
     // @include box-shadow(0px 0px 15px #000);
-    
+
     .alert{
         margin-top: 20px;
     }
@@ -204,7 +207,7 @@
             margin-top: 0;
         }
     }
-    
+
     .form-group:last-child{
         margin-bottom: 0;
     }
@@ -265,7 +268,7 @@
     @include box-shadow(0px 0px 5px #505050);
     border-radius: 0 5px 5px 5px;
     overflow: hidden;
-    
+
     ul{
         list-style: none;
         padding: 0;
@@ -274,15 +277,15 @@
         padding: 7px 12px;
         border-bottom: 1px solid #dadada;
         background-color: #eee;
-        
+
         &.read{
             background-color: #fff;
         }
-        
+
         &:hover{
             background-color: #ececec;
         }
-        
+
         .fa-comment{
             margin-right: 5px;
         }
@@ -296,16 +299,16 @@
     left: 0;
     margin: auto;
     width: 700px;
-    
+
     transition: all 0.3s ease;
     -webkit-transition: all 0.3s ease;
     -ms-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
-    
+
     &.ng-hide-remove{
         top: -100px;
     }
-    
+
     &.ng-hide{
         top: -100px;
     }
