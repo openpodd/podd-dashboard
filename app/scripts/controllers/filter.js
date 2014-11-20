@@ -7,6 +7,11 @@ angular.module('poddDashboardApp')
     $scope.$on('filter:clearQuery', function (willClear) {
         if (willClear) {
             $scope.query = '';
+            $scope.willShowResult = false;
+            $scope.loading = false;
+            $scope.empty = false;
+            $scope.error = false;
+            $scope.help = false;
         }
     });
 
