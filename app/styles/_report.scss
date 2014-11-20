@@ -259,3 +259,28 @@ mentio-menu {
 #recent-reports{
 //    margin-top: 70px;
 }
+
+.report-fields{
+    .nav-tabs > {
+        border-bottom: 1px solid #888888;
+        
+        li{
+            > a{
+                margin-right: 5px;
+                color: #fff;
+                
+                &:hover{
+                    color: #2A2A2A;
+                    background-color: #FFFFFF;
+                    cursor: pointer;
+                }
+            }
+            
+            &.active > a{
+                color: #2A2A2A;
+                background-color: #FFFFFF;
+                border: none;
+            }
+        }
+    }
+}
