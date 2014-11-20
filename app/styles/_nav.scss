@@ -45,10 +45,19 @@
     line-height: 20px;
 }
 
+.pd-nav-icon{
+    height: 42px;
+    padding: 12px 12px 8px 12px;
+    display: block;
+}
+.pd-nav-title{
+    padding: 5px 0;
+    display: block;
+}
+
 .pd-nav-item{
     position: relative;
-    height: 42px;
-    padding: 12px 10px 8px 10px;
+    
     color: #333;
     text-align: center;
     
