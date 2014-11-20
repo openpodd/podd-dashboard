@@ -203,7 +203,9 @@ angular.module('poddDashboardApp')
     };
 
     $scope.onClickReport = function (report) {
-        $scope.viewReport(report.id);
+        if ( report.negative ) {
+            $scope.viewReport(report.id);
+        }
         report.isNew = false;
         delete shared.newReportQueue[report.id];
     };
