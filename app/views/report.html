@@ -55,21 +55,30 @@
                 </div></div><!-- end .report-meta -->
 
                 <div class="row"><div class="col-md-12 report-fields">
-                  <table class="table table-striped pd-table">
-                    <thead>
-                      <tr>
-                        <th>คำถาม</th>
-                        <th>คำตอบ</th>
-                      </tr>
-                    </thead>
 
-                    <tbody>
-                      <tr ng-repeat="field in $parent.report.formData">
-                        <td ng-bind="field.name"></td>
-                        <td ng-bind="field.value"></td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <tabset ng-if="$parent.report">
+                    <tab heading="ธรรมดา">
+                      <table class="table table-striped pd-table">
+                        <thead>
+                          <tr>
+                            <th>คำถาม</th>
+                            <th>คำตอบ</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <tr ng-repeat="field in $parent.report.formData">
+                            <td ng-bind="field.name"></td>
+                            <td ng-bind="field.value"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </tab>
+                    <tab heading="บรรยาย (มี template)">
+                      <div report-type-form-data report="$parent.report"></div>
+                    </tab>
+                  </tabset>
+
                 </div></div><!-- end .report-fields -->
 
               </div><!-- end .report-details -->
