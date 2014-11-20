@@ -5,22 +5,24 @@
       <div class="input-group">
 
         <span class="input-group-btn" ng-class="{ 'open': help }">
-            <button class="btn btn-default" type="button" ng-click="toggleHelp()">
+            <button class="btn btn-default btn-info-search" type="button" ng-click="toggleHelp()">
                 <i class="fa fa-info"></i>
             </button>
 
             <div class="filter-help" ng-show="help">
                 <a href=""><i class="fa fa-times pull-right" ng-click="closeHelp()"></i></a>
 
-                <h4><i class="fa fa-info-circle"></i> ช่วยเหลือ</h3>
+                <h4 style="margin-bottom:20px;"><i class="fa fa-info-circle"></i> ช่วยเหลือ รูปแบบการค้นหา:</h3>
                 <p>
-                    <strong>รูปแบบการค้นหา:</strong>
-                    <ul class="list-unstyled">
+                    
+                    <ul class="list-unstyled filter-list-help">
                         <li>
                             ค้นหาโดยใช้รูปแบบ <em>field:value</em> ตัวอย่าง:
                             <ul>
-                                <li><code>animalType:ไก่</code></li>
-                                <li><code>sickCount:10</code></li>
+                                <li><code>animalType:ไก่</code>
+                                <span class="explain">คือ หาประเภทของสัตว์</span></li>
+                                <li><code>sickCount:10</code>
+                                <span class="explain">คือ หาจำนวนสัตว์ป่วย</span></li>
                             </ul>
                         </li>
 
@@ -28,13 +30,13 @@
                             ค้นหาโดยใช้การกำหนดช่วง ตัวอย่าง:
                             <ul>
                                 <li>
-                                    <code>sickCount:[1 TO 3]</code><br>
-                                    <span class="explain">หาจำนวนสัตว์ป่วย ตั้งแต่ 1 ถึง 3 ตัว</span>
+                                    <code>sickCount:[1 TO 3]</code>
+                                    <span class="explain">คือ หาจำนวนสัตว์ป่วย ตั้งแต่ 1 ถึง 3 ตัว</span>
                                 </li>
 
                                 <li>
-                                    <code>sickCount:[1 TO *]</code><br>
-                                    <span class="explain">หาจำนวนสัตว์ป่วย ตั้งแต่ 1 ตัวเป็นต้นไป</span>
+                                    <code>sickCount:[1 TO *]</code>
+                                    <span class="explain">คือ หาจำนวนสัตว์ป่วย ตั้งแต่ 1 ตัวเป็นต้นไป</span>
                                 </li>
                             </ul>
                         </li>
@@ -43,12 +45,12 @@
                             ค้นหาโดยใช้วันที่ ตัวอย่าง:
                             <ul>
                                 <li>
-                                    <code>date:2014-11-20</code><br>
-                                    <span class="explain">หารายงานของวันที่ 20 พ.ย. 2014</span>
+                                    <code>date:2014-11-20</code>
+                                    <span class="explain">คือ หารายงานของวันที่ 20 พ.ย. 2014</span>
                                 </li>
                                 <li>
-                                    <code>date:[2014-11-20 TO *]</code><br>
-                                    <span class="explain">หารายงาน <em>ตั้งแต่</em> วันที่ 20 พ.ย. 2014</span>
+                                    <code>date:[2014-11-20 TO *]</code>
+                                    <span class="explain">คือ หารายงานตั้งแต่ วันที่ 20 พ.ย. 2014</span>
                                 </li>
                             </ul>
                         </li>
@@ -58,7 +60,7 @@
                             <ul>
                                 <li>
                                     <code>(animalType:หมา AND sickCount:10) OR sickCount:[3 TO *]</code><br>
-                                    <span class="explain">หาจำนวนหมาป่วยสิบตัว หรือ สัตว์อะไรก็ได้ที่ป่วย 3 ตัวขึ้นไป</span>
+                                    <span class="explain">คือ หาจำนวนหมาป่วยสิบตัว หรือ สัตว์อะไรก็ได้ที่ป่วย 3 ตัวขึ้นไป</span>
                                 </li>
                             </ul>
                         </li>
