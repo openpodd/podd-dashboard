@@ -17,6 +17,8 @@ angular.module('poddDashboardApp')
     $scope.search = function () {
         console.log('Will search with query', $scope.query);
 
+        $scope.closeHelp();
+
         if ($scope.loading) {
             return;
         }
@@ -74,6 +76,14 @@ angular.module('poddDashboardApp')
 
     $scope.closeResult = function () {
         $scope.willShowResult = false;
+    };
+
+    $scope.toggleHelp = function () {
+        $scope.help = !$scope.help;
+    };
+
+    $scope.closeHelp = function () {
+        $scope.help = false;
     };
 
 });
