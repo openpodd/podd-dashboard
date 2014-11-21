@@ -29,7 +29,12 @@
             ng-click="onClickReport(report)"
             ng-class="{ 'report-positive': !report.negative }">
           <td ng-bind="report.date | amDateFormat:'D MMM YYYY HH:mm'"></td>
-          <td ng-bind="report.incidentDate | amDateFormat:'D MMM YYYY'"></td>
+          <td>
+            <span ng-if="report.negative">
+              {{  report.incidentDate | amDateFormat:'D MMM YYYY' }}
+            </span>
+            <div class="text-center" ng-if="!report.negative">-</div>
+          </td>
           <td ng-bind="report.reportTypeName"></td>
           <td>
              <span ng-show="report.negative" class="badge badge-bad">Bad</span>
@@ -62,7 +67,12 @@
             ng-click="onClickReport(report)"
             ng-class="{ 'report-positive': !report.negative }">
           <td ng-bind="report.date | amDateFormat:'D MMM YYYY HH:mm'"></td>
-          <td ng-bind="report.incidentDate | amDateFormat:'D MMM YYYY'"></td>
+          <td>
+            <span ng-if="report.negative">
+              {{  report.incidentDate | amDateFormat:'D MMM YYYY' }}
+            </span>
+            <div class="text-center" ng-if="!report.negative">-</div>
+          </td>
           <td ng-bind="report.reportTypeName"></td>
           <td>
              <span ng-show="report.negative" class="badge badge-bad">Bad</span>
