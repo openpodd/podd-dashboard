@@ -23,8 +23,6 @@ angular.module('poddDashboardApp')
             });
 
             $scope.notifications = tmp;
-
-            checkunread();
         });
     }
 
@@ -49,22 +47,12 @@ angular.module('poddDashboardApp')
             Mentions.seen(data).$promise.then(function () {
                 mention.isNotified = true;
             });
-            $scope.unread--;
-            checkunread();
+            $scope.shared.unread--;
         }
 
         $scope.shared.reportWatchId = mention.reportId;
         shared.reportWatchId = mention.reportId;
-
-    }
-
-    function checkunread(){
-
-        if($scope.unread <= 0)
-            $('.alert-dotted').addClass('hide');
-        else
-            $('.alert-dotted').removeClass('hide');
-    }
+    };
 
     streaming.on('mention:new', function (data) {
         console.log('got new notification', data, $.cookie('userid'));
@@ -72,7 +60,7 @@ angular.module('poddDashboardApp')
         data = angular.fromJson(data);
 
         if (data.mentioneeId == $.cookie('userid')) {
-            refreshNotifications()
+            refreshNotifications();
         }
     });
 });

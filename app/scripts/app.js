@@ -51,7 +51,8 @@ angular
     'ngTouch',
     'angularMoment',
     'mentio',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'angularFileUpload'
   ])
 
   .factory('addTrailingSlashInterceptor', function ($q) {

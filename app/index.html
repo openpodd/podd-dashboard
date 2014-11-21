@@ -51,7 +51,7 @@
                 <li ng-show="shared.loggedIn" class="pd-nav-item">
                     <span class="icon-bell pd-nav-icon">
                         <i class="fa fa-bell fa-size-18"></i>
-                        <span class="alert-dotted">5</span>
+                        <span class="alert-dotted" ng-show="shared.unread > 0">{{ shared.unread }}</span>
                     </span>
                     <div ng-include src="'views/notification-list.html'"></div>
                 </li>
@@ -118,6 +118,7 @@
     <script src="bower_components/jquery-cookie/jquery.cookie.js"></script>
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/angular-moment/angular-moment.js"></script>
+    <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
     <!-- endbower -->
     <script src="bower_components/ment.io/dist/mentio.js"></script>
     <script src="bower_components/moment/locale/th.js"></script>
