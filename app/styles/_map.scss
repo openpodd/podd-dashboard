@@ -47,3 +47,15 @@
 
 //    animation: fadeInLeft 1s 1s alternate backwards;
 }
+
+.map-mask {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
