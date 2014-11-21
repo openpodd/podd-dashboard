@@ -5,16 +5,15 @@ angular.module('poddDashboardApp')
 .controller('NotificationsCtrl', function ($scope, Mentions, shared, streaming) {
     console.log('init notification ctrl');
     $scope.shared = shared;
-    $scope.unread = 0;
+    $scope.shared.unread = 0;
     function refreshNotifications() {
         $scope.unread = 0;
         Mentions.get().$promise.then(function (mentions) {
             $scope.notifications = [];
             mentions.forEach(function (item) {
                 $scope.notifications.push(item);
-                if(!item.isNotified) $scope.unread++;
+                if(!item.isNotified) $scope.shared.unread++;
             });
-            checkunread();
         });
     }
 
@@ -30,22 +29,13 @@ angular.module('poddDashboardApp')
             Mentions.seen(data).$promise.then(function () {
                 mention.isNotified = true;
             });
-            $scope.unread--;
-            checkunread();
+            $scope.shared.unread--;
         }
 
         $scope.shared.reportWatchId = mention.reportId;
         shared.reportWatchId = mention.reportId;
-
     }
 
-   function checkunread(){
-        
-        if($scope.unread <= 0)
-            $('.alert-dotted').addClass('hide');
-        else 
-            $('.alert-dotted').removeClass('hide');
-    }
 
     streaming.on('mention:new', function (data) {
         console.log('got new notification', data, $.cookie('userid'));

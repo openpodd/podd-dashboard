@@ -10,9 +10,17 @@ angular.module('poddDashboardApp')
         $scope.comments = Comments.list({ reportId: $scope.$parent.report.id });
     }
 
+    $scope.loading = false
     function reset() {
         $scope.message = '';
         $scope.submitting = false;
+        $scope.loading = false;
+        clearFile();
+    }
+
+    function clearFile(){
+        $('.file-upload').val('');
+        $scope.file = '';
     }
 
     $scope.$watch('$parent.report', function (newValue) {
@@ -28,9 +36,12 @@ angular.module('poddDashboardApp')
 
         var data = {
             reportId: $scope.$parent.report.id,
-            message: $scope.message.replace(/\@(\w+)/g, '@[$1]')
+            message: $scope.message.replace(/\@(\w+)/g, '@[$1]'),
+            file: $scope.file,
         };
 
+        $scope.loading = true;
+        
         Comments.post(data).$promise.then(function (newComment) {
             reset();
         });
@@ -49,6 +60,16 @@ angular.module('poddDashboardApp')
 
     $scope.getUserTextRaw = function(item) {
         return '@' + item.username;
+    };
+
+    $scope.file = '';
+
+    $scope.onFileSelect = function($file) {
+        $scope.file = $file;
+    };
+
+    $scope.clearFile = function() {
+        clearFile();
     };
 
     streaming.on('report:comment:new', function (data) {

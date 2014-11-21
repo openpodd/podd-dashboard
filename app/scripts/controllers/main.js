@@ -4,7 +4,7 @@ angular.module('poddDashboardApp')
 
 .controller('MainCtrl', [
     '$scope', 'dashboard', 'streaming', 'Map', 'Reports', 'ReportModal',
-    'shared', 'Auth', 'Search', 'Menu', 'Mentions',
+    'shared', 'Auth', 'Search', 'Menu', 'Mentions', '$upload',
     function ($scope, dashboard, streaming,
               Map, Reports, ReportModal, shared, Auth, Search, Menu, Mentions) {
 
