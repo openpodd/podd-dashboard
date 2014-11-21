@@ -27,8 +27,8 @@
       </div>
       <div class="row">
         <div class="col-md-6">
+          <input class="btn btn-default file-upload" type="file" ng-model="file" ng-file-select="onFileSelect($files)">
           <span class="image-mask-text" ng-show="loading">Loading &hellip;</span>
-          <input class="file-upload" type="file" ng-model="file" ng-file-select="onFileSelect($files)">
           <a ng-click="clearFile()">clear</a>
         </div>
         <div class="col-md-6">
