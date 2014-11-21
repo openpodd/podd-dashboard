@@ -5,22 +5,40 @@ angular.module('poddDashboardApp')
 .controller('NotificationsCtrl', function ($scope, Mentions, shared, streaming) {
     console.log('init notification ctrl');
     $scope.shared = shared;
-    $scope.shared.unread = 0;
+    $scope.unread = 0;
+
+    $scope.notifications = [];
+
     function refreshNotifications() {
         $scope.unread = 0;
+
         Mentions.get().$promise.then(function (mentions) {
-            $scope.notifications = [];
+            var tmp = [];
+
             mentions.forEach(function (item) {
-                $scope.notifications.push(item);
-                if(!item.isNotified) $scope.shared.unread++;
+               tmp.push(item);
+               if ( ! item.isNotified ) {
+                  $scope.unread++;
+               }
             });
+
+            $scope.notifications = tmp;
         });
     }
 
     refreshNotifications();
 
+    $scope.$watch('shared.loggedIn', function (newValue) {
+        if (newValue) {
+            refreshNotifications();
+        }
+        else {
+            $scope.notification = [];
+        }
+    });
+
     $scope.onClickNotification = function(mention){
-        
+
         if(!mention.isNotified){
             var data = {
                 mentionId: mention.id,
@@ -34,8 +52,7 @@ angular.module('poddDashboardApp')
 
         $scope.shared.reportWatchId = mention.reportId;
         shared.reportWatchId = mention.reportId;
-    }
-
+    };
 
     streaming.on('mention:new', function (data) {
         console.log('got new notification', data, $.cookie('userid'));
@@ -43,7 +60,7 @@ angular.module('poddDashboardApp')
         data = angular.fromJson(data);
 
         if (data.mentioneeId == $.cookie('userid')) {
-            refreshNotifications()
+            refreshNotifications();
         }
     });
 });
