@@ -59,7 +59,7 @@ angular.module('poddDashboardApp')
 
         data = angular.fromJson(data);
 
-        if (data.mentioneeId == $.cookie('userid')) {
+        if (data.mentioneeId === $.cookie('userid')) {
             refreshNotifications();
         }
     });
