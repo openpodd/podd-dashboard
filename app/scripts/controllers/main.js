@@ -1,3 +1,4 @@
+/*global L */
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -6,7 +7,7 @@ angular.module('poddDashboardApp')
     '$scope', 'dashboard', 'streaming', 'Map', 'Reports', 'ReportModal',
     'shared', 'Auth', 'Search', 'Menu', 'Mentions', '$upload',
     function ($scope, dashboard, streaming,
-              Map, Reports, ReportModal, shared, Auth, Search, Menu, Mentions) {
+              Map, Reports, ReportModal, shared, Auth, Search, Menu) {
 
     console.log('IN MainCtrl');
 
@@ -14,7 +15,9 @@ angular.module('poddDashboardApp')
 
     Menu.setActiveMenu('home');
 
-    var map = Map();
+    var center = [13.791177699, 100.58814079],
+        zoomLevel = 15,
+        map = new Map( L.map('map').setView(center, zoomLevel) );
 
     function refreshDashboard() {
         dashboard.get().$promise.then(function (villages) {

@@ -10,7 +10,7 @@ angular.module('poddDashboardApp')
         $scope.comments = Comments.list({ reportId: $scope.$parent.report.id });
     }
 
-    $scope.loading = false
+    $scope.loading = false;
     function reset() {
         $scope.message = '';
         $scope.submitting = false;
@@ -41,8 +41,8 @@ angular.module('poddDashboardApp')
         };
 
         $scope.loading = true;
-        
-        Comments.post(data).$promise.then(function (newComment) {
+
+        Comments.post(data).$promise.then(function () {
             reset();
         });
     };

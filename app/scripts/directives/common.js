@@ -43,7 +43,7 @@ angular.module('poddDashboardApp')
         scope: {
             blink: '='
         },
-        link: function (scope, element, attr) {
+        link: function (scope, element/*, attr*/) {
             scope.$watch('blink', function (newValue) {
                 if (newValue) {
                     element.addClass('blink');

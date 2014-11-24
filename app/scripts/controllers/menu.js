@@ -2,7 +2,7 @@
 
 angular.module('poddDashboardApp')
 
-.controller('MenuCtrl', function ($scope, $http, shared, $location, Menu, Mentions) {
+.controller('MenuCtrl', function ($scope, $http, shared, $location, Menu) {
     $scope.shared = shared;
 
     $scope.logout = function () {

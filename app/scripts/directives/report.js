@@ -18,9 +18,8 @@ angular.module('poddDashboardApp')
         scope: {
             report: '='
         },
-        compile: function compile(element, attr) {
-            return function (scope, $element, $attr) {
-                window.xxx = scope;
+        compile: function compile(/* element, attr */) {
+            return function (scope, $element/*, $attr */) {
                 scope.$watch('report', function (report) {
                     console.log('DBG::reportTypeFormData', report);
 
