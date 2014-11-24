@@ -233,6 +233,17 @@ angular.module('poddDashboardApp')
             $scope.report = data;
 
             ReportModal.show();
+        })
+        .catch(function (err) {
+            if (err.status === 403) {
+                swal({
+                    title: '',
+                    text: 'ขออภัย คุณยังไม่ได้รับสิทธิดูรายงานนี้',
+                    confirmButtonText: 'ตกลง',
+                    confirmButtonClass: 'btn-default',
+                    type: 'error'
+                });
+            }
         });
     };
 
