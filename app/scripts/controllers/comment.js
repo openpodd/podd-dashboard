@@ -34,6 +34,11 @@ angular.module('poddDashboardApp')
 
     $scope.comment = function () {
         $scope.submitting = true;
+    
+        if($scope.file[0] && $scope.file[0].size > 10485760){
+            callError('ไม่สามารถอัพโหลดไฟล์ที่มีขนาดของไฟล์มากกว่า 10MB');
+            return;
+        }
 
         var data = {
             reportId: $scope.$parent.report.id,
@@ -48,18 +53,21 @@ angular.module('poddDashboardApp')
 
         }, function(error){
             if(error.status == 400){
-                $scope.loading = false;
-                swal({title: '', text: error.data.detail, type: 'error', confirmButtonText: 'ตกลง' },
-                    function(isConfirm){   
-                        if(isConfirm) { 
-                            $scope.submitting = false;
-                        } 
-                    }
-                );
+                callError(error.data.detail);
             }
         });
     };
 
+    function callError(detail){
+        $scope.loading = false;
+        swal({title: '', text: detail, type: 'error', confirmButtonText: 'ตกลง' },
+            function(isConfirm){   
+                if(isConfirm) { 
+                    $scope.submitting = false;
+                } 
+            }
+        );
+    }
 
     $scope.searchUser = function(term) {
         return User.search({ username: term }).$promise.then(function (data) {
