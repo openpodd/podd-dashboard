@@ -45,7 +45,6 @@ consumer.on('message', function (channel, message) {
     var i;
 
     for (i in io.sockets.connected) {
-        console.log('---------', io.sockets.connected[i]);
         io.sockets.connected[i].emit(channel, message);
     }
 });

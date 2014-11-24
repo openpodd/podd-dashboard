@@ -77,7 +77,7 @@ angular.module('poddDashboardApp')
         // update current list view if match the current village viewing.
         // TODO: fix angular Array.push mystery that not update
         // NOTE: $digest() does not help
-        if (data.administrationAreaId === $scope.currentVillage.id) {
+        if ($scope.currentVillage && data.administrationAreaId === $scope.currentVillage.id) {
             if ( isRecentReport(data) ) {
                 $scope.recentReports.splice(0, 0, data);
             }
