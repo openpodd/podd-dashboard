@@ -19,8 +19,9 @@ angular.module('poddDashboardApp')
     }
 
     function clearFile(){
-        $('.file-upload').val('');
         $scope.file = '';
+        var file_upload = $('.upload').val('').clone(true);
+        $('.upload').replaceWith(file_upload);
     }
 
     $scope.$watch('$parent.report', function (newValue) {
@@ -44,6 +45,17 @@ angular.module('poddDashboardApp')
         
         Comments.post(data).$promise.then(function (newComment) {
             reset();
+        }, function(error){
+            if(error.status == 400){
+                swal({title: '',   text: error.data.detail,   type: 'error',   confirmButtonText: 'ตกลง' },
+                    function(isConfirm){   
+                        if(isConfirm) {     
+                            $scope.submitting = false;
+                            $scope.loading = false;   
+                        } 
+                    }
+                );
+            }
         });
     };
 
@@ -66,6 +78,7 @@ angular.module('poddDashboardApp')
 
     $scope.onFileSelect = function($file) {
         $scope.file = $file;
+        console.log('----------->', $scope.file)
     };
 
     $scope.clearFile = function() {

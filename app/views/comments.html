@@ -25,13 +25,15 @@
           placeholder="Your comment here"></textarea>
 
       </div>
-      
       <div class="file-upload btn btn-default">
           <span>
             <i class="fa fa-paperclip"></i><span ng-hide="file[0].name"> Attachment</span>
           </span>
           <span>{{ file[0].name }}</span>
-          <input class="btn btn-default upload" type="file" ng-model="file" ng-file-select="onFileSelect($files)">
+          <input class="btn btn-default upload" 
+            type="file" 
+            ng-file-select="onFileSelect($files)" 
+            ng-disabled="submitting">
       </div>
 
       <div class="loader spinner" ng-show="loading">
@@ -42,7 +44,7 @@
       <button type="submit" class="btn btn-default btn-post"
                   ng-disabled="!message || submitting" ng-hide="loading">Comment</button>
 
-      <a ng-click="clearFile()" ng-show="file[0].name">clear</a>
+      <a ng-click="clearFile()" ng-show="file[0].name && !submitting">clear</a>
     </form>
   </div>
 
