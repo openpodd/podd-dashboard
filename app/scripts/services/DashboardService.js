@@ -1,3 +1,4 @@
+/*global io */
 'use strict';
 
 angular.module('poddDashboardApp')

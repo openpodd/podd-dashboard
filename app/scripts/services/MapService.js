@@ -3,12 +3,9 @@
 
 angular.module('poddDashboardApp')
 
-.factory('Map', function ($rootScope) {
+.factory('Map', function () {
 
-    var map,
-        center = [13.791177699, 100.58814079],
-        zoomLevel = 15,
-        tileLayerURL = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
+    var tileLayerURL = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
 
     function Map(leaflet) {
         this.leaflet = leaflet;
@@ -80,7 +77,7 @@ angular.module('poddDashboardApp')
                 riseOnHover: true,
             }).addTo(self.villageMarkerLayer);
 
-            village.marker.on('click', function (eventObject) {
+            village.marker.on('click', function () {
                 self.container.trigger('clicked:village', item);
             });
         });
@@ -171,7 +168,7 @@ angular.module('poddDashboardApp')
         this.radarMarkerLayer.removeLayer(radarMarker);
     };
 
-    Map.prototype.unwinkAll = function unwink(radarMarker) {
+    Map.prototype.unwinkAll = function unwinkAll() {
         this.radarMarkerLayer.clearLayers();
     };
 
@@ -179,11 +176,5 @@ angular.module('poddDashboardApp')
         this.container.on('clicked:village', cb);
     };
 
-
-    // Setup map.
-    map = function () {
-        return new Map( L.map('map').setView(center, zoomLevel) );
-    };
-
-    return map;
+    return Map;
 });

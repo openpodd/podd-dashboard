@@ -25,9 +25,26 @@
           placeholder="Your comment here"></textarea>
 
       </div>
+      <div class="file-upload btn btn-default">
+          <span>
+            <i class="fa fa-paperclip"></i><span ng-hide="file[0].name"> Attachment</span>
+          </span>
+          <span>{{ file[0].name }}</span>
+          <input class="btn btn-default upload" 
+            type="file" 
+            ng-file-select="onFileSelect($files)" 
+            ng-disabled="submitting">
+      </div>
 
-      <button type="submit" class="btn btn-default pull-right btn-post"
-              ng-disabled="!message || submitting">Comment</button>
+      <div class="loader spinner" ng-show="loading">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+      <button type="submit" class="btn btn-default btn-post"
+                  ng-disabled="!message || submitting" ng-hide="loading">Comment</button>
+
+      <a ng-click="clearFile()" ng-show="file[0].name && !submitting">clear</a>
     </form>
   </div>
 
@@ -37,8 +54,8 @@
           blink="comment.isNew"
           ng-repeat="comment in comments | orderBy:'-createdAt' ">
         <p class="comment-post" ng-bind-html="comment.message | htmlToPlainText | renderMention"></p>
-
         <div class="comment-meta">
+            <a href="{{ comment.fileUrl }}" target="_blank" ng-show="comment.fileUrl"><i class="fa fa-paperclip"></i>ไฟล์แนบ</a> 
             <span class="">เมื่อ <span am-time-ago="comment.createdAt"></span></span>
             <span class="">โดย {{ comment.createdBy }}</span>
         </div>

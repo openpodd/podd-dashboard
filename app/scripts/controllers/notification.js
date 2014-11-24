@@ -6,22 +6,39 @@ angular.module('poddDashboardApp')
     console.log('init notification ctrl');
     $scope.shared = shared;
     $scope.unread = 0;
+
+    $scope.notifications = [];
+
     function refreshNotifications() {
         $scope.unread = 0;
+
         Mentions.get().$promise.then(function (mentions) {
-            $scope.notifications = [];
+            var tmp = [];
+
             mentions.forEach(function (item) {
-                $scope.notifications.push(item);
-                if(!item.isNotified) $scope.unread++;
+               tmp.push(item);
+               if ( ! item.isNotified ) {
+                  $scope.unread++;
+               }
             });
-            checkunread();
+
+            $scope.notifications = tmp;
         });
     }
 
     refreshNotifications();
 
+    $scope.$watch('shared.loggedIn', function (newValue) {
+        if (newValue) {
+            refreshNotifications();
+        }
+        else {
+            $scope.notification = [];
+        }
+    });
+
     $scope.onClickNotification = function(mention){
-        
+
         if(!mention.isNotified){
             var data = {
                 mentionId: mention.id,
@@ -30,30 +47,20 @@ angular.module('poddDashboardApp')
             Mentions.seen(data).$promise.then(function () {
                 mention.isNotified = true;
             });
-            $scope.unread--;
-            checkunread();
+            $scope.shared.unread--;
         }
 
         $scope.shared.reportWatchId = mention.reportId;
         shared.reportWatchId = mention.reportId;
-
-    }
-
-   function checkunread(){
-        
-        if($scope.unread <= 0)
-            $('.alert-dotted').addClass('hide');
-        else 
-            $('.alert-dotted').removeClass('hide');
-    }
+    };
 
     streaming.on('mention:new', function (data) {
         console.log('got new notification', data, $.cookie('userid'));
 
         data = angular.fromJson(data);
 
-        if (data.mentioneeId == $.cookie('userid')) {
-            refreshNotifications()
+        if (data.mentioneeId === $.cookie('userid')) {
+            refreshNotifications();
         }
     });
 });

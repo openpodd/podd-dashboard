@@ -10,7 +10,7 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
-    <link rel="stylesheet" href="bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-sweetalert/lib/sweet-alert.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css">
@@ -18,6 +18,7 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/app.css">
     <!-- endbuild -->
+    <link rel="stylesheet" type="text/css" href="bower_components/sweetalert/lib/sweet-alert.css">
   </head>
   <body ng-app="poddDashboardApp">
     <!--[if lt IE 7]>
@@ -52,7 +53,7 @@
                 <li ng-show="shared.loggedIn" class="pd-nav-item">
                     <span class="icon-bell pd-nav-icon">
                         <i class="fa fa-bell fa-size-18"></i>
-                        <span class="alert-dotted">5</span>
+                        <span class="alert-dotted" ng-show="shared.unread > 0">{{ shared.unread }}</span>
                     </span>
                     <div ng-include src="'views/notification-list.html'"></div>
                 </li>
@@ -119,12 +120,13 @@
     <script src="bower_components/jquery-cookie/jquery.cookie.js"></script>
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/angular-moment/angular-moment.js"></script>
-    <script src="bower_components/jquery-mousewheel/jquery.mousewheel.js"></script>
-    <script src="bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js"></script>
+    <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
+    <script src="bower_components/bootstrap-sweetalert/lib/sweet-alert.js"></script>
     <!-- endbower -->
     <script src="bower_components/ment.io/dist/mentio.js"></script>
     <script src="bower_components/moment/locale/th.js"></script>
     <script src="bower_components/socket.io-client/socket.io.js"></script>
+    <script src="bower_components/sweetalert/lib/sweet-alert.min.js"></script>
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->

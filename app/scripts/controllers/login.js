@@ -9,7 +9,7 @@ angular.module('poddDashboardApp')
 
     Menu.setActiveMenu('login');
 
-    $scope.$watch('shared.loggedIn', function(newValue, oldValue) {
+    $scope.$watch('shared.loggedIn', function(newValue) {
         if (newValue) {
             $location.url('/');
         }

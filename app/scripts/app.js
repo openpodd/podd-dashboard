@@ -4,9 +4,7 @@
 // Reference: http://es5.github.io/#x15.4.4.17
 if (!Array.prototype.some) {
   Array.prototype.some = function(fun /*, thisArg*/) {
-    'use strict';
-
-    if (this == null) {
+    if (this === null) {
       throw new TypeError('Array.prototype.some called on null or undefined');
     }
 
@@ -15,7 +13,7 @@ if (!Array.prototype.some) {
     }
 
     var t = Object(this);
-    var len = t.length >>> 0;
+    var len = t.length || 0;
 
     var thisArg = arguments.length >= 2 ? arguments[1] : void 0;
     for (var i = 0; i < len; i++) {
@@ -51,7 +49,8 @@ angular
     'ngTouch',
     'angularMoment',
     'mentio',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'angularFileUpload'
   ])
 
   .factory('addTrailingSlashInterceptor', function ($q) {
