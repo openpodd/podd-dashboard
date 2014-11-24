@@ -49,11 +49,11 @@ angular.module('poddDashboardApp')
 
         }, function(error){
             if(error.status == 400){
-                swal({title: '',   text: error.data.detail,   type: 'error',   confirmButtonText: 'ตกลง' },
+                $scope.loading = false;
+                swal({title: '', text: error.data.detail, type: 'error', confirmButtonText: 'ตกลง' },
                     function(isConfirm){   
-                        if(isConfirm) {     
+                        if(isConfirm) { 
                             $scope.submitting = false;
-                            $scope.loading = false;   
                         } 
                     }
                 );

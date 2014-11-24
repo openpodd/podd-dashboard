@@ -55,7 +55,7 @@
           ng-repeat="comment in comments | orderBy:'-createdAt' ">
         <p class="comment-post" ng-bind-html="comment.message | htmlToPlainText | renderMention"></p>
         <div class="comment-meta">
-            <a href="{{ comment.fileUrl }}" target="_blank" ng-show="comment.fileUrl"><i class="fa fa-paperclip"></i>ไฟล์แนบ</a> 
+            <a href="{{ comment.fileUrl }}" target="_blank" ng-show="comment.fileUrl"><i class="fa fa-paperclip"></i> ดูไฟล์แนบ</a> 
             <span class="">เมื่อ <span am-time-ago="comment.createdAt"></span></span>
             <span class="">โดย {{ comment.createdBy }}</span>
         </div>
