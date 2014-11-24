@@ -32,8 +32,8 @@
           <span>{{ file[0].name }}</span>
           <input class="btn btn-default upload" 
             type="file" 
-            ng-file-select="onFileSelect($files)" 
-            ng-disabled="submitting">
+            ng-disabled="submitting"
+            ng-file-select="onFileSelect($files)" />
       </div>
 
       <div class="loader spinner" ng-show="loading">

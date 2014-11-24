@@ -15,6 +15,7 @@ angular.module('poddDashboardApp')
         $scope.message = '';
         $scope.submitting = false;
         $scope.loading = false;
+        $scope.$apply();
         clearFile();
     }
 
@@ -45,6 +46,7 @@ angular.module('poddDashboardApp')
 
         Comments.post(data).$promise.then(function () {
             reset();
+
         }, function(error){
             if(error.status == 400){
                 swal({title: '',   text: error.data.detail,   type: 'error',   confirmButtonText: 'ตกลง' },
