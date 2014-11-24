@@ -15,7 +15,6 @@ angular.module('poddDashboardApp')
         $scope.message = '';
         $scope.submitting = false;
         $scope.loading = false;
-        $scope.$apply();
         clearFile();
     }
 
