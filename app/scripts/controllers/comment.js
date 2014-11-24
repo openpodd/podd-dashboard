@@ -34,7 +34,7 @@ angular.module('poddDashboardApp')
 
     $scope.comment = function () {
         $scope.submitting = true;
-    
+
         if($scope.file[0] && $scope.file[0].size > 10485760){
             callError('ไม่สามารถอัพโหลดไฟล์ที่มีขนาดของไฟล์มากกว่า 10MB');
             return;
