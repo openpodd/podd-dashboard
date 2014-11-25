@@ -19,8 +19,9 @@ angular.module('poddDashboardApp')
     }
 
     function clearFile(){
-        $('.file-upload').val('');
         $scope.file = '';
+        var file_upload = $('.upload').val('').clone(true);
+        $('.upload').replaceWith(file_upload);
     }
 
     $scope.$watch('$parent.report', function (newValue) {
@@ -34,6 +35,11 @@ angular.module('poddDashboardApp')
     $scope.comment = function () {
         $scope.submitting = true;
 
+        if($scope.file[0] && $scope.file[0].size > 10485760){
+            callError('ไม่สามารถอัพโหลดไฟล์ที่มีขนาดของไฟล์มากกว่า 10MB');
+            return;
+        }
+
         var data = {
             reportId: $scope.$parent.report.id,
             message: $scope.message.replace(/\@(\w+)/g, '@[$1]'),
@@ -44,9 +50,24 @@ angular.module('poddDashboardApp')
 
         Comments.post(data).$promise.then(function () {
             reset();
+
+        }, function(error){
+            if(error.status == 400){
+                callError(error.data.detail);
+            }
         });
     };
 
+    function callError(detail){
+        $scope.loading = false;
+        swal({title: '', text: detail, type: 'error', confirmButtonText: 'ตกลง' },
+            function(isConfirm){   
+                if(isConfirm) { 
+                    $scope.submitting = false;
+                } 
+            }
+        );
+    }
 
     $scope.searchUser = function(term) {
         return User.search({ username: term }).$promise.then(function (data) {
@@ -66,6 +87,7 @@ angular.module('poddDashboardApp')
 
     $scope.onFileSelect = function($file) {
         $scope.file = $file;
+        console.log('----------->', $scope.file)
     };
 
     $scope.clearFile = function() {
