@@ -45,3 +45,51 @@
         -webkit-animation: fadeOutRight .5s .2s alternate forwards;
     }
 }
+
+
+//***************************
+// Layout
+//***************************
+
+$report-section-bg: #fff;
+$detail-section-bg: #333;
+$comment-section-bg: #333;
+
+.l-section{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    
+    .title{
+        padding: 20px;
+        font-size: 20px;
+        background-color: rgba(190, 190, 190, 0.2);
+    }
+    .content{
+        height: 90%;
+        padding: 10px 5px 10px 20px;
+    }
+}
+.l-report-section{
+    left: 50px;
+    width: 40%;
+    background-color: $report-section-bg;
+    z-index: 9998;
+}
+.l-info-section{ /* Wrapping detail & comment section */
+    top: 0;
+    left: 43.5%;  
+    width: 56.5%;
+    z-index: 9990;
+}
+.l-detail-section{
+    top: 0;
+    right: 30%;
+    width: 70%;
+    background-color: $detail-section-bg;
+}
+.l-comment-section{
+    right: 0%;
+    width: 30%;
+    background-color: $comment-section-bg;
+}

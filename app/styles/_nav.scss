@@ -1,78 +1,61 @@
-//.pd-nav-toggle{
-//    z-index: 999;
-//    
-//    transition: all 0.5s ease;
-//    -webkit-transition: all 0.5s ease;
-//    -ms-transition: all 0.5s ease;
-//    -moz-transition: all 0.5s ease;
-//    
-//    &:hover{
-//        color: #fff;
-//        background-color: #4a4a4a;
-//        cursor: pointer;
-//    }
-//    
-//    .ng-hide{
-//        top: 0;
-//        left: 150px;
-//    }
-//}
+@import "mixin";
 
-//@import "mixin";
+//***************************
+// Nav
+//***************************
 
-.pd-nav-list{
-//    @incldue border-radius(3px);
-	border-radius: 5px;	
-    
-    @include box-shadow(0px 0px 5px #505050);
-    list-style: none;
-    
+$section-nav-bg: #333;
+$nav-item-color: #fff;
+$nav-item-color-hover: #404040;
+$nav-item-bg-hover: #eee;
+$nav-item-bg-active: #0074d9;
+$nav-font-family: ThaiSansNeueRegular;
+
+.pd-section-nav{
     position: absolute;
-    top: 70px;
-    left: 15px;
-//    height: 100%;
-    margin: 0;
+    width: 50px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    background: $section-nav-bg;
+//    @include box-shadow(0px 0px 5px #505050);
+}
+
+// UL
+.pd-nav-list{
     padding: 0;
-    z-index: 999;
-    background-color: #fff; 
-    
-    animation: fadeInLeft 1s 1s alternate backwards;
+    list-style: none;
 }
 
-.pd-nav-title{
-    font-size: 22px;
-    font-family: ThaiSansNeueRegular;
-    line-height: 20px;
-}
-
-.pd-nav-icon{
-    height: 42px;
-    padding: 12px 12px 8px 12px;
+.logo{
     display: block;
-    position: relative;
-    
-    &:hover{
-        cursor: pointer;
-    }
-}
-.pd-nav-title{
-    padding: 5px 0;
-    display: block;
+    width: 30px;
+    height: 23px;
+    margin: 10px auto 5px;
+    background: url("../images/logo-small.png");
+    @include image-2x('../images/logo-small@2x.png', 30px, 23px);
 }
 
+// LI
 .pd-nav-item{
     position: relative;
-    
-    color: #333;
+    color: $nav-item-color;
     text-align: center;
     
-    a{  
-        color: #404040;
-        font-size: 20px;
-        font-family: ThaiSansNeueRegular;
-        line-height: 20px;
+    &:hover{
+        background-color: $nav-item-bg-hover;
+        color: $nav-item-color-hover;
+        
+        .pd-nav-text{
+            left: 42px;
+            opacity: 1;
+        }
+        
+        i{ color: $nav-item-color-hover; }
     }
     
+    /* Hide Text */
     .pd-nav-text{
         @include box-shadow(0px 0px 5px #505050);
         position: absolute;
@@ -94,130 +77,130 @@
     }
     
     &.active{
-        background-color: #0074d9;
+        background-color: $nav-item-bg-active;
         
-        &:hover{ background-color: #0074d9; }
-        i{ color: #fff; }
+        i{ color: $nav-item-color; }
         
+        /* Make text active style */
         .pd-nav-text{
-            color: #fff;
-            background-color: #0074d9;
+            color: $nav-item-color;
+            background-color: $nav-item-bg-active;
         }
     }
+}
+
+// For title text on list
+.pd-nav-title{
+    padding: 5px 0;
+    display: block;
+    font: 22px / 20px $nav-font-family;
+    line-height: 20px;
+    
+    /* Clear defuaft hover style */
+    &:hover{
+        background-color: transparent;
+        color: $nav-item-color;
+    }
+}
+
+// Link <a>
+.pd-nav-icon{
+    height: 42px;
+    padding: 12px 12px 8px 12px;
+    display: block;
+    position: relative;
+    
+    color: $nav-item-color;
+        font: 20px / 20px $nav-font-family;
     
     &:hover{
-        background-color: #eee;
-        
-        .pd-nav-text{
-            left: 42px;
-            opacity: 1;
-            
-        }
-    }
-    
-    &:first-child{
-        border-radius: 5px 5px 0 0;
-        
-        &:hover{
-//            border-radius: 5px 0 0 0;
-        }
-    }
-    &:last-child{
-        border-radius: 0 0 0 5px;
-        
-        &:hover{
-            border-radius: 0 0 0 5px;
-        }
+        cursor: pointer;
+        color: $nav-item-color-hover;
     }
 }
 
 
 
-
-
 //***************************
-// Nav
+// Notification
 //***************************
 
-$nav-bg: #333;
-$nav-font-color: #fff;
-$nav-icon-color: #fff;
-$nav-list-hover: #000;
+$notifi-border-bottom-color: #dadada;
+$notifi-item-bg: #eee;
+$notifi-item-hover: #ececec;
+$notifi-item-read: #fff;
 
-$nav-width: 50px;
-
-$nav-font-family: ThaiSansNeueRegular;
-
-.pd-nav-small{
-//    position: absolute;
-//    top: 0;
-//    left: 0;
-//    width: $nav-width;
-//    height: 100%;
-//    z-index: 9999;
-//    background: $nav-bg;
+.pd-nav-item:hover{
+    .notification-block{
+        display: block;
+    }
 }
-.pd-nav-list{
-    
-}
-.pd-nav-item{
-    
-}
-.pd-nav-text{
-    
-}
-.pd-nav-icon{
-//    color: $nav-icon-color;
-}
-
-
-
-//***************************
-// Layout
-//***************************
-
-$report-section-bg: #fff;
-$detail-section-bg: #333;
-$comment-section-bg: #333;
-
-.l-section{
+.notification-block{
+    @include box-shadow(0px 0px 5px #505050);
     position: absolute;
+    display: none;
     top: 0;
-    height: 100%;
-    
-    .title{
-        padding: 20px;
-        font-size: 20px;
-        background-color: rgba(190, 190, 190, 0.2);
-    }
-    .content{
-        height: 90%;
-        padding: 10px 5px 10px 20px;
-    }
-}
-.l-report-section{
     left: 50px;
-    width: 40%;
-    background-color: $report-section-bg;
-    z-index: 9998;
-}
-.l-info-section{ /* Wrapping detail & comment section */
-    top: 0;
-    left: 43.5%;  
-    width: 56.5%;
-    z-index: 9990;
-}
-.l-detail-section{
-    top: 0;
-    right: 30%;
-    width: 70%;
-    background-color: $detail-section-bg;
-}
-.l-comment-section{
-    right: 0%;
-    width: 30%;
-    background-color: $comment-section-bg;
+    width: 300px;
+    z-index: -1;
+    text-align: left;
+    border-radius: 0 5px 5px 0;
+    overflow: hidden;
+
+    ul{
+        list-style: none;
+        padding: 0;
+    }
+    li{
+        border-bottom: 1px solid $notifi-border-bottom-color;
+        background-color: $notifi-item-bg;
+
+        &.read{
+            background-color: $notifi-item-read;
+        }
+
+        &:hover{
+            background-color: $notifi-item-hover;
+        }
+
+        .fa-comment{
+            margin-right: 5px;
+        }  
+    }
+    
+    a{
+        display: block;
+        padding: 7px 12px;
+        color: $nav-item-color-hover;
+        font-size: 13px;
+
+        &:hover{
+            text-decoration: none;
+        }
+    }
 }
 
+#notifications-empty{
+    padding: 11px 10px;
+    
+    li{
+        border: none;
+        background: #eee !important;
+        border-radius: 0 5px 5px 0;
+    }
+}
 
-
+.icon-bell{
+    position: relative;
+}
+.alert-dotted{
+    position: absolute;
+    display: block;
+    top: 9px;
+    right: 6px;
+    width: 12px;
+    height: 12px;
+    text-indent: -999em;
+    background-color: red;
+    border-radius: 10px;
+}

@@ -10,18 +10,8 @@
 
     @include image-2x('../images/logo@2x.png', 106px, 25px);
 }
-.logo{
-    position: absolute;
-    top: 30px;
-    left: 20px;
-    z-index: 99;
-    width: 30px;
-    height: 23px;
-    background: url("../images/logo-small.png");
-    @include image-2x('../images/logo-small@2x.png', 30px, 23px);
-    animation: fadeInLeft 1s 1s alternate backwards;
-}
 
+.fa-size-12{ font-size: 12px; }
 .fa-size-14{ font-size: 14px; }
 .fa-size-16{ font-size: 16px; }
 .fa-size-18{ font-size: 18px; }
@@ -234,82 +224,6 @@
 }
 
 
-
-//Alert
-.icon-bell{
-    position: relative;
-}
-.alert-dotted{
-    position: absolute;
-    display: block;
-    top: 9px;
-    right: 6px;
-    width: 12px;
-    height: 12px;
-    text-indent: -999em;
-    background-color: red;
-    border-radius: 10px;
-}
-
-.pd-nav-item:hover{
-    .notification-block{
-        display: block;
-    }
-}
-.notification-block{
-    position: absolute;
-    display: none;
-    top: 0;
-    left: 42px;
-    width: 300px;
-    z-index: -1;
-    text-align: left;
-    background-color: #eee;
-    @include box-shadow(0px 0px 5px #505050);
-    border-radius: 0 5px 5px 5px;
-    overflow: hidden;
-
-    ul{
-        list-style: none;
-        padding: 0;
-    }
-    li{
-        border-bottom: 1px solid #dadada;
-        background-color: #eee;
-
-        &.read{
-            background-color: #fff;
-        }
-
-        &:hover{
-            background-color: #ececec;
-        }
-
-        .fa-comment{
-            margin-right: 5px;
-        }
-
-        a{
-            padding: 7px 12px;
-            display: block;
-            
-            &:hover{
-                text-decoration: none;
-            }
-        }
-    }
-}
-
-#notifications-empty{
-    padding: 11px 10px;
-    
-    li{
-        border: none;
-        background: #eee !important;
-        border-radius: 0 5px 5px 0;
-    }
-}
-
 .section-filter{
     position: absolute;
     top: 0px;
@@ -369,13 +283,22 @@
     -moz-transition: all 0.3s ease;
 }
 
-.time{
-    font-size: 14px;
-    margin-top: 5px;
-}
+
 
 .sweet-alert {
     p.lead {
         margin-top: 1.5em;
     }
+}
+
+
+.avatar{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 2px 10px 0 0;
+}
+.time{
+    font-size: 11px;
+    margin-top: 3px;
 }
