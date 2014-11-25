@@ -1,6 +1,11 @@
 <div class="comments-wrapper" ng-controller="CommentsCtrl">
   <h3 class="comment-title"><i class="fa fa-comments"></i> ความคิดเห็น</h3>
   <div class="comment-form clearfix">
+
+    <p>Report Priority : 
+      <select ng-options="op.name for op in options"
+        ng-model="flag" ng-change="updateFlag()" ></select></p>
+
     <form role="form" ng-submit="comment();">
 
       <div clas="form-group">
@@ -24,12 +29,11 @@
           required
           placeholder="Your comment here"></textarea>
 
-
         <div class="pd-file-upload file-upload" ng-disabled="submitting">
             <span class="pd-file-upload-area">
               <i class="fa fa-paperclip pd-file-upload-icon"></i><span ng-hide="file[0].name"> ไฟล์แนบ</span>
             </span>
-            <span class="pd-file-upload-name">{{ file[0].name }}</span>
+            <span class="pd-file-upload-name" ng-show="file[0].name">{{ file[0].name }}</span>
             <input class="btn btn-default upload" 
               type="file" 
               ng-file-select="onFileSelect($files)" />

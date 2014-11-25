@@ -2,7 +2,7 @@
 
 angular.module('poddDashboardApp')
 
-.controller('CommentsCtrl', function ($scope, Comments, User, streaming) {
+.controller('CommentsCtrl', function ($scope, Comments, Flags, User, streaming) {
 
     console.log('init comment ctrl');
 
@@ -11,6 +11,8 @@ angular.module('poddDashboardApp')
     }
 
     $scope.loading = false;
+    $scope.options = [{ name: "Green", id: 0 }, { name: "Yellow", id: 1 }, { name: "Red", id: 2 }];
+
     function reset() {
         $scope.message = '';
         $scope.submitting = false;
@@ -83,11 +85,28 @@ angular.module('poddDashboardApp')
         return '@' + item.username;
     };
 
+    $scope.flag = $scope.options[0];
+
+    $scope.updateFlag = function() {
+       $scope.submitting = true;
+
+       var data = {
+            reportId: $scope.$parent.report.id,
+            priority: $scope.flag.id,
+        };
+
+        $scope.loading = true;
+
+        Flags.post(data).$promise.then(function () {
+            $scope.submitting = false;
+            $scope.loading = false;
+        });
+    }
+
     $scope.file = '';
 
     $scope.onFileSelect = function($file) {
         $scope.file = $file;
-        console.log('----------->', $scope.file)
     };
 
     $scope.clearFile = function() {
