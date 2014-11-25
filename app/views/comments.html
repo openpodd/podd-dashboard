@@ -24,16 +24,17 @@
           required
           placeholder="Your comment here"></textarea>
 
-      </div>
-      <div class="file-upload btn btn-default">
-          <span>
-            <i class="fa fa-paperclip"></i><span ng-hide="file[0].name"> Attachment</span>
-          </span>
-          <span>{{ file[0].name }}</span>
-          <input class="btn btn-default upload" 
-            type="file" 
-            ng-disabled="submitting"
-            ng-file-select="onFileSelect($files)" />
+
+        <div class="file-upload btn btn-default" ng-disabled="submitting">
+            <span>
+              <i class="fa fa-paperclip"></i><span ng-hide="file[0].name"> Attachment</span>
+            </span>
+            <span>{{ file[0].name }}</span>
+            <input class="btn btn-default upload" 
+              type="file" 
+              ng-file-select="onFileSelect($files)" />
+        </div>
+
       </div>
 
       <div class="loader spinner" ng-show="loading">
