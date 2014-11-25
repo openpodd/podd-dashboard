@@ -314,10 +314,22 @@
 
 // Wrapper
 .pd-file-upload{
+    position: relative;
+    height: 40px;
     background-color: #eee;
+    border-radius: 5px;
+    
+    .upload{
+        width: 270px;
+        left: 30px;
+    }
+}
+
+.pd-file-upload-area{
+    
 }
 .pd-file-upload-icon{
-    padding: 10px;
+    padding: 15px 10px;
     border-right: 1px solid #ccc;
     
     &:hover{
@@ -335,7 +347,17 @@
 .pd-file-upload-clear{
     padding: 10px;
     color: #fff;
-    background-color: red;
+    background-color: rgb(247, 75, 75);
+    position: absolute;
+    top: 0;
+    right: 0;
+    
+    &:hover{
+        color: #fff;
+    }
+}
+.pd-file-upload-attach{
+    padding: 10px;
 }
 
 .avatar{
