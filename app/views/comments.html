@@ -30,8 +30,9 @@
           placeholder="Your comment here"></textarea>
 
         <div class="pd-file-upload file-upload" ng-disabled="submitting">
-            <span class="pd-file-upload-area">
-              <i class="fa fa-paperclip pd-file-upload-icon"></i><span ng-hide="file[0].name"> ไฟล์แนบ</span>
+            <span class="pd-file-upload-area pull-left">
+              <i class="fa fa-paperclip pd-file-upload-icon"></i>
+              <span ng-hide="file[0].name" class="pd-file-upload-attach"> ไฟล์แนบ</span>
             </span>
             <span class="pd-file-upload-name" ng-show="file[0].name">{{ file[0].name }}</span>
             <input class="btn btn-default upload" 
