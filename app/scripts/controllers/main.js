@@ -1,4 +1,4 @@
-/*global L */
+/*global L, swal */
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -21,6 +21,7 @@ angular.module('poddDashboardApp')
 
     function refreshDashboard() {
         dashboard.get().$promise.then(function (villages) {
+            console.log('refreshDashboard');
             map.setVillages(villages);
             // Because every available village for this user is returned even there
             // is no report. We can use this variable to keep which village
@@ -32,7 +33,6 @@ angular.module('poddDashboardApp')
             });
         });
     }
-
     refreshDashboard();
 
     function isRecentReport(report) {
@@ -140,6 +140,9 @@ angular.module('poddDashboardApp')
 
     map.onClickVillage(function (event, data) {
         console.log('clicked on village', data);
+
+        // unwink first.
+        map.villageUnwink(data);
 
         var query,
             searcher;
@@ -253,14 +256,14 @@ angular.module('poddDashboardApp')
 
     // Watch to turn on filter mode.
     $scope.shared = shared;
-    $scope.$watch('shared.filterMode', function (newValue) {
+    $scope.$watch('shared.filterMode', function (newValue, oldValue) {
         $scope.showReportList = false;
 
         if (newValue) {
             $scope.$broadcast('filter:clearQuery', true);
             map.clearVillages();
         }
-        else {
+        else if ( oldValue && !newValue ) {
             refreshDashboard();
         }
     });

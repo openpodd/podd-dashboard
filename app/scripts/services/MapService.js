@@ -40,6 +40,13 @@ angular.module('poddDashboardApp')
             iconAnchor: [ 80, 80 ],
             html: '<div class="radar-wink"></div>'
         });
+
+        this.iconRadarHidden = L.divIcon({
+            className: 'radar-wink-wrapper radar-hide',
+            iconSize: [ 160, 160 ],
+            iconAnchor: [ 80, 80 ],
+            html: '<div class="radar-wink"></div>'
+        });
     }
 
     Map.prototype.getIconByStatus = function getIconByStatus(village) {
@@ -80,6 +87,12 @@ angular.module('poddDashboardApp')
             village.marker.on('click', function () {
                 self.container.trigger('clicked:village', item);
             });
+
+            // Initiate radar marker, so every village will already has a radar
+            // marker. We will use this instead of create and destroy <div>.
+            if ( !village.radarMarker ) {
+                village.radarMarker = self.createVillageRadarMarker(village);
+            }
         });
 
         // Prevent error when villages is empty array.
@@ -95,9 +108,8 @@ angular.module('poddDashboardApp')
         this.unwinkAll();
     };
 
-    Map.prototype.addReport = function addReport(report, toWink, winkTimeout, unwinkOnClick) {
+    Map.prototype.addReport = function addReport(report, toWink) {
         var self = this,
-            location,
             village = self.villages[ report.administrationAreaId ];
 
         if (village) {
@@ -125,41 +137,29 @@ angular.module('poddDashboardApp')
             self.setVillages([ village ]);
 
             if (toWink) {
-                location = [
-                    village.location.coordinates[1],
-                    village.location.coordinates[0]
-                ];
-
-                // if already has `wink` marker, clear it first.
-                if (village.radarMarker) {
-                    self.unwink(village.radarMarker);
-                }
-
-                village.radarMarker = self.wink(location, winkTimeout || 0);
-
-                if (unwinkOnClick) {
-                    village.marker.on('click', function () {
-                        self.unwink(village.radarMarker);
-                    });
-                }
+                self.villageWink(village);
             }
         }
     };
 
-    Map.prototype.wink = function wink(location, timeout) {
-        var self = this;
+    Map.prototype.createVillageRadarMarker = function createVillageRadarMarker(village) {
+        var location = [
+            village.location.coordinates[1],
+            village.location.coordinates[0]
+        ];
+
+        return this.wink(location, true);
+    };
+
+    Map.prototype.wink = function wink(location, hide) {
+        var self = this,
+            icon = hide ? self.iconRadarHidden : self.iconRadar;
 
         var radarMarker = L.marker(location, {
-            icon: self.iconRadar,
+            icon: icon,
             zIndexOffset: -10
         })
         .addTo(self.radarMarkerLayer);
-
-        if (timeout) {
-            setTimeout(function () {
-                self.radarMarkerLayer.removeLayer(radarMarker);
-            }, timeout);
-        }
 
         return radarMarker;
     };
@@ -170,6 +170,21 @@ angular.module('poddDashboardApp')
 
     Map.prototype.unwinkAll = function unwinkAll() {
         this.radarMarkerLayer.clearLayers();
+    };
+
+    Map.prototype.villageWink = function villageWink(village) {
+        // Automatically create radarMarker on-the-fly.
+        if ( !village.radarMarker ) {
+            village.radarMarker = this.createVillageRadarMarker(village);
+        }
+
+        $(village.radarMarker._icon).removeClass('radar-hide');
+    };
+
+    Map.prototype.villageUnwink = function villageWink(village) {
+        if (village.radarMarker) {
+            $(village.radarMarker._icon).addClass('radar-hide');
+        }
     };
 
     Map.prototype.onClickVillage = function onClickVillage(cb) {
