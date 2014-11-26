@@ -10,6 +10,23 @@ angular.module('poddDashboardApp')
         $scope.comments = Comments.list({ reportId: $scope.$parent.report.id });
     }
 
+    function refreshFlag() {
+        $scope.reportFlag = Flags.list({ reportId: $scope.$parent.report.id, amount:1 }).$promise.then(function (flags) {
+            var tmp = [];
+
+            flags.forEach(function (item) {
+               tmp.push(item);
+            });
+       
+            if(tmp[0]){
+                $scope.flag = $scope.options[tmp[0].priority];
+            }else{
+                $scope.flag = '';
+            }
+        });
+
+    }
+
     $scope.loading = false;
     $scope.options = [{ name: 'Green', id: 0 }, { name: 'Yellow', id: 1 }, { name: 'Red', id: 2 }];
 
@@ -29,6 +46,7 @@ angular.module('poddDashboardApp')
     $scope.$watch('$parent.report', function (newValue) {
         if (newValue) {
             refreshComments();
+            refreshFlag();
         }
     });
 
@@ -85,7 +103,7 @@ angular.module('poddDashboardApp')
         return '@' + item.username;
     };
 
-    $scope.flag = $scope.options[0];
+    // $scope.flag = $scope.options[0];
 
     $scope.updateFlag = function() {
        $scope.submitting = true;
