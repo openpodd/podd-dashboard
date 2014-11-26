@@ -138,36 +138,22 @@ angular.module('poddDashboardApp')
         }
     });
 
-    map.onClickVillage(function (event, data) {
-        console.log('clicked on village', data);
-
-        // unwink first.
-        map.villageUnwink(data);
-
+    $scope.loadVillageReports = function (village) {
         var query,
             searcher;
 
-        // set current village
-        $scope.currentVillage = data;
-
-        // set center to this marker.
-        map.leaflet.panTo([
-            data.location.coordinates[1],
-            data.location.coordinates[0]
-        ]);
-
         if (shared.filterMode) {
             query = {
-                q: 'administrationArea:' + data.id + ' AND ' + shared.filterQuery
+                q: 'administrationArea:' + village.id + ' AND ' + shared.filterQuery
             };
             searcher = Search.query;
         }
         else {
-            query = { administrationArea: data.id };
+            query = { administrationArea: village.id };
             searcher = Reports.list;
         }
 
-        searcher(query).$promise.then(function (items) {
+        return searcher(query).$promise.then(function (items) {
 
             $scope.recentReports = [];
             $scope.olderReports = [];
@@ -189,7 +175,29 @@ angular.module('poddDashboardApp')
             });
 
             $scope.reports = items;
-            $scope.showReportList = true;
+        });
+    };
+
+    map.onClickVillage(function (event, data) {
+        console.log('clicked on village', data);
+
+        // unwink first.
+        map.villageUnwink(data);
+
+        // set current village
+        $scope.currentVillage = data;
+
+        // set center to this marker.
+        map.leaflet.panTo([
+            data.location.coordinates[1],
+            data.location.coordinates[0]
+        ]);
+
+        $scope.showReportList = true;
+        $scope.loadingReportList = true;
+
+        $scope.loadVillageReports(data).then(function () {
+            $scope.loadingReportList = false;
         });
     });
 
