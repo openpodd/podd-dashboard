@@ -1,6 +1,7 @@
 <div class="comments-wrapper" ng-controller="CommentsCtrl">
   <h3 class="comment-title"><i class="fa fa-comments"></i> ความคิดเห็น</h3>
   <div class="comment-form clearfix">
+
     <form role="form" ng-submit="comment();">
 
       <div clas="form-group">
@@ -23,7 +24,6 @@
           ng-model="message"
           required
           placeholder="Your comment here"></textarea>
-
 
         <div class="pd-file-upload file-upload" ng-disabled="submitting">
             <span class="pd-file-upload-area pull-left">
@@ -50,6 +50,10 @@
       
     </form>
   </div>
+
+  <p>Set Report Priority : 
+    <select ng-options="op.name for op in options"
+      ng-model="flag" ng-change="updateFlag()" ></select></p>
 
   <div class="comment-list">
     <ul class="list-unstyled">
