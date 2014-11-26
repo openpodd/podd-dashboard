@@ -11,7 +11,7 @@ angular.module('poddDashboardApp')
     }
 
     $scope.loading = false;
-    $scope.options = [{ name: "Green", id: 0 }, { name: "Yellow", id: 1 }, { name: "Red", id: 2 }];
+    $scope.options = [{ name: 'Green', id: 0 }, { name: 'Yellow', id: 1 }, { name: 'Red', id: 2 }];
 
     function reset() {
         $scope.message = '';
@@ -22,8 +22,8 @@ angular.module('poddDashboardApp')
 
     function clearFile(){
         $scope.file = '';
-        var file_upload = $('.upload').val('').clone(true);
-        $('.upload').replaceWith(file_upload);
+        var fileUpload = $('.upload').val('').clone(true);
+        $('.upload').replaceWith(fileUpload);
     }
 
     $scope.$watch('$parent.report', function (newValue) {
@@ -54,7 +54,7 @@ angular.module('poddDashboardApp')
             reset();
 
         }, function(error){
-            if(error.status == 400){
+            if(error.status === 400){
                 callError(error.data.detail);
             }
         });
@@ -101,7 +101,7 @@ angular.module('poddDashboardApp')
             $scope.submitting = false;
             $scope.loading = false;
         });
-    }
+    };
 
     $scope.file = '';
 

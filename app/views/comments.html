@@ -2,10 +2,6 @@
   <h3 class="comment-title"><i class="fa fa-comments"></i> ความคิดเห็น</h3>
   <div class="comment-form clearfix">
 
-    <p>Report Priority : 
-      <select ng-options="op.name for op in options"
-        ng-model="flag" ng-change="updateFlag()" ></select></p>
-
     <form role="form" ng-submit="comment();">
 
       <div clas="form-group">
@@ -54,6 +50,10 @@
       
     </form>
   </div>
+
+  <p>Set Report Priority : 
+    <select ng-options="op.name for op in options"
+      ng-model="flag" ng-change="updateFlag()" ></select></p>
 
   <div class="comment-list">
     <ul class="list-unstyled">
