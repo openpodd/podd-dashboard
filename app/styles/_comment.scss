@@ -1,0 +1,89 @@
+.comment-list{
+    .form-group{
+        margin-bottom: 1em;
+    }
+}
+.comment-meta{
+    font-size: .75em;
+}
+.comment-post{
+    color: #fff;
+    word-break: break-all;
+
+    .label{
+        display: inline-block;
+        font-size: 14px;
+        margin: 5px 5px 0 0;
+        background-color: #0074d9;
+    }
+}
+.comment-item{
+    padding: 15px 5px;
+    border-bottom: 1px solid #5E5E5E ;
+}
+.comment-title{
+    font-size: 1.85em;
+    margin-bottom: 1em;
+    font-family: ThaiSansNeueRegular;
+    color: #FFF200;
+    margin-top: 0;
+
+    .fa-comments{
+        color: #FFF200;
+        margin: 5px 5px 0 5px;
+        font-size: .9em;
+    }
+}
+.btn-post{
+    margin-top: 1em;
+    width: 100%;
+}
+
+.comment-form{
+    margin-bottom: 2em;
+
+    textarea{
+        height: 70px;
+    }
+}
+
+mentio-menu {
+    z-index: 9999 !important;
+
+    .menu-highlighted {
+        background-color: yellow;
+    }
+
+    .list-group-item.active {
+        background-color: #f5f5f5;
+    }
+
+    .user-search:hover {
+        cursor: pointer;
+    }
+
+    .user-search {
+        .list-group-item-heading, .list-group-item-text {
+            margin-left: 10px;
+        }
+
+        .list-group-item.active {
+            color: #fff;
+            background-color: #428bca;
+            border-color: #428bca;
+        }
+
+        .list-group-item.active .text-muted {
+            color: #ccc;
+        }
+
+        .list-group-item.active .text-primary {
+            color: #fff;
+        }
+
+        .list-group-item {
+            padding: 5px;
+        }
+    }
+
+}
