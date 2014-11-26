@@ -6,7 +6,12 @@
 
     <div loader-spinner ng-show="loadingReportList"></div>
 
-    <div class="content" ng-hide="loadingReportList">
+    <div class="scroller scroller-x scroller-y content-wrapper" ng-if="!loadingReportList"
+         perfect-scrollbar
+         wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"
+         refresh-on-change="reports">
+    <div class="content">
+
         <div id="reports-empty" ng-hide="reports">ยังไม่พบการรายงาน</div>
 
         <div id="recent-reports" ng-show="recentReports">
@@ -86,6 +91,7 @@
             </table>
         </div>
 
+    </div>
     </div>
 
 </div>
