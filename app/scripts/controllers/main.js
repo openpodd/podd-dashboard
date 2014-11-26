@@ -1,13 +1,13 @@
-/*global L, swal */
+/*global L */
 'use strict';
 
 angular.module('poddDashboardApp')
 
 .controller('MainCtrl', [
     '$scope', 'dashboard', 'streaming', 'Map', 'Reports', 'ReportModal',
-    'shared', 'Auth', 'Search', 'Menu', 'Mentions', '$upload',
+    'shared', 'Auth', 'Search', 'Menu', 'Mentions', 'Flags',
     function ($scope, dashboard, streaming,
-              Map, Reports, ReportModal, shared, Auth, Search, Menu) {
+               Map, Reports, ReportModal, shared, Auth, Search, Menu, Flags) {
 
     console.log('IN MainCtrl');
 
@@ -21,7 +21,6 @@ angular.module('poddDashboardApp')
 
     function refreshDashboard() {
         dashboard.get().$promise.then(function (villages) {
-            console.log('refreshDashboard');
             map.setVillages(villages);
             // Because every available village for this user is returned even there
             // is no report. We can use this variable to keep which village
@@ -33,6 +32,7 @@ angular.module('poddDashboardApp')
             });
         });
     }
+
     refreshDashboard();
 
     function isRecentReport(report) {
@@ -77,7 +77,7 @@ angular.module('poddDashboardApp')
         // update current list view if match the current village viewing.
         // TODO: fix angular Array.push mystery that not update
         // NOTE: $digest() does not help
-        if ($scope.currentVillage && data.administrationAreaId === $scope.currentVillage.id) {
+        if (data.administrationAreaId === $scope.currentVillage.id) {
             if ( isRecentReport(data) ) {
                 $scope.recentReports.splice(0, 0, data);
             }
@@ -264,14 +264,14 @@ angular.module('poddDashboardApp')
 
     // Watch to turn on filter mode.
     $scope.shared = shared;
-    $scope.$watch('shared.filterMode', function (newValue, oldValue) {
+    $scope.$watch('shared.filterMode', function (newValue) {
         $scope.showReportList = false;
 
         if (newValue) {
             $scope.$broadcast('filter:clearQuery', true);
             map.clearVillages();
         }
-        else if ( oldValue && !newValue ) {
+        else {
             refreshDashboard();
         }
     });

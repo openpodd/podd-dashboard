@@ -56,6 +56,7 @@ angular
   .factory('addTrailingSlashInterceptor', function ($q) {
     var apiUrls = [
       /\/api-token-auth/,
+      /\/flags/,
       /\/reports/,
       /\/reportType/,
       /\/dashboard/,
