@@ -61,48 +61,6 @@
     }
 }
 
-.badge-good{ background-color: #5cb85c; }
-.badge-bad{ background-color: #d2322d; }
-
-.pd-table{
-    > thead > tr{
-        background-color: #494949;
-        > th{
-            border-bottom: none;
-            color: #fff;
-        }
-    }
-    > tbody > tr > td{
-        border: none;
-    }
-    > tbody > tr:nth-child(odd) > td{
-        background-color: #353535;
-    }
-    tr > td:first-child, tr > th:first-child{
-        padding-left: 20px;
-    }
-    > tbody > tr:hover {
-        color: lighten(#909090, 30%);
-        // font-weight: bold;
-        cursor: pointer;
-    }
-    > tbody > tr.report-positive:hover {
-        cursor: default;
-    }
-    tr:hover{
-        td{
-            background-color: #444 !important;
-        }
-    }
-}
-.pd-table-title{
-    margin-bottom: 15px;
-    padding-left: 20px;
-    color: #fff;
-    font-size: 1.7em;
-    font-family: ThaiSansNeueRegular;
-}
-
 .modal-dialog{
     z-index: 1041;
 }

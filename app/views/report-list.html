@@ -1,86 +1,89 @@
-<div class="reports-list pd-sidebar-right" ng-show="showReportList">
-    <div class="pd-sidebar-title clearfix">
-        <h2 class="pull-left">
-          <i class="fa fa-map-marker pull-left fa-size-18"></i>{{ currentVillage.address }}
-        </h2>
+<div class="reports-list l-report-section l-section" ng-show="showReportList">
+    <div class="title clearfix">
+        <h2 class="pull-left"><i class="fa fa-stethoscope  pull-left fa-size-28"></i>รายงาน</h2>
         <i class="fa fa-times pull-right" ng-click="closeReportList()"></i>
     </div>
+    
+    <div class="content">
+        <div id="reports-empty" ng-hide="reports">ยังไม่พบการรายงาน</div>
+        
+        <div id="recent-reports" ng-show="recentReports">
+        <p>ตำแหน่ง : {{ currentVillage.address }}</p>
+        <h3 class="pd-table-title">รายงานล่าสุด (ภายใน 2 อาทิตย์)</h3>
+            <table class="table table-striped pd-table">
+                <thead>
+                    <tr>
+                        <th>Flag</th>
+                        <th>วันที่รายงาน</th>
+                        <th>วันที่เกิดเหตุ</th>
+                        <th>ประเภท</th>
+                        <th>สถานะ</th>
+                        <th>ผู้รายงาน</th>
+                        <th></th>
+                    </tr>
+                    </thead>
 
-  <div id="reports-empty" ng-hide="reports">
-    ยังไม่พบการรายงาน
-  </div>
+                    <tbody>
+                    <tr ng-repeat="report in recentReports | orderBy:'-date' " id="report-{{ report.id }}"
+                        ng-click="onClickReport(report)"
+                        ng-class="{ 'report-positive': !report.negative }">
+                        <td><i class="fa fa-times pull-right" ng-click="closeReportList()"></i></td>    
+                        <td ng-bind="report.date | amDateFormat:'D MMM YYYY HH:mm'"></td>
+                        <td>
+                        <span ng-if="report.negative">
+                          {{  report.incidentDate | amDateFormat:'D MMM YYYY' }}
+                        </span>
+                        <div class="text-center" ng-if="!report.negative">-</div>
+                        </td>
+                        <td ng-bind="report.reportTypeName"></td>
+                        <td>
+                         <span ng-show="report.negative" class="badge badge-bad">Bad</span>
+                         <span ng-hide="report.negative" class="badge badge-good">Good</span>
+                        </td>
+                        <td ng-bind="report.createdByName"></td>
+                        <td>
+                        <i class="fa fa-certificate report-new-icon" ng-show="report.isNew"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+       
+        <div id="older-reports" ng-show="olderReports">
+            <h3 class="pd-table-title">รายงานย้อนหลัง</h3>
+            <table class="table table-striped pd-table">
+              <thead>
+                <tr>
+                  <th>วันที่รายงาน</th>
+                  <th>วันที่เกิดเหตุ</th>
+                  <th>ประเภท</th>
+                  <th>สถานะ</th>
+                  <th>ผู้รายงาน</th>
+                </tr>
+              </thead>
 
-  <div id="recent-reports" ng-show="recentReports">
-    <h3 class="pd-table-title">รายงานล่าสุด (ภายใน 2 อาทิตย์)</h3>
-    <table class="table table-striped pd-table">
-      <thead>
-        <tr>
-          <th>วันที่รายงาน</th>
-          <th>วันที่เกิดเหตุ</th>
-          <th>ประเภท</th>
-          <th>สถานะ</th>
-          <th>ผู้รายงาน</th>
-          <th></th>
-        </tr>
-      </thead>
+              <tbody>
+                <tr ng-repeat="report in olderReports | orderBy:'-date' " id="report-{{ report.id }}"
+                    ng-click="onClickReport(report)"
+                    ng-class="{ 'report-positive': !report.negative }">
+                  <td ng-bind="report.date | amDateFormat:'D MMM YYYY HH:mm'"></td>
+                  <td>
+                    <span ng-if="report.negative">
+                      {{  report.incidentDate | amDateFormat:'D MMM YYYY' }}
+                    </span>
+                    <div class="text-center" ng-if="!report.negative">-</div>
+                  </td>
+                  <td ng-bind="report.reportTypeName"></td>
+                  <td>
+                     <span ng-show="report.negative" class="badge badge-bad">Bad</span>
+                     <span ng-hide="report.negative" class="badge badge-good">Good</span>
+                  </td>
+                  <td ng-bind="report.createdByName"></td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+        
+    </div>
 
-      <tbody>
-        <tr ng-repeat="report in recentReports | orderBy:'-date' " id="report-{{ report.id }}"
-            ng-click="onClickReport(report)"
-            ng-class="{ 'report-positive': !report.negative }">
-          <td ng-bind="report.date | amDateFormat:'D MMM YYYY HH:mm'"></td>
-          <td>
-            <span ng-if="report.negative">
-              {{  report.incidentDate | amDateFormat:'D MMM YYYY' }}
-            </span>
-            <div class="text-center" ng-if="!report.negative">-</div>
-          </td>
-          <td ng-bind="report.reportTypeName"></td>
-          <td>
-             <span ng-show="report.negative" class="badge badge-bad">Bad</span>
-             <span ng-hide="report.negative" class="badge badge-good">Good</span>
-          </td>
-          <td ng-bind="report.createdByName"></td>
-          <td>
-            <i class="fa fa-certificate report-new-icon" ng-show="report.isNew"></i>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div id="older-reports" ng-show="olderReports">
-    <h3 class="pd-table-title">รายงานย้อนหลัง</h3>
-    <table class="table table-striped pd-table">
-      <thead>
-        <tr>
-          <th>วันที่รายงาน</th>
-          <th>วันที่เกิดเหตุ</th>
-          <th>ประเภท</th>
-          <th>สถานะ</th>
-          <th>ผู้รายงาน</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr ng-repeat="report in olderReports | orderBy:'-date' " id="report-{{ report.id }}"
-            ng-click="onClickReport(report)"
-            ng-class="{ 'report-positive': !report.negative }">
-          <td ng-bind="report.date | amDateFormat:'D MMM YYYY HH:mm'"></td>
-          <td>
-            <span ng-if="report.negative">
-              {{  report.incidentDate | amDateFormat:'D MMM YYYY' }}
-            </span>
-            <div class="text-center" ng-if="!report.negative">-</div>
-          </td>
-          <td ng-bind="report.reportTypeName"></td>
-          <td>
-             <span ng-show="report.negative" class="badge badge-bad">Bad</span>
-             <span ng-hide="report.negative" class="badge badge-good">Good</span>
-          </td>
-          <td ng-bind="report.createdByName"></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
 </div>
