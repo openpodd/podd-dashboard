@@ -22,18 +22,18 @@
         <div id="reports-empty" ng-hide="reports">ยังไม่พบการรายงาน</div>
 
         <div id="recent-reports" ng-show="recentReports">
-        <p>ตำแหน่ง : {{ currentVillage.address }}</p>
+        <h3 class="pd-table-title">ตำแหน่ง : {{ currentVillage.address }}</h3>
         <h3 class="pd-table-title">รายงานล่าสุด (ภายใน 2 อาทิตย์)</h3>
             <table class="table table-striped pd-table">
                 <thead>
                     <tr>
-                        <th>Flag</th>
-                        <th>วันที่รายงาน</th>
-                        <th>วันที่เกิดเหตุ</th>
-                        <th>ประเภท</th>
-                        <th>สถานะ</th>
-                        <th>ผู้รายงาน</th>
-                        <th></th>
+                        <th class="pd-table-flag"></th>
+                        <th class="pd-table-date">วันที่รายงาน</th>
+                        <th class="pd-table-report-date">วันที่เกิดเหตุ</th>
+                        <th class="pd-table-type">ประเภท</th>
+                        <th class="pd-table-status">สถานะ</th>
+                        <th class="pd-table-reporter">ผู้รายงาน</th>
+                        <th class="pd-table-notification"></th>
                     </tr>
                     </thead>
 

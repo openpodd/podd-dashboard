@@ -36,7 +36,8 @@ $badge-bad: #d2322d;
 //        background-color: $table-row-odd-bg;
     }
     tr > td:first-child, tr > th:first-child{
-        padding-left: 20px;
+        width: 32px;
+        padding-left: 7px;
     }
     > tbody > tr:hover {
 //        color: lighten(#909090, 30%);
@@ -52,10 +53,9 @@ $badge-bad: #d2322d;
     }
 }
 .pd-table-title{
-    margin-bottom: 15px;
-    padding-left: 20px;
-    color: $table-title-color;
-    font-size: 1.7em;
+    margin: 0 0 15px;
+    font-size: 1.8em;
+    line-height: 1em;
     font-family: ThaiSansNeueRegular;
 }
 
