@@ -2,15 +2,19 @@
     border-top: 4px solid #DBDBDB;
     padding-top: 20px;
 }
+.comment-title{
+    font-size: 1.85em;
+    font-family: ThaiSansNeueRegular;
+    margin-top: 0;
 
-.comment-list{
-    .form-group{
-        margin-bottom: 1em;
+    .fa-comments{
+        margin: 5px 5px 0 5px;
+        font-size: .9em;
     }
 }
-.comment-meta{
-    font-size: .75em;
-    color: #A5A5A5;
+.comment-item{
+    padding: 15px 5px;
+    border-bottom: 1px solid #e5e5e5 ;
 }
 .comment-post{
     color: #666;
@@ -23,20 +27,17 @@
         background-color: #F5BA84;
     }
 }
-.comment-item{
-    padding: 15px 5px;
-    border-bottom: 1px solid #e5e5e5 ;
+.comment-meta{
+    font-size: .75em;
+    color: #A5A5A5;
 }
-.comment-title{
-    font-size: 1.85em;
-    font-family: ThaiSansNeueRegular;
-//    color: #FFF200;
-    margin-top: 0;
 
-    .fa-comments{
-//        color: #FFF200;
-        margin: 5px 5px 0 5px;
-        font-size: .9em;
+/*--- FORM ---*/
+.comment-form{
+    margin-bottom: 2em;
+
+    textarea{
+        height: 70px;
     }
 }
 .btn-post{
@@ -53,13 +54,10 @@
     }
 }
 
-.comment-form{
-    margin-bottom: 2em;
 
-    textarea{
-        height: 70px;
-    }
-}
+//***************************
+// MENTION
+//***************************
 
 mentio-menu {
     z-index: 9999 !important;

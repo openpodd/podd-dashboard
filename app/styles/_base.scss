@@ -55,6 +55,9 @@
     }
 }
 
+//***************************
+// TITLE
+//***************************
 .subheading{
     margin: 0 0 15px;
     font: 1.8em / 1em ThaiSansNeueRegular;
@@ -65,20 +68,7 @@
 }
 
 
-// Loading
-.loader-container{
-    position: relative;
-    height: 100%;
-}
-.loader{
-    position: absolute;
-    top: -50px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 30px;
-    margin: auto !important;
-}
+
 
 
 
@@ -295,11 +285,7 @@
     margin-top: 3px;
 }
 
-.loader.spinner {
-    [class^="bounce"] {
-        background-color: #777;
-    }
-}
+
 
 .scroller {
     position: relative;

@@ -1,24 +1,16 @@
+//***************************
+// Old Layout
+//***************************
+
 .pd-container{
     position: relative;
 }
 
 .pd-section-left{
-//    @include box-shadow(1px 1px 4px #ccc);
-//    position: absolute;
-//    top: 0px;
-//    left: -150px;
-//    width: 150px;
-//    height: 100%;
-//    z-index: 999;
-//    padding: 15px 15px;
-//    background: rgba(255,255,255, 0.7);
-
     transition: all 0.5s ease;
     -webkit-transition: all 0.5s ease;
     -ms-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
-
-//    -webkit-filter: blur(2px); filter: url(#blur-effect-1);
 
     &.ng-hide-remove {}
     &.ng-hide-add {}
@@ -93,6 +85,7 @@ $comment-section-bg: #333;
     }
 }
 .l-report-section{
+    @include box-shadow(1px 0px 5px rgba(0, 0, 0, 0.1));
     left: 50px;
     width: 47%;
     background-color: $report-section-bg;
@@ -138,4 +131,11 @@ $comment-section-bg: #333;
     right: 0%;
     width: 30%;
     background-color: $comment-section-bg;
+}
+
+// Close Button
+.title {
+    .fa-times:hover{
+        cursor: pointer;
+    }
 }
