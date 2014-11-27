@@ -34,20 +34,28 @@ angular.module('poddDashboardApp')
         verify: function () {
             if ( ! $.cookie('token') ) {
                 shared.loggedIn = false;
+                return false;
+            }
+            else {
+                shared.loggedIn = true;
+                return true;
             }
         },
 
         requireLogin: function ($scope) {
             var self = this;
 
-            // Loop check
-            var promise = $interval(function () {
-                self.verify();
+            function check() {
+              self.verify();
 
-                if (!shared.loggedIn) {
-                    $location.url('/login');
-                }
-            }, 1000);
+              if (!shared.loggedIn) {
+                $location.url('/login');
+              }
+            }
+
+            // Loop check
+            check();
+            var promise = $interval(check, 500);
 
             $scope.$on('$destroy', function () {
                 $interval.cancel(promise);

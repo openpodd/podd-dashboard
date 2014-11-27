@@ -23,6 +23,10 @@ angular.module('poddDashboardApp')
 
     Auth.requireLogin($scope);
 
+    $scope.$watch('shared.loggedIn', function (newValue) {
+        $scope.isLoggedIn = newValue;
+    });
+
     Menu.setActiveMenu('home');
 
     var center = [13.791177699, 100.58814079],
@@ -295,15 +299,16 @@ angular.module('poddDashboardApp')
     };
 
     // Watch to turn on filter mode.
-    $scope.shared = shared;
     $scope.$watch('shared.filterMode', function (newValue) {
         $scope.showReportList = false;
 
         if (newValue) {
             $scope.$broadcast('filter:clearQuery', true);
             map.clearVillages();
+            $scope.closeModal();
         }
         else {
+            $scope.closeModal();
             refreshDashboard();
         }
     });

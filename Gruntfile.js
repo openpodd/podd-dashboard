@@ -81,6 +81,10 @@ module.exports = function (grunt) {
                 '/bower_components',
                 connect.static('./bower_components')
               ),
+              connect().use(
+                '/fonts/bootstrap',
+                connect.static('./bower_components/bootstrap-sass-official/assets/fonts/bootstrap')
+              ),
               connect.static(appConfig.app)
             ];
           }

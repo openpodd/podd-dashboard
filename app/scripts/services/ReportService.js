@@ -36,6 +36,8 @@ angular.module('poddDashboardApp')
             return this;
         },
         close: function () {
+            init();
+            
             $rootScope.willShowReportView = false;
             modal.trigger('hide:report');
 

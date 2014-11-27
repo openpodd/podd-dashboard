@@ -100,6 +100,12 @@ angular
     };
   })
 
+  .run(function ($location, Auth) {
+      if ( ! Auth.verify() ) {
+          $location.url('/login');
+      }
+  })
+
   .config(function ($routeProvider, $httpProvider) {
     $httpProvider.interceptors.push('addTrailingSlashInterceptor');
 
