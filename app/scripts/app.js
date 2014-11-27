@@ -50,7 +50,8 @@ angular
     'angularMoment',
     'mentio',
     'ui.bootstrap',
-    'angularFileUpload'
+    'angularFileUpload',
+    'perfect_scrollbar'
   ])
 
   .factory('addTrailingSlashInterceptor', function ($q) {

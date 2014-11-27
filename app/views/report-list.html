@@ -3,10 +3,24 @@
         <h2 class="pull-left"><i class="fa fa-stethoscope  pull-left fa-size-28"></i>รายงาน</h2>
         <i class="fa fa-times pull-right" ng-click="closeReportList()"></i>
     </div>
-    
+
+    <div loader-spinner ng-show="loadingReportList"></div>
+
+    <div id="reports-error" class="alert alert-danger" role="alert"
+         ng-show="loadingReportListError">
+      <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+      เกิดข้อผิดพลาด ไม่สามารถดึงข้อมูลรายการรายงานได้
+    </div>
+
+    <div class="scroller scroller-x scroller-y content-wrapper"
+         ng-if="!loadingReportList && !loadingReportListError"
+         perfect-scrollbar
+         wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"
+         refresh-on-change="reports">
     <div class="content">
+
         <div id="reports-empty" ng-hide="reports">ยังไม่พบการรายงาน</div>
-        
+
         <div id="recent-reports" ng-show="recentReports">
         <h3 class="pd-table-title">ตำแหน่ง : {{ currentVillage.address }}</h3>
         <h3 class="pd-table-title">รายงานล่าสุด (ภายใน 2 อาทิตย์)</h3>
@@ -27,7 +41,7 @@
                     <tr ng-repeat="report in recentReports | orderBy:'-date' " id="report-{{ report.id }}"
                         ng-click="onClickReport(report)"
                         ng-class="{ 'report-positive': !report.negative }">
-                        <td><i class="fa fa-flag"></i></td>    
+                        <td><i class="fa fa-times pull-right" ng-click="closeReportList()"></i></td>
                         <td ng-bind="report.date | amDateFormat:'D MMM YYYY HH:mm'"></td>
                         <td>
                         <span ng-if="report.negative">
@@ -48,7 +62,7 @@
                 </tbody>
             </table>
         </div>
-       
+
         <div id="older-reports" ng-show="olderReports">
             <h3 class="pd-table-title">รายงานย้อนหลัง</h3>
             <table class="table table-striped pd-table">
@@ -83,7 +97,8 @@
               </tbody>
             </table>
         </div>
-        
+
+    </div>
     </div>
 
 </div>

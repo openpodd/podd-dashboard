@@ -61,4 +61,15 @@ angular.module('poddDashboardApp')
     return function (text) {
         return text.replace(/\@\[(\w+)\]/g, '<span class="label label-info">@$1</span>');
     };
+})
+
+.directive('loaderSpinner', function () {
+    return {
+        strict: 'A',
+        template: '<div class="loader spinner">' +
+                     '<div class="bounce1"></div>' +
+                     '<div class="bounce2"></div>' +
+                     '<div class="bounce3"></div>' +
+                  '</div>'
+    };
 });

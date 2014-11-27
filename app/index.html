@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
     <link rel="stylesheet" href="bower_components/bootstrap-sweetalert/lib/sweet-alert.css" />
-    <link rel="stylesheet" href="bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css" />
+    <link rel="stylesheet" href="bower_components/perfect-scrollbar/min/perfect-scrollbar.min.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css">
@@ -27,7 +27,7 @@
     <![endif]-->
 
 <div class="pd-section-nav" ng-controller="MenuCtrl">
-    <div class="pd-section-left" ng-hide="isActiveMenu('login')" ng-cloak>
+    <div class="pd-section-left" ng-show="shared.loggedIn" ng-cloak>
     <!--   <div ng-init="isShowNav = true"></div>-->
         <div class="pd-container" >
            <img src="images/logo-small.png" alt="" class="logo"/>
@@ -123,8 +123,9 @@
     <script src="bower_components/angular-moment/angular-moment.js"></script>
     <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
     <script src="bower_components/bootstrap-sweetalert/lib/sweet-alert.js"></script>
-    <script src="bower_components/jquery-mousewheel/jquery.mousewheel.js"></script>
-    <script src="bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js"></script>
+    <script src="bower_components/perfect-scrollbar/min/perfect-scrollbar.min.js"></script>
+    <script src="bower_components/perfect-scrollbar/min/perfect-scrollbar.with-mousewheel.min.js"></script>
+    <script src="bower_components/angular-perfect-scrollbar/src/angular-perfect-scrollbar.js"></script>
     <!-- endbower -->
     <script src="bower_components/ment.io/dist/mentio.js"></script>
     <script src="bower_components/moment/locale/th.js"></script>

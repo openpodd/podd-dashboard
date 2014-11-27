@@ -12,14 +12,14 @@
 //    z-index: 999;
 //    padding: 15px 15px;
 //    background: rgba(255,255,255, 0.7);
-        
+
     transition: all 0.5s ease;
     -webkit-transition: all 0.5s ease;
     -ms-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
-    
+
 //    -webkit-filter: blur(2px); filter: url(#blur-effect-1);
-    
+
     &.ng-hide-remove {}
     &.ng-hide-add {}
 }
@@ -35,12 +35,12 @@
     color: #909090;
     background-color: #3c3c3c;
     overflow-y: scroll;
-    
+
     &.ng-hide-remove {
         -webkit-animation: fadeInRight .5s .2s alternate forwards;
         opacity: 0;
     }
-    
+
     &.ng-hide-add{
         -webkit-animation: fadeOutRight .5s .2s alternate forwards;
     }
@@ -59,22 +59,25 @@ $comment-section-bg: #333;
     position: absolute;
     top: 0;
     height: 100%;
-    
+
     .title{
+        height: 10%;
         padding: 20px;
         font-size: 20px;
         background-color: rgba(190, 190, 190, 0.2);
-        
+
         font-size: 1.7em;
         font-family: ThaiSansNeueRegular;
-        
+
         h2{
             margin: 0;
         }
     }
-    .content{
+    .content-wrapper {
         height: 90%;
-        padding: 15px 10px;
+    }
+    .content {
+        padding: 10px;
     }
 }
 .l-report-section{
@@ -82,19 +85,19 @@ $comment-section-bg: #333;
     width: 40%;
     background-color: $report-section-bg;
     z-index: 9998;
-    
+
     &.ng-hide-remove {
         -webkit-animation: fadeInLeft .5s .2s alternate forwards;
         opacity: 0;
     }
-    
+
     &.ng-hide-add{
         -webkit-animation: fadeOutLeft .5s .2s alternate forwards;
     }
 }
 .l-info-section{ /* Wrapping detail & comment section */
     top: 0;
-    left: 43.5%;  
+    left: 43.5%;
     width: 56.5%;
     z-index: 9990;
 }

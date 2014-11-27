@@ -54,4 +54,13 @@ angular.module('poddDashboardApp')
             };
         }
     };
+})
+
+.directive('ReportView', function () {
+  return {
+      strict: 'A',
+      link: function () {
+          // NOTE: see ReportService.js in factory ReportModal.
+      }
+  };
 });

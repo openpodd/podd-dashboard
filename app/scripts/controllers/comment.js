@@ -2,12 +2,27 @@
 
 angular.module('poddDashboardApp')
 
-.controller('CommentsCtrl', function ($scope, Comments, Flags, User, streaming) {
+.controller('CommentsCtrl', function ($scope, Comments, Flags, User, streaming, FailRequest, shared) {
 
     console.log('init comment ctrl');
 
     function refreshComments() {
-        $scope.comments = Comments.list({ reportId: $scope.$parent.report.id });
+        $scope.loadingReportComments = true;
+        $scope.loadingReportCommentsError = false;
+
+        // TODO: remove
+        var searcher = Comments.list;
+        if (shared.rcError) searcher = FailRequest.query;
+
+        $scope.comments = searcher({ reportId: $scope.$parent.report.id });
+
+        $scope.comments.$promise
+            .catch(function () {
+                $scope.loadingReportCommentsError = true;
+            })
+            .finally(function () {
+                $scope.loadingReportComments = false;
+            });
     }
 
     function refreshFlag() {
@@ -17,7 +32,7 @@ angular.module('poddDashboardApp')
             flags.forEach(function (item) {
                tmp.push(item);
             });
-       
+
             if(tmp[0]){
                 $scope.flag = $scope.options[tmp[0].priority];
             }else{
@@ -81,10 +96,10 @@ angular.module('poddDashboardApp')
     function callError(detail){
         $scope.loading = false;
         swal({title: '', text: detail, type: 'error', confirmButtonText: 'ตกลง' },
-            function(isConfirm){   
-                if(isConfirm) { 
+            function(isConfirm){
+                if(isConfirm) {
                     $scope.submitting = false;
-                } 
+                }
             }
         );
     }

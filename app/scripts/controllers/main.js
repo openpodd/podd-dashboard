@@ -5,11 +5,21 @@ angular.module('poddDashboardApp')
 
 .controller('MainCtrl', [
     '$scope', 'dashboard', 'streaming', 'Map', 'Reports', 'ReportModal',
-    'shared', 'Auth', 'Search', 'Menu', 'Mentions', 'Flags', 
+    'shared', 'Auth', 'Search', 'Menu', 'Mentions', 'Flags', 'FailRequest',
     function ($scope, dashboard, streaming,
-               Map, Reports, ReportModal, shared, Auth, Search, Menu, Flags) {
+               Map, Reports, ReportModal, shared, Auth, Search, Menu, Mentions, Flags, FailRequest) {
 
     console.log('IN MainCtrl');
+
+    /**
+     * This for debug only
+     * TODO: remove when done debugging.
+     */
+    shared.rlError = false;
+    shared.rvError = false;
+    shared.rcError = false;
+    $scope.shared = shared;
+    /* -- end debugging code -- */
 
     Auth.requireLogin($scope);
 
@@ -138,33 +148,24 @@ angular.module('poddDashboardApp')
         }
     });
 
-    map.onClickVillage(function (event, data) {
-        console.log('clicked on village', data);
-
+    $scope.loadVillageReports = function (village) {
         var query,
             searcher;
 
-        // set current village
-        $scope.currentVillage = data;
-
-        // set center to this marker.
-        map.leaflet.panTo([
-            data.location.coordinates[1],
-            data.location.coordinates[0]
-        ]);
-
         if (shared.filterMode) {
             query = {
-                q: 'administrationArea:' + data.id + ' AND ' + shared.filterQuery
+                q: 'administrationArea:' + village.id + ' AND ' + shared.filterQuery
             };
             searcher = Search.query;
         }
         else {
-            query = { administrationArea: data.id };
+            query = { administrationArea: village.id };
             searcher = Reports.list;
         }
+        // TODO: remove
+        if (shared.rlError) searcher = FailRequest.query;
 
-        searcher(query).$promise.then(function (items) {
+        return searcher(query).$promise.then(function (items) {
 
             $scope.recentReports = [];
             $scope.olderReports = [];
@@ -186,7 +187,33 @@ angular.module('poddDashboardApp')
             });
 
             $scope.reports = items;
-            $scope.showReportList = true;
+        })
+        .catch(function () {
+            $scope.loadingReportListError = true;
+        });
+    };
+
+    map.onClickVillage(function (event, data) {
+        console.log('clicked on village', data);
+
+        // unwink first.
+        map.villageUnwink(data);
+
+        // set current village
+        $scope.currentVillage = data;
+
+        // set center to this marker.
+        map.leaflet.panTo([
+            data.location.coordinates[1],
+            data.location.coordinates[0]
+        ]);
+
+        $scope.showReportList = true;
+        $scope.loadingReportList = true;
+        $scope.loadingReportListError = false;
+
+        $scope.loadVillageReports(data).then(function () {
+            $scope.loadingReportList = false;
         });
     });
 
@@ -195,12 +222,15 @@ angular.module('poddDashboardApp')
         $scope.recentReports = null;
         $scope.olderReports = null;
         $scope.showReportList = false;
+
+        $scope.report = null;
+        ReportModal.close();
     };
 
     $scope.initReportModal = function () {
         ReportModal.init();
 
-        ReportModal.on('hide.bs.modal', function () {
+        ReportModal.on('hide:report', function () {
             $scope.report = null;
         });
     };
@@ -214,7 +244,16 @@ angular.module('poddDashboardApp')
     };
 
     $scope.viewReport = function (reportId) {
-        Reports.get({ reportId: reportId }).$promise.then(function (data) {
+        ReportModal.show();
+        $scope.loadingReportView = true;
+        $scope.loadingReportViewError = false;
+
+        // TODO: remove
+        var searcher;
+        if (shared.rvError) searcher = FailRequest;
+        else searcher = Reports;
+
+        searcher.get({ reportId: reportId }).$promise.then(function (data) {
             console.log('loaded report data', data);
 
             var tmpFormData = [], index;
@@ -231,8 +270,6 @@ angular.module('poddDashboardApp')
             }
 
             $scope.report = data;
-
-            ReportModal.show();
         })
         .catch(function (err) {
             if (err.status === 403) {
@@ -244,6 +281,12 @@ angular.module('poddDashboardApp')
                     type: 'error'
                 });
             }
+            else {
+                $scope.loadingReportViewError = true;
+            }
+        })
+        .finally(function () {
+            $scope.loadingReportView = false;
         });
     };
 

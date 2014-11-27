@@ -276,7 +276,7 @@
     height: 40px;
     background-color: #eee;
     border-radius: 5px;
-    
+
     .upload{
         width: 270px;
         left: 30px;
@@ -284,12 +284,12 @@
 }
 
 .pd-file-upload-area{
-    
+
 }
 .pd-file-upload-icon{
     padding: 15px 10px;
     border-right: 1px solid #ccc;
-    
+
     &:hover{
         background-color: #ddd;
     }
@@ -309,7 +309,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    
+
     &:hover{
         color: #fff;
     }
@@ -327,4 +327,21 @@
 .time{
     font-size: 11px;
     margin-top: 3px;
+}
+
+.loader.spinner {
+    [class^="bounce"] {
+        background-color: #f00;
+    }
+}
+
+.scroller {
+    position: relative;
+}
+
+.scroller-x {
+    overflow-x: hidden;
+}
+.scroller-y {
+    overflow-y: hidden;
 }
