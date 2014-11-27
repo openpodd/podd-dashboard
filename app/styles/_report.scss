@@ -11,16 +11,16 @@
 // REPORT TABLE
 ************************/
 
-$table-thead-row-bg: #666;
-$table-th-row-color: #fff;
+$table-thead-row-bg: #ddd;
+$table-th-row-color: #666;
 $table-font-color: #666;
 $table-row-odd-bg: #353535;
 $table-row-hover-bg: #f2f2f2;
-$table-title-color: #fff;
-$table-title-bg: #494949;
+$table-title-color: #666;
+$table-title-bg: #ccc;
 
 $badge-good-color: #5cb85c;
-$badge-bad: #d2322d;
+$badge-bad: #FF6D69;
 
 .pd-table{
     > thead > tr{
@@ -67,6 +67,7 @@ $badge-bad: #d2322d;
 .pd-table-notification{ width: 25px; }
 
 .pd-table-title{
+    width: 99.9%;
     margin: 0;
     padding: 10px;
     font-size: 1.8em;

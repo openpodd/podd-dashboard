@@ -1,3 +1,8 @@
+.comments-wrapper{
+    border-top: 4px solid #DBDBDB;
+    padding-top: 20px;
+}
+
 .comment-list{
     .form-group{
         margin-bottom: 1em;
@@ -5,21 +10,22 @@
 }
 .comment-meta{
     font-size: .75em;
+    color: #A5A5A5;
 }
 .comment-post{
-    color: #fff;
+    color: #666;
     word-break: break-all;
 
     .label{
         display: inline-block;
         font-size: 14px;
         margin: 5px 5px 0 0;
-        background-color: #0074d9;
+        background-color: #F5BA84;
     }
 }
 .comment-item{
     padding: 15px 5px;
-    border-bottom: 1px solid #5E5E5E ;
+    border-bottom: 1px solid #e5e5e5 ;
 }
 .comment-title{
     font-size: 1.85em;

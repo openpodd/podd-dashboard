@@ -69,12 +69,18 @@
         <li class="comment-item"
             blink="comment.isNew"
             ng-repeat="comment in comments | orderBy:'-createdAt' ">
-          <p class="comment-post" ng-bind-html="comment.message | htmlToPlainText | renderMention"></p>
-          <div class="comment-meta">
-              <a href="{{ comment.fileUrl }}" target="_blank" ng-show="comment.fileUrl"><i class="fa fa-paperclip"></i> ดูไฟล์แนบ</a>
-              <span class="">เมื่อ <span am-time-ago="comment.createdAt"></span></span>
-              <span class="">โดย {{ comment.createdBy }}</span>
-          </div>
+            
+            <div class="row">
+                <div class="col-xs-1"><img src="images/avatar.jpg" alt="avatar" class="pull-left avatar avatar-w4"></div>
+                <div class="col-xs-11">
+                    <p class="comment-post" ng-bind-html="comment.message | htmlToPlainText | renderMention"></p>
+                    <div class="comment-meta">
+                      <a href="{{ comment.fileUrl }}" target="_blank" ng-show="comment.fileUrl"><i class="fa fa-paperclip"></i> ดูไฟล์แนบ</a>
+                      <span class="">เมื่อ <span am-time-ago="comment.createdAt"></span></span>
+                      <span class="">โดย {{ comment.createdBy }}</span>
+                    </div>
+                </div>
+            </div>
         </li>
       </ul>
     </div>
