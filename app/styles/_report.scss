@@ -11,26 +11,30 @@
 // REPORT TABLE
 ************************/
 
-$table-thead-row-bg: #494949;
+$table-thead-row-bg: #666;
 $table-th-row-color: #fff;
+$table-font-color: #666;
 $table-row-odd-bg: #353535;
-$table-row-hover-bg: #444;
-$table-title-color: #444;
+$table-row-hover-bg: #f2f2f2;
+$table-title-color: #fff;
+$table-title-bg: #494949;
 
 $badge-good-color: #5cb85c;
 $badge-bad: #d2322d;
 
 .pd-table{
     > thead > tr{
-//        background-color: $table-thead-row-bg;
+        background-color: $table-thead-row-bg;
         
         > th{
             border-bottom: none;
-//            color: $table-th-row-color;
+            color: $table-th-row-color;
+            font-weight: normal;
         }
     }
     > tbody > tr > td{
         border: none;
+        color: $table-font-color;
     }
     > tbody > tr:nth-child(odd) > td{
 //        background-color: $table-row-odd-bg;
@@ -48,15 +52,29 @@ $badge-bad: #d2322d;
     }
     tr:hover{
         td{
-//            background-color: $table-row-hover-bg !important;
+            background-color: $table-row-hover-bg !important;
         }
     }
 }
+
+// Width of column
+.pd-table-flag{ width: 32px; }
+.pd-table-date{ width: 140px; }
+.pd-table-report-date{ width: 100px; }
+.pd-table-type{ width: 100px; }
+.pd-table-status{ width: 60px; }
+.pd-table-reporter{ width: 110px; }
+.pd-table-notification{ width: 25px; }
+
 .pd-table-title{
-    margin: 0 0 15px;
+    margin: 0;
+    padding: 10px;
     font-size: 1.8em;
     line-height: 1em;
     font-family: ThaiSansNeueRegular;
+    background: $table-title-bg;
+    color: $table-title-color;
+    text-align: center;
 }
 
 .badge-good{ background-color: $badge-good-color; }
@@ -68,6 +86,67 @@ $badge-bad: #d2322d;
         cursor: pointer;
     }
 }
+
+// White Table
+.pd-white-table{
+    border: 1px solid #eee;
+    margin: 0;
+    
+    > thead > tr{
+        background-color: #fff;
+        
+        > th{
+            border-bottom: none;
+            color: #666;
+        }
+    }
+    
+    > tbody > tr > td{
+        background-color: #fff;
+        border-color: #eee;
+        border-top-style: dotted;
+        padding: 10px;
+//        border-style: dotted;
+    }
+}
+
+.pd-tabs{
+    margin-bottom: 2em;
+    
+    .tab-pane:nth-child(2){
+        padding: 10px;
+        background-color: #fff;
+    }
+}
+
+.nav-tabs{
+    border-bottom: 1px solid #eee;
+    
+    > li{
+        a{
+            background-color: #EFEFEF;
+            color: #999;
+            margin-right: 5px;
+            
+            &:hover{
+                color: #666;
+                cursor: pointer;
+                background-color: #ededed;
+            }
+        }
+        
+        &.active > a{
+            border: 1px solid #eee;
+            
+            &:hover{
+                background-color: #fff;
+                color: #666;
+                border: 1px solid #eee;
+            }
+        }
+    }
+} 
+
 
 /************************
 // REPORT MODAL (it will delete soon)
@@ -144,7 +223,7 @@ $badge-bad: #d2322d;
 
 .report-view{
     position: relative;
-    background-color: #1a1a1a;
+    background-color: #ECECEC;
     min-height: 200px;
 
     img {
@@ -209,6 +288,102 @@ $badge-bad: #d2322d;
 
 .report-new-icon {
     color: #e91e63;
+}
+
+
+/************************
+// REPORT INFO
+************************/
+.pd-report-info{
+    background-color: #fff;
+    border: 1px solid #eee;
+    overflow: hidden;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2em;
+    
+    li{
+        border-bottom: 1px dotted #eee;
+        padding: 10px;
+        float: left;
+        clear: both;
+        width: 100%;
+        
+        &:last-child{
+            border-bottom: none;
+        }
+    }
+}
+
+
+//***************************
+// Layout
+//***************************
+.file-upload {
+    width: 100%;
+    margin-top: 1em;
+    position: relative;
+    overflow: hidden;
+}
+.file-upload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+// Wrapper
+.pd-file-upload{
+    position: relative;
+    height: 40px;
+    background-color: #E0E0E0;
+    border-radius: 5px;
+
+    .upload{
+        width: 270px;
+        left: 30px;
+    }
+}
+
+.pd-file-upload-area{
+
+}
+.pd-file-upload-icon{
+    padding: 15px 10px;
+    border-right: 1px solid #ccc;
+    background-color: #CACACA;
+
+    &:hover{
+        background-color: #ddd;
+    }
+}
+.pd-file-upload-name{
+    padding: 10px;
+    overflow: hidden;
+    width: 240px;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.pd-file-upload-clear{
+    padding: 10px;
+    color: #fff;
+    background-color: rgb(247, 75, 75);
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    &:hover{
+        color: #fff;
+    }
+}
+.pd-file-upload-attach{
+    padding: 10px;
 }
 
 

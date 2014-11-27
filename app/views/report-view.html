@@ -2,8 +2,9 @@
      ng-controller="ReportViewCtrl" ng-show="willShowReportView" ng-cloak>
 
   <div class="l-detail-section l-section">
-    <div class="title">
-      <i class="fa fa-file-text-o pull-left fa-size-22"></i>รายละเอียด
+    <div class="title clearfix">
+        <h2 class="pull-left"><i class="fa fa-file-text-o pull-left fa-size-22"></i>รายละเอียด</h2>
+        <i class="fa fa-times fa-size-18 pull-right" ng-click="closeReportView()"></i>
     </div>
 
     <div loader-spinner ng-if="loadingReportView"></div>
@@ -14,18 +15,18 @@
       เกิดข้อผิดพลาด ไม่สามารถดึงข้อมูลรายงานได้
     </div>
 
-    <div class="scroller scroller-x scroller-y content-wrapper"
+    <div class="scroller scroller-x scroller-y content"
          perfect-scrollbar
          wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"
          refresh-on-change="report"
          ng-if="!loadingReportView && !loadingReportViewError">
-      <div class="content">
+         
 
         <div class="report-details">
           <div class="row">
             <div class="col-md-12" ng-if="$parent.report.images.length">
               <div class="report-image clearfix">
-                <h2 class="modal-subtitle"><i class="fa fa-picture-o fa-size-18 icon-yellow"></i>รูปประกอบ</h2>
+                <h3 class="subheading">รูปประกอบ</h3>
                 <div class="text-center report-view">
                   <img ng-src="{{ activeImage.imageUrl }}"
                   show-image-loader mask=".image-mask" />
@@ -45,31 +46,19 @@
 
         </div><!-- end .report-images -->
 
-        <div class="row"><div class="col-md-12 report-meta">
-          <h2 class="modal-subtitle"><i class="fa fa-file-text-o fa-size-18 icon-yellow"></i>รายละเอียด</h2>
-          <dl class="dl-horizontal pd-dl-horizontal">
-            <dt>วันที่รายงาน</dt>
-            <dd>{{ $parent.report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</dd>
+        <h2 class="subheading">ข้อมูลรายงาน</h2>
+         <ul class="pd-report-info">
+             <li>วันที่รายงาน - {{ $parent.report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</li>
+             <li>วันที่เกิดเหตุ - {{ $parent.report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</li>
+             <li>ประเภทรายงาน - {{ $parent.report.reportTypeName }}</li>
+             <li>โดย - {{ $parent.report.createdBy }}</li>
+             <li ng-show="$parent.report.createdByContact">ติดต่อ - {{ $parent.report.createdByContact }}</li>
+         </ul>
 
-            <dt>วันที่เกิดเหตุ</dt>
-            <dd>{{ $parent.report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</dd>
-
-            <dt>ประเภทรายงาน</dt>
-            <dd>{{ $parent.report.reportTypeName }}</dd>
-
-            <dt>โดย</dt>
-            <dd>{{ $parent.report.createdBy }}</dd>
-
-            <dt ng-show="$parent.report.createdByContact">ติดต่อ</dt>
-            <dd ng-show="$parent.report.createdByContact">{{ $parent.report.createdByContact }}</dd>
-
-          </div></div><!-- end .report-meta -->
-
-          <div class="row"><div class="col-md-12 report-fields">
-
-            <tabset ng-if="$parent.report">
+           
+            <tabset ng-if="$parent.report" class="pd-tabs" >
               <tab heading="ข้อมูล">
-                <table class="table table-striped pd-table">
+                <table class="table pd-white-table">
                   <thead>
                     <tr>
                       <th>คำถาม</th>
@@ -85,19 +74,23 @@
                   </tbody>
                 </table>
               </tab>
-              <tab heading="อธิบาย">
+              <tab heading="อธิบาย" class="foo" >
                 <div report-type-form-data report="$parent.report"></div>
               </tab>
             </tabset>
 
-          </div></div><!-- end .report-fields -->
+<!--          </div></div> end .report-fields -->
 
         </div><!-- end .report-details -->
 
-      </div>
+        <div class="report-comments">
+            <div ng-include="'/views/comments.html'"></div>
+        </div>
+      
     </div>
   </div>
 
+<!--
   <div class="l-comment-section l-section">
     <div class="title">
       <i class="fa fa-times fa-size-22 pull-left" ng-click="closeReportView()"></i>
@@ -110,9 +103,10 @@
 
         <div ng-include="'/views/comments.html'"></div>
 
-      </div><!-- end .report-comments -->
+      </div> end .report-comments 
 
     </div>
   </div>
+-->
 
 </div>

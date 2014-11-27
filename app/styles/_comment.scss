@@ -23,13 +23,12 @@
 }
 .comment-title{
     font-size: 1.85em;
-    margin-bottom: 1em;
     font-family: ThaiSansNeueRegular;
-    color: #FFF200;
+//    color: #FFF200;
     margin-top: 0;
 
     .fa-comments{
-        color: #FFF200;
+//        color: #FFF200;
         margin: 5px 5px 0 5px;
         font-size: .9em;
     }
@@ -37,6 +36,15 @@
 .btn-post{
     margin-top: 1em;
     width: 100%;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px;
+    background-color: rgb(80, 150, 34) !important;
+    
+    &:hover{
+        background-color: rgb(67, 134, 22) !important;
+        color: #fff;
+    }
 }
 
 .comment-form{

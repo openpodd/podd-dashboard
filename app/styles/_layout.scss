@@ -52,7 +52,11 @@
 //***************************
 
 $report-section-bg: #fff;
-$detail-section-bg: #333;
+$report-title-bg: #9966cb;
+$report-title-color: #fff;
+
+$detail-title-color: #8D58C2;
+$detail-section-bg: rgb(245, 245, 245);
 $comment-section-bg: #333;
 
 .l-section{
@@ -61,28 +65,36 @@ $comment-section-bg: #333;
     height: 100%;
 
     .title{
-        height: 10%;
-        padding: 20px;
+        padding: 10px 20px;
         font-size: 20px;
         background-color: rgba(190, 190, 190, 0.2);
 
         font-size: 1.7em;
         font-family: ThaiSansNeueRegular;
+        color: $report-title-color;
+        background-color: $report-title-bg;
 
         h2{
-            margin: 0;
+            margin: 0 .5em 0 0;
+            line-height: 1em;
+            
+            i{ line-height: inherit; margin-right: 15px; }
+        }
+        i{
+            line-height: 32px;
         }
     }
     .content-wrapper {
-        height: 90%;
+        
     }
     .content {
-        padding: 10px;
+        padding: 20px 10px;
+        height: 90%;
     }
 }
 .l-report-section{
     left: 50px;
-    width: 40%;
+    width: 47%;
     background-color: $report-section-bg;
     z-index: 9998;
 
@@ -97,15 +109,30 @@ $comment-section-bg: #333;
 }
 .l-info-section{ /* Wrapping detail & comment section */
     top: 0;
-    left: 43.5%;
-    width: 56.5%;
+    left: 50.7%;
+    width: 70%;
     z-index: 9990;
+    
+     &.ng-hide-remove {
+        -webkit-animation: fadeInLeft .5s .2s alternate forwards;
+        opacity: 0;
+    }
+
+    &.ng-hide-add{
+        -webkit-animation: fadeOutLeft .5s .2s alternate forwards;
+    }
 }
 .l-detail-section{
     top: 0;
-    right: 30%;
-    width: 70%;
+//    right: 30%;
+    left: 0;
+    width: 70.5%;
+    color: #666;
     background-color: $detail-section-bg;
+    
+    .title{
+        background-color: $detail-title-color;
+    }
 }
 .l-comment-section{
     right: 0%;
