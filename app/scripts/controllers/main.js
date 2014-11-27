@@ -302,8 +302,10 @@ angular.module('poddDashboardApp')
         if (newValue) {
             $scope.$broadcast('filter:clearQuery', true);
             map.clearVillages();
+            $scope.closeModal();
         }
         else {
+            $scope.closeModal();
             refreshDashboard();
         }
     });
