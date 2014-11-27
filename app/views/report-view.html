@@ -1,0 +1,111 @@
+<div class="l-info-section l-section" report-view
+     ng-controller="ReportViewCtrl" ng-show="willShowReportView" ng-cloak>
+
+  <div class="l-detail-section l-section">
+    <div class="title">
+      <i class="fa fa-file-text-o pull-left fa-size-22"></i>รายละเอียด
+    </div>
+
+    <div loader-spinner ng-if="loadingReportView"></div>
+
+    <div class="scroller scroller-x scroller-y content-wrapper"
+         perfect-scrollbar
+         wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"
+         refresh-on-change="report" ng-if="!loadingReportView">
+      <div class="content">
+
+        <div class="report-details">
+          <div class="row">
+            <div class="col-md-12" ng-if="$parent.report.images.length">
+              <div class="report-image clearfix">
+                <h2 class="modal-subtitle"><i class="fa fa-picture-o fa-size-18 icon-yellow"></i>รูปประกอบ</h2>
+                <div class="text-center report-view">
+                  <img ng-src="{{ activeImage.imageUrl }}"
+                  show-image-loader mask=".image-mask" />
+                  <div class="image-mask">
+                    <span class="image-mask-text">Loading &hellip;</span>
+                  </div>
+                </div>
+                <ul class="list-unstyled list-inline report-thumbnails">
+                  <li ng-repeat="image in $parent.report.images"
+                  ng-click="clickThumbnail(image)"
+                  ng-class="{ 'active active-image':isActiveImage(image) }">
+                  <img ng-src="{{ image.thumbnailUrl }}"/>
+                </li>
+              </ul>
+            </div> <!-- end of report-images -->
+          </div>
+
+        </div><!-- end .report-images -->
+
+        <div class="row"><div class="col-md-12 report-meta">
+          <h2 class="modal-subtitle"><i class="fa fa-file-text-o fa-size-18 icon-yellow"></i>รายละเอียด</h2>
+          <dl class="dl-horizontal pd-dl-horizontal">
+            <dt>วันที่รายงาน</dt>
+            <dd>{{ $parent.report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</dd>
+
+            <dt>วันที่เกิดเหตุ</dt>
+            <dd>{{ $parent.report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</dd>
+
+            <dt>ประเภทรายงาน</dt>
+            <dd>{{ $parent.report.reportTypeName }}</dd>
+
+            <dt>โดย</dt>
+            <dd>{{ $parent.report.createdBy }}</dd>
+
+            <dt ng-show="$parent.report.createdByContact">ติดต่อ</dt>
+            <dd ng-show="$parent.report.createdByContact">{{ $parent.report.createdByContact }}</dd>
+
+          </div></div><!-- end .report-meta -->
+
+          <div class="row"><div class="col-md-12 report-fields">
+
+            <tabset ng-if="$parent.report">
+              <tab heading="ข้อมูล">
+                <table class="table table-striped pd-table">
+                  <thead>
+                    <tr>
+                      <th>คำถาม</th>
+                      <th>คำตอบ</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr ng-repeat="field in $parent.report.formData">
+                      <td ng-bind="field.name"></td>
+                      <td ng-bind="field.value"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </tab>
+              <tab heading="อธิบาย">
+                <div report-type-form-data report="$parent.report"></div>
+              </tab>
+            </tabset>
+
+          </div></div><!-- end .report-fields -->
+
+        </div><!-- end .report-details -->
+
+      </div>
+    </div>
+  </div>
+
+  <div class="l-comment-section l-section">
+    <div class="title">
+      <i class="fa fa-times fa-size-22 pull-left" ng-click="closeReportView()"></i>
+      <i class="fa fa-comments pull-left fa-size-22"></i>ความคิดเห็น <div class="b-noti">2</div>
+    </div>
+
+    <div class="content">
+
+      <div class="report-comments">
+
+        <div ng-include="'/views/comments.html'"></div>
+
+      </div><!-- end .report-comments -->
+
+    </div>
+  </div>
+
+</div>

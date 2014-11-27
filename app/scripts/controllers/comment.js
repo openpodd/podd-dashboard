@@ -7,7 +7,13 @@ angular.module('poddDashboardApp')
     console.log('init comment ctrl');
 
     function refreshComments() {
+        $scope.loadingReportComments = true;
+
         $scope.comments = Comments.list({ reportId: $scope.$parent.report.id });
+        
+        $scope.comments.$promise.finally(function () {
+            $scope.loadingReportComments = false;
+        });
     }
 
     function refreshFlag() {
@@ -17,7 +23,7 @@ angular.module('poddDashboardApp')
             flags.forEach(function (item) {
                tmp.push(item);
             });
-       
+
             if(tmp[0]){
                 $scope.flag = $scope.options[tmp[0].priority];
             }else{
@@ -81,10 +87,10 @@ angular.module('poddDashboardApp')
     function callError(detail){
         $scope.loading = false;
         swal({title: '', text: detail, type: 'error', confirmButtonText: 'ตกลง' },
-            function(isConfirm){   
-                if(isConfirm) { 
+            function(isConfirm){
+                if(isConfirm) {
                     $scope.submitting = false;
-                } 
+                }
             }
         );
     }

@@ -206,12 +206,15 @@ angular.module('poddDashboardApp')
         $scope.recentReports = null;
         $scope.olderReports = null;
         $scope.showReportList = false;
+
+        $scope.report = null;
+        ReportModal.close();
     };
 
     $scope.initReportModal = function () {
         ReportModal.init();
 
-        ReportModal.on('hide.bs.modal', function () {
+        ReportModal.on('hide:report', function () {
             $scope.report = null;
         });
     };
@@ -225,6 +228,9 @@ angular.module('poddDashboardApp')
     };
 
     $scope.viewReport = function (reportId) {
+        ReportModal.show();
+        $scope.loadingReportView = true;
+
         Reports.get({ reportId: reportId }).$promise.then(function (data) {
             console.log('loaded report data', data);
 
@@ -242,8 +248,6 @@ angular.module('poddDashboardApp')
             }
 
             $scope.report = data;
-
-            ReportModal.show();
         })
         .catch(function (err) {
             if (err.status === 403) {
@@ -255,6 +259,9 @@ angular.module('poddDashboardApp')
                     type: 'error'
                 });
             }
+        })
+        .finally(function () {
+            $scope.loadingReportView = false;
         });
     };
 

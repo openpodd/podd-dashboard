@@ -7,12 +7,17 @@ angular.module('poddDashboardApp')
     return $resource(config.API_BASEPATH + '/reportTypes/:id');
 })
 
-.factory('ReportModal', function () {
+.factory('ReportModal', function ($rootScope) {
     var modal;
+
+    $rootScope.closeReportView = function () {
+        $rootScope.willShowReportView = false;
+    };
 
     function init() {
         if (!modal || !modal.length) {
-            modal = $('.report-modal');
+            modal = angular.element('[report-view]');
+            $rootScope.willShowReportView = false;
         }
     }
 
@@ -22,19 +27,17 @@ angular.module('poddDashboardApp')
         getElement: function getElement() {
             return modal;
         },
-        show: function (options) {
+        show: function () {
             init();
 
-            options = options || {};
-
-            setTimeout(function () {
-                modal.modal('show');
-            }, options.delay || 100);
+            $rootScope.willShowReportView = true;
+            modal.trigger('show:report');
 
             return this;
         },
         close: function () {
-            modal.modal('hide');
+            $rootScope.willShowReportView = false;
+            modal.trigger('hide:report');
 
             return this;
         },

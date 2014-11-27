@@ -46,24 +46,33 @@
 
     </form>
   </div>
-  
-  <p>Set Report Priority : 
+
+  <p>Set Report Priority :
     <select ng-options="op.name for op in options"
       ng-model="flag" ng-change="updateFlag()" ></select></p>
 
-  <div class="comment-list">
-    <ul class="list-unstyled">
-      <li class="comment-item"
-          blink="comment.isNew"
-          ng-repeat="comment in comments | orderBy:'-createdAt' ">
-        <p class="comment-post" ng-bind-html="comment.message | htmlToPlainText | renderMention"></p>
-        <div class="comment-meta">
-            <a href="{{ comment.fileUrl }}" target="_blank" ng-show="comment.fileUrl"><i class="fa fa-paperclip"></i> ดูไฟล์แนบ</a>
-            <span class="">เมื่อ <span am-time-ago="comment.createdAt"></span></span>
-            <span class="">โดย {{ comment.createdBy }}</span>
-        </div>
-      </li>
-    </ul>
+  <div loader-spinner ng-if="loadingReportComments"></div>
+
+  <div class="scroller scroller-x scroller-y content-wrapper"
+       perfect-scrollbar
+       wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"
+       refresh-on-change="comments" ng-if="!loadingReportComments">
+
+    <div class="comment-list">
+      <ul class="list-unstyled">
+        <li class="comment-item"
+            blink="comment.isNew"
+            ng-repeat="comment in comments | orderBy:'-createdAt' ">
+          <p class="comment-post" ng-bind-html="comment.message | htmlToPlainText | renderMention"></p>
+          <div class="comment-meta">
+              <a href="{{ comment.fileUrl }}" target="_blank" ng-show="comment.fileUrl"><i class="fa fa-paperclip"></i> ดูไฟล์แนบ</a>
+              <span class="">เมื่อ <span am-time-ago="comment.createdAt"></span></span>
+              <span class="">โดย {{ comment.createdBy }}</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
   </div>
 
   <script type="text/ng-template" id="/user-mentions.tpl">

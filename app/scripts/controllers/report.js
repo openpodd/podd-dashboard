@@ -27,6 +27,8 @@ angular.module('poddDashboardApp')
             else {
                 $scope.activeImage = null;
             }
+
+            $scope.$broadcast('rebuildScrollbar:reportView');
         }
     });
 
