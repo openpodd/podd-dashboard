@@ -53,6 +53,12 @@
 
   <div loader-spinner ng-if="loadingReportComments"></div>
 
+  <div id="reports-error" class="alert alert-danger" role="alert"
+       ng-show="loadingReportCommentsError">
+    <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+    เกิดข้อผิดพลาด
+  </div>
+
   <div class="scroller scroller-x scroller-y content-wrapper"
        perfect-scrollbar
        wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"

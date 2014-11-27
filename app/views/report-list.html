@@ -6,7 +6,14 @@
 
     <div loader-spinner ng-show="loadingReportList"></div>
 
-    <div class="scroller scroller-x scroller-y content-wrapper" ng-if="!loadingReportList"
+    <div id="reports-error" class="alert alert-danger" role="alert"
+         ng-show="loadingReportListError">
+      <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+      เกิดข้อผิดพลาด ไม่สามารถดึงข้อมูลรายการรายงานได้
+    </div>
+
+    <div class="scroller scroller-x scroller-y content-wrapper"
+         ng-if="!loadingReportList && !loadingReportListError"
          perfect-scrollbar
          wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"
          refresh-on-change="reports">

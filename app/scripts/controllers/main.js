@@ -5,11 +5,21 @@ angular.module('poddDashboardApp')
 
 .controller('MainCtrl', [
     '$scope', 'dashboard', 'streaming', 'Map', 'Reports', 'ReportModal',
-    'shared', 'Auth', 'Search', 'Menu', 'Mentions', 'Flags',
+    'shared', 'Auth', 'Search', 'Menu', 'Mentions', 'Flags', 'FailRequest',
     function ($scope, dashboard, streaming,
-               Map, Reports, ReportModal, shared, Auth, Search, Menu, Flags) {
+               Map, Reports, ReportModal, shared, Auth, Search, Menu, Mentions, Flags, FailRequest) {
 
     console.log('IN MainCtrl');
+
+    /**
+     * This for debug only
+     * TODO: remove when done debugging.
+     */
+    shared.rlError = false;
+    shared.rvError = false;
+    shared.rcError = false;
+    $scope.shared = shared;
+    /* -- end debugging code -- */
 
     Auth.requireLogin($scope);
 
@@ -152,6 +162,8 @@ angular.module('poddDashboardApp')
             query = { administrationArea: village.id };
             searcher = Reports.list;
         }
+        // TODO: remove
+        if (shared.rlError) searcher = FailRequest.query;
 
         return searcher(query).$promise.then(function (items) {
 
@@ -175,6 +187,9 @@ angular.module('poddDashboardApp')
             });
 
             $scope.reports = items;
+        })
+        .catch(function () {
+            $scope.loadingReportListError = true;
         });
     };
 
@@ -195,6 +210,7 @@ angular.module('poddDashboardApp')
 
         $scope.showReportList = true;
         $scope.loadingReportList = true;
+        $scope.loadingReportListError = false;
 
         $scope.loadVillageReports(data).then(function () {
             $scope.loadingReportList = false;
@@ -230,8 +246,14 @@ angular.module('poddDashboardApp')
     $scope.viewReport = function (reportId) {
         ReportModal.show();
         $scope.loadingReportView = true;
+        $scope.loadingReportViewError = false;
 
-        Reports.get({ reportId: reportId }).$promise.then(function (data) {
+        // TODO: remove
+        var searcher;
+        if (shared.rvError) searcher = FailRequest;
+        else searcher = Reports;
+
+        searcher.get({ reportId: reportId }).$promise.then(function (data) {
             console.log('loaded report data', data);
 
             var tmpFormData = [], index;
@@ -258,6 +280,9 @@ angular.module('poddDashboardApp')
                     confirmButtonClass: 'btn-default',
                     type: 'error'
                 });
+            }
+            else {
+                $scope.loadingReportViewError = true;
             }
         })
         .finally(function () {

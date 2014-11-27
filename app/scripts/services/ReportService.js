@@ -49,6 +49,10 @@ angular.module('poddDashboardApp')
     };
 })
 
+.factory('FailRequest', function ($resource) {
+    return $resource(config.API_BASEPATH + '/failURL');
+})
+
 .factory('Reports', function ($resource) {
     var resource = $resource(config.API_BASEPATH + '/reports/:reportId', {}, {
         list: {

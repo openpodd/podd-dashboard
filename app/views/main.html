@@ -5,3 +5,16 @@
 <div ng-include="'/views/filter.html'" class="section-filter" ng-show="shared.filterMode"></div>
 
 <div ng-include="'/views/report-view.html'" onload="initReportModal()"></div>
+
+<div class="fakeErrorBar" style="position:fixed;bottom:10px;width:100%;left:0;text-align:center;z-index:999999">
+  <span class="label label-default">Toggle error</span>
+
+  <div class="fakeErrorBar">
+    <button type="button" class="btn btn-danger" ng-click="shared.rlError = !shared.rlError">
+      <i class="fa" ng-class="{ 'fa-square-o': !shared.rlError, 'fa-check-square-o': shared.rlError }"></i> Report List</button>
+    <button type="button" class="btn btn-danger" ng-click="shared.rvError = !shared.rvError">
+      <i class="fa" ng-class="{ 'fa-square-o': !shared.rvError, 'fa-check-square-o': shared.rvError }"></i> Report View</button>
+    <button type="button" class="btn btn-danger"ng-click="shared.rcError = !shared.rcError">
+      <i class="fa" ng-class="{ 'fa-square-o': !shared.rcError, 'fa-check-square-o': shared.rcError }"></i> Report Comments</button>
+  </div>
+</div>
