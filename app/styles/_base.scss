@@ -387,16 +387,16 @@
         text-align: center;
 
         p {
-            margin-top: 1em;
+            margin: 0 0 10px;
             font-size: 2.8em;
         }
 
-        i {
+        .icon-heart {
+            margin-left: 20px;
             transition: transform .7s;
             animation-name: heartbeat;
             animation-duration: .7s;
             animation-iteration-count: infinite;
-            color: red;
         }
     }
 }
