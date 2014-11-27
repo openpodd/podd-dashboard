@@ -20,6 +20,7 @@ $nav-font-family: ThaiSansNeueRegular;
     z-index: 9999;
     background: $section-nav-bg;
 //    @include box-shadow(0px 0px 5px #505050);
+    @include box-shadow(1px 0px 5px rgba(0, 0, 0, 0.1));
 }
 
 // UL
