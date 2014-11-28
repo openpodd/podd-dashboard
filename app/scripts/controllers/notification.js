@@ -38,6 +38,8 @@ angular.module('poddDashboardApp')
     });
 
     $scope.onClickNotification = function(mention){
+        // Close report list before open new report dialog.
+        shared.showReportList = false;
 
         if(!mention.isNotified){
             var data = {

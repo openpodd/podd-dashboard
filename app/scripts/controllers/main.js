@@ -21,6 +21,9 @@ angular.module('poddDashboardApp')
     $scope.shared = shared;
     /* -- end debugging code -- */
 
+    // Defined shared variables.
+    shared.showReportList = false;
+
     Auth.requireLogin($scope);
 
     $scope.$watch('shared.loggedIn', function (newValue) {
@@ -212,7 +215,7 @@ angular.module('poddDashboardApp')
             data.location.coordinates[0]
         ]);
 
-        $scope.showReportList = true;
+        shared.showReportList = true;
         $scope.loadingReportList = true;
         $scope.loadingReportListError = false;
 
@@ -225,7 +228,7 @@ angular.module('poddDashboardApp')
         $scope.reports = null;
         $scope.recentReports = null;
         $scope.olderReports = null;
-        $scope.showReportList = false;
+        shared.showReportList = false;
 
         $scope.report = null;
         ReportModal.close();
@@ -303,7 +306,7 @@ angular.module('poddDashboardApp')
 
     // Watch to turn on filter mode.
     $scope.$watch('shared.filterMode', function (newValue) {
-        $scope.showReportList = false;
+        shared.showReportList = false;
 
         if (newValue) {
             $scope.$broadcast('filter:clearQuery', true);
@@ -318,7 +321,7 @@ angular.module('poddDashboardApp')
 
     $scope.$watch('shared.filterResults', function (newValue) {
         if (newValue) {
-            $scope.showReportList = false;
+            shared.showReportList = false;
             map.clearVillages();
             map.setVillages(newValue);
         }
