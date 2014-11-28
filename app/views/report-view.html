@@ -1,4 +1,5 @@
 <div class="l-info-section l-section" report-view
+     ng-class="{ 'l-full-width': !showReportList }"
      ng-controller="ReportViewCtrl" ng-show="willShowReportView" ng-cloak>
 
   <div class="l-detail-section l-section">
@@ -20,7 +21,7 @@
          wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"
          refresh-on-change="report"
          ng-if="!loadingReportView && !loadingReportViewError">
-         
+
 
         <div class="report-details">
           <div class="row">
@@ -55,7 +56,7 @@
              <li ng-show="$parent.report.createdByContact">ติดต่อ - {{ $parent.report.createdByContact }}</li>
          </ul>
 
-           
+
             <tabset ng-if="$parent.report" class="pd-tabs" >
               <tab heading="ข้อมูลแบบสอบถาม">
                 <table class="table pd-white-table">
@@ -86,7 +87,7 @@
         <div class="report-comments">
             <div ng-include="'/views/comments.html'"></div>
         </div>
-      
+
     </div>
   </div>
 
@@ -103,7 +104,7 @@
 
         <div ng-include="'/views/comments.html'"></div>
 
-      </div> end .report-comments 
+      </div> end .report-comments
 
     </div>
   </div>

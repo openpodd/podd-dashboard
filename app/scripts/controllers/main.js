@@ -1,4 +1,4 @@
-/*global L */
+/*global L, swal */
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -251,6 +251,8 @@ angular.module('poddDashboardApp')
         ReportModal.show();
         $scope.loadingReportView = true;
         $scope.loadingReportViewError = false;
+        // Also clear report data.
+        $scope.report = null;
 
         // TODO: remove
         var searcher;
@@ -277,6 +279,7 @@ angular.module('poddDashboardApp')
         })
         .catch(function (err) {
             if (err.status === 403) {
+                ReportModal.close();
                 swal({
                     title: '',
                     text: 'ขออภัย คุณยังไม่ได้รับสิทธิดูรายงานนี้',
