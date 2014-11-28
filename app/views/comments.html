@@ -2,7 +2,7 @@
   <h3 class="comment-title subheading"><i class="fa fa-comments fa-size-18"></i> ความคิดเห็น</h3>
   <div class="comment-form clearfix">
 
-    <form role="form" ng-submit="comment();">
+    <form role="form" ng-submit="postComment();">
 
       <div clas="form-group">
 
@@ -59,32 +59,26 @@
     เกิดข้อผิดพลาด
   </div>
 
-  <div class="scroller scroller-x scroller-y content-wrapper"
-       perfect-scrollbar
-       wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"
-       refresh-on-change="comments" ng-if="!loadingReportComments">
 
-    <div class="comment-list">
-      <ul class="list-unstyled">
-        <li class="comment-item"
-            blink="comment.isNew"
-            ng-repeat="comment in comments | orderBy:'-createdAt' ">
-            
-            <div class="row">
-                <div class="col-xs-1"><img src="images/avatar.jpg" alt="avatar" class="pull-left avatar avatar-w4"></div>
-                <div class="col-xs-11">
-                    <p class="comment-post" ng-bind-html="comment.message | htmlToPlainText | renderMention"></p>
-                    <div class="comment-meta">
-                      <a href="{{ comment.fileUrl }}" target="_blank" ng-show="comment.fileUrl"><i class="fa fa-paperclip"></i> ดูไฟล์แนบ</a>
-                      <span class="">เมื่อ <span am-time-ago="comment.createdAt"></span></span>
-                      <span class="">โดย {{ comment.createdBy }}</span>
-                    </div>
-                </div>
-            </div>
-        </li>
-      </ul>
-    </div>
+  <div class="comment-list">
+    <ul class="list-unstyled">
+      <li class="comment-item"
+          blink="comment.isNew"
+          ng-repeat="comment in comments | orderBy:'-createdAt' ">
 
+          <div class="row">
+              <div class="col-xs-1"><img src="images/avatar.jpg" alt="avatar" class="pull-left avatar avatar-w4"></div>
+              <div class="col-xs-11">
+                  <p class="comment-post" ng-bind-html="comment.message | htmlToPlainText | renderMention"></p>
+                  <div class="comment-meta">
+                    <a href="{{ comment.fileUrl }}" target="_blank" ng-show="comment.fileUrl"><i class="fa fa-paperclip"></i> ดูไฟล์แนบ</a>
+                    <span class="">เมื่อ <span am-time-ago="comment.createdAt"></span></span>
+                    <span class="">โดย {{ comment.createdBy }}</span>
+                  </div>
+              </div>
+          </div>
+      </li>
+    </ul>
   </div>
 
   <script type="text/ng-template" id="/user-mentions.tpl">

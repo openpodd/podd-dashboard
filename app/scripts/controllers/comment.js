@@ -6,7 +6,12 @@ angular.module('poddDashboardApp')
 
     console.log('init comment ctrl');
 
+    $scope.comments = []; // --> Why we need this? It's quite weird. When
+                          // --> this line is missing. Some async function
+                          // --> may raise $scope.comments is undefined.
+
     function refreshComments() {
+        $scope.comments = [];
         $scope.loadingReportComments = true;
         $scope.loadingReportCommentsError = false;
 
@@ -14,7 +19,7 @@ angular.module('poddDashboardApp')
         var searcher = Comments.list;
         if (shared.rcError) searcher = FailRequest.query;
 
-        $scope.comments = searcher({ reportId: $scope.$parent.report.id });
+        $scope.comments = Comments.list({ reportId: $scope.$parent.report.id });
 
         $scope.comments.$promise
             .catch(function () {
@@ -67,7 +72,7 @@ angular.module('poddDashboardApp')
 
     reset();
 
-    $scope.comment = function () {
+    $scope.postComment = function () {
         $scope.submitting = true;
 
         if($scope.file[0] && $scope.file[0].size > 10485760){
@@ -150,7 +155,7 @@ angular.module('poddDashboardApp')
         console.log('got new comment', data);
         data = angular.fromJson(data);
 
-        if($scope.$parent.report){
+        if ($scope.$parent.report) {
             if (data.reportId === $scope.$parent.report.id) {
                 data.isNew = true;
                 $scope.comments.push(data);
