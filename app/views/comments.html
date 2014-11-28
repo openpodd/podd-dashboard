@@ -48,7 +48,7 @@
   </div>
 
   <p>Set Report Priority :
-    <select ng-options="op.name for op in options"
+    <select ng-options="op.color for op in options"
       ng-model="flag" ng-change="updateFlag()" ></select></p>
 
   <div loader-spinner ng-if="loadingReportComments"></div>

@@ -39,7 +39,7 @@ angular.module('poddDashboardApp')
             });
 
             if(tmp[0]){
-                $scope.flag = $scope.options[tmp[0].priority];
+                $scope.flag = $scope.options[tmp[0].priority-1];
             }else{
                 $scope.flag = '';
             }
@@ -48,7 +48,12 @@ angular.module('poddDashboardApp')
     }
 
     $scope.loading = false;
-    $scope.options = [{ name: 'Green', id: 0 }, { name: 'Yellow', id: 1 }, { name: 'Red', id: 2 }];
+    $scope.options = [{ color: 'Green', rank: 1 }, 
+        { color: 'Yellow', rank: 2 }, 
+        { color: 'Yellow', rank: 3 },
+        { color: 'Yellow', rank: 4 },
+        { color: 'Red', rank: 5 }
+    ];
 
     function reset() {
         $scope.message = '';
@@ -130,7 +135,7 @@ angular.module('poddDashboardApp')
 
        var data = {
             reportId: $scope.$parent.report.id,
-            priority: $scope.flag.id,
+            priority: $scope.flag.rank,
         };
 
         $scope.loading = true;
