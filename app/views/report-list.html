@@ -10,11 +10,11 @@
          ng-show="loadingReportListError"><span class="fa fa-exclamation-circle" aria-hidden="true"></span>เกิดข้อผิดพลาด ไม่สามารถดึงข้อมูลรายการรายงานได้
     </div>
 
-    <div class="scroller scroller-x scroller-y content"
+    <div class="scroller scroller-x scroller-y content-wrapper"
          ng-if="!loadingReportList && !loadingReportListError"
          perfect-scrollbar
          wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"
-         refresh-on-change="reports">
+         refresh-on-change="reports"><div class="content">
 
         <div id="reports-empty" ng-hide="reports">ยังไม่พบการรายงาน</div>
 
@@ -98,6 +98,6 @@
               </tbody>
             </table>
         </div>
-    </div>
+    </div></div><!-- end .content-wrapper .contetn -->
 
 </div>

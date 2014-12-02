@@ -16,11 +16,11 @@
       เกิดข้อผิดพลาด ไม่สามารถดึงข้อมูลรายงานได้
     </div>
 
-    <div class="scroller scroller-x scroller-y content"
+    <div class="scroller scroller-x scroller-y content-wrapper"
          perfect-scrollbar
          wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"
          refresh-on-change="report"
-         ng-if="!loadingReportView && !loadingReportViewError">
+         ng-if="!loadingReportView && !loadingReportViewError"><div class="content">
 
 
         <div class="report-details">
@@ -89,7 +89,7 @@
         </div>
 
     </div>
-  </div>
+  </div></div> <!-- end .content-wrapper .content -->
 
 <!--
   <div class="l-comment-section l-section">
