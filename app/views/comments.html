@@ -6,24 +6,7 @@
 
       <div clas="form-group">
 
-        <mentio-menu
-          mentio-for="'message'"
-          mentio-trigger-char="'@'"
-          mentio-items="users"
-          mentio-template-url="/user-mentions.tpl"
-          mentio-search="searchUser(term)"
-          mentio-select="getUserTextRaw(item)"></mentio-menu>
-
-        <textarea mentio
-          mentio-trigger-char="'@'"
-          class="editor form-control"
-          ng-trim="false"
-          rows="6"
-          mentio-id="'message'"
-          id="message"
-          ng-model="message"
-          required
-          placeholder="Your comment here"></textarea>
+        <textarea mention ng-model="message" class="form-control" rows="3"></textarea>
 
         <div class="pd-file-upload file-upload" ng-disabled="submitting">
             <span class="pd-file-upload-area pull-left">
@@ -46,6 +29,8 @@
 
     </form>
   </div>
+
+  <div id='atwho-container'></div>
 
   <p>Set Report Priority :
     <select ng-options="op.color for op in options"

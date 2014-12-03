@@ -72,4 +72,30 @@ angular.module('poddDashboardApp')
                      '<div class="bounce3"></div>' +
                   '</div>'
     };
+})
+
+.directive('mention', function (User) {
+    return {
+        strict: 'A',
+        scope: {
+            user: '=mentionUser'
+        },
+        link: function (scope, element) {
+            element.atwho({
+                at: '@',
+                tpl: '<li class="list-group-item" data-value="@${username}">' +
+                     ' <span class="text-primary">${username}</span>' +
+                     ' <em class="text-muted">${fullName}</em>' +
+                     '</li>',
+                callbacks: {
+                    remote_filter: function (query, callback) {
+                        User.search({ username: query }).$promise.then(function (data) {
+                            callback(data);
+                        });
+                    }
+                },
+                data: []
+            });
+        }
+    };
 });

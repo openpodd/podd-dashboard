@@ -1,6 +1,7 @@
 .comments-wrapper{
     border-top: 4px solid #DBDBDB;
     padding-top: 20px;
+    position: relative;
 }
 .comment-item{
     padding: 15px 5px;
@@ -37,7 +38,7 @@
     border: none;
     padding: 10px;
     background-color: rgb(80, 150, 34) !important;
-    
+
     &:hover{
         background-color: rgb(67, 134, 22) !important;
         color: #fff;
