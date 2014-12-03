@@ -27,7 +27,7 @@ $badge-good-color: #5cb85c;
 $badge-bad: #FF6D69;
 
 .pd-table-title{
-    width: 99.9%;
+    width: 100%;
     margin: 0;
     padding: 10px;
     font-size: 1.8em;
@@ -53,7 +53,7 @@ $badge-bad: #FF6D69;
 .pd-table{
     > thead > tr{
         background-color: $table-thead-row-bg;
-        
+
         > th{
             border-bottom: none;
             color: $table-th-row-color;
@@ -89,16 +89,16 @@ $badge-bad: #FF6D69;
 .pd-white-table{
     border: 1px solid #eee;
     margin: 0;
-    
+
     > thead > tr{
         background-color: #fff;
-        
+
         > th{
             border-bottom: none;
             color: #666;
         }
     }
-    
+
     > tbody > tr > td{
         background-color: #fff;
         border-color: #eee;
@@ -113,7 +113,7 @@ $badge-bad: #FF6D69;
 
 .pd-tabs{
     margin-bottom: 2em;
-    
+
     .tab-pane:nth-child(2){
         padding: 10px;
         background-color: #fff;
@@ -122,23 +122,23 @@ $badge-bad: #FF6D69;
 
 .nav-tabs{
     border-bottom: 1px solid #eee;
-    
+
     > li{
         a{
             background-color: #EFEFEF;
             color: #999;
             margin-right: 5px;
-            
+
             &:hover{
                 color: #666;
                 cursor: pointer;
                 background-color: #ededed;
             }
         }
-        
+
         &.active > a{
             border: 1px solid #eee;
-            
+
             &:hover{
                 background-color: #fff;
                 color: #666;
@@ -146,7 +146,7 @@ $badge-bad: #FF6D69;
             }
         }
     }
-} 
+}
 
 /************************
 // ERROR
@@ -306,14 +306,14 @@ $badge-bad: #FF6D69;
     list-style: none;
     padding: 0;
     margin: 0 0 2em;
-    
+
     li{
         border-bottom: 1px dotted #eee;
         padding: 10px;
         float: left;
         clear: both;
         width: 100%;
-        
+
         &:last-child{
             border-bottom: none;
         }
@@ -399,19 +399,19 @@ $badge-bad: #FF6D69;
 .report-fields{
     .nav-tabs > {
         border-bottom: 1px solid #888888;
-        
+
         li{
             > a{
                 margin-right: 5px;
                 color: #fff;
-                
+
                 &:hover{
                     color: #2A2A2A;
                     background-color: #FFFFFF;
                     cursor: pointer;
                 }
             }
-            
+
             &.active > a{
                 color: #2A2A2A;
                 background-color: #FFFFFF;
@@ -420,6 +420,3 @@ $badge-bad: #FF6D69;
         }
     }
 }
-
-
-

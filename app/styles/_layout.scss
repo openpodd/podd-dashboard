@@ -107,8 +107,8 @@ $comment-section-bg: #333;
 }
 .l-info-section{ /* Wrapping detail & comment section */
     top: 0;
-    left: 50.7%;
-    width: 70%;
+    right: 0;
+    width: 53%;
     z-index: 9990;
 
      &.ng-hide-remove {
@@ -122,9 +122,10 @@ $comment-section-bg: #333;
 }
 .l-detail-section{
     top: 0;
-//    right: 30%;
     left: 0;
-    width: 70.5%;
+    width: 100%;
+    border-left: 50px solid transparent;
+    
     color: #666;
     background-color: $detail-section-bg;
 
