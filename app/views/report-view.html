@@ -24,9 +24,7 @@
 
 
         <div class="report-details">
-          <div class="row">
-            <div class="col-md-12" ng-if="$parent.report.images.length">
-              <div class="report-image clearfix">
+              <div class="report-image clearfix" ng-if="$parent.report.images.length">
                 <h3 class="subheading"><i class="fa fa-picture-o fa-size-18"></i> รูปประกอบ</h3>
                 <div class="text-center report-view">
                   <img ng-src="{{ activeImage.imageUrl }}"
@@ -42,10 +40,7 @@
                   <img ng-src="{{ image.thumbnailUrl }}"/>
                 </li>
               </ul>
-            </div> <!-- end of report-images -->
-          </div>
-
-        </div><!-- end .report-images -->
+            </div> <!-- end of .report-images -->
 
         <h2 class="subheading"><i class="fa fa-newspaper-o fa-size-18"></i> ข้อมูลรายงาน</h2>
          <ul class="pd-report-info">
