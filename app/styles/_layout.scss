@@ -119,13 +119,22 @@ $comment-section-bg: #333;
     &.ng-hide-add{
         -webkit-animation: fadeOutLeft .5s .2s alternate forwards;
     }
+
+    &.l-full-width {
+        width: 100%;
+
+        .content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    }
 }
 .l-detail-section{
     top: 0;
     left: 0;
     width: 100%;
     border-left: 50px solid transparent;
-    
+
     color: #666;
     background-color: $detail-section-bg;
 
