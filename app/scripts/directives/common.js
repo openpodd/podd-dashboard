@@ -94,7 +94,8 @@ angular.module('poddDashboardApp')
                         });
                     }
                 },
-                data: []
+                data: [],
+                search_key: 'username'
             });
         }
     };
