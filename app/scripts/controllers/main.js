@@ -278,6 +278,9 @@ angular.module('poddDashboardApp')
                 data.formData = tmpFormData;
             }
 
+            // QUICKFIX: inject village into data.
+            data.village = shared.villages[ data.administrationAreaId ];
+
             $scope.report = data;
         })
         .catch(function (err) {
