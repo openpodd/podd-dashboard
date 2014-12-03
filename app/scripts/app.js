@@ -48,7 +48,6 @@ angular
     'ngSanitize',
     'ngTouch',
     'angularMoment',
-    'mentio',
     'ui.bootstrap',
     'angularFileUpload',
     'perfect_scrollbar'
