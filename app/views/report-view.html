@@ -25,7 +25,11 @@
 
         <div class="report-details">
               <div class="report-image clearfix" ng-if="$parent.report.images.length">
-                <h3 class="subheading"><i class="fa fa-picture-o fa-size-18"></i> รูปประกอบ</h3>
+                <h3 class="subheading pull-left"><i class="fa fa-picture-o fa-size-18"></i> รูปประกอบ</h3>
+                <div class="priority-report pull-right">ตั้งค่าความสำคัญของรายงาน :
+                <select ng-options="op.color for op in options"
+                ng-model="flag" ng-change="updateFlag()" ></select></div>
+                
                 <ul class="list-unstyled list-inline report-thumbnails">
                   <li ng-repeat="image in $parent.report.images"
                       ng-click="clickThumbnail(image)"

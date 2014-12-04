@@ -240,10 +240,10 @@ $badge-bad: #FF6D69;
 .report-thumbnails {
     margin-bottom: 30px;
     margin-left: 0;
+    clear: both;
 
     img {
         width: 100%;
-        opacity: .4;
 
         &:hover{
             opacity: 1;
@@ -398,4 +398,15 @@ $badge-bad: #FF6D69;
             }
         }
     }
+}
+.priority-report{
+    margin: 5px 10px 0 0;
+}
+
+//Modal
+//.modal-content{
+//    background-color: #444 !important;
+//}
+.lightbox-nav{
+    text-align: left;
 }

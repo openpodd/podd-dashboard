@@ -41,9 +41,10 @@
 
 
 //Controller
-.leaflet-top .leaflet-control-zoom{
-    bottom: 20px;
-    left: 15px;
+.leaflet-top.leaflet-top{
+    position: absolute;
+    top: 90%;
+    left: 3px;
     z-index: 9999;
 
 //    animation: fadeInLeft 1s 1s alternate backwards;
