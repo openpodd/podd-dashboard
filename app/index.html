@@ -26,6 +26,14 @@
     <!-- endbuild -->
 
     <style>
+    body{
+        background: -webkit-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* Chrome 10+, Saf5.1+ */
+        background:    -moz-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* FF3.6+ */
+        background:     -ms-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* IE10 */
+        background:      -o-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* Opera 11.10+ */
+        background:         linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* W3C */
+    }
+        
     @-webkit-keyframes heartbeat {
       0% { transform: scale3d(1, 1, 1); }
       50% { transform: scale3d(1.4, 1.4, 1.4); }
@@ -74,10 +82,11 @@
       bottom: 0;
       margin: auto;
       text-align: center;
+      height: 180px;
     }
     .splash .splash-content p {
       margin: 0 0 10px;
-      font-size: 2.8em;
+      font-size: 2em;
     }
     .splash .splash-content .icon-heart {
       margin-left: 20px;
@@ -94,6 +103,46 @@
 
       vertical-align: middle;
     }
+
+    @-webkit-keyframes load8 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+    }
+    @keyframes load8 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+        }
+    }
+    .loader {
+        margin: 6em auto;
+        font-size: 5px;
+        position: relative;
+        text-indent: -9999em;
+        border-top: 1.1em solid rgb(0, 0, 0);
+        border-right: 1.1em solid rgba(0, 0, 0, 0.2);
+        border-bottom: 1.1em solid rgba(0, 0, 0, 0.2);
+        border-left: 1.1em solid #000;
+        -webkit-animation: load8 1.1s infinite linear;
+        animation: load8 1.1s infinite linear;
+    }
+    .loader,
+    .loader:after {
+        border-radius: 50%;
+        width: 10em;
+        height: 10em;
+    }
+
     </style>
   </head>
   <body ng-app="poddDashboardApp" ng-class="{ 'page-login':!shared.loggedIn }">
@@ -103,8 +152,10 @@
 
 <div ng-cloak class="splash">
   <div class="splash-content">
-    <p>Loading <img class="icon-heart" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSI0Mi4xIDE4NyA1MTMgNDgxLjUiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgNDIuMSAxODcgNTEzIDQ4MS41IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxnIGlkPSJmYXZvcml0ZSI+DQoJPHBhdGggZmlsbD0iI0ZGMTIwMCIgZD0iTTI5Ny42LDY1NC4xbC0zNC43LTM0LjdjLTEyOS0xMTQuMS0yMTMuMy0xOTEtMjEzLjMtMjg1LjJjMC03Ni45LDU5LjUtMTM2LjQsMTM2LjQtMTM2LjQNCgkJYzQyLjIsMCw4NC4zLDE5LjgsMTExLjYsNTIuMWMyNy4zLTMyLjIsNjkuNC01Mi4xLDExMS42LTUyLjFjNzYuOSwwLDEzNi40LDU5LjUsMTM2LjQsMTM2LjRjMCw5NC4zLTg0LjMsMTcxLjEtMjEzLjMsMjg1LjINCgkJTDI5Ny42LDY1NC4xeiIvPg0KPC9nPg0KPC9zdmc+DQo=" width="64px"></p>
-  </div>
+    <p>กรุณารอสักครู่ </p>
+    <div class="loader">Loading...</div>
+</div>
+ 
   <script>
   var linkTags = document.getElementsByTagName('link');
   for (i=0; i < linkTags.length; i++) {

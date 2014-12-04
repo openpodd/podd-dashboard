@@ -1,5 +1,9 @@
 @import "mixin";
 
+html, body{
+    height: 100%;
+}
+
 .pd-logo{
     overflow: hidden;
     margin: 0 auto 15px;
@@ -129,9 +133,7 @@
 // LOGIN 
 //***************************
 .page-login{
-//    border: 2px solid red;
-    padding: 30px;
-    background-color: beige;    
+    background-color: #7474BF;    
     background: -webkit-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* Chrome 10+, Saf5.1+ */
     background:    -moz-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* FF3.6+ */
     background:     -ms-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* IE10 */
@@ -326,59 +328,4 @@
 }
 .scroller-y {
     overflow-y: hidden;
-}
-
-@keyframes heartbeat {
-    0% {
-        transform: scale3d(1, 1, 1);
-    }
-
-    50% {
-        transform: scale3d(1.4, 1.4, 1.4);
-    }
-
-    100% {
-        transform: scale3d(1, 1, 1);
-    }
-}
-
-.splash {
-    display: none;
-    &[ng-cloak] {
-        display: block;
-    }
-
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background-color: #fff;
-    margin: 0;
-    padding: 0;
-    z-index: 999999;
-
-    .splash-content {
-        display: block;
-        position: absolute;
-        width: 50%;
-        height: 0;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        margin: auto;
-        text-align: center;
-
-        p {
-            margin: 0 0 10px;
-            font-size: 2.8em;
-        }
-
-        .icon-heart {
-            margin-left: 20px;
-            transition: transform .7s;
-            animation-name: heartbeat;
-            animation-duration: .7s;
-            animation-iteration-count: infinite;
-        }
-    }
 }
