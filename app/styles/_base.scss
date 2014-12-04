@@ -147,7 +147,7 @@
     right: 0;
     bottom: 0;
     margin: auto;
-    width: 315px;
+    width: 330px;
     max-height: 400px;
     
     .form-group{
@@ -172,11 +172,15 @@
     padding: 20px 15px;
     border-radius: 10px;
     background-color: #fff;
-    @include box-shadow(1px 1px 7px #444);
+    text-align: center;
+    @include box-shadow(1px 1px 7px #666);
     
     .logo-img{
         margin: 15px 0;
     }
+    
+    
+    
 }
 
 #reports-empty{
@@ -228,11 +232,11 @@
   }
 
   50% {
-    background-color: #333;
+    background-color: #EAEAEA;
   }
 
   100% {
-    background-color: #333;
+    background-color: #EAEAEA;
   }
 }
 
@@ -242,17 +246,17 @@
   }
 
   50% {
-    background-color: #333;
+    background-color: #EAEAEA;
   }
 
   100% {
-    background-color: #333;
+    background-color: #EAEAEA;
   }
 }
 
 .blink{
     animation: pulse .5s .5s alternate forwards , bg-opacity .8s;
-    background-color: #333;
+    background-color: #EAEAEA;
     transition: all 0.3s ease;
     -webkit-transition: all 0.3s ease;
     -ms-transition: all 0.3s ease;
