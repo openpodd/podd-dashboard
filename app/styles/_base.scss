@@ -124,19 +124,23 @@
     }
 }
 
+
+//***************************
+// LOGIN 
+//***************************
+.page-login{
+//    border: 2px solid red;
+    padding: 30px;
+    background-color: beige;    
+    background: -webkit-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* Chrome 10+, Saf5.1+ */
+    background:    -moz-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* FF3.6+ */
+    background:     -ms-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* IE10 */
+    background:      -o-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* Opera 11.10+ */
+    background:         linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* W3C */
+
+    
+}
 .login{
-//    position: absolute;
-//    top: 0;
-//    left: 0;
-//    right: 0;
-//    bottom: 0;
-//    width: 320px;
-//    margin: auto;
-//    height: 390px;
-
-//    width: 320px;
-//    margin: 150px auto 0 auto;
-
     position: absolute;
     top: 0;
     left: 0;
@@ -145,17 +149,13 @@
     margin: auto;
     width: 315px;
     max-height: 400px;
-}
-
-.login-page{
-    background-color: #303030;
-}
-.login{
-    background-color: #fff;
-    padding: 30px;
-//    height: 270px;
-    // @include box-shadow(0px 0px 15px #000);
-
+    
+    .form-group{
+        margin: 0 0 15px;
+    }
+    .form-group:last-child{
+        margin-bottom: 0;
+    }
     .alert{
         margin-top: 20px;
     }
@@ -166,10 +166,16 @@
         .alert {
             margin-top: 0;
         }
-    }
-
-    .form-group:last-child{
-        margin-bottom: 0;
+    } 
+}
+.login-inner{
+    padding: 20px 15px;
+    border-radius: 10px;
+    background-color: #fff;
+    @include box-shadow(1px 1px 7px #444);
+    
+    .logo-img{
+        margin: 15px 0;
     }
 }
 
