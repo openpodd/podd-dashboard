@@ -14,6 +14,9 @@ angular.module('poddDashboardApp')
 })
 
 .config(function (LightboxProvider) {
+    // set a custom template
+    LightboxProvider.templateUrl = '/views/lightbox.html';
+
     LightboxProvider.getImageUrl = function (image) {
         return image.imageUrl;
     };
