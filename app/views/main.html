@@ -8,7 +8,45 @@
 
 <div ng-include="'/views/report-view.html'" onload="initReportModal()"></div>
 
-<div class="fakeErrorBar" style="position:fixed;bottom:10px;width:100%;left:0;text-align:center;z-index:999999">
+<script id="lightbox.html" type="text/ng-template">
+<div class="modal-body report-image-modal"
+  ng-swipe-left="Lightbox.nextImage()"
+  ng-swipe-right="Lightbox.prevImage()">
+    <!-- navigation -->
+    <div class="lightbox-nav">
+      <!-- close button -->
+      <button class="close" aria-hidden="true" ng-click="$dismiss()">×</button>
+
+      <div class="btn-group">
+      <a class="btn btn-xs btn-default" ng-click="Lightbox.prevImage()">
+      ‹ ก่อนหน้า
+      </a>
+
+      <a ng-href="{{Lightbox.imageUrl}}" target="_blank"
+      class="btn btn-xs btn-default" title="Open in new tab">
+      ดูในแท็บใหม่
+      </a>
+
+      <a class="btn btn-xs btn-default" ng-click="Lightbox.nextImage()">
+      ถัดไป ›
+      </a>
+      </div>
+    </div>
+
+    <div class="lightbox-image-container">
+      <!-- caption -->
+      <div class="lightbox-image-caption">
+      <span>{{Lightbox.imageCaption}}</span>
+      </div>
+
+      <!-- image -->
+      <img lightbox-src="{{Lightbox.imageUrl}}" />
+    </div>
+</div>
+
+</script>
+
+<!-- <div class="fakeErrorBar" style="position:fixed;bottom:10px;width:100%;left:0;text-align:center;z-index:999999">
   <span class="label label-default">Toggle error</span>
 
   <div class="fakeErrorBar">
@@ -19,4 +57,4 @@
     <button type="button" class="btn btn-danger"ng-click="shared.rcError = !shared.rcError">
       <i class="fa" ng-class="{ 'fa-square-o': !shared.rcError, 'fa-check-square-o': shared.rcError }"></i> Report Comments</button>
   </div>
-</div>
+</div> -->

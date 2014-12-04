@@ -26,17 +26,10 @@
         <div class="report-details">
               <div class="report-image clearfix" ng-if="$parent.report.images.length">
                 <h3 class="subheading"><i class="fa fa-picture-o fa-size-18"></i> รูปประกอบ</h3>
-                <div class="text-center report-view">
-                  <img ng-src="{{ activeImage.imageUrl }}"
-                  show-image-loader mask=".image-mask" />
-                  <div class="image-mask">
-                    <span class="image-mask-text">Loading &hellip;</span>
-                  </div>
-                </div>
                 <ul class="list-unstyled list-inline report-thumbnails">
                   <li ng-repeat="image in $parent.report.images"
-                  ng-click="clickThumbnail(image)"
-                  ng-class="{ 'active active-image':isActiveImage(image) }">
+                      ng-click="clickThumbnail(image)"
+                      ng-class="{ 'active active-image':isActiveImage(image) }">
                   <img ng-src="{{ image.thumbnailUrl }}"/>
                 </li>
               </ul>
