@@ -20,7 +20,8 @@ angular.module('poddDashboardApp')
             }
             mask.addClass('image-loader-mask');
 
-            attrs.$observe('src', function () {
+            attrs.$observe('src', function (newValue) {
+                console.log('---------------- src', newValue);
                 mask.addClass('image-loader-progress');
                 mask.parent().addClass('your-child-is-working');
             });

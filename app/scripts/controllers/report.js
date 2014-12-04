@@ -13,7 +13,17 @@ angular.module('poddDashboardApp')
     });
 })
 
-.controller('ReportViewCtrl', function ($scope, streaming, ReportModal) {
+.config(function (LightboxProvider) {
+    LightboxProvider.getImageUrl = function (image) {
+        return image.imageUrl;
+    };
+
+    LightboxProvider.getImageCaption = function (image) {
+        return image.note;
+    };
+})
+
+.controller('ReportViewCtrl', function ($scope, streaming, Lightbox) {
 
     $scope.userAlreadyClickImage = false;
 
@@ -21,12 +31,13 @@ angular.module('poddDashboardApp')
         if (newValue) {
             $scope.userAlreadyClickImage = false;
 
-            if ( $scope.$parent.report.images.length ) {
-                $scope.activeImage = $scope.$parent.report.images[0];
-            }
-            else {
-                $scope.activeImage = null;
-            }
+            // if ( $scope.$parent.report.images.length ) {
+            //     $scope.activeImage = $scope.$parent.report.images[0];
+            // }
+            // else {
+            //     $scope.activeImage = null;
+            // }
+            $scope.activeImage = null;
 
             $scope.$broadcast('rebuildScrollbar:reportView');
         }
@@ -34,7 +45,7 @@ angular.module('poddDashboardApp')
 
     $scope.clickThumbnail = function (image) {
         $scope.userAlreadyClickImage = true;
-        $scope.setActiveImage(image);
+        $scope.viewReportImage(image);
     };
 
     $scope.setActiveImage = function (image) {
@@ -43,6 +54,20 @@ angular.module('poddDashboardApp')
 
     $scope.isActiveImage = function (image) {
         return $scope.activeImage === image;
+    };
+
+    $scope.viewReportImage = function (image) {
+        var index = 0,
+            images = $scope.$parent.report.images;
+
+        images.some(function (item, i) {
+            if (item === image) {
+                index = i;
+                return true;
+            }
+        });
+
+        Lightbox.openModal($scope.$parent.report.images, index);
     };
 
     streaming.on('report:image:new', function (data) {
