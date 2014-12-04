@@ -1,23 +1,29 @@
 <div class="login" ng-controller="LoginCtrl">
-  <img src="images/logo-large.png" alt="Logo" class="logo-img"/>
+    <div class="login-inner">
+        <img src="images/logo-large.png" alt="Logo" class="logo-img"/>
   
-  <form class="form-horizontal" role="form" ng-submit="submit()">
-    <div class="form-group" ng-show="invalidLogin" ng-cloak>
-        <div class="alert alert-danger" role="alert" >
-            <strong>เกิดข้อผิดพลาด</strong> กรุณาตรวจสอบชื่อบัญชีและรหัสผ่านของคุณอีกครั้ง
+        <form class="form-horizontal" role="form" ng-submit="submit()">
+        <div class="form-group" ng-show="invalidLogin" ng-cloak>
+            <div class="alert alert-danger" role="alert" >
+                <strong>เกิดข้อผิดพลาด</strong> กรุณาตรวจสอบชื่อบัญชีและรหัสผ่านของคุณอีกครั้ง
+            </div>
         </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" id="inputUsername" placeholder="ชื่อบัญชี" ng-model="username">
+            <div class="alert alert-danger" role="alert" ng-show="invalidUsername" ng-cloak>กรุณากรอกชื่อผู้ใช้</div>
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" id="inputPassword" placeholder="รหัสผ่าน" ng-model="password">
+            <div class="alert alert-danger" role="alert" ng-show="invalidPasswordLength" ng-cloak>รหัสผ่านมีความยาวไม่ต่ำกว่า 4 ตัวอักษร</div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-login">เข้าสู่ระบบ</button>
+        </div>
+        </form>
     </div>
-   
-    <div class="form-group">
-        <input type="text" class="form-control" id="inputUsername" placeholder="ชื่อบัญชี" ng-model="username">
-        <div class="alert alert-danger" role="alert" ng-show="invalidUsername" ng-cloak>กรุณากรอกชื่อผู้ใช้</div>
-    </div>
-    <div class="form-group">
-        <input type="password" class="form-control" id="inputPassword" placeholder="รหัสผ่าน" ng-model="password">
-        <div class="alert alert-danger" role="alert" ng-show="invalidPasswordLength" ng-cloak>รหัสผ่านมีความยาวไม่ต่ำกว่า 4 ตัวอักษร</div>
-    </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-login">เข้าสู่ระบบ</button>
-    </div>
-  </form>
 </div>
+
+
+
+
