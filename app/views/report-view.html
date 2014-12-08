@@ -20,24 +20,29 @@
          perfect-scrollbar
          wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"
          refresh-on-change="report"
-         ng-show="!loadingReportView && !loadingReportViewError"><div class="content">
+         ng-if="!loadingReportView && !loadingReportViewError"><div class="content">
 
+      <div class="report-details">
 
-        <div class="report-details">
-              <div class="report-image clearfix" ng-if="$parent.report.images.length">
-                <h3 class="subheading pull-left"><i class="fa fa-picture-o fa-size-18"></i> รูปประกอบ</h3>
-                <div class="priority-report pull-right">ตั้งค่าความสำคัญของรายงาน :
-                <select ng-options="op.color for op in options"
-                ng-model="flag" ng-change="updateFlag()" ></select></div>
-                
-                <ul class="list-unstyled list-inline report-thumbnails">
-                  <li ng-repeat="image in $parent.report.images"
-                      ng-click="clickThumbnail(image)"
-                      ng-class="{ 'active active-image':isActiveImage(image) }">
+        <div class="priority-report pull-right">ตั้งค่าความสำคัญของรายงาน :
+          <select ng-model="reportFlag"
+                  ng-options="flagItem as flagItem.color for flagItem in flagOptions"
+                  ng-change="updateFlag(reportFlag)">
+            <!-- <option value="">-- ระดับความสำคัญ --</option> -->
+          </select>
+        </div>
+
+        <div class="report-image clearfix" ng-if="$parent.report.images.length">
+          <h3 class="subheading pull-left"><i class="fa fa-picture-o fa-size-18"></i> รูปประกอบ</h3>
+
+          <ul class="list-unstyled list-inline report-thumbnails">
+              <li ng-repeat="image in $parent.report.images"
+                  ng-click="clickThumbnail(image)"
+                  ng-class="{ 'active active-image':isActiveImage(image) }">
                   <img ng-src="{{ image.thumbnailUrl }}"/>
-                </li>
-              </ul>
-            </div> <!-- end of .report-images -->
+              </li>
+          </ul>
+        </div> <!-- end of .report-images -->
 
         <h2 class="subheading"><i class="fa fa-newspaper-o fa-size-18"></i> ข้อมูลรายงาน</h2>
          <ul class="pd-report-info">

@@ -1,8 +1,9 @@
+/*global swal */
 'use strict';
 
 angular.module('poddDashboardApp')
 
-.controller('CommentsCtrl', function ($scope, Comments, Flags, User, streaming, FailRequest, shared) {
+.controller('CommentsCtrl', function ($scope, Comments, User, streaming, FailRequest, shared) {
 
     console.log('init comment ctrl');
 
@@ -30,30 +31,7 @@ angular.module('poddDashboardApp')
             });
     }
 
-    function refreshFlag() {
-        $scope.reportFlag = Flags.list({ reportId: $scope.$parent.report.id, amount:1 }).$promise.then(function (flags) {
-            var tmp = [];
-
-            flags.forEach(function (item) {
-               tmp.push(item);
-            });
-
-            if(tmp[0]){
-                $scope.flag = $scope.options[tmp[0].priority-1];
-            }else{
-                $scope.flag = '';
-            }
-        });
-
-    }
-
     $scope.loading = false;
-    $scope.options = [{ color: 'Green', rank: 1 }, 
-        { color: 'Yellow', rank: 2 }, 
-        { color: 'Yellow', rank: 3 },
-        { color: 'Yellow', rank: 4 },
-        { color: 'Red', rank: 5 }
-    ];
 
     function reset() {
         $scope.message = '';
@@ -71,7 +49,6 @@ angular.module('poddDashboardApp')
     $scope.$watch('$parent.report', function (newValue) {
         if (newValue) {
             refreshComments();
-            refreshFlag();
         }
     });
 
@@ -126,24 +103,6 @@ angular.module('poddDashboardApp')
 
     $scope.getUserTextRaw = function(item) {
         return '@' + item.username;
-    };
-
-    // $scope.flag = $scope.options[0];
-
-    $scope.updateFlag = function() {
-       $scope.submitting = true;
-
-       var data = {
-            reportId: $scope.$parent.report.id,
-            priority: $scope.flag.rank,
-        };
-
-        $scope.loading = true;
-
-        Flags.post(data).$promise.then(function () {
-            $scope.submitting = false;
-            $scope.loading = false;
-        });
     };
 
     $scope.file = '';
