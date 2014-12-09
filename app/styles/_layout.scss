@@ -97,11 +97,13 @@ $comment-section-bg: #333;
     z-index: 9998;
 
     &.ng-hide-remove {
+        -moz-animation: fadeInLeft .5s .2s alternate forwards;
         -webkit-animation: fadeInLeft .5s .2s alternate forwards;
         opacity: 0;
     }
 
     &.ng-hide-add{
+        -moz-animation: fadeOutLeft .5s .2s alternate forwards;
         -webkit-animation: fadeOutLeft .5s .2s alternate forwards;
     }
 }
@@ -113,11 +115,13 @@ $comment-section-bg: #333;
 
      &.ng-hide-remove {
         -webkit-animation: fadeInLeft .5s .2s alternate forwards;
+        -moz-animation: fadeInLeft .5s .2s alternate forwards;
         opacity: 0;
     }
 
     &.ng-hide-add{
         -webkit-animation: fadeOutLeft .5s .2s alternate forwards;
+        -moz-animation: fadeOutLeft .5s .2s alternate forwards;
     }
 
     &.l-full-width {
