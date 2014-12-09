@@ -258,6 +258,9 @@ html, body{
 
 .blink{
     animation: pulse .5s .5s alternate forwards , bg-opacity .8s;
+    -webkit-animation: pulse .5s .5s alternate forwards , bg-opacity .8s;
+    -moz-animation: pulse .5s .5s alternate forwards , bg-opacity .8s;
+    -ms-animation: pulse .5s .5s alternate forwards , bg-opacity .8s;
     background-color: #EAEAEA;
     transition: all 0.3s ease;
     -webkit-transition: all 0.3s ease;
