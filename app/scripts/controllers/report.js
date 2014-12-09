@@ -26,9 +26,10 @@ angular.module('poddDashboardApp')
     };
 })
 
-.controller('ReportViewCtrl', function ($scope, streaming, Lightbox) {
+.controller('ReportViewCtrl', function ($scope, streaming, Flags, Lightbox) {
 
     $scope.userAlreadyClickImage = false;
+    $scope.reportFlag = {};
 
     $scope.$parent.$watch('report', function (newValue) {
         if (newValue) {
@@ -41,6 +42,8 @@ angular.module('poddDashboardApp')
             //     $scope.activeImage = null;
             // }
             $scope.activeImage = null;
+
+            refreshFlag();
 
             $scope.$broadcast('rebuildScrollbar:reportView');
         }
@@ -92,5 +95,39 @@ angular.module('poddDashboardApp')
             }
         }
     });
+
+    // Report flag.
+
+    $scope.flagOptions = [
+        { color: 'Priority 1', priority: 1 },
+        { color: 'Priority 2', priority: 2 },
+        { color: 'Priority 3', priority: 3 },
+        { color: 'Priority 4', priority: 4 },
+        { color: 'Priority 5', priority: 5 }
+    ];
+
+    function refreshFlag() {
+        var query = {
+            reportId: $scope.report.id,
+            amount: 1
+        };
+
+        Flags.list(query).$promise.then(function (flags) {
+            if (flags.length) {
+                $scope.reportFlag = $scope.flagOptions[ flags[0].priority - 1 ];
+            }
+            else {
+                $scope.reportFlag = null;
+            }
+        });
+    }
+
+    $scope.updateFlag = function(flag) {
+        var data = {
+            reportId: $scope.report.id,
+            priority: flag.priority,
+        };
+        Flags.post(data);
+    };
 
 });

@@ -1,4 +1,3 @@
-/*global $:true */
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -37,7 +36,7 @@ angular.module('poddDashboardApp')
         },
         close: function () {
             init();
-            
+
             $rootScope.willShowReportView = false;
             modal.trigger('hide:report');
 

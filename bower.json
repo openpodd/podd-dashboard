@@ -23,9 +23,9 @@
     "moment": "~2.8.3",
     "ng-file-upload": "~1.6.12",
     "bootstrap-sweetalert": "~0.4.3",
-    "angular-perfect-scrollbar": "*",
     "jquery.atwho": "~0.5.1",
-    "angular-bootstrap-lightbox": "~0.3.2"
+    "angular-bootstrap-lightbox": "~0.3.2",
+    "angular-perfect-scrollbar": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",

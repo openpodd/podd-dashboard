@@ -155,6 +155,21 @@ angular.module('poddDashboardApp')
         }
     });
 
+    streaming.on('report:flag:new', function (data) {
+        console.log('got new report flag', data);
+
+        data = angular.fromJson(data);
+
+        // Loop through existing reports list and update data.
+        if ($scope.reports) {
+            $scope.reports.forEach(function (item) {
+                if (item.id === parseInt(data.reportId)) {
+                    item.flag = data.priority;
+                }
+            });
+        }
+    });
+
     $scope.loadVillageReports = function (village) {
         var query,
             searcher;
