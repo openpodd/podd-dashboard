@@ -47,13 +47,32 @@ consumer.on('message', function (channel, message) {
     for (i in io.sockets.connected) {
         io.sockets.connected[i].emit(channel, message);
     }
+
+    if(channel == 'news:new'){
+      //console.log('got new notification', message)
+      var data = JSON.parse(message);
+
+      var gcm = require('android-gcm');
+      var gcmObject = new gcm.AndroidGcm(data.GCMAPIKey);
+
+      var message = new gcm.Message({
+          registration_ids: data.androidRegistrationIds,
+          data: {
+              message: data.message,
+              type: data.type
+          }
+      });
+      gcmObject.send(message, function(err, response) {});
+    }
+
 });
 consumer.subscribe(
   'report:new',
   'report:comment:new',
   'report:image:new',
   'report:flag:new',
-  'mention:new'
+  'mention:new',
+  'news:new'
 );
 
 io.on('connection', function (socket) {
@@ -63,3 +82,6 @@ io.on('connection', function (socket) {
 
 io.serveClient();
 console.log('Listening on 0.0.0.0:8888 ...');
+
+
+
