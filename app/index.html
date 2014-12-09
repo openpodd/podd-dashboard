@@ -33,7 +33,7 @@
         background:      -o-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* Opera 11.10+ */
         background:         linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* W3C */
     }
-        
+
     @-webkit-keyframes heartbeat {
       0% { transform: scale3d(1, 1, 1); }
       50% { transform: scale3d(1.4, 1.4, 1.4); }
@@ -124,7 +124,7 @@
         transform: rotate(360deg);
         }
     }
-    .loader {
+    .splash .loader {
         margin: 6em auto;
         font-size: 5px;
         position: relative;
@@ -136,8 +136,8 @@
         -webkit-animation: load8 1.1s infinite linear;
         animation: load8 1.1s infinite linear;
     }
-    .loader,
-    .loader:after {
+    .splash .loader,
+    .splash .loader:after {
         border-radius: 50%;
         width: 10em;
         height: 10em;
@@ -155,7 +155,7 @@
     <p>กรุณารอสักครู่ </p>
     <div class="loader">Loading...</div>
 </div>
- 
+
   <script>
   var linkTags = document.getElementsByTagName('link');
   for (i=0; i < linkTags.length; i++) {
