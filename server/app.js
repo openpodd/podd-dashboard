@@ -58,10 +58,12 @@ consumer.on('message', function (channel, message) {
       var message = new gcm.Message({
           registration_ids: data.androidRegistrationIds,
           data: {
-              message: data.message,
-              type: data.type
+              type: data.type,
+              message: data.message
           }
       });
+      message.delay_while_idle = true;
+      message.time_to_live = 6000;
       gcmObject.send(message, function(err, response) {});
     }
 
