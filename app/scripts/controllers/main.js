@@ -225,10 +225,23 @@ angular.module('poddDashboardApp')
         $scope.currentVillage = data;
 
         // set center to this marker.
-        map.leaflet.panTo([
+        // ,-------*-------,*******,
+        // ,       *       x       , -> this is paddingLeft = (w/2)
+        // ,_______*_______,*******,
+        //
+        // <- w/2->
+        // <------ w ------>
+        //
+        // So we need to reduce paddingLeft by (1/2) of (w/2)
+        // ,----*----------,****,
+        // ,    *      x        , -> this is paddingLeft = (w/4)
+        // ,____*__________,****,
+        //
+        var paddingLeft = map.leaflet.getSize().x * (1 / 4);
+        map.leaflet.panToOffset([
             data.location.coordinates[1],
             data.location.coordinates[0]
-        ]);
+        ], [ paddingLeft, 0 ]);
 
         shared.showReportList = true;
         $scope.loadingReportList = true;

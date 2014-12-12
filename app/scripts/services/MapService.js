@@ -7,6 +7,13 @@ angular.module('poddDashboardApp')
 
     var tileLayerURL = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
 
+    L.Map.prototype.panToOffset = function (latlng, offset, options) {
+        var x = this.latLngToContainerPoint(latlng).x - offset[0];
+        var y = this.latLngToContainerPoint(latlng).y - offset[1];
+        var point = this.containerPointToLatLng([x, y]);
+        return this.setView(point, this._zoom, { pan: options });
+    };
+
     function Map(leaflet) {
         this.leaflet = leaflet;
         this.container = $( this.leaflet.getContainer() );
