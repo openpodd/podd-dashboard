@@ -181,11 +181,12 @@ $notifi-item-read: #fff;
     }
 }
 #notifications-empty{
-    padding: 11px 10px;
+    background-color: #FFF;
+    color: #666;
+    padding: 10px 20px;
     
     li{
         border: none;
-        background: #eee !important;
         border-radius: 0 5px 5px 0;
     }
 }
