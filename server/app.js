@@ -58,7 +58,7 @@ consumer.on('message', function (channel, message) {
       var message = new gcm.Message({
           registration_ids: data.androidRegistrationIds,
           data: {
-              type: data.type,
+              type: data.type.toLowerCase(),
               message: data.message
           }
       });
