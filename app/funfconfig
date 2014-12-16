@@ -1,0 +1,40 @@
+{
+    "@type": "edu.mit.media.funf.pipeline.BasicPipeline",
+    "name": "default",
+    "version": 1,
+    "archive": {
+        "@schedule": {
+            "interval": 14400
+        }
+    },
+    "upload": {
+        "url": "https://api.cmonehealth.org/funf/upload/",
+        "@schedule": {
+            "interval": 43200
+        }
+    },
+    "update": {
+        "url": "http://www.cmonehealth.org/funfconfig",
+        "@schedule": {
+            "interval": 86400
+        }
+    },
+    "data": [{
+        "@type": "edu.mit.media.funf.probe.builtin.BatteryProbe",
+        "@schedule": {
+            "interval": 7200
+        }
+    }, {
+        "@type": "edu.mit.media.funf.probe.builtin.RunningApplicationsProbe",
+        "@schedule": {
+            "interval": 14400
+        }
+    }, {
+        "@type": "edu.mit.media.funf.probe.builtin.SimpleLocationProbe",
+        "@schedule": {
+            "interval": 14400
+        }
+    }, {
+        "@type": "edu.mit.media.funf.probe.builtin.HardwareInfoProbe"
+    }]
+}
