@@ -99,11 +99,11 @@ angular.module('poddDashboardApp')
     // Report flag.
 
     $scope.flagOptions = [
-        { color: 'Priority 1', priority: 1 },
-        { color: 'Priority 2', priority: 2 },
-        { color: 'Priority 3', priority: 3 },
-        { color: 'Priority 4', priority: 4 },
-        { color: 'Priority 5', priority: 5 }
+        { color: 'Ignore',   priority: 1 },
+        { color: 'OK',       priority: 2 },
+        { color: 'Contact',  priority: 3 },
+        { color: 'Follow',   priority: 4 },
+        { color: 'Critical', priority: 5 }
     ];
 
     function refreshFlag() {
