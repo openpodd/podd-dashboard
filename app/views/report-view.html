@@ -52,6 +52,8 @@
              <li>พื้นที่เกิดเหตุ - {{ $parent.report.village.address }}</li>
              <li>โดย - {{ $parent.report.createdBy }}</li>
              <li ng-show="$parent.report.createdByContact">ติดต่อ - {{ $parent.report.createdByContact }}</li>
+             <li ng-show="$parent.report.createdByTelephone">เบอร์โทร - {{ $parent.report.createdByTelephone }}</li>
+             <li ng-show="$parent.report.createdByProjectMobileNumber">เบอร์โทรของโครงการ - {{ $parent.report.createdByProjectMobileNumber }}</li>
          </ul>
 
 
