@@ -82,7 +82,10 @@
                 <tr ng-repeat="report in olderReports | orderBy:'-date' " id="report-{{ report.id }}"
                     ng-click="onClickReport(report)"
                     ng-class="{ 'report-positive': !report.negative }">
-                    <td><i class="fa fa-flag  pull-right" ng-click="closeReportList()"></i></td>
+                  <td>
+                    <i class="fa fa-flag flag-priority-{{ report.flag }}" ng-if="report.flag"></i>
+                    <i class="fa fa-flag flag-priority-none" ng-if="!report.flag"></i>
+                  </td>
                   <td ng-bind="report.date | amDateFormat:'D MMM YYYY HH:mm'"></td>
                   <td>
                     <span ng-if="report.negative">
