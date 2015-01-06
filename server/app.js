@@ -63,8 +63,19 @@ consumer.on('message', function (channel, message) {
           }
       });
       message.delay_while_idle = true;
-      message.time_to_live = 6000;
-      gcmObject.send(message, function(err, response) {});
+      message.time_to_live = 8640000;
+      gcmObject.send(message, function(err, response) {
+
+        // console.log(err);
+
+        var raven = require('raven');
+        var client = new raven.Client('http://e69d80f24ad54b1894c33dc14a4007f6:7e355437d92e4391b598e0218147d8bd@localhost:9005/2', {level: 'error'});
+
+        client.captureMessage(err, function(result) {
+             // console.log((result));
+        });
+      });
+
     }
 
 });
