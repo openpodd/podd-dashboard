@@ -11,12 +11,12 @@ angular.module('poddDashboardApp')
 
     $rootScope.closeReportView = function () {
         $rootScope.willShowReportView = false;
+        modal.trigger('hide:report');
     };
 
     function init() {
         if (!modal || !modal.length) {
             modal = angular.element('[report-view]');
-            $rootScope.willShowReportView = false;
         }
     }
 

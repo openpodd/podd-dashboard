@@ -45,7 +45,7 @@ angular
     'ngAnimate',
     'ngCookies',
     'ngResource',
-    'ngRoute',
+    // 'ngRoute',
     'ngSanitize',
     'ngTouch',
     'angularMoment',
@@ -53,6 +53,7 @@ angular
     'angularFileUpload',
     'perfect_scrollbar',
     'bootstrapLightbox',
+    'ui.router'
   ])
 
   // override z-index of ui.bootstrap
@@ -129,25 +130,32 @@ angular
       }
   })
 
-  .config(function ($routeProvider, $httpProvider) {
+  // .config(function ($routeProvider, $httpProvider, $stateProvider, $urlRouterProvider) {
+  .config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
     $httpProvider.interceptors.push('addTrailingSlashInterceptor');
 
-    $routeProvider
-      .when('/', {
+    $urlRouterProvider.otherwise('/');
+
+    $stateProvider
+      .state('main', {
+        url: '/',
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'mainctrl'
+        controller: 'MainCtrl'
       })
-      .when('/login', {
+      .state('main.report', {
+        url: '^/reports/{reportId:int}',
+        template: '',
+        controller: 'MainReportCtrl'
+      })
+      .state('login', {
+        url: '/login',
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl'
       })
-      .when('/about', {
+      .state('about', {
+        url: '/about',
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
-      })
-      .otherwise({
-        redirectTo: '/'
       });
   });
 
