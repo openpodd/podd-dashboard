@@ -176,13 +176,13 @@
                 <li class="pd-nav-item pd-nav-title"><span class="pd-nav-title">เมนู</span></li>
                 <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('home') }"
                     ng-click="setActiveMenu('home')">
-                  <a ng-href="#/" ng-click="shared.filterMode = false" class="pd-nav-icon">
+                  <a ng-href="#/" ng-click="shared.filterMode = false; shared.summaryMode = false" class="pd-nav-icon">
                   <i class="fa fa-map-marker fa-size-22"></i>
                   <span class="pd-nav-text">เฝ้าระวัง</span></a>
                 </li>
                 <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('filter') }"
                     ng-click="setActiveMenu('filter')">
-                  <a ng-href="#/" ng-click="shared.filterMode = true" class="pd-nav-icon">
+                  <a ng-href="#/" ng-click="shared.filterMode = true; shared.summaryMode = false" class="pd-nav-icon">
                   <i class="fa fa-search fa-size-18"></i>
                   <span class="pd-nav-text">ค้นหา</span></a>
                 </li>
@@ -198,6 +198,12 @@
                         <span class="alert-dotted" ng-show="shared.unread > 0">{{ shared.unread }}</span>
                     </span>
                     <div ng-include src="'views/notification-list.html'"></div>
+                </li>
+                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('summary') }"
+                    ng-click="setActiveMenu('summary')">
+                  <a ng-href="#/" ng-click="shared.filterMode = false; shared.summaryMode = true" class="pd-nav-icon">
+                  <i class="fa fa-bar-chart fa-size-18"></i>
+                  <span class="pd-nav-text">สรุปรายงาน</span></a>
                 </li>
                 <li ng-show="shared.loggedIn" class="pd-nav-item" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('logout') }">
@@ -293,6 +299,7 @@
         <script src="scripts/services/FilterService.js"></script>
         <script src="scripts/services/FlagService.js"></script>
         <script src="scripts/services/MenuService.js"></script>
+        <script src="scripts/services/SummaryService.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/main-report.js"></script>
         <script src="scripts/controllers/menu.js"></script>
@@ -302,6 +309,7 @@
         <script src="scripts/controllers/filter.js"></script>
         <script src="scripts/controllers/login.js"></script>
         <script src="scripts/controllers/notification.js"></script>
+        <script src="scripts/controllers/summary.js"></script>
         <!-- endbuild -->
 </body>
 </html>

@@ -6,10 +6,10 @@ angular.module('poddDashboardApp')
 .controller('MainCtrl', [
     '$scope', 'dashboard', 'streaming', 'Map', 'Reports', 'ReportModal',
     'shared', 'Auth', 'Search', 'Menu', 'Mentions', 'Flags', 'FailRequest',
-    '$location',
+    '$location', 'Summary', 
     function ($scope, dashboard, streaming,
                Map, Reports, ReportModal, shared, Auth, Search, Menu, Mentions,
-               Flags, FailRequest, $location) {
+               Flags, FailRequest, $location, Summary) {
 
     console.log('IN MainCtrl');
 

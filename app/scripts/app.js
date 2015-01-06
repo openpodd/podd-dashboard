@@ -30,6 +30,7 @@ function htmlToPlainText(text) {
   return String(text).replace(/<[^>]+>/gm, '');
 }
 
+
 /**
  * @ngdoc overview
  * @name poddDashboardApp
@@ -86,7 +87,8 @@ angular
       /\/notifications/,
       /\/notification\/seen/,
       /\/reportComments/,
-      /\/users\/search/
+      /\/users\/search/,
+      /\/reports\/summary\/week/
     ];
 
     function matchAPIUrls(url) {
@@ -156,3 +158,5 @@ angular
         controller: 'AboutCtrl'
       });
   });
+
+
