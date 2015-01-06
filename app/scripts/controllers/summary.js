@@ -8,6 +8,7 @@ angular.module('poddDashboardApp')
 
     $scope.currentYear = 2014;
     $scope.currentWeek =4;
+    $scope.weekSearch = '';
 
     $scope.$on('summary:clearQuery', function (willClear) {
         if (willClear) {
@@ -56,11 +57,28 @@ angular.module('poddDashboardApp')
                 $scope.empty = false;
                 $scope.willShowResult = false;
             }
+            $scope.weekSearch = $scope.query;
 
         }).catch(function () {
             $scope.loading = false;
             $scope.error = true;
         });
+    };
+
+    $scope.disabled = function(date, mode) {
+        return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+    };
+
+    $scope.open = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.opened = true;
+    };
+
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1
     };
 
 });

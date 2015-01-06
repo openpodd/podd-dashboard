@@ -5,12 +5,12 @@
       <div class="input-group">
 
         <span class="input-group-btn" >
-            <button class="btn btn-default btn-info-search" type="button" >
+            <button class="btn btn-default btn-info-search" type="button" ng-click="open($event)">
                 <i class="fa fa-calendar"></i>
             </button>
 
             <div class="filter-help summary-list" ng-show="results">
-                <h4 style="margin-bottom:20px;"><i class="fa fa-info-circle"></i> สรุปการรายงานสัปดาห์ที่ {{ query }} 
+                <h4 style="margin-bottom:20px;"><i class="fa fa-info-circle"></i> สรุปการรายงานสัปดาห์ที่ {{ weekSearch }} 
                 [ ตั้งแต่วันที่ {{results[0].dates[0].date}} ถึง {{results[0].dates[6].date}} ]</h3>
                 <ul class="list-unstyled filter-list-help">
                       <li>
@@ -47,9 +47,8 @@
             </div>
         </span>
 
-        <input ng-model="query" type="text" class="form-control"
-               placeholder="ตัวอย่าง. 2014-W3">
-
+        <input type="week" class="form-control" ng-model="query" />
+         
         <span class="input-group-btn">
             <button class="btn btn-default pd-btn-search" type="submit"><i class="fa fa-search fa-size-18"></i></button>
         </span>
