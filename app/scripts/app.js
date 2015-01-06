@@ -30,6 +30,7 @@ function htmlToPlainText(text) {
   return String(text).replace(/<[^>]+>/gm, '');
 }
 
+
 /**
  * @ngdoc overview
  * @name poddDashboardApp
@@ -51,7 +52,7 @@ angular
     'ui.bootstrap',
     'angularFileUpload',
     'perfect_scrollbar',
-    'bootstrapLightbox'
+    'bootstrapLightbox',
   ])
 
   // override z-index of ui.bootstrap
@@ -85,7 +86,8 @@ angular
       /\/notifications/,
       /\/notification\/seen/,
       /\/reportComments/,
-      /\/users\/search/
+      /\/users\/search/,
+      /\/reports\/summary\/week/
     ];
 
     function matchAPIUrls(url) {
@@ -148,3 +150,5 @@ angular
         redirectTo: '/'
       });
   });
+
+
