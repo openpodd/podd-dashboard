@@ -6,8 +6,10 @@ angular.module('poddDashboardApp')
 .controller('MainCtrl', [
     '$scope', 'dashboard', 'streaming', 'Map', 'Reports', 'ReportModal',
     'shared', 'Auth', 'Search', 'Menu', 'Mentions', 'Flags', 'FailRequest',
+    '$location',
     function ($scope, dashboard, streaming,
-               Map, Reports, ReportModal, shared, Auth, Search, Menu, Mentions, Flags, FailRequest) {
+               Map, Reports, ReportModal, shared, Auth, Search, Menu, Mentions,
+               Flags, FailRequest, $location) {
 
     console.log('IN MainCtrl');
 
@@ -20,6 +22,8 @@ angular.module('poddDashboardApp')
     shared.rcError = false;
     $scope.shared = shared;
     /* -- end debugging code -- */
+
+    shared.villages = [];
 
     // Defined shared variables.
     shared.showReportList = false;
@@ -272,7 +276,7 @@ angular.module('poddDashboardApp')
 
     $scope.onClickReport = function (report) {
         if ( report.negative ) {
-            $scope.viewReport(report.id);
+            $location.url('/reports/' + report.id);
         }
         report.isNew = false;
         delete shared.newReportQueue[report.id];
@@ -335,6 +339,10 @@ angular.module('poddDashboardApp')
         ReportModal.close();
     };
 
+    $scope.gotoMainPage = function () {
+        $location.url('/');
+    };
+
     // Watch to turn on filter mode.
     $scope.$watch('shared.filterMode', function (newValue) {
         shared.showReportList = false;
@@ -344,7 +352,7 @@ angular.module('poddDashboardApp')
             map.clearVillages();
             $scope.closeModal();
         }
-        else {
+        else if ( !angular.isUndefined(newValue) ) {
             $scope.closeModal();
             refreshDashboard();
         }
@@ -360,9 +368,8 @@ angular.module('poddDashboardApp')
 
     $scope.$watch('shared.reportWatchId', function (newValue) {
         if (newValue) {
-            $scope.viewReport(newValue);
+            $location.url('/reports/' + newValue);
         }
-        shared.reportWatchId = '';
     });
 
 }]);
