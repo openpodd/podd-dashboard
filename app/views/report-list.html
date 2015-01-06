@@ -1,7 +1,7 @@
 <div class="reports-list l-report-section l-section" ng-show="shared.showReportList">
     <div class="title clearfix">
         <h2 class="pull-left"><i class="fa fa-stethoscope pull-left fa-size-22"></i>รายงาน</h2>
-        <i class="fa fa-times pull-right fa-size-18" ng-click="closeReportList()"></i>
+        <i class="fa fa-times pull-right fa-size-18" ng-click="closeReportList();gotoMainPage();"></i>
     </div>
 
     <div loader-spinner ng-show="loadingReportList" class="loader-container"></div>
