@@ -14,6 +14,9 @@
                 [ ตั้งแต่วันที่ {{results[0].dates[0].date}} ถึง {{results[0].dates[6].date}} ]</h3>
                 <ul class="list-unstyled filter-list-help">
                       <li>
+                          <h5>จำนวนการรายงานทั้งสิ้น {{ totalReport }} รายงาน</h5>
+                      </li>
+                      <li>
                           ค่าที่ระบุในตาราง <em>POSITIVE:NEGATIVE</em> ตัวอย่าง:
                           <ul>
                               <li><code>อทป. ตำบลสุเทพ 0,1่</code>
@@ -33,7 +36,7 @@
                     </thead>
                     <tbody>
                       <tr class="summary-item"
-                          ng-repeat="result in results | orderBy:'administration_area' ">
+                          ng-repeat="result in results | orderBy:'administrationArea' ">
                         <th class="">{{ $index + 1 }}</th>
                         <td class="">{{ result.administrationArea }}</td>
                         <td class=""
@@ -48,7 +51,7 @@
         </span>
 
         <input type="week" class="form-control" ng-model="query" />
-         
+
         <span class="input-group-btn">
             <button class="btn btn-default pd-btn-search" type="submit"><i class="fa fa-search fa-size-18"></i></button>
         </span>
