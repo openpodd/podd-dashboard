@@ -1,25 +1,27 @@
 <div class="modal-body report-image-modal"
      ng-swipe-left="Lightbox.nextImage()"
-     ng-swipe-right="Lightbox.prevImage()">
+     ng-swipe-right="Lightbox.prevImage()"
+     ng-controller="ReportImageLightboxCtrl">
   <!-- navigation -->
   <div class="lightbox-nav">
     <!-- close button -->
     <button class="close" aria-hidden="true" ng-click="$dismiss()">×</button>
 
     <div class="btn-group">
-      <a class="btn btn-xs btn-default" ng-click="Lightbox.prevImage()">
+      <a class="btn btn-xs btn-default" ng-click="unshowMap();Lightbox.prevImage()">
         ‹ ก่อนหน้า
       </a>
 
       <a ng-href="{{Lightbox.imageUrl}}" target="_blank"
-      class="btn btn-xs btn-default" title="Open in new tab">
-      ดูในแท็บใหม่
-    </a>
+        class="btn btn-xs btn-default" title="Open in new tab">
+        ดูในแท็บใหม่
+      </a>
 
-    <a class="btn btn-xs btn-default" ng-click="Lightbox.nextImage()">
-      ถัดไป ›
-    </a>
-  </div>
+      <a class="btn btn-xs btn-default" ng-click="unshowMap();Lightbox.nextImage()">
+        ถัดไป ›
+      </a>
+    </div>
+
   </div>
 
   <div class="lightbox-image-container">
@@ -30,5 +32,19 @@
 
     <!-- image -->
     <img lightbox-src="{{Lightbox.imageUrl}}" />
+
+    <div class="lightbox-image-container-map" ng-class="{ 'show-image-map': showMap }">
+      <div id="image-position-map"></div>
+    </div>
   </div>
+
+  <div class="text-center show-map-button-wrapper"
+       ng-show="Lightbox.image.location.latitude && Lightbox.image.location.longitude">
+      <button class="btn btn-xs btn-default"
+        ng-click="toggleImageMapView(Lightbox.image.location)">
+        <span ng-show="!showMap">แสดงในแผนที่</span>
+        <span ng-show="showMap">ปิดแผนที่</span>
+      </button>
+  </div>
+
 </div>

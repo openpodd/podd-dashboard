@@ -169,6 +169,7 @@ angular.module('poddDashboardApp')
             $scope.reports.forEach(function (item) {
                 if (item.id === parseInt(data.reportId)) {
                     item.flag = data.priority;
+                    item.negative = data.reportNegative;
                 }
             });
         }
