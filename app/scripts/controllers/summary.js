@@ -17,6 +17,7 @@ angular.module('poddDashboardApp')
             $scope.loading = false;
             $scope.error = false;
             $scope.results = [];
+            $scope.totalReport = 0;
         }
     });
 
@@ -32,6 +33,7 @@ angular.module('poddDashboardApp')
         }
 
         $scope.results = [];
+        $scope.totalReport = 0;
         $scope.loading = true;
         $scope.error = false;
         $scope.willShowResult = true;
@@ -42,9 +44,10 @@ angular.module('poddDashboardApp')
             console.log('Query result:', data);
             
             var results = [];
-
+            var total = 0;
             data.forEach(function (item) {
                 results.push(item);
+                total += item.totalReport;
             });
 
             $scope.results = results;
@@ -56,6 +59,7 @@ angular.module('poddDashboardApp')
             else {
                 $scope.empty = false;
                 $scope.willShowResult = false;
+                $scope.totalReport = total;
             }
             $scope.weekSearch = $scope.query;
 
