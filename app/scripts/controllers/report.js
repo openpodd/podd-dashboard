@@ -1,3 +1,4 @@
+/*global L */
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -140,4 +141,29 @@ angular.module('poddDashboardApp')
         Flags.post(data);
     };
 
+})
+
+.controller('ReportImageLightboxCtrl', function ($scope, Map) {
+  // Init map.
+  var center = [13.791177699, 100.58814079],
+      zoomLevel = 15,
+      map = false;
+
+  $scope.unshowMap = function () {
+      $scope.showMap = false;
+  };
+
+  $scope.toggleImageMapView = function (location) {
+      $scope.showMap = !$scope.showMap;
+
+      if (!map) {
+          map = new Map( L.map('image-position-map').setView(center, zoomLevel) );
+      }
+      if ($scope.showMap && location) {
+          L.marker([
+              location.latitude,
+              location.longitude
+          ]).addTo( map.leaflet );
+      }
+  };
 });
