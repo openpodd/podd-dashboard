@@ -2,14 +2,7 @@
 
 angular.module('poddDashboardApp')
 
-.controller('MainReportCtrl', function ($scope, $location, $stateParams, shared) {
+.controller('MainReportCtrl', function ($scope, $location, $stateParams) {
     console.log('init main report ctrl');
-
-    $scope.shared = shared;
-
-    $scope.$watch('shared.reportTypeTemplateLoaded', function (newValue) {
-        if (newValue) {
-            $scope.$parent.viewReport($stateParams.reportId);
-        }
-    });
+    $scope.$parent.viewReport($stateParams.reportId);
 });
