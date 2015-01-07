@@ -36,9 +36,9 @@
                     </thead>
                     <tbody>
                       <tr class="summary-item"
-                          ng-repeat="result in results | orderBy:'administrationArea' ">
+                          ng-repeat="result in results | orderBy:'name' ">
                         <th class="">{{ $index + 1 }}</th>
-                        <td class="">{{ result.administrationArea }}</td>
+                        <td class="">{{ result.name }}</td>
                         <td class=""
                           ng-repeat="date in result.dates ">
                           {{ date.positive }},{{ date.negative }}
