@@ -2,13 +2,23 @@
 
 angular.module('poddDashboardApp')
 
-.run(function ($templateCache, ReportType) {
+.run(function ($templateCache, ReportType, shared, $q) {
     ReportType.query().$promise.then(function (reportTypes) {
+        shared.reportTypeTemplateLoaded = false;
+
+        var promises = [];
+
         reportTypes.forEach(function (item) {
             // Loop to get each templates.
-            ReportType.get({ id: item.id }).$promise.then(function (reportType) {
+            var promise = ReportType.get({ id: item.id }).$promise.then(function (reportType) {
                 $templateCache.put('reportType-' + item.id + '.html', reportType.template);
+                shared['reportTypeTemplateLoadedReportType' + item.id] = true;
             });
+            promises.push(promise);
+        });
+
+        $q.all(promises).then(function () {
+            shared.reportTypeTemplateLoaded = true;
         });
     });
 })
