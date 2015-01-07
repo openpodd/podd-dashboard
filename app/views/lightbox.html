@@ -38,9 +38,9 @@
     </div>
   </div>
 
-  <div class="text-center show-map-button-wrapper">
+  <div class="text-center show-map-button-wrapper"
+       ng-show="Lightbox.image.location.latitude && Lightbox.image.location.longitude">
       <button class="btn btn-xs btn-default"
-        ng-disabled="!Lightbox.image.location"
         ng-click="toggleImageMapView(Lightbox.image.location)">
         <span ng-show="!showMap">แสดงในแผนที่</span>
         <span ng-show="showMap">ปิดแผนที่</span>

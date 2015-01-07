@@ -445,7 +445,6 @@ $badge-bad: #FF6D69;
 .lightbox-modal {
     .modal-dialog {
         height: 100%;
-        width: 60% !important;
         min-width: 400px;
     }
 
@@ -458,6 +457,13 @@ $badge-bad: #FF6D69;
 
     .leaflet-top.leaflet-left {
         top: 0;
+    }
+
+    .lightbox-image-container {
+        img {
+            max-width: 100%;
+            height: auto !important;
+        }
     }
 }
 .show-map-button-wrapper {
