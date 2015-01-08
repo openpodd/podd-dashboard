@@ -40,7 +40,7 @@ angular.module('poddDashboardApp')
 
         shared.summaryReports = {};
 
-        Summary.query({ dates: $scope.query }).$promise.then(function (data) {
+        Summary.query({ dates: $scope.query, offset: ((new Date()).getTimezoneOffset() * -1 / 60) }).$promise.then(function (data) {
             console.log('Query result:', data);
             
             var results = [];
