@@ -26,7 +26,8 @@
     "jquery.atwho": "~0.5.1",
     "angular-bootstrap-lightbox": "~0.3.2",
     "angular-perfect-scrollbar": "*",
-    "angular-ui-router": "~0.2.13"
+    "angular-ui-router": "~0.2.13",
+    "week-picker": "https://github.com/morshedalam/week-picker.git"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",
