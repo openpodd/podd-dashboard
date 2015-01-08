@@ -40,7 +40,7 @@ angular.module('poddDashboardApp')
 
         shared.summaryReports = {};
 
-        Summary.query({ week: $scope.query }).$promise.then(function (data) {
+        Summary.query({ dates: $scope.query }).$promise.then(function (data) {
             console.log('Query result:', data);
             
             var results = [];
@@ -69,20 +69,9 @@ angular.module('poddDashboardApp')
         });
     };
 
-    $scope.disabled = function(date, mode) {
-        return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-    };
-
-    $scope.open = function($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-
-        $scope.opened = true;
-    };
-
-    $scope.dateOptions = {
-        formatYear: 'yy',
-        startingDay: 1
-    };
+    $scope.$evalAsync(function () {
+        $('[data-weekpicker]').weekpicker();
+    });
+    
 
 });
