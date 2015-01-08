@@ -30,6 +30,9 @@ var pushGCM = function pushGCM(message) {
                 var options = {
                     extra: {
                         GCMPayload: gcmMessage
+                    },
+                    tags: {
+                        service: 'gcm'
                     }
                 };
 
