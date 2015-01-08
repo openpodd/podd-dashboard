@@ -371,6 +371,7 @@ module.exports = function (grunt) {
           src: [
             'bower_components/leaflet/dist/**/*',
             'bower_components/Leaflet.awesome-markers/**/*',
+            'bower_components/week-picker/**/*',
           ]
         }, {
           expand: true,
