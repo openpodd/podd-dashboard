@@ -27,14 +27,13 @@ var pushGCM = function pushGCM(message) {
         if (err) {
             console.log('ERROR:', err);
             try {
-                var errorData = {
-                    gcm: {
-                        err: err,
-                        gcmMessage: gcmMessage
+                var options = {
+                    extra: {
+                        GCMPayload: gcmMessage
                     }
                 };
 
-                client.captureMessage(errorData, function (response) {
+                client.captureError(err, options, function (response) {
                     console.log('Sentry Error ID :', response.id);
                 });
             }
