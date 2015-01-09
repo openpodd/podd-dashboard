@@ -144,26 +144,35 @@ angular.module('poddDashboardApp')
 })
 
 .controller('ReportImageLightboxCtrl', function ($scope, Map) {
-  // Init map.
-  var center = [13.791177699, 100.58814079],
-      zoomLevel = 15,
-      map = false;
+    // Init map.
+    var center = [13.791177699, 100.58814079],
+        zoomLevel = 15,
+        map = false;
 
-  $scope.unshowMap = function () {
+    L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
+    var iconRed = L.AwesomeMarkers.icon({
+        icon: 'medkit',
+        markerColor: 'red'
+    });
+
+    $scope.unshowMap = function () {
       $scope.showMap = false;
-  };
+    };
 
-  $scope.toggleImageMapView = function (location) {
-      $scope.showMap = !$scope.showMap;
+    $scope.toggleImageMapView = function (location) {
+        $scope.showMap = !$scope.showMap;
 
-      if (!map) {
-          map = new Map( L.map('image-position-map').setView(center, zoomLevel) );
-      }
-      if ($scope.showMap && location) {
-          L.marker([
-              location.latitude,
-              location.longitude
-          ]).addTo( map.leaflet );
-      }
-  };
+        var newCenter = [ location.latitude, location.longitude ];
+
+        if (!map) {
+            map = new Map( L.map('image-position-map').setView(center, zoomLevel) );
+        }
+        if ($scope.showMap && location) {
+            map.leaflet.setView(newCenter);
+
+            L.marker(newCenter, {
+                icon: iconRed
+            }).addTo( map.leaflet );
+        }
+    };
 });
