@@ -173,6 +173,8 @@ angular.module('poddDashboardApp')
             L.marker(newCenter, {
                 icon: iconRed
             }).addTo( map.leaflet );
+
+            map.leaflet.invalidateSize();
         }
     };
 });
