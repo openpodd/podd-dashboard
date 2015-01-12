@@ -13,41 +13,25 @@
                 <h4 style="margin-bottom:20px;"><i class="fa fa-info-circle"></i> สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }} </h3>
                 <ul class="list-unstyled filter-list-help">
                       <li>
-                          <h5>จำนวนการรายงานทั้งสิ้น {{ totalReport }} รายงาน</h5>
+                          <h5>จำนวนการรายงานทั้งสิ้น {{ totalReport }} รายงาน แบ่งเป็น</h5>
+                          <ul>
+                              <li>รายงานไม่พบเหตุผิดปกติจำนวน {{ positiveReport }} ครั้ง</li>
+                              <li>รายงานพบเหตุผิดปกติจำนวน {{ negativeReport }} ครั้ง</li>
+                          </ul>
                       </li>
                       <li>
                           ค่าที่ระบุในตาราง <em>POSITIVE:NEGATIVE</em> ตัวอย่าง:
                           <ul>
                               <li><code>อทป. ตำบลสุเทพ 0,1่</code>
-                              <span class="explain">มีการรายงานไม่พบเหตุผิดปกติ คือ 0 ครั้งและ มีการรายงานพบเหตุผิดปกติ คือ 1 ครั้ง</span></li>
+                              <span class="explain">มีการรายงานไม่พบเหตุผิดปกติจำนวน 0 ครั้งและ มีการรายงานพบเหตุผิดปกติจำนวน 1 ครั้ง</span></li>
                           </ul>
                       </li>
-                <div class="">
-                  <table class="table table-bordered">
-                    <thead>
-                      <th class="">#</th>
-                      <th class="">อปท.</th>
-                      <th class=""
-                          ng-repeat="date in results[0].dates">
-                          <p>{{ date.dayOfWeek }}</p>
-                          <p>{{ date.date }}</p>
-                        </th>
-                    </thead>
-                    <tbody>
-                      <tr class="summary-item"
-                          ng-repeat="result in results | orderBy:'name' ">
-                        <th class="">{{ $index + 1 }}</th>
-                        <td class="">{{ result.name }}</td>
-                        <td class=""
-                          ng-repeat="date in result.dates ">
-                          {{ date.positive }},{{ date.negative }}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                 <div class="summary-grid" ui-grid="gridOptions">
+
                 </div>
             </div>
         </span>
+
 
         <input type="text" id="week_range" class="form-control" ng-model="query" data-weekpicker="weekpicker"data-week_start="1" placeholder="ตัวอย่าง. 12/01/2015-18/01/2015"/>
 
