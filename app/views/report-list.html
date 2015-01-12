@@ -28,7 +28,7 @@
                     <tr>
                         <th class="pd-table-flag"></th>
                         <th class="pd-table-date">วันที่รายงาน</th>
-                        <th class="pd-table-report-date">วันที่เกิดเหตุ</th>
+<!--                        <th class="pd-table-report-date">วันที่เกิดเหตุ</th>-->
                         <th class="pd-table-type">ประเภท</th>
                         <th class="pd-table-status">สถานะ</th>
                         <th class="pd-table-reporter">ผู้รายงาน</th>
@@ -44,12 +44,14 @@
                           <i class="fa fa-flag flag-priority-{{ report.flag }}" ng-if="report.flag"></i>
                         </td>
                         <td ng-bind="report.date | amDateFormat:'D MMM YYYY HH:mm'"></td>
+<!--
                         <td>
                         <span ng-if="report.negative">
                           {{  report.incidentDate | amDateFormat:'D MMM YYYY' }}
                         </span>
                         <div class="text-center" ng-if="!report.negative">-</div>
                         </td>
+-->
                         <td ng-bind="report.reportTypeName"></td>
                         <td>
                          <span ng-show="report.negative" class="badge badge-bad">Bad</span>
@@ -71,7 +73,7 @@
                 <tr>
                     <th class="pd-table-flag"></th>
                     <th class="pd-table-date">วันที่รายงาน</th>
-                    <th class="pd-table-report-date">วันที่เกิดเหตุ</th>
+<!--                    <th class="pd-table-report-date">วันที่เกิดเหตุ</th>-->
                     <th class="pd-table-type">ประเภท</th>
                     <th class="pd-table-status">สถานะ</th>
                     <th class="pd-table-reporter">ผู้รายงาน</th>
@@ -87,12 +89,14 @@
                     <i class="fa fa-flag flag-priority-{{ report.flag }}" ng-if="report.flag"></i>
                   </td>
                   <td ng-bind="report.date | amDateFormat:'D MMM YYYY HH:mm'"></td>
+<!--
                   <td>
                     <span ng-if="report.negative">
                       {{  report.incidentDate | amDateFormat:'D MMM YYYY' }}
                     </span>
                     <div class="text-center" ng-if="!report.negative">-</div>
                   </td>
+-->
                   <td ng-bind="report.reportTypeName"></td>
                   <td>
                      <span ng-show="report.negative" class="badge badge-bad">Bad</span>
