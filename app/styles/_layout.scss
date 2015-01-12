@@ -145,6 +145,10 @@ $comment-section-bg: #333;
     .title{
         background-color: $detail-title-color;
     }
+    
+    .content{
+        padding: 20px 35px;
+    }
 }
 .l-comment-section{
     right: 0%;

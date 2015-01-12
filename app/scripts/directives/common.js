@@ -2,6 +2,12 @@
 
 angular.module('poddDashboardApp')
 
+.filter('encodeURI', function ($window) {
+    return function (text) {
+        return $window.encodeURIComponent(text);
+    };
+})
+
 .directive('showImageLoader', function () {
     return {
         restrict: 'A',
