@@ -25,11 +25,8 @@ angular.module('poddDashboardApp')
         }
     });
 
-    $scope.$watch('query', function (newValue) {
-        shared.filterQuery = newValue;
-    });
-
     $scope.search = function () {
+        shared.filterQuery = $scope.query;
         $state.go('main.filter', { q: $scope.query }, { location: true });
     };
 
