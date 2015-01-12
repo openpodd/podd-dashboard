@@ -25,9 +25,9 @@
       <div class="report-details">
 
         <div class="priority-report pull-right">ตั้งค่าความสำคัญของรายงาน :
-          <select ng-model="reportFlag"
+          <select ng-model="flag.current"
                   ng-options="flagItem as flagItem.color for flagItem in flagOptions"
-                  ng-change="updateFlag(reportFlag)">
+                  ng-change="updateFlag(flag.current)">
             <!-- <option value="">-- ระดับความสำคัญ --</option> -->
           </select>
         </div>

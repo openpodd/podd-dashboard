@@ -1,4 +1,4 @@
-/*global L */
+/*global L, swal */
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -109,6 +109,14 @@ angular.module('poddDashboardApp')
 
     // Report flag.
 
+    // Make flag as object here to prevent child scope to create new variable
+    // due to ng-if, ng-repeat, ng-switch.
+    // @see: http://stackoverflow.com/a/19410602/163216
+    $scope.flag = {
+        old: undefined,
+        current: {}
+    };
+
     // TODO: get these configurations from server
     $scope.flagOptions = [
         { color: 'Ignore',   priority: 1 },
@@ -126,20 +134,51 @@ angular.module('poddDashboardApp')
 
         Flags.list(query).$promise.then(function (flags) {
             if (flags.length) {
-                $scope.reportFlag = $scope.flagOptions[ flags[0].priority - 1 ];
+                $scope.flag.current = $scope.flagOptions[ flags[0].priority - 1 ];
             }
             else {
-                $scope.reportFlag = null;
+                $scope.flag.current = null;
             }
         });
     }
+
+    $scope.$watch('flag.current', function (newValue, oldValue) {
+        $scope.flag.old = oldValue;
+    });
 
     $scope.updateFlag = function(flag) {
         var data = {
             reportId: $scope.report.id,
             priority: flag.priority,
         };
-        Flags.post(data);
+
+        var flagToConfirm = [ 'Ignore', 'Case' ];
+
+        // Wait for confirm before update flag.
+        if ( flagToConfirm.indexOf(flag.color) !== -1 ) {
+            swal({
+                title: '',
+                type: 'warning',
+                text: 'โปรดยืนยัน หากคุณต้องการเปลี่ยนค่าระดับความสำคัญใหม่',
+                confirmButtonText: 'ตกลง',
+                confirmButtonClass: 'btn-danger',
+                showCancelButton: true,
+                cancelButtonText: 'ยกเลิก'
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    Flags.post(data);
+                }
+                else {
+                    // reset if not confirm.
+                    $scope.flag.current = $scope.flag.old;
+                }
+            });
+        }
+        else {
+            Flags.post(data);
+        }
+
     };
 
 })
