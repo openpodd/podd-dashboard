@@ -40,7 +40,10 @@ angular.module('poddDashboardApp')
         $scope.loading = true;
         $scope.error = false;
         $scope.willShowResult = true;
-
+        $scope.gridOptions = {
+            data: [], 
+            columnDefs: [],
+        };
         shared.summaryReports = {};
 
         Summary.query({ dates: $scope.query, offset: ((new Date()).getTimezoneOffset() * -1 / 60) }).$promise.then(function (data) {
@@ -57,7 +60,7 @@ angular.module('poddDashboardApp')
                 var result = {};
 
                 result['name'] = item.name;
-                options.push({ field: 'name', displayName: 'Name' });
+                if(!header) options.push({ field: 'name', displayName: 'Name' });
 
                 item.dates.forEach(function (date) {
                     result[date.date + "P"] = date.positive;
@@ -99,10 +102,8 @@ angular.module('poddDashboardApp')
             }
             $scope.weekSearch = $scope.query;
             $scope.gridOptions = { 
-                headerTemplate: '<div class="ui-grid-top-panel" style="text-align: center">I am a Custom Grid Header</div>',
                 data: results, 
                 columnDefs: options, };
-
 
         }).catch(function () {
             $scope.loading = false;
