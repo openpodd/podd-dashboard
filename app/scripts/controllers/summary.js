@@ -7,7 +7,11 @@ angular.module('poddDashboardApp')
     console.log('init summary ctrl');
 
     $scope.weekSearch = '';
-    $scope.gridOptions = {};
+    $scope.gridOptions = {
+        enableSorting: true,
+        data: [], 
+        columnDefs: [],
+    };
 
     $scope.$on('summary:clearQuery', function (willClear) {
         if (willClear) {
@@ -41,6 +45,7 @@ angular.module('poddDashboardApp')
         $scope.error = false;
         $scope.willShowResult = true;
         $scope.gridOptions = {
+            enableSorting: true,
             data: [], 
             columnDefs: [],
         };
@@ -60,22 +65,15 @@ angular.module('poddDashboardApp')
                 var result = {};
 
                 result['name'] = item.name;
-                if(!header) options.push({ field: 'name', displayName: 'Name' });
+                if(!header) options.push({ field: 'name', displayName: 'Name', width:200 });
 
                 item.dates.forEach(function (date) {
-                    result[date.date + "P"] = date.positive;
-                    result[date.date + "N"] = date.negative;
+                    result["P" + date.date] = date.positive;
+                    result["N" + date.date] = date.negative;
 
                     if(!header){ 
-                        options.push({ 
-                            field: date.date + "P", 
-                            cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                              if (grid.getCellValue(row,col) === 0) return 'gray';
-                            }
-                        });
-                        options.push({ 
-                            field: date.date + "N", cellClass: 'red'
-                        })
+                        options.push({ field: "P" + date.date, cellTemplate: '<div class="ui-grid-cell-contents" ng-class="{ gray: COL_FIELD == 0}">{{COL_FIELD}}</div>' });
+                        options.push({ field: "N" + date.date, cellTemplate: '<div class="ui-grid-cell-contents red">{{COL_FIELD}}</div>' })
                     }
                 });
 
@@ -101,9 +99,9 @@ angular.module('poddDashboardApp')
                 $scope.totalReport = total;
             }
             $scope.weekSearch = $scope.query;
-            $scope.gridOptions = { 
-                data: results, 
-                columnDefs: options, };
+            $scope.gridOptions.enableSorting = true;
+            $scope.gridOptions.columnDefs = options;
+            $scope.gridOptions.data = results; 
 
         }).catch(function () {
             $scope.loading = false;

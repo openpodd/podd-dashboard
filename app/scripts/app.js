@@ -127,6 +127,11 @@ angular
         template: '',
         controller: 'FilterModeCtrl'
       })
+      .state('main.summary', {
+        url: '^/summary?dates',
+        template: '',
+        controller: 'SummaryCtrl'
+      })
       .state('login', {
         url: '/login',
         templateUrl: 'views/login.html',
