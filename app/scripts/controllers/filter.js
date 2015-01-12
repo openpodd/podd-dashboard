@@ -2,16 +2,26 @@
 
 angular.module('poddDashboardApp')
 
-.controller('FilterCtrl', function ($scope, Search, shared) {
+.controller('FilterModeCtrl', function (shared, Menu) {
+    shared.filterMode = true;
+    Menu.setActiveMenu('filter');
+})
+
+.controller('FilterCtrl', function ($scope, Search, shared, $window, $state, $stateParams) {
 
     $scope.$on('filter:clearQuery', function (willClear) {
         if (willClear) {
-            $scope.query = '';
+            console.log('- clearQuery');
+            $scope.query = $stateParams.q || '';
             $scope.willShowResult = false;
             $scope.loading = false;
             $scope.empty = false;
             $scope.error = false;
             $scope.help = false;
+
+            if ($scope.query) {
+                $scope.doQueryOnParams($stateParams);
+            }
         }
     });
 
@@ -20,6 +30,10 @@ angular.module('poddDashboardApp')
     });
 
     $scope.search = function () {
+        $state.go('main.filter', { q: $scope.query }, { location: true });
+    };
+
+    $scope._search = function () {
         console.log('Will search with query', $scope.query);
 
         $scope.closeHelp();
@@ -46,6 +60,7 @@ angular.module('poddDashboardApp')
                 matchedVillages = {};
 
             data.forEach(function (item) {
+                // TODO: get rid of dependencies with dashboard data.
                 var village = shared.villages[ item.administrationAreaId ];
 
                 // Append in filtered reports list
@@ -90,5 +105,28 @@ angular.module('poddDashboardApp')
     $scope.closeHelp = function () {
         $scope.help = false;
     };
+
+
+    // do things about URL
+    $scope.doQueryOnParams = function (params) {
+        // do query only in main.filter mode.
+        if ($state.current.name === 'main.filter') {
+            $scope.query = $window.decodeURIComponent(params.q || '');
+            if ($scope.query) {
+                $scope._search();
+            }
+            else {
+                shared.filterResults = [];
+            }
+        }
+    };
+    $scope.doQueryOnParams($stateParams);
+    // detect change on 'q' param changes.
+    $scope.$on('$stateChangeSuccess', function (scope, current, params) {
+        // do query only in main.filter mode.
+        if ($state.current.name === 'main.filter') {
+            $scope.doQueryOnParams(params);
+        }
+    });
 
 });

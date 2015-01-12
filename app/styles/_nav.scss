@@ -180,14 +180,24 @@ $notifi-item-read: #ececec;
         }
     }
 }
-#notifications-empty{
-    background-color: #FFF;
+.notifications-empty{
     color: #666;
-    padding: 10px 20px;
     
     li{
         border: none;
         border-radius: 0 5px 5px 0;
+        padding: 11px 20px 11px;
+        background-color: $notifi-item-bg;
+    }
+}
+.pd-nav-submenu{
+    @extend .notification-block;
+
+    li{
+        a{
+            padding: 10px 20px;
+            font: 20px/22px ThaiSansNeueRegular;
+        }
     }
 }
 

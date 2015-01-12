@@ -6,10 +6,10 @@ angular.module('poddDashboardApp')
 .controller('MainCtrl', [
     '$scope', 'dashboard', 'streaming', 'Map', 'Reports', 'ReportModal',
     'shared', 'Auth', 'Search', 'Menu', 'Mentions', 'Flags', 'FailRequest',
-    '$location', 'Summary', 
+    '$location', '$state',
     function ($scope, dashboard, streaming,
                Map, Reports, ReportModal, shared, Auth, Search, Menu, Mentions,
-               Flags, FailRequest, $location, Summary) {
+               Flags, FailRequest, $location, $state) {
 
     console.log('IN MainCtrl');
 
@@ -42,7 +42,9 @@ angular.module('poddDashboardApp')
 
     function refreshDashboard() {
         dashboard.get().$promise.then(function (villages) {
-            map.setVillages(villages);
+            if ($state.current.name === 'main') {
+                map.setVillages(villages);
+            }
             // Because every available village for this user is returned even there
             // is no report. We can use this variable to keep which village
             // current logged-in user can access.

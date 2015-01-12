@@ -175,16 +175,14 @@
         <div class="pd-container" >
            <img src="images/logo-onehealth.svg" alt="" class="logo"/>
             <ul class="pd-nav-list">
-<!--                <li class="pd-nav-item pd-nav-title"><span class="pd-nav-title">เมนู</span></li>-->
                 <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('home') }"
                     ng-click="setActiveMenu('home')">
                   <a ng-href="#/" ng-click="shared.filterMode = false; shared.summaryMode = false" class="pd-nav-icon">
                   <i class="fa fa-map-marker fa-size-22"></i>
                   <span class="pd-nav-text">เฝ้าระวัง</span></a>
                 </li>
-                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('filter') }"
-                    ng-click="setActiveMenu('filter')">
-                  <a ng-href="#/" ng-click="shared.filterMode = true; shared.summaryMode = false" class="pd-nav-icon">
+                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('filter') }">
+                  <a ng-href="#/filter" ng-click="shared.filterMode = true; shared.summaryMode = false" class="pd-nav-icon">
                   <i class="fa fa-search fa-size-18"></i>
                   <span class="pd-nav-text">ค้นหา</span></a>
                 </li>
@@ -203,9 +201,13 @@
                 </li>
                 <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('summary') }"
                     ng-click="setActiveMenu('summary')">
-                  <a ng-href="#/" ng-click="shared.filterMode = false; shared.summaryMode = true" class="pd-nav-icon">
-                  <i class="fa fa-bar-chart fa-size-18"></i>
-                  <span class="pd-nav-text">สรุปรายงาน</span></a>
+                    <span class="pd-nav-icon"><i class="fa fa-bar-chart fa-size-18"></i></span>
+                  <div class="pd-nav-submenu">
+                      <ul class="">
+                          <li><a ng-href="#/" ng-click="shared.filterMode = false; shared.summaryMode = true" class="">สรุปรายงาน</a></li>
+                          <li><a href="">สรุปรายงาน xxx</a></li>
+                      </ul>
+                  </div>
                 </li>
                 <li ng-show="shared.loggedIn" class="pd-nav-item" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('logout') }">

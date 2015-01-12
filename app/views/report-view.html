@@ -23,8 +23,7 @@
          ng-if="!loadingReportView && !loadingReportViewError"><div class="content">
 
       <div class="report-details">
-
-        <div class="priority-report pull-right">ตั้งค่าความสำคัญของรายงาน :
+        <div class="priority-report pull-right">สถานะ :
           <select ng-model="flag.current"
                   ng-options="flagItem as flagItem.color for flagItem in flagOptions"
                   ng-change="updateFlag(flag.current)">
