@@ -50,7 +50,7 @@
              <li>วันที่เกิดเหตุ - {{ $parent.report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</li>
              <li>ประเภทรายงาน - {{ $parent.report.reportTypeName }}</li>
              <li>พื้นที่เกิดเหตุ - {{ $parent.report.village.address }}</li>
-             <li>โดย - {{ $parent.report.createdBy }}</li>
+             <li>โดย - <span jump-to-filter name=" 'createdByName' " value="$parent.report.createdBy"></span></li>
              <li ng-show="$parent.report.createdByContact">ติดต่อ - {{ $parent.report.createdByContact }}</li>
              <li ng-show="$parent.report.createdByTelephone">เบอร์โทร - {{ $parent.report.createdByTelephone }}</li>
              <li ng-show="$parent.report.createdByProjectMobileNumber">เบอร์โทรของโครงการ - {{ $parent.report.createdByProjectMobileNumber }}</li>
@@ -70,7 +70,7 @@
                   <tbody>
                     <tr ng-repeat="field in $parent.report.formData">
                       <td ng-bind="field.name"></td>
-                      <td ng-bind="field.value"></td>
+                      <td jump-to-filter name="field.name" value="field.value"></td>
                     </tr>
                   </tbody>
                 </table>

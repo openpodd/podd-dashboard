@@ -66,11 +66,46 @@ angular.module('poddDashboardApp')
     };
 })
 
+.directive('jumpToFilter', function ($compile) {
+    var supportedFields = [ 'animalType', 'createdByName' ],
+        defaultTimeCriteria = 'last 7 days';
+
+    return {
+        strict: 'EA',
+        scope: {
+            name: '=',
+            value: '='
+        },
+        compile: function compile() {
+            return function (scope, $element) {
+                var q = '';
+
+                if ( supportedFields.indexOf(scope.name) !== -1) {
+                    // add time criteria
+                    q += defaultTimeCriteria;
+                    // add field criteria
+                    q += ' AND ' + scope.name + ':' + scope.value;
+
+                    scope.q = q;
+
+                    $element.html('<a ng-href="#/search?q={{ q|encodeURI }}">{{ value }}</a>');
+                    $compile($element.contents())(scope);
+                }
+                else {
+                    // render plain value if not supported.
+                    $element.html('{{ value }}');
+                    $compile($element.contents())(scope);
+                }
+            };
+        }
+    };
+})
+
 .directive('ReportView', function () {
-  return {
-      strict: 'A',
-      link: function () {
-          // NOTE: see ReportService.js in factory ReportModal.
-      }
-  };
+    return {
+        strict: 'A',
+        link: function () {
+            // NOTE: see ReportService.js in factory ReportModal.
+        }
+    };
 });
