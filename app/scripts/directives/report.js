@@ -68,7 +68,7 @@ angular.module('poddDashboardApp')
 
 .directive('jumpToFilter', function ($compile) {
     var supportedFields = [ 'animalType', 'createdByName' ],
-        defaultTimeCriteria = 'last 7 days';
+        defaultTimeCriteria = 'date:last 7 days';
 
     return {
         strict: 'EA',
@@ -88,7 +88,7 @@ angular.module('poddDashboardApp')
 
                     scope.q = q;
 
-                    $element.html('<a ng-href="#/search?q={{ q|encodeURI }}">{{ value }}</a>');
+                    $element.html('<a ng-href="#/filter?q={{ q|encodeURI }}">{{ value }}</a>');
                     $compile($element.contents())(scope);
                 }
                 else {
