@@ -121,6 +121,11 @@ angular
         template: '',
         controller: 'MainReportCtrl'
       })
+      .state('main.filter', {
+        url: '^/filter?q',
+        template: '',
+        controller: 'FilterModeCtrl'
+      })
       .state('login', {
         url: '/login',
         templateUrl: 'views/login.html',
@@ -132,5 +137,3 @@ angular
         controller: 'AboutCtrl'
       });
   });
-
-
