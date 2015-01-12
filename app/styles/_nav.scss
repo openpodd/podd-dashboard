@@ -190,6 +190,16 @@ $notifi-item-read: #ececec;
         border-radius: 0 5px 5px 0;
     }
 }
+.pd-nav-submenu{
+    @extend .notification-block;
+
+    li{
+        a{
+            padding: 10px 20px;
+            font: 20px/22px ThaiSansNeueRegular;
+        }
+    }
+}
 
 /*--- ALERT ICON ---*/
 .icon-bell{
