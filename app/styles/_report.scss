@@ -70,6 +70,11 @@ $badge-bad: #FF6D69;
 
 .badge-good{ background-color: $badge-good-color; }
 .badge-bad{ background-color: $badge-bad; }
+.badge-new{ 
+    background-color: $badge-bad;
+    font-weight: normal;
+    font-size: 10px;
+}
 
 .pd-table{
     > thead > tr{
@@ -103,6 +108,12 @@ $badge-bad: #FF6D69;
     tr:hover{
         td{
             background-color: $table-row-hover-bg !important;
+        }
+    }
+    
+    .pd-table-notification{
+        td{
+            text-align: center;
         }
     }
 }
