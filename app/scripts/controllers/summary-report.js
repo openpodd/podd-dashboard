@@ -2,10 +2,14 @@
 
 angular.module('poddDashboardApp')
 
-.controller('SummaryReportCtrl', function ($scope, SummaryReport, User, streaming, FailRequest, shared, $location) {
+.controller('SummaryReportModeCtrl', function (shared, Menu) {
+    shared.summaryReportMode = true;
+    Menu.setActiveMenu('summary');
+})
+
+.controller('SummaryReportCtrl', function ($scope, SummaryReport, User, streaming, FailRequest, shared, $location, $state) {
     
     console.log('init summary ctrl');
-
     $scope.weekSearch = '';
     $scope.gridOptions = {
         enableSorting: true,
@@ -13,6 +17,7 @@ angular.module('poddDashboardApp')
         columnDefs: [],
     };
 
+    $state.go('main.summary-report', { dates: $scope.weekSearch }, { type: 'week' });
     $scope.$on('summary:clearQuery', function (willClear) {
         if (willClear) {
             $scope.query = '';
@@ -31,7 +36,10 @@ angular.module('poddDashboardApp')
     });
 
     $scope.search = function () {
+        $scope.query = $('#week_range_report').val();
+
         console.log('Will search with query', $scope.query);
+        $state.go('main.summary-report', { dates: $scope.query }, { type: 'week' });
 
         if ($scope.loading) {
             return;
@@ -113,6 +121,10 @@ angular.module('poddDashboardApp')
         $('[data-weekpicker]').weekpicker();
     });
     
+    $scope.changeQuery = function() {
+        console.log("ffff");
+    };
+
     $scope.closeSummaryReport = function () {
         shared.summaryReportMode = false;
     };

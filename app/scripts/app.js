@@ -130,12 +130,12 @@ angular
       .state('main.summary-report', {
         url: '^/summary/report?dates',
         template: '',
-        controller: 'SummaryReportCtrl'
+        controller: 'SummaryReportModeCtrl'
       })
       .state('main.summary-person', {
         url: '^/summary/person?dates',
         template: '',
-        controller: 'SummaryPersonCtrl'
+        controller: 'SummaryPersonModeCtrl'
       })
       .state('login', {
         url: '/login',
