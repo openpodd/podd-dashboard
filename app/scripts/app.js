@@ -127,12 +127,12 @@ angular
         template: '',
         controller: 'FilterModeCtrl'
       })
-      .state('main.summary-report', {
+      .state('main.summaryreport', {
         url: '^/summary/report?dates',
         template: '',
         controller: 'SummaryReportModeCtrl'
       })
-      .state('main.summary-person', {
+      .state('main.summaryperson', {
         url: '^/summary/person?dates',
         template: '',
         controller: 'SummaryPersonModeCtrl'

@@ -11,7 +11,19 @@ angular.module('poddDashboardApp')
     
     console.log('init summary ctrl');
 
-    $scope.weekSearch = '';
+    var now = moment();
+    var start_date;
+    var end_date;
+
+    if(now.format('d') === '0'){
+        start_date = moment().day(-6).format("DD/MM/YYYY");
+        end_date = moment().day(0).format("DD/MM/YYYY");
+    }else{
+        start_date = moment().day(1).format("DD/MM/YYYY");;
+        end_date = moment().day(7).format("DD/MM/YYYY");;
+    }
+
+    $scope.query = start_date + '-' + end_date;
     $scope.gridOptions = {
         enableSorting: true,
         data: [], 
@@ -36,10 +48,11 @@ angular.module('poddDashboardApp')
     });
 
     $scope.search = function () {
-        $scope.query = $('#week_range_person').val();
+        if($('#week_range_person').val() !== '') 
+            $scope.query = $('#week_range_person').val();
 
         console.log('Will search with query', $scope.query);
-        $state.go('main.summary-person', { dates: $scope.query }, { type: 'week' });
+        $state.go('main.summaryperson', { dates: $scope.query, type: 'week' });
 
         if ($scope.loading) {
             return;
@@ -107,6 +120,7 @@ angular.module('poddDashboardApp')
     };
 
     $scope.$evalAsync(function () {
+        $scope.search();
         $('[data-weekpicker]').weekpicker();
     });
     

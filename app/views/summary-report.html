@@ -42,7 +42,10 @@
         <div class="summary-grid" ui-grid="gridOptions"></div>
 
         <div class="" ng-show="willShowResult">
-            <div class="filter-loading" ng-show="loading">กำลังค้นหา &hellip;</div>
+            <div class="filter-loading" ng-show="loading">
+              กำลังค้นหา &hellip;
+              <div loader-spinner></div>
+            </div>
             <div class="filter-error" ng-show="error">เกิดข้อผิดพลาด</div>
             <div class="filter-empty" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
         </div> <!-- End filter-result -->
