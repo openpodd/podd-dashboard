@@ -2,7 +2,12 @@
 
 angular.module('poddDashboardApp')
 
-.controller('SummaryPersonCtrl', function ($scope, SummaryPerson, User, streaming, FailRequest, shared, $location) {
+.controller('SummaryPersonModeCtrl', function (shared, Menu) {
+    shared.summaryPersonMode = true;
+    Menu.setActiveMenu('summary');
+})
+
+.controller('SummaryPersonCtrl', function ($scope, SummaryPerson, User, streaming, FailRequest, shared, $location, $state) {
     
     console.log('init summary ctrl');
 
@@ -32,6 +37,7 @@ angular.module('poddDashboardApp')
 
     $scope.search = function () {
         console.log('Will search with query', $scope.query);
+        $state.go('main.summary-person', { dates: $scope.query }, { type: 'week' });
 
         if ($scope.loading) {
             return;
@@ -109,6 +115,4 @@ angular.module('poddDashboardApp')
     $scope.gotoMainPage = function () {
         $location.url('/');
     };
-
-
 });
