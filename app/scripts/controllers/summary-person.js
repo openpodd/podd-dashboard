@@ -36,6 +36,8 @@ angular.module('poddDashboardApp')
     });
 
     $scope.search = function () {
+        $scope.query = $('#week_range_person').val();
+
         console.log('Will search with query', $scope.query);
         $state.go('main.summary-person', { dates: $scope.query }, { type: 'week' });
 

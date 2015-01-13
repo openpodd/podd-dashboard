@@ -10,6 +10,12 @@
     }
 }
 
+.report-followup-title {
+  color: #2196f3;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 /* ignore */
 .flag-priority-1 {
   color: #f5f5f5;
@@ -70,7 +76,7 @@ $badge-bad: #FF6D69;
 
 .badge-good{ background-color: $badge-good-color; }
 .badge-bad{ background-color: $badge-bad; }
-.badge-new{ 
+.badge-new{
     background-color: $badge-bad;
     font-weight: normal;
     font-size: 10px;
