@@ -86,12 +86,18 @@ angular.module('poddDashboardApp')
     return {
         strict: 'A',
         scope: {
-            value: '=setMaxHeight'
+            value: '=setMaxHeight',
+            triggerEvent: '='
         },
         link: function (scope, element) {
             $($window).on('resize', function () {
                 setMaxHeight(element, scope.value);
             }).trigger('resize');
+
+            // Additional trigger to force resize.
+            $($window).on(scope.triggerEvent, function () {
+                setMaxHeight(element, scope.value);
+            });
         }
     };
 })

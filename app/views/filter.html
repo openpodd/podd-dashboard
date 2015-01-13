@@ -97,13 +97,13 @@
 
     <div class="filter-result filter-result-reports"
          ng-show="didSearch && !loading && !error && !empty"
-         set-max-height="30">
+         set-max-height="30" trigger-event="'forceResizeResultWrapper'">
         <h6>
-            พบผลลัพธ์จำนวน {{ (filteredReports.length || 0) | number }} รายงาน
+            พบผลลัพธ์จำนวน {{ (shared.filteredReports.length || 0) | number }} รายงาน
 
             <button class="btn btn-info btn-xs" type="button"
                 ng-click="toggleTable()"
-                ng-show="filteredReports.length"
+                ng-show="shared.filteredReports.length"
                 ng-class="{ 'active': showTable }">
                 <div ng-if="!showTable">แสดงรายการ</div>
                 <div ng-if="showTable">ปิดรายการ</div>
@@ -111,12 +111,12 @@
 
         </h6>
 
-        <div ng-show="showTable && filteredReports"
+        <div ng-show="showTable && shared.filteredReports"
              class="scroller scroller-x scroller-y content-wrapper"
-             set-max-height="40"
+             set-max-height="40" trigger-event="'forceResizeResultTable'"
              perfect-scrollbar
              wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"
-             refresh-on-change="filteredReports">
+             refresh-on-change="shared.filteredReports">
         <table class="table table-striped pd-table">
             <thead>
                 <tr>
@@ -130,7 +130,7 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="item in filteredReports | orderBy:'-date' " id="report-{{ report.id }}"
+                <tr ng-repeat="item in shared.filteredReports | orderBy:'-date' " id="report-{{ report.id }}"
                     ng-click="onClickReport(item)"
                     ng-class="{ 'report-positive': !report.negative }">
 

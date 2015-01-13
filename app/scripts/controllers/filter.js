@@ -10,6 +10,8 @@ angular.module('poddDashboardApp')
 .controller('FilterCtrl', function ($scope, Search, shared, $window,
                                     $state, $stateParams, $q, $timeout) {
 
+    $scope.shared = shared;
+
     $scope.$on('filter:clearQuery', function (willClear) {
         if (willClear) {
             $scope.query = $stateParams.q || '';
@@ -47,7 +49,7 @@ angular.module('poddDashboardApp')
         $scope.empty = false;
         $scope.error = false;
 
-        $scope.filteredReports = [];
+        shared.filteredReports = [];
         // show result box.
         $scope.willShowResult = true;
 
@@ -56,7 +58,7 @@ angular.module('poddDashboardApp')
 
             $scope.loading = false;
 
-            $scope.filteredReports = data;
+            shared.filteredReports = data;
 
             // Do group by administrationAreaId
             var results = [],
@@ -109,6 +111,10 @@ angular.module('poddDashboardApp')
     $scope.showTable = false;
     $scope.toggleTable = function () {
         $scope.showTable = !$scope.showTable;
+        $($window).trigger('forceResizeResultWrapper');
+        $timeout(function () {
+            $($window).trigger('forceResizeResultTable');
+        }, 100);
     };
 
 
@@ -130,7 +136,7 @@ angular.module('poddDashboardApp')
             }
             else {
                 shared.filterResults = [];
-                $scope.filteredReports = [];
+                shared.filteredReports = [];
 
                 return $q.when();
             }
