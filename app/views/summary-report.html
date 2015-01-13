@@ -1,4 +1,4 @@
-<div class="l-info-section l-section l-full-width" ng-controller="SummaryReportCtrl" ng-cloak>
+<div class="l-info-section l-section l-full-width" ng-controller="SummaryReportCtrl" ng-show="shared.summaryReportMode" ng-cloak>
   <div class="l-detail-section l-section">
     <div class="title clearfix">
         <h2 class="pull-left"><i class="fa fa-stethoscope pull-left fa-size-22"></i>สรุปจำนวนรายงาน</h2>
@@ -22,7 +22,7 @@
                 </span>
             </div>
         </form>
-        
+
         <div ng-show="loading" loader-spinner></div>
         <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
         <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>

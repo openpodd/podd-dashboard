@@ -371,6 +371,20 @@ angular.module('poddDashboardApp')
         }
     });
 
+    $scope.$watch('shared.summaryReportMode', function (newValue) {
+        if (newValue) {
+            $scope.$broadcast('summaryReport:clearQuery', true);
+            $scope.closeModal();
+        }
+    });
+
+    $scope.$watch('shared.summaryPersonMode', function (newValue) {
+        if (newValue) {
+            $scope.$broadcast('summaryPerson:clearQuery', true);
+            $scope.closeModal();
+        }
+    });
+
     $scope.$watch('shared.filterResults', function (newValue) {
         if (newValue) {
             shared.showReportList = false;

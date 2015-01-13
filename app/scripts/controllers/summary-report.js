@@ -7,10 +7,11 @@ angular.module('poddDashboardApp')
     Menu.setActiveMenu('summary');
 })
 
-.controller('SummaryReportCtrl', function ($scope, SummaryReport, User, streaming, FailRequest, shared, $location, $state) {
+.controller('SummaryReportCtrl', function ($scope, SummaryReport, User, 
+    streaming, FailRequest, shared, $location, $state, $stateParams, $window) {
     
-    console.log('init summary ctrl');
-    
+    console.log('init summary report ctrl');
+
     var now = moment();
     var start_date;
     var end_date;
@@ -30,15 +31,18 @@ angular.module('poddDashboardApp')
         columnDefs: [],
     };
 
-    $scope.$on('summary:clearQuery', function (willClear) {
+    $scope.$on('summaryReport:clearQuery', function (willClear) {
         if (willClear) {
-            $scope.query = '';
+            $scope.query = $stateParams.q || start_date + '-' + end_date;
             $scope.willShowResult = false;
             $scope.loading = false;
             $scope.error = false;
             $scope.results = [];
             $scope.gridOptions = {};
             $scope.totalReport = 0;
+            if ($scope.query) {
+                $scope.doQueryOnParams($stateParams);
+            }
         }
     });
 
@@ -48,10 +52,14 @@ angular.module('poddDashboardApp')
     });
 
     $scope.search = function () {
-        $scope.query = $('#week_range_report').val();
-
-        console.log('Will search with query', $scope.query);
+        if($('#week_range_report').val() !== '') 
+            $scope.query = $('#week_range_report').val();
+        
         $state.go('main.summaryreport', { dates: $scope.query, type: 'week' });
+    }
+
+    $scope._search = function () {
+        console.log('Will search with query', $scope.query);
 
         if ($scope.loading) {
             return;
@@ -145,5 +153,23 @@ angular.module('poddDashboardApp')
         $location.url('/');
     };
 
+    $scope.doQueryOnParams = function (params) {
+        if ($state.current.name === 'main.summaryreport') {
+            $scope.query = $window.decodeURIComponent(params.dates || '');
+            if ($scope.query) {
+                return $scope._search();
+            }
+            $scope.query = start_date + '-' + end_date;
+        }
+    };
 
+    $scope.doQueryOnParams($stateParams);
+    $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
+        console.log("stateChangeSuccess");
+        if ($state.current.name === 'main.summaryreport') {
+            if (oldParams.dates !== params.dates) {
+                $scope.doQueryOnParams(params);
+            }
+        }
+    });
 });
