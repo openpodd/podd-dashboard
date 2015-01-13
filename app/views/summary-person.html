@@ -13,7 +13,7 @@
         <form role="form" ng-submit="search()">
             <div class="input-group">
                 <span class="input-group-btn" >
-                    <button class="btn btn-default btn-info-search" data-weekpicker="weekpicker" data-months="1" placeholder="ตัวอย่าง. 12/01/2015-18/01/2015" data-target="#week_range_person" type="button" >
+                    <button class="btn btn-default btn-info-search" data-weekpicker="weekpicker" data-months="1" placeholder="ตัวอย่าง. 12/01/2015-18/01/2015"  data-week_start="1" data-months="1" data-target="#week_range_person" type="button" >
                         <i class="fa fa-calendar"></i>
                     </button>
                 </span>
@@ -32,12 +32,13 @@
             <div class="filter-error" ng-show="error">เกิดข้อผิดพลาด</div>
             <div class="filter-empty" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
         </div> <!-- End filter-result -->
-        
+        {{ result }}
         <div class="summary-list" ng-show="results">
             <h3 style="margin-bottom:20px;"><i class="fa fa-info-circle"></i> สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }} </h3>
             <h4>จำนวนการรายงานทั้งสิ้น {{ totalPerson }} คน</h4>
+
+            <div class="summary-grid" ui-grid="gridOptions"></div>
         </div>
-        <div class="summary-grid" ui-grid="gridOptions"></div>
         
        <!-- </div> --> <!-- End content -->
     <!-- </div> --> <!-- End scroller -->

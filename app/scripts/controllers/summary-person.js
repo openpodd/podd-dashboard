@@ -7,9 +7,10 @@ angular.module('poddDashboardApp')
     Menu.setActiveMenu('summary');
 })
 
-.controller('SummaryPersonCtrl', function ($scope, SummaryPerson, User, streaming, FailRequest, shared, $location, $state) {
+.controller('SummaryPersonCtrl', function ($scope, SummaryPerson, User, 
+    streaming, FailRequest, shared, $location, $state, $stateParams, $window) {
     
-    console.log('init summary ctrl');
+    console.log('init summary person ctrl');
 
     var now = moment();
     var start_date;
@@ -30,18 +31,20 @@ angular.module('poddDashboardApp')
         columnDefs: [],
     };
 
-    $scope.$on('summary:clearQuery', function (willClear) {
+    $scope.$on('summaryPerson:clearQuery', function (willClear) {
         if (willClear) {
-            $scope.query = '';
+            $scope.query = $stateParams.q || start_date + '-' + end_date;
             $scope.willShowResult = false;
             $scope.loading = false;
             $scope.error = false;
             $scope.results = [];
             $scope.gridOptions = {};
             $scope.totalPerson = 0;
+            if ($scope.query) {
+                $scope.doQueryOnParams($stateParams);
+            }
         }
     });
-
 
     $scope.$watch('query', function (newValue) {
         shared.summaryQuery = newValue;
@@ -50,9 +53,14 @@ angular.module('poddDashboardApp')
     $scope.search = function () {
         if($('#week_range_person').val() !== '') 
             $scope.query = $('#week_range_person').val();
+        
+        console.log("goooooo",  $scope.query);
+        $state.go('main.summaryperson', { dates: $scope.query, type: 'week' });
+    }
+
+    $scope._search = function () {
 
         console.log('Will search with query', $scope.query);
-        $state.go('main.summaryperson', { dates: $scope.query, type: 'week' });
 
         if ($scope.loading) {
             return;
@@ -104,9 +112,7 @@ angular.module('poddDashboardApp')
             $scope.gridOptions.columnDefs = [
                 { field: 'parentAdministrationArea', },
                 { field: 'administrationArea', },
-                { field: 'username', },
                 { field: 'fullname', },
-                { field: 'contract', },
                 { field: 'telephone', },
                 { field: 'projectMobileNumber', },
                 { field: 'totalReport', },
@@ -131,4 +137,26 @@ angular.module('poddDashboardApp')
     $scope.gotoMainPage = function () {
         $location.url('/');
     };
+
+    $scope.doQueryOnParams = function (params) {
+        if ($state.current.name === 'main.summaryperson') {
+            $scope.query = $window.decodeURIComponent(params.dates || start_date + '-' + end_date);
+            if ($scope.query) {
+                return $scope._search();
+            }
+        }
+    };
+
+    $scope.doQueryOnParams($stateParams);
+    $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
+        console.log("stateChangeSuccess", $state.current.name, params.dates);
+        if ($state.current.name === 'main.summaryperson') {
+            if (oldParams.dates !== params.dates) {
+                $scope.doQueryOnParams(params);
+            }
+            else if(typeof params.dates === 'undefined'){
+                $scope.search();
+            }
+        }
+    });
 });
