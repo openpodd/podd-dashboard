@@ -101,6 +101,36 @@ angular.module('poddDashboardApp')
     };
 })
 
+.directive('reportFollowUp', function (Reports) {
+    function refresh(scope) {
+        if (scope.report) {
+            Reports.followUp({ reportId: scope.report.id }).$promise.then(function (data) {
+                scope.items = data;
+            });
+        }
+    }
+
+    return {
+        strict: 'EA',
+        scope: {
+            report: '='
+        },
+        templateUrl: 'views/report-followup.html',
+        controller: function ($scope, shared) {
+            $scope.onClickReportFollowUp = function (report) {
+                shared.reportWatchId = report.id;
+            };
+        },
+        link: function (scope) {
+            refresh(scope);
+
+            scope.$watch('report', function (newValue) {
+                refresh(newValue);
+            });
+        }
+    };
+})
+
 .directive('ReportView', function () {
     return {
         strict: 'A',

@@ -1,8 +1,5 @@
-<div class="l-info-section l-section l-full-width"
-     ng-controller="SummaryReportCtrl" ng-cloak>
-
+<div class="l-info-section l-section l-full-width" ng-controller="SummaryReportCtrl" ng-cloak>
   <div class="l-detail-section l-section">
-
     <div class="title clearfix">
         <h2 class="pull-left"><i class="fa fa-stethoscope pull-left fa-size-22"></i>สรุปจำนวนรายงาน</h2>
         <i class="fa fa-times pull-right fa-size-18" ng-click="closeSummaryReport();gotoMainPage();"></i>
@@ -12,11 +9,11 @@
       <div class="content">
 -->
  
-        <form role="form" ng-submit="search()">
+        <form role="form" ng-submit="search()" class="search-block">
             <div class="input-group">
                 <span class="input-group-btn" >
                     <button class="btn btn-default btn-info-search" data-weekpicker="weekpicker" data-week_start="1" data-months="1" data-target="#week_range_report" type="button" >
-                        <i class="fa fa-calendar"></i>
+                        เลือกวันที่ <i class="fa fa-calendar"></i>
                     </button>
                 </span>
                 <input type="text" id="week_range_report" class="form-control" ng-model="query" data-weekpicker="weekpicker"data-week_start="1" data-months="1" placeholder="ตัวอย่าง. 12/01/2015-18/01/2015" />
@@ -26,18 +23,20 @@
             </div>
         </form>
         
+        <div class="loading-block" ng-show="willShowResult">
+            <div ng-show="loading">กำลังค้นหา &hellip;</div>
+            <div ng-show="error">เกิดข้อผิดพลาด</div>
+            <div ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
+        </div> <!-- End filter-result -->
+        
         <div class="summary-list" ng-show="results">
-            <h3 style="margin-bottom:20px;"><i class="fa fa-info-circle"></i> สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }} </h3>
-            <h4>จำนวนการรายงานทั้งสิ้น {{ totalReport }} รายงาน แบ่งเป็น</h4>
-            <ul>
-                <li>รายงานไม่พบเหตุผิดปกติจำนวน {{ positiveReport }} ครั้ง</li>
-                <li>รายงานพบเหตุผิดปกติจำนวน {{ negativeReport }} ครั้ง</li>
-            </ul>
-            <h4>ค่าที่ระบุในตาราง <em>POSITIVE:NEGATIVE</em> ตัวอย่าง:</h4>
-            <ul>
-                <li>อทป. ตำบลสุเทพ 0,1
-                <span class="explain">มีการรายงานไม่พบเหตุผิดปกติจำนวน 0 ครั้งและ มีการรายงานพบเหตุผิดปกติจำนวน 1 ครั้ง</span></li>
-            </ul>
+            <h3 class="subheading">สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }}</h3>
+            <p>จำนวนการรายงานทั้งสิ้น <span class="badge badge-bad">{{ totalReport }}</span> รายงาน แบ่งเป็น รายงานไม่พบเหตุผิดปกติจำนวน <span class="badge badge-good">{{ positiveReport }}</span> ครั้ง, รายงานพบเหตุผิดปกติจำนวน <span class="badge badge-bad">{{ negativeReport }}</span> ครั้ง</p>
+            <h4 class="subheading ">ค่าที่ระบุในตาราง <em>POSITIVE:NEGATIVE</em> ตัวอย่าง:</h4>
+            <p>อทป. ตำบลสุเทพ 0,1 มีการรายงานไม่พบเหตุผิดปกติจำนวน 0 ครั้งและ มีการรายงานพบเหตุผิดปกติจำนวน 1 ครั้ง</p>
+            <hr/>
+            <h3 class="subheading">ตารางสรุปการรายงานในแต่ละอปท.</h3>
+            <div class="summary-grid" ui-grid="gridOptions"></div>
         </div>
         <div class="summary-grid" ui-grid="gridOptions"></div>
 
