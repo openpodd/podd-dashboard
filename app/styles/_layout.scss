@@ -113,7 +113,7 @@ $comment-section-bg: #333;
     width: 53%;
     z-index: 9990;
 
-     &.ng-hide-remove {
+    &.ng-hide-remove {
         -webkit-animation: fadeInLeft .5s .2s alternate forwards;
         -moz-animation: fadeInLeft .5s .2s alternate forwards;
         opacity: 0;
@@ -155,6 +155,25 @@ $comment-section-bg: #333;
     width: 30%;
     background-color: $comment-section-bg;
 }
+
+
+//***************************
+// Map
+//***************************
+.l-map{
+    &.ng-hide-remove {
+        -webkit-animation: fadeIn .5s .2s alternate forwards;
+        -moz-animation: fadeIn .5s .2s alternate forwards;
+        opacity: 0;
+    }
+
+    &.ng-hide-add{
+        -webkit-animation: fadeOut 1s .2s alternate forwards;
+        -moz-animation: fadeOut 1s .2s alternate forwards;
+    }
+}
+
+
 
 // Close Button
 .title {
