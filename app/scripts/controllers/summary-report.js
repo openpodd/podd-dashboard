@@ -2,7 +2,7 @@
 
 angular.module('poddDashboardApp')
 
-.controller('SummaryCtrl', function ($scope, Summary, User, streaming, FailRequest, shared) {
+.controller('SummaryReportCtrl', function ($scope, SummaryReport, User, streaming, FailRequest, shared, $location) {
     
     console.log('init summary ctrl');
 
@@ -51,7 +51,7 @@ angular.module('poddDashboardApp')
         };
         shared.summaryReports = {};
 
-        Summary.query({ dates: $scope.query, offset: ((new Date()).getTimezoneOffset() * -1 / 60) }).$promise.then(function (data) {
+        SummaryReport.query({ dates: $scope.query, offset: ((new Date()).getTimezoneOffset() * -1 / 60) }).$promise.then(function (data) {
             console.log('Query result:', data);
             
             var results = [];
@@ -113,5 +113,13 @@ angular.module('poddDashboardApp')
         $('[data-weekpicker]').weekpicker();
     });
     
+    $scope.closeSummaryReport = function () {
+        shared.summaryReportMode = false;
+    };
+
+    $scope.gotoMainPage = function () {
+        $location.url('/');
+    };
+
 
 });

@@ -7,11 +7,11 @@ angular.module('poddDashboardApp')
     Menu.setActiveMenu('filter');
 })
 
-.controller('FilterCtrl', function ($scope, Search, shared, $window, $state, $stateParams) {
+.controller('FilterCtrl', function ($scope, Search, shared, $window,
+                                    $state, $stateParams, $q, $timeout) {
 
     $scope.$on('filter:clearQuery', function (willClear) {
         if (willClear) {
-            console.log('- clearQuery');
             $scope.query = $stateParams.q || '';
             $scope.willShowResult = false;
             $scope.loading = false;
@@ -26,12 +26,13 @@ angular.module('poddDashboardApp')
     });
 
     $scope.search = function () {
-        shared.filterQuery = $scope.query;
         $state.go('main.filter', { q: $scope.query }, { location: true });
     };
 
     $scope._search = function () {
         console.log('Will search with query', $scope.query);
+
+        shared.filterQuery = $scope.query;
 
         $scope.closeHelp();
 
@@ -47,7 +48,7 @@ angular.module('poddDashboardApp')
         // show result box.
         $scope.willShowResult = true;
 
-        Search.query({ q: $scope.query }).$promise.then(function (data) {
+        return Search.query({ q: $scope.query }).$promise.then(function (data) {
             console.log('Query result:', data);
 
             $scope.loading = false;
@@ -110,19 +111,33 @@ angular.module('poddDashboardApp')
         if ($state.current.name === 'main.filter') {
             $scope.query = $window.decodeURIComponent(params.q || '');
             if ($scope.query) {
-                $scope._search();
+                return $scope._search().then(function () {
+                    if (params.reportId) {
+                        // Need to force report view to open here. Normal 
+                        // behavior when filterResults changed is to close
+                        // report list and report modal.
+                        shared.forceReportViewOpen = true;
+                        $scope.$parent.viewReport(params.reportId);
+                    }
+                });
             }
             else {
                 shared.filterResults = [];
+                return $q.resolve();
             }
         }
     };
     $scope.doQueryOnParams($stateParams);
     // detect change on 'q' param changes.
-    $scope.$on('$stateChangeSuccess', function (scope, current, params) {
+    $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
         // do query only in main.filter mode.
         if ($state.current.name === 'main.filter') {
-            $scope.doQueryOnParams(params);
+            if (params.reportId && oldParams.q === params.q) {
+                $scope.$parent.viewReport(params.reportId);
+            }
+            else if (oldParams.q !== params.q) {
+                $scope.doQueryOnParams(params);
+            }
         }
     });
 

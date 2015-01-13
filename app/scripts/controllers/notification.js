@@ -41,7 +41,7 @@ angular.module('poddDashboardApp')
         // Close report list before open new report dialog.
         shared.showReportList = false;
 
-        if(!mention.isNotified){
+        if (!mention.isNotified) {
             var data = {
                 mentionId: mention.id,
             };

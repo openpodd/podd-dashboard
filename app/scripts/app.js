@@ -123,14 +123,19 @@ angular
         controller: 'MainReportCtrl'
       })
       .state('main.filter', {
-        url: '^/filter?q',
+        url: '^/filter?q&reportId',
         template: '',
         controller: 'FilterModeCtrl'
       })
-      .state('main.summary', {
-        url: '^/summary?dates',
+      .state('main.summary-report', {
+        url: '^/summary/report?dates',
         template: '',
-        controller: 'SummaryCtrl'
+        controller: 'SummaryReportCtrl'
+      })
+      .state('main.summary-person', {
+        url: '^/summary/person?dates',
+        template: '',
+        controller: 'SummaryPersonCtrl'
       })
       .state('login', {
         url: '/login',
