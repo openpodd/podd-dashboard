@@ -36,6 +36,8 @@ angular.module('poddDashboardApp')
     });
 
     $scope.search = function () {
+        $scope.query = $('#week_range_report').val();
+
         console.log('Will search with query', $scope.query);
         $state.go('main.summary-report', { dates: $scope.query }, { type: 'week' });
 
@@ -119,6 +121,10 @@ angular.module('poddDashboardApp')
         $('[data-weekpicker]').weekpicker();
     });
     
+    $scope.changeQuery = function() {
+        console.log("ffff");
+    };
+
     $scope.closeSummaryReport = function () {
         shared.summaryReportMode = false;
     };
