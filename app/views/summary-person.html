@@ -1,4 +1,4 @@
-<div class="l-info-section l-section l-full-width" ng-controller="SummaryPersonCtrl" ng-cloak>
+<div class="l-info-section l-section l-full-width" ng-controller="SummaryPersonCtrl" ng-show="shared.summaryPersonMode" ng-cloak>
   <div class="l-detail-section l-section">
     <div class="title clearfix">
         <h2 class="pull-left"><i class="fa fa-stethoscope pull-left fa-size-22"></i>สรุปจำนวนผู้ที่รายงานน้อย</h2>
@@ -10,11 +10,11 @@
       <div class="content">
 -->
  
-        <form role="form" ng-submit="search()">
+        <form role="form" ng-submit="search()" class="search-block">
             <div class="input-group">
                 <span class="input-group-btn" >
                     <button class="btn btn-default btn-info-search" data-weekpicker="weekpicker" data-months="1" placeholder="ตัวอย่าง. 12/01/2015-18/01/2015" data-target="#week_range_person" type="button" >
-                        <i class="fa fa-calendar"></i>
+                        เลือกวันที่ <i class="fa fa-calendar"></i>
                     </button>
                 </span>
                 <input type="text" id="week_range_person" class="form-control" ng-model="query" data-weekpicker="weekpicker"data-week_start="1" data-months="1" placeholder="ตัวอย่าง. 12/01/2015-18/01/2015"/>
@@ -24,20 +24,16 @@
             </div>
         </form>
         
-        <div class="" ng-show="willShowResult">
-            <div class="filter-loading" ng-show="loading">
-              กำลังค้นหา &hellip;
-              <div loader-spinner></div>
-            </div>
-            <div class="filter-error" ng-show="error">เกิดข้อผิดพลาด</div>
-            <div class="filter-empty" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
-        </div> <!-- End filter-result -->
+        <div ng-show="loading" loader-spinner></div>
+        <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
+        <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
         
         <div class="summary-list" ng-show="results">
-            <h3 style="margin-bottom:20px;"><i class="fa fa-info-circle"></i> สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }} </h3>
-            <h4>จำนวนการรายงานทั้งสิ้น {{ totalPerson }} คน</h4>
+            <h3 class="subheading" style="margin-bottom:20px;">สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }} </h3>
+            <h4 class="subheading">จำนวนการรายงานทั้งสิ้น {{ totalPerson }} คน</h4><hr/>
+            <div class="summary-grid" ui-grid="gridOptions"></div>
         </div>
-        <div class="summary-grid" ui-grid="gridOptions"></div>
+        
         
        <!-- </div> --> <!-- End content -->
     <!-- </div> --> <!-- End scroller -->

@@ -1,6 +1,6 @@
 <div ng-hide="isLoggedIn" class="map-mask"></div>
 
-<div id="map" class="section-map" ng-hide="shared.summaryReportMode || shared.summaryPersonMode"></div>
+<div id="map" class="l-map" ng-hide="shared.summaryReportMode || shared.summaryPersonMode"></div>
 
 <div ng-include="'/views/report-list.html'" class="section-report"></div>
 
@@ -9,9 +9,9 @@
 <div ng-include="'/views/report-view.html'" onload="initReportModal()"></div>
 
 
-<div ng-include="'/views/summary-report.html'" class="section-summary-report" ng-show="shared.summaryReportMode"></div>
+<div ng-include="'/views/summary-report.html'"></div>
 
-<div ng-include="'/views/summary-person.html'" class="section-summary-person" ng-show="shared.summaryPersonMode"></div>
+<div ng-include="'/views/summary-person.html'"></div>
 
 <!-- placeholder ui-view: intend to do nothing -->
 <div ui-view></div>
