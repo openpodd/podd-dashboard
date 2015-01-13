@@ -120,7 +120,7 @@ angular.module('poddDashboardApp')
     };
 
     $scope.$evalAsync(function () {
-        $scope.search();
+        if(shared.summaryPersonMode) $scope.search();
         $('[data-weekpicker]').weekpicker();
     });
     

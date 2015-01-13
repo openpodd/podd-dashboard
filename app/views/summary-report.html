@@ -23,31 +23,17 @@
             </div>
         </form>
         
-        <div class="loading-block" ng-show="willShowResult">
-            <div ng-show="loading">กำลังค้นหา &hellip;</div>
-            <div ng-show="error">เกิดข้อผิดพลาด</div>
-            <div ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
-        </div> <!-- End filter-result -->
+        <div ng-show="loading" loader-spinner></div>
+        <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
+        <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
         
         <div class="summary-list" ng-show="results">
             <h3 class="subheading">สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }}</h3>
             <p>จำนวนการรายงานทั้งสิ้น <span class="badge badge-bad">{{ totalReport }}</span> รายงาน แบ่งเป็น รายงานไม่พบเหตุผิดปกติจำนวน <span class="badge badge-good">{{ positiveReport }}</span> ครั้ง, รายงานพบเหตุผิดปกติจำนวน <span class="badge badge-bad">{{ negativeReport }}</span> ครั้ง</p>
-            <h4 class="subheading ">ค่าที่ระบุในตาราง <em>POSITIVE:NEGATIVE</em> ตัวอย่าง:</h4>
-            <p>อทป. ตำบลสุเทพ 0,1 มีการรายงานไม่พบเหตุผิดปกติจำนวน 0 ครั้งและ มีการรายงานพบเหตุผิดปกติจำนวน 1 ครั้ง</p>
             <hr/>
             <h3 class="subheading">ตารางสรุปการรายงานในแต่ละอปท.</h3>
             <div class="summary-grid" ui-grid="gridOptions"></div>
         </div>
-        <div class="summary-grid" ui-grid="gridOptions"></div>
-
-        <div class="" ng-show="willShowResult">
-            <div class="filter-loading" ng-show="loading">
-              กำลังค้นหา &hellip;
-              <div loader-spinner></div>
-            </div>
-            <div class="filter-error" ng-show="error">เกิดข้อผิดพลาด</div>
-            <div class="filter-empty" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
-        </div> <!-- End filter-result -->
         
        <!-- </div> --> <!-- End content -->
     <!-- </div> --> <!-- End scroller -->
