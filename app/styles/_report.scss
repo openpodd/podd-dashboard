@@ -506,6 +506,19 @@ $badge-bad: #FF6D69;
     margin: 20px 50px;
     border: 1px solid #eee;
 }
+.loading-block{
+    padding: 20px 30px;
+    background: #fff;
+    margin: 20px 50px;
+    border: 1px solid #eee;
+}
+.search-block{
+    margin: 20px 50px;
+    
+    .form-control{
+        height: 38px;
+    }
+}
 
 .gray { background-color: #e7e7e7; color: #777; text-align: center;}
 .red { background-color: rgb(255, 77, 77); color: #fff; text-align: center;}
