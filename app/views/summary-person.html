@@ -1,8 +1,5 @@
-<div class="l-info-section l-section l-full-width"
-     ng-controller="SummaryPersonCtrl" ng-cloak>
-
+<div class="l-info-section l-section l-full-width" ng-controller="SummaryPersonCtrl" ng-cloak>
   <div class="l-detail-section l-section">
-
     <div class="title clearfix">
         <h2 class="pull-left"><i class="fa fa-stethoscope pull-left fa-size-22"></i>สรุปจำนวนผู้ที่รายงานน้อย</h2>
         <i class="fa fa-times pull-right fa-size-18" ng-click="closeSummaryPerson();gotoMainPage();"></i>
@@ -27,17 +24,17 @@
             </div>
         </form>
         
-        <div class="summary-list" ng-show="results">
-            <h3 style="margin-bottom:20px;"><i class="fa fa-info-circle"></i> สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }} </h3>
-            <h4>จำนวนการรายงานทั้งสิ้น {{ totalPerson }} คน</h4>
-        </div>
-        <div class="summary-grid" ui-grid="gridOptions"></div>
-
         <div class="" ng-show="willShowResult">
             <div class="filter-loading" ng-show="loading">กำลังค้นหา &hellip;</div>
             <div class="filter-error" ng-show="error">เกิดข้อผิดพลาด</div>
             <div class="filter-empty" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
         </div> <!-- End filter-result -->
+        
+        <div class="summary-list" ng-show="results">
+            <h3 style="margin-bottom:20px;"><i class="fa fa-info-circle"></i> สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }} </h3>
+            <h4>จำนวนการรายงานทั้งสิ้น {{ totalPerson }} คน</h4>
+        </div>
+        <div class="summary-grid" ui-grid="gridOptions"></div>
         
        <!-- </div> --> <!-- End content -->
     <!-- </div> --> <!-- End scroller -->

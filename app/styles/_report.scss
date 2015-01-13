@@ -495,8 +495,11 @@ $badge-bad: #FF6D69;
 }
 
 .summary-list{
-    width: 1000px !important;
+    padding: 20px 30px;
+    background: #fff;
+    margin: 20px 50px;
+    border: 1px solid #eee;
 }
 
-.gray { background-color: #777 !important;  }
-.red { background-color: red !important;  }
+.gray { background-color: #e7e7e7; color: #777; text-align: center;}
+.red { background-color: rgb(255, 77, 77); color: #fff; text-align: center;}
