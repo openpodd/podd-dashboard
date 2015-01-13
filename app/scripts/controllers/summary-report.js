@@ -8,7 +8,8 @@ angular.module('poddDashboardApp')
 })
 
 .controller('SummaryReportCtrl', function ($scope, SummaryReport, User, 
-    streaming, FailRequest, shared, $location, $state, $stateParams, $window, uiGridConstants) {
+    streaming, FailRequest, shared, $location, $state, $stateParams, $window,
+    uiGridConstants, cfpLoadingBar) {
     
     console.log('init summary report ctrl');
 
@@ -140,6 +141,7 @@ angular.module('poddDashboardApp')
             $scope.gridOptions.enableSorting = false;
             $scope.gridOptions.columnDefs = options;
             $scope.gridOptions.data = results; 
+            $('#loading-bar').hide();
 
         }).catch(function () {
             $scope.loading = false;
@@ -170,6 +172,7 @@ angular.module('poddDashboardApp')
                 return $scope._search();
             }
             $scope.query = start_date + '-' + end_date;
+            $state.go('main.summaryreport', { dates: $scope.query, type: 'week' });
         }
     };
 
@@ -179,6 +182,8 @@ angular.module('poddDashboardApp')
         if ($state.current.name === 'main.summaryreport') {
             if (oldParams.dates !== params.dates) {
                 $scope.doQueryOnParams(params);
+            }else if(typeof params.dates === 'undefined'){
+                $state.go('main.summaryreport', { dates: $scope.query, type: 'week' });
             }
         }
     });

@@ -9,7 +9,7 @@ angular.module('poddDashboardApp')
     '$location', '$state', '$window',
     function ($scope, dashboard, streaming,
                Map, Reports, ReportModal, shared, Auth, Search, Menu, Mentions,
-               Flags, FailRequest, $location, $state, $window) {
+               Flags, FailRequest, $location, $state, $window, cfpLoadingBar) {
 
     console.log('IN MainCtrl');
 
@@ -43,6 +43,7 @@ angular.module('poddDashboardApp')
     function refreshDashboard() {
         if ($state.current.name !== 'main.summaryreport' && $state.current.name !== 'main.summaryperson' ) {
             dashboard.get().$promise.then(function (villages) {
+
                 if ($state.current.name !== 'main.filter') {
                     map.setVillages(villages);
                 }
@@ -54,6 +55,7 @@ angular.module('poddDashboardApp')
                 villages.forEach(function (item) {
                     shared.villages[ item.id ] = item;
                 });
+
             });
         }
     }
@@ -375,6 +377,7 @@ angular.module('poddDashboardApp')
 
     $scope.$watch('shared.summaryReportMode', function (newValue) {
         if (newValue) {
+
             $scope.$broadcast('summaryReport:clearQuery', true);
             $scope.closeModal();
         }
@@ -417,9 +420,7 @@ angular.module('poddDashboardApp')
     $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
         console.log("stateChangeSuccess", $state.current.name, params.dates);
         if ($state.current.name === 'main') {
-            if (oldParams.dates !== params.dates) {
-                refreshDashboard()
-            }
+            $('#loading-bar').show();
         }
     });
 }]);
