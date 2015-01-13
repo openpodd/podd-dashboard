@@ -27,7 +27,8 @@ angular
     'angularFileUpload',
     'perfect_scrollbar',
     'bootstrapLightbox',
-    'ui.router'
+    'ui.router',
+    'ui.grid'
   ])
 
   // override z-index of ui.bootstrap
@@ -125,6 +126,11 @@ angular
         url: '^/filter?q',
         template: '',
         controller: 'FilterModeCtrl'
+      })
+      .state('main.summary', {
+        url: '^/summary?dates',
+        template: '',
+        controller: 'SummaryCtrl'
       })
       .state('login', {
         url: '/login',

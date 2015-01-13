@@ -364,6 +364,7 @@ angular.module('poddDashboardApp')
     $scope.$watch('shared.filterResults', function (newValue) {
         if (newValue) {
             shared.showReportList = false;
+            $scope.closeModal();
             map.clearVillages();
             map.setVillages(newValue);
         }

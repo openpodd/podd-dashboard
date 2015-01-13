@@ -114,7 +114,7 @@ angular.module('poddDashboardApp')
     // @see: http://stackoverflow.com/a/19410602/163216
     $scope.flag = {
         old: undefined,
-        current: {}
+        current: null
     };
 
     // TODO: get these configurations from server

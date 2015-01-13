@@ -1,92 +1,71 @@
+<div class="l-info-section l-section l-full-width"
+     ng-controller="SummaryCtrl" ng-cloak>
 
-<div class="report-filter" ng-controller="SummaryCtrl">
+  <div class="l-detail-section l-section">
 
-    <form role="form" ng-submit="search()">
-      <div class="input-group">
-
-        <span class="input-group-btn" >
-            <button class="btn btn-default btn-info-search" data-weekpicker="weekpicker" data-target="#week_range" type="button" >
-                <i class="fa fa-calendar"></i>
-            </button>
-
-            <div class="filter-help summary-list" ng-show="results">
-                <h4 style="margin-bottom:20px;"><i class="fa fa-info-circle"></i> สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }} </h3>
-                <ul class="list-unstyled filter-list-help">
-                      <li>
-                          <h5>จำนวนการรายงานทั้งสิ้น {{ totalReport }} รายงาน</h5>
-                      </li>
-                      <li>
-                          ค่าที่ระบุในตาราง <em>POSITIVE:NEGATIVE</em> ตัวอย่าง:
-                          <ul>
-                              <li><code>อทป. ตำบลสุเทพ 0,1่</code>
-                              <span class="explain">มีการรายงานไม่พบเหตุผิดปกติ คือ 0 ครั้งและ มีการรายงานพบเหตุผิดปกติ คือ 1 ครั้ง</span></li>
-                          </ul>
-                      </li>
-                <div class="">
-                  <table class="table table-bordered">
-                    <thead>
-                      <th class="">#</th>
-                      <th class="">อปท.</th>
-                      <th class=""
-                          ng-repeat="date in results[0].dates">
-                          <p>{{ date.dayOfWeek }}</p>
-                          <p>{{ date.date }}</p>
-                        </th>
-                    </thead>
-                    <tbody>
-                      <tr class="summary-item"
-                          ng-repeat="result in results | orderBy:'name' ">
-                        <th class="">{{ $index + 1 }}</th>
-                        <td class="">{{ result.name }}</td>
-                        <td class=""
-                          ng-repeat="date in result.dates ">
-                          {{ date.positive }},{{ date.negative }}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-            </div>
-        </span>
-
-        <input type="text" id="week_range" class="form-control" ng-model="query" data-weekpicker="weekpicker"data-week_start="1" placeholder="ตัวอย่าง. 12/01/2015-18/01/2015"/>
-
-        <span class="input-group-btn">
-            <button class="btn btn-default pd-btn-search" type="submit"><i class="fa fa-search fa-size-18"></i></button>
-        </span>
-      </div>
-    </form>
-
-    <div class="filter-result" ng-show="willShowResult">
-      <div class="filter-loading" ng-show="loading">
-          กำลังค้นหา &hellip;
-      </div>
-
-      <div class="filter-error" ng-show="error">
-          เกิดข้อผิดพลาด
-      </div>
-
-      <div class="filter-empty" ng-show="empty">
-          ไม่พบผลการค้นหาที่กำหนด
-      </div>
-
-      <ul class="list-unstyled filter-result-list" ng-hide="1">
-        <li ng-repeat="item in results" ng-click="triggerVillageClick(item)"
-            class="filter-result-item">
-
-          <div class="filter-result-village">
-            <div class="village-name">{{ item.name }}</div>
-
-            <div class="village-location">
-              <span class="latitude">{{ item.location.coordinates[1] }}</span> ,
-              <span class="longitude">{{ item.location.coordinates[0] }}</span>
-            </div>
-          </div>
-
-        </li>
-      </ul>
-
-      <!-- <buttom class="btn btn-default" ng-click="closeResult()">ปิด</button> -->
+    <div class="title clearfix">
+        <h2 class="pull-left"><i class="fa fa-stethoscope pull-left fa-size-22"></i>รายงาน</h2>
+        <i class="fa fa-times pull-right fa-size-18" ng-click="closeReportList();gotoMainPage();"></i>
     </div>
 
+<!--     <div class="scroller scroller-x scroller-y content-wrapper"
+         perfect-scrollbar
+         wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"
+         refresh-on-change="report"
+         ng-if="!loadingReportView && !loadingReportViewError">
+      <div class="content">
+ -->
+        <form role="form" ng-submit="search()">
+          <div class="input-group">
+
+            <span class="input-group-btn" >
+                <button class="btn btn-default btn-info-search" data-weekpicker="weekpicker" data-target="#week_range" type="button" >
+                    <i class="fa fa-calendar"></i>
+                </button>
+
+                <div class="filter-help summary-list" ng-show="results">
+                    <h4 style="margin-bottom:20px;"><i class="fa fa-info-circle"></i> สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }} </h3>
+                    <ul class="list-unstyled filter-list-help">
+                          <li>
+                              <h5>จำนวนการรายงานทั้งสิ้น {{ totalReport }} รายงาน แบ่งเป็น</h5>
+                              <ul>
+                                  <li>รายงานไม่พบเหตุผิดปกติจำนวน {{ positiveReport }} ครั้ง</li>
+                                  <li>รายงานพบเหตุผิดปกติจำนวน {{ negativeReport }} ครั้ง</li>
+                              </ul>
+                          </li>
+                          <li>
+                              ค่าที่ระบุในตาราง <em>POSITIVE:NEGATIVE</em> ตัวอย่าง:
+                              <ul>
+                                  <li><code>อทป. ตำบลสุเทพ 0,1่</code>
+                                  <span class="explain">มีการรายงานไม่พบเหตุผิดปกติจำนวน 0 ครั้งและ มีการรายงานพบเหตุผิดปกติจำนวน 1 ครั้ง</span></li>
+                              </ul>
+                          </li>
+                     <div class="summary-grid" ui-grid="gridOptions"></div>
+                </div>
+            </span>
+
+            <input type="text" id="week_range" class="form-control" ng-model="query" data-weekpicker="weekpicker"data-week_start="1" data-months="1" placeholder="ตัวอย่าง. 12/01/2015-18/01/2015"/>
+
+            <span class="input-group-btn">
+                <button class="btn btn-default pd-btn-search" type="submit"><i class="fa fa-search fa-size-18"></i></button>
+            </span>
+          </div>
+        </form>
+
+        <div class="filter-result" ng-show="willShowResult">
+            <div class="filter-loading" ng-show="loading">
+                กำลังค้นหา &hellip;
+            </div>
+
+            <div class="filter-error" ng-show="error">
+                เกิดข้อผิดพลาด
+            </div>
+
+            <div class="filter-empty" ng-show="empty">
+                ไม่พบผลการค้นหาที่กำหนด
+            </div>
+        </div>
+      <!-- </div>
+    </div> -->
+  </div>
 </div>
