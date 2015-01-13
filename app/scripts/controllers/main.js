@@ -41,19 +41,21 @@ angular.module('poddDashboardApp')
         map = new Map( L.map('map').setView(center, zoomLevel) );
 
     function refreshDashboard() {
-        dashboard.get().$promise.then(function (villages) {
-            if ($state.current.name !== 'main.filter') {
-                map.setVillages(villages);
-            }
-            // Because every available village for this user is returned even there
-            // is no report. We can use this variable to keep which village
-            // current logged-in user can access.
-            shared.villages = {};
+        if ($state.current.name !== 'main.summaryreport' && $state.current.name !== 'main.summaryperson' ) {
+            dashboard.get().$promise.then(function (villages) {
+                if ($state.current.name !== 'main.filter') {
+                    map.setVillages(villages);
+                }
+                // Because every available village for this user is returned even there
+                // is no report. We can use this variable to keep which village
+                // current logged-in user can access.
+                shared.villages = {};
 
-            villages.forEach(function (item) {
-                shared.villages[ item.id ] = item;
+                villages.forEach(function (item) {
+                    shared.villages[ item.id ] = item;
+                });
             });
-        });
+        }
     }
 
     refreshDashboard();
@@ -412,4 +414,12 @@ angular.module('poddDashboardApp')
         }
     });
 
+    $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
+        console.log("stateChangeSuccess", $state.current.name, params.dates);
+        if ($state.current.name === 'main') {
+            if (oldParams.dates !== params.dates) {
+                refreshDashboard()
+            }
+        }
+    });
 }]);

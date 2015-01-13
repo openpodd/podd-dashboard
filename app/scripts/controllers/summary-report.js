@@ -8,7 +8,7 @@ angular.module('poddDashboardApp')
 })
 
 .controller('SummaryReportCtrl', function ($scope, SummaryReport, User, 
-    streaming, FailRequest, shared, $location, $state, $stateParams, $window) {
+    streaming, FailRequest, shared, $location, $state, $stateParams, $window, uiGridConstants) {
     
     console.log('init summary report ctrl');
 
@@ -23,10 +23,12 @@ angular.module('poddDashboardApp')
         start_date = moment().day(1).format("DD/MM/YYYY");;
         end_date = moment().day(7).format("DD/MM/YYYY");;
     }
-
+    console.log( uiGridConstants.scrollbars.NEVER)
     $scope.query = start_date + '-' + end_date;
     $scope.gridOptions = {
-        enableSorting: true,
+        enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
+        enableVerticalScrollbar: uiGridConstants.scrollbars.NEVER,
+        enableSorting: false,
         data: [], 
         columnDefs: [],
     };
@@ -54,7 +56,7 @@ angular.module('poddDashboardApp')
     $scope.search = function () {
         if($('#week_range_report').val() !== '') 
             $scope.query = $('#week_range_report').val();
-        
+
         $state.go('main.summaryreport', { dates: $scope.query, type: 'week' });
     }
 
@@ -73,7 +75,9 @@ angular.module('poddDashboardApp')
         $scope.error = false;
         $scope.willShowResult = true;
         $scope.gridOptions = {
-            enableSorting: true,
+            enableVerticalScrollbar: uiGridConstants.scrollbars.NEVER,
+            enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
+            enableSorting: false,
             data: [], 
             columnDefs: [],
         };
@@ -100,8 +104,12 @@ angular.module('poddDashboardApp')
                     result["N" + date.date] = date.negative;
 
                     if(!header){ 
-                        options.push({ field: "P" + date.date, cellTemplate: '<div class="ui-grid-cell-contents" ng-class="{ gray: COL_FIELD == 0}">{{COL_FIELD}}</div>' });
-                        options.push({ field: "N" + date.date, cellTemplate: '<div class="ui-grid-cell-contents red">{{COL_FIELD}}</div>' })
+                        options.push({ field: "P" + date.date, width:100, 
+                            cellTemplate: '<div class="ui-grid-cell-contents cell-report" ng-class="{ gray: COL_FIELD == 0}">{{COL_FIELD}}</div>',
+                            headerCellTemplate: '<div class="ui-grid-cell-contents grid ui-grid-cell-contents-collapse-2"><div class="ui-grid-collapse-2"><span>'+ date.date +'</span></div>'});
+                        options.push({ field: "N" + date.date, width:100, 
+                            cellTemplate: '<div class="ui-grid-cell-contents cell-report" ng-class="{ red: COL_FIELD > 0}">{{COL_FIELD}}</div>', 
+                            headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope"></div>' })
                     }
                 });
 
@@ -127,7 +135,9 @@ angular.module('poddDashboardApp')
                 $scope.totalReport = total;
             }
             $scope.weekSearch = $scope.query;
-            $scope.gridOptions.enableSorting = true;
+            $scope.gridOptions.enableHorizontalScrollbar = uiGridConstants.scrollbars.NEVER;
+            $scope.gridOptions.enableVerticalScrollbar = uiGridConstants.scrollbars.NEVER;
+            $scope.gridOptions.enableSorting = false;
             $scope.gridOptions.columnDefs = options;
             $scope.gridOptions.data = results; 
 
