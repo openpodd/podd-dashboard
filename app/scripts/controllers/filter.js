@@ -32,6 +32,9 @@ angular.module('poddDashboardApp')
     $scope._search = function () {
         console.log('Will search with query', $scope.query);
 
+        // Mark as already did the search.
+        $scope.didSearch = true;
+
         shared.filterQuery = $scope.query;
 
         $scope.closeHelp();
@@ -44,7 +47,7 @@ angular.module('poddDashboardApp')
         $scope.empty = false;
         $scope.error = false;
 
-        shared.filteredReports = {};
+        $scope.filteredReports = [];
         // show result box.
         $scope.willShowResult = true;
 
@@ -53,6 +56,8 @@ angular.module('poddDashboardApp')
 
             $scope.loading = false;
 
+            $scope.filteredReports = data;
+
             // Do group by administrationAreaId
             var results = [],
                 matchedVillages = {};
@@ -60,9 +65,6 @@ angular.module('poddDashboardApp')
             data.forEach(function (item) {
                 // TODO: get rid of dependencies with dashboard data.
                 var village = shared.villages[ item.administrationAreaId ];
-
-                // Append in filtered reports list
-                shared.filteredReports[item.id] = item;
 
                 if ( ! matchedVillages[ village.id ] ) {
                     matchedVillages[ item.administrationAreaId ] = true;
@@ -104,6 +106,11 @@ angular.module('poddDashboardApp')
         $scope.help = false;
     };
 
+    $scope.showTable = false;
+    $scope.toggleTable = function () {
+        $scope.showTable = !$scope.showTable;
+    };
+
 
     // do things about URL
     $scope.doQueryOnParams = function (params) {
@@ -113,7 +120,7 @@ angular.module('poddDashboardApp')
             if ($scope.query) {
                 return $scope._search().then(function () {
                     if (params.reportId) {
-                        // Need to force report view to open here. Normal 
+                        // Need to force report view to open here. Normal
                         // behavior when filterResults changed is to close
                         // report list and report modal.
                         shared.forceReportViewOpen = true;
@@ -123,7 +130,9 @@ angular.module('poddDashboardApp')
             }
             else {
                 shared.filterResults = [];
-                return $q.resolve();
+                $scope.filteredReports = [];
+
+                return $q.when();
             }
         }
     };
