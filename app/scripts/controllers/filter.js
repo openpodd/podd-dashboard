@@ -7,8 +7,10 @@ angular.module('poddDashboardApp')
     Menu.setActiveMenu('filter');
 })
 
-.controller('FilterCtrl', function ($scope, Search, shared, $window,
+.controller('FilterCtrl', function ($scope, Search, shared, $window, dashboard,
                                     $state, $stateParams, $q, $timeout) {
+
+    $scope.shared = shared;
 
     $scope.$on('filter:clearQuery', function (willClear) {
         if (willClear) {
@@ -32,6 +34,9 @@ angular.module('poddDashboardApp')
     $scope._search = function () {
         console.log('Will search with query', $scope.query);
 
+        // Mark as already did the search.
+        $scope.didSearch = true;
+
         shared.filterQuery = $scope.query;
 
         $scope.closeHelp();
@@ -44,7 +49,7 @@ angular.module('poddDashboardApp')
         $scope.empty = false;
         $scope.error = false;
 
-        shared.filteredReports = {};
+        shared.filteredReports = [];
         // show result box.
         $scope.willShowResult = true;
 
@@ -53,33 +58,74 @@ angular.module('poddDashboardApp')
 
             $scope.loading = false;
 
+            shared.filteredReports = data;
+
             // Do group by administrationAreaId
             var results = [],
                 matchedVillages = {};
 
-            data.forEach(function (item) {
-                // TODO: get rid of dependencies with dashboard data.
-                var village = shared.villages[ item.administrationAreaId ];
-
-                // Append in filtered reports list
-                shared.filteredReports[item.id] = item;
-
-                if ( ! matchedVillages[ village.id ] ) {
-                    matchedVillages[ item.administrationAreaId ] = true;
-                    results.push(village);
-                }
-            });
-
-            $scope.results = results;
-            shared.filterResults = results;
-
-            if (results.length === 0) {
-                $scope.empty = true;
+            var promise;
+            if (false && shared.villages) {
+                promise = $q.when();
             }
             else {
-                $scope.empty = false;
-                $scope.willShowResult = false;
+                // Load administration area before next task.
+                promise = dashboard.getAdministrationAreas().$promise;
             }
+
+            promise.then(function (administrationAreas) {
+                if (administrationAreas) {
+                    shared.villages = {};
+                    administrationAreas.forEach(function (item) {
+                        shared.villages[ item.id ] = item;
+                        item.positive = 0;
+                        item.positiveCases = [];
+                        item.negative = 0;
+                        item.negativeCases = [];
+                    });
+                }
+
+                data.forEach(function (item) {
+                    var village = shared.villages[ item.administrationAreaId ];
+
+                    if ( ! matchedVillages[ village.id ] ) {
+                        matchedVillages[ item.administrationAreaId ] = true;
+                        results.push(village);
+                    }
+
+                    if (item.positive) {
+                        village.positive += 1;
+                        village.positiveCases.push({
+                            id: item.id,
+                            createdBy: item.createdByName,
+                            date: item.date,
+                            incidentDate: item.incidentDate,
+                            eventTypeName: item.reportTypeName
+                        });
+                    }
+                    else {
+                        village.negative += 1;
+                        village.negativeCases.push({
+                            id: item.id,
+                            createdBy: item.createdByName,
+                            date: item.date,
+                            incidentDate: item.incidentDate,
+                            eventTypeName: item.reportTypeName
+                        });
+                    }
+                });
+
+                $scope.results = results;
+                shared.filterResults = results;
+
+                if (results.length === 0) {
+                    $scope.empty = true;
+                }
+                else {
+                    $scope.empty = false;
+                    $scope.willShowResult = false;
+                }
+            });
 
         }).catch(function () {
             $scope.loading = false;
@@ -104,6 +150,25 @@ angular.module('poddDashboardApp')
         $scope.help = false;
     };
 
+    $scope.showTable = false;
+    $scope.toggleTable = function () {
+        $scope.showTable = !$scope.showTable;
+        if ($scope.showTable) {
+            shared.showReportList = false;
+
+            $($window).trigger('forceResizeResultWrapper');
+            $timeout(function () {
+                $($window).trigger('forceResizeResultTable');
+            }, 100);
+        }
+    };
+
+    $scope.$watch('shared.showReportList', function (newValue) {
+        if (newValue) {
+            $scope.showTable = false;
+        }
+    });
+
 
     // do things about URL
     $scope.doQueryOnParams = function (params) {
@@ -113,7 +178,7 @@ angular.module('poddDashboardApp')
             if ($scope.query) {
                 return $scope._search().then(function () {
                     if (params.reportId) {
-                        // Need to force report view to open here. Normal 
+                        // Need to force report view to open here. Normal
                         // behavior when filterResults changed is to close
                         // report list and report modal.
                         shared.forceReportViewOpen = true;
@@ -123,7 +188,9 @@ angular.module('poddDashboardApp')
             }
             else {
                 shared.filterResults = [];
-                return $q.resolve();
+                shared.filteredReports = [];
+
+                return $q.when();
             }
         }
     };

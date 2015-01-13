@@ -64,6 +64,44 @@ angular.module('poddDashboardApp')
     };
 })
 
+.directive('setMaxHeight', function ($window) {
+    function setMaxHeight($element, value) {
+        var isPercent = false,
+            windowHeight = $($window).height(),
+            elemTop = $element.offset().top;
+
+        if (angular.isString(value) && value.indexOf('%')) {
+            isPercent = true;
+        }
+        value = parseFloat(value);
+
+        if (isPercent) {
+            $element.css('max-height', '' + ( windowHeight * (value/100.0) ) + 'px' );
+        }
+        else {
+            $element.css('max-height', '' + ( windowHeight - value - elemTop ) + 'px');
+        }
+    }
+
+    return {
+        strict: 'A',
+        scope: {
+            value: '=setMaxHeight',
+            triggerEvent: '='
+        },
+        link: function (scope, element) {
+            $($window).on('resize', function () {
+                setMaxHeight(element, scope.value);
+            }).trigger('resize');
+
+            // Additional trigger to force resize.
+            $($window).on(scope.triggerEvent, function () {
+                setMaxHeight(element, scope.value);
+            });
+        }
+    };
+})
+
 .filter('renderMention', function () {
     return function (text) {
         return text.replace(/\@\[(\w+)\]/g, '<span class="label label-info">@$1</span>');

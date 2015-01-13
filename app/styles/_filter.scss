@@ -15,6 +15,10 @@
     }
 }
 
+.filter-result-reports {
+    overflow: hidden;
+}
+
 .filter-help {
     position: absolute;
 
@@ -25,10 +29,10 @@
     font-size: 15px;
     display: block;
     margin-top: 10px;
-    
+
     width: 699px;
     padding: 10px 20px;
-    
+
     .fa-info-circle{
         margin-right: 10px;
     }
@@ -43,7 +47,7 @@
     background-color: #eee;
     z-index: 99;
     margin-right: 0;
-    
+
     &:hover{
         background-color: #d5d5d5;
         border-color: #cfcfcf;
