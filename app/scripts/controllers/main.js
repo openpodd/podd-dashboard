@@ -6,10 +6,10 @@ angular.module('poddDashboardApp')
 .controller('MainCtrl', [
     '$scope', 'dashboard', 'streaming', 'Map', 'Reports', 'ReportModal',
     'shared', 'Auth', 'Search', 'Menu', 'Mentions', 'Flags', 'FailRequest',
-    '$location', '$state',
+    '$location', '$state', '$window',
     function ($scope, dashboard, streaming,
                Map, Reports, ReportModal, shared, Auth, Search, Menu, Mentions,
-               Flags, FailRequest, $location, $state) {
+               Flags, FailRequest, $location, $state, $window) {
 
     console.log('IN MainCtrl');
 
@@ -42,7 +42,7 @@ angular.module('poddDashboardApp')
 
     function refreshDashboard() {
         dashboard.get().$promise.then(function (villages) {
-            if ($state.current.name === 'main') {
+            if ($state.current.name !== 'main.filter') {
                 map.setVillages(villages);
             }
             // Because every available village for this user is returned even there
@@ -279,7 +279,12 @@ angular.module('poddDashboardApp')
 
     $scope.onClickReport = function (report) {
         if ( report.negative ) {
-            $location.url('/reports/' + report.id);
+            if ($state.is('main.filter')) {
+                $state.go('main.filter', { reportId: report.id });
+            }
+            else {
+                $state.go('main.report', { reportId: report.id });
+            }
         }
         report.isNew = false;
         delete shared.newReportQueue[report.id];
@@ -343,7 +348,12 @@ angular.module('poddDashboardApp')
     };
 
     $scope.gotoMainPage = function () {
-        $location.url('/');
+        if ($state.is('main.filter')) {
+            $state.go('main.filter', { reportId: undefined });
+        }
+        else {
+            $state.go('main');
+        }
     };
 
     // Watch to turn on filter mode.
@@ -364,7 +374,13 @@ angular.module('poddDashboardApp')
     $scope.$watch('shared.filterResults', function (newValue) {
         if (newValue) {
             shared.showReportList = false;
-            $scope.closeModal();
+
+            if (!shared.forceReportViewOpen) {
+                $scope.closeModal();
+            }
+            // Immediately reset to default state.
+            shared.forceReportViewOpen = false;
+
             map.clearVillages();
             map.setVillages(newValue);
         }
@@ -372,7 +388,13 @@ angular.module('poddDashboardApp')
 
     $scope.$watch('shared.reportWatchId', function (newValue) {
         if (newValue) {
-            $location.url('/reports/' + newValue);
+            if ($state.is('main.filter')) {
+                $state.go('main.filter', { reportId: newValue });
+            }
+            else {
+                $state.go('main.report', { reportId: newValue });
+            }
+
         }
     });
 

@@ -123,7 +123,7 @@ angular
         controller: 'MainReportCtrl'
       })
       .state('main.filter', {
-        url: '^/filter?q',
+        url: '^/filter?q&reportId',
         template: '',
         controller: 'FilterModeCtrl'
       })
