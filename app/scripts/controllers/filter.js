@@ -7,7 +7,7 @@ angular.module('poddDashboardApp')
     Menu.setActiveMenu('filter');
 })
 
-.controller('FilterCtrl', function ($scope, Search, shared, $window,
+.controller('FilterCtrl', function ($scope, Search, shared, $window, dashboard,
                                     $state, $stateParams, $q, $timeout) {
 
     $scope.shared = shared;
@@ -64,26 +64,68 @@ angular.module('poddDashboardApp')
             var results = [],
                 matchedVillages = {};
 
-            data.forEach(function (item) {
-                // TODO: get rid of dependencies with dashboard data.
-                var village = shared.villages[ item.administrationAreaId ];
-
-                if ( ! matchedVillages[ village.id ] ) {
-                    matchedVillages[ item.administrationAreaId ] = true;
-                    results.push(village);
-                }
-            });
-
-            $scope.results = results;
-            shared.filterResults = results;
-
-            if (results.length === 0) {
-                $scope.empty = true;
+            var promise;
+            if (false && shared.villages) {
+                promise = $q.when();
             }
             else {
-                $scope.empty = false;
-                $scope.willShowResult = false;
+                // Load administration area before next task.
+                promise = dashboard.getAdministrationAreas().$promise;
             }
+
+            promise.then(function (administrationAreas) {
+                if (administrationAreas) {
+                    shared.villages = {};
+                    administrationAreas.forEach(function (item) {
+                        shared.villages[ item.id ] = item;
+                        item.positive = 0;
+                        item.positiveCases = [];
+                        item.negative = 0;
+                        item.negativeCases = [];
+                    });
+                }
+
+                data.forEach(function (item) {
+                    var village = shared.villages[ item.administrationAreaId ];
+
+                    if ( ! matchedVillages[ village.id ] ) {
+                        matchedVillages[ item.administrationAreaId ] = true;
+                        results.push(village);
+                    }
+
+                    if (item.positive) {
+                        village.positive += 1;
+                        village.positiveCases.push({
+                            id: item.id,
+                            createdBy: item.createdByName,
+                            date: item.date,
+                            incidentDate: item.incidentDate,
+                            eventTypeName: item.reportTypeName
+                        });
+                    }
+                    else {
+                        village.negative += 1;
+                        village.negativeCases.push({
+                            id: item.id,
+                            createdBy: item.createdByName,
+                            date: item.date,
+                            incidentDate: item.incidentDate,
+                            eventTypeName: item.reportTypeName
+                        });
+                    }
+                });
+
+                $scope.results = results;
+                shared.filterResults = results;
+
+                if (results.length === 0) {
+                    $scope.empty = true;
+                }
+                else {
+                    $scope.empty = false;
+                    $scope.willShowResult = false;
+                }
+            });
 
         }).catch(function () {
             $scope.loading = false;
@@ -111,11 +153,21 @@ angular.module('poddDashboardApp')
     $scope.showTable = false;
     $scope.toggleTable = function () {
         $scope.showTable = !$scope.showTable;
-        $($window).trigger('forceResizeResultWrapper');
-        $timeout(function () {
-            $($window).trigger('forceResizeResultTable');
-        }, 100);
+        if ($scope.showTable) {
+            shared.showReportList = false;
+
+            $($window).trigger('forceResizeResultWrapper');
+            $timeout(function () {
+                $($window).trigger('forceResizeResultTable');
+            }, 100);
+        }
     };
+
+    $scope.$watch('shared.showReportList', function (newValue) {
+        if (newValue) {
+            $scope.showTable = false;
+        }
+    });
 
 
     // do things about URL

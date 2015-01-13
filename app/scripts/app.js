@@ -59,6 +59,7 @@ angular
       /\/reports/,
       /\/reportType/,
       /\/dashboard/,
+      /\/administrationArea/,
       /\/notifications/,
       /\/notification\/seen/,
       /\/reportComments/,

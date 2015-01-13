@@ -100,8 +100,9 @@
          set-max-height="30" trigger-event="'forceResizeResultWrapper'">
         <h6>
             พบผลลัพธ์จำนวน {{ (shared.filteredReports.length || 0) | number }} รายงาน
+            <span ng-if="!empty">กระจายใน {{ shared.filterResults.length }} พื้นที่</span>
 
-            <button class="btn btn-info btn-xs" type="button"
+            <button class="btn btn-info btn-xs pull-right" type="button"
                 ng-click="toggleTable()"
                 ng-show="shared.filteredReports.length"
                 ng-class="{ 'active': showTable }">
