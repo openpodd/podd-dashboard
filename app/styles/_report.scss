@@ -536,8 +536,9 @@ $badge-bad: #FF6D69;
 }
 
 .ui-grid-collapse-2{
-    width: 200px;
+//    width: 100px;
     text-align: center;
+    font-size: 11px;
 }
 
 .case-content{
@@ -545,4 +546,9 @@ $badge-bad: #FF6D69;
 }
 .custom-csv-link-location{
     margin-top: 20px;
+}
+
+.pd-badge-cell{
+    text-align: center;
+    font-size: 11px;
 }

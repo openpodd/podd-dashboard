@@ -98,19 +98,19 @@ angular.module('poddDashboardApp')
                 var result = {};
 
                 result['name'] = item.name;
-                if(!header) options.push({ field: 'name', displayName: 'Name', width:200 });
+                if(!header) options.push({ field: 'name', displayName: 'Name', width:320 });
 
                 item.dates.forEach(function (date) {
                     result["P" + date.date] = date.positive;
                     result["N" + date.date] = date.negative;
 
                     if(!header){
-                        options.push({ field: "P" + date.date, width:100,
+                        options.push({ field: "P" + date.date, 
                             cellTemplate: '<div class="ui-grid-cell-contents cell-report" ng-class="{ gray: COL_FIELD == 0}">{{COL_FIELD}}</div>',
-                            headerCellTemplate: '<div class="ui-grid-cell-contents grid ui-grid-cell-contents-collapse-2"><div class="ui-grid-collapse-2"><span>'+ date.date +'</span><div class="row"><div class="col-md-6">P</div><div class="col-md-6">N</div></div></div></div>'});
-                        options.push({ field: "N" + date.date, width:100,
+                            headerCellTemplate: '<div class="ui-grid-cell-contents grid ui-grid-cell-contents-collapse-2"><div class="ui-grid-collapse-2">Good</div></div>'});
+                        options.push({ field: "N" + date.date,
                             cellTemplate: '<div class="ui-grid-cell-contents cell-report" ng-class="{ red: COL_FIELD > 0}">{{COL_FIELD}}</div>',
-                            headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope"></div>' })
+                            headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">Bad</div>' })
                     }
                 });
 
