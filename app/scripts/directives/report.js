@@ -139,14 +139,24 @@ angular.module('poddDashboardApp')
 
 .filter('administrationAreaName', function (shared) {
     return function (report) {
-        return shared.villages[ report.administrationAreaId ].name;
+        if (shared.villages[ report.administrationAreaId ]) {
+            return shared.villages[ report.administrationAreaId ].name;
+        }
+        else {
+            return '';
+        }
     };
 })
 
 .filter('administrationAreaAddress', function (shared) {
-  return function (report) {
-    return shared.villages[ report.administrationAreaId ].address;
-  };
+    return function (report) {
+        if (shared.villages[ report.administrationAreaId ]) {
+            return shared.villages[ report.administrationAreaId ].address;
+        }
+        else {
+            return '';
+        }
+    };
 })
 
 .directive('ReportView', function () {

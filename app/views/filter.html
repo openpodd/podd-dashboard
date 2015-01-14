@@ -158,7 +158,7 @@
                         <i class="fa fa-flag flag-priority-{{ item.flag }}" ng-if="item.flag"></i>
                     </td>
                     <td ng-bind="item.date | amDateFormat:'D MMM YYYY HH:mm'"></td>
-                    <td ng-bind="item | filter:administrationAreaAddress"></td>
+                    <td ng-bind="item | administrationAreaAddress"></td>
                     <td ng-bind="item.reportTypeName"></td>
                     <td>
                         <span ng-show="item.negative" class="badge badge-bad">Bad</span>

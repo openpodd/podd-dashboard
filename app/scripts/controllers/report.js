@@ -187,7 +187,7 @@ angular.module('poddDashboardApp')
                                 ' AND date:last 70 days' +
                                 ' AND flag:case';
 
-                        scope.casesToFollow = Search.query({ q: q });
+                        scope.casesToFollow = Search.query({ q: q, withFormData: true });
 
                         scope.selected = {};
 

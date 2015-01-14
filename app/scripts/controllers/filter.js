@@ -77,8 +77,6 @@ angular.module('poddDashboardApp')
         return Search.query({ q: $scope.query }).$promise.then(function (data) {
             console.log('Query result:', data);
 
-            $scope.loading = false;
-
             shared.filteredReports = data.results;
 
             // Do group by administrationAreaId
