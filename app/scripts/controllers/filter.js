@@ -116,23 +116,9 @@ angular.module('poddDashboardApp')
 
                     if (item.negative) {
                         village.negative += 1;
-                        village.negativeCases.push({
-                            id: item.id,
-                            createdBy: item.createdByName,
-                            date: item.date,
-                            incidentDate: item.incidentDate,
-                            eventTypeName: item.reportTypeName
-                        });
                     }
                     else {
                         village.positive += 1;
-                        village.positiveCases.push({
-                            id: item.id,
-                            createdBy: item.createdByName,
-                            date: item.date,
-                            incidentDate: item.incidentDate,
-                            eventTypeName: item.reportTypeName
-                        });
                     }
                 });
 

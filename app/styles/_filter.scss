@@ -17,6 +17,14 @@
 
 .filter-result-reports {
     overflow: hidden;
+
+    .pd-table-area {
+        width: 144px;
+    }
+
+    .report-negative {
+        cursor: pointer;
+    }
 }
 
 .filter-help {

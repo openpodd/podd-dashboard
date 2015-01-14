@@ -123,6 +123,7 @@
                 <tr>
                     <th class="pd-table-flag"></th>
                     <th class="pd-table-date">วันที่รายงาน</th>
+                    <th class="pd-table-area">พื้นที่</th>
                     <th class="pd-table-type">ประเภท</th>
                     <th class="pd-table-status">สถานะ</th>
                     <th class="pd-table-reporter">ผู้รายงาน</th>
@@ -130,14 +131,15 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="item in shared.filteredReports | orderBy:'-date' " id="report-{{ report.id }}"
+                <tr ng-repeat="item in shared.filteredReports | orderBy:'-date' " id="report-{{ item.id }}"
                     ng-click="onClickReport(item)"
-                    ng-class="{ 'report-positive': !report.negative }">
+                    ng-class="{ 'report-positive': !item.negative }">
 
                     <td>
                         <i class="fa fa-flag flag-priority-{{ item.flag }}" ng-if="item.flag"></i>
                     </td>
                     <td ng-bind="item.date | amDateFormat:'D MMM YYYY HH:mm'"></td>
+                    <td ng-bind="item | administrationAreaAddress"></td>
                     <td ng-bind="item.reportTypeName"></td>
                     <td>
                         <span ng-show="item.negative" class="badge badge-bad">Bad</span>
