@@ -76,6 +76,16 @@ angular.module('poddDashboardApp')
         $scope.willShowResult = true;
         $scope.loadingLink = true;
         
+        shared.gridOptions = {
+            enableSorting: false,
+            data: [],
+            columnDefs: [],
+            exporterLinkLabel: 'ดาวน์โหลดข้อมูลไฟล์ CSV',
+            exporterLinkTemplate: '<span><a class="btn btn-primary btn-sm" href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\">LINK_LABEL</a></span>',
+            onRegisterApi: function(gridApi){ 
+                shared.gridApi = gridApi;
+            }
+        };
 
         shared.summaryReports = {};
 

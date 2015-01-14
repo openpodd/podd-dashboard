@@ -54,16 +54,6 @@ angular.module('poddDashboardApp')
 
     $scope.shared = shared;
 
-    shared.gridOptions = {
-        enableSorting: false,
-        data: [],
-        columnDefs: [],
-        exporterLinkLabel: 'ดาวน์โหลดข้อมูลไฟล์ CSV',
-        exporterLinkTemplate: '<span><a class="btn btn-primary btn-sm" href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\">LINK_LABEL</a></span>',
-        onRegisterApi: function(gridApi){ 
-            shared.gridApi = gridApi;
-        }
-    };
 
     $scope._search = function () {
         console.log('Will search with query', $scope.query_report);
@@ -81,7 +71,17 @@ angular.module('poddDashboardApp')
         $scope.willShowResult = true;
         $scope.loadingLink = true;
         
-
+        shared.gridOptions = {
+            enableSorting: false,
+            data: [],
+            columnDefs: [],
+            exporterLinkLabel: 'ดาวน์โหลดข้อมูลไฟล์ CSV',
+            exporterLinkTemplate: '<span><a class="btn btn-primary btn-sm" href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\">LINK_LABEL</a></span>',
+            onRegisterApi: function(gridApi){ 
+                shared.gridApi = gridApi;
+            }
+        };
+    
         shared.summaryReports = {};
 
         SummaryReport.query({ dates: $scope.query_report, offset: ((new Date()).getTimezoneOffset() * -1 / 60) }).$promise.then(function (data) {
