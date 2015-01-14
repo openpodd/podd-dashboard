@@ -203,7 +203,7 @@ angular.module('poddDashboardApp')
             $scope.recentReports = [];
             $scope.olderReports = [];
 
-            items.forEach(function (item) {
+            items.results.forEach(function (item) {
                 // Filter for last 2 weeks
                 if ( isRecentReport(item) ) {
                     $scope.recentReports.push(item);
@@ -219,7 +219,65 @@ angular.module('poddDashboardApp')
                 }
             });
 
-            $scope.reports = items;
+            if (items.next) {
+                $scope.loadmoreParams = {
+                    'django_id__lt': items.results.slice(-1)[0].id
+                };
+            } else {
+                $scope.loadmoreParams = null;
+            }
+
+            $scope.reports = items.results;
+        })
+        .catch(function () {
+            $scope.loadingReportListError = true;
+        });
+    };
+
+    $scope.loadmoreVillageReports = function (village, query) {
+        var query = query || {};
+        var searcher;
+
+        if (shared.filterMode) {
+            query = $.extend(query, {
+                q: 'administrationArea:' + village.id + ' AND ' + shared.filterQuery
+            });
+            searcher = Search.query;
+        }
+        else {
+            query = $.extend(query, { administrationArea: village.id });
+            searcher = Reports.list;
+        }
+        // TODO: remove
+        if (shared.rlError) searcher = FailRequest.query;
+
+        return searcher(query).$promise.then(function (items) {
+
+            items.results.forEach(function (item) {
+                // Filter for last 2 weeks
+                if ( isRecentReport(item) ) {
+                    $scope.recentReports.push(item);
+                }
+                // Filter for the older
+                else {
+                    $scope.olderReports = $scope.olderReports.concat([item]);
+                }
+
+                // Check if it is new report and add flag 'isNew'
+                if (shared.newReportQueue[item.id]) {
+                    item.isNew = true;
+                }
+            });
+
+            if (items.next) {
+                $scope.loadmoreParams = {
+                    'django_id__lt': items.results.slice(-1)[0].id
+                };
+            } else {
+                $scope.loadmoreParams = null;
+            }
+
+            $scope.reports.push.apply(items.results);
         })
         .catch(function () {
             $scope.loadingReportListError = true;

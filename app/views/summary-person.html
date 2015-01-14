@@ -22,7 +22,7 @@
                     </button>
                 </span>
                     
-                <input type="text" id="week_range_person" class="form-control" ng-model="query_person" data-weekpicker="weekpicker"data-week_start="1" data-months="1" placeholder="ตัวอย่าง. 12/01/2015-18/01/2015" ng-show="type === 'week'"/>
+                <input type="text" id="week_range_person" class="form-control" ng-model="queryPerson" data-weekpicker="weekpicker"data-week_start="1" data-months="1" placeholder="ตัวอย่าง. 12/01/2015-18/01/2015" ng-show="type === 'week'"/>
 
                 <input type="text" id="month_range_person" class="form-control" ng-model="query_person" ng-show="type === 'month'"/>
 
@@ -39,9 +39,9 @@
         <div class="summary-list" ng-show="results">
             <h3 class="subheading" style="margin-bottom:20px;">สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }} </h3>
             <h4 class="subheading">จำนวนการรายงานทั้งสิ้น {{ totalPerson }} คน</h4><hr/>
-            <div class="summary-grid" ui-grid="gridOptions" ui-grid-exporter></div>
-            <div class="custom-csv-link-location">
-                <a href="#" class="btn btn-primary btn-sm">ดาวน์โหลดข้อมูลไฟล์ CSV</a>
+            <div id="gridPerson" class="summary-grid-person" ui-grid="gridOptionsPerson" ui-grid-exporter></div>
+            <div class="custom-csv-link-location-person">
+                <div ng-show="loadingLink" loader-spinner></div>
                 <span class="ui-grid-exporter-csv-link">&nbsp</span>
             </div>
         </div>

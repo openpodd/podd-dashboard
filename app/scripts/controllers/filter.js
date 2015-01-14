@@ -77,7 +77,9 @@ angular.module('poddDashboardApp')
         return Search.query({ q: $scope.query }).$promise.then(function (data) {
             console.log('Query result:', data);
 
-            shared.filteredReports = data;
+            $scope.loading = false;
+
+            shared.filteredReports = data.results;
 
             // Do group by administrationAreaId
             var results = [],
@@ -106,7 +108,7 @@ angular.module('poddDashboardApp')
                     });
                 }
 
-                data.forEach(function (item) {
+                data.results.forEach(function (item) {
                     var village = shared.villages[ item.administrationAreaId ];
 
                     if ( ! matchedVillages[ village.id ] ) {
@@ -116,23 +118,9 @@ angular.module('poddDashboardApp')
 
                     if (item.negative) {
                         village.negative += 1;
-                        village.negativeCases.push({
-                            id: item.id,
-                            createdBy: item.createdByName,
-                            date: item.date,
-                            incidentDate: item.incidentDate,
-                            eventTypeName: item.reportTypeName
-                        });
                     }
                     else {
                         village.positive += 1;
-                        village.positiveCases.push({
-                            id: item.id,
-                            createdBy: item.createdByName,
-                            date: item.date,
-                            incidentDate: item.incidentDate,
-                            eventTypeName: item.reportTypeName
-                        });
                     }
                 });
 

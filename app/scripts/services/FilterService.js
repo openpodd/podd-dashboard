@@ -6,7 +6,7 @@ angular.module('poddDashboardApp')
     return $resource(config.API_BASEPATH + '/reports/search', {}, {
         query: {
             method: 'GET',
-            isArray: true
+            isArray: false
         }
     });
 });
