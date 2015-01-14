@@ -126,7 +126,6 @@
                     <th class="pd-table-type">ประเภท</th>
                     <th class="pd-table-status">สถานะ</th>
                     <th class="pd-table-reporter">ผู้รายงาน</th>
-                    <th class="pd-table-notification"></th>
                 </tr>
             </thead>
 
@@ -145,9 +144,6 @@
                         <span ng-hide="item.negative" class="badge badge-good">Good</span>
                     </td>
                     <td ng-bind="item.createdByName"></td>
-                    <td>
-                        <span class="badge badge-new" ng-show="report.isNew">ใหม่</span>
-                    </td>
                 </tr>
             </tbody>
         </table>

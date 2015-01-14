@@ -8,7 +8,7 @@ angular.module('poddDashboardApp')
 })
 
 .controller('FilterCtrl', function ($scope, Search, shared, $window, dashboard,
-                                    $state, $stateParams, $q, $timeout) {
+                                    $state, $stateParams, $q, $timeout, streaming) {
 
     $scope.shared = shared;
 
@@ -29,6 +29,22 @@ angular.module('poddDashboardApp')
                 $scope.doQueryOnParams($stateParams);
             }
         }
+    });
+
+    streaming.on('report:flag:new', function (data) {
+      console.log('got new report flag in filter', data);
+
+      data = angular.fromJson(data);
+
+      // Loop through existing reports list and update data.
+      if (shared.filteredReports) {
+        shared.filteredReports.forEach(function (item) {
+          if (item.id === parseInt(data.reportId)) {
+            item.flag = data.priority;
+            item.negative = data.reportNegative;
+          }
+        });
+      }
     });
 
     $scope.search = function () {
