@@ -227,9 +227,6 @@ angular.module('poddDashboardApp')
             }
             $('#loading-bar').show();
         }
-        else {
-            $scope.$broadcast('filter:clearQuery', true);
-        }
     });
 
 });
