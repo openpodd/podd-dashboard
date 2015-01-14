@@ -26,11 +26,7 @@ angular.module('poddDashboardApp')
     }
     $scope.query_report = start_date + '-' + end_date;
     $scope.loadingLink = true;
-    $scope.gridOptions = {
-        enableSorting: false,
-        data: [],
-        columnDefs: [],
-    };
+    $scope.type = 'week';
 
     $scope.$on('summaryReport:clearQuery', function (willClear) {
         if (willClear) {
@@ -40,14 +36,13 @@ angular.module('poddDashboardApp')
             $scope.loadingLink = true;
             $scope.error = false;
             $scope.results = [];
-            $scope.gridOptions = {};
+            $scope.gridOptionsReports = {};
             $scope.totalReport = 0;
             if ($scope.query_report) {
                 $scope.doQueryOnParams($stateParams);
             }
         }
     });
-
 
     $scope.$watch('query', function (newValue) {
         shared.summaryQuery = newValue;
@@ -56,6 +51,19 @@ angular.module('poddDashboardApp')
     $scope.search = function () {
         $state.go('main.summaryreport', { dates: $scope.query_report, type: 'week' });
     }
+
+    $scope.shared = shared;
+
+    shared.gridOptions = {
+        enableSorting: false,
+        data: [],
+        columnDefs: [],
+        exporterLinkLabel: 'ดาวน์โหลดข้อมูลไฟล์ CSV',
+        exporterLinkTemplate: '<span><a class="btn btn-primary btn-sm" href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\">LINK_LABEL</a></span>',
+        onRegisterApi: function(gridApi){ 
+            shared.gridApi = gridApi;
+        }
+    };
 
     $scope._search = function () {
         console.log('Will search with query', $scope.query_report);
@@ -72,15 +80,7 @@ angular.module('poddDashboardApp')
         $scope.error = false;
         $scope.willShowResult = true;
         $scope.loadingLink = true;
-        $scope.gridOptions = {
-            enableSorting: false,
-            data: [],
-            columnDefs: [],
-            onRegisterApi: function(gridApi){ 
-              $scope.gridApi_report = gridApi;
-              console.log("Api" ,$scope.gridApi_report);
-            }
-        };
+        
 
         shared.summaryReports = {};
 
@@ -136,13 +136,13 @@ angular.module('poddDashboardApp')
                 $scope.totalReport = total;
             }
             $scope.weekSearch = $scope.query_report;
-            $scope.gridOptions.enableSorting = false;
-            $scope.gridOptions.columnDefs = options;
-            $scope.gridOptions.data = results;
+            shared.gridOptions.enableSorting = false;
+            shared.gridOptions.columnDefs = options;
+            shared.gridOptions.data = results;
 
             setTimeout(function(){
                 $scope.loadingLink = false;
-                $scope.export();
+                $scope.exportReport();
             }, 3000);
 
         }).catch(function () {
@@ -151,9 +151,10 @@ angular.module('poddDashboardApp')
         });
     };
 
-    $scope.export = function(){
-            var element = angular.element(document.querySelectorAll(".custom-csv-link-location"));
-            $scope.gridApi_report.exporter.csvExport( 'all', 'all', element );
+    $scope.exportReport = function(){
+        console.log("Api========", shared.gridApit);
+        var element = angular.element(document.querySelectorAll(".custom-csv-link-location-report")); element.html('');
+        shared.gridApi.exporter.csvExport( 'all', 'all', element );
     };
 
     $scope.$evalAsync(function () {
@@ -182,7 +183,6 @@ angular.module('poddDashboardApp')
             $state.go('main.summaryreport', { dates: $scope.query_report, type: 'week' });
         }
     };
-
 
     $scope.doQueryOnParams($stateParams);
     $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {

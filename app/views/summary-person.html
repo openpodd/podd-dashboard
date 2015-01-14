@@ -39,9 +39,9 @@
         <div class="summary-list" ng-show="results">
             <h3 class="subheading" style="margin-bottom:20px;">สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }} </h3>
             <h4 class="subheading">จำนวนการรายงานทั้งสิ้น {{ totalPerson }} คน</h4><hr/>
-            <div class="summary-grid" ui-grid="gridOptions" ui-grid-exporter></div>
-            <div class="custom-csv-link-location">
-                <a href="#" class="btn btn-primary btn-sm">ดาวน์โหลดข้อมูลไฟล์ CSV</a>
+            <div class="summary-grid-person" ui-grid="shared.gridOptions" ui-grid-exporter></div>
+            <div class="custom-csv-link-location-person">
+                <div ng-show="loadingLink" loader-spinner></div>
                 <span class="ui-grid-exporter-csv-link">&nbsp</span>
             </div>
         </div>

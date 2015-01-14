@@ -26,11 +26,13 @@ angular.module('poddDashboardApp')
 
     $scope.query_person = start_date + '-' + end_date;
     $scope.type = 'week';
-    $scope.gridOptions = {
+    $scope.gridOptionsPersons = {
         enableSorting: true,
         data: [],
         columnDefs: [],
     };
+
+    $scope.shared = shared;
 
     $scope.$on('summaryPerson:clearQuery', function (willClear) {
         if (willClear) {
@@ -40,7 +42,7 @@ angular.module('poddDashboardApp')
             $scope.loading = false;
             $scope.error = false;
             $scope.results = [];
-            $scope.gridOptions = {};
+            $scope.gridOptionsPersons = {};
             $scope.totalPerson = 0;
             if ($scope.query_person) {
                 $scope.doQueryOnParams($stateParams);
@@ -73,15 +75,8 @@ angular.module('poddDashboardApp')
         $scope.error = false;
         $scope.willShowResult = true;
         $scope.loadingLink = true;
-        $scope.gridOptions = {
-            enableSorting: true,
-            data: [],
-            columnDefs: [],
-            onRegisterApi: function(gridApi){ 
-              $scope.gridApi_person = gridApi;
-              console.log("Api" ,$scope.gridApi_person);
-            }
-        };
+        
+
         shared.summaryReports = {};
 
         SummaryPerson.query({ dates: $scope.query_person, type: 'week', offset: ((new Date()).getTimezoneOffset() * -1 / 60) }).$promise.then(function (data) {
@@ -112,8 +107,8 @@ angular.module('poddDashboardApp')
                 $scope.totalPerson = total;
             }
             $scope.weekSearch = $scope.query_person;
-            $scope.gridOptions.enableSorting = true;
-            $scope.gridOptions.columnDefs = [
+            shared.gridOptions.enableSorting = true;
+            shared.gridOptions.columnDefs = [
                 { field: 'parentAdministrationArea', },
                 { field: 'administrationArea', },
                 { field: 'fullname', },
@@ -121,11 +116,11 @@ angular.module('poddDashboardApp')
                 { field: 'projectMobileNumber', },
                 { field: 'totalReport', },
             ];
-            $scope.gridOptions.data = results;
+            shared.gridOptions.data = results;
 
             setTimeout(function(){
                 $scope.loadingLink = false;
-                $scope.export();
+                $scope.exportPerson();
             }, 3000);
 
         }).catch(function () {
@@ -159,9 +154,9 @@ angular.module('poddDashboardApp')
         }
     };
 
-    $scope.export = function(){
-        var element = angular.element(document.querySelectorAll(".custom-csv-link-location"));
-        $scope.gridApi_person.exporter.csvExport( 'all', 'all', element );
+    $scope.exportPerson = function(){
+        var element = angular.element(document.querySelectorAll(".custom-csv-link-location-person")); element.html('');
+        shared.gridApi.exporter.csvExport( 'all', 'all', element);
     };
 
     $scope.doQueryOnParams($stateParams);
