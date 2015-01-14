@@ -417,10 +417,4 @@ angular.module('poddDashboardApp')
         }
     });
 
-    $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
-        console.log("stateChangeSuccess", $state.current.name, params.dates);
-        if ($state.current.name === 'main') {
-            $('#loading-bar').show();
-        }
-    });
 }]);

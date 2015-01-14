@@ -205,7 +205,6 @@ angular.module('poddDashboardApp')
             else if (oldParams.q !== params.q) {
                 $scope.doQueryOnParams(params);
             }
-            $('#loading-bar').show();
         }
     });
 

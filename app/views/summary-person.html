@@ -12,12 +12,20 @@
  
         <form role="form" ng-submit="search()" class="search-block">
             <div class="input-group">
+                <span>
+                    <input type="radio" ng-model="type" value="week">  Week 
+                    <input type="radio" ng-model="type" value="month"> Month 
+                </span>
                 <span class="input-group-btn" >
-                    <button class="btn btn-default btn-info-search" data-weekpicker="weekpicker" data-months="1" placeholder="ตัวอย่าง. 12/01/2015-18/01/2015" data-week_start="1" data-months="1" data-target="#week_range_person" type="button" >
-                        เลือกวันที่ <i class="fa fa-calendar"></i>
+                    <button class="btn btn-default btn-info-search" type="button" >
+                        <label for="week_range_person">เลือกวันที่ <i class="fa fa-calendar"></i> </label>
                     </button>
                 </span>
-                <input type="text" id="week_range_person" class="form-control" ng-model="query" data-weekpicker="weekpicker"data-week_start="1" data-months="1" placeholder="ตัวอย่าง. 12/01/2015-18/01/2015"/>
+                    
+                <input type="text" id="week_range_person" class="form-control" ng-model="query_person" data-weekpicker="weekpicker"data-week_start="1" data-months="1" placeholder="ตัวอย่าง. 12/01/2015-18/01/2015" ng-show="type === 'week'"/>
+
+                <input type="text" id="month_range_person" class="form-control" ng-model="query_person" ng-show="type === 'month'"/>
+
                 <span class="input-group-btn">
                     <button class="btn btn-default pd-btn-search" type="submit"><i class="fa fa-search fa-size-18"></i></button>
                 </span>
@@ -31,7 +39,12 @@
         <div class="summary-list" ng-show="results">
             <h3 class="subheading" style="margin-bottom:20px;">สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }} </h3>
             <h4 class="subheading">จำนวนการรายงานทั้งสิ้น {{ totalPerson }} คน</h4><hr/>
-            <div class="summary-grid" ui-grid="gridOptions"></div>
+            <div class="summary-grid" ui-grid="gridOptions" ui-grid-exporter></div>
+            <div class="custom-csv-link-location">
+                <label>ลิงค์สำหรับดาวน์โหลดข้อมูลไฟล์ CSV:</label>
+                <div ng-show="loadingLink" loader-spinner></div>
+                <span class="ui-grid-exporter-csv-link">&nbsp</span>
+            </div>
         </div>
         
        <!-- </div> --> <!-- End content -->

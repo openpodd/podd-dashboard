@@ -24,7 +24,8 @@ angular.module('poddDashboardApp')
         end_date = moment().day(7).format("DD/MM/YYYY");;
     }
 
-    $scope.query = start_date + '-' + end_date;
+    $scope.query_person = start_date + '-' + end_date;
+    $scope.type = 'week';
     $scope.gridOptions = {
         enableSorting: true,
         data: [], 
@@ -33,14 +34,15 @@ angular.module('poddDashboardApp')
 
     $scope.$on('summaryPerson:clearQuery', function (willClear) {
         if (willClear) {
-            $scope.query = $stateParams.q || start_date + '-' + end_date;
+            $scope.query_person = $stateParams.q || start_date + '-' + end_date;
+            $scope.type = 'week';
             $scope.willShowResult = false;
             $scope.loading = false;
             $scope.error = false;
             $scope.results = [];
             $scope.gridOptions = {};
             $scope.totalPerson = 0;
-            if ($scope.query) {
+            if ($scope.query_person) {
                 $scope.doQueryOnParams($stateParams);
             }
         }
@@ -51,16 +53,13 @@ angular.module('poddDashboardApp')
     });
 
     $scope.search = function () {
-        if($('#week_range_person').val() !== '') 
-            $scope.query = $('#week_range_person').val();
-        
-        console.log("goooooo",  $scope.query);
-        $state.go('main.summaryperson', { dates: $scope.query, type: 'week' });
+        console.log("goooooo",  $scope.query_person);
+        $state.go('main.summaryperson', { dates: $scope.query_person, type: 'week' });
     }
 
     $scope._search = function () {
 
-        console.log('Will search with query', $scope.query);
+        console.log('Will search with query', $scope.query_person);
 
         if ($scope.loading) {
             return;
@@ -73,14 +72,19 @@ angular.module('poddDashboardApp')
         $scope.loading = true;
         $scope.error = false;
         $scope.willShowResult = true;
+        $scope.loadingLink = true;
         $scope.gridOptions = {
             enableSorting: true,
             data: [], 
             columnDefs: [],
+            onRegisterApi: function(gridApi){ 
+              $scope.gridApi = gridApi;
+              console.log("Api" ,$scope.gridApi);
+            }
         };
         shared.summaryReports = {};
 
-        SummaryPerson.query({ dates: $scope.query, type: 'week', offset: ((new Date()).getTimezoneOffset() * -1 / 60) }).$promise.then(function (data) {
+        SummaryPerson.query({ dates: $scope.query_person, type: 'week', offset: ((new Date()).getTimezoneOffset() * -1 / 60) }).$promise.then(function (data) {
             console.log('Query result:', data);
             
             var results = [];
@@ -107,7 +111,7 @@ angular.module('poddDashboardApp')
                 $scope.negativeReport = negative;
                 $scope.totalPerson = total;
             }
-            $scope.weekSearch = $scope.query;
+            $scope.weekSearch = $scope.query_person;
             $scope.gridOptions.enableSorting = true;
             $scope.gridOptions.columnDefs = [
                 { field: 'parentAdministrationArea', },
@@ -118,7 +122,11 @@ angular.module('poddDashboardApp')
                 { field: 'totalReport', },
             ];
             $scope.gridOptions.data = results;
-            $('#loading-bar').hide();
+
+            setTimeout(function(){
+                $scope.loadingLink = false;
+                $scope.export();
+            }, 3000);
 
         }).catch(function () {
             $scope.loading = false;
@@ -141,13 +149,19 @@ angular.module('poddDashboardApp')
 
     $scope.doQueryOnParams = function (params) {
         if ($state.current.name === 'main.summaryperson') {
-            $scope.query = $window.decodeURIComponent(params.dates || '');
-            if ($scope.query) {
+            $scope.query_person = $window.decodeURIComponent(params.dates || '');
+            if ($scope.query_person) {
                 return $scope._search();
             }
-            $scope.query = start_date + '-' + end_date;
-            $state.go('main.summaryperson', { dates: $scope.query, type: 'week' });
+            $scope.query_person = start_date + '-' + end_date;
+            $scope.type = 'week';
+            $state.go('main.summaryperson', { dates: $scope.query_person, type: 'week' });
         }
+    };
+
+    $scope.export = function(){
+        var element = angular.element(document.querySelectorAll(".custom-csv-link-location"));
+        $scope.gridApi.exporter.csvExport( 'all', 'all', element );
     };
 
     $scope.doQueryOnParams($stateParams);
@@ -157,7 +171,7 @@ angular.module('poddDashboardApp')
             if (oldParams.dates !== params.dates) {
                 $scope.doQueryOnParams(params);
             }else if(typeof params.dates === 'undefined'){
-                $state.go('main.summaryperson', { dates: $scope.query, type: 'week' });
+                $state.go('main.summaryperson', { dates: $scope.query_person, type: 'week' });
             }
         }
     });

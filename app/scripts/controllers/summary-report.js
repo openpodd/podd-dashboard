@@ -24,7 +24,8 @@ angular.module('poddDashboardApp')
         start_date = moment().day(1).format("DD/MM/YYYY");;
         end_date = moment().day(7).format("DD/MM/YYYY");;
     }
-    $scope.query = start_date + '-' + end_date;
+    $scope.query_report = start_date + '-' + end_date;
+    $scope.loadingLink = true;
     $scope.gridOptions = {
         enableSorting: false,
         data: [], 
@@ -33,14 +34,15 @@ angular.module('poddDashboardApp')
 
     $scope.$on('summaryReport:clearQuery', function (willClear) {
         if (willClear) {
-            $scope.query = $stateParams.q || start_date + '-' + end_date;
+            $scope.query_report = $stateParams.q || start_date + '-' + end_date;
             $scope.willShowResult = false;
             $scope.loading = false;
+            $scope.loadingLink = true;
             $scope.error = false;
             $scope.results = [];
             $scope.gridOptions = {};
             $scope.totalReport = 0;
-            if ($scope.query) {
+            if ($scope.query_report) {
                 $scope.doQueryOnParams($stateParams);
             }
         }
@@ -52,14 +54,11 @@ angular.module('poddDashboardApp')
     });
 
     $scope.search = function () {
-        if($('#week_range_report').val() !== '') 
-            $scope.query = $('#week_range_report').val();
-
-        $state.go('main.summaryreport', { dates: $scope.query, type: 'week' });
+        $state.go('main.summaryreport', { dates: $scope.query_report, type: 'week' });
     }
 
     $scope._search = function () {
-        console.log('Will search with query', $scope.query);
+        console.log('Will search with query', $scope.query_report);
 
         if ($scope.loading) {
             return;
@@ -72,18 +71,20 @@ angular.module('poddDashboardApp')
         $scope.loading = true;
         $scope.error = false;
         $scope.willShowResult = true;
+        $scope.loadingLink = true;
         $scope.gridOptions = {
-            enableVerticalScrollbar: uiGridConstants.scrollbars.NEVER,
-            enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
             enableSorting: false,
             data: [], 
             columnDefs: [],
-            minRowsToShow: 77
+            onRegisterApi: function(gridApi){ 
+              $scope.gridApi = gridApi;
+              console.log("Api" ,$scope.gridApi);
+            }
         };
 
         shared.summaryReports = {};
 
-        SummaryReport.query({ dates: $scope.query, offset: ((new Date()).getTimezoneOffset() * -1 / 60) }).$promise.then(function (data) {
+        SummaryReport.query({ dates: $scope.query_report, offset: ((new Date()).getTimezoneOffset() * -1 / 60) }).$promise.then(function (data) {
             console.log('Query result:', data);
             
             var results = [];
@@ -134,17 +135,25 @@ angular.module('poddDashboardApp')
                 $scope.negativeReport = negative;
                 $scope.totalReport = total;
             }
-            $scope.weekSearch = $scope.query;
+            $scope.weekSearch = $scope.query_report;
             $scope.gridOptions.enableSorting = false;
             $scope.gridOptions.columnDefs = options;
             $scope.gridOptions.data = results; 
-            $scope.gridOptions.minRowsToShow = results.length;
-            $('#loading-bar').hide();
+
+            setTimeout(function(){
+                $scope.loadingLink = false;
+                $scope.export();
+            }, 3000);
 
         }).catch(function () {
             $scope.loading = false;
             $scope.error = true;
         });
+    };
+
+    $scope.export = function(){
+            var element = angular.element(document.querySelectorAll(".custom-csv-link-location"));
+            $scope.gridApi.exporter.csvExport( 'all', 'all', element );
     };
 
     $scope.$evalAsync(function () {
@@ -165,12 +174,12 @@ angular.module('poddDashboardApp')
 
     $scope.doQueryOnParams = function (params) {
         if ($state.current.name === 'main.summaryreport') {
-            $scope.query = $window.decodeURIComponent(params.dates || '');
-            if ($scope.query) {
+            $scope.query_report = $window.decodeURIComponent(params.dates || '');
+            if ($scope.query_report) {
                 return $scope._search();
             }
-            $scope.query = start_date + '-' + end_date;
-            $state.go('main.summaryreport', { dates: $scope.query, type: 'week' });
+            $scope.query_report = start_date + '-' + end_date;
+            $state.go('main.summaryreport', { dates: $scope.query_report, type: 'week' });
         }
     };
 
@@ -182,7 +191,7 @@ angular.module('poddDashboardApp')
             if (oldParams.dates !== params.dates) {
                 $scope.doQueryOnParams(params);
             }else if(typeof params.dates === 'undefined'){
-                $state.go('main.summaryreport', { dates: $scope.query, type: 'week' });
+                $state.go('main.summaryreport', { dates: $scope.query_report, type: 'week' });
             }
         }
     });
