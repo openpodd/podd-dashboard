@@ -101,16 +101,15 @@
         <h6>
             พบผลลัพธ์จำนวน {{ (shared.filteredReports.length || 0) | number }} รายงาน
             <span ng-if="!empty">กระจายใน {{ shared.filterResults.length }} พื้นที่</span>
-
-            <button class="btn btn-info btn-xs pull-right" type="button"
-                ng-click="toggleTable()"
-                ng-show="shared.filteredReports.length"
-                ng-class="{ 'active': showTable }">
-                <div ng-if="!showTable">แสดงรายการ</div>
-                <div ng-if="showTable">ปิดรายการ</div>
-            </button>
-
         </h6>
+
+        <button class="btn btn-info btn-xs pull-right filter-result-list-button" type="button"
+            ng-click="toggleTable()"
+            ng-show="shared.filteredReports.length"
+            ng-class="{ 'active': showTable }">
+            <span ng-hide="showTable">แสดงรายการ</span>
+            <span ng-show="showTable">ปิดรายการ</span>
+        </button>
 
         <div ng-show="showTable && shared.filteredReports"
              class="scroller scroller-x scroller-y content-wrapper"
