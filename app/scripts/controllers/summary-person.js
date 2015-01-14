@@ -7,9 +7,9 @@ angular.module('poddDashboardApp')
     Menu.setActiveMenu('summary');
 })
 
-.controller('SummaryPersonCtrl', function ($scope, SummaryPerson, User, 
+.controller('SummaryPersonCtrl', function ($scope, SummaryPerson, User,
     streaming, FailRequest, shared, $location, $state, $stateParams, $window, cfpLoadingBar) {
-    
+
     console.log('init summary person ctrl');
 
     var now = moment();
@@ -27,7 +27,7 @@ angular.module('poddDashboardApp')
     $scope.query = start_date + '-' + end_date;
     $scope.gridOptions = {
         enableSorting: true,
-        data: [], 
+        data: [],
         columnDefs: [],
     };
 
@@ -51,9 +51,9 @@ angular.module('poddDashboardApp')
     });
 
     $scope.search = function () {
-        if($('#week_range_person').val() !== '') 
+        if($('#week_range_person').val() !== '')
             $scope.query = $('#week_range_person').val();
-        
+
         console.log("goooooo",  $scope.query);
         $state.go('main.summaryperson', { dates: $scope.query, type: 'week' });
     }
@@ -75,14 +75,14 @@ angular.module('poddDashboardApp')
         $scope.willShowResult = true;
         $scope.gridOptions = {
             enableSorting: true,
-            data: [], 
+            data: [],
             columnDefs: [],
         };
         shared.summaryReports = {};
 
         SummaryPerson.query({ dates: $scope.query, type: 'week', offset: ((new Date()).getTimezoneOffset() * -1 / 60) }).$promise.then(function (data) {
             console.log('Query result:', data);
-            
+
             var results = [];
             var options = [];
             var positive = 0;
@@ -118,7 +118,6 @@ angular.module('poddDashboardApp')
                 { field: 'totalReport', },
             ];
             $scope.gridOptions.data = results;
-            $('#loading-bar').hide();
 
         }).catch(function () {
             $scope.loading = false;
@@ -130,7 +129,7 @@ angular.module('poddDashboardApp')
         if(shared.summaryPersonMode) $scope.search();
         $('[data-weekpicker]').weekpicker();
     });
-    
+
     $scope.closeSummaryPerson = function () {
         shared.summaryPersonMode = false;
     };

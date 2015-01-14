@@ -41,26 +41,26 @@ angular.module('poddDashboardApp')
         map = new Map( L.map('map').setView(center, zoomLevel) );
 
     function refreshDashboard() {
-        if ($state.current.name !== 'main.summaryreport' && $state.current.name !== 'main.summaryperson' ) {
-            dashboard.get().$promise.then(function (villages) {
+        dashboard.get().$promise.then(function (villages) {
 
-                if ($state.current.name !== 'main.filter') {
-                    map.setVillages(villages);
-                }
-                // Because every available village for this user is returned even there
-                // is no report. We can use this variable to keep which village
-                // current logged-in user can access.
-                shared.villages = {};
+            if ($state.current.name !== 'main.filter') {
+                map.setVillages(villages);
+            }
+            // Because every available village for this user is returned even there
+            // is no report. We can use this variable to keep which village
+            // current logged-in user can access.
+            shared.villages = {};
 
-                villages.forEach(function (item) {
-                    shared.villages[ item.id ] = item;
-                });
-
+            villages.forEach(function (item) {
+                shared.villages[ item.id ] = item;
             });
-        }
+
+        });
     }
 
-    refreshDashboard();
+    if ($state.current.name === 'main') {
+        refreshDashboard();
+    }
 
     function isRecentReport(report) {
         var threshold = new Date((new Date()).getTime() - (86400 * 14 * 1000));
@@ -330,6 +330,7 @@ angular.module('poddDashboardApp')
         .catch(function (err) {
             if (err.status === 403) {
                 ReportModal.close();
+                $scope.gotoMainPage();
                 swal({
                     title: '',
                     text: 'ขออภัย คุณยังไม่ได้รับสิทธิดูรายงานนี้',
@@ -360,6 +361,21 @@ angular.module('poddDashboardApp')
         }
     };
 
+    // Force refresh data only the right time to optimize network load.
+    $scope.$on('$stateChangeSuccess', function (scope, current, params, old) {
+        if (current.name === 'main') {
+            $scope.closeModal();
+
+            if ( (old.name === 'main.report' && shared.villages.length === 0) ||
+                  old.name === 'main.filter' ||
+                  old.name === 'main.summaryreport' ||
+                  old.name === 'main.summaryperson' ) {
+                refreshDashboard();
+            }
+        }
+
+    });
+
     // Watch to turn on filter mode.
     $scope.$watch('shared.filterMode', function (newValue) {
         shared.showReportList = false;
@@ -368,10 +384,6 @@ angular.module('poddDashboardApp')
             $scope.$broadcast('filter:clearQuery', true);
             map.clearVillages();
             $scope.closeModal();
-        }
-        else if ( !angular.isUndefined(newValue) ) {
-            $scope.closeModal();
-            refreshDashboard();
         }
     });
 
@@ -417,10 +429,4 @@ angular.module('poddDashboardApp')
         }
     });
 
-    $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
-        console.log("stateChangeSuccess", $state.current.name, params.dates);
-        if ($state.current.name === 'main') {
-            $('#loading-bar').show();
-        }
-    });
 }]);
