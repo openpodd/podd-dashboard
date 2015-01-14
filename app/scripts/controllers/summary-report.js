@@ -13,24 +13,39 @@ angular.module('poddDashboardApp')
 
     console.log('init summary report ctrl');
 
-    var now = moment();
-    var start_date;
-    var end_date;
+    function setDateRangeFromNow(){
+        var now = moment();
+        var start_date;
+        var end_date;
 
-    if(now.format('d') === '0'){
-        start_date = moment().day(-6).format("DD/MM/YYYY");
-        end_date = moment().day(0).format("DD/MM/YYYY");
-    }else{
-        start_date = moment().day(1).format("DD/MM/YYYY");;
-        end_date = moment().day(7).format("DD/MM/YYYY");;
+        if(now.format('d') === '0'){
+            start_date = moment().day(-6).format("DD/MM/YYYY");
+            end_date = moment().day(0).format("DD/MM/YYYY");
+        }else{
+            start_date = moment().day(1).format("DD/MM/YYYY");;
+            end_date = moment().day(7).format("DD/MM/YYYY");;
+        }
+        return start_date + '-' + end_date;
     }
-    $scope.query_report = start_date + '-' + end_date;
+
+    $scope.queryReport = setDateRangeFromNow();
     $scope.loadingLink = true;
     $scope.type = 'week';
+    $scope.shared = shared;      
+    $scope.gridOptionsReport = {
+        enableSorting: false,
+        data: [],
+        columnDefs: [],
+        exporterLinkLabel: 'ดาวน์โหลดข้อมูลไฟล์ CSV',
+        exporterLinkTemplate: '<span><a class="btn btn-primary btn-sm" href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\">LINK_LABEL</a></span>',
+        onRegisterApi: function(gridApi){ 
+            $scope.gridApi = gridApi;
+        }
+    };
 
     $scope.$on('summaryReport:clearQuery', function (willClear) {
         if (willClear) {
-            $scope.query_report = $stateParams.q || start_date + '-' + end_date;
+            $scope.queryReport = $stateParams.q || setDateRangeFromNow();
             $scope.willShowResult = false;
             $scope.loading = false;
             $scope.loadingLink = true;
@@ -38,7 +53,7 @@ angular.module('poddDashboardApp')
             $scope.results = [];
             $scope.gridOptionsReports = {};
             $scope.totalReport = 0;
-            if ($scope.query_report) {
+            if ($scope.queryReport) {
                 $scope.doQueryOnParams($stateParams);
             }
         }
@@ -49,14 +64,11 @@ angular.module('poddDashboardApp')
     });
 
     $scope.search = function () {
-        $state.go('main.summaryreport', { dates: $scope.query_report, type: 'week' });
+        $state.go('main.summaryreport', { dates: $scope.queryReport, type: 'week' });
     }
 
-    $scope.shared = shared;
-
-
     $scope._search = function () {
-        console.log('Will search with query', $scope.query_report);
+        console.log('Will search with query', $scope.queryReport);
 
         if ($scope.loading) {
             return;
@@ -70,21 +82,12 @@ angular.module('poddDashboardApp')
         $scope.error = false;
         $scope.willShowResult = true;
         $scope.loadingLink = true;
-        
-        shared.gridOptions = {
-            enableSorting: false,
-            data: [],
-            columnDefs: [],
-            exporterLinkLabel: 'ดาวน์โหลดข้อมูลไฟล์ CSV',
-            exporterLinkTemplate: '<span><a class="btn btn-primary btn-sm" href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\">LINK_LABEL</a></span>',
-            onRegisterApi: function(gridApi){ 
-                shared.gridApi = gridApi;
-            }
-        };
-    
+        $scope.gridOptionsReport.columnDefs = [];
+        $scope.gridOptionsReport.data = [];
+
         shared.summaryReports = {};
 
-        SummaryReport.query({ dates: $scope.query_report, offset: ((new Date()).getTimezoneOffset() * -1 / 60) }).$promise.then(function (data) {
+        SummaryReport.query({ dates: $scope.queryReport, offset: ((new Date()).getTimezoneOffset() * -1 / 60) }).$promise.then(function (data) {
             console.log('Query result:', data);
 
             var results = [];
@@ -135,10 +138,10 @@ angular.module('poddDashboardApp')
                 $scope.negativeReport = negative;
                 $scope.totalReport = total;
             }
-            $scope.weekSearch = $scope.query_report;
-            shared.gridOptions.enableSorting = false;
-            shared.gridOptions.columnDefs = options;
-            shared.gridOptions.data = results;
+            $scope.weekSearch = $scope.queryReport;
+            $scope.gridOptionsReport.enableSorting = false;
+            $scope.gridOptionsReport.columnDefs = options;
+            $scope.gridOptionsReport.data = results;
 
             setTimeout(function(){
                 $scope.loadingLink = false;
@@ -154,7 +157,7 @@ angular.module('poddDashboardApp')
     $scope.exportReport = function(){
         console.log("Api========", shared.gridApit);
         var element = angular.element(document.querySelectorAll(".custom-csv-link-location-report")); element.html('');
-        shared.gridApi.exporter.csvExport( 'all', 'all', element );
+        $scope.gridApi.exporter.csvExport( 'all', 'all', element );
     };
 
     $scope.$evalAsync(function () {
@@ -175,12 +178,12 @@ angular.module('poddDashboardApp')
 
     $scope.doQueryOnParams = function (params) {
         if ($state.current.name === 'main.summaryreport') {
-            $scope.query_report = $window.decodeURIComponent(params.dates || '');
-            if ($scope.query_report) {
+            $scope.queryReport = $window.decodeURIComponent(params.dates || '');
+            if ($scope.queryReport) {
                 return $scope._search();
             }
-            $scope.query_report = start_date + '-' + end_date;
-            $state.go('main.summaryreport', { dates: $scope.query_report, type: 'week' });
+            $scope.queryReport = setDateRangeFromNow();
+            $state.go('main.summaryreport', { dates: $scope.queryReport, type: 'week' });
         }
     };
 
@@ -191,7 +194,7 @@ angular.module('poddDashboardApp')
             if (oldParams.dates !== params.dates) {
                 $scope.doQueryOnParams(params);
             }else if(typeof params.dates === 'undefined'){
-                $state.go('main.summaryreport', { dates: $scope.query_report, type: 'week' });
+                $state.go('main.summaryreport', { dates: $scope.queryReport, type: 'week' });
             }
         }
     });

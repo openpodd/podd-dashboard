@@ -16,7 +16,7 @@
                         <label for="week_range_report">เลือกวันที่ <i class="fa fa-calendar"></i> </label>
                     </button>
                 </span>
-                <input type="text" id="week_range_report" class="form-control" ng-model="query_report" data-weekpicker="weekpicker"data-week_start="1" data-months="1" placeholder="ตัวอย่าง. 12/01/2015-18/01/2015" />
+                <input type="text" id="week_range_report" class="form-control" ng-model="queryReport" data-weekpicker="weekpicker"data-week_start="1" data-months="1" placeholder="ตัวอย่าง. 12/01/2015-18/01/2015" />
                 <span class="input-group-btn">
                     <button class="btn btn-default pd-btn-search" type="submit"><i class="fa fa-search fa-size-18"></i></button>
                 </span>
@@ -32,7 +32,7 @@
             <p>จำนวนการรายงานทั้งสิ้น <span class="badge badge-bad">{{ totalReport }}</span> รายงาน แบ่งเป็น รายงานไม่พบเหตุผิดปกติจำนวน <span class="badge badge-good">{{ positiveReport }}</span> ครั้ง, รายงานพบเหตุผิดปกติจำนวน <span class="badge badge-bad">{{ negativeReport }}</span> ครั้ง</p>
             <hr/>
             <h3 class="subheading">ตารางสรุปการรายงานในแต่ละอปท.</h3>
-            <div class="summary-grid-report" ui-grid="shared.gridOptions" ui-grid-exporter></div>
+            <div id="gridReport" class="summary-grid-report" ui-grid="gridOptionsReport" ui-grid-exporter></div>
             <div class="custom-csv-link-location-report">
                 <div ng-show="loadingLink" loader-spinner></div>
                 <span class="ui-grid-exporter-csv-link">&nbsp</span>
