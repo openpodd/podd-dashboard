@@ -67,7 +67,7 @@ angular.module('poddDashboardApp')
                 matchedVillages = {};
 
             var promise;
-            if (shared.villages) {
+            if (shared.villages.length) {
                 promise = $q.when();
             }
             else {
