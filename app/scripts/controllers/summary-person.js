@@ -7,9 +7,9 @@ angular.module('poddDashboardApp')
     Menu.setActiveMenu('summary');
 })
 
-.controller('SummaryPersonCtrl', function ($scope, SummaryPerson, User, 
+.controller('SummaryPersonCtrl', function ($scope, SummaryPerson, User,
     streaming, FailRequest, shared, $location, $state, $stateParams, $window, cfpLoadingBar) {
-    
+
     console.log('init summary person ctrl');
 
     var now = moment();
@@ -28,7 +28,7 @@ angular.module('poddDashboardApp')
     $scope.type = 'week';
     $scope.gridOptions = {
         enableSorting: true,
-        data: [], 
+        data: [],
         columnDefs: [],
     };
 
@@ -75,7 +75,7 @@ angular.module('poddDashboardApp')
         $scope.loadingLink = true;
         $scope.gridOptions = {
             enableSorting: true,
-            data: [], 
+            data: [],
             columnDefs: [],
             onRegisterApi: function(gridApi){ 
               $scope.gridApi_person = gridApi;
@@ -86,7 +86,7 @@ angular.module('poddDashboardApp')
 
         SummaryPerson.query({ dates: $scope.query_person, type: 'week', offset: ((new Date()).getTimezoneOffset() * -1 / 60) }).$promise.then(function (data) {
             console.log('Query result:', data);
-            
+
             var results = [];
             var options = [];
             var positive = 0;
@@ -138,7 +138,7 @@ angular.module('poddDashboardApp')
         if(shared.summaryPersonMode) $scope.search();
         $('[data-weekpicker]').weekpicker();
     });
-    
+
     $scope.closeSummaryPerson = function () {
         shared.summaryPersonMode = false;
     };

@@ -105,7 +105,7 @@ angular.module('poddDashboardApp')
         // Prevent error when villages is empty array.
         if (items.length && !dontFitBound) {
             bounds = self.villageMarkerLayer.getBounds();
-            bounds.pad(5);
+            bounds = bounds.pad(1);
             self.leaflet.fitBounds(bounds);
         }
     };

@@ -8,7 +8,7 @@ angular.module('poddDashboardApp')
 })
 
 .controller('FilterCtrl', function ($scope, Search, shared, $window, dashboard,
-                                    $state, $stateParams, $q, $timeout) {
+                                    $state, $stateParams, $q, $timeout, streaming) {
 
     $scope.shared = shared;
 
@@ -21,10 +21,30 @@ angular.module('poddDashboardApp')
             $scope.error = false;
             $scope.help = false;
 
+            $scope.didSearch = false;
+            shared.filterResults = [];
+            shared.filteredReports = [];
+
             if ($scope.query) {
                 $scope.doQueryOnParams($stateParams);
             }
         }
+    });
+
+    streaming.on('report:flag:new', function (data) {
+      console.log('got new report flag in filter', data);
+
+      data = angular.fromJson(data);
+
+      // Loop through existing reports list and update data.
+      if (shared.filteredReports) {
+        shared.filteredReports.forEach(function (item) {
+          if (item.id === parseInt(data.reportId)) {
+            item.flag = data.priority;
+            item.negative = data.reportNegative;
+          }
+        });
+      }
     });
 
     $scope.search = function () {
@@ -56,8 +76,6 @@ angular.module('poddDashboardApp')
         return Search.query({ q: $scope.query }).$promise.then(function (data) {
             console.log('Query result:', data);
 
-            $scope.loading = false;
-
             shared.filteredReports = data;
 
             // Do group by administrationAreaId
@@ -65,7 +83,7 @@ angular.module('poddDashboardApp')
                 matchedVillages = {};
 
             var promise;
-            if (false && shared.villages) {
+            if (shared.villages.length) {
                 promise = $q.when();
             }
             else {
@@ -74,6 +92,8 @@ angular.module('poddDashboardApp')
             }
 
             promise.then(function (administrationAreas) {
+                $scope.loading = false;
+
                 if (administrationAreas) {
                     shared.villages = {};
                     administrationAreas.forEach(function (item) {
@@ -93,9 +113,9 @@ angular.module('poddDashboardApp')
                         results.push(village);
                     }
 
-                    if (item.positive) {
-                        village.positive += 1;
-                        village.positiveCases.push({
+                    if (item.negative) {
+                        village.negative += 1;
+                        village.negativeCases.push({
                             id: item.id,
                             createdBy: item.createdByName,
                             date: item.date,
@@ -104,8 +124,8 @@ angular.module('poddDashboardApp')
                         });
                     }
                     else {
-                        village.negative += 1;
-                        village.negativeCases.push({
+                        village.positive += 1;
+                        village.positiveCases.push({
                             id: item.id,
                             createdBy: item.createdByName,
                             date: item.date,
@@ -202,7 +222,7 @@ angular.module('poddDashboardApp')
             if (params.reportId && oldParams.q === params.q) {
                 $scope.$parent.viewReport(params.reportId);
             }
-            else if (oldParams.q !== params.q) {
+            else if (oldParams.q !== params.q || current.name !== old.name) {
                 $scope.doQueryOnParams(params);
             }
         }
