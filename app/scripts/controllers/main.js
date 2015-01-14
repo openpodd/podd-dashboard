@@ -220,7 +220,9 @@ angular.module('poddDashboardApp')
             });
 
             if (items.next) {
-                $scope.loadmoreParams = utils.queryStringToJSON(items.next);
+                $scope.loadmoreParams = {
+                    'django_id__lt': items.results.slice(-1)[0].id
+                };
             } else {
                 $scope.loadmoreParams = null;
             }
@@ -268,7 +270,9 @@ angular.module('poddDashboardApp')
             });
 
             if (items.next) {
-                $scope.loadmoreParams = utils.queryStringToJSON(items.next);
+                $scope.loadmoreParams = {
+                    'django_id__lt': items.results.slice(-1)[0].id
+                };
             } else {
                 $scope.loadmoreParams = null;
             }
