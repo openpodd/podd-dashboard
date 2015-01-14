@@ -527,5 +527,19 @@ $badge-bad: #FF6D69;
     left: 100px !important;
 }
 
-.gray { background-color: #e7e7e7; color: #777; text-align: center;}
-.red { background-color: rgb(255, 77, 77); color: #fff; text-align: center;}
+.cell-report { text-align: center; }
+.gray { background-color: #e7e7e7; color: #777;}
+.red { background-color: rgb(255, 77, 77); color: #fff;}
+
+.ui-grid-cell-contents-collapse-2 {
+    overflow: visible !important;
+}
+
+.ui-grid-collapse-2{
+    width: 200px;
+    text-align: center;
+}
+
+.case-content{
+    width: 100px;
+}

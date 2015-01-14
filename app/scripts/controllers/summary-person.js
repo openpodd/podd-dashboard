@@ -8,7 +8,7 @@ angular.module('poddDashboardApp')
 })
 
 .controller('SummaryPersonCtrl', function ($scope, SummaryPerson, User, 
-    streaming, FailRequest, shared, $location, $state, $stateParams, $window) {
+    streaming, FailRequest, shared, $location, $state, $stateParams, $window, cfpLoadingBar) {
     
     console.log('init summary person ctrl');
 
@@ -117,7 +117,8 @@ angular.module('poddDashboardApp')
                 { field: 'projectMobileNumber', },
                 { field: 'totalReport', },
             ];
-            $scope.gridOptions.data = results; 
+            $scope.gridOptions.data = results;
+            $('#loading-bar').hide();
 
         }).catch(function () {
             $scope.loading = false;
@@ -140,10 +141,12 @@ angular.module('poddDashboardApp')
 
     $scope.doQueryOnParams = function (params) {
         if ($state.current.name === 'main.summaryperson') {
-            $scope.query = $window.decodeURIComponent(params.dates || start_date + '-' + end_date);
+            $scope.query = $window.decodeURIComponent(params.dates || '');
             if ($scope.query) {
                 return $scope._search();
             }
+            $scope.query = start_date + '-' + end_date;
+            $state.go('main.summaryperson', { dates: $scope.query, type: 'week' });
         }
     };
 
@@ -153,9 +156,8 @@ angular.module('poddDashboardApp')
         if ($state.current.name === 'main.summaryperson') {
             if (oldParams.dates !== params.dates) {
                 $scope.doQueryOnParams(params);
-            }
-            else if(typeof params.dates === 'undefined'){
-                $scope.search();
+            }else if(typeof params.dates === 'undefined'){
+                $state.go('main.summaryperson', { dates: $scope.query, type: 'week' });
             }
         }
     });

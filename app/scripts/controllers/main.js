@@ -9,7 +9,7 @@ angular.module('poddDashboardApp')
     '$location', '$state', '$window',
     function ($scope, dashboard, streaming,
                Map, Reports, ReportModal, shared, Auth, Search, Menu, Mentions,
-               Flags, FailRequest, $location, $state, $window) {
+               Flags, FailRequest, $location, $state, $window, cfpLoadingBar) {
 
     console.log('IN MainCtrl');
 
@@ -41,19 +41,23 @@ angular.module('poddDashboardApp')
         map = new Map( L.map('map').setView(center, zoomLevel) );
 
     function refreshDashboard() {
-        dashboard.get().$promise.then(function (villages) {
-            if ($state.current.name !== 'main.filter') {
-                map.setVillages(villages);
-            }
-            // Because every available village for this user is returned even there
-            // is no report. We can use this variable to keep which village
-            // current logged-in user can access.
-            shared.villages = {};
+        if ($state.current.name !== 'main.summaryreport' && $state.current.name !== 'main.summaryperson' ) {
+            dashboard.get().$promise.then(function (villages) {
 
-            villages.forEach(function (item) {
-                shared.villages[ item.id ] = item;
+                if ($state.current.name !== 'main.filter') {
+                    map.setVillages(villages);
+                }
+                // Because every available village for this user is returned even there
+                // is no report. We can use this variable to keep which village
+                // current logged-in user can access.
+                shared.villages = {};
+
+                villages.forEach(function (item) {
+                    shared.villages[ item.id ] = item;
+                });
+
             });
-        });
+        }
     }
 
     refreshDashboard();
@@ -373,6 +377,7 @@ angular.module('poddDashboardApp')
 
     $scope.$watch('shared.summaryReportMode', function (newValue) {
         if (newValue) {
+
             $scope.$broadcast('summaryReport:clearQuery', true);
             $scope.closeModal();
         }
@@ -412,4 +417,10 @@ angular.module('poddDashboardApp')
         }
     });
 
+    $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
+        console.log("stateChangeSuccess", $state.current.name, params.dates);
+        if ($state.current.name === 'main') {
+            $('#loading-bar').show();
+        }
+    });
 }]);

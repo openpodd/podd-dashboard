@@ -8,7 +8,8 @@ angular.module('poddDashboardApp')
 })
 
 .controller('SummaryReportCtrl', function ($scope, SummaryReport, User, 
-    streaming, FailRequest, shared, $location, $state, $stateParams, $window) {
+    streaming, FailRequest, shared, $location, $state, $stateParams, $window,
+    uiGridConstants, cfpLoadingBar) {
     
     console.log('init summary report ctrl');
 
@@ -23,10 +24,9 @@ angular.module('poddDashboardApp')
         start_date = moment().day(1).format("DD/MM/YYYY");;
         end_date = moment().day(7).format("DD/MM/YYYY");;
     }
-
     $scope.query = start_date + '-' + end_date;
     $scope.gridOptions = {
-        enableSorting: true,
+        enableSorting: false,
         data: [], 
         columnDefs: [],
     };
@@ -54,7 +54,7 @@ angular.module('poddDashboardApp')
     $scope.search = function () {
         if($('#week_range_report').val() !== '') 
             $scope.query = $('#week_range_report').val();
-        
+
         $state.go('main.summaryreport', { dates: $scope.query, type: 'week' });
     }
 
@@ -73,10 +73,14 @@ angular.module('poddDashboardApp')
         $scope.error = false;
         $scope.willShowResult = true;
         $scope.gridOptions = {
-            enableSorting: true,
+            enableVerticalScrollbar: uiGridConstants.scrollbars.NEVER,
+            enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
+            enableSorting: false,
             data: [], 
             columnDefs: [],
+            minRowsToShow: 77
         };
+
         shared.summaryReports = {};
 
         SummaryReport.query({ dates: $scope.query, offset: ((new Date()).getTimezoneOffset() * -1 / 60) }).$promise.then(function (data) {
@@ -100,8 +104,12 @@ angular.module('poddDashboardApp')
                     result["N" + date.date] = date.negative;
 
                     if(!header){ 
-                        options.push({ field: "P" + date.date, cellTemplate: '<div class="ui-grid-cell-contents" ng-class="{ gray: COL_FIELD == 0}">{{COL_FIELD}}</div>' });
-                        options.push({ field: "N" + date.date, cellTemplate: '<div class="ui-grid-cell-contents red">{{COL_FIELD}}</div>' })
+                        options.push({ field: "P" + date.date, width:100, 
+                            cellTemplate: '<div class="ui-grid-cell-contents cell-report" ng-class="{ gray: COL_FIELD == 0}">{{COL_FIELD}}</div>',
+                            headerCellTemplate: '<div class="ui-grid-cell-contents grid ui-grid-cell-contents-collapse-2"><div class="ui-grid-collapse-2"><span>'+ date.date +'</span><div class="row"><div class="col-md-6">P</div><div class="col-md-6">N</div></div></div></div>'});
+                        options.push({ field: "N" + date.date, width:100, 
+                            cellTemplate: '<div class="ui-grid-cell-contents cell-report" ng-class="{ red: COL_FIELD > 0}">{{COL_FIELD}}</div>', 
+                            headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope"></div>' })
                     }
                 });
 
@@ -127,9 +135,11 @@ angular.module('poddDashboardApp')
                 $scope.totalReport = total;
             }
             $scope.weekSearch = $scope.query;
-            $scope.gridOptions.enableSorting = true;
+            $scope.gridOptions.enableSorting = false;
             $scope.gridOptions.columnDefs = options;
             $scope.gridOptions.data = results; 
+            $scope.gridOptions.minRowsToShow = results.length;
+            $('#loading-bar').hide();
 
         }).catch(function () {
             $scope.loading = false;
@@ -160,8 +170,10 @@ angular.module('poddDashboardApp')
                 return $scope._search();
             }
             $scope.query = start_date + '-' + end_date;
+            $state.go('main.summaryreport', { dates: $scope.query, type: 'week' });
         }
     };
+
 
     $scope.doQueryOnParams($stateParams);
     $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
@@ -169,6 +181,8 @@ angular.module('poddDashboardApp')
         if ($state.current.name === 'main.summaryreport') {
             if (oldParams.dates !== params.dates) {
                 $scope.doQueryOnParams(params);
+            }else if(typeof params.dates === 'undefined'){
+                $state.go('main.summaryreport', { dates: $scope.query, type: 'week' });
             }
         }
     });
