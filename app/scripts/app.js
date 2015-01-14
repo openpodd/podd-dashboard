@@ -28,7 +28,9 @@ angular
     'perfect_scrollbar',
     'bootstrapLightbox',
     'ui.router',
-    'ui.grid'
+    'ui.grid',
+    'ui.grid.selection',
+    'ui.grid.exporter'
   ])
 
   // override z-index of ui.bootstrap
