@@ -527,9 +527,13 @@ $badge-bad: #FF6D69;
     left: 100px !important;
 }
 
-.cell-report { text-align: center; }
+.cell-center { text-align: center; }
 .gray { background-color: #e7e7e7; color: #777;}
 .red { background-color: rgb(255, 77, 77); color: #fff;}
+
+.custom-csv-link-location a{
+    margin-top: 20px;    
+}
 
 .ui-grid-cell-contents-collapse-2 {
     overflow: visible !important;

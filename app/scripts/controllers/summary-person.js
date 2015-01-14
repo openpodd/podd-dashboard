@@ -96,6 +96,7 @@ angular.module('poddDashboardApp')
             var negative = 0;
             var total = 0;
             var header = false;
+
             data.forEach(function (item) {
                 results.push(item);
                 total += 1;
@@ -117,12 +118,12 @@ angular.module('poddDashboardApp')
             $scope.weekSearch = $scope.queryPerson;
             $scope.gridOptionsPerson.enableSorting = true;
             $scope.gridOptionsPerson.columnDefs = [
-                { field: 'parentAdministrationArea', },
-                { field: 'administrationArea', },
-                { field: 'fullname', },
-                { field: 'telephone', },
-                { field: 'projectMobileNumber', },
-                { field: 'totalReport', },
+                { field: 'parentAdministrationArea', headerCellClass: 'cell-center' },
+                { field: 'administrationArea', headerCellClass: 'cell-center' },
+                { field: 'fullname', headerCellClass: 'cell-center' },
+                { field: 'telephone', cellClass: 'cell-center', headerCellClass: 'cell-center' },
+                { field: 'projectMobileNumber', cellClass: 'cell-center', headerCellClass: 'cell-center' },
+                { field: 'totalReport', cellClass: 'cell-center', headerCellClass: 'cell-center' },
             ];
             $scope.gridOptionsPerson.data = results;
 

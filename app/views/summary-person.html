@@ -12,19 +12,14 @@
  
         <form role="form" ng-submit="search()" class="search-block">
             <div class="input-group">
-                <span>
-                    <input type="radio" ng-model="type" value="week">  Week 
-                    <input type="radio" ng-model="type" value="month"> Month 
-                </span>
                 <span class="input-group-btn" >
                     <button class="btn btn-default btn-info-search" type="button" >
                         <label for="week_range_person">เลือกวันที่ <i class="fa fa-calendar"></i> </label>
                     </button>
                 </span>
-                    
-                <input type="text" id="week_range_person" class="form-control" ng-model="queryPerson" data-weekpicker="weekpicker"data-week_start="1" data-months="1" placeholder="ตัวอย่าง. 12/01/2015-18/01/2015" ng-show="type === 'week'"/>
+                <input type="text" id="week_range_person" class="form-control" ng-model="queryPerson" data-weekpicker="weekpicker"data-week_start="1" data-months="1" placeholder="ตัวอย่าง. 12/01/2015-18/01/2015" />
 
-                <input type="text" id="month_range_person" class="form-control" ng-model="query_person" ng-show="type === 'month'"/>
+               <!--  <input type="text" id="month_range_person" class="form-control" ng-model="query_person" ng-show="type === 'month'"/> -->
 
                 <span class="input-group-btn">
                     <button class="btn btn-default pd-btn-search" type="submit"><i class="fa fa-search fa-size-18"></i></button>
@@ -40,7 +35,7 @@
             <h3 class="subheading" style="margin-bottom:20px;">สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }} </h3>
             <h4 class="subheading">จำนวนการรายงานทั้งสิ้น {{ totalPerson }} คน</h4><hr/>
             <div id="gridPerson" class="summary-grid-person" ui-grid="gridOptionsPerson" ui-grid-exporter></div>
-            <div class="custom-csv-link-location-person">
+            <div class="custom-csv-link-location-person custom-csv-link-location">
                 <div ng-show="loadingLink" loader-spinner></div>
                 <span class="ui-grid-exporter-csv-link">&nbsp</span>
             </div>
