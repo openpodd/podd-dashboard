@@ -203,7 +203,7 @@ angular.module('poddDashboardApp')
             $scope.recentReports = [];
             $scope.olderReports = [];
 
-            items.forEach(function (item) {
+            items.results.forEach(function (item) {
                 // Filter for last 2 weeks
                 if ( isRecentReport(item) ) {
                     $scope.recentReports.push(item);
@@ -219,7 +219,7 @@ angular.module('poddDashboardApp')
                 }
             });
 
-            $scope.reports = items;
+            $scope.reports = items.results;
         })
         .catch(function () {
             $scope.loadingReportListError = true;

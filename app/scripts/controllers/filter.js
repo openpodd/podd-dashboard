@@ -58,7 +58,7 @@ angular.module('poddDashboardApp')
 
             $scope.loading = false;
 
-            shared.filteredReports = data;
+            shared.filteredReports = data.results;
 
             // Do group by administrationAreaId
             var results = [],
@@ -85,7 +85,7 @@ angular.module('poddDashboardApp')
                     });
                 }
 
-                data.forEach(function (item) {
+                data.results.forEach(function (item) {
                     var village = shared.villages[ item.administrationAreaId ];
 
                     if ( ! matchedVillages[ village.id ] ) {

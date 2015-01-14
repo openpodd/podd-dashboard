@@ -58,7 +58,7 @@ angular.module('poddDashboardApp')
     var resource = $resource(config.API_BASEPATH + '/reports/:reportId', {}, {
         list: {
             method: 'GET',
-            isArray: true
+            isArray: false
         },
         followUp: {
             url: config.API_BASEPATH + '/reports/:reportId/involved',
