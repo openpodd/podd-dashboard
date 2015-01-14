@@ -113,9 +113,9 @@ angular.module('poddDashboardApp')
                         results.push(village);
                     }
 
-                    if (item.positive) {
-                        village.positive += 1;
-                        village.positiveCases.push({
+                    if (item.negative) {
+                        village.negative += 1;
+                        village.negativeCases.push({
                             id: item.id,
                             createdBy: item.createdByName,
                             date: item.date,
@@ -124,8 +124,8 @@ angular.module('poddDashboardApp')
                         });
                     }
                     else {
-                        village.negative += 1;
-                        village.negativeCases.push({
+                        village.positive += 1;
+                        village.positiveCases.push({
                             id: item.id,
                             createdBy: item.createdByName,
                             date: item.date,
