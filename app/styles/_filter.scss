@@ -17,6 +17,18 @@
 
 .filter-result-reports {
     overflow: hidden;
+
+    .pd-table-area {
+        width: 144px;
+    }
+
+    .report-negative {
+        cursor: pointer;
+    }
+
+    .filter-result-list-button {
+        margin-top: -28px;
+    }
 }
 
 .filter-help {
@@ -39,6 +51,8 @@
     h4{
         font-size: 16px;
     }
+
+    z-index: 99; /* above filter result */
 }
 
 .btn-info-search{

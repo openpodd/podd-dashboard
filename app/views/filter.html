@@ -96,21 +96,20 @@
 
 
     <div class="filter-result filter-result-reports"
-         ng-show="didSearch && !loading && !error && !empty"
+         ng-show="didSearch && !willShowResult"
          set-max-height="30" trigger-event="'forceResizeResultWrapper'">
         <h6>
             พบผลลัพธ์จำนวน {{ (shared.filteredReports.length || 0) | number }} รายงาน
             <span ng-if="!empty">กระจายใน {{ shared.filterResults.length }} พื้นที่</span>
-
-            <button class="btn btn-info btn-xs pull-right" type="button"
-                ng-click="toggleTable()"
-                ng-show="shared.filteredReports.length"
-                ng-class="{ 'active': showTable }">
-                <div ng-if="!showTable">แสดงรายการ</div>
-                <div ng-if="showTable">ปิดรายการ</div>
-            </button>
-
         </h6>
+
+        <button class="btn btn-info btn-xs pull-right filter-result-list-button" type="button"
+            ng-click="toggleTable()"
+            ng-show="shared.filteredReports.length"
+            ng-class="{ 'active': showTable }">
+            <span ng-hide="showTable">แสดงรายการ</span>
+            <span ng-show="showTable">ปิดรายการ</span>
+        </button>
 
         <div ng-show="showTable && shared.filteredReports"
              class="scroller scroller-x scroller-y content-wrapper"
@@ -123,31 +122,29 @@
                 <tr>
                     <th class="pd-table-flag"></th>
                     <th class="pd-table-date">วันที่รายงาน</th>
+                    <th class="pd-table-area">พื้นที่</th>
                     <th class="pd-table-type">ประเภท</th>
                     <th class="pd-table-status">สถานะ</th>
                     <th class="pd-table-reporter">ผู้รายงาน</th>
-                    <th class="pd-table-notification"></th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr ng-repeat="item in shared.filteredReports | orderBy:'-date' " id="report-{{ report.id }}"
+                <tr ng-repeat="item in shared.filteredReports | orderBy:'-date' " id="report-{{ item.id }}"
                     ng-click="onClickReport(item)"
-                    ng-class="{ 'report-positive': !report.negative }">
+                    ng-class="{ 'report-positive': !item.negative }">
 
                     <td>
                         <i class="fa fa-flag flag-priority-{{ item.flag }}" ng-if="item.flag"></i>
                     </td>
                     <td ng-bind="item.date | amDateFormat:'D MMM YYYY HH:mm'"></td>
+                    <td ng-bind="item | administrationAreaAddress"></td>
                     <td ng-bind="item.reportTypeName"></td>
                     <td>
                         <span ng-show="item.negative" class="badge badge-bad">Bad</span>
                         <span ng-hide="item.negative" class="badge badge-good">Good</span>
                     </td>
                     <td ng-bind="item.createdByName"></td>
-                    <td>
-                        <span class="badge badge-new" ng-show="report.isNew">ใหม่</span>
-                    </td>
                 </tr>
             </tbody>
         </table>
