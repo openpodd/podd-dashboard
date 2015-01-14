@@ -115,3 +115,35 @@
 -->
 
 </div>
+
+<script type="text/ng-template" id="reports-to-follow.html">
+  <div class="modal-header">
+    <h3 class="modal-title">เลือกรายงานที่ต้องการติดตาม</h3>
+  </div>
+
+  <div class="modal-body">
+    <ul class="list-group">
+      <li ng-repeat="item in casesToFollow.results" class="list-group-item"
+          ng-click="selected.item = item">
+        <div class="row">
+          <div class="col-md-1">
+            <span ng-if="selected.item == item"><i class="fa fa-check"></i></span>
+          </div>
+          <div class="col-md-11">
+            <p class="lead report-title">
+              รายงานหมายเลข #{{ item.id }}
+              <small>วันที่รายงาน - {{ item.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</small>
+            </p>
+            <blockquote>
+              <p report-type-form-data report="item"></p>
+            </blockquote>
+          </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()" ng-disabled="!selected.item">ตกลง</button>
+    <button class="btn btn-warning" ng-click="cancel()">ยกเลิก</button>
+  </div>
+</script>

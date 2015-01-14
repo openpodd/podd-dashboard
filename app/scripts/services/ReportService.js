@@ -55,17 +55,23 @@ angular.module('poddDashboardApp')
 })
 
 .factory('Reports', function ($resource) {
-    var resource = $resource(config.API_BASEPATH + '/reports/:reportId', {}, {
-        list: {
-            method: 'GET',
-            isArray: false
-        },
-        followUp: {
-            url: config.API_BASEPATH + '/reports/:reportId/involved',
-            method: 'GET',
-            isArray: true
-        }
-    });
+    var resource = $resource(config.API_BASEPATH + '/reports/:reportId', {
+            reportId: '@id'
+        }, {
+            list: {
+                method: 'GET',
+                isArray: true
+            },
+            followUp: {
+                url: config.API_BASEPATH + '/reports/:reportId/involved',
+                method: 'GET',
+                isArray: true
+            },
+            follow: {
+                url: config.API_BASEPATH + '/reports/:reportId/follow',
+                method: 'POST'
+            }
+        });
 
     return resource;
 });

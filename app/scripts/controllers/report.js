@@ -37,7 +37,8 @@ angular.module('poddDashboardApp')
     };
 })
 
-.controller('ReportViewCtrl', function ($scope, streaming, Flags, Lightbox) {
+.controller('ReportViewCtrl', function ($scope, streaming, Flags, Lightbox,
+                                        $modal, Search, Reports) {
 
     $scope.userAlreadyClickImage = false;
     $scope.reportFlag = {};
@@ -128,7 +129,7 @@ angular.module('poddDashboardApp')
 
     function refreshFlag() {
         var query = {
-            reportId: $scope.report.id,
+            reportId: $scope.$parent.report.id,
             amount: 1
         };
 
@@ -148,11 +149,13 @@ angular.module('poddDashboardApp')
 
     $scope.updateFlag = function(flag) {
         var data = {
-            reportId: $scope.report.id,
+            reportId: $scope.$parent.report.id,
             priority: flag.priority,
         };
 
         var flagToConfirm = [ 'Ignore', 'Case' ];
+
+        var modalInstance;
 
         // Wait for confirm before update flag.
         if ( flagToConfirm.indexOf(flag.color) !== -1 ) {
@@ -176,7 +179,55 @@ angular.module('poddDashboardApp')
             });
         }
         else {
-            Flags.post(data);
+            if (flag.color === 'Follow') {
+                modalInstance = $modal.open({
+                    templateUrl: 'reports-to-follow.html',
+                    controller: ['$scope', function (scope) {
+                        var q = 'administrationArea:' + $scope.$parent.report.administrationAreaId +
+                                ' AND date:last 70 days' +
+                                ' AND flag:case';
+
+                        scope.casesToFollow = Search.query({ q: q });
+
+                        scope.selected = {};
+
+                        scope.ok = function () {
+                            modalInstance.close(scope.selected.item);
+                        };
+
+                        scope.cancel = function () {
+                            modalInstance.dismiss('cancel');
+                        };
+                    }],
+                    size: 'lg'
+                });
+
+                modalInstance.result.then(function (selectedItem) {
+                    return Reports.follow({ reportId: $scope.$parent.report.id }, {
+                        parent: selectedItem.id
+                    }).$promise
+
+                    .then(function () {
+                        $scope.$broadcast('report:updateFollowUp', $scope.$parent.report.id);
+                    })
+                    .catch(function () {
+                        $scope.flag.current = $scope.flag.old;
+
+                        swal({
+                            title: '',
+                            type: 'warning',
+                            text: 'เกิดข้อผิดพลาด กรุณาลองใหม่',
+                            confirmButtonText: 'ตกลง',
+                            confirmButtonClass: 'btn-danger',
+                        });
+                    });
+                }, function () {
+                    $scope.flag.current = $scope.flag.old;
+                });
+            }
+            else {
+                Flags.post(data);
+            }
         }
 
     };

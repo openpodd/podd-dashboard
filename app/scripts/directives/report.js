@@ -127,6 +127,12 @@ angular.module('poddDashboardApp')
             scope.$watch('report', function (newValue) {
                 refresh(newValue);
             });
+
+            scope.$on('report:updateFollowUp', function (event, reportId) {
+                if (reportId === scope.report.id) {
+                    refresh(scope);
+                }
+            });
         }
     };
 })
