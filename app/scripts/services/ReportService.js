@@ -60,7 +60,7 @@ angular.module('poddDashboardApp')
         }, {
             list: {
                 method: 'GET',
-                isArray: true
+                isArray: false
             },
             followUp: {
                 url: config.API_BASEPATH + '/reports/:reportId/involved',
