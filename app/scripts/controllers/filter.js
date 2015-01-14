@@ -21,6 +21,10 @@ angular.module('poddDashboardApp')
             $scope.error = false;
             $scope.help = false;
 
+            $scope.didSearch = false;
+            shared.filterResults = [];
+            shared.filteredReports = [];
+
             if ($scope.query) {
                 $scope.doQueryOnParams($stateParams);
             }
@@ -56,8 +60,6 @@ angular.module('poddDashboardApp')
         return Search.query({ q: $scope.query }).$promise.then(function (data) {
             console.log('Query result:', data);
 
-            $scope.loading = false;
-
             shared.filteredReports = data;
 
             // Do group by administrationAreaId
@@ -65,7 +67,7 @@ angular.module('poddDashboardApp')
                 matchedVillages = {};
 
             var promise;
-            if (false && shared.villages) {
+            if (shared.villages) {
                 promise = $q.when();
             }
             else {
@@ -74,6 +76,8 @@ angular.module('poddDashboardApp')
             }
 
             promise.then(function (administrationAreas) {
+                $scope.loading = false;
+
                 if (administrationAreas) {
                     shared.villages = {};
                     administrationAreas.forEach(function (item) {
@@ -202,9 +206,12 @@ angular.module('poddDashboardApp')
             if (params.reportId && oldParams.q === params.q) {
                 $scope.$parent.viewReport(params.reportId);
             }
-            else if (oldParams.q !== params.q) {
+            else if (oldParams.q !== params.q || current.name !== old.name) {
                 $scope.doQueryOnParams(params);
             }
+        }
+        else {
+            $scope.$broadcast('filter:clearQuery', true);
         }
     });
 

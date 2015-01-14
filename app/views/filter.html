@@ -96,7 +96,7 @@
 
 
     <div class="filter-result filter-result-reports"
-         ng-show="didSearch && !loading && !error && !empty"
+         ng-show="didSearch && !willShowResult"
          set-max-height="30" trigger-event="'forceResizeResultWrapper'">
         <h6>
             พบผลลัพธ์จำนวน {{ (shared.filteredReports.length || 0) | number }} รายงาน
