@@ -1,5 +1,17 @@
 'use strict';
 
+var utils = {
+    getObjectLength: function (obj) {
+        var i, count = 0;
+        for (i in obj) {
+            if (obj.hasOwnProperty(i)) {
+                count++;
+            }
+        }
+        return count;
+    }
+};
+
 angular.module('poddDashboardApp')
 
 .filter('encodeURI', function ($window) {

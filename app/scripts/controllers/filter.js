@@ -1,3 +1,4 @@
+/* global utils */
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -83,7 +84,7 @@ angular.module('poddDashboardApp')
                 matchedVillages = {};
 
             var promise;
-            if (shared.villages.length) {
+            if (utils.getObjectLength(shared.villages)) {
                 promise = $q.when();
             }
             else {
