@@ -181,18 +181,6 @@ angular.module('poddDashboardApp')
         }
     });
 
-    // UTILS
-    function QueryStringToJSON(string) {
-        var pairs = string.slice(1).split('&');
-
-        var result = {};
-        pairs.forEach(function(pair) {
-            pair = pair.split('=');
-            result[pair[0]] = decodeURIComponent(pair[1] || '');
-        });
-        return JSON.parse(JSON.stringify(result));
-    }
-
     $scope.loadVillageReports = function (village) {
         var query,
             searcher;
@@ -232,7 +220,7 @@ angular.module('poddDashboardApp')
             });
 
             if (items.next) {
-                $scope.loadmoreParams = QueryStringToJSON(items.next);
+                $scope.loadmoreParams = utils.queryStringToJSON(items.next);
             } else {
                 $scope.loadmoreParams = null;
             }
@@ -280,7 +268,7 @@ angular.module('poddDashboardApp')
             });
 
             if (items.next) {
-                $scope.loadmoreParams = QueryStringToJSON(items.next);
+                $scope.loadmoreParams = utils.queryStringToJSON(items.next);
             } else {
                 $scope.loadmoreParams = null;
             }
