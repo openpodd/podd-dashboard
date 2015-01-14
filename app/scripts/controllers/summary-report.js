@@ -76,9 +76,9 @@ angular.module('poddDashboardApp')
             enableSorting: false,
             data: [],
             columnDefs: [],
-            onRegisterApi: function(gridApi){
-              $scope.gridApi = gridApi;
-              console.log("Api" ,$scope.gridApi);
+            onRegisterApi: function(gridApi){ 
+              $scope.gridApi_report = gridApi;
+              console.log("Api" ,$scope.gridApi_report);
             }
         };
 
@@ -153,7 +153,7 @@ angular.module('poddDashboardApp')
 
     $scope.export = function(){
             var element = angular.element(document.querySelectorAll(".custom-csv-link-location"));
-            $scope.gridApi.exporter.csvExport( 'all', 'all', element );
+            $scope.gridApi_report.exporter.csvExport( 'all', 'all', element );
     };
 
     $scope.$evalAsync(function () {
