@@ -117,6 +117,7 @@
 </div>
 
 <script type="text/ng-template" id="reports-to-follow.html">
+<div class="reports-to-follow">
   <div class="modal-header">
     <h3 class="modal-title">เลือกรายงานที่ต้องการติดตาม</h3>
   </div>
@@ -124,6 +125,7 @@
   <div class="modal-body">
     <ul class="list-group">
       <li ng-repeat="item in casesToFollow.results" class="list-group-item"
+          ng-class="{ 'selected-case': selected.item == item }"
           ng-click="selected.item = item">
         <div class="row">
           <div class="col-md-1">
@@ -146,4 +148,5 @@
     <button class="btn btn-primary" ng-click="ok()" ng-disabled="!selected.item">ตกลง</button>
     <button class="btn btn-warning" ng-click="cancel()">ยกเลิก</button>
   </div>
+</div>
 </script>
