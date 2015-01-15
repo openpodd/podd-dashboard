@@ -32,6 +32,8 @@ angular.module('poddDashboardApp')
 
     $scope.$watch('shared.loggedIn', function (newValue) {
         $scope.isLoggedIn = newValue;
+        console.log("LOginnnnn", newValue);
+        if(!newValue) $window.location.reload();
     });
 
     Menu.setActiveMenu('home');

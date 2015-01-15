@@ -1,7 +1,7 @@
 <div class="l-info-section l-section l-full-width" ng-controller="SummaryPersonCtrl" ng-show="shared.summaryPersonMode" ng-cloak>
   <div class="l-detail-section l-section">
     <div class="title clearfix">
-        <h2 class="pull-left"><i class="fa fa-stethoscope pull-left fa-size-22"></i>สรุปจำนวนผู้ที่รายงานน้อย</h2>
+        <h2 class="pull-left"><i class="fa fa-stethoscope pull-left fa-size-22"></i>สรุปจำนวนอาสาที่รายงานต่ำกว่าเกณฑ์</h2>
         <i class="fa fa-times pull-right fa-size-18" ng-click="closeSummaryPerson();gotoMainPage();"></i>
     </div>
 
@@ -17,7 +17,8 @@
                         <label for="week_range_person">เลือกวันที่ <i class="fa fa-calendar"></i> </label>
                     </button>
                 </span>
-                <input type="text" id="week_range_person" class="form-control" ng-model="queryPerson" data-weekpicker="weekpicker"data-week_start="1" data-months="1" placeholder="ตัวอย่าง. 12/01/2015-18/01/2015" />
+
+                <input date-range-picker type="text" id="week_range_person" class="form-control" ng-model="date" options="dateOptions" />
 
                <!--  <input type="text" id="month_range_person" class="form-control" ng-model="query_person" ng-show="type === 'month'"/> -->
 
