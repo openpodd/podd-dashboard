@@ -251,6 +251,7 @@ angular.module('poddDashboardApp')
         // TODO: remove
         if (shared.rlError) searcher = FailRequest.query;
 
+        $scope.disabledLoadmoreBtn = true;
         return searcher(query).$promise.then(function (items) {
 
             items.results.forEach(function (item) {
@@ -278,6 +279,7 @@ angular.module('poddDashboardApp')
             }
 
             $scope.reports.push.apply(items.results);
+            $scope.disabledLoadmoreBtn = false;
         })
         .catch(function () {
             $scope.loadingReportListError = true;
