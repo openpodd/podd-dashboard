@@ -189,7 +189,8 @@ angular.module('poddDashboardApp')
 
         if (shared.filterMode) {
             query = {
-                q: 'administrationArea:' + village.id + ' AND ' + shared.filterQuery
+                q: 'administrationArea:' + village.id + ' AND ' + shared.filterQuery,
+                page_size: 20
             };
             searcher = Search.query;
         }
@@ -223,7 +224,7 @@ angular.module('poddDashboardApp')
 
             if (items.next) {
                 $scope.loadmoreParams = {
-                    'django_id__lt': items.results.slice(-1)[0].id
+                    'date__lt': items.results.slice(-1)[0].date
                 };
             } else {
                 $scope.loadmoreParams = null;
@@ -242,7 +243,8 @@ angular.module('poddDashboardApp')
 
         if (shared.filterMode) {
             query = $.extend(query, {
-                q: 'administrationArea:' + village.id + ' AND ' + shared.filterQuery
+                q: 'administrationArea:' + village.id + ' AND ' + shared.filterQuery,
+                page_size: 20
             });
             searcher = Search.query;
         }
@@ -259,7 +261,8 @@ angular.module('poddDashboardApp')
             items.results.forEach(function (item) {
                 // Filter for last 2 weeks
                 if ( isRecentReport(item) ) {
-                    $scope.recentReports.push(item);
+                    // $scope.recentReports.push(item);
+                    $scope.recentReports = $scope.recentReports.concat([item]);
                 }
                 // Filter for the older
                 else {
@@ -274,7 +277,7 @@ angular.module('poddDashboardApp')
 
             if (items.next) {
                 $scope.loadmoreParams = {
-                    'django_id__lt': items.results.slice(-1)[0].id
+                    'date__lt': items.results.slice(-1)[0].date
                 };
             } else {
                 $scope.loadmoreParams = null;
