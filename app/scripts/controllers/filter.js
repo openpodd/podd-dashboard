@@ -84,14 +84,9 @@ angular.module('poddDashboardApp')
             var results = [],
                 matchedVillages = {};
 
-            var promise;
-            if (utils.getObjectLength(shared.villages)) {
-                promise = $q.when();
-            }
-            else {
-                // Load administration area before next task.
-                promise = dashboard.getAdministrationAreas().$promise;
-            }
+            // Force to clear all village data. This is prevent further request
+            // by $resource caching.
+            var promise = dashboard.getAdministrationAreas().$promise;
 
             promise.then(function (administrationAreas) {
                 $scope.loading = false;

@@ -441,6 +441,8 @@ angular.module('poddDashboardApp')
                   old.name === 'main.filter' ||
                   old.name === 'main.summaryreport' ||
                   old.name === 'main.summaryperson' ) {
+                shared.villages = {};
+                map.clearVillages();
                 refreshDashboard();
             }
         }
