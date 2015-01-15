@@ -280,15 +280,22 @@ html, body{
 
 
 .sweet-alert {
+    z-index: 9998;
+    
     p.lead {
         margin-top: 1.5em;
+        font-size: 1.3em;
     }
-
-    z-index: 9998;
-
     .sweet-alert{
         z-index: 9999;
     }
+    .btn-lg{
+        font-size: 14px;
+    }
+}
+
+.sweet-overlay{
+    z-index: 9998;
 }
 
 /* FILE UPLOAD */
