@@ -8,26 +8,32 @@ angular.module('poddDashboardApp')
 })
 
 .controller('SummaryPersonCtrl', function ($scope, SummaryPerson, User,
-    streaming, FailRequest, shared, $location, $state, $stateParams, $window, cfpLoadingBar) {
+    streaming, FailRequest, shared, $location, $state, $stateParams, $window,
+    cfpLoadingBar, dateRangePickerConfig) {
 
     console.log('init summary person ctrl');
 
-    function setDateRangeFromNow(){
-        var now = moment();
-        var start_date;
-        var end_date;
+    $scope.date = {
+        startDate: (moment().format('d') === '0' ? moment().day(-6) : moment().day(1)),
+        endDate: (moment().format('d') === '0' ? moment().day(0) : moment().day(7)),
+    };
+    dateRangePickerConfig.format = "DD/MM/YYYY";
+    $scope.dateOptions = {
+        startDate: $scope.date.startDate,
+        endDate: $scope.date.endDate,
+        format: 'DD/MM/YYYY',
+        ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
+            'Last 7 Days': [moment().subtract('days', 6), moment()],
+            'Last 30 Days': [moment().subtract('days', 29), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+        },
+    };
 
-        if(now.format('d') === '0'){
-            start_date = moment().day(-6).format("DD/MM/YYYY");
-            end_date = moment().day(0).format("DD/MM/YYYY");
-        }else{
-            start_date = moment().day(1).format("DD/MM/YYYY");;
-            end_date = moment().day(7).format("DD/MM/YYYY");;
-        }
-        return start_date + '-' + end_date;
-    }
 
-    $scope.queryPerson = setDateRangeFromNow();
+    $scope.queryPerson = '';
     $scope.type = 'week';
     $scope.shared = shared;
     $scope.gridOptionsPerson = {
@@ -43,7 +49,11 @@ angular.module('poddDashboardApp')
 
     $scope.$on('summaryPerson:clearQuery', function (willClear) {
         if (willClear) {
-            $scope.queryPerson = $stateParams.q || setDateRangeFromNow();
+            $scope.queryPerson = $stateParams.q || '';
+            $scope.date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
+            $scope.date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
+            $scope.dateOptions.startDate = $scope.date.startDate;
+            $scope.dateOptions.endDate = $scope.date.endDate;
             $scope.type = 'week';
             $scope.willShowResult = false;
             $scope.loading = false;
@@ -62,7 +72,7 @@ angular.module('poddDashboardApp')
     });
 
     $scope.search = function () {
-        console.log("goooooo",  $scope.queryPerson);
+        $scope.queryPerson = moment($scope.date.startDate).format('DD/MM/YYYY') + "-" + moment($scope.date.endDate).format('DD/MM/YYYY');
         $state.go('main.summaryperson', { dates: $scope.queryPerson, type: 'week' });
     }
 
@@ -138,11 +148,6 @@ angular.module('poddDashboardApp')
         });
     };
 
-    $scope.$evalAsync(function () {
-        if(shared.summaryPersonMode) $scope.search();
-        $('[data-weekpicker]').weekpicker();
-    });
-
     $scope.closeSummaryPerson = function () {
         shared.summaryPersonMode = false;
     };
@@ -155,11 +160,21 @@ angular.module('poddDashboardApp')
         if ($state.current.name === 'main.summaryperson') {
             $scope.queryPerson = $window.decodeURIComponent(params.dates || '');
             if ($scope.queryPerson) {
-                return $scope._search();
+                console.log($scope.queryPerson);
+                var splitDate = $scope.queryPerson.split("-");
+                $scope.date.startDate = moment(splitDate[0], "DD/MM/YYYY");
+                $scope.date.endDate = moment(splitDate[1], "DD/MM/YYYY");
+            }else{
+                console.log("--------ddd----------");
+                $scope.date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
+                $scope.date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
             }
-            $scope.queryPerson = setDateRangeFromNow();
-            $scope.type = 'week';
-            $state.go('main.summaryperson', { dates: $scope.queryPerson, type: 'week' });
+            
+            $scope.dateOptions.startDate = $scope.date.startDate;
+            $scope.dateOptions.endDate = $scope.date.endDate;
+            
+            if ($scope.queryPerson) return $scope._search();
+            return $scope.search();
         }
     };
 
@@ -175,7 +190,9 @@ angular.module('poddDashboardApp')
             if (oldParams.dates !== params.dates) {
                 $scope.doQueryOnParams(params);
             }else if(typeof params.dates === 'undefined'){
-                $state.go('main.summaryperson', { dates: $scope.queryPerson, type: 'week' });
+                $scope.date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
+                $scope.date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
+                return $scope.search();
             }
         }
     });

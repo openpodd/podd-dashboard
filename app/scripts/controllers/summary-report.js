@@ -78,7 +78,6 @@ angular.module('poddDashboardApp')
 
     $scope.search = function () {
         $scope.queryReport = moment($scope.date.startDate).format('DD/MM/YYYY') + "-" + moment($scope.date.endDate).format('DD/MM/YYYY');
-        console.log($scope.queryReport)
         $state.go('main.summaryreport', { dates: $scope.queryReport, type: 'week' });
     }
 
@@ -189,10 +188,6 @@ angular.module('poddDashboardApp')
         var element = angular.element(document.querySelectorAll(".custom-csv-link-location-report")); element.html('');
         $scope.gridApi.exporter.csvExport( 'all', 'all', element );
     };
-
-    $scope.$evalAsync(function () {
-        $('[data-weekpicker]').weekpicker();
-    });
 
     $scope.changeQuery = function() {
         console.log("ffff");
