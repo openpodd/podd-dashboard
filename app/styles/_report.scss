@@ -17,16 +17,23 @@
 }
 
 .reports-to-follow {
-  li {
-    cursor: pointer;
-  }
-
-  .selected-case {
-    i {
-      font-size: 4em;
+    li {
+        cursor: pointer;
     }
-  }
+
+    .selected-case {
+        td{
+            background-color: #dff0d8 !important;
+        }
+    }
+    tr:hover{
+        cursor: pointer;
+    }
+    .subheading{
+        margin: 0;
+    }
 }
+
 
 /* ignore */
 .flag-priority-1 {
@@ -79,12 +86,12 @@ $badge-bad: #FF6D69;
 
 // Width of column
 .pd-table-flag{ width: 22px; }
-.pd-table-date{ width: 110px; }
+.pd-table-date{ width: 110px; text-align: center; }
 .pd-table-report-date{ width: 100px; }
-.pd-table-type{ width: 100px; }
-.pd-table-status{ width: 50px; }
-.pd-table-reporter{ width: 110px; }
-.pd-table-notification{ width: 25px; }
+.pd-table-type{ width: 100px; text-align: center; }
+.pd-table-status{ width: 50px; text-align: center; }
+.pd-table-reporter{ width: 110px; text-align: center; }
+.pd-table-notification{ width: 25px; text-align: center; }
 
 .badge-good{ background-color: $badge-good-color; }
 .badge-bad{ background-color: $badge-bad; }
@@ -165,8 +172,8 @@ $badge-bad: #FF6D69;
 .pd-tabs{
     margin-bottom: 2em;
 
-    .tab-pane:nth-child(2){
-        padding: 15px 10px 5px;
+    .tab-pane:nth-child(2), .tab-pane:nth-child(3) {
+        padding: 15px 10px 10px;
         background-color: #fff;
     }
 }
@@ -571,4 +578,8 @@ $badge-bad: #FF6D69;
 
 .grid-report{
     min-width: 743px;
+}
+
+.daterangepicker{
+    z-index: 9999 !important;
 }

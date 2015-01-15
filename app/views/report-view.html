@@ -119,34 +119,36 @@
 <script type="text/ng-template" id="reports-to-follow.html">
 <div class="reports-to-follow">
   <div class="modal-header">
-    <h3 class="modal-title">เลือกรายงานที่ต้องการติดตาม</h3>
+    <h3 class="modal-title subheading">เลือกรายงานที่ต้องการติดตาม</h3>
   </div>
 
   <div class="modal-body">
-    <ul class="list-group">
-      <li ng-repeat="item in casesToFollow.results" class="list-group-item"
-          ng-class="{ 'selected-case': selected.item == item }"
-          ng-click="selected.item = item">
-        <div class="row">
-          <div class="col-md-1">
-            <span ng-if="selected.item == item"><i class="fa fa-check"></i></span>
-          </div>
-          <div class="col-md-11">
-            <p class="lead report-title">
-              รายงานหมายเลข #{{ item.id }}
-              <small>วันที่รายงาน - {{ item.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</small>
-            </p>
-            <blockquote>
-              <p report-type-form-data report="item"></p>
-            </blockquote>
-          </div>
-      </li>
-    </ul>
+      
+    <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+                <th style="width:40px;"></th>
+                <th >หมายเลขรายงาน</th>
+                <th >วันที่รายงาน</th>
+                <th >ประเภท</th>
+            </tr>
+          </thead>
+
+          <tbody>
+          <tr ng-repeat="item in casesToFollow.results" ng-class="{ 'selected-case': selected.item == item }" ng-click="selected.item = item">
+              <td><span ng-if="selected.item == item"><i class="fa fa-check"></i></span>
+              </td>
+              <td>#{{ item.id }}</td>
+              <td>{{ item.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</td>
+              <td><span report-type-form-data report="item"></span></td>
+            </tr><!-- end ngRepeat: report in olderReports | orderBy:'-date' -->
+          </tbody>
+        </table>
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()" ng-disabled="!selected.item">ตกลง</button>
-    <button class="btn btn-warning" ng-click="cancel()">ยกเลิก</button>
+    <button class="btn btn-success" ng-click="ok()" ng-disabled="!selected.item">ตกลง</button>
+    <button class="btn btn-default" ng-click="cancel()">ยกเลิก</button>
   </div>
 </div>
 </script>

@@ -128,19 +128,7 @@ angular.module('poddDashboardApp')
     ];
 
     function refreshFlag() {
-        var query = {
-            reportId: $scope.$parent.report.id,
-            amount: 1
-        };
-
-        Flags.list(query).$promise.then(function (flags) {
-            if (flags.length) {
-                $scope.flag.current = $scope.flagOptions[ flags[0].priority - 1 ];
-            }
-            else {
-                $scope.flag.current = null;
-            }
-        });
+        $scope.flag.current = $scope.flagOptions[ parseInt($scope.$parent.report.flag) - 1 ];
     }
 
     $scope.$watch('flag.current', function (newValue, oldValue) {

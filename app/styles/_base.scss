@@ -205,6 +205,15 @@ html, body{
     width: 100%;
 }
 
+.loadmore{
+    .btn{
+        width: 100%;
+        color: #666;
+        border: 1px solid #DFDFDF;
+        background: #F9F9F9;
+    }
+}
+
 
 .section-filter{
     position: absolute;
@@ -271,15 +280,22 @@ html, body{
 
 
 .sweet-alert {
+    z-index: 9998;
+    
     p.lead {
         margin-top: 1.5em;
+        font-size: 1.3em;
     }
-
-    z-index: 9998;
-
     .sweet-alert{
         z-index: 9999;
     }
+    .btn-lg{
+        font-size: 14px;
+    }
+}
+
+.sweet-overlay{
+    z-index: 9998;
 }
 
 /* FILE UPLOAD */
