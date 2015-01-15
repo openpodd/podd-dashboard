@@ -9,7 +9,8 @@ angular.module('poddDashboardApp')
         getAdministrationAreas: {
             url: config.API_BASEPATH + '/administrationArea/',
             method: 'GET',
-            isArray: true
+            isArray: true,
+            cache: true
         }
     });
 

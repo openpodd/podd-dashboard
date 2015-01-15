@@ -79,29 +79,37 @@ angular.module('poddDashboardApp')
         },
         compile: function compile() {
             return function (scope, $element) {
-                var q = '';
+                function render() {
+                    var q = '';
 
-                if ( supportedFields.indexOf(scope.name) !== -1) {
-                    // add time criteria
-                    q += defaultTimeCriteria;
-                    // add field criteria
-                    if (scope.wrapWithQuote) {
-                      q += ' AND ' + scope.name + ':"' + scope.value + '"';
+                    if ( supportedFields.indexOf(scope.name) !== -1) {
+                        // add time criteria
+                        q += defaultTimeCriteria;
+                        // add field criteria
+                        if (scope.wrapWithQuote) {
+                            q += ' AND ' + scope.name + ':"' + scope.value + '"';
+                        }
+                        else {
+                            q += ' AND ' + scope.name + ':' + scope.value;
+                        }
+
+                        scope.q = q;
+
+                        $element.html('<a ng-href="#/filter?q={{ q|encodeURI }}">{{ value }}</a>');
+                        $compile($element.contents())(scope);
                     }
                     else {
-                      q += ' AND ' + scope.name + ':' + scope.value;
+                        // render plain value if not supported.
+                        $element.html('{{ value }}');
+                        $compile($element.contents())(scope);
                     }
-
-                    scope.q = q;
-
-                    $element.html('<a ng-href="#/filter?q={{ q|encodeURI }}">{{ value }}</a>');
-                    $compile($element.contents())(scope);
                 }
-                else {
-                    // render plain value if not supported.
-                    $element.html('{{ value }}');
-                    $compile($element.contents())(scope);
-                }
+
+                render();
+
+                scope.$watch('value', function () {
+                    render();
+                });
             };
         }
     };

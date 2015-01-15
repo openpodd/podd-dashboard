@@ -388,7 +388,13 @@ angular.module('poddDashboardApp')
             }
 
             // QUICKFIX: inject village into data.
-            data.village = shared.villages[ data.administrationAreaId ];
+            dashboard.getAdministrationAreas().$promise.then(function (areas) {
+                areas.forEach(function (item) {
+                    if (data.administrationAreaId === item.id) {
+                        data.village = item;
+                    }
+                });
+            });
 
             $scope.report = data;
         })
