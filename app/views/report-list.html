@@ -66,8 +66,8 @@
                 </tbody>
             </table>
 
-            <div class="loadmore" ng-show="olderReports.length == 0 && loadmoreParams">
-              <button class="btn btn-default center-block" type="button" ng-click="loadmoreVillageReports(currentVillage, loadmoreParams)">Load more...</button>
+            <div class="loadmore" ng-show="olderReports.length == 0 && loadmoreParams" ng-cloak>
+              <button class="btn btn-default center-block" type="button" ng-click="loadmoreVillageReports(currentVillage, loadmoreParams)" ng-disabled="disabledLoadmoreBtn">{{ disabledLoadmoreBtn ? 'Loading...' : 'Load more...' }}</button>
             </div>
         </div>
 
@@ -113,8 +113,8 @@
               </tbody>
             </table>
 
-            <div class="loadmore" ng-show="olderReports.length > 0 && loadmoreParams">
-              <button class="btn btn-default center-block" type="button" ng-click="loadmoreVillageReports(currentVillage, loadmoreParams)">Load more...</button>
+            <div class="loadmore" ng-show="olderReports.length > 0 && loadmoreParams" ng-cloak>
+              <button class="btn btn-default center-block" type="button" ng-click="loadmoreVillageReports(currentVillage, loadmoreParams)" ng-disabled="disabledLoadmoreBtn">{{ disabledLoadmoreBtn ? 'Loading...' : 'Load more...' }}</button>
             </div>
         </div>
     </div></div><!-- end .content-wrapper .contetn -->
