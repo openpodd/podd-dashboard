@@ -74,7 +74,8 @@ angular.module('poddDashboardApp')
         strict: 'EA',
         scope: {
             name: '=',
-            value: '='
+            value: '=',
+            wrapWithQuote: '='
         },
         compile: function compile() {
             return function (scope, $element) {
@@ -84,7 +85,12 @@ angular.module('poddDashboardApp')
                     // add time criteria
                     q += defaultTimeCriteria;
                     // add field criteria
-                    q += ' AND ' + scope.name + ':' + scope.value;
+                    if (scope.wrapWithQuote) {
+                      q += ' AND ' + scope.name + ':"' + scope.value + '"';
+                    }
+                    else {
+                      q += ' AND ' + scope.name + ':' + scope.value;
+                    }
 
                     scope.q = q;
 

@@ -48,7 +48,7 @@
              <li>วันที่รายงาน - {{ $parent.report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</li>
              <li>วันที่เกิดเหตุ - {{ $parent.report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</li>
              <li>ประเภทรายงาน - {{ $parent.report.reportTypeName }}</li>
-             <li>พื้นที่เกิดเหตุ - <span jump-to-filter name=" 'area' " value="$parent.report.village.address"></span></li>
+             <li>พื้นที่เกิดเหตุ - <span jump-to-filter name=" 'area' " value="$parent.report.village.address" wrap-with-quote="true"></span></li>
              <li>โดย - <span jump-to-filter name=" 'createdByName' " value="$parent.report.createdBy"></span></li>
              <li ng-show="$parent.report.createdByContact">ติดต่อ - {{ $parent.report.createdByContact }}</li>
              <li ng-show="$parent.report.createdByTelephone">เบอร์โทร - <a href="tel:">{{ $parent.report.createdByTelephone }}</a></li>
