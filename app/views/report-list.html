@@ -52,8 +52,8 @@
                         <div class="text-center" ng-if="!report.negative">-</div>
                         </td>
 -->
-                        <td ng-bind="report.reportTypeName"></td>
-                        <td>
+                        <td class="pd-table-type" ng-bind="report.reportTypeName"></td>
+                        <td class="pd-table-status">
                          <span ng-show="report.negative" class="badge badge-bad">Bad</span>
                          <span ng-hide="report.negative" class="badge badge-good">Good</span>
                         </td>
@@ -102,8 +102,8 @@
                     <div class="text-center" ng-if="!report.negative">-</div>
                   </td>
 -->
-                  <td ng-bind="report.reportTypeName"></td>
-                  <td>
+                  <td class="pd-table-type" ng-bind="report.reportTypeName"></td>
+                  <td class="pd-table-status">
                      <span ng-show="report.negative" class="badge badge-bad">Bad</span>
                      <span ng-hide="report.negative" class="badge badge-good">Good</span>
                   </td>

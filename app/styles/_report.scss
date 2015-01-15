@@ -79,12 +79,12 @@ $badge-bad: #FF6D69;
 
 // Width of column
 .pd-table-flag{ width: 22px; }
-.pd-table-date{ width: 110px; }
+.pd-table-date{ width: 110px; text-align: center; }
 .pd-table-report-date{ width: 100px; }
-.pd-table-type{ width: 100px; }
-.pd-table-status{ width: 50px; }
-.pd-table-reporter{ width: 110px; }
-.pd-table-notification{ width: 25px; }
+.pd-table-type{ width: 100px; text-align: center; }
+.pd-table-status{ width: 50px; text-align: center; }
+.pd-table-reporter{ width: 110px; text-align: center; }
+.pd-table-notification{ width: 25px; text-align: center; }
 
 .badge-good{ background-color: $badge-good-color; }
 .badge-bad{ background-color: $badge-bad; }
