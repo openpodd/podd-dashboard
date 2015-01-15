@@ -17,16 +17,23 @@
 }
 
 .reports-to-follow {
-  li {
-    cursor: pointer;
-  }
-
-  .selected-case {
-    i {
-      font-size: 4em;
+    li {
+        cursor: pointer;
     }
-  }
+
+    .selected-case {
+        td{
+            background-color: #dff0d8 !important;
+        }
+    }
+    tr:hover{
+        cursor: pointer;
+    }
+    .subheading{
+        margin: 0;
+    }
 }
+
 
 /* ignore */
 .flag-priority-1 {
