@@ -67,7 +67,7 @@ angular.module('poddDashboardApp')
 })
 
 .directive('jumpToFilter', function ($compile) {
-    var supportedFields = [ 'animalType', 'createdByName' ],
+    var supportedFields = [ 'animalType', 'createdByName', 'area' ],
         defaultTimeCriteria = 'date:last 7 days';
 
     return {
