@@ -30,7 +30,8 @@ angular
     'ui.router',
     'ui.grid',
     'ui.grid.selection',
-    'ui.grid.exporter'
+    'ui.grid.exporter',
+    'daterangepicker'
   ])
 
   // override z-index of ui.bootstrap
