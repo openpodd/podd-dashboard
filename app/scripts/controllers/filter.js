@@ -78,6 +78,7 @@ angular.module('poddDashboardApp')
             console.log('Query result:', data);
 
             shared.filteredReports = data.results;
+            $scope.filterResultGridOptions.data = data.results;
 
             // Do group by administrationAreaId
             var results = [],
@@ -212,6 +213,81 @@ angular.module('poddDashboardApp')
             else if (oldParams.q !== params.q || current.name !== old.name) {
                 $scope.doQueryOnParams(params);
             }
+        }
+    });
+
+    // ui-grid
+    $scope.filterResultGridOptions = {
+        // enablePagination: true,
+        // rowsPerPage: 10,
+        // enableVerticalScrollbar: false,
+        // enableHorizontalScrollbar: false,
+        // scrollThrottle: 144,
+        minRowsToShow: 15,
+        enableRowSelection: true,
+        enableRowHeaderSelection: false,
+        multiSelect: false,
+        rowTemplate: '<div ng-class="{ \'report-negative\': row.entity.negative }">' +
+                     '<div ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name\"' +
+                     '     class=\"ui-grid-cell\" ui-grid-cell ' +
+                     '     ng-class=\"{ \'ui-grid-row-header-cell\': col.isRowHeader }\">' +
+                     '</div></div>',
+        columnDefs: [
+            {
+                name: '',
+                field: 'flag',
+                width: '5%',
+                cellTemplate: '<div class=\"ui-grid-cell-contents\">' +
+                              '<i class="fa fa-flag flag-priority-{{COL_FIELD}}" ng-if="COL_FIELD"></i>' +
+                              '</div>'
+            },
+            {
+                name: 'วันที่รายงาน',
+                field: 'date',
+                width: '18%',
+                cellFilter: 'amDateFormat:\'D MMM YYYY\''
+            },
+            {
+                name: 'พื้นที่',
+                field: 'administrationAreaId',
+                width: '24%',
+                cellFilter: 'administrationAreaAddress'
+            },
+            {
+                name: 'ประเภท',
+                field: 'reportTypeName',
+                width: '18%',
+            },
+            {
+                name: 'สถานะ',
+                field: 'negative',
+                width: '10%',
+                cellTemplate: '<div class=\"ui-grid-cell-contents\">' +
+                              '<span ng-show="COL_FIELD" class="badge badge-bad">Bad</span>' +
+                              '<span ng-hide="COL_FIELD" class="badge badge-good">Good</span>' +
+                              '</div>'
+            },
+            {
+                name: 'ผู้รายงาน',
+                field: 'createdByName',
+                width: '*'
+            }
+        ],
+        onRegisterApi: function (gridApi) {
+            $scope.gridApi = gridApi;
+
+            gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                if (row && row.isSelected) {
+                    $scope.$parent.onClickReport(row.entity);
+                }
+            });
+        },
+        data: []
+    };
+
+    $scope.$watch('$parent.report', function (newValue) {
+        if (!newValue) {
+            $scope.gridApi.selection.clearSelectedRows();
         }
     });
 

@@ -130,17 +130,17 @@ html, body{
 
 
 //***************************
-// LOGIN 
+// LOGIN
 //***************************
 .page-login{
-    background-color: #7474BF;    
+    background-color: #7474BF;
     background: -webkit-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* Chrome 10+, Saf5.1+ */
     background:    -moz-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* FF3.6+ */
     background:     -ms-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* IE10 */
     background:      -o-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* Opera 11.10+ */
     background:         linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* W3C */
 
-    
+
 }
 .login{
     position: absolute;
@@ -151,7 +151,7 @@ html, body{
     margin: auto;
     width: 330px;
     max-height: 400px;
-    
+
     .form-group{
         margin: 0 0 15px;
     }
@@ -168,7 +168,7 @@ html, body{
         .alert {
             margin-top: 0;
         }
-    } 
+    }
 }
 .login-inner{
     padding: 20px 15px;
@@ -176,13 +176,13 @@ html, body{
     background-color: #fff;
     text-align: center;
     @include box-shadow(1px 1px 7px #666);
-    
+
     .logo-img{
         margin: 15px 0;
     }
-    
-    
-    
+
+
+
 }
 
 #reports-empty{
@@ -331,4 +331,8 @@ html, body{
 }
 .scroller-y {
     overflow-y: hidden;
+}
+
+.ui-grid-native-scrollbar.vertical {
+    width: 17px !important;
 }
