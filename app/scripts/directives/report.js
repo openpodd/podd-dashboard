@@ -103,9 +103,17 @@ angular.module('poddDashboardApp')
 
 .directive('reportFollowUp', function (Reports) {
     function refresh(scope) {
+        scope.reportFollowUpParent = null;
+
         if (scope.report) {
             Reports.followUp({ reportId: scope.report.id }).$promise.then(function (data) {
                 scope.items = data;
+
+                data.forEach(function (item) {
+                    if (item.id === scope.report.parent) {
+                        scope.reportFollowUpParent = item;
+                    }
+                });
             });
         }
     }

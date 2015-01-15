@@ -1,10 +1,19 @@
-<ul class="list-unstyled report-followup-list"
-    ng-repeat="item in items"
-    ng-show="items">
-  <li>
-    <div class="report-followup-title" ng-click="onClickReportFollowUp(item)">
-      รายงานหมายเลข #{{ item.id }}
-    </div>
-  </li>
-</ul>
+<div ng-if="reportFollowUpParent" class="report-followup-parent">
+  <h4>Case ที่ follow</h4>
+  <p ng-click="onClickReportFollowUp(reportFollowUpParent)" class="report-followup-title">
+    รายงานหมายเลข #{{ reportFollowUpParent.id }}
+  </p>
+</div>
+
+<div ng-if="!reportFollowUpParent">
+  <h4>รายงานที่ follow รายงานนี้ (Follow-up reports)</h4>
+  <ul class="list-group report-followup-list" ng-show="items">
+    <li class="list-group-item" ng-repeat="item in items">
+      <div class="report-followup-title" ng-click="onClickReportFollowUp(item)">
+        <p>รายงานหมายเลข #{{ item.id }}</p>
+      </div>
+    </li>
+  </ul>
+</div>
+
 <div class="empty-text" ng-hide="items">ยังไม่มีรายงานที่เกี่ยวข้อง</div>
