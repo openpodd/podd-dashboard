@@ -9,7 +9,7 @@
                 <i class="fa fa-info"></i>
             </button>
 
-            <div class="filter-help" ng-show="help">
+            <div class="filter-help" ng-show="help" set-max-height="30">
                 <a href=""><i class="fa fa-times pull-right" ng-click="closeHelp()"></i></a>
 
                 <h4 style="margin-bottom:20px;"><i class="fa fa-info-circle"></i> ช่วยเหลือ รูปแบบการค้นหา:</h3>
@@ -49,27 +49,27 @@
                             ค้นหาโดยใช้วันที่ สำหรับ field นี้ใช้ได้เฉพาะการค้นหาแบบกำหนดช่วงเท่านั้น ตัวอย่าง:
                             <ul>
                                 <li>
-                                    <code>date:[2014-11-20 TO 2014-11-20]</code>
-                                    <span class="explain">คือ หารายงานของวันที่ 20 พ.ย. 2014</span>
+                                    <code>date:[{{startOfMonth}} TO {{endOfMonth}}]</code>
+                                    <span class="explain">คือ หารายงานตั้งแต่ต้นเดือนถึงสิ้นเดือนนี้</span>
                                 </li>
                                 <li>
-                                    <code>date:[2014-11-20 TO *]</code>
-                                    <span class="explain">คือ หารายงานตั้งแต่ วันที่ 20 พ.ย. 2014</span>
+                                    <code filter-this>date:[{{startOfMonth}} TO *]</code>
+                                    <span class="explain">คือ หารายงานตั้งแต่ต้นเดือนจนถึงวันที่ปัจจุบัน</span>
                                 </li>
                                 <li>
-                                    <code>date:today</code>
+                                    <code filter-this>date:today</code>
                                     <span class="explain">คือ หารายงานภายในวันนี้</span>
                                 </li>
                                 <li>
-                                    <code>date:yesterday</code>
+                                    <code filter-this>date:yesterday</code>
                                     <span class="explain">คือ หารายงานของเมื่อวานนี้</span>
                                 </li>
                                 <li>
-                                    <code>date:this week</code>
+                                    <code filter-this>date:this week</code>
                                     <span class="explain">คือ หารายงานภายในอาทิตย์นี้</span>
                                 </li>
                                 <li>
-                                    <code>date:last 10 days</code>
+                                    <code filter-this>date:last 10 days</code>
                                     <span class="explain">คือ หารายงานตั้งแต่ วันนี้ ย้อนหลังไป 10 วัน</span>
                                 </li>
                             </ul>

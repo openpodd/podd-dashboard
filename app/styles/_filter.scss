@@ -37,6 +37,7 @@
 
 .filter-help {
     position: absolute;
+    overflow: auto;
 
     background-color: rgb(255, 255, 255);
     border-radius: 2px;
@@ -54,6 +55,12 @@
     }
     h4{
         font-size: 16px;
+    }
+
+    [filter-this] {
+        cursor: pointer;
+        color: #31708F;
+        background-color: #D9EDF7;
     }
 
     z-index: 99; /* above filter result */

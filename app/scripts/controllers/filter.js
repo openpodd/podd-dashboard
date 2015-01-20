@@ -1,4 +1,4 @@
-/* global utils */
+/* global utils, moment */
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -12,6 +12,9 @@ angular.module('poddDashboardApp')
                                     $state, $stateParams, $q, $timeout, streaming) {
 
     $scope.shared = shared;
+
+    $scope.startOfMonth = moment().startOf('month').format('YYYY-MM-DD');
+    $scope.endOfMonth = moment().endOf('month').format('YYYY-MM-DD');
 
     $scope.$on('filter:clearQuery', function (willClear) {
         if (willClear) {
@@ -286,4 +289,31 @@ angular.module('poddDashboardApp')
         }
     });
 
+})
+
+.directive('filterThis', function () {
+    return {
+        scope: 'A',
+        compile: function () {
+            return {
+                pre: function (scope, $element) {
+                    $element.html($element.text() + ' <i class="fa fa-arrow-circle-o-up"></i>');
+                },
+                post: function (scope, $element) {
+                    $element.tooltip({
+                        title: 'คลิกเพื่อเพิ่ม filter นี้ในกล่องด้านบน'
+                    });
+
+                    $element.on('click', function () {
+                        if (scope.query) {
+                            scope.query += ' AND ' + $element.text();
+                        }
+                        else {
+                            scope.query += '' + $element.text();
+                        }
+                    });
+                }
+            };
+        },
+    };
 });
