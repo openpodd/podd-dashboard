@@ -5,8 +5,12 @@
     <ul>
         <li ng-class="{'read': notification.isNotified}" ng-repeat="notification in notifications | orderBy:'-createdAt' " ng-click="onClickNotification(notification)">
             <a href="">
-               <img src="images/avatar.png" alt="avatar" class="pull-left avatar"/>
-                @{{ notification.mentioner }} อ้างอิงถึงคุณบนรายงานที่ {{ notification.reportId }}
+               <img alt="avatar" class="pull-left avatar"
+                    ng-if="notification.mentioner.avatarUrl"
+                    ng-src="{{ notification.mentioner | avatarUrl:'thumbnail' }}" />
+               <img src="images/avatar.png" alt="avatar" class="pull-left avatar"
+                    ng-if="!notification.mentioner.avatarUrl" />
+                @{{ notification.mentioner | fullname }} อ้างอิงถึงคุณบนรายงานที่ {{ notification.reportId }}
                 <div class="time">
                     <i class="fa fa-comment fa-size-12"></i>
                     เมื่อ <span am-time-ago="notification.createdAt"></span>

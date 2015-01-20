@@ -30,6 +30,23 @@ angular.module('poddDashboardApp')
     };
 })
 
+.filter('fullname', function () {
+    return function (user) {
+        return user.firstName + ' ' + user.lastName;
+    };
+})
+
+.filter('avatarUrl', function () {
+    return function (user, size) {
+        if (size === 'thumbnail') {
+            return user.thumbnailAvatarUrl;
+        }
+        else {
+            return user.avatarUrl;
+        }
+    };
+})
+
 .directive('showImageLoader', function () {
     return {
         restrict: 'A',
