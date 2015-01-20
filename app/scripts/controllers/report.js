@@ -133,6 +133,7 @@ angular.module('poddDashboardApp')
 
     $scope.$watch('flag.current', function (newValue, oldValue) {
         $scope.flag.old = oldValue;
+        $state.go($state.current, { confirmCase: null }, { notify: false });
     });
 
     $scope.updateFlag = function(flag, noConfirm) {
