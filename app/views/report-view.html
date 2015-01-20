@@ -22,6 +22,18 @@
          refresh-on-change="report"
          ng-if="!loadingReportView && !loadingReportViewError"><div class="content">
 
+       <div class="case-confirmation-box" ng-show="willShowConfirmationBox()">
+         <div class="panel panel-default">
+           <div class="panel-heading">
+             <h3 class="panel-title">ยืนยันรายงานนี้เป็น Case ที่ต้องตอบสนอง?</h3>
+           </div>
+           <div class="panel-body text-center">
+             <button class="btn btn-danger" ng-click="confirmCase(report)">ยืนยัน</button>
+             <button class="btn btn-default" ng-click="noResponse(report)">ไม่ตอบสนอง</button>
+           </div>
+         </div>
+       </div>
+
       <div class="report-details">
         <div class="priority-report pull-right">ติดตามรายงาน :
           <select ng-model="flag.current"

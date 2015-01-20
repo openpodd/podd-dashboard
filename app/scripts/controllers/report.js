@@ -38,7 +38,7 @@ angular.module('poddDashboardApp')
 })
 
 .controller('ReportViewCtrl', function ($scope, streaming, Flags, Lightbox,
-                                        $modal, Search, Reports) {
+                                        $modal, Search, Reports, $state) {
 
     $scope.userAlreadyClickImage = false;
     $scope.reportFlag = {};
@@ -135,7 +135,7 @@ angular.module('poddDashboardApp')
         $scope.flag.old = oldValue;
     });
 
-    $scope.updateFlag = function(flag) {
+    $scope.updateFlag = function(flag, noConfirm) {
         var data = {
             reportId: $scope.$parent.report.id,
             priority: flag.priority,
@@ -146,7 +146,7 @@ angular.module('poddDashboardApp')
         var modalInstance;
 
         // Wait for confirm before update flag.
-        if ( flagToConfirm.indexOf(flag.color) !== -1 ) {
+        if ( !noConfirm && flagToConfirm.indexOf(flag.color) !== -1 ) {
             swal({
                 title: '',
                 type: 'warning',
@@ -218,6 +218,26 @@ angular.module('poddDashboardApp')
             }
         }
 
+    };
+
+    $scope.willShowConfirmationBox = function () {
+        return $scope.flag.current.color !== 'OK' &&
+               $scope.flag.current.color !== 'Case' &&
+               $state.params.confirmCase;
+    };
+
+    // Mark as case
+    $scope.confirmCase = function () {
+        $scope.flag.current = $scope.flagOptions[4];
+        $scope.updateFlag($scope.flag.current, true);
+        $state.go($state.current, { confirmCase: null }, { notify: false });
+    };
+
+    // Mark as ok
+    $scope.noResponse = function () {
+        $scope.flag.current = $scope.flagOptions[1];
+        $scope.updateFlag($scope.flag.current, true);
+        $state.go($state.current, { confirmCase: null }, { notify: false });
     };
 
 })

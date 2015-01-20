@@ -123,7 +123,7 @@ angular
         controller: 'MainCtrl'
       })
       .state('main.report', {
-        url: '^/reports/{reportId:int}',
+        url: '^/reports/{reportId:int}?confirmCase',
         template: '',
         controller: 'MainReportCtrl'
       })

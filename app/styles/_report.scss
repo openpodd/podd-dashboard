@@ -589,3 +589,19 @@ $badge-bad: #FF6D69;
 .daterangepicker{
     z-index: 9999 !important;
 }
+
+.case-confirmation-box {
+    transition: opacity 1s ease;
+    -webkit-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+
+    &.ng-hide-add, .ng-hide-remove {
+        opacity: 1;
+        display: block !important;
+    }
+
+    &.ng-hide {
+        opacity: 0;
+    }
+}
