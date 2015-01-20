@@ -221,9 +221,10 @@ angular.module('poddDashboardApp')
     };
 
     $scope.willShowConfirmationBox = function () {
-        return $scope.flag.current.color !== 'OK' &&
-               $scope.flag.current.color !== 'Case' &&
-               $state.params.confirmCase;
+        return ($scope.flag.current &&
+                $scope.flag.current.color !== 'OK' &&
+                $scope.flag.current.color !== 'Case') &&
+                $state.params.confirmCase;
     };
 
     // Mark as case
