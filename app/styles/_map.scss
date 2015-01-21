@@ -16,7 +16,13 @@
   }
 }
 
+.radar-wink-wrapper {
+  pointer-events: none;
+  cursor: inherit;
+}
+
 .radar-wink {
+
   width: 160px;
   height: 160px;
 
