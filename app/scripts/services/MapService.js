@@ -111,6 +111,10 @@ angular.module('poddDashboardApp')
                 riseOnHover: true,
             }).addTo(self.villageMarkerLayer);
 
+            $(village.marker._icon).tooltip({
+                title: item.address || item.name
+            });
+
             village.marker.on('click', function () {
                 self.container.trigger('clicked:village', item);
             });
