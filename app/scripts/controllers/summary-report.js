@@ -20,6 +20,7 @@ angular.module('poddDashboardApp')
         endDate: (moment().format('d') === '0' ? moment().day(0) : moment().day(7)),
     };
     dateRangePickerConfig.format = 'DD/MM/YYYY';
+
     $scope.dateOptions = {
         startDate: $scope.date.startDate,
         endDate: $scope.date.endDate,
@@ -78,8 +79,8 @@ angular.module('poddDashboardApp')
         shared.summaryQuery = newValue;
     });
 
-    $scope.search = function () {
-        $scope.queryReport = moment($scope.date.startDate).format('DD/MM/YYYY') + '-' + moment($scope.date.endDate).format('DD/MM/YYYY');
+    $scope.search = function (date) {
+        $scope.queryReport = moment(date.startDate).format('DD/MM/YYYY') + '-' + moment(date.endDate).format('DD/MM/YYYY');
         $state.go('main.summaryreport', { dates: $scope.queryReport, type: 'day' });
     };
 
@@ -145,8 +146,8 @@ angular.module('poddDashboardApp')
 
                     if (!header) {
                         var length = item.dates.length;
-
-                        var column = { field: date.date,
+                        
+                        var column = { field: date.date, 
                             headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ui-grid-cell-contents-collapse-2"><div class="ui-grid-collapse-2">' + date.date + '</div></div>',
                             cellTemplate: '<div class="ui-grid-cell-contents cell-center">\
                                 <span class="badge ng-binding" ng-class="{ \'badge-good\': COL_FIELD.split(\',\')[0] !== \'0\'}" >{{ COL_FIELD.split(",")[0] }}</span> , \
@@ -156,13 +157,12 @@ angular.module('poddDashboardApp')
                         if (length > 12) {
                             column.width = 70;
                         }
-
-                        /* jshint -W109 */
+                        
                         showOptions.push(column);
-                        reportOptions.push({ field: "P" + date.date,
+                        reportOptions.push({ field: 'P' + date.date, 
                             cellTemplate: '<div class="ui-grid-cell-contents cell-center" ng-class="{ gray: COL_FIELD == 0}">{{COL_FIELD}}</div>',
                             headerCellTemplate: '<div class="ui-grid-vertical-bar"></div><div class="ui-grid-cell-contents grid ui-grid-cell-contents-collapse-2"><div class="ui-grid-collapse-2">Good</div></div>'});
-                        reportOptions.push({ field: "N" + date.date,
+                        reportOptions.push({ field: 'N' + date.date,
                             cellTemplate: '<div class="ui-grid-cell-contents cell-center" ng-class="{ red: COL_FIELD > 0}">{{COL_FIELD}}</div>',
                             headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">Bad</div>' });
 
@@ -192,7 +192,7 @@ angular.module('poddDashboardApp')
                 $scope.negativeReport = negative;
                 $scope.totalReport = total;
             }
-            $scope.weekSearch = $scope.queryReport;
+            $scope.weekSearch = $scope.queryReport.replace('-', ' - ');
             $scope.gridOptionsReport.enableSorting = false;
             $scope.gridOptionsReport.columnDefs = reportOptions;
             $scope.gridOptionsReport.data = results;
@@ -227,14 +227,20 @@ angular.module('poddDashboardApp')
     $scope.doQueryOnParams = function (params) {
         if ($state.current.name === 'main.summaryreport') {
             $scope.queryReport = $window.decodeURIComponent(params.dates || '');
+            
+            var date = {};
+            
             if ($scope.queryReport) {
                 console.log($scope.queryReport);
                 var splitDate = $scope.queryReport.split('-');
                 $scope.date.startDate = moment(splitDate[0], 'DD/MM/YYYY');
                 $scope.date.endDate = moment(splitDate[1], 'DD/MM/YYYY');
-            }else{
+            } else {
                 $scope.date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
                 $scope.date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
+
+                date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
+                date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
             }
 
             $scope.dateOptions.startDate = $scope.date.startDate;
@@ -244,7 +250,7 @@ angular.module('poddDashboardApp')
                 return $scope._search();
             }
             else {
-                return $scope.search();
+                return $scope.search(date);
             }
         }
     };
@@ -255,9 +261,10 @@ angular.module('poddDashboardApp')
             if (oldParams.dates !== params.dates) {
                 $scope.doQueryOnParams(params);
             }else if(typeof params.dates === 'undefined'){
-                $scope.date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
-                $scope.date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
-                return $scope.search();
+                var date = {};
+                date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
+                date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
+                return $scope.search(date);
             }
         }
     });

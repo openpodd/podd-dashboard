@@ -72,8 +72,8 @@ angular.module('poddDashboardApp')
         shared.summaryQuery = newValue;
     });
 
-    $scope.search = function () {
-        $scope.queryPerson = moment($scope.date.startDate).format('DD/MM/YYYY') + '-' + moment($scope.date.endDate).format('DD/MM/YYYY');
+    $scope.search = function (date) {
+        $scope.queryPerson = moment(date.startDate).format('DD/MM/YYYY') + '-' + moment(date.endDate).format('DD/MM/YYYY');
         $state.go('main.summaryperson', { dates: $scope.queryPerson, type: 'percent' });
     };
 
@@ -102,15 +102,18 @@ angular.module('poddDashboardApp')
             console.log('Query result:', data);
 
             var results = [];
-            // var options = [];
+            var percent = null;
             var positive = 0;
             var negative = 0;
             var total = 0;
-            // var header = false;
 
             data.forEach(function (item) {
                 results.push(item);
                 total += 1;
+
+                if (percent === null) {
+                    percent = item.percent;
+                }
             });
 
             $scope.results = results;
@@ -126,7 +129,9 @@ angular.module('poddDashboardApp')
                 $scope.negativeReport = negative;
                 $scope.totalPerson = total;
             }
-            $scope.weekSearch = $scope.queryPerson;
+            $scope.weekSearch = $scope.queryPerson.replace('-', ' - ');
+            $scope.percent = percent;
+            $scope.minReport = Math.ceil(percent / 100 * ((moment().range($scope.date.startDate, $scope.date.endDate)).diff('days') + 1));
             $scope.gridOptionsPerson.enableSorting = true;
             $scope.gridOptionsPerson.columnDefs = [
                 { field: 'parentAdministrationArea', headerCellClass: 'cell-center' },
@@ -160,6 +165,9 @@ angular.module('poddDashboardApp')
     $scope.doQueryOnParams = function (params) {
         if ($state.current.name === 'main.summaryperson') {
             $scope.queryPerson = $window.decodeURIComponent(params.dates || '');
+            
+            var date = {};
+
             if ($scope.queryPerson) {
                 console.log($scope.queryPerson);
                 var splitDate = $scope.queryPerson.split('-');
@@ -168,6 +176,8 @@ angular.module('poddDashboardApp')
             } else {
                 $scope.date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
                 $scope.date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
+                date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
+                date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
             }
 
             $scope.dateOptions.startDate = $scope.date.startDate;
@@ -177,7 +187,7 @@ angular.module('poddDashboardApp')
                 return $scope._search();
             }
             else {
-                return $scope.search();
+                return $scope.search(date);
             }
         }
     };
@@ -194,9 +204,10 @@ angular.module('poddDashboardApp')
             if (oldParams.dates !== params.dates) {
                 $scope.doQueryOnParams(params);
             }else if(typeof params.dates === 'undefined'){
-                $scope.date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
-                $scope.date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
-                return $scope.search();
+                var date = {};
+                date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
+                date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
+                return $scope.search(date);
             }
         }
     });
