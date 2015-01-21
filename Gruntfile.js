@@ -371,6 +371,11 @@ module.exports = function (grunt) {
           dest: '<%= yeoman.dist %>'
         }, {
           expand: true,
+          cwd: 'bower_components/mapbox.js',
+          src: [ 'images/*.png', 'images/*.svg' ],
+          dest: '<%= yeoman.dist %>/styles/'
+        }, {
+          expand: true,
           cwd: '.',
           dest: '<%= yeoman.dist %>',
           src: [
