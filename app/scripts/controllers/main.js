@@ -9,7 +9,7 @@ angular.module('poddDashboardApp')
     '$location', '$state', '$window',
     function ($scope, dashboard, streaming,
                Map, Reports, ReportModal, shared, Auth, Search, Menu, Mentions,
-               Flags, FailRequest, $location, $state, $window, cfpLoadingBar) {
+               Flags, FailRequest, $location, $state, $window) {
 
     console.log('IN MainCtrl');
 
@@ -32,7 +32,9 @@ angular.module('poddDashboardApp')
 
     $scope.$watch('shared.loggedIn', function (newValue) {
         $scope.isLoggedIn = newValue;
-        if(!newValue) $window.location.reload();
+        if (!newValue) {
+            $window.location.reload();
+        }
     });
 
     Menu.setActiveMenu('home');

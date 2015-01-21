@@ -30,7 +30,8 @@
     "angular-ui-router": "~0.2.13",
     "week-picker": "https://github.com/morshedalam/week-picker.git",
     "angular-ui-grid": "~3.0.0-rc.16",
-    "angular-daterangepicker": "~0.1.11"
+    "angular-daterangepicker": "~0.1.11",
+    "moment-range": "~1.0.5"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",

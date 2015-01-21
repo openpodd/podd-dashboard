@@ -9,7 +9,7 @@ angular.module('poddDashboardApp')
 
 .controller('SummaryReportCtrl', function ($scope, SummaryReport, User,
     streaming, FailRequest, shared, $location, $state, $stateParams, $window,
-    uiGridConstants, cfpLoadingBar, dateRangePickerConfig) {
+    uiGridConstants, cfpLoadingBar, dateRangePickerConfig, moment) {
 
     console.log('init summary report ctrl');
 
@@ -17,7 +17,8 @@ angular.module('poddDashboardApp')
         startDate: (moment().format('d') === '0' ? moment().day(-6) : moment().day(1)),
         endDate: (moment().format('d') === '0' ? moment().day(0) : moment().day(7)),
     };
-    dateRangePickerConfig.format = "DD/MM/YYYY";
+    dateRangePickerConfig.format = 'DD/MM/YYYY';
+
     $scope.dateOptions = {
         startDate: $scope.date.startDate,
         endDate: $scope.date.endDate,
@@ -77,9 +78,9 @@ angular.module('poddDashboardApp')
     });
 
     $scope.search = function (date) {
-        $scope.queryReport = moment(date.startDate).format('DD/MM/YYYY') + "-" + moment(date.endDate).format('DD/MM/YYYY');
+        $scope.queryReport = moment(date.startDate).format('DD/MM/YYYY') + '-' + moment(date.endDate).format('DD/MM/YYYY');
         $state.go('main.summaryreport', { dates: $scope.queryReport, type: 'day' });
-    }
+    };
 
     $scope._search = function () {
         console.log('Will search with query', $scope.queryReport);
@@ -124,8 +125,8 @@ angular.module('poddDashboardApp')
                 var result = {};
                 var showResult = {};
 
-                result['name'] = item.name;
-                showResult['name'] = item.name;
+                result.name = item.name;
+                showResult.name = item.name;
                 if(!header){
                     showOptions.push({ field: 'name', pinnedLeft: true,
                         headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">Name</div>',
@@ -137,28 +138,32 @@ angular.module('poddDashboardApp')
                 } 
 
                 item.dates.forEach(function (date) {
-                    result["P" + date.date] = date.positive;
-                    result["N" + date.date] = date.negative;
-                    showResult[date.date] = date.positive + "," + date.negative;
+                    result['P' + date.date] = date.positive;
+                    result['N' + date.date] = date.negative;
+                    showResult[date.date] = date.positive + ',' + date.negative;
 
                     if(!header){
                         var length = item.dates.length;
-
+                        
+                        /*jshint multistr: true */
                         var column = { field: date.date, 
                             headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ui-grid-cell-contents-collapse-2"><div class="ui-grid-collapse-2">' + date.date + '</div></div>',
                             cellTemplate: '<div class="ui-grid-cell-contents cell-center">\
                                 <span class="badge ng-binding" ng-class="{ \'badge-good\': COL_FIELD.split(\',\')[0] !== \'0\'}" >{{ COL_FIELD.split(",")[0] }}</span> , \
                                 <span class="badge ng-binding" ng-class="{ \'badge-bad\': COL_FIELD.split(\',\')[1] !== \'0\'}" >{{ COL_FIELD.split(",")[1] }}</span>\
-                                </div>'}
-                        if(length > 12) column.width = 70;
+                                </div>'};
+
+                        if (length > 12) {
+                            column.width = 70;
+                        }
                         
                         showOptions.push(column);
-                        reportOptions.push({ field: "P" + date.date, 
+                        reportOptions.push({ field: 'P' + date.date, 
                             cellTemplate: '<div class="ui-grid-cell-contents cell-center" ng-class="{ gray: COL_FIELD == 0}">{{COL_FIELD}}</div>',
                             headerCellTemplate: '<div class="ui-grid-vertical-bar"></div><div class="ui-grid-cell-contents grid ui-grid-cell-contents-collapse-2"><div class="ui-grid-collapse-2">Good</div></div>'});
-                        reportOptions.push({ field: "N" + date.date,
+                        reportOptions.push({ field: 'N' + date.date,
                             cellTemplate: '<div class="ui-grid-cell-contents cell-center" ng-class="{ red: COL_FIELD > 0}">{{COL_FIELD}}</div>',
-                            headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">Bad</div>' })
+                            headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">Bad</div>' });
                     }
                 });
 
@@ -204,13 +209,12 @@ angular.module('poddDashboardApp')
     };
 
     $scope.exportReport = function(){
-        console.log("Api========", shared.gridApit);
-        var element = angular.element(document.querySelectorAll(".custom-csv-link-location-report")); element.html('');
+        var element = angular.element(document.querySelectorAll('.custom-csv-link-location-report')); element.html('');
         $scope.gridApi.exporter.csvExport( 'all', 'all', element );
     };
 
     $scope.changeQuery = function() {
-        console.log("ffff");
+
     };
 
     $scope.closeSummaryReport = function () {
@@ -224,30 +228,33 @@ angular.module('poddDashboardApp')
     $scope.doQueryOnParams = function (params) {
         if ($state.current.name === 'main.summaryreport') {
             $scope.queryReport = $window.decodeURIComponent(params.dates || '');
+            
+            var date = {};
+            
             if ($scope.queryReport) {
                 console.log($scope.queryReport);
-                var splitDate = $scope.queryReport.split("-");
-                $scope.date.startDate = moment(splitDate[0], "DD/MM/YYYY");
-                $scope.date.endDate = moment(splitDate[1], "DD/MM/YYYY");
+                var splitDate = $scope.queryReport.split('-');
+                $scope.date.startDate = moment(splitDate[0], 'DD/MM/YYYY');
+                $scope.date.endDate = moment(splitDate[1], 'DD/MM/YYYY');
             }else{
                 $scope.date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
                 $scope.date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
 
-                var date = {};
                 date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
                 date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
             }
             $scope.dateOptions.startDate = $scope.date.startDate;
             $scope.dateOptions.endDate = $scope.date.endDate;
             
-            if ($scope.queryReport) return $scope._search();
+            if ($scope.queryReport) {
+                return $scope._search();
+            }
             return $scope.search(date);
         }
     };
 
     $scope.doQueryOnParams($stateParams);
     $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
-        console.log("stateChangeSuccess");
         if ($state.current.name === 'main.summaryreport') {
             if (oldParams.dates !== params.dates) {
                 $scope.doQueryOnParams(params);

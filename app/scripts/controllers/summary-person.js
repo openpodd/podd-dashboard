@@ -9,7 +9,7 @@ angular.module('poddDashboardApp')
 
 .controller('SummaryPersonCtrl', function ($scope, SummaryPerson, User,
     streaming, FailRequest, shared, $location, $state, $stateParams, $window,
-    cfpLoadingBar, dateRangePickerConfig) {
+    cfpLoadingBar, dateRangePickerConfig, moment) {
 
     console.log('init summary person ctrl');
 
@@ -17,7 +17,7 @@ angular.module('poddDashboardApp')
         startDate: (moment().format('d') === '0' ? moment().day(-6) : moment().day(1)),
         endDate: (moment().format('d') === '0' ? moment().day(0) : moment().day(7)),
     };
-    dateRangePickerConfig.format = "DD/MM/YYYY";
+    dateRangePickerConfig.format = 'DD/MM/YYYY';
     $scope.dateOptions = {
         startDate: $scope.date.startDate,
         endDate: $scope.date.endDate,
@@ -72,9 +72,9 @@ angular.module('poddDashboardApp')
     });
 
     $scope.search = function (date) {
-        $scope.queryPerson = moment(date.startDate).format('DD/MM/YYYY') + "-" + moment(date.endDate).format('DD/MM/YYYY');
+        $scope.queryPerson = moment(date.startDate).format('DD/MM/YYYY') + '-' + moment(date.endDate).format('DD/MM/YYYY');
         $state.go('main.summaryperson', { dates: $scope.queryPerson, type: 'percent' });
-    }
+    };
 
     $scope._search = function () {
 
@@ -101,15 +101,18 @@ angular.module('poddDashboardApp')
             console.log('Query result:', data);
 
             var results = [];
-            var options = [];
+            var percent = null;
             var positive = 0;
             var negative = 0;
             var total = 0;
-            var header = false;
 
             data.forEach(function (item) {
                 results.push(item);
                 total += 1;
+
+                if (percent === null) {
+                    percent = item.percent;
+                }
             });
 
             $scope.results = results;
@@ -126,6 +129,8 @@ angular.module('poddDashboardApp')
                 $scope.totalPerson = total;
             }
             $scope.weekSearch = $scope.queryPerson.replace('-', ' - ');
+            $scope.percent = percent;
+            $scope.minReport = Math.ceil(percent / 100 * ((moment().range($scope.date.startDate, $scope.date.endDate)).diff('days') + 1));
             $scope.gridOptionsPerson.enableSorting = true;
             $scope.gridOptionsPerson.columnDefs = [
                 { field: 'parentAdministrationArea', headerCellClass: 'cell-center' },
@@ -159,17 +164,17 @@ angular.module('poddDashboardApp')
     $scope.doQueryOnParams = function (params) {
         if ($state.current.name === 'main.summaryperson') {
             $scope.queryPerson = $window.decodeURIComponent(params.dates || '');
+            
+            var date = {};
+
             if ($scope.queryPerson) {
                 console.log($scope.queryPerson);
-                var splitDate = $scope.queryPerson.split("-");
-                $scope.date.startDate = moment(splitDate[0], "DD/MM/YYYY");
-                $scope.date.endDate = moment(splitDate[1], "DD/MM/YYYY");
+                var splitDate = $scope.queryPerson.split('-');
+                $scope.date.startDate = moment(splitDate[0], 'DD/MM/YYYY');
+                $scope.date.endDate = moment(splitDate[1], 'DD/MM/YYYY');
             }else{
-                console.log("--------ddd----------");
                 $scope.date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
                 $scope.date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
-                
-                var date = {};
                 date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
                 date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
             }
@@ -177,19 +182,21 @@ angular.module('poddDashboardApp')
             $scope.dateOptions.startDate = $scope.date.startDate;
             $scope.dateOptions.endDate = $scope.date.endDate;
             
-            if ($scope.queryPerson) return $scope._search();
+            if ($scope.queryPerson) {
+                return $scope._search();
+            }
             return $scope.search(date);
         }
     };
 
     $scope.exportPerson = function(){
-        var element = angular.element(document.querySelectorAll(".custom-csv-link-location-person")); element.html('');
+        var element = angular.element(document.querySelectorAll('.custom-csv-link-location-person')); element.html('');
         $scope.gridApi.exporter.csvExport( 'all', 'all', element);
     };
 
     $scope.doQueryOnParams($stateParams);
     $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
-        console.log("stateChangeSuccess", $state.current.name, params.dates);
+        console.log('stateChangeSuccess', $state.current.name, params.dates);
         if ($state.current.name === 'main.summaryperson') {
             if (oldParams.dates !== params.dates) {
                 $scope.doQueryOnParams(params);
