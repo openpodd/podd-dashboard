@@ -2,7 +2,7 @@
 
 angular.module('poddDashboardApp')
 
-.controller('LoginCtrl', function ($scope, $http, shared, Auth, $location, Menu) {
+.controller('LoginCtrl', function ($scope, $http, shared, Auth, $state, Menu) {
     $scope.username = '';
     $scope.password = '';
     $scope.shared = shared;
@@ -11,7 +11,7 @@ angular.module('poddDashboardApp')
 
     $scope.$watch('shared.loggedIn', function(newValue) {
         if (newValue) {
-            $location.url('/');
+            $state.go('main.filter', { q: 'date:today negative:true' });
         }
     });
 
@@ -49,7 +49,7 @@ angular.module('poddDashboardApp')
             if (err) {
                 $scope.invalidLogin = true;
             } else {
-                $location.url('/');
+                $state.go('main.filter', { q: 'date:today negative:true' });
             }
         });
     };
