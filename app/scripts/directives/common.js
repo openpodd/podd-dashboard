@@ -1,6 +1,6 @@
 'use strict';
 
-var utils = {
+window.utils = window.utils || {
     getObjectLength: function (obj) {
         var i, count = 0;
         for (i in obj) {
@@ -172,14 +172,14 @@ angular.module('poddDashboardApp')
                      ' <em class="text-muted">${fullName}</em>' +
                      '</li>',
                 callbacks: {
-                    remote_filter: function (query, callback) {
+                    'remote_filter': function (query, callback) {
                         User.search({ username: query }).$promise.then(function (data) {
                             callback(data);
                         });
                     }
                 },
                 data: [],
-                search_key: 'username'
+                'search_key': 'username'
             });
         }
     };

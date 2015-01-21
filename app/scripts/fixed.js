@@ -53,6 +53,6 @@ $(document).ready(function () {
             dom = '0' + dom;
         }
 
-        return dom + "/" + month + '/' + date.getFullYear().toString();
-    }
+        return dom + '/' + month + '/' + date.getFullYear().toString();
+    };
 });

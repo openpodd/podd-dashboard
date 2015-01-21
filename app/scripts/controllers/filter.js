@@ -1,4 +1,4 @@
-/* global utils, moment */
+/* global moment */
 'use strict';
 
 angular.module('poddDashboardApp')

@@ -9,7 +9,7 @@ angular.module('poddDashboardApp')
     '$location', '$state', '$window',
     function ($scope, dashboard, streaming,
                Map, Reports, ReportModal, shared, Auth, Search, Menu, Mentions,
-               Flags, FailRequest, $location, $state, $window, cfpLoadingBar) {
+               Flags, FailRequest, $location, $state, $window) {
 
     console.log('IN MainCtrl');
 
@@ -32,7 +32,9 @@ angular.module('poddDashboardApp')
 
     $scope.$watch('shared.loggedIn', function (newValue) {
         $scope.isLoggedIn = newValue;
-        if(!newValue) $window.location.reload();
+        if(!newValue) {
+            $window.location.reload();
+        }
     });
 
     Menu.setActiveMenu('home');
@@ -195,7 +197,7 @@ angular.module('poddDashboardApp')
         if (shared.filterMode) {
             query = {
                 q: 'administrationArea:' + village.id + ' AND ' + shared.filterQuery,
-                page_size: 20
+                'page_size': 20
             };
             searcher = Search.query;
         }
@@ -204,7 +206,7 @@ angular.module('poddDashboardApp')
             searcher = Reports.list;
         }
         // TODO: remove
-        if (shared.rlError) searcher = FailRequest.query;
+        if (shared.rlError) { searcher = FailRequest.query; }
 
         return searcher(query).$promise.then(function (items) {
 
@@ -243,13 +245,13 @@ angular.module('poddDashboardApp')
     };
 
     $scope.loadmoreVillageReports = function (village, query) {
-        var query = query || {};
+        query = query || {};
         var searcher;
 
         if (shared.filterMode) {
             query = $.extend(query, {
                 q: 'administrationArea:' + village.id + ' AND ' + shared.filterQuery,
-                page_size: 20
+                'page_size': 20
             });
             searcher = Search.query;
         }
@@ -258,7 +260,9 @@ angular.module('poddDashboardApp')
             searcher = Reports.list;
         }
         // TODO: remove
-        if (shared.rlError) searcher = FailRequest.query;
+        if (shared.rlError) {
+            searcher = FailRequest.query;
+        }
 
         $scope.disabledLoadmoreBtn = true;
         return searcher(query).$promise.then(function (items) {
@@ -373,8 +377,12 @@ angular.module('poddDashboardApp')
 
         // TODO: remove
         var searcher;
-        if (shared.rvError) searcher = FailRequest;
-        else searcher = Reports;
+        if (shared.rvError) {
+            searcher = FailRequest;
+        }
+        else {
+            searcher = Reports;
+        }
 
         searcher.get({ reportId: reportId }).$promise.then(function (data) {
             console.log('loaded report data', data);

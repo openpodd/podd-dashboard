@@ -1,3 +1,4 @@
+/* global moment */
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -17,7 +18,7 @@ angular.module('poddDashboardApp')
         startDate: (moment().format('d') === '0' ? moment().day(-6) : moment().day(1)),
         endDate: (moment().format('d') === '0' ? moment().day(0) : moment().day(7)),
     };
-    dateRangePickerConfig.format = "DD/MM/YYYY";
+    dateRangePickerConfig.format = 'DD/MM/YYYY';
     $scope.dateOptions = {
         startDate: $scope.date.startDate,
         endDate: $scope.date.endDate,
@@ -42,7 +43,7 @@ angular.module('poddDashboardApp')
         columnDefs: [],
         exporterLinkLabel: 'ดาวน์โหลดข้อมูลไฟล์ CSV',
         exporterLinkTemplate: '<span><a class="btn btn-primary btn-sm" href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\">LINK_LABEL</a></span>',
-        onRegisterApi: function(gridApi){ 
+        onRegisterApi: function(gridApi){
             $scope.gridApi = gridApi;
         }
     };
@@ -72,9 +73,9 @@ angular.module('poddDashboardApp')
     });
 
     $scope.search = function () {
-        $scope.queryPerson = moment($scope.date.startDate).format('DD/MM/YYYY') + "-" + moment($scope.date.endDate).format('DD/MM/YYYY');
+        $scope.queryPerson = moment($scope.date.startDate).format('DD/MM/YYYY') + '-' + moment($scope.date.endDate).format('DD/MM/YYYY');
         $state.go('main.summaryperson', { dates: $scope.queryPerson, type: 'percent' });
-    }
+    };
 
     $scope._search = function () {
 
@@ -101,11 +102,11 @@ angular.module('poddDashboardApp')
             console.log('Query result:', data);
 
             var results = [];
-            var options = [];
+            // var options = [];
             var positive = 0;
             var negative = 0;
             var total = 0;
-            var header = false;
+            // var header = false;
 
             data.forEach(function (item) {
                 results.push(item);
@@ -161,31 +162,34 @@ angular.module('poddDashboardApp')
             $scope.queryPerson = $window.decodeURIComponent(params.dates || '');
             if ($scope.queryPerson) {
                 console.log($scope.queryPerson);
-                var splitDate = $scope.queryPerson.split("-");
-                $scope.date.startDate = moment(splitDate[0], "DD/MM/YYYY");
-                $scope.date.endDate = moment(splitDate[1], "DD/MM/YYYY");
-            }else{
-                console.log("--------ddd----------");
+                var splitDate = $scope.queryPerson.split('-');
+                $scope.date.startDate = moment(splitDate[0], 'DD/MM/YYYY');
+                $scope.date.endDate = moment(splitDate[1], 'DD/MM/YYYY');
+            } else {
                 $scope.date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
                 $scope.date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
             }
-            
+
             $scope.dateOptions.startDate = $scope.date.startDate;
             $scope.dateOptions.endDate = $scope.date.endDate;
-            
-            if ($scope.queryPerson) return $scope._search();
-            return $scope.search();
+
+            if ($scope.queryPerson) {
+                return $scope._search();
+            }
+            else {
+                return $scope.search();
+            }
         }
     };
 
     $scope.exportPerson = function(){
-        var element = angular.element(document.querySelectorAll(".custom-csv-link-location-person")); element.html('');
+        var element = angular.element(document.querySelectorAll('.custom-csv-link-location-person')); element.html('');
         $scope.gridApi.exporter.csvExport( 'all', 'all', element);
     };
 
     $scope.doQueryOnParams($stateParams);
     $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
-        console.log("stateChangeSuccess", $state.current.name, params.dates);
+        console.log('stateChangeSuccess', $state.current.name, params.dates);
         if ($state.current.name === 'main.summaryperson') {
             if (oldParams.dates !== params.dates) {
                 $scope.doQueryOnParams(params);
