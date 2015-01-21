@@ -31,9 +31,22 @@
                 <h3 class="subheading">สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }}</h3>
                 <p>จำนวนการรายงานทั้งสิ้น <span class="badge badge-bad">{{ totalReport }}</span> รายงาน แบ่งเป็น รายงานไม่พบเหตุผิดปกติจำนวน <span class="badge badge-good">{{ positiveReport }}</span> ครั้ง, รายงานพบเหตุผิดปกติจำนวน <span class="badge badge-bad">{{ negativeReport }}</span> ครั้ง</p>
                 <hr/>
-                <h3 class="subheading">ตารางสรุปการรายงานในแต่ละอปท.</h3>
-                <div id="gridReportHeader" class="summary-grid-header-report grid-report" ui-grid="gridOptionsReportHeader" ui-grid-exporter></div>
-                <div id="gridReport" class="summary-grid-report grid-report" ui-grid="gridOptionsReport" ui-grid-exporter></div>
+                <h3 class="subheading">ตารางสรุปการรายงานในแต่ละอปท. </h3>
+
+                <ul class="list-unstyled filter-list-help">
+                    <li>
+                        รูปแบบของข้อมูลในตาราง <em>positiveCases, negativeCases</em> ตัวอย่าง:
+                        <ul>
+                            <li><code>animalType:ไก่</code>
+                            <span class="explain">คือ หาประเภทของสัตว์</span></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div id="gridReportShow" class="summary-grid-show-report grid-report" ui-grid="gridOptionsReportShow" ui-grid-exporter></div>
+
+                <div id="gridReport" class="summary-grid-report grid-report hide" ui-grid="gridOptionsReport" ui-grid-exporter></div>
+
                 <div class="custom-csv-link-location-report custom-csv-link-location">
                     <div ng-show="loadingLink" loader-spinner></div>
                     <span class="ui-grid-exporter-csv-link">&nbsp</span>

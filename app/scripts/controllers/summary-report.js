@@ -46,10 +46,9 @@ angular.module('poddDashboardApp')
             $scope.gridApi = gridApi;
         }
     };
-    $scope.gridOptionsReportHeader = {
+    $scope.gridOptionsReportShow = {
         data: [],
         columnDefs: [],
-        minRowsToShow: 0
     };
 
     $scope.$on('summaryReport:clearQuery', function (willClear) {
@@ -64,7 +63,7 @@ angular.module('poddDashboardApp')
             $scope.loadingLink = true;
             $scope.error = false;
             $scope.results = [];
-            $scope.gridOptionsReports = {};
+
             $scope.totalReport = 0;
             if ($scope.queryReport) {
                 $scope.doQueryOnParams($stateParams);
@@ -96,10 +95,12 @@ angular.module('poddDashboardApp')
         $scope.error = false;
         $scope.willShowResult = true;
         $scope.loadingLink = true;
+
         $scope.gridOptionsReport.columnDefs = [];
         $scope.gridOptionsReport.data = [];
 
-        $scope.gridOptionsReportHeader.columnDefs = [];
+        $scope.gridOptionsReportShow.columnDefs = [];
+        $scope.gridOptionsReportShow.data = [];
 
         shared.summaryReports = {};
 
@@ -107,8 +108,11 @@ angular.module('poddDashboardApp')
             console.log('Query result:', data);
 
             var results = [];
-            var headerOptions = [];
+            var showResults = [];
+
+            var showOptions = [];
             var reportOptions = [];
+            
             var positive = 0;
             var negative = 0;
             var total = 0;
@@ -116,27 +120,35 @@ angular.module('poddDashboardApp')
             data.forEach(function (item) {
 
                 var result = {};
+                var showResult = {};
 
                 result['name'] = item.name;
+                showResult['name'] = item.name;
                 if(!header){
-                    headerOptions.push({ field: 'name', 
-                        headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell"></div>',
+                    showOptions.push({ field: 'name', 
+                        headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">Name</div>',
                         width:320 });
                     reportOptions.push({ field: 'name', 
                         headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">Name</div>',
-                        width:320 });
+                        width:320});
                 } 
 
                 item.dates.forEach(function (date) {
                     result["P" + date.date] = date.positive;
                     result["N" + date.date] = date.negative;
+                    showResult[date.date] = date.positive + "," + date.negative;
 
                     if(!header){
-                        headerOptions.push({ field: date.date,  
-                            headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ui-grid-cell-contents-collapse-2"><div class="ui-grid-collapse-2">' + date.date + '</div></div>'});
+                        showOptions.push({ field: date.date,  
+                            headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ui-grid-cell-contents-collapse-2"><div class="ui-grid-collapse-2">' + date.date + '</div></div>',
+                            cellTemplate: '<div class="ui-grid-cell-contents cell-center">\
+                                <span class="badge ng-binding" ng-class="{ \'badge-good\': COL_FIELD.split(\',\')[0] !== \'0\'}" >{{ COL_FIELD.split(",")[0] }}</span> , \
+                                <span class="badge ng-binding" ng-class="{ \'badge-bad\': COL_FIELD.split(\',\')[1] !== \'0\'}" >{{ COL_FIELD.split(",")[1] }}</span>\
+                                </div>'});
+                        
                         reportOptions.push({ field: "P" + date.date, 
                             cellTemplate: '<div class="ui-grid-cell-contents cell-center" ng-class="{ gray: COL_FIELD == 0}">{{COL_FIELD}}</div>',
-                            headerCellTemplate: '<div class="ui-grid-cell-contents grid ui-grid-cell-contents-collapse-2"><div class="ui-grid-collapse-2">Good</div></div>'});
+                            headerCellTemplate: '<div class="ui-grid-vertical-bar"></div><div class="ui-grid-cell-contents grid ui-grid-cell-contents-collapse-2"><div class="ui-grid-collapse-2">Good</div></div>'});
                         reportOptions.push({ field: "N" + date.date,
                             cellTemplate: '<div class="ui-grid-cell-contents cell-center" ng-class="{ red: COL_FIELD > 0}">{{COL_FIELD}}</div>',
                             headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">Bad</div>' })
@@ -149,6 +161,7 @@ angular.module('poddDashboardApp')
 
                 header = true;
                 results.push(result);
+                showResults.push(showResult);
             });
 
             $scope.results = results;
@@ -169,8 +182,8 @@ angular.module('poddDashboardApp')
             $scope.gridOptionsReport.columnDefs = reportOptions;
             $scope.gridOptionsReport.data = results;
 
-            $scope.gridOptionsReportHeader.columnDefs = headerOptions;
-
+            $scope.gridOptionsReportShow.columnDefs = showOptions;
+            $scope.gridOptionsReportShow.data = showResults;
 
             setTimeout(function(){
                 $scope.loadingLink = false;
@@ -210,7 +223,6 @@ angular.module('poddDashboardApp')
                 $scope.date.startDate = moment(splitDate[0], "DD/MM/YYYY");
                 $scope.date.endDate = moment(splitDate[1], "DD/MM/YYYY");
             }else{
-                console.log("--------ddd----------");
                 $scope.date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
                 $scope.date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
             }
