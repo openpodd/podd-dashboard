@@ -248,7 +248,7 @@ angular.module('poddDashboardApp')
 .controller('ReportImageLightboxCtrl', function ($scope, Map) {
     // Init map.
     var center = [13.791177699, 100.58814079],
-        zoomLevel = 15,
+        zoomLevel = 9,
         map = false;
 
     L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
@@ -266,8 +266,16 @@ angular.module('poddDashboardApp')
 
         var newCenter = [ location.latitude, location.longitude ];
 
+        var mapOptions = {
+            attributionControl: false
+        };
+
+        var leafletMap = config.MAPBOX_MAP_ID ?
+            L.mapbox.map('image-position-map', config.MAPBOX_MAP_ID, mapOptions) :
+            L.map('image-position-map', mapOptions);
+
         if (!map) {
-            map = new Map( L.map('image-position-map').setView(center, zoomLevel) );
+            map = new Map( leafletMap.setView(center, zoomLevel) );
         }
         if ($scope.showMap && location) {
             map.leaflet.setView(newCenter);
