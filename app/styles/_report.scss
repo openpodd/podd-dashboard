@@ -99,8 +99,10 @@ $badge-bad: #FF6D69;
 .pd-table-reporter{ width: 110px; text-align: center; }
 .pd-table-notification{ width: 25px; text-align: center; }
 
+.badge-zero{ background-color: #c1c1c1; }
 .badge-good{ background-color: $badge-good-color; }
 .badge-bad{ background-color: $badge-bad; }
+
 .badge-new{
     background-color: $badge-bad;
     font-weight: normal;

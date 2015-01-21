@@ -31,40 +31,24 @@
                 <h3 class="subheading">สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }}</h3>
                 <p>จำนวนการรายงานทั้งสิ้น <span class="badge badge-bad">{{ totalReport }}</span> รายงาน แบ่งเป็น รายงานไม่พบเหตุผิดปกติจำนวน <span class="badge badge-good">{{ positiveReport }}</span> ครั้ง, รายงานพบเหตุผิดปกติจำนวน <span class="badge badge-bad">{{ negativeReport }}</span> ครั้ง</p>
                 <hr/>
-                <h3 class="subheading">ตารางสรุปการรายงานในแต่ละอปท. </h3>
-
                 <ul class="list-unstyled report-list-help">
                     <li>
-                        รูปแบบของข้อมูลในตารางระบุค่าของ<code>จำนวนของรายงานไม่พบเหตุผิดปกติ, จำนวนของรายงานพบเหตุผิดปกติ</code> ตัวอย่างของข้อมูล:
+                        รูปแบบของข้อมูลในตารางระบุค่าของ<code>[จำนวนรายงานไม่พบเหตุผิดปกติ, จำนวนรายงานพบเหตุผิดปกติ]</code> ตัวอย่างข้อมูล:
                         <ul>
                             <li>
-                                <p>
-                                    <span class="badge">0</span> , 
-                                    <span class="badge">0</span>
-                                    <span class="explain">คือ จำนวนของรายงานไม่พบเหตุผิดปกติเท่ากับ 0 และ จำนวนของรายงานพบเหตุผิดปกติเท่ากับ 0
-                                </p>
-                                <p>
-                                    <span class="explain">
-                                        โดยที่วงกลมสีเทาจะแสดงบนจำนวนรายงานไม่พบเหตุผิดปกติเมื่อจำนวนรายงานเท่ากับ 0 และวงกลมสีเทาจะแสดงบนจำนวนรายงานพบเหตุผิดปกติเมื่อจำนวนรายงานเท่ากับ 0
-                                    </span>
-                                </p>
+                                <p><span class="badge badge-zero">0</span> สีเทา คือ จำนวนรายงานเท่ากับศูนย์</p>
                             </li>
                             <li>
-                                <p>
-                                    <span class="badge badge-good">1</span> , 
-                                    <span class="badge badge-bad">2</span>
-                                    <span class="explain">คือ จำนวนของรายงานไม่พบเหตุผิดปกติเท่ากับ 1 และ จำนวนของรายงานพบเหตุผิดปกติเท่ากับ 2
-                                </p>
-                                <p>
-                                    <span class="explain">
-                                        โดยที่วงกลมสีเขียวจะแสดงบนจำนวนรายงานไม่พบเหตุผิดปกติเมื่อจำนวนรายงานมากกว่า 0 และวงกลมสีแดงจะแสดงบนจำนวนรายงานพบเหตุผิดปกติเมื่อจำนวนรายงานมากกว่า 0
-                                    </span>
-                                </p>
+                                <p><span class="badge badge-good">4</span> สีเขียว คือ จำนวนรายงานไม่พบเหตุผิดปกติมากกว่าศูนย์</p>
+                            </li>
+                            <li>
+                                <p><span class="badge badge-bad">2</span> สีแดง คือ จำนวนรายงานพบเหตุผิดปกติมากกว่าศูนย์</p>
                             </li>
                         </ul>
                     </li>
                 </ul>
-
+                <hr/>
+                <h3 class="subheading">ตารางสรุปการรายงานในแต่ละอปท. </h3>
                 <div id="gridReportShow" class="summary-grid-show-report grid-report" ui-grid="gridOptionsReportShow" ui-grid-pinning></div>
 
                 <div id="gridReport" class="summary-grid-report grid-report hide" ui-grid="gridOptionsReport" ui-grid-exporter></div>
