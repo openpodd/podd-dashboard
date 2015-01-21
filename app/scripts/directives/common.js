@@ -31,8 +31,15 @@ angular.module('poddDashboardApp')
 })
 
 .filter('fullname', function () {
-    return function (user) {
-        return user.firstName + ' ' + user.lastName;
+    return function (user, defaultName) {
+        if (user.firstName || user.lastName) {
+            return [user.firstName, user.lastName]
+             .filter(function (item) { return item ? item : false; })
+             .join(' ');
+        }
+        else {
+            return defaultName;
+        }
     };
 })
 
