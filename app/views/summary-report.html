@@ -5,8 +5,8 @@
         <i class="fa fa-times pull-right fa-size-18" ng-click="closeSummaryReport();gotoMainPage();"></i>
     </div>
 
-<!--      <div class="scroller scroller-x scroller-y content-wrapper" perfect-scrollbar wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20" >
-        <div class="content"> -->
+     <div class="scroller scroller-x scroller-y content-wrapper" perfect-scrollbar wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20" >
+        <div class="">
 
             <form role="form" ng-submit="search()" class="search-block">
                 <div class="input-group">
@@ -33,17 +33,39 @@
                 <hr/>
                 <h3 class="subheading">ตารางสรุปการรายงานในแต่ละอปท. </h3>
 
-                <ul class="list-unstyled filter-list-help">
+                <ul class="list-unstyled report-list-help">
                     <li>
-                        รูปแบบของข้อมูลในตาราง <em>positiveCases, negativeCases</em> ตัวอย่าง:
+                        รูปแบบของข้อมูลในตารางระบุค่าของ<code>จำนวนของรายงานไม่พบเหตุผิดปกติ, จำนวนของรายงานพบเหตุผิดปกติ</code> ตัวอย่างของข้อมูล:
                         <ul>
-                            <li><code>animalType:ไก่</code>
-                            <span class="explain">คือ หาประเภทของสัตว์</span></li>
+                            <li>
+                                <p>
+                                    <span class="badge">0</span> , 
+                                    <span class="badge">0</span>
+                                    <span class="explain">คือ จำนวนของรายงานไม่พบเหตุผิดปกติเท่ากับ 0 และ จำนวนของรายงานพบเหตุผิดปกติเท่ากับ 0
+                                </p>
+                                <p>
+                                    <span class="explain">
+                                        โดยที่วงกลมสีเทาจะแสดงบนจำนวนรายงานไม่พบเหตุผิดปกติเมื่อจำนวนรายงานเท่ากับ 0 และวงกลมสีเทาจะแสดงบนจำนวนรายงานพบเหตุผิดปกติเมื่อจำนวนรายงานเท่ากับ 0
+                                    </span>
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    <span class="badge badge-good">1</span> , 
+                                    <span class="badge badge-bad">2</span>
+                                    <span class="explain">คือ จำนวนของรายงานไม่พบเหตุผิดปกติเท่ากับ 1 และ จำนวนของรายงานพบเหตุผิดปกติเท่ากับ 2
+                                </p>
+                                <p>
+                                    <span class="explain">
+                                        โดยที่วงกลมสีเขียวจะแสดงบนจำนวนรายงานไม่พบเหตุผิดปกติเมื่อจำนวนรายงานมากกว่า 0 และวงกลมสีแดงจะแสดงบนจำนวนรายงานพบเหตุผิดปกติเมื่อจำนวนรายงานมากกว่า 0
+                                    </span>
+                                </p>
+                            </li>
                         </ul>
                     </li>
                 </ul>
 
-                <div id="gridReportShow" class="summary-grid-show-report grid-report" ui-grid="gridOptionsReportShow" ui-grid-exporter></div>
+                <div id="gridReportShow" class="summary-grid-show-report grid-report" ui-grid="gridOptionsReportShow" ui-grid-pinning></div>
 
                 <div id="gridReport" class="summary-grid-report grid-report hide" ui-grid="gridOptionsReport" ui-grid-exporter></div>
 
@@ -53,8 +75,8 @@
                 </div>
             </div>
 
-<!--       </div>
-    </div> -->
+      </div>
+    </div>
 
   </div>
 </div>

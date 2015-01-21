@@ -49,6 +49,7 @@ angular.module('poddDashboardApp')
     $scope.gridOptionsReportShow = {
         data: [],
         columnDefs: [],
+        minRowsToShow: 10,
     };
 
     $scope.$on('summaryReport:clearQuery', function (willClear) {
@@ -77,7 +78,7 @@ angular.module('poddDashboardApp')
 
     $scope.search = function () {
         $scope.queryReport = moment($scope.date.startDate).format('DD/MM/YYYY') + "-" + moment($scope.date.endDate).format('DD/MM/YYYY');
-        $state.go('main.summaryreport', { dates: $scope.queryReport, type: 'week' });
+        $state.go('main.summaryreport', { dates: $scope.queryReport, type: 'day' });
     }
 
     $scope._search = function () {
@@ -117,6 +118,7 @@ angular.module('poddDashboardApp')
             var negative = 0;
             var total = 0;
             var header = false;
+
             data.forEach(function (item) {
 
                 var result = {};
@@ -125,9 +127,10 @@ angular.module('poddDashboardApp')
                 result['name'] = item.name;
                 showResult['name'] = item.name;
                 if(!header){
-                    showOptions.push({ field: 'name', 
+                    showOptions.push({ field: 'name', pinnedLeft: true,
                         headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">Name</div>',
                         width:320 });
+                    
                     reportOptions.push({ field: 'name', 
                         headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">Name</div>',
                         width:320});
@@ -139,13 +142,17 @@ angular.module('poddDashboardApp')
                     showResult[date.date] = date.positive + "," + date.negative;
 
                     if(!header){
-                        showOptions.push({ field: date.date,  
+                        var length = item.dates.length;
+
+                        var column = { field: date.date, 
                             headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ui-grid-cell-contents-collapse-2"><div class="ui-grid-collapse-2">' + date.date + '</div></div>',
                             cellTemplate: '<div class="ui-grid-cell-contents cell-center">\
                                 <span class="badge ng-binding" ng-class="{ \'badge-good\': COL_FIELD.split(\',\')[0] !== \'0\'}" >{{ COL_FIELD.split(",")[0] }}</span> , \
                                 <span class="badge ng-binding" ng-class="{ \'badge-bad\': COL_FIELD.split(\',\')[1] !== \'0\'}" >{{ COL_FIELD.split(",")[1] }}</span>\
-                                </div>'});
+                                </div>'}
+                        if(length > 12) column.width = 70;
                         
+                        showOptions.push(column);
                         reportOptions.push({ field: "P" + date.date, 
                             cellTemplate: '<div class="ui-grid-cell-contents cell-center" ng-class="{ gray: COL_FIELD == 0}">{{COL_FIELD}}</div>',
                             headerCellTemplate: '<div class="ui-grid-vertical-bar"></div><div class="ui-grid-cell-contents grid ui-grid-cell-contents-collapse-2"><div class="ui-grid-collapse-2">Good</div></div>'});
