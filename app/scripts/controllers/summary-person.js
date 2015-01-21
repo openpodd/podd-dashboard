@@ -71,8 +71,8 @@ angular.module('poddDashboardApp')
         shared.summaryQuery = newValue;
     });
 
-    $scope.search = function () {
-        $scope.queryPerson = moment($scope.date.startDate).format('DD/MM/YYYY') + "-" + moment($scope.date.endDate).format('DD/MM/YYYY');
+    $scope.search = function (date) {
+        $scope.queryPerson = moment(date.startDate).format('DD/MM/YYYY') + "-" + moment(date.endDate).format('DD/MM/YYYY');
         $state.go('main.summaryperson', { dates: $scope.queryPerson, type: 'percent' });
     }
 
@@ -125,7 +125,7 @@ angular.module('poddDashboardApp')
                 $scope.negativeReport = negative;
                 $scope.totalPerson = total;
             }
-            $scope.weekSearch = $scope.queryPerson;
+            $scope.weekSearch = $scope.queryPerson.replace('-', ' - ');
             $scope.gridOptionsPerson.enableSorting = true;
             $scope.gridOptionsPerson.columnDefs = [
                 { field: 'parentAdministrationArea', headerCellClass: 'cell-center' },
@@ -168,13 +168,17 @@ angular.module('poddDashboardApp')
                 console.log("--------ddd----------");
                 $scope.date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
                 $scope.date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
+                
+                var date = {};
+                date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
+                date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
             }
             
             $scope.dateOptions.startDate = $scope.date.startDate;
             $scope.dateOptions.endDate = $scope.date.endDate;
             
             if ($scope.queryPerson) return $scope._search();
-            return $scope.search();
+            return $scope.search(date);
         }
     };
 
@@ -190,9 +194,10 @@ angular.module('poddDashboardApp')
             if (oldParams.dates !== params.dates) {
                 $scope.doQueryOnParams(params);
             }else if(typeof params.dates === 'undefined'){
-                $scope.date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
-                $scope.date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
-                return $scope.search();
+                var date = {};
+                date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
+                date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
+                return $scope.search(date);
             }
         }
     });

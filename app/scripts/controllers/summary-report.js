@@ -76,8 +76,8 @@ angular.module('poddDashboardApp')
         shared.summaryQuery = newValue;
     });
 
-    $scope.search = function () {
-        $scope.queryReport = moment($scope.date.startDate).format('DD/MM/YYYY') + "-" + moment($scope.date.endDate).format('DD/MM/YYYY');
+    $scope.search = function (date) {
+        $scope.queryReport = moment(date.startDate).format('DD/MM/YYYY') + "-" + moment(date.endDate).format('DD/MM/YYYY');
         $state.go('main.summaryreport', { dates: $scope.queryReport, type: 'day' });
     }
 
@@ -184,7 +184,7 @@ angular.module('poddDashboardApp')
                 $scope.negativeReport = negative;
                 $scope.totalReport = total;
             }
-            $scope.weekSearch = $scope.queryReport;
+            $scope.weekSearch = $scope.queryReport.replace('-', ' - ');
             $scope.gridOptionsReport.enableSorting = false;
             $scope.gridOptionsReport.columnDefs = reportOptions;
             $scope.gridOptionsReport.data = results;
@@ -232,13 +232,16 @@ angular.module('poddDashboardApp')
             }else{
                 $scope.date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
                 $scope.date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
+
+                var date = {};
+                date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
+                date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
             }
-            
             $scope.dateOptions.startDate = $scope.date.startDate;
             $scope.dateOptions.endDate = $scope.date.endDate;
             
             if ($scope.queryReport) return $scope._search();
-            return $scope.search();
+            return $scope.search(date);
         }
     };
 
@@ -249,9 +252,10 @@ angular.module('poddDashboardApp')
             if (oldParams.dates !== params.dates) {
                 $scope.doQueryOnParams(params);
             }else if(typeof params.dates === 'undefined'){
-                $scope.date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
-                $scope.date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
-                return $scope.search();
+                var date = {};
+                date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
+                date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
+                return $scope.search(date);
             }
         }
     });

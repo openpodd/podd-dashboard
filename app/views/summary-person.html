@@ -5,45 +5,61 @@
         <i class="fa fa-times pull-right fa-size-18" ng-click="closeSummaryPerson();gotoMainPage();"></i>
     </div>
 
-<!--
+
      <div class="scroller scroller-x scroller-y content-wrapper" perfect-scrollbar wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20" refresh-on-change="report" ng-if="!loadingReportView && !loadingReportViewError">
-      <div class="content">
--->
- 
-        <form role="form" ng-submit="search()" class="search-block">
-            <div class="input-group">
-                <span class="input-group-btn" >
-                    <button class="btn btn-default btn-info-search" type="button" >
-                        <label for="week_range_person">เลือกวันที่ <i class="fa fa-calendar"></i> </label>
-                    </button>
-                </span>
+        <div class="">
 
-                <input date-range-picker type="text" id="week_range_person" class="form-control" ng-model="date" options="dateOptions" />
+            <form role="form" ng-submit="search(date)" class="search-block">
+                <div class="input-group">
+                    <span class="input-group-btn" >
+                        <button class="btn btn-default btn-info-search" type="button" >
+                            <label for="week_range_person">เลือกวันที่ <i class="fa fa-calendar"></i> </label>
+                        </button>
+                    </span>
 
-               <!--  <input type="text" id="month_range_person" class="form-control" ng-model="query_person" ng-show="type === 'month'"/> -->
+                    <input date-range-picker type="text" id="week_range_person" class="form-control" ng-model="date" options="dateOptions" />
 
-                <span class="input-group-btn">
-                    <button class="btn btn-default pd-btn-search" type="submit"><i class="fa fa-search fa-size-18"></i></button>
-                </span>
+                   <!--  <input type="text" id="month_range_person" class="form-control" ng-model="query_person" ng-show="type === 'month'"/> -->
+
+                    <span class="input-group-btn">
+                        <button class="btn btn-default pd-btn-search" type="submit"><i class="fa fa-search fa-size-18"></i></button>
+                    </span>
+                </div>
+            </form>
+
+            <div ng-show="loading" loader-spinner></div>
+            <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
+            <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
+            
+            <div class="summary-list" ng-show="results">
+                <h3 class="subheading" style="margin-bottom:20px;">สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }} </h3>
+                <ul class="list-unstyled report-list-help">
+                    <li>
+                        เกณฑ์การวัดผู้ที่รายงานต่ำกว่าเกณฑ์ <code>10 %</code> 
+                        โดยดูจากผู้รายงานต่ำกว่าเกณฑ์มีจำนวนรายงานในช่วงวันที่ <code>{{ weekSearch }}</code> ต่ำกว่า <code>1 รายงาน</code>
+                    </li>
+                    <li>
+                        ตัวอย่างการคิดจำนวนรายงานต่ำกว่าเกณฑ์:
+                        <ul>
+                            <li>
+                                <span class="explain">
+                                    เมื่อกำหนดเปอร์เซนต์ของจำนวนรายงานที่ตำกว่าเกณฑ์เท่ากับ 10% และทำการค้นหาระหว่างวันที่ 01/01/2015 - 10/01/2015
+                                    คิดเป็นระยะเวลา 10 วัน เพราะฉะนั้นผู้รายงานที่ตำกว่าเกณฑ์จะต้องรายงานต่ำกว่า <img src="http://latex.codecogs.com/svg.latex?\frac{10}{100}\times10=1" border="0" style="margin-top:2px;"/> ครั้งของช่วงเวลานั้น
+                                </span>
+                            </li>
+                        </ul>
+                    </li> 
+                </ul>
+                <h4 class="subheading">พบจำนวนผู้รายงานที่ต่ำกว่าเกณฑ์ทั้งสิ้น {{ totalPerson }} คน</h4><hr/>
+                <div id="gridPerson" class="summary-grid-person" ui-grid="gridOptionsPerson" ui-grid-exporter></div>
+                <div class="custom-csv-link-location-person custom-csv-link-location">
+                    <div ng-show="loadingLink" loader-spinner></div>
+                    <span class="ui-grid-exporter-csv-link">&nbsp</span>
+                </div>
             </div>
-        </form>
-
-        <div ng-show="loading" loader-spinner></div>
-        <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
-        <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
         
-        <div class="summary-list" ng-show="results">
-            <h3 class="subheading" style="margin-bottom:20px;">สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }} </h3>
-            <h4 class="subheading">จำนวนการรายงานทั้งสิ้น {{ totalPerson }} คน</h4><hr/>
-            <div id="gridPerson" class="summary-grid-person" ui-grid="gridOptionsPerson" ui-grid-exporter></div>
-            <div class="custom-csv-link-location-person custom-csv-link-location">
-                <div ng-show="loadingLink" loader-spinner></div>
-                <span class="ui-grid-exporter-csv-link">&nbsp</span>
-            </div>
-        </div>
-        
-       <!-- </div> --> <!-- End content -->
-    <!-- </div> --> <!-- End scroller -->
+        </div> 
+    </div> 
 
   </div>
 </div>
