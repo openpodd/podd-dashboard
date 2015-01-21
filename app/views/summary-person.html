@@ -35,8 +35,13 @@
                 <h3 class="subheading" style="margin-bottom:20px;">สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }} </h3>
                 <ul class="list-unstyled report-list-help">
                     <li>
-                        เกณฑ์การวัดผู้ที่รายงานต่ำกว่าเกณฑ์ <code>{{ percent }} %</code> 
-                        โดยดูจากผู้รายงานต่ำกว่าเกณฑ์มีจำนวนรายงานในช่วงวันที่ <code>{{ weekSearch }}</code> ต่ำกว่า <code>{{ minReport }} รายงาน</code>
+                        เกณฑ์การวัดผู้ที่รายงานต่ำกว่าเกณฑ์ 
+                        <select ng-model="percent"
+                          ng-options="i for i in percentRange()"
+                          ng-change="updatePercent(percent)">
+                        </select>
+                        <code>  %</code> 
+                        โดยดูจากผู้รายงานต่ำกว่าเกณฑ์มีจำนวนรายงานในช่วงวันที่ <code>{{ weekSearch }}</code> ต่ำกว่าหรือเท่ากับ <code>{{ minReport }} รายงาน</code>
                     </li>
                     <li>
                         ตัวอย่างการคิดจำนวนรายงานต่ำกว่าเกณฑ์:
@@ -44,7 +49,7 @@
                             <li>
                                 <span class="explain">
                                     เมื่อกำหนดเปอร์เซนต์ของจำนวนรายงานที่ตำกว่าเกณฑ์เท่ากับ 10% และทำการค้นหาระหว่างวันที่ 01/01/2015 - 10/01/2015
-                                    คิดเป็นระยะเวลา 10 วัน เพราะฉะนั้นผู้รายงานที่ตำกว่าเกณฑ์จะต้องรายงานต่ำกว่า <img src="http://latex.codecogs.com/svg.latex?\frac{10}{100}\times10=1" border="0" style="margin-top:2px;"/> ครั้งของช่วงเวลานั้น
+                                    คิดเป็นระยะเวลา 10 วัน เพราะฉะนั้นผู้รายงานที่ตำกว่าเกณฑ์จะรายงานต่ำกว่าหรือเท่ากับ <img src="http://latex.codecogs.com/svg.latex?\frac{10}{100}\times10=1" border="0" style="margin-top:2px;"/> ครั้งของช่วงเวลานั้น
                                 </span>
                             </li>
                         </ul>

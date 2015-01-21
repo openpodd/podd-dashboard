@@ -33,7 +33,6 @@ angular.module('poddDashboardApp')
         },
     };
 
-
     $scope.queryPerson = '';
     $scope.type = 'week';
     $scope.shared = shared;
@@ -72,6 +71,19 @@ angular.module('poddDashboardApp')
         shared.summaryQuery = newValue;
     });
 
+
+    $scope.percentRange = function(){
+        var results = [];
+        for (var i = 0; i <= 100; i+=5) {
+            results.push(i);
+        }
+        return results;
+    };
+
+    $scope.updatePercent = function(percent){
+        $state.go('main.summaryperson', { dates: $scope.queryPerson, type: 'percent', percent: percent });
+    };
+
     $scope.search = function (date) {
         $scope.queryPerson = moment(date.startDate).format('DD/MM/YYYY') + '-' + moment(date.endDate).format('DD/MM/YYYY');
         $state.go('main.summaryperson', { dates: $scope.queryPerson, type: 'percent' });
@@ -98,7 +110,12 @@ angular.module('poddDashboardApp')
 
         shared.summaryReports = {};
 
-        SummaryPerson.query({ dates: $scope.queryPerson, type: 'percent', offset: ((new Date()).getTimezoneOffset() * -1 / 60) }).$promise.then(function (data) {
+        var object = { dates: $scope.queryPerson, type: 'percent', offset: ((new Date()).getTimezoneOffset() * -1 / 60) };
+        if ($scope.percent) {
+            object.percent = $scope.percent;
+        }
+
+        SummaryPerson.query(object).$promise.then(function (data) {
             console.log('Query result:', data);
 
             var results = [];
@@ -131,7 +148,7 @@ angular.module('poddDashboardApp')
             }
             $scope.weekSearch = $scope.queryPerson.replace('-', ' - ');
             $scope.percent = percent;
-            $scope.minReport = Math.ceil(percent / 100 * ((moment().range($scope.date.startDate, $scope.date.endDate)).diff('days') + 1));
+            $scope.minReport = Math.floor(percent / 100 * ((moment().range($scope.date.startDate, $scope.date.endDate)).diff('days') + 1));
             $scope.gridOptionsPerson.enableSorting = true;
             $scope.gridOptionsPerson.columnDefs = [
                 { field: 'parentAdministrationArea', headerCellClass: 'cell-center' },
@@ -165,6 +182,7 @@ angular.module('poddDashboardApp')
     $scope.doQueryOnParams = function (params) {
         if ($state.current.name === 'main.summaryperson') {
             $scope.queryPerson = $window.decodeURIComponent(params.dates || '');
+            $scope.percent = $window.decodeURIComponent(params.percent || '');
             
             var date = {};
 
@@ -201,7 +219,7 @@ angular.module('poddDashboardApp')
     $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
         console.log('stateChangeSuccess', $state.current.name, params.dates);
         if ($state.current.name === 'main.summaryperson') {
-            if (oldParams.dates !== params.dates) {
+            if (oldParams.dates !== params.dates || oldParams.percent !== params.percent) {
                 $scope.doQueryOnParams(params);
             }else if(typeof params.dates === 'undefined'){
                 var date = {};

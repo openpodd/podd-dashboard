@@ -139,7 +139,7 @@ angular
         controller: 'SummaryReportModeCtrl'
       })
       .state('main.summaryperson', {
-        url: '^/summary/person?dates&type',
+        url: '^/summary/person?dates&percent&type',
         template: '',
         controller: 'SummaryPersonModeCtrl'
       })
