@@ -1,12 +1,19 @@
 /* ------------------------ */
 #map {
-  width: 100%;
+  // width: 100%;
+  left: 50px;
+  right: 0;
   height: 100%;
-    position: absolute;
+  position: absolute;
+  // transition: left .5s linear;
 
   .awesome-marker i {
     font-size: 22px;
     margin-top: 6px;
+  }
+
+  &.half-map {
+    // left: 50%;
   }
 }
 
@@ -39,6 +46,16 @@
   display: none;
 }
 
+.radar-focus {
+  display: block;
+
+  .radar-wink {
+    opacity: .68;
+    animation: none;
+    background-color: #9966CB;
+  }
+}
+
 @keyframes wink {
   from {
     opacity: .5;
@@ -54,10 +71,10 @@
 
 //Controller
 .leaflet-top.leaflet-top{
-    position: absolute;
-    top: 90%;
-    left: 2px;
-    z-index: 9999;
+    // position: absolute;
+    // top: 90%;
+    // left: 2px;
+    // z-index: 9999;
 
 //    animation: fadeInLeft 1s 1s alternate backwards;
 }

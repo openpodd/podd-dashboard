@@ -305,6 +305,7 @@ angular.module('poddDashboardApp')
 
         // unwink first.
         map.villageUnwink(data);
+        map.villageFocus(data);
 
         // set current village
         $scope.currentVillage = data;
@@ -326,7 +327,7 @@ angular.module('poddDashboardApp')
         map.leaflet.panToOffset([
             data.location.coordinates[1],
             data.location.coordinates[0]
-        ], [ paddingLeft, 0 ]);
+        ], [ paddingLeft, 0 ], 11);
 
         shared.showReportList = true;
         $scope.loadingReportList = true;
@@ -342,6 +343,8 @@ angular.module('poddDashboardApp')
         $scope.recentReports = null;
         $scope.olderReports = null;
         shared.showReportList = false;
+
+        map.villageBlurAll();
 
         $scope.report = null;
         ReportModal.close();

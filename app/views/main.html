@@ -1,6 +1,8 @@
 <div ng-hide="isLoggedIn" class="map-mask"></div>
 
-<div id="map" class="l-map" ng-hide="shared.summaryReportMode || shared.summaryPersonMode"></div>
+<div id="map" class="l-map"
+     ng-hide="shared.summaryReportMode || shared.summaryPersonMode"
+     ng-class="{ 'half-map': shared.showReportList }"></div>
 
 <div ng-include="'/views/report-list.html'" class="section-report" ng-hide="shared.summaryReportMode || shared.summaryPersonMode"></div>
 

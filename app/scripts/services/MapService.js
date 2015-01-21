@@ -7,11 +7,23 @@ angular.module('poddDashboardApp')
 
     var tileLayerURL = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
 
-    L.Map.prototype.panToOffset = function (latlng, offset, options) {
+    L.Map.prototype.panToOffset = function (latlng, offset, zoomLevel) {
+        var self = this;
+
         var x = this.latLngToContainerPoint(latlng).x - offset[0];
         var y = this.latLngToContainerPoint(latlng).y - offset[1];
         var point = this.containerPointToLatLng([x, y]);
-        return this.setView(point, this._zoom, { pan: options });
+
+        var zoomAround = function () {
+            self.setZoomAround(latlng, zoomLevel !== undefined ?
+                                            zoomLevel :
+                                            self.getZoom());
+        };
+
+        this.panTo(point);
+        this.once('moveend', zoomAround);
+
+        return this;
     };
 
     /**
@@ -218,6 +230,18 @@ angular.module('poddDashboardApp')
         if (village.radarMarker) {
             $(village.radarMarker._icon).addClass('radar-hide');
         }
+    };
+
+    Map.prototype.villageFocus = function villageFocus(village) {
+        this.villageBlurAll();
+
+        if (village.radarMarker) {
+            $(village.radarMarker._icon).addClass('radar-focus');
+        }
+    };
+
+    Map.prototype.villageBlurAll = function villageBlurAll() {
+        $('.radar-focus').removeClass('radar-focus');
     };
 
     Map.prototype.onClickVillage = function onClickVillage(cb) {
