@@ -32,15 +32,20 @@ angular.module('poddDashboardApp')
 
     $scope.$watch('shared.loggedIn', function (newValue) {
         $scope.isLoggedIn = newValue;
-        console.log("LOginnnnn", newValue);
         if(!newValue) $window.location.reload();
     });
 
     Menu.setActiveMenu('home');
 
+    L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
+
+    var leafletMap = config.MAPBOX_MAP_ID ?
+                        L.mapbox.map('map', config.MAPBOX_MAP_ID) :
+                        L.map('map');
+
     var center = [13.791177699, 100.58814079],
         zoomLevel = 15,
-        map = new Map( L.map('map').setView(center, zoomLevel) );
+        map = new Map( leafletMap.setView(center, zoomLevel) );
 
     function refreshDashboard() {
         dashboard.get().$promise.then(function (villages) {

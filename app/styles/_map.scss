@@ -50,6 +50,10 @@
 //    animation: fadeInLeft 1s 1s alternate backwards;
 }
 
+.leaflet-control-zoom-in, .leaflet-control-zoom-out {
+    text-indent: -9999em;
+}
+
 .map-mask {
     position: absolute;
     display: block;

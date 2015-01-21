@@ -1,5 +1,6 @@
 var config = {
     API_BASEPATH: 'http://localhost:8000',
-
-    SOCKETIO_BASEPATH: 'http://localhost:8888'
+    SOCKETIO_BASEPATH: 'http://localhost:8888',
+    MAPBOX_ACCESS_TOKEN: '',
+    MAPBOX_MAP_ID: ''
 };
