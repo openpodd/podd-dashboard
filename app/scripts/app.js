@@ -32,6 +32,7 @@ angular
     'ui.grid.selection',
     'ui.grid.exporter',
     'ui.grid.resizeColumns',
+    'ui.grid.pinning',
     'daterangepicker'
   ])
 

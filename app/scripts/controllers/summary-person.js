@@ -73,7 +73,7 @@ angular.module('poddDashboardApp')
 
     $scope.search = function () {
         $scope.queryPerson = moment($scope.date.startDate).format('DD/MM/YYYY') + "-" + moment($scope.date.endDate).format('DD/MM/YYYY');
-        $state.go('main.summaryperson', { dates: $scope.queryPerson, type: 'week' });
+        $state.go('main.summaryperson', { dates: $scope.queryPerson, type: 'percent' });
     }
 
     $scope._search = function () {
@@ -97,7 +97,7 @@ angular.module('poddDashboardApp')
 
         shared.summaryReports = {};
 
-        SummaryPerson.query({ dates: $scope.queryPerson, type: 'week', offset: ((new Date()).getTimezoneOffset() * -1 / 60) }).$promise.then(function (data) {
+        SummaryPerson.query({ dates: $scope.queryPerson, type: 'percent', offset: ((new Date()).getTimezoneOffset() * -1 / 60) }).$promise.then(function (data) {
             console.log('Query result:', data);
 
             var results = [];

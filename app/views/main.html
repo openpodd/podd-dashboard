@@ -2,7 +2,7 @@
 
 <div id="map" class="l-map" ng-hide="shared.summaryReportMode || shared.summaryPersonMode"></div>
 
-<div ng-include="'/views/report-list.html'" class="section-report"></div>
+<div ng-include="'/views/report-list.html'" class="section-report" ng-hide="shared.summaryReportMode || shared.summaryPersonMode"></div>
 
 <div ng-include="'/views/filter.html'" class="section-filter" ng-show="shared.filterMode"></div>
 

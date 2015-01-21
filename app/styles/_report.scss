@@ -590,6 +590,10 @@ $badge-bad: #FF6D69;
     z-index: 9999 !important;
 }
 
+.report-list-help li{
+    margin-top: 10px;    
+}
+
 .case-confirmation-box {
     transition: opacity 1s ease;
     -webkit-transition: all 1s ease;
