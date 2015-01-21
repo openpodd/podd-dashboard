@@ -18,7 +18,7 @@ angular.module('poddDashboardApp')
 
         // TODO: remove
         var searcher = Comments.list;
-        if (shared.rcError) searcher = FailRequest.query;
+        if (shared.rcError) { searcher = FailRequest.query; }
 
         $scope.comments = Comments.list({ reportId: $scope.$parent.report.id });
 

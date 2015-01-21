@@ -1,3 +1,4 @@
+/* global moment */
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -9,7 +10,7 @@ angular.module('poddDashboardApp')
 
 .controller('SummaryPersonCtrl', function ($scope, SummaryPerson, User,
     streaming, FailRequest, shared, $location, $state, $stateParams, $window,
-    cfpLoadingBar, dateRangePickerConfig, moment) {
+    cfpLoadingBar, dateRangePickerConfig) {
 
     console.log('init summary person ctrl');
 
@@ -42,7 +43,7 @@ angular.module('poddDashboardApp')
         columnDefs: [],
         exporterLinkLabel: 'ดาวน์โหลดข้อมูลไฟล์ CSV',
         exporterLinkTemplate: '<span><a class="btn btn-primary btn-sm" href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\">LINK_LABEL</a></span>',
-        onRegisterApi: function(gridApi){ 
+        onRegisterApi: function(gridApi){
             $scope.gridApi = gridApi;
         }
     };
@@ -172,20 +173,22 @@ angular.module('poddDashboardApp')
                 var splitDate = $scope.queryPerson.split('-');
                 $scope.date.startDate = moment(splitDate[0], 'DD/MM/YYYY');
                 $scope.date.endDate = moment(splitDate[1], 'DD/MM/YYYY');
-            }else{
+            } else {
                 $scope.date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
                 $scope.date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
                 date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
                 date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
             }
-            
+
             $scope.dateOptions.startDate = $scope.date.startDate;
             $scope.dateOptions.endDate = $scope.date.endDate;
-            
+
             if ($scope.queryPerson) {
                 return $scope._search();
             }
-            return $scope.search(date);
+            else {
+                return $scope.search(date);
+            }
         }
     };
 

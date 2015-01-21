@@ -14,6 +14,24 @@ angular.module('poddDashboardApp')
         return this.setView(point, this._zoom, { pan: options });
     };
 
+    /**
+     * Calculate padding by pixel. Require re-calculate each zoom level because
+     * pixel calculation depends on map projection.
+     */
+    L.Map.prototype.padBoundsByPixel = function (bounds, pixel) {
+        var sw = bounds._southWest,
+            ne = bounds._northEast,
+            neTop = this.latLngToContainerPoint(ne).y - pixel,
+            neRight = this.latLngToContainerPoint(ne).x + pixel,
+            swBottom = this.latLngToContainerPoint(sw).y + pixel,
+            swLeft = this.latLngToContainerPoint(sw).x - pixel;
+
+        var newSW = this.containerPointToLatLng([swLeft, swBottom]),
+            newNE = this.containerPointToLatLng([neRight, neTop]);
+
+        return new L.LatLngBounds(newSW, newNE);
+    };
+
     function Map(leaflet) {
         this.leaflet = leaflet;
         this.container = $( this.leaflet.getContainer() );
@@ -93,6 +111,10 @@ angular.module('poddDashboardApp')
                 riseOnHover: true,
             }).addTo(self.villageMarkerLayer);
 
+            $(village.marker._icon).tooltip({
+                title: item.address || item.name
+            });
+
             village.marker.on('click', function () {
                 self.container.trigger('clicked:village', item);
             });
@@ -107,7 +129,9 @@ angular.module('poddDashboardApp')
         // Prevent error when villages is empty array.
         if (items.length && !dontFitBound) {
             bounds = self.villageMarkerLayer.getBounds();
-            bounds = bounds.pad(1);
+            self.leaflet.fitBounds(bounds);
+            // then zoom out include padding of the web page.
+            bounds = self.leaflet.padBoundsByPixel(bounds, 60);
             self.leaflet.fitBounds(bounds);
         }
     };
