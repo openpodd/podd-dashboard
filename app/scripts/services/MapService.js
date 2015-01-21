@@ -1,4 +1,4 @@
-/*global L:true */
+/*global L, config */
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -18,7 +18,9 @@ angular.module('poddDashboardApp')
         this.leaflet = leaflet;
         this.container = $( this.leaflet.getContainer() );
 
-        this.tileLayer = L.tileLayer(tileLayerURL).addTo(this.leaflet);
+        if (!config.MAPBOX_MAP_ID) {
+            this.tileLayer = L.tileLayer(tileLayerURL).addTo(this.leaflet);
+        }
 
         // Group marker for better management.
         this.radarMarkerLayer = new L.featureGroup().addTo(this.leaflet);
