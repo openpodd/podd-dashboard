@@ -105,7 +105,7 @@ angular.module('poddDashboardApp')
         data.isNew = isNew;
 
         if ( ! shared.filterMode ) {
-            map.addReport(data, toWink, 0, true);
+            map.addReport(data, toWink, true);
         }
 
         // keep track of which is new.
@@ -156,7 +156,7 @@ angular.module('poddDashboardApp')
                 }
 
                 if ( ! shared.filterMode ) {
-                    map.addReport(data, toWink, 0, true);
+                    map.addReport(data, toWink, true);
                 }
             });
         }
@@ -169,7 +169,7 @@ angular.module('poddDashboardApp')
 
             shared.newReportQueue[mimicReport.id] = mimicReport;
             if ( ! shared.filterMode ) {
-                map.addReport(data, toWink, 0, true);
+                map.addReport(data, toWink, true);
             }
         }
     });

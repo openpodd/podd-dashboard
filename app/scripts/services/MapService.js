@@ -141,7 +141,7 @@ angular.module('poddDashboardApp')
         this.unwinkAll();
     };
 
-    Map.prototype.addReport = function addReport(report, toWink) {
+    Map.prototype.addReport = function addReport(report, toWink, dontFitBound) {
         var self = this,
             village = self.villages[ report.administrationAreaId ];
 
@@ -167,7 +167,7 @@ angular.module('poddDashboardApp')
                 });
             }
 
-            self.setVillages([ village ]);
+            self.setVillages([ village ], dontFitBound);
 
             if (toWink) {
                 self.villageWink(village);
