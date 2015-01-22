@@ -3,7 +3,7 @@
 angular.module('poddDashboardApp')
 
 .factory('SummaryReport', function ($resource) {
-    var resource = $resource(config.API_BASEPATH + '/reports/summary/week/', {}, {
+    var resource = $resource(config.API_BASEPATH + '/summary/areas/count-reports/', {}, {
         get: {
             isArray: true
         }
@@ -13,7 +13,7 @@ angular.module('poddDashboardApp')
 })
 
 .factory('SummaryPerson', function ($resource) {
-    var resource = $resource(config.API_BASEPATH + '/reports/summary/zero/', {}, {
+    var resource = $resource(config.API_BASEPATH + '/summary/users/inactive/', {}, {
         get: {
             isArray: true
         }

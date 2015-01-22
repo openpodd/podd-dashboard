@@ -69,7 +69,8 @@ angular
       /\/notification\/seen/,
       /\/reportComments/,
       /\/users\/search/,
-      /\/reports\/summary\/week/
+      /\/summary\/areas\/count-reports/,
+      /\/summary\/users\/inactive/
     ];
 
     function matchAPIUrls(url) {
