@@ -15,10 +15,10 @@ angular.module('poddDashboardApp')
 
     console.log('init summary report ctrl');
 
-    $scope.date = {
-        startDate: (moment().format('d') === '0' ? moment().day(-6) : moment().day(1)),
-        endDate: (moment().format('d') === '0' ? moment().day(0) : moment().day(7)),
-    };
+    $scope.date = {};
+    $scope.date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
+    $scope.date.endDate =(moment().format('d') === '0' ? moment().day(0) : moment().day(7));
+
     dateRangePickerConfig.format = 'DD/MM/YYYY';
 
     $scope.dateOptions = {
@@ -28,10 +28,9 @@ angular.module('poddDashboardApp')
         ranges: {
             'Today': [moment(), moment()],
             'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
+            'This Week': [(moment().format('d') === '0' ? moment().day(-6) : moment().day(1)), (moment().format('d') === '0' ? moment().day(0) : moment().day(7))],
             'Last 7 Days': [moment().subtract('days', 6), moment()],
-            'Last 30 Days': [moment().subtract('days', 29), moment()],
             'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
         },
     };
 
@@ -80,6 +79,9 @@ angular.module('poddDashboardApp')
     });
 
     $scope.search = function (date) {
+        $scope.date.startDate = date.startDate;
+        $scope.date.endDate = date.endDate;
+
         $scope.queryReport = moment(date.startDate).format('DD/MM/YYYY') + '-' + moment(date.endDate).format('DD/MM/YYYY');
         $state.go('main.summaryreport', { dates: $scope.queryReport, type: 'day' });
     };
@@ -90,6 +92,9 @@ angular.module('poddDashboardApp')
         if ($scope.loading) {
             return;
         }
+
+        $scope.dateOptions.startDate = $scope.date.startDate;
+        $scope.dateOptions.endDate = $scope.date.endDate;
 
         $scope.results = [];
         $scope.positiveReport = 0;
@@ -227,31 +232,22 @@ angular.module('poddDashboardApp')
     $scope.doQueryOnParams = function (params) {
         if ($state.current.name === 'main.summaryreport') {
             $scope.queryReport = $window.decodeURIComponent(params.dates || '');
-            
-            var date = {};
-            
             if ($scope.queryReport) {
-                console.log($scope.queryReport);
                 var splitDate = $scope.queryReport.split('-');
+                
                 $scope.date.startDate = moment(splitDate[0], 'DD/MM/YYYY');
                 $scope.date.endDate = moment(splitDate[1], 'DD/MM/YYYY');
-            } else {
-                $scope.date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
-                $scope.date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
 
+                return $scope._search();
+            } 
+            var date = {};
+            if ($scope.date) {
+                date = $scope.date;
+            } else {
                 date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
                 date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
             }
-
-            $scope.dateOptions.startDate = $scope.date.startDate;
-            $scope.dateOptions.endDate = $scope.date.endDate;
-
-            if ($scope.queryReport) {
-                return $scope._search();
-            }
-            else {
-                return $scope.search(date);
-            }
+            return $scope.search(date);
         }
     };
 

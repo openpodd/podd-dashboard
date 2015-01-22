@@ -5,21 +5,23 @@
         <i class="fa fa-times pull-right fa-size-18" ng-click="closeSummaryPerson();gotoMainPage();"></i>
     </div>
 
-
-     <div class="scroller scroller-x scroller-y content-wrapper" perfect-scrollbar wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20" refresh-on-change="report" ng-if="!loadingReportView && !loadingReportViewError">
+    <div class="scroller scroller-x scroller-y content-wrapper" perfect-scrollbar wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20" refresh-on-change="report" ng-if="!loadingReportView && !loadingReportViewError" ng-transclude="true">
         <div class="">
 
             <form role="form" ng-submit="search(date)" class="search-block">
                 <div class="input-group">
-                    <span class="input-group-btn" >
-                        <button class="btn btn-default btn-info-search" type="button" >
-                            <label for="week_range_person">เลือกวันที่ <i class="fa fa-calendar"></i> </label>
-                        </button>
+
+                    <span date-range-picker type="text" id="week_range_person" class="btn btn-default btn-info-search form-control" ng-model="$parent.$parent.date" options="$parent.$parent.dateOptions" >
+                       เลือกวันที่ <i class="fa fa-calendar"></i> 
+                            <font ng-hide="$parent.date.startDate.format()">
+                                {{ $parent.date.startDate| date:'dd/MM/yyyy' }}
+                            </font>
+                            {{ $parent.date.startDate.format()| date:'dd/MM/yyyy'}} - 
+                            <font ng-hide="$parent.date.endDate.format()">
+                                {{ $parent.date.endDate| date:'dd/MM/yyyy' }}
+                            </font>
+                            {{ $parent.date.endDate.format()| date:'dd/MM/yyyy'}}  
                     </span>
-
-                    <input date-range-picker type="text" id="week_range_person" class="form-control" ng-model="date" options="dateOptions" />
-
-                   <!--  <input type="text" id="month_range_person" class="form-control" ng-model="query_person" ng-show="type === 'month'"/> -->
 
                     <span class="input-group-btn">
                         <button class="btn btn-default pd-btn-search" type="submit"><i class="fa fa-search fa-size-18"></i></button>
