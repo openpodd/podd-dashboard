@@ -5,7 +5,7 @@
         <i class="fa fa-times pull-right fa-size-18" ng-click="closeSummaryPerson();gotoMainPage();"></i>
     </div>
 
-    <div class="scroller scroller-x scroller-y content-wrapper" perfect-scrollbar wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20" refresh-on-change="report" ng-if="!loadingReportView && !loadingReportViewError" ng-transclude="true">
+    <div class="scroller scroller-x scroller-y content-wrapper" perfect-scrollbar wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"  ng-if="!loadingReportView && !loadingReportViewError" ng-transclude="true">
         <div class="">
 
             <form role="form" ng-submit="search(date)" class="search-block">

@@ -132,8 +132,8 @@ angular.module('poddDashboardApp')
                 var result = {};
                 var showResult = {};
 
-                result.name = item.name;
-                showResult.name = item.name;
+                result.name = item.parentName + ' | ' + item.name;
+                showResult.name = item.parentName + ' | ' + item.name;
                 if(!header){
                     showOptions.push({ field: 'name', pinnedLeft: true,
                         headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">Name</div>',

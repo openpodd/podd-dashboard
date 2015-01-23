@@ -164,7 +164,7 @@ angular.module('poddDashboardApp')
                 { field: 'totalReport', cellClass: 'cell-center', headerCellClass: 'cell-center' },
             ];
             $scope.gridOptionsPerson.data = results;
-
+            
             setTimeout(function(){
                 $scope.loadingLink = false;
                 $scope.exportPerson();
