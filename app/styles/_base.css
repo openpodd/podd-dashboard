@@ -197,31 +197,33 @@ html, body {
     margin: 15px 0; }
 
 /* line 191, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
-#reports-empty {
-  padding: 20px; }
+.reports-empty {
+  padding: 20px;
+  border: 1px solid #eee;
+  background-color: #f7f7f7; }
 
-/* line 195, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+/* line 197, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
 .logo-img {
   width: 270px; }
 
-/* line 200, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+/* line 202, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
 .form-group .alert {
   padding: 5px 12px;
   margin-top: 10px !important;
   margin-bottom: 0; }
 
-/* line 207, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+/* line 209, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
 .btn-login {
   width: 100%; }
 
-/* line 212, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+/* line 214, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
 .loadmore .btn {
   width: 100%;
   color: #666;
   border: 1px solid #DFDFDF;
   background: #F9F9F9; }
 
-/* line 221, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+/* line 223, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
 .section-filter {
   position: absolute;
   top: 0px;
@@ -233,40 +235,40 @@ html, body {
   -webkit-transition: all 0.3s ease;
   -ms-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease; }
-  /* line 234, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+  /* line 236, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
   .section-filter.ng-hide-remove {
     top: -100px; }
-  /* line 238, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+  /* line 240, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
   .section-filter.ng-hide {
     top: -100px; }
 
 @-webkit-keyframes bg-opacity {
-  /* line 244, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+  /* line 246, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
   0% {
     background-color: transparent; }
 
-  /* line 248, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+  /* line 250, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
   50% {
     background-color: #EAEAEA; }
 
-  /* line 252, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+  /* line 254, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
   100% {
     background-color: #EAEAEA; } }
 
 @keyframes bg-opacity {
-  /* line 258, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+  /* line 260, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
   0% {
     background-color: transparent; }
 
-  /* line 262, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+  /* line 264, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
   50% {
     background-color: #EAEAEA; }
 
-  /* line 266, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+  /* line 268, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
   100% {
     background-color: #EAEAEA; } }
 
-/* line 271, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+/* line 273, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
 .blink {
   animation: pulse 0.5s 0.5s alternate forwards, bg-opacity 0.8s;
   -webkit-animation: pulse 0.5s 0.5s alternate forwards, bg-opacity 0.8s;
@@ -278,51 +280,51 @@ html, body {
   -ms-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease; }
 
-/* line 285, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+/* line 287, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
 .sweet-alert {
   z-index: 9998; }
-  /* line 288, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+  /* line 290, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
   .sweet-alert p.lead {
     margin-top: 1.5em;
     font-size: 1.3em; }
-  /* line 292, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+  /* line 294, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
   .sweet-alert .sweet-alert {
     z-index: 9999; }
-  /* line 295, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+  /* line 297, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
   .sweet-alert .btn-lg {
     font-size: 14px; }
 
-/* line 300, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+/* line 302, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
 .sweet-overlay {
   z-index: 9998; }
 
 /* FILE UPLOAD */
-/* line 307, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+/* line 309, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
 .avatar {
   width: 30px;
   height: 30px;
   border-radius: 50%;
   margin: 2px 10px 0 0; }
 
-/* line 313, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+/* line 315, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
 .avatar-w4 {
   width: 40px;
   height: 40px; }
 
-/* line 317, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+/* line 319, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
 .time {
   font-size: 11px;
   margin-top: 3px; }
 
-/* line 323, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+/* line 325, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
 .your-child-is-working img {
   opacity: 0; }
 
-/* line 328, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+/* line 330, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
 .image-mask {
   display: none; }
 
-/* line 332, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+/* line 334, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
 .image-mask.image-loader-progress {
   display: block;
   position: absolute;
@@ -333,19 +335,19 @@ html, body {
   background-color: black;
   opacity: 0.8; }
 
-/* line 344, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+/* line 346, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
 .scroller {
   position: relative; }
 
-/* line 348, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+/* line 350, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
 .scroller-x {
   overflow-x: hidden; }
 
-/* line 351, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+/* line 353, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
 .scroller-y {
   overflow-y: hidden; }
 
-/* line 355, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+/* line 357, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
 .ui-grid-native-scrollbar.vertical {
   width: 17px !important; }
 

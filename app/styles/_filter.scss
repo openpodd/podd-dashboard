@@ -9,6 +9,7 @@
 
     padding: 10px;
     text-align: center;
+    color: #888;
 
     .filter-result-item {
         overflow: hidden;
@@ -96,6 +97,6 @@
     }
 }
 
-.filter-header{
-    margin: 0 0 20px;
+.filter-wrapper{
+    margin: 20px 0 0;
 }

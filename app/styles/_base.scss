@@ -188,8 +188,10 @@ html, body{
 
 }
 
-#reports-empty{
+.reports-empty{
     padding: 20px;
+    border: 1px solid #eee;
+    background-color: #f7f7f7;
 }
 
 .logo-img{
