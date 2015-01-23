@@ -71,10 +71,11 @@
 
 //Controller
 .leaflet-top.leaflet-top{
-    // position: absolute;
-    // top: 90%;
-    // left: 2px;
-    // z-index: 9999;
+    position: absolute;
+    top: 7px;
+    right: 15px;
+    left: auto;
+    z-index: 9990;
 
 //    animation: fadeInLeft 1s 1s alternate backwards;
 }

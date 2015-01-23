@@ -575,9 +575,6 @@ $badge-bad: #FF6D69;
 .case-content{
     width: 100px;
 }
-.custom-csv-link-location{
-    margin-top: 20px;
-}
 
 .pd-badge-cell{
     text-align: center;
@@ -610,4 +607,16 @@ $badge-bad: #FF6D69;
     &.ng-hide {
         opacity: 0;
     }
+}
+
+.btn-text{
+    margin: 0;
+    color: #777;
+    font-weight: normal;
+}
+.view-textbox{
+    height: 38px;
+    padding: 9px 10px;
+    border: 1px solid #ddd;
+    background-color: #fff;
 }

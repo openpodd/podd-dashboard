@@ -9,24 +9,25 @@
         <div class="">
 
             <form role="form" ng-submit="search($parent.date)" class="search-block">
-                <div class="input-group">
-                   <!--  <span class="input-group-btn" >
-                    </span> -->
-                    <span date-range-picker type="text" id="week_range_report" class="btn btn-default btn-info-search form-control" ng-model="$parent.$parent.date" options="$parent.$parent.dateOptions" >
-                       เลือกวันที่ <i class="fa fa-calendar"></i> 
-                            <font ng-hide="$parent.date.startDate.format()">
-                                {{ $parent.date.startDate| date:'dd/MM/yyyy' }}
-                            </font>
-                            {{ $parent.date.startDate.format()| date:'dd/MM/yyyy'}} - 
-                            <font ng-hide="$parent.date.endDate.format()">
-                                {{ $parent.date.endDate| date:'dd/MM/yyyy' }}
-                            </font>
-                            {{ $parent.date.endDate.format()| date:'dd/MM/yyyy'}}  
-                    </span>
-
-                    <span class="input-group-btn">
+                <div class="input-group"> 
+                    <div class="input-group-btn" date-range-picker type="text" id="week_range_report" ng-model="$parent.$parent.date" options="$parent.$parent.dateOptions">
+                        <button class="btn btn-default btn-info-search" type="button">
+                            <span for="week_range_report" class="btn-text">เลือกวันที่ <i class="fa fa-calendar"></i></span>
+                        </button>
+                    </div>
+                    <div class="view-textbox">
+                        <span ng-hide="$parent.date.startDate.format()">
+                            {{ $parent.date.startDate| date:'dd/MM/yyyy' }}
+                        </span>
+                        {{ $parent.date.startDate.format()| date:'dd/MM/yyyy'}} - 
+                        <span ng-hide="$parent.date.endDate.format()">
+                            {{ $parent.date.endDate| date:'dd/MM/yyyy' }}
+                        </span>
+                        {{ $parent.date.endDate.format()| date:'dd/MM/yyyy'}}  
+                    </div>
+                    <div class="input-group-btn">
                         <button class="btn btn-default pd-btn-search" type="submit"><i class="fa fa-search fa-size-18"></i></button>
-                    </span>
+                    </div>
                 </div>
             </form>
 
@@ -36,25 +37,25 @@
             
             <div class="summary-list" ng-show="results">
                 <h3 class="subheading">สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }}</h3>
-                <p>จำนวนการรายงานทั้งสิ้น <span class="badge badge-bad">{{ totalReport }}</span> รายงาน แบ่งเป็น รายงานไม่พบเหตุผิดปกติจำนวน <span class="badge badge-good">{{ positiveReport }}</span> ครั้ง, รายงานพบเหตุผิดปกติจำนวน <span class="badge badge-bad">{{ negativeReport }}</span> ครั้ง</p>
-                <hr/>
-                <ul class="list-unstyled report-list-help">
-                    <li>
-                        รูปแบบของข้อมูลในตารางระบุค่าของ<code>[จำนวนรายงานไม่พบเหตุผิดปกติ, จำนวนรายงานพบเหตุผิดปกติ]</code> ตัวอย่างข้อมูล:
-                        <ul>
-                            <li>
-                                <p><span class="badge badge-zero">0</span> สีเทา คือ จำนวนรายงานเท่ากับศูนย์</p>
-                            </li>
-                            <li>
-                                <p><span class="badge badge-good">4</span> สีเขียว คือ จำนวนรายงานไม่พบเหตุผิดปกติมากกว่าศูนย์</p>
-                            </li>
-                            <li>
-                                <p><span class="badge badge-bad">2</span> สีแดง คือ จำนวนรายงานพบเหตุผิดปกติมากกว่าศูนย์</p>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <hr/>
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="well mini-box mini-box-total" style="text-align:center;">
+                            <p class="mini-box-text">จำนวนการรายงานทั้งสิ้น</p> <p class="mini-box-number">{{ totalReport }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="well mini-box mini-box-good">
+                            <p class="mini-box-text">รายงานไม่พบเหตุผิดปกติจำนวน</p> <p class="mini-box-number">{{ positiveReport }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="well mini-box mini-box-bad">
+                            <p class="mini-box-text">รายงานพบเหตุผิดปกติจำนวน</p> <p class="mini-box-number">{{ negativeReport }}</p>
+                        </div>
+                    </div>
+                </div>
+                
                 <h3 class="subheading">ตารางสรุปการรายงานในแต่ละอปท. </h3>
                 <div id="gridReportShow" class="summary-grid-show-report grid-report" ui-grid="gridOptionsReportShow" ui-grid-pinning></div>
 
@@ -64,6 +65,21 @@
                     <div ng-show="loadingLink" loader-spinner></div>
                     <span class="ui-grid-exporter-csv-link">&nbsp</span>
                 </div>
+                
+                <hr/>
+                <p>รูปแบบของข้อมูลในตารางระบุค่าของ<code>[จำนวนรายงานไม่พบเหตุผิดปกติ, จำนวนรายงานพบเหตุผิดปกติ]</code> ตัวอย่างข้อมูล:</p>
+                <ul class="list-unstyled">
+                    <li>
+                        <p><span class="badge badge-zero">0</span> สีเทา คือ จำนวนรายงานเท่ากับศูนย์</p>
+                    </li>
+                    <li>
+                        <p><span class="badge badge-good">4</span> สีเขียว คือ จำนวนรายงานไม่พบเหตุผิดปกติมากกว่าศูนย์</p>
+                    </li>
+                    <li>
+                        <p><span class="badge badge-bad">2</span> สีแดง คือ จำนวนรายงานพบเหตุผิดปกติมากกว่าศูนย์</p>
+                    </li>
+                </ul>                
+                
             </div>
 
       </div>

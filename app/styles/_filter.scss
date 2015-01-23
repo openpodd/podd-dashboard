@@ -9,6 +9,7 @@
 
     padding: 10px;
     text-align: center;
+    color: #888;
 
     .filter-result-item {
         overflow: hidden;
@@ -74,10 +75,10 @@
     z-index: 99; /* above filter result */
 }
 
-.btn-info-search{
-    height: 38px;
-    border: 1px solid #DDD;
-    background-color: #eee;
+.btn-info-search{ 
+    height: 38px; 
+    border: 1px solid #DDD; 
+    background-color: #ececec; 
     z-index: 99;
     margin-right: 0;
 
@@ -94,4 +95,8 @@
     > li{
         margin-bottom: 10px;
     }
+}
+
+.filter-wrapper{
+    margin: 20px 0 0;
 }

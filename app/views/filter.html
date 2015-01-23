@@ -118,11 +118,11 @@
     <div class="filter-result filter-result-reports"
          ng-show="didSearch && !willShowResult"
          set-max-height="30" trigger-event="'forceResizeResultWrapper'">
+
         <h3 class="filter-title">
             พบผลลัพธ์จำนวน {{ (shared.filteredReports.length || 0) | number }} รายงาน
             <span ng-if="!empty">กระจายใน {{ shared.filterResults.length }} พื้นที่</span>
         </h3>
-        
         <button class="btn btn-xs pull-right filter-result-list-button" type="button"
             ng-click="toggleTable()"
             ng-show="shared.filteredReports.length"
@@ -132,7 +132,7 @@
         </button>
 
         <div ng-show="showTable && shared.filteredReports"
-             class="scroller scroller-x scroller-y content-wrapper"
+             class="scroller scroller-x scroller-y content-wrapper filter-wrapper"
              set-max-height="40" trigger-event="'forceResizeResultTable'">
 
             <div ui-grid="filterResultGridOptions" ui-grid-selection ui-grid-resize-columns class="myGrid"></div>
