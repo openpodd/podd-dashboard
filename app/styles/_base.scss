@@ -357,3 +357,36 @@ html, body{
 .ui-grid-native-scrollbar.vertical {
     width: 17px !important;
 }
+
+
+
+.mini-box{
+    margin: 0 0 20px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    text-align: center;
+    box-shadow: none;
+    border: none;
+
+    
+    .mini-box-text{
+        font-size: 15px;
+    }
+    .mini-box-number{
+        margin: 0;
+        font-size: 2em;
+        line-height: 1em;
+        font-weight: bold;
+    }
+}
+.mini-box-total{
+    background-color: mistyrose;
+}
+.mini-box-good{
+    color: #fff;
+    background-color: #5cb85c;
+}
+.mini-box-bad{
+    color: #fff;
+    background-color: salmon;
+}

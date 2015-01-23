@@ -351,4 +351,36 @@ html, body {
 .ui-grid-native-scrollbar.vertical {
   width: 17px !important; }
 
+/* line 363, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+.mini-box {
+  margin: 0 0 20px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  text-align: center;
+  box-shadow: none;
+  border: none; }
+  /* line 372, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+  .mini-box .mini-box-text {
+    font-size: 15px; }
+  /* line 375, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+  .mini-box .mini-box-number {
+    margin: 0;
+    font-size: 2em;
+    line-height: 1em;
+    font-weight: bold; }
+
+/* line 382, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+.mini-box-total {
+  background-color: mistyrose; }
+
+/* line 385, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+.mini-box-good {
+  color: #fff;
+  background-color: #5cb85c; }
+
+/* line 389, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/_base.scss */
+.mini-box-bad {
+  color: #fff;
+  background-color: salmon; }
+
 /*# sourceMappingURL=_base.css.map */

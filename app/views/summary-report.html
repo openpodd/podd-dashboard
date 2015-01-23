@@ -37,25 +37,25 @@
             
             <div class="summary-list" ng-show="results">
                 <h3 class="subheading">สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }}</h3>
-                <p>จำนวนการรายงานทั้งสิ้น <span class="badge badge-bad">{{ totalReport }}</span> รายงาน แบ่งเป็น รายงานไม่พบเหตุผิดปกติจำนวน <span class="badge badge-good">{{ positiveReport }}</span> ครั้ง, รายงานพบเหตุผิดปกติจำนวน <span class="badge badge-bad">{{ negativeReport }}</span> ครั้ง</p>
-                <hr/>
-                <ul class="list-unstyled report-list-help">
-                    <li>
-                        รูปแบบของข้อมูลในตารางระบุค่าของ<code>[จำนวนรายงานไม่พบเหตุผิดปกติ, จำนวนรายงานพบเหตุผิดปกติ]</code> ตัวอย่างข้อมูล:
-                        <ul>
-                            <li>
-                                <p><span class="badge badge-zero">0</span> สีเทา คือ จำนวนรายงานเท่ากับศูนย์</p>
-                            </li>
-                            <li>
-                                <p><span class="badge badge-good">4</span> สีเขียว คือ จำนวนรายงานไม่พบเหตุผิดปกติมากกว่าศูนย์</p>
-                            </li>
-                            <li>
-                                <p><span class="badge badge-bad">2</span> สีแดง คือ จำนวนรายงานพบเหตุผิดปกติมากกว่าศูนย์</p>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <hr/>
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="well mini-box mini-box-total" style="text-align:center;">
+                            <p class="mini-box-text">จำนวนการรายงานทั้งสิ้น</p> <p class="mini-box-number">{{ totalReport }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="well mini-box mini-box-good">
+                            <p class="mini-box-text">รายงานไม่พบเหตุผิดปกติจำนวน</p> <p class="mini-box-number">{{ positiveReport }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="well mini-box mini-box-bad">
+                            <p class="mini-box-text">รายงานพบเหตุผิดปกติจำนวน</p> <p class="mini-box-number">{{ negativeReport }}</p>
+                        </div>
+                    </div>
+                </div>
+                
                 <h3 class="subheading">ตารางสรุปการรายงานในแต่ละอปท. </h3>
                 <div id="gridReportShow" class="summary-grid-show-report grid-report" ui-grid="gridOptionsReportShow" ui-grid-pinning></div>
 
@@ -65,6 +65,21 @@
                     <div ng-show="loadingLink" loader-spinner></div>
                     <span class="ui-grid-exporter-csv-link">&nbsp</span>
                 </div>
+                
+                <hr/>
+                <p>รูปแบบของข้อมูลในตารางระบุค่าของ<code>[จำนวนรายงานไม่พบเหตุผิดปกติ, จำนวนรายงานพบเหตุผิดปกติ]</code> ตัวอย่างข้อมูล:</p>
+                <ul class="list-unstyled">
+                    <li>
+                        <p><span class="badge badge-zero">0</span> สีเทา คือ จำนวนรายงานเท่ากับศูนย์</p>
+                    </li>
+                    <li>
+                        <p><span class="badge badge-good">4</span> สีเขียว คือ จำนวนรายงานไม่พบเหตุผิดปกติมากกว่าศูนย์</p>
+                    </li>
+                    <li>
+                        <p><span class="badge badge-bad">2</span> สีแดง คือ จำนวนรายงานพบเหตุผิดปกติมากกว่าศูนย์</p>
+                    </li>
+                </ul>                
+                
             </div>
 
       </div>
