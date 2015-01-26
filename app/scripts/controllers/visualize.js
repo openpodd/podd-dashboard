@@ -14,18 +14,37 @@ angular.module('poddDashboardApp')
     $scope.data = {
         raw: null,
         prepared: {
+            'graph1': { totalReports: 0 },
             'graph2': []
         },
         preparations: [
             {
+                name: 'graph1',
+                func: function (data) {
+                    return {
+                        totalReports: data.reduce(function (prev, current) {
+                            return prev + current.totalReport;
+                        }, 0)
+                    };
+                }
+            },
+            {
                 name: 'graph2',
                 func: function (data) {
-                    return data.map(function (item) {
-                        return {
-                            positiveReports: item.positiveReport,
-                            negativeReports: item.negativeReport
-                        };
-                    });
+                    var totalReports = 0,
+                        result = data.map(function (item) {
+                            totalReports += item.totalReport;
+                            return {
+                                positiveReports: item.positiveReport,
+                                negativeReports: item.negativeReport
+                            };
+                        });
+
+                    if (totalReports === 0) {
+                        this.options.graph2.noReports = true;
+                    }
+
+                    return result;
                 }
             }
         ],
@@ -65,6 +84,7 @@ angular.module('poddDashboardApp')
             return;
         }
 
+        $scope.data.raw = null;
         $scope.data.loading = true;
         $scope.data.error = false;
 
@@ -83,7 +103,7 @@ angular.module('poddDashboardApp')
             $scope.data.raw = data;
 
             $scope.data.preparations.forEach(function (rule) {
-                $scope.data.prepared[rule.name] = rule.func.call(this, data);
+                $scope.data.prepared[rule.name] = rule.func.call($scope.data, data);
             });
         })
         .catch(function () {

@@ -33,17 +33,29 @@
   <!-- end error message -->
 
   <!-- content  -->
-  <div class="row" id="visualization-main-content" ng-hide="data.error">
-    <!-- graph1 -->
-    <!-- end graph1 -->
+  <div id="visualization-main-content" class="container" ng-show="data.raw">
+    <div class="row">
+      <!-- graph1 -->
+      <div class="col-lg-6">
+        จำนวนรายงานทั้งหมด {{ data.prepared.graph1.totalReports }}
+      </div>
+      <!-- end graph1 -->
 
-    <!-- graph2 -->
-    <angularchart
-      dataset="data.prepared.graph2"
-      schema="data.schemas.graph2"
-      options="data.options.graph2">
-    </angularchart>
-    <!-- end graph2 -->
+      <!-- graph2 -->
+      <div class="col-lg-6">
+        <angularchart
+          class="graph2-valid-reports"
+          ng-hide="data.options.graph2.noReports"
+          dataset="data.prepared.graph2"
+          schema="data.schemas.graph2"
+          options="data.options.graph2">
+        </angularchart>
+        <div class="graph2-no-reports" ng-show="data.options.graph2.noReports">
+          ไม่มีข้อมูลการรายงาน
+        </div>
+      </div>
+      <!-- end graph2 -->
+    </div>
   </div>
   <!-- end content -->
 </div>
