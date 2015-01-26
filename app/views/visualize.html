@@ -1,0 +1,40 @@
+<div class="container visualization-view">
+  <div class="row">
+    <!-- address -->
+    <div class="col-lg-8">
+      <h1 ng-bind="areas.selected.address"></h1>
+    </div>
+    <!-- end address -->
+
+    <!-- select -->
+    <div class="col-lg-3">
+      <ui-select ng-model="areas.selected" theme="selectize" title="Choose a person">
+        <ui-select-match placeholder="Select areas">{{areas.selected.name}}</ui-select-match>
+        <ui-select-choices repeat="area in areas.all | filter:$select.search">
+          <span ng-bind-html="area.name | highlight:$select.search"></span>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+    <!-- end select -->
+  </div>
+
+  <!-- error message -->
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+      <p class="alert alert-warning" ng-show="data.error">
+        เกิดข้อผิดพลาดในการดึงข้อมูล กรุณาลอง<a ng-click="refresh()">รีเฟรชใหม่</a>
+      </p>
+
+      <p class="alert alert-info" ng-show="!areas.selected">
+        โปรดเลือกพื้นที่ที่ต้องการดูข้อมูล
+      </p>
+    </div>
+  </div>
+  <!-- end error message -->
+
+  <!-- content  -->
+  <div class="row" id="visualization-main-content" ng-hide="data.error">
+    <!-- TODO: content here -->
+  </div>
+  <!-- end content -->
+</div>

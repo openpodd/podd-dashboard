@@ -33,7 +33,8 @@ angular
     'ui.grid.exporter',
     'ui.grid.resizeColumns',
     'ui.grid.pinning',
-    'daterangepicker'
+    'daterangepicker',
+    'ui.select'
   ])
 
   // override z-index of ui.bootstrap
@@ -70,7 +71,8 @@ angular
       /\/reportComments/,
       /\/users\/search/,
       /\/summary\/areas\/count-reports/,
-      /\/summary\/users\/inactive/
+      /\/summary\/users\/inactive/,
+      /\/summary\/areas\/show-detail/
     ];
 
     function matchAPIUrls(url) {
@@ -143,6 +145,11 @@ angular
         url: '^/summary/person?dates&percent&type',
         template: '',
         controller: 'SummaryPersonModeCtrl'
+      })
+      .state('visualize', {
+        url: '/visualize',
+        templateUrl: 'views/visualize.html',
+        controller: 'VisualizationCtrl'
       })
       .state('login', {
         url: '/login',
