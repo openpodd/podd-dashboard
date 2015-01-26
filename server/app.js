@@ -67,7 +67,8 @@ consumer.subscribe(
     'report:image:new',
     'report:flag:new',
     'mention:new',
-    'news:new'
+    'news:new',
+    'user:avatar:new'
 );
 
 io.on('connection', function (socket) {
