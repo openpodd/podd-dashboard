@@ -34,7 +34,16 @@
 
   <!-- content  -->
   <div class="row" id="visualization-main-content" ng-hide="data.error">
-    <!-- TODO: content here -->
+    <!-- graph1 -->
+    <!-- end graph1 -->
+
+    <!-- graph2 -->
+    <angularchart
+      dataset="data.prepared.graph2"
+      schema="data.schemas.graph2"
+      options="data.options.graph2">
+    </angularchart>
+    <!-- end graph2 -->
   </div>
   <!-- end content -->
 </div>
