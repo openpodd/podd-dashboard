@@ -33,7 +33,8 @@
     "angular-daterangepicker": "~0.1.11",
     "moment-range": "~1.0.5",
     "angular-ui-select": "~0.9.6",
-    "angular-chart": "~0.2.6"
+    "angular-chart": "~0.2.6",
+    "countUp.js": "~1.3.2"
   },
   "resolutions": {
     "angular": "~1.2.6"
