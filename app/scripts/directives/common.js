@@ -190,4 +190,67 @@ angular.module('poddDashboardApp')
             });
         }
     };
+})
+
+.directive('countUp', function ($timeout) {
+    /* global countUp */
+    return {
+        strict: 'A',
+        scope: {
+            countFrom: '=countFrom',
+            countTo: '=countTo',
+            duration: '=duration',
+            options: '=options'
+        },
+        link: function (scope, element) {
+            var counterInstance = new countUp(element[0]);
+
+            var updateProperties = (function () {
+                var timer,
+                    processing = false;
+
+                return function updateProperties() {
+                    if (processing) {
+                        clearTimeout(timer);
+                    }
+                    processing = true;
+
+                    timer = $timeout(function () {
+                        counterInstance.reset();
+
+                        counterInstance.startVal = scope.countFrom || 0;
+                        counterInstance.endVal = scope.countTo;
+                        counterInstance.duration = scope.duration || 1000;
+                        counterInstance.options = angular.extend({
+                            useEasing : true,
+                            useGrouping : true,
+                            separator : ',',
+                            decimal : '.',
+                            prefix : '',
+                            suffix : ''
+                        }, scope.options);
+
+                        counterInstance.start();
+                    }, 10); // give another 10ms chance
+                };
+            })();
+
+            // Initialize once.
+            updateProperties();
+
+            // Then watch.
+            scope.$watch('countFrom', function () {
+                updateProperties();
+            });
+            scope.$watch('countTo', function () {
+                updateProperties();
+            });
+            scope.$watch('duration', function () {
+                updateProperties();
+            });
+            scope.$watch('options', function () {
+                updateProperties();
+            });
+        }
+    };
 });

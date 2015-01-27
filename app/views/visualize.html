@@ -37,7 +37,16 @@
     <div class="row">
       <!-- graph1 -->
       <div class="col-lg-6">
-        จำนวนรายงานทั้งหมด {{ data.prepared.graph1.totalReports }}
+        <div class="row">
+          จำนวนรายงานทั้งหมด
+        </div>
+        <div class="row">
+          <span class="number-of-reports"
+                count-up
+                count-to="data.prepared.graph1.totalReports"
+                duration="1400"></span>
+        </div>
+        <div class="row">รายงาน</div>
       </div>
       <!-- end graph1 -->
 
@@ -45,11 +54,23 @@
       <div class="col-lg-6">
         <angularchart
           class="graph2-valid-reports"
-          ng-hide="data.options.graph2.noReports"
-          dataset="data.prepared.graph2"
+          ng-hide="data.prepared.graph2.noReports"
+          dataset="data.prepared.graph2.data"
           schema="data.schemas.graph2"
           options="data.options.graph2">
         </angularchart>
+
+        <div class="graph1-legend">
+          <div class="legend-positive">
+            <span count-up count-to="data.prepared.graph2.positiveReports"></span>
+            <br>รายงานไม่พบเหตุผิดปกติ
+          </div>
+          <div class="legend-negative">
+            <span count-up count-to="data.prepared.graph2.negativeReports"></span>
+            <br>รายงานเหตุผิดปกติ
+          </div>
+        </div>
+
         <div class="graph2-no-reports" ng-show="data.options.graph2.noReports">
           ไม่มีข้อมูลการรายงาน
         </div>

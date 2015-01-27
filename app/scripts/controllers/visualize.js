@@ -11,20 +11,24 @@ angular.module('poddDashboardApp')
         selected: null
     };
 
+    function sum(array, propertyName) {
+        return array.reduce(function (prev, current) {
+            return prev + current[propertyName];
+        }, 0);
+    }
+
     $scope.data = {
         raw: null,
         prepared: {
             'graph1': { totalReports: 0 },
-            'graph2': []
+            'graph2': { data: [] }
         },
         preparations: [
             {
                 name: 'graph1',
                 func: function (data) {
                     return {
-                        totalReports: data.reduce(function (prev, current) {
-                            return prev + current.totalReport;
-                        }, 0)
+                        totalReports: sum(data, 'totalReport')
                     };
                 }
             },
@@ -32,19 +36,26 @@ angular.module('poddDashboardApp')
                 name: 'graph2',
                 func: function (data) {
                     var totalReports = 0,
+                        positiveReports = 0,
+                        negativeReports = 0,
+
                         result = data.map(function (item) {
-                            totalReports += item.totalReport;
+                            totalReports    += item.totalReport;
+                            positiveReports += item.positiveReport;
+                            negativeReports += item.negativeReport;
+
                             return {
                                 positiveReports: item.positiveReport,
                                 negativeReports: item.negativeReport
                             };
                         });
 
-                    if (totalReports === 0) {
-                        this.options.graph2.noReports = true;
-                    }
-
-                    return result;
+                    return {
+                        data: result || [],
+                        noReports: totalReports === 0,
+                        positiveReports: positiveReports,
+                        negativeReports: negativeReports
+                    };
                 }
             }
         ],
@@ -52,7 +63,7 @@ angular.module('poddDashboardApp')
             'graph2': {
                 positiveReports: {
                     type: 'numeric',
-                    name: 'รายงานไม่พบเหตุผิดปกติ'
+                    name: 'รายงานไม่พบเหตุผิดปกติ',
                 },
                 negativeReports: {
                     type: 'numeric',
@@ -62,7 +73,10 @@ angular.module('poddDashboardApp')
         },
         options: {
             'graph2': {
-                type: 'pie',
+                type: 'donut',
+                legend: {
+                    show: false
+                },
                 rows: [
                     {
                         key: 'positiveReports',
