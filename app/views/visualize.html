@@ -72,7 +72,7 @@
           </div>
         </div>
 
-        <div class="graph2-no-reports" ng-show="data.options.graph2.noReports">
+        <div class="graph2-no-reports" ng-show="data.prepared.graph2.noReports">
           ไม่มีข้อมูลการรายงาน
         </div>
       </div>
@@ -152,6 +152,23 @@
         <!-- end reporter row -->
       </div>
       <!-- end graph5 -->
+
+      <!-- graph6 : sick/death -->
+      <div class="col-lg-4">
+        <angularchart
+          class="graph6-valid-reports"
+          ng-hide="data.prepared.graph6.noReports"
+          dataset="data.prepared.graph6.data"
+          schema="data.schemas.graph6"
+          options="data.options.graph6">
+        </angularchart>
+
+        <div class="graph6-no-reports" ng-show="data.prepared.graph6.noReports">
+          ไม่มีข้อมูลการรายงาน
+        </div>
+      </div>
+      <!-- end graph6 -->
+
     </div>
     <!-- end #1 row -->
   </div>

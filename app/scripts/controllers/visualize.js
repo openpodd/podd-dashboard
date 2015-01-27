@@ -55,7 +55,8 @@ angular.module('poddDashboardApp')
             'graph2': { data: [] },
             'graph3': {},
             'graph4': { periodName: 'none' },
-            'graph5': { reporters: [] }
+            'graph5': { reporters: [] },
+            'graph6': { data: [] }
         },
         preparations: [
             {
@@ -129,6 +130,51 @@ angular.module('poddDashboardApp')
                         reporters: data[0].reporters
                     };
                 }
+            },
+            {
+                name: 'graph6',
+                func: function (data) {
+                    var self = this,
+                        total = 0,
+                        result = {};
+
+                    // phase #1 : get all animal types
+                    data.forEach(function (item) {
+                        item.animalTypes.forEach(function (animalType) {
+                            // prepare schemas
+                            self.schemas.graph6[animalType.name] = {
+                                type: 'numeric',
+                                name: animalType.name
+                            };
+                            // prepare options.rows
+                            self.options.graph6.rows.push({
+                                key: animalType.name,
+                                axis: 'y'
+                            });
+                            // phase #2 : struct returned data so at last we got only
+                            // one row. like this:
+                            // {
+                            //   'chicken': 10,
+                            //   'pig': 11,
+                            //   'cow': 12
+                            // }
+                            if (!result[animalType.name]) {
+                                result[animalType.name] = animalType.total;
+                            }
+                            else {
+                                result[animalType.name] += animalType.total;
+                            }
+
+                            total += animalType.total;
+                        });
+                    });
+
+                    return {
+                        data: [ result ],
+                        noReports: !total,
+                        total: total
+                    };
+                }
             }
         ],
         schemas: {
@@ -141,7 +187,8 @@ angular.module('poddDashboardApp')
                     type: 'numeric',
                     name: 'รายงานผิดปกติ'
                 }
-            }
+            },
+            'graph6': {}
         },
         options: {
             'graph2': {
@@ -159,6 +206,13 @@ angular.module('poddDashboardApp')
                         axis: 'y'
                     }
                 ]
+            },
+            'graph6': {
+                type: 'pie',
+                legend: {
+                    show: true
+                },
+                rows: [] // will fill this later in preparation phase
             }
         },
         loading: false,
