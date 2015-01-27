@@ -17,12 +17,44 @@ angular.module('poddDashboardApp')
         }, 0);
     }
 
+    function max(array, propertyName) {
+        var maxIndex = 0,
+            maxValue = 0;
+
+        array.forEach(function (item, index) {
+            if (item[propertyName] > maxValue) {
+                maxIndex = index;
+            }
+        });
+
+        return array[maxIndex];
+    }
+
+    function padLeft(text, desiredLength, padChar) {
+        var newText = '' + text;
+
+        padChar = padChar || '0';
+
+        return (function doPad() {
+            return ({
+                true: function () {
+                    newText = padChar + newText;
+                    return doPad();
+                },
+                false: function () {
+                    return newText;
+                }
+            }[newText.length < desiredLength])();
+        })();
+    }
+
     $scope.data = {
         raw: null,
         prepared: {
             'graph1': { totalReports: 0 },
             'graph2': { data: [] },
-            'graph3': {}
+            'graph3': {},
+            'graph4': { periodName: 'none' }
         },
         preparations: [
             {
@@ -65,6 +97,28 @@ angular.module('poddDashboardApp')
                     return {
                         grade: data[0].grade
                     };
+                }
+            },
+            {
+                name: 'graph4',
+                func: function (data) {
+                    var periodNames = {
+                             6: 'morning',
+                            12: 'afternoon',
+                            18: 'evening',
+                             0: 'night'
+                        },
+                        period = max(data[0].timeRanges, 'totalReport');
+
+                    /*jshint camelcase: false */
+                    return {
+                        periodName: periodNames[period.start_time],
+                        totalReports: period.totalReports,
+                        periodRange: padLeft(period.start_time, 2) + ':00' +
+                                     ' - ' +
+                                     padLeft(period.end_time, 2) + ':00 น.'
+                    };
+                    /*jshint camelcase: true */
                 }
             }
         ],
