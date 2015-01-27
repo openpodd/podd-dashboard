@@ -39,7 +39,7 @@
       <!-- graph1 -->
       <div class="col-lg-6">
         <div class="row">
-          จำนวนรายงานทั้งหมด
+          <h3>จำนวนรายงานทั้งหมด</h3>
         </div>
         <div class="row">
           <span class="number-of-reports"
@@ -102,6 +102,56 @@
         </div>
       </div>
       <!-- end graph4 -->
+
+      <!-- graph5 : volunteer list -->
+      <div class="col-lg-12">
+        <div class="row">
+          <div class="col-lg-8">
+            <h3>รายชื่ออาสาในพื้นที่</h3>
+          </div>
+
+          <div class="col-lg-4">
+            <h3>จำนวนครั้งที่รายงาน</h3>
+          </div>
+        </div>
+
+        <!-- header row -->
+        <div class="row">
+        </div>
+        <!-- end header row -->
+
+        <!-- content row -->
+        <div
+            class="row"
+            ng-repeat="reporter in data.prepared.graph5.reporters | orderBy:reporter.totalReport">
+          <!-- avatar -->
+          <div class="col-lg-2">
+            <img
+              alt="avatar" class="pull-left avatar"
+              ng-if="reporter.thumbnail_avatar_url"
+              ng-src="{{ reporter.thumbnail_avatar_url }}" />
+            <img
+              src="images/avatar.png" alt="avatar" class="pull-left avatar"
+              ng-if="!reporter.thumbnail_avatar_url" />
+          </div>
+          <!-- end avatar -->
+
+          <!-- fullname -->
+          <div class="col-lg-6">
+            <span class="reporter-fullname" ng-bind="reporter.fullname"></span>
+          </div>
+          <!-- end fullname -->
+
+          <!-- number of reports -->
+          <div class="col-lg-4">
+            <span class="reporter-reports" ng-bind="reporter.totalReport"></span>
+          </div>
+          <!-- end number of reports -->
+
+        </div>
+        <!-- end reporter row -->
+      </div>
+      <!-- end graph5 -->
     </div>
     <!-- end #1 row -->
   </div>

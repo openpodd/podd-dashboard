@@ -54,7 +54,8 @@ angular.module('poddDashboardApp')
             'graph1': { totalReports: 0 },
             'graph2': { data: [] },
             'graph3': {},
-            'graph4': { periodName: 'none' }
+            'graph4': { periodName: 'none' },
+            'graph5': { reporters: [] }
         },
         preparations: [
             {
@@ -119,6 +120,14 @@ angular.module('poddDashboardApp')
                                      padLeft(period.end_time, 2) + ':00 น.'
                     };
                     /*jshint camelcase: true */
+                }
+            },
+            {
+                name: 'graph5',
+                func: function (data) {
+                    return {
+                        reporters: data[0].reporters
+                    };
                 }
             }
         ],
