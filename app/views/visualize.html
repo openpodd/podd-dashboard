@@ -122,8 +122,8 @@
 
         <!-- content row -->
         <div
-            class="row"
-            ng-repeat="reporter in data.prepared.graph5.reporters | orderBy:reporter.totalReport">
+          class="row"
+          ng-repeat="reporter in data.prepared.graph5.reporters | orderBy:'-totalReport'">
           <!-- avatar -->
           <div class="col-lg-2">
             <img
