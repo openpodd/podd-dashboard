@@ -21,7 +21,8 @@ angular.module('poddDashboardApp')
         raw: null,
         prepared: {
             'graph1': { totalReports: 0 },
-            'graph2': { data: [] }
+            'graph2': { data: [] },
+            'graph3': {}
         },
         preparations: [
             {
@@ -55,6 +56,14 @@ angular.module('poddDashboardApp')
                         noReports: totalReports === 0,
                         positiveReports: positiveReports,
                         negativeReports: negativeReports
+                    };
+                }
+            },
+            {
+                name: 'graph3',
+                func: function (data) {
+                    return {
+                        grade: data[0].grade
                     };
                 }
             }

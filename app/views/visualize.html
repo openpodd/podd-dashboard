@@ -34,6 +34,7 @@
 
   <!-- content  -->
   <div id="visualization-main-content" class="container" ng-show="data.raw">
+    <!-- #1 row -->
     <div class="row">
       <!-- graph1 -->
       <div class="col-lg-6">
@@ -76,7 +77,22 @@
         </div>
       </div>
       <!-- end graph2 -->
+
+      <!-- graph3 -->
+      <div class="col-lg-6">
+        <div class="row">
+          <h3>ประสิทธิภาพการรายงาน</h3>
+        </div>
+        <div class="row">
+          <span ng-class="{ 'grade-a': data.prepared.graph3.grade == 'A',
+                            'grade-b': data.prepared.graph3.grade == 'B',
+                            'grade-c': data.prepared.graph3.grade == 'C' }"
+                ng-bind="data.prepared.graph3.grade"></span>
+        </div>
+      </div>
+      <!-- end graph3 -->
     </div>
+    <!-- end #1 row -->
   </div>
   <!-- end content -->
 </div>
