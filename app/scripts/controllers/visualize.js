@@ -136,37 +136,72 @@ angular.module('poddDashboardApp')
                 func: function (data) {
                     var self = this,
                         total = 0,
+                        animalTypeMap = {},
+                        animalTypeList = [],
+                        animalTypeIndex = 0,
+                        sumOther = 0,
                         result = {};
 
                     // phase #1 : get all animal types
                     data.forEach(function (item) {
                         item.animalTypes.forEach(function (animalType) {
-                            // prepare schemas
-                            self.schemas.graph6[animalType.name] = {
-                                type: 'numeric',
-                                name: animalType.name
-                            };
-                            // prepare options.rows
-                            self.options.graph6.rows.push({
-                                key: animalType.name,
-                                axis: 'y'
-                            });
-                            // phase #2 : struct returned data so at last we got only
-                            // one row. like this:
-                            // {
-                            //   'chicken': 10,
-                            //   'pig': 11,
-                            //   'cow': 12
-                            // }
-                            if (!result[animalType.name]) {
-                                result[animalType.name] = animalType.total;
+                            // map for later sort.
+                            // [
+                            //   { name: 'chicken', count: 10 },
+                            //   { name: 'pig', count: 11 },
+                            //   { name: 'cow', count: 12 }
+                            // ]
+                            if (!animalTypeMap[animalType.name]) {
+                                animalTypeMap[animalType.name] = animalTypeIndex++;
+                                animalTypeList[animalTypeIndex] = {
+                                    name: animalType.name,
+                                    sum: animalType.total
+                                };
                             }
                             else {
-                                result[animalType.name] += animalType.total;
+                                animalTypeList[ animalTypeMap[animalType.name] ]
+                                    .sum += animalType.total;
                             }
 
                             total += animalType.total;
                         });
+                    });
+                    // phase #2 : cut off to show only first 4 orders.
+                    // phase #2.1 : sort
+                    animalTypeList.sort(function (a, b) {
+                        return b.sum - a.sum;
+                    });
+                    // phase #2.2 : cut off
+                    if (animalTypeList.length > 4) {
+                        sumOther = sum(animalTypeList.slice(4), 'sum');
+
+                        animalTypeList = animalTypeList.slice(0, 4);
+                        animalTypeList.push({
+                            name: 'อื่นๆ',
+                            sum: sumOther
+                        });
+                    }
+
+                    // phase #3 : struct returned data so at last we got only
+                    // one row. like this:
+                    // {
+                    //   'chicken': 10,
+                    //   'pig': 11,
+                    //   'cow': 12
+                    // }
+                    animalTypeList.forEach(function (item) {
+                        // prepare schemas
+                        self.schemas.graph6[item.name] = {
+                            type: 'numeric',
+                            name: item.name
+                        };
+                        // prepare options.rows
+                        self.options.graph6.rows.push({
+                            key: item.name,
+                            axis: 'y'
+                        });
+
+                        result[item.name] = item.sum;
                     });
 
                     return {
