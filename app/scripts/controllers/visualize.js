@@ -56,7 +56,8 @@ angular.module('poddDashboardApp')
             'graph3': {},
             'graph4': { periodName: 'none' },
             'graph5': { reporters: [] },
-            'graph6': { data: [] }
+            'graph6': { data: [] },
+            'graph7': { data: [] }
         },
         preparations: [
             {
@@ -140,7 +141,8 @@ angular.module('poddDashboardApp')
                         animalTypeList = [],
                         animalTypeIndex = 0,
                         sumOther = 0,
-                        result = {};
+                        result = {},
+                        resultForGraph7 = [];
 
                     // phase #1 : get all animal types
                     data.forEach(function (item) {
@@ -155,12 +157,17 @@ angular.module('poddDashboardApp')
                                 animalTypeMap[animalType.name] = animalTypeIndex++;
                                 animalTypeList[animalTypeIndex] = {
                                     name: animalType.name,
+                                    sick: animalType.sick,
+                                    death: animalType.death,
                                     sum: animalType.total
                                 };
                             }
                             else {
-                                animalTypeList[ animalTypeMap[animalType.name] ]
-                                    .sum += animalType.total;
+                                var animalTypeListItem = animalTypeList[ animalTypeMap[animalType.name] ];
+
+                                animalTypeListItem.sick += animalType.sick;
+                                animalTypeListItem.death += animalType.death;
+                                animalTypeListItem.sum += animalType.total;
                             }
 
                             total += animalType.total;
@@ -202,12 +209,43 @@ angular.module('poddDashboardApp')
                         });
 
                         result[item.name] = item.sum;
+                        // for graph7
+                        resultForGraph7.push(item);
                     });
+
+                    // keep it for 7.
+                    self.prepared.graph7.resultFromGraph6 = resultForGraph7;
 
                     return {
                         data: [ result ],
                         noReports: !total,
                         total: total
+                    };
+                }
+            },
+            {
+                name: 'graph7',
+                func: function () {
+                    var classMap = [
+                        { regexp: /โค/, className: 'animal-type-cow' },
+                        { regexp: /ควาย/, className: 'animal-type-buffalo' },
+                        { regexp: /หมู/, className: 'animal-type-pig' },
+                        { regexp: /หมา/, className: 'animal-type-dog' },
+                        { regexp: /ไก่/, className: 'animal-type-chicken' }
+                    ];
+
+                    return {
+                        data: this.prepared.graph7.resultFromGraph6.map(function (item) {
+                            var matches = classMap.filter(function (rule) {
+                                return rule.regexp.test(item.name);
+                            });
+
+                            item.className = matches.length ?
+                                                matches[0].className :
+                                                'animal-type-other';
+
+                            return item;
+                        })
                     };
                 }
             }

@@ -154,7 +154,7 @@
       <!-- end graph5 -->
 
       <!-- graph6 : sick/death -->
-      <div class="col-lg-4">
+      <div class="col-lg-6">
         <angularchart
           class="graph6-valid-reports"
           ng-hide="data.prepared.graph6.noReports"
@@ -170,8 +170,25 @@
       <!-- end graph6 -->
 
       <!-- graph7 : sick/death -->
-      <div class="col-lg-8">
-        
+      <div class="col-lg-6">
+        <div class="row">
+          <div class="col-lg-2"></div>
+          <div class="col-lg-2">จำนวนสัตว์ตาย (ตัว)</div>
+          <div class="col-lg-2">จำนวนสัตว์ป่วย (ตัว)</div>
+        </div>
+
+        <div class="row" ng-repeat="item in data.prepared.graph7.data">
+          <div class="col-lg-2">
+            <span ng-class="item.className">icon here</span>
+            <span ng-bind="item.name"></span>
+          </div>
+          <div class="col-lg-2">
+            <span ng-bind="item.death"></span>
+          </div>
+          <div class="col-lg-2">
+            <span ng-bind="item.sick"></span>
+          </div>
+        </div>
       </div>
       <!-- end graph7 -->
 
