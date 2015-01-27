@@ -130,6 +130,12 @@ angular.module('poddDashboardApp')
             var total = 0;
 
             data.forEach(function (item) {
+                if (item.isVolunteer){
+                    item.isVolunteer = 'เป็นอาสาสมัคร'
+                }else{
+                    item.isVolunteer = '-'
+                }
+
                 results.push(item);
                 total += 1;
 
@@ -159,6 +165,7 @@ angular.module('poddDashboardApp')
                 { field: 'parentAdministrationArea', headerCellClass: 'cell-center' },
                 { field: 'administrationArea', headerCellClass: 'cell-center' },
                 { field: 'fullname', headerCellClass: 'cell-center' },
+                { field: 'isVolunteer', cellClass: 'cell-center', headerCellClass: 'cell-center' },
                 { field: 'telephone', cellClass: 'cell-center', headerCellClass: 'cell-center' },
                 { field: 'projectMobileNumber', cellClass: 'cell-center', headerCellClass: 'cell-center' },
                 { field: 'totalReport', cellClass: 'cell-center', headerCellClass: 'cell-center' },
