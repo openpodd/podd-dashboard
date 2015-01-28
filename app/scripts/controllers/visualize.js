@@ -4,7 +4,7 @@
 angular.module('poddDashboardApp')
 
 .controller('VisualizationCtrl', function ($scope, Menu, dashboard, $interval,
-                                           VisualizationData) {
+                                           VisualizationData, $window) {
     Menu.setActiveMenu('visualize');
 
     /* shortcuts */
@@ -18,8 +18,12 @@ angular.module('poddDashboardApp')
     $scope.areas = {
         all: [],
         selected: null,
-        randomize: false
+        randomize: false,
+        randomizeInterval: 8000 // 2s for data, 1s for anim, 5s for display
     };
+    // Temporary allow dev to change interval on-the-fly (when demo).
+    $window.areas = $scope.areas;
+
     // Fetch available adminisitration areas
     dashboard.getAdministrationAreas().$promise.then(function (data) {
         $scope.areas.all = data.filter(function (item) {
@@ -278,10 +282,9 @@ angular.module('poddDashboardApp')
     /* scope functions */
     $scope.play = function play() {
         console.log('- randomize');
-        $scope.areas.randomize = true;
+        var index = 0;
 
-        var interval = 5000,
-            index = 0;
+        $scope.areas.randomize = true;
 
         if (timer) {
             return;
@@ -293,7 +296,7 @@ angular.module('poddDashboardApp')
         }
         randomize();
 
-        timer = $interval(randomize, interval);
+        timer = $interval(randomize, $scope.areas.randomizeInterval);
     };
     $scope.pause = function pause() {
         console.log('- stop randomize');
@@ -316,6 +319,13 @@ angular.module('poddDashboardApp')
             $scope.play();
         }
     };
+
+    $scope.$watch('areas.randomizeInterval', function () {
+        if ($scope.areas.randomize) {
+            $scope.pause();
+            $scope.play();
+        }
+    });
 
     $scope.refresh = function () {
         if (!$scope.areas.selected || $scope.data.loading) {
