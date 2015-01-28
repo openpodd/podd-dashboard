@@ -4,7 +4,7 @@
 angular.module('poddDashboardApp')
 
 .controller('VisualizationCtrl', function ($scope, Menu, dashboard, $interval,
-                                           VisualizationData) {
+                                           VisualizationData, $window) {
     Menu.setActiveMenu('visualize');
 
     /* shortcuts */
@@ -18,8 +18,12 @@ angular.module('poddDashboardApp')
     $scope.areas = {
         all: [],
         selected: null,
-        randomize: false
+        randomize: false,
+        randomizeInterval: 8000 // 2s for data, 1s for anim, 5s for display
     };
+    // Temporary allow dev to change interval on-the-fly (when demo).
+    $window.areas = $scope.areas;
+
     // Fetch available adminisitration areas
     dashboard.getAdministrationAreas().$promise.then(function (data) {
         $scope.areas.all = data.filter(function (item) {
@@ -278,10 +282,9 @@ angular.module('poddDashboardApp')
     /* scope functions */
     $scope.play = function play() {
         console.log('- randomize');
-        $scope.areas.randomize = true;
+        var index = 0;
 
-        var interval = 5000,
-            index = 0;
+        $scope.areas.randomize = true;
 
         if (timer) {
             return;
@@ -293,7 +296,7 @@ angular.module('poddDashboardApp')
         }
         randomize();
 
-        timer = $interval(randomize, interval);
+        timer = $interval(randomize, $scope.areas.randomizeInterval);
     };
     $scope.pause = function pause() {
         console.log('- stop randomize');
@@ -317,6 +320,21 @@ angular.module('poddDashboardApp')
         }
     };
 
+    $scope.$watch('areas.randomizeInterval', function () {
+        if ($scope.areas.randomize) {
+            $scope.pause();
+            $scope.play();
+        }
+    });
+
+
+    $scope.months = {
+        months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        years: [2015, 2014],
+        selectedMonth: moment().month() + 1,
+        selectedYear: moment().year()
+    };
+
     $scope.refresh = function () {
         if (!$scope.areas.selected || $scope.data.loading) {
             return;
@@ -326,17 +344,14 @@ angular.module('poddDashboardApp')
         $scope.data.loading = true;
         $scope.data.error = false;
 
-        var dateStart = moment().subtract(3, 'months').format('DD/MM/YYYY'),
-            dateEnd   = moment().format('DD/MM/YYYY'),
-            dateQuery = dateStart + '-' + dateEnd,
+        var query = {
+            month: $scope.months.selectedMonth + '/' + $scope.months.selectedYear,
+            administrationAreaId: $scope.areas.selected.id
+        };
 
-            query = {
-                dates: dateQuery,
-                administrationAreaId: $scope.areas.selected.id
-            };
-
-        VisualizationData.query(query).$promise
+        VisualizationData.get(query).$promise
         .then(function (data) {
+            data = [ data ];
             $scope.data.error = false;
             $scope.data.raw = data;
 
@@ -353,6 +368,18 @@ angular.module('poddDashboardApp')
     };
 
     $scope.$watch('areas.selected', function (newValue) {
+        if (newValue) {
+            $scope.refresh();
+        }
+    });
+
+    $scope.$watch('months.selectedMonth', function (newValue) {
+        if (newValue) {
+            $scope.refresh();
+        }
+    });
+
+    $scope.$watch('months.selectedYear', function (newValue) {
         if (newValue) {
             $scope.refresh();
         }

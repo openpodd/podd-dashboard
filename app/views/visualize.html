@@ -2,6 +2,12 @@
   <div class="info">
     <!-- select -->
     <div class="select-location pull-right">
+      <select
+        ng-model="months.selectedMonth"
+        ng-options="month for month in months.months"></select>
+      <select
+        ng-model="months.selectedYear"
+        ng-options="year for year in months.years"></select>
       <button
         class="btn btn-default"
         title="Randomize"
