@@ -7,9 +7,15 @@ angular.module('poddDashboardApp')
     Menu.setActiveMenu('visualize');
 
     $scope.areas = {
-        all: dashboard.getAdministrationAreas(),
+        all: [],
         selected: null
     };
+    // Fetch available adminisitration areas
+    dashboard.getAdministrationAreas().$promise.then(function (data) {
+        $scope.areas.all = data.filter(function (item) {
+            return item.isLeaf;
+        });
+    });
 
     function sum(array, propertyName) {
         return array.reduce(function (prev, current) {
