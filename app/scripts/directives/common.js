@@ -1,6 +1,43 @@
 'use strict';
 
 window.utils = window.utils || {
+    sum: function sum(array, propertyName) {
+        return array.reduce(function (prev, current) {
+            return prev + current[propertyName];
+        }, 0);
+    },
+    max: function max(array, propertyName) {
+        var maxIndex = 0,
+        maxValue = 0;
+
+        array.forEach(function (item, index) {
+            if (item[propertyName] > maxValue) {
+                maxIndex = index;
+            }
+        });
+
+        return array[maxIndex];
+    },
+    padLeft: function padLeft(text, desiredLength, padChar) {
+        var newText = '' + text;
+
+        padChar = padChar || '0';
+
+        return (function doPad() {
+            return ({
+                true: function () {
+                    newText = padChar + newText;
+                    return doPad();
+                },
+                false: function () {
+                    return newText;
+                }
+            }[newText.length < desiredLength])();
+        })();
+    },
+    random: function random(min, max) {
+        return Math.random() * (max - min) + min;
+    },
     getObjectLength: function (obj) {
         var i, count = 0;
         for (i in obj) {

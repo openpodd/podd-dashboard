@@ -8,7 +8,18 @@
 
     <!-- select -->
     <div class="col-lg-3">
-      <ui-select ng-model="areas.selected" theme="selectize" title="Choose a person">
+      <button
+        class="btn btn-default"
+        title="Randomize"
+        ng-class="{ 'active': areas.randomize }"
+        ng-click="toggleRandomize()">
+        <i class="fa fa-random"></i>
+      </button>
+      <ui-select
+        ng-model="areas.selected"
+        theme="selectize"
+        title="Choose a person"
+        ng-disabled="areas.randomize">
         <ui-select-match placeholder="Select areas">{{areas.selected.name}}</ui-select-match>
         <ui-select-choices
           group-by="'parentName'"

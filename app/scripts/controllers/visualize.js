@@ -1,14 +1,24 @@
-/* global moment */
+/* global moment, utils */
 'use strict';
 
 angular.module('poddDashboardApp')
 
-.controller('VisualizationCtrl', function ($scope, Menu, dashboard, VisualizationData) {
+.controller('VisualizationCtrl', function ($scope, Menu, dashboard, $interval,
+                                           VisualizationData) {
     Menu.setActiveMenu('visualize');
+
+    /* shortcuts */
+    var sum = utils.sum,
+        max = utils.max,
+        padLeft = utils.padLeft,
+        random = utils.random,
+        // for randomize worker
+        timer = null;
 
     $scope.areas = {
         all: [],
-        selected: null
+        selected: null,
+        randomize: false
     };
     // Fetch available adminisitration areas
     dashboard.getAdministrationAreas().$promise.then(function (data) {
@@ -16,43 +26,6 @@ angular.module('poddDashboardApp')
             return item.isLeaf;
         });
     });
-
-    function sum(array, propertyName) {
-        return array.reduce(function (prev, current) {
-            return prev + current[propertyName];
-        }, 0);
-    }
-
-    function max(array, propertyName) {
-        var maxIndex = 0,
-            maxValue = 0;
-
-        array.forEach(function (item, index) {
-            if (item[propertyName] > maxValue) {
-                maxIndex = index;
-            }
-        });
-
-        return array[maxIndex];
-    }
-
-    function padLeft(text, desiredLength, padChar) {
-        var newText = '' + text;
-
-        padChar = padChar || '0';
-
-        return (function doPad() {
-            return ({
-                true: function () {
-                    newText = padChar + newText;
-                    return doPad();
-                },
-                false: function () {
-                    return newText;
-                }
-            }[newText.length < desiredLength])();
-        })();
-    }
 
     $scope.data = {
         raw: null,
@@ -300,6 +273,48 @@ angular.module('poddDashboardApp')
         },
         loading: false,
         error: false
+    };
+
+    /* scope functions */
+    $scope.play = function play() {
+        console.log('- randomize');
+        $scope.areas.randomize = true;
+
+        var interval = 5000,
+            index = 0;
+
+        if (timer) {
+            return;
+        }
+
+        function randomize() {
+            index = Math.floor(random(0, $scope.areas.all.length));
+            $scope.areas.selected = $scope.areas.all[index];
+        }
+        randomize();
+
+        timer = $interval(randomize, interval);
+    };
+    $scope.pause = function pause() {
+        console.log('- stop randomize');
+        $scope.areas.randomize = false;
+
+        if (!timer) {
+            return;
+        }
+
+        $interval.cancel(timer);
+        timer = null;
+    };
+
+    $scope.toggleRandomize = function toggleRandomize() {
+        if ($scope.areas.randomize) {
+            $scope.pause();
+        }
+        else {
+            // run randomize worker.
+            $scope.play();
+        }
     };
 
     $scope.refresh = function () {
