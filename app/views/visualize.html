@@ -1,7 +1,7 @@
 <div class="container visualization-view">
   <div class="row">
     <!-- address -->
-    <div class="col-lg-8">
+    <div class="col-lg-9">
       <h1 ng-bind="areas.selected.address"></h1>
     </div>
     <!-- end address -->
@@ -10,7 +10,9 @@
     <div class="col-lg-3">
       <ui-select ng-model="areas.selected" theme="selectize" title="Choose a person">
         <ui-select-match placeholder="Select areas">{{areas.selected.name}}</ui-select-match>
-        <ui-select-choices repeat="area in areas.all | filter:$select.search">
+        <ui-select-choices
+          group-by="'parentName'"
+          repeat="area in areas.all | filter:$select.search | orderBy:['parentName', 'name']">
           <span ng-bind-html="area.name | highlight:$select.search"></span>
         </ui-select-choices>
       </ui-select>
