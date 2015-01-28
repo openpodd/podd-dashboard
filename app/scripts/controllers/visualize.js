@@ -327,6 +327,14 @@ angular.module('poddDashboardApp')
         }
     });
 
+
+    $scope.months = {
+        months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        years: [2015, 2014],
+        selectedMonth: moment().month() + 1,
+        selectedYear: moment().year()
+    };
+
     $scope.refresh = function () {
         if (!$scope.areas.selected || $scope.data.loading) {
             return;
@@ -336,17 +344,14 @@ angular.module('poddDashboardApp')
         $scope.data.loading = true;
         $scope.data.error = false;
 
-        var dateStart = moment().subtract(3, 'months').format('DD/MM/YYYY'),
-            dateEnd   = moment().format('DD/MM/YYYY'),
-            dateQuery = dateStart + '-' + dateEnd,
+        var query = {
+            month: $scope.months.selectedMonth + '/' + $scope.months.selectedYear,
+            administrationAreaId: $scope.areas.selected.id
+        };
 
-            query = {
-                dates: dateQuery,
-                administrationAreaId: $scope.areas.selected.id
-            };
-
-        VisualizationData.query(query).$promise
+        VisualizationData.get(query).$promise
         .then(function (data) {
+            data = [ data ];
             $scope.data.error = false;
             $scope.data.raw = data;
 
@@ -363,6 +368,18 @@ angular.module('poddDashboardApp')
     };
 
     $scope.$watch('areas.selected', function (newValue) {
+        if (newValue) {
+            $scope.refresh();
+        }
+    });
+
+    $scope.$watch('months.selectedMonth', function (newValue) {
+        if (newValue) {
+            $scope.refresh();
+        }
+    });
+
+    $scope.$watch('months.selectedYear', function (newValue) {
         if (newValue) {
             $scope.refresh();
         }
