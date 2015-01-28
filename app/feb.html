@@ -30,227 +30,132 @@
     <link rel="stylesheet" href="bower_components/week-picker/week-picker-view.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.bootstrap3.css">
     <!-- build:css(.tmp) styles/main.css -->
-    <link id="main-style" rel="stylesheet" href="styles/app.css" media="print">
+    <link id="main-style" rel="stylesheet" href="styles/info.css">
     <!-- endbuild -->
 
-    <style>
-    body{
-        background: -webkit-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* Chrome 10+, Saf5.1+ */
-        background:    -moz-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* FF3.6+ */
-        background:     -ms-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* IE10 */
-        background:      -o-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* Opera 11.10+ */
-        background:         linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* W3C */
-    }
-
-    @-webkit-keyframes heartbeat {
-      0% { transform: scale3d(1, 1, 1); }
-      50% { transform: scale3d(1.4, 1.4, 1.4); }
-      100% { transform: scale3d(1, 1, 1); }
-    }
-    @-moz-keyframes heartbeat {
-      0% { transform: scale3d(1, 1, 1); }
-      50% { transform: scale3d(1.4, 1.4, 1.4); }
-      100% { transform: scale3d(1, 1, 1); }
-    }
-    @-o-keyframes heartbeat {
-      0% { transform: scale3d(1, 1, 1); }
-      50% { transform: scale3d(1.4, 1.4, 1.4); }
-      100% { transform: scale3d(1, 1, 1); }
-    }
-    @keyframes heartbeat {
-      0% { transform: scale3d(1, 1, 1); }
-      50% { transform: scale3d(1.4, 1.4, 1.4); }
-      100% { transform: scale3d(1, 1, 1); }
-    }
-
-    .splash {
-      display: none;
-      font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-      font-size: 14px;
-      line-height: 1.42857;
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background-color: #fff;
-      margin: 0;
-      padding: 0;
-      z-index: 999999;
-    }
-    .splash[ng-cloak] {
-      display: block;
-    }
-    .splash .splash-content {
-      display: block;
-      position: absolute;
-      width: 50%;
-      height: 0;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      margin: auto;
-      text-align: center;
-      height: 180px;
-    }
-    .splash .splash-content p {
-      margin: 0 0 10px;
-      font-size: 2em;
-    }
-    .splash .splash-content .icon-heart {
-      margin-left: 20px;
-
-      transition: -moz-transform .7s;
-      transition: -webkit-transform .7s;
-      transition: -o-transform .7s;
-      transition: transform .7s;
-
-      -moz-animation: heartbeat .7s infinite;
-      -webkit-animation: heartbeat .7s infinite;
-      -o-animation: heartbeat .7s infinite;
-      animation: heartbeat .7s infinite;
-
-      vertical-align: middle;
-    }
-
-    @-webkit-keyframes load8 {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-    }
-    @keyframes load8 {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-        }
-    }
-    .splash .loader {
-        margin: 6em auto;
-        font-size: 5px;
-        position: relative;
-        text-indent: -9999em;
-        border-top: 1.1em solid rgb(0, 0, 0);
-        border-right: 1.1em solid rgba(0, 0, 0, 0.2);
-        border-bottom: 1.1em solid rgba(0, 0, 0, 0.2);
-        border-left: 1.1em solid #000;
-        -webkit-animation: load8 1.1s infinite linear;
-        animation: load8 1.1s infinite linear;
-    }
-    .splash .loader,
-    .splash .loader:after {
-        border-radius: 50%;
-        width: 10em;
-        height: 10em;
-    }
-
-    </style>
   </head>
   <body ng-app="poddDashboardApp" ng-class="{ 'page-login':!shared.loggedIn }">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
+    
+    <div class="container">
+        <div class="info">
+            <select class="pul-right">
+                <option>1</option>
+                <option>1</option>
+                <option>1</option>
+            </select>
 
-<div ng-cloak class="splash">
-  <div class="splash-content">
-    <p>กรุณารอสักครู่ </p>
-    <div class="loader">Loading...</div>
-</div>
-
-  <script>
-  var linkTags = document.getElementsByTagName('link');
-  for (i=0; i < linkTags.length; i++) {
-      if (linkTags.item(i).getAttribute('media') === 'print') {
-          console.log('link-->', linkTags.item(i));
-          linkTags.item(i).setAttribute('media', 'screen');
-      }
-  }
-  </script>
-</div>
-
-<div class="pd-section-nav" ng-controller="MenuCtrl">
-    <div class="pd-section-left" ng-show="shared.loggedIn" ng-cloak>
-    <!--   <div ng-init="isShowNav = true"></div>-->
-        <div class="pd-container" >
-           <img src="images/logo-onehealth.svg" alt="" class="logo"/>
-            <ul class="pd-nav-list">
-                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('home') }"
-                    ng-click="setActiveMenu('home')">
-                  <a ng-href="#/" ng-click="shared.filterMode = false; shared.infoReportMode = false; shared.infoPersonMode = false;" class="pd-nav-icon">
-                  <i class="fa fa-map-marker fa-size-22"></i>
-                  <span class="pd-nav-text">เฝ้าระวัง</span></a>
-                </li>
-                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('filter') }">
-                  <a ng-href="#/filter" ng-click="shared.filterMode = true; shared.infoReportMode = false; shared.infoPersonMode = false;" class="pd-nav-icon">
-                  <i class="fa fa-search fa-size-18"></i>
-                  <span class="pd-nav-text">ค้นหา</span></a>
-                </li>
-                <li ng-hide="shared.loggedIn" class="pd-nav-item" ng-cloak
-                    ng-class="{ 'active active-menu':isActiveMenu('login') }">
-                  <a ng-href="#/login" ng-click="isShowNav=!isShowNav" class="pd-nav-icon">
-                  <i class="fa fa-sign-in"></i>
-                  <span class="pd-nav-text">เข้าสู่ระบบ</span></a>
-                </li>
-                <li ng-show="shared.loggedIn" class="pd-nav-item">
-                    <span class="icon-bell pd-nav-icon">
-                        <i class="fa fa-bell fa-size-18"></i>
-                        <span class="alert-dotted" ng-show="shared.unread > 0">{{ shared.unread }}</span>
-                    </span>
-                    <div ng-include src="'views/notification-list.html'"></div>
-                </li>
-                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('info') }"
-                    ng-click="setActiveMenu('info')">
-                    <span class="pd-nav-icon"><i class="fa fa-bar-chart fa-size-18"></i></span>
-                  <div class="pd-nav-submenu">
-                      <ul class="">
-                          <li><a ng-href="#/info/report" ng-click="shared.filterMode = false; shared.infoReportMode = true; shared.infoPersonMode = false;" class="">สรุปรายงาน</a></li>
-                          <li><a href="#/info/person" ng-click="shared.filterMode = false; shared.infoReportMode = false; shared.infoPersonMode = true;" >สรุปจำนวนอาสาที่รายงานต่ำกว่าเกณฑ์</a></li>
-                      </ul>
-                  </div>
-                </li>
-                <!-- info menu -->
-                <li class="pd-nav-item"
-                    ng-class="{ 'active active-menu':isActiveMenu('info') }">
-                  <a ng-href="#/info"><span class="pd-nav-icon">
-                    <i class="fa fa-pie-chart fa-size-18"></i>
-                  </span></a>
-                </li>
-                <!-- end info menu -->
-
-                <li ng-show="shared.loggedIn" class="pd-nav-item" ng-cloak
-                    ng-class="{ 'active active-menu':isActiveMenu('logout') }">
-
-                  <a ng-href="#/" ng-click="isShowNav=!isShowNav;logout();" class="pd-nav-icon">
-                  <i class="fa fa-sign-out fa-size-18"></i>
-                  <span class="pd-nav-text">ออกจากระบบ</span></a>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-<!--    <div class="pd-nav-toggle" ng-click="isShowNav=!isShowNav"><i class="fa fa-bars fa-size-24"></i></div>-->
-</div>
-
-<div ui-view="" class="pd-main"></div>
-
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
-       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
-    </script>
+            <div class="info-section-one">
+                <h1 class="info-heading">เทศบาลตำบลพร้าว อำเภอพร้าว</h1>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="info-box">
+                            <i class="info-report-icon info-icon"></i>
+                            <h2 class="info-title">จำนวนรายงายทั้งหมด</h2>
+                            <p class="text-center info-number">76</p>
+                            <p class="text-center text">รายงาน</p> 
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <p>Chart</p>
+                    </div>
+                </div> <!-- row -->
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="info-box">
+                            <i class="info-icon-grade info-icon"></i>
+                            <h2 class="info-title">รายงานจ้า จุ๊บๆ</h2>
+                            <img src=""/>
+                            <p class="text text-center">เหรียญทอง</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="info-box">
+                            <i class="info-icon-time info-icon"></i>
+                            <h2 class="info-title">ช่วงเวลาที่รายงานบ่อยที่สุด</h2>
+                            <img src=""/>
+                            <p class="text text-center">06.00 - 12.00 น.</p>
+                        </div>
+                    </div>
+                </div> <!-- row -->
+            </div> <!-- section -->
+            
+            <div class="info-section-two">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p>Chart</p>
+                    </div>
+                    <div class="col-xs-6">
+                        <table class="info-table info-animal-table table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>จำนวนสัตว์ตาย</th>
+                                <th>จำนวนสัตว์ป่วย</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><img src="" class="animal-icon"/>โค</td>
+                                <td><span class="animal-number">5</span></td>
+                                <td><span class="animal-number">5</span></td>
+                            </tr>
+                            <tr>
+                                <td><img src="" class="animal-icon"/>ควาย</td>
+                                <td><span class="animal-number">5</span></td>
+                                <td><span class="animal-number">5</span></td>
+                            </tr>
+                            <tr>
+                                <td><img src="" class="animal-icon"/>หมา</td>
+                                <td><span class="animal-number">5</span></td>
+                                <td><span class="animal-number">5</span></td>
+                            </tr>
+                            <tr>
+                                <td><img src="" class="animal-icon"/>ไก่</td>
+                                <td><span class="animal-number">5</span></td>
+                                <td><span class="animal-number">5</span></td>
+                            </tr>
+                            <tr>
+                                <td><img src="" class="animal-icon"/>นก</td>
+                                <td><span class="animal-number">5</span></td>
+                                <td><span class="animal-number">5</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+                
+                
+                <table class="info-table table-striped table">
+                    <thead>
+                        <tr>
+                            <th class="info-title">รายชื่ออาสาในพื้นที่</th>
+                            <th class="info-title">รายงาน / ครั้ง</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mark</td>
+                            <td>Mark</td>
+                        </tr>
+                        <tr>
+                            <td>Mark</td>
+                            <td>Jacob</td>
+                        </tr>
+                        <tr>
+                            <td>Mark</td>
+                            <td>Larry</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div> <!-- info -->
+    </div> <!-- container -->
+    
+    
+    
 
     <!-- build:js(.) scripts/oldieshim.js -->
     <!--[if lt IE 9]>

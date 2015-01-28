@@ -29,6 +29,16 @@
     font-style: normal;
 }
 @font-face {
+    font-family: 'ThaiSansNeueBold';
+    src: url('ThaiSansNeue/thaisansneue-bold.eot');
+    src: url('ThaiSansNeue/thaisansneue-bold.eot') format('embedded-opentype'),
+         url('ThaiSansNeue/thaisansneue-bold.woff') format('woff'),
+         url('ThaiSansNeue/thaisansneue-bold.ttf') format('truetype'),
+         url('ThaiSansNeue/thaisansneue-bold.svg#ThaiSansNeueBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
     font-family: 'RSURegular';
     src: url('RSU/rsu_regular.eot');
     src: url('RSU/rsu_regular.eot') format('embedded-opentype'),
