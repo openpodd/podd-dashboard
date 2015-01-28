@@ -1,13 +1,7 @@
-<div class="container visualization-view">
-  <div class="row">
-    <!-- address -->
-    <div class="col-lg-9">
-      <h1 ng-bind="areas.selected.address"></h1>
-    </div>
-    <!-- end address -->
-
+<div class="container visualization-view info-container" ng-show="data.raw">
+  <div class="info">
     <!-- select -->
-    <div class="col-lg-3">
+    <div class="select-location pull-right">
       <button
         class="btn btn-default"
         title="Randomize"
@@ -29,110 +23,137 @@
       </ui-select>
     </div>
     <!-- end select -->
-  </div>
-
-  <!-- error message -->
-  <div class="row">
-    <div class="col-lg-6 col-lg-offset-3">
-      <p class="alert alert-warning" ng-show="data.error">
-        เกิดข้อผิดพลาดในการดึงข้อมูล กรุณาลอง<a ng-click="refresh()">รีเฟรชใหม่</a>
-      </p>
-
-      <p class="alert alert-info" ng-show="!areas.selected">
-        โปรดเลือกพื้นที่ที่ต้องการดูข้อมูล
-      </p>
-    </div>
-  </div>
-  <!-- end error message -->
-
-  <!-- content  -->
-  <div id="visualization-main-content" class="container" ng-show="data.raw">
-    <!-- #1 row -->
-    <div class="row">
-      <!-- graph1 -->
-      <div class="col-lg-6">
-        <div class="row">
-          <h3>จำนวนรายงานทั้งหมด</h3>
-        </div>
-        <div class="row">
-          <span class="number-of-reports"
+    
+    <div class="info-section-one">
+      <h1 ng-bind="areas.selected.address" class="info-heading"></h1>
+      
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="info-box">
+            <i class="info-report-icon info-icon"></i>
+            <h2 class="info-title">จำนวนรายงายทั้งหมด</h2>
+            <p class="text-center info-number number-of-reports"
                 count-up
                 count-to="data.prepared.graph1.totalReports"
-                duration="1400"></span>
+                duration="1400"></p>
+            <p class="text-center text">รายงาน</p> 
+          </div>
         </div>
-        <div class="row">รายงาน</div>
-      </div>
-      <!-- end graph1 -->
-
-      <!-- graph2 -->
-      <div class="col-lg-6">
-        <angularchart
+        <div class="col-xs-6">
+          <angularchart
           class="graph2-valid-reports"
           ng-hide="data.prepared.graph2.noReports"
           dataset="data.prepared.graph2.data"
           schema="data.schemas.graph2"
           options="data.options.graph2">
-        </angularchart>
-
-        <div class="graph1-legend">
-          <div class="legend-positive">
-            <span count-up count-to="data.prepared.graph2.positiveReports"></span>
-            <br>รายงานไม่พบเหตุผิดปกติ
+          </angularchart>
+          <div class="graph1-legend">
+            <div class="legend-positive">
+              <span count-up count-to="data.prepared.graph2.positiveReports"></span>
+              <br>รายงานไม่พบเหตุผิดปกติ
+            </div>
+            <div class="legend-negative">
+              <span count-up count-to="data.prepared.graph2.negativeReports"></span>
+              <br>รายงานเหตุผิดปกติ
+            </div>
           </div>
-          <div class="legend-negative">
-            <span count-up count-to="data.prepared.graph2.negativeReports"></span>
-            <br>รายงานเหตุผิดปกติ
-          </div>
-        </div>
-
-        <div class="graph2-no-reports" ng-show="data.prepared.graph2.noReports">
+          <div class="graph2-no-reports" ng-show="data.prepared.graph2.noReports">
           ไม่มีข้อมูลการรายงาน
-        </div>
-      </div>
-      <!-- end graph2 -->
-
-      <!-- graph3 -->
-      <div class="col-lg-6">
-        <div class="row">
-          <h3>ประสิทธิภาพการรายงาน</h3>
-        </div>
-        <div class="row">
-          <span ng-class="{ 'grade-a': data.prepared.graph3.grade == 'A',
-                            'grade-b': data.prepared.graph3.grade == 'B',
-                            'grade-c': data.prepared.graph3.grade == 'C' }"
-                ng-bind="data.prepared.graph3.grade"></span>
-        </div>
-      </div>
-      <!-- end graph3 -->
-
-      <!-- graph4 -->
-      <div class="col-lg-6">
-        <div class="row">
-          <h3>ช่วงเวลาที่รายงานบ่อยที่สุด</h3>
-        </div>
-        <div class="row">
-          <span ng-class="period-{{ data.prepared.graph4.periodName }}" ng-bind="data.prepared.graph4.periodRange"></span>
-        </div>
-      </div>
-      <!-- end graph4 -->
-
-      <!-- graph5 : volunteer list -->
-      <div class="col-lg-12">
-        <div class="row">
-          <div class="col-lg-8">
-            <h3>รายชื่ออาสาในพื้นที่</h3>
-          </div>
-
-          <div class="col-lg-4">
-            <h3>จำนวนครั้งที่รายงาน</h3>
           </div>
         </div>
-
-        <!-- header row -->
-        <div class="row">
+      </div>
+      
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="info-box">
+            <i class="info-icon-grade info-icon"></i>
+            <h2 class="info-title">ประสิทธิภาพการรายงาน</h2>
+            <span ng-class="{ 'grade-a': data.prepared.graph3.grade == 'A',
+                              'grade-b': data.prepared.graph3.grade == 'B',
+                              'grade-c': data.prepared.graph3.grade == 'C' }"
+                  ng-bind="data.prepared.graph3.grade"></span>
+            <img src=""/>
+            <p class="text text-center">เหรียญทอง</p>
+          </div>
         </div>
-        <!-- end header row -->
+        <div class="col-xs-6">
+          <div class="info-box">
+            <i class="info-icon-time info-icon"></i>
+            <h2 class="info-title">ช่วงเวลาที่รายงานบ่อยที่สุด</h2>
+            <span ng-class="period-{{ data.prepared.graph4.periodName }}" ng-bind="data.prepared.graph4.periodRange"></span>
+            <img src=""/>
+            <p class="text text-center">06.00 - 12.00 น.</p>
+          </div>
+        </div>
+      </div> <!-- row -->
+      
+    </div>
+    
+    <!-- info-section-two -->
+    <div class="info-section-two">
+      <div class="row">
+          <div class="col-xs-6">
+            <angularchart
+              class="graph6-valid-reports"
+              ng-hide="data.prepared.graph6.noReports"
+              dataset="data.prepared.graph6.data"
+              schema="data.schemas.graph6"
+              options="data.options.graph6">
+            </angularchart>
 
+            <div class="graph6-no-reports" ng-show="data.prepared.graph6.noReports">
+              ไม่มีข้อมูลการรายงาน
+            </div>  
+          </div>
+          <div class="col-xs-6">
+              
+            <div class="row">
+              <div class="col-lg-2"></div>
+              <div class="col-lg-2">จำนวนสัตว์ตาย (ตัว)</div>
+              <div class="col-lg-2">จำนวนสัตว์ป่วย (ตัว)</div>
+            </div>
+
+            <div class="row" ng-repeat="item in data.prepared.graph7.data">
+              <div class="col-lg-2">
+                <span ng-class="item.className">icon here</span>
+                <span ng-bind="item.name"></span>
+              </div>
+              <div class="col-lg-2">
+                <span ng-bind="item.death"></span>
+              </div>
+              <div class="col-lg-2">
+                <span ng-bind="item.sick"></span>
+              </div>
+            </div>
+
+            <div class="row" ng-show="data.prepared.graph6.noReports">
+              <div class="col-lg-12">
+                ยังไม่มีการรายงาน
+              </div>
+            </div>
+              
+            <table class="info-table info-animal-table table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>จำนวนสัตว์ตาย</th>
+                  <th>จำนวนสัตว์ป่วย</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><img src="" class="animal-icon"/>โค</td>
+                  <td><span class="animal-number">5</span></td>
+                  <td><span class="animal-number">5</span></td>
+                </tr>
+              </tbody>
+            </table>
+              
+          </div>
+      </div> <!-- row -->
+      
+      <div class="foo">
+        
         <!-- content row -->
         <div
           class="row"
@@ -163,56 +184,46 @@
 
         </div>
         <!-- end reporter row -->
+        
+        
+        <table class="info-table table-striped table">
+          <thead>
+            <tr>
+              <th class="info-title">รายชื่ออาสาในพื้นที่</th>
+              <th class="info-title">รายงาน / ครั้ง</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mark</td>
+              <td>Mark</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        
       </div>
-      <!-- end graph5 -->
-
-      <!-- graph6 : sick/death -->
-      <div class="col-lg-6">
-        <angularchart
-          class="graph6-valid-reports"
-          ng-hide="data.prepared.graph6.noReports"
-          dataset="data.prepared.graph6.data"
-          schema="data.schemas.graph6"
-          options="data.options.graph6">
-        </angularchart>
-
-        <div class="graph6-no-reports" ng-show="data.prepared.graph6.noReports">
-          ไม่มีข้อมูลการรายงาน
-        </div>
-      </div>
-      <!-- end graph6 -->
-
-      <!-- graph7 : sick/death -->
-      <div class="col-lg-6">
-        <div class="row">
-          <div class="col-lg-2"></div>
-          <div class="col-lg-2">จำนวนสัตว์ตาย (ตัว)</div>
-          <div class="col-lg-2">จำนวนสัตว์ป่วย (ตัว)</div>
-        </div>
-
-        <div class="row" ng-repeat="item in data.prepared.graph7.data">
-          <div class="col-lg-2">
-            <span ng-class="item.className">icon here</span>
-            <span ng-bind="item.name"></span>
-          </div>
-          <div class="col-lg-2">
-            <span ng-bind="item.death"></span>
-          </div>
-          <div class="col-lg-2">
-            <span ng-bind="item.sick"></span>
-          </div>
-        </div>
-
-        <div class="row" ng-show="data.prepared.graph6.noReports">
-          <div class="col-lg-12">
-            ยังไม่มีการรายงาน
-          </div>
-        </div>
-      </div>
-      <!-- end graph7 -->
-
+      
+      
+      
     </div>
-    <!-- end #1 row -->
   </div>
+  
+
+
+  <!-- error message -->
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+      <p class="alert alert-warning" ng-show="data.error">
+        เกิดข้อผิดพลาดในการดึงข้อมูล กรุณาลอง<a ng-click="refresh()">รีเฟรชใหม่</a>
+      </p>
+
+      <p class="alert alert-info" ng-show="!areas.selected">
+        โปรดเลือกพื้นที่ที่ต้องการดูข้อมูล
+      </p>
+    </div>
+  </div>
+  <!-- end error message -->
+
   <!-- end content -->
 </div>

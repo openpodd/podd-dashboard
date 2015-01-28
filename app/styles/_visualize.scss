@@ -10,3 +10,70 @@
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
 }
+
+
+.pd-section-left{
+//  display: none;
+}
+.info-container{
+    width: 100% !important;
+    padding: 0 !important;
+}
+.info-section-one, .info-section-two{
+    padding: 0 25px;
+}
+
+.info{
+    font-family: 'ThaiSansNeueRegular';
+    
+    .info-number{
+        font-size: 200px;
+        font-family: ThaiSansNeueBold;
+        line-height: 120px;
+        color: #59226D;
+    }
+    .text{
+        font-size: 50px;
+        font-family: ThaiSansNeueBold;
+        line-height: 40px;
+        color: #59226D;
+    }
+}
+.info-heading{
+    font-size: 90px;
+    font-family: ThaiSansNeueBold;
+    color: #000;
+}
+
+.info-title{
+    font-size: 56px;
+    font-family: ThaiSansNeueBold;
+    color: #333;
+    margin: 0 0 30px;
+}
+
+.info-section-two{
+    background-color: #412954;
+    color: #fff;
+}
+
+//Table
+.info-table{
+    table-layout: fixed;
+    background-color: #412954 !important;
+    
+    th{
+        color: #fff;
+        border: none !important;
+    }
+    td{
+        border: none !important;
+        font-size: 32px;
+    }
+    tbody tr:nth-child(odd){
+        background-color: #4e3466 !important;
+    }
+}
+.info-table{
+    
+}
