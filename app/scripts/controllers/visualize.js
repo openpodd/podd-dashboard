@@ -150,6 +150,10 @@ angular.module('poddDashboardApp')
                         result = {},
                         resultForGraph7 = [];
 
+                    // phase #0 : reset graph schemas and options
+                    self.schemas.graph6 = {};
+                    self.options.graph6.rows = [];
+
                     // phase #1 : get all animal types
                     data.forEach(function (item) {
                         item.animalTypes.forEach(function (animalType) {
