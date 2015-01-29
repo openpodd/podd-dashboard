@@ -211,6 +211,7 @@
 }
 .animal-name{
   display: inline-block;
+  color: #a47aaf;
 }
 
 
@@ -230,6 +231,31 @@
   position: absolute;
   right: 0;
   top: 0;
+}
+
+/*hide svg*/
+.c3-legend-item{
+  display: none;
+}
+
+.graph6-legend{
+  margin-top: 30px;
+
+  li{
+    list-style: none;
+    display: inline-block;
+    font-size: 36px;
+    margin: 0 20px 0 0;
+  }
+  .color-box{
+    width: 20px;
+    height: 20px;
+    margin-top: 0 20px 0 0;
+    display: inline-block;
+  }
+  .color-name{
+
+  }
 }
 
 
