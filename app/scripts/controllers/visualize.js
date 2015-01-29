@@ -149,6 +149,7 @@ angular.module('poddDashboardApp')
                         animalTypeIndex = 0,
                         sumOther = 0,
                         result = {},
+                        legends = [],
                         resultForGraph7 = [];
 
                     // phase #0 : reset graph schemas and options
@@ -219,6 +220,13 @@ angular.module('poddDashboardApp')
                             axis: 'y',
                             color: $scope.pieChartColor[itemIndex]
                         });
+                        // prepare legends
+                        legends.push({
+                            name: item.name,
+                            style: {
+                                'background-color': $scope.pieChartColor[itemIndex]
+                            }
+                        });
 
                         result[item.name] = item.sum;
                         // for graph7
@@ -231,7 +239,8 @@ angular.module('poddDashboardApp')
                     return {
                         data: [ result ],
                         noReports: !total,
-                        total: total
+                        total: total,
+                        legends: legends
                     };
                 }
             },
