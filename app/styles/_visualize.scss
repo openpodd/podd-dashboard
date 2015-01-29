@@ -116,6 +116,11 @@
   height: 83px;
   background: url('/images/ic-rating.png');
 }
+.info-icon-time{
+  width: 67px;
+  height: 67px;
+  background: url('/images/ic-time.png');
+}
 
 
 //Chart
@@ -136,12 +141,14 @@
   top: 0;
 }
 
+
 //Grade
 .info-grade{
   width: 164px;
   height: 246px;
   margin: 0 auto;
   overflow: hidden;
+  text-indent: -999em;
 }
 .grade-a{
   background: url('/images/gold.png'); 
@@ -151,4 +158,36 @@
 }
 .grade-c{
   background: url('/images/copper.png');
+}
+
+
+/*Time*/
+.period-img-morning{
+  width: 290px;
+  height: 217px;
+  margin: 0 auto;
+  overflow: hidden;
+  text-indent: -999em;
+  background: url('/images/morning.png');
+}
+.period-img-afternoon{
+  width: 290px;
+  height: 217px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: url('/images/afternoon.png');
+}
+.period-img-evening{
+  width: 275px;
+  height: 217px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: url('/images/evening.png');  
+}
+.period-img-midnight{
+  width: 275px;
+  height: 217px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: url('/images/midnight.png');
 }
