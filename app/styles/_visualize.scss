@@ -21,7 +21,7 @@
   background-color: #fff;
 }
 .info-section-one, .info-section-two{
-    padding: 0 25px;
+    padding: 0 40px;
 }
 
 .info{
@@ -32,6 +32,7 @@
         font-family: ThaiSansNeueBold;
         line-height: 120px;
         color: #59226D;
+      margin-bottom: 20px;
     }
     .text{
         font-size: 50px;
@@ -39,11 +40,15 @@
         line-height: 40px;
         color: #59226D;
     }
+    .text-gray{
+      color: #333;
+    }
 }
 .info-heading{
-    font-size: 90px;
-    font-family: ThaiSansNeueBold;
-    color: #000;
+  font-size: 90px;
+  font-family: ThaiSansNeueBold;
+  color: #000;
+  margin: 30px 0 50px;
 }
 
 .info-title{
@@ -77,4 +82,18 @@
 }
 .info-table{
     
+}
+
+
+
+//ICON
+.info-icon{
+  display: inline-block;
+  margin-right: 20px;
+  vertical-align: middle;
+}
+.info-report-icon{
+  width: 63px;
+  height: 77px;
+  background: url('/images/ic-report.png');
 }
