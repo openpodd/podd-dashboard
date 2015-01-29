@@ -147,8 +147,8 @@ angular.module('poddDashboardApp')
                         animalTypeMap = {},
                         animalTypeList = [],
                         animalTypeIndex = 0,
-                        sumOther = 0,
                         result = {},
+                        legends = [],
                         resultForGraph7 = [];
 
                     // phase #0 : reset graph schemas and options
@@ -191,13 +191,17 @@ angular.module('poddDashboardApp')
                     });
                     // phase #2.2 : cut off
                     if (animalTypeList.length > 4) {
-                        sumOther = sum(animalTypeList.slice(4), 'sum');
+                        (function () {
+                            var listOther = animalTypeList.slice(4);
 
-                        animalTypeList = animalTypeList.slice(0, 4);
-                        animalTypeList.push({
-                            name: 'อื่นๆ',
-                            sum: sumOther
-                        });
+                            animalTypeList = animalTypeList.slice(0, 4);
+                            animalTypeList.push({
+                                name: 'อื่นๆ',
+                                sum: sum(listOther, 'sum'),
+                                sick: sum(listOther, 'sick'),
+                                death: sum(listOther, 'death')
+                            });
+                        })();
                     }
 
                     // phase #3 : struct returned data so at last we got only
@@ -219,6 +223,13 @@ angular.module('poddDashboardApp')
                             axis: 'y',
                             color: $scope.pieChartColor[itemIndex]
                         });
+                        // prepare legends
+                        legends.push({
+                            name: item.name,
+                            style: {
+                                'background-color': $scope.pieChartColor[itemIndex]
+                            }
+                        });
 
                         result[item.name] = item.sum;
                         // for graph7
@@ -231,7 +242,8 @@ angular.module('poddDashboardApp')
                     return {
                         data: [ result ],
                         noReports: !total,
-                        total: total
+                        total: total,
+                        legends: legends
                     };
                 }
             },
