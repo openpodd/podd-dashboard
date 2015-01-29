@@ -81,7 +81,7 @@ angular.module('poddDashboardApp')
                 name: 'graph3',
                 func: function (data) {
                     return {
-                        grade: data[0].grade
+                        grade: data[0].grade.toLowerCase()
                     };
                 }
             },
