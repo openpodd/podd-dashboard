@@ -139,7 +139,7 @@
           </div>
           <div class="col-xs-6">
 
-            <div class="row">
+            <div class="row table-header">
               <div class="col-lg-6"></div>
               <div class="col-lg-3"><div class="text text-center text-sm">จำนวนสัตว์ตาย (ตัว)</div></div>
               <div class="col-lg-3"><div class="text text-center text-sm">จำนวนสัตว์ป่วย (ตัว)</div></div>
@@ -147,7 +147,7 @@
 
             <div class="row table-content" ng-repeat="item in data.prepared.graph7.data">
               <div class="col-lg-6">
-                <span ng-class="item.className" class="animal-icon">icon here</span>
+                <span ng-class="item.className" class="animal-icon"></span>
                 <span ng-bind="item.name" class="animal-name"></span>
               </div>
               <div class="col-lg-3">
@@ -166,35 +166,35 @@
           </div>
       </div> <!-- row -->
 
-      <div class="foo">
+      <div class="info-repoter">
 
         <!-- content row -->
-        <div class="row">
-          <div class="col-lg-10">
-            <span class="info-title">รายชื่ออาสาในพื้นที่</span>
+        <div class="row table-header">
+          <div class="col-lg-9">
+            <div class="info-title ">รายชื่ออาสาในพื้นที่</div>
           </div>
-          <div class="col-lg-2">
-            <th class="info-title">รายงาน / ครั้ง</th>
+          <div class="col-lg-3">
+            <div class="info-title">รายงาน / ครั้ง</div>
           </div>
         </div>
 
         <div
-          class="row"
+          class="row table-content table-row"
           ng-repeat="reporter in data.prepared.graph5.reporters | orderBy:'-totalReport'">
           <!-- avatar -->
-          <div class="col-lg-2">
+          <div class="col-lg-1 text-center">
             <img
-              alt="avatar" class="pull-left avatar"
+              alt="avatar" class="avatar"
               ng-if="reporter.thumbnail_avatar_url"
               ng-src="{{ reporter.thumbnail_avatar_url }}" />
             <img
-              src="images/avatar.png" alt="avatar" class="pull-left avatar"
+              src="images/avatar.png" alt="avatar" class="avatar"
               ng-if="!reporter.thumbnail_avatar_url" />
           </div>
           <!-- end avatar -->
 
           <!-- fullname -->
-          <div class="col-lg-8">
+          <div class="col-lg-9">
             <span class="reporter-fullname" ng-bind="reporter.fullname"></span>
           </div>
           <!-- end fullname -->
@@ -207,24 +207,6 @@
 
         </div>
         <!-- end reporter row -->
-
-
-        <table class="info-table table-striped table">
-          <thead>
-            <tr>
-              <th class="info-title">รายชื่ออาสาในพื้นที่</th>
-              <th class="info-title">รายงาน / ครั้ง</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Mark</td>
-              <td>Mark</td>
-            </tr>
-          </tbody>
-        </table>
-
-
       </div>
 
 
