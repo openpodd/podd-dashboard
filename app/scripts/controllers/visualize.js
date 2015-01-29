@@ -147,7 +147,6 @@ angular.module('poddDashboardApp')
                         animalTypeMap = {},
                         animalTypeList = [],
                         animalTypeIndex = 0,
-                        sumOther = 0,
                         result = {},
                         legends = [],
                         resultForGraph7 = [];
@@ -192,13 +191,17 @@ angular.module('poddDashboardApp')
                     });
                     // phase #2.2 : cut off
                     if (animalTypeList.length > 4) {
-                        sumOther = sum(animalTypeList.slice(4), 'sum');
+                        (function () {
+                            var listOther = animalTypeList.slice(4);
 
-                        animalTypeList = animalTypeList.slice(0, 4);
-                        animalTypeList.push({
-                            name: 'อื่นๆ',
-                            sum: sumOther
-                        });
+                            animalTypeList = animalTypeList.slice(0, 4);
+                            animalTypeList.push({
+                                name: 'อื่นๆ',
+                                sum: sum(listOther, 'sum'),
+                                sick: sum(listOther, 'sick'),
+                                death: sum(listOther, 'death')
+                            });
+                        })();
                     }
 
                     // phase #3 : struct returned data so at last we got only
