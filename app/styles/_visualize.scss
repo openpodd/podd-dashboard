@@ -71,6 +71,9 @@
     margin: 0 0 30px;
 }
 
+.info-section-one{
+  margin-bottom: 40px;
+}
 .info-section-two{
     background-color: #412954;
     color: #fff;
@@ -108,6 +111,11 @@
   height: 77px;
   background: url('/images/ic-report.png');
 }
+.info-icon-grade{
+  width: 69px;
+  height: 83px;
+  background: url('/images/ic-rating.png');
+}
 
 
 //Chart
@@ -128,4 +136,19 @@
   top: 0;
 }
 
-.bbbbb { background:red ;}
+//Grade
+.info-grade{
+  width: 164px;
+  height: 246px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.grade-a{
+  background: url('/images/gold.png'); 
+}
+.grade-b{
+  background: url('/images/silver.png');
+}
+.grade-c{
+  background: url('/images/copper.png');
+}

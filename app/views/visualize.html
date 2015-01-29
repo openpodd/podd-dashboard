@@ -72,12 +72,11 @@
       <div class="row">
         <div class="col-xs-6">
           <div class="info-box">
-            <i class="info-icon-grade info-icon"></i>
-            <h2 class="info-title">ประสิทธิภาพการรายงาน</h2>
-            <span ng-class="{ 'grade-a': data.prepared.graph3.grade == 'A',
+            <h2 class="info-title"><i class="info-icon-grade info-icon"></i> ประสิทธิภาพการรายงาน</h2>
+            <div ng-class="{ 'grade-a': data.prepared.graph3.grade == 'A',
                               'grade-b': data.prepared.graph3.grade == 'B',
                               'grade-c': data.prepared.graph3.grade == 'C' }"
-                  ng-bind="data.prepared.graph3.grade"></span>
+                  ng-bind="data.prepared.graph3.grade" class="info-grade"></div>
             <img src=""/>
             <p class="text text-center">เหรียญทอง</p>
           </div>
