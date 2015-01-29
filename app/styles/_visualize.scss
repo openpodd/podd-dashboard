@@ -13,8 +13,13 @@
 
 
 .pd-section-left{
-//  display: none;
+  //display: none;
 }
+.fix-chart-row{
+  min-height: 450px;
+}
+
+
 .info-container{
   width: 100% !important;
   padding: 0 !important;
@@ -28,17 +33,25 @@
     font-family: 'ThaiSansNeueRegular';
     
     .info-number{
-        font-size: 200px;
-        font-family: ThaiSansNeueBold;
-        line-height: 120px;
-        color: #59226D;
+      font-size: 200px;
+      font-family: ThaiSansNeueBold;
+      line-height: 120px;
+      color: #59226D;
       margin-bottom: 20px;
+    }
+    .info-number-sm{
+      font-size: 100px;
+      line-height: 60px;
     }
     .text{
         font-size: 50px;
         font-family: ThaiSansNeueBold;
         line-height: 40px;
         color: #59226D;
+    }
+    .text-sm{
+      font-size: 35px;
+      line-height: 25px;
     }
     .text-gray{
       color: #333;
@@ -84,8 +97,6 @@
     
 }
 
-
-
 //ICON
 .info-icon{
   display: inline-block;
@@ -97,3 +108,24 @@
   height: 77px;
   background: url('/images/ic-report.png');
 }
+
+
+//Chart
+.graph1-legend{
+  position: relative;
+  top: -60px;
+}
+.legend-negative{
+  width: 250px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.legend-positive{
+  width: 270px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.bbbbb { background:red ;}

@@ -33,7 +33,7 @@
     <div class="info-section-one">
       <h1 ng-bind="areas.selected.address" class="info-heading"></h1>
 
-      <div class="row">
+      <div class="fix-chart-row row">
         <div class="col-xs-6">
           <div class="info-box">
 
@@ -54,13 +54,13 @@
           options="data.options.graph2">
           </angularchart>
           <div class="graph1-legend">
-            <div class="legend-positive">
-              <span count-up count-to="data.prepared.graph2.positiveReports"></span>
-              <br>รายงานไม่พบเหตุผิดปกติ
-            </div>
             <div class="legend-negative">
-              <span count-up count-to="data.prepared.graph2.negativeReports"></span>
-              <br>รายงานเหตุผิดปกติ
+              <p class="info-number info-number-sm text-center" count-up count-to="data.prepared.graph2.negativeReports"></p>
+              <p class="text-center text-gray text-sm text">รายงานเหตุผิดปกติ</p>
+            </div>
+            <div class="legend-positive">
+              <p class="info-number info-number-sm text-center" count-up count-to="data.prepared.graph2.positiveReports"></p>
+              <p class="text-center text-gray text-sm text">รายงานไม่พบเหตุผิดปกติ</p>
             </div>
           </div>
           <div class="graph2-no-reports" ng-show="data.prepared.graph2.noReports">
