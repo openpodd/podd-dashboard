@@ -15,6 +15,16 @@ angular.module('poddDashboardApp')
         // for randomize worker
         timer = null;
 
+    $scope.negativeReportColor = '#00000';
+    $scope.positiveReportColor = '#fffff';
+
+    $scope.pieChartColor = [];
+    $scope.pieChartColor[0] = '#aa0000';
+    $scope.pieChartColor[1] = '#bb0000';
+    $scope.pieChartColor[2] = '#cc0000';
+    $scope.pieChartColor[3] = '#dd0000';
+    $scope.pieChartColor[4] = '#ee0000';
+
     $scope.areas = {
         all: [],
         selected: null,
@@ -68,6 +78,20 @@ angular.module('poddDashboardApp')
                                 negativeReports: item.negativeReport
                             };
                         });
+
+                    // reset pie chart color
+                    this.options.graph2.rows = [
+                        {
+                            key: 'positiveReports',
+                            axis: 'y',
+                            color: $scope.positiveReportColor
+                        },
+                        {
+                            key: 'negativeReports',
+                            axis: 'y',
+                            color: $scope.negativeReportColor
+                        }
+                    ];
 
                     return {
                         data: result || [],
@@ -183,7 +207,7 @@ angular.module('poddDashboardApp')
                     //   'pig': 11,
                     //   'cow': 12
                     // }
-                    animalTypeList.forEach(function (item) {
+                    animalTypeList.forEach(function (item, itemIndex) {
                         // prepare schemas
                         self.schemas.graph6[item.name] = {
                             type: 'numeric',
@@ -192,7 +216,8 @@ angular.module('poddDashboardApp')
                         // prepare options.rows
                         self.options.graph6.rows.push({
                             key: item.name,
-                            axis: 'y'
+                            axis: 'y',
+                            color: $scope.pieChartColor[itemIndex]
                         });
 
                         result[item.name] = item.sum;
@@ -259,11 +284,13 @@ angular.module('poddDashboardApp')
                 rows: [
                     {
                         key: 'positiveReports',
-                        axis: 'y'
+                        axis: 'y',
+                        color: $scope.positiveReportColor
                     },
                     {
                         key: 'negativeReports',
-                        axis: 'y'
+                        axis: 'y',
+                        color: $scope.negativeReportColor
                     }
                 ]
             },
