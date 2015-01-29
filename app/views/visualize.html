@@ -134,20 +134,20 @@
 
             <div class="row">
               <div class="col-lg-6"></div>
-              <div class="col-lg-3">จำนวนสัตว์ตาย (ตัว)</div>
-              <div class="col-lg-3">จำนวนสัตว์ป่วย (ตัว)</div>
+              <div class="col-lg-3"><div class="text text-center text-sm">จำนวนสัตว์ตาย (ตัว)</div></div>
+              <div class="col-lg-3"><div class="text text-center text-sm">จำนวนสัตว์ป่วย (ตัว)</div></div>
             </div>
 
-            <div class="row" ng-repeat="item in data.prepared.graph7.data">
+            <div class="row table-content" ng-repeat="item in data.prepared.graph7.data">
               <div class="col-lg-6">
                 <span ng-class="item.className" class="animal-icon">icon here</span>
                 <span ng-bind="item.name" class="animal-name"></span>
               </div>
               <div class="col-lg-3">
-                <span ng-bind="item.death" class="animal-number"></span>
+                <div ng-bind="item.death" class="animal-number"></div>
               </div>
               <div class="col-lg-3">
-                <span ng-bind="item.sick" class="animal-number"></span>
+                <div ng-bind="item.sick" class="animal-number"></div>
               </div>
             </div>
 
