@@ -1,4 +1,4 @@
-<div class="container visualization-view info-container">  
+<div class="container visualization-view info-container">
     <!-- select -->
     <div class="select-location pull-right">
       <select
@@ -28,21 +28,21 @@
       </ui-select>
     </div>
     <!-- end select -->
-    
+
     <div class="info" ng-show="data.raw">
     <div class="info-section-one">
       <h1 ng-bind="areas.selected.address" class="info-heading"></h1>
-      
+
       <div class="row">
         <div class="col-xs-6">
           <div class="info-box">
-            
+
             <h2 class="info-title"><i class="info-report-icon info-icon"></i> จำนวนรายงายทั้งหมด</h2>
             <p class="text-center info-number number-of-reports"
                 count-up
                 count-to="data.prepared.graph1.totalReports"
                 duration="1400"></p>
-            <p class="text-center text-gray text">รายงาน</p> 
+            <p class="text-center text-gray text">รายงาน</p>
           </div>
         </div>
         <div class="col-xs-6">
@@ -68,7 +68,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="row">
         <div class="col-xs-6">
           <div class="info-box">
@@ -79,7 +79,9 @@
                               'grade-c': data.prepared.graph3.grade == 'C' }"
                   ng-bind="data.prepared.graph3.grade"></span>
             <img src=""/>
-            <p class="text text-center">เหรียญทอง</p>
+            <p class="text text-center" ng-show="data.prepared.graph3.grade == 'A'">เหรียญทอง</p>
+            <p class="text text-center" ng-show="data.prepared.graph3.grade == 'B'">เหรียญเงิน</p>
+            <p class="text text-center" ng-show="data.prepared.graph3.grade == 'C'">เหรียญทองแดง</p>
           </div>
         </div>
         <div class="col-xs-6">
@@ -91,9 +93,9 @@
           </div>
         </div>
       </div> <!-- row -->
-      
+
     </div>
-    
+
     <!-- info-section-two -->
     <div class="info-section-two">
       <div class="row">
@@ -108,10 +110,10 @@
 
             <div class="graph6-no-reports" ng-show="data.prepared.graph6.noReports">
               ไม่มีข้อมูลการรายงาน
-            </div>  
+            </div>
           </div>
           <div class="col-xs-6">
-              
+
             <div class="row">
               <div class="col-lg-6"></div>
               <div class="col-lg-3">จำนวนสัตว์ตาย (ตัว)</div>
@@ -135,12 +137,12 @@
               <div class="col-lg-12">
                 ยังไม่มีการรายงาน
               </div>
-            </div>              
+            </div>
           </div>
       </div> <!-- row -->
-      
+
       <div class="foo">
-        
+
         <!-- content row -->
         <div class="row">
           <div class="col-lg-10">
@@ -150,7 +152,7 @@
             <th class="info-title">รายงาน / ครั้ง</th>
           </div>
         </div>
-        
+
         <div
           class="row"
           ng-repeat="reporter in data.prepared.graph5.reporters | orderBy:'-totalReport'">
@@ -180,8 +182,8 @@
 
         </div>
         <!-- end reporter row -->
-        
-        
+
+
         <table class="info-table table-striped table">
           <thead>
             <tr>
@@ -196,15 +198,15 @@
             </tr>
           </tbody>
         </table>
-        
-        
+
+
       </div>
-      
-      
-      
+
+
+
     </div>
   </div>
-  
+
 
 
   <!-- error message -->
