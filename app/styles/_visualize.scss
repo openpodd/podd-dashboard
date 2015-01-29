@@ -103,6 +103,14 @@
 .info-table{
     
 }
+.table-content{
+  font-size: 46px;
+}
+.animal-number{
+  font-size: 56px;
+  font-family: ThaiSansNeueBold;
+  color: #dd3136;
+}
 
 //ICON
 .info-icon{
@@ -169,7 +177,7 @@
 .period-img-morning{
   width: 290px;
   height: 217px;
-  margin: 0 auto;
+  margin: 45px auto;
   overflow: hidden;
   text-indent: -999em;
   background: url('/images/morning.png');
@@ -177,21 +185,21 @@
 .period-img-afternoon{
   width: 290px;
   height: 217px;
-  margin: 0 auto;
+  margin: 45px auto;
   overflow: hidden;
   background: url('/images/afternoon.png');
 }
 .period-img-evening{
   width: 275px;
   height: 217px;
-  margin: 0 auto;
+  margin: 45px auto;
   overflow: hidden;
   background: url('/images/evening.png');  
 }
 .period-img-midnight{
   width: 275px;
   height: 217px;
-  margin: 0 auto;
+  margin: 45px auto;
   overflow: hidden;
   background: url('/images/midnight.png');
 }
