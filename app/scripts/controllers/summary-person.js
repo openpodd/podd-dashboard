@@ -220,6 +220,7 @@ angular.module('poddDashboardApp')
     $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
         console.log('stateChangeSuccess', $state.current.name, params.dates);
         if ($state.current.name === 'main.summaryperson') {
+            shared.reportWatchId = '';
             if (oldParams.dates !== params.dates || oldParams.percent !== params.percent) {
                 $scope.doQueryOnParams(params);
             }else if(typeof params.dates === 'undefined'){

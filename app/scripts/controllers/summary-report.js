@@ -254,6 +254,7 @@ angular.module('poddDashboardApp')
     $scope.doQueryOnParams($stateParams);
     $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
         if ($state.current.name === 'main.summaryreport') {
+            shared.reportWatchId = '';
             if (oldParams.dates !== params.dates) {
                 $scope.doQueryOnParams(params);
             }else if(typeof params.dates === 'undefined'){
