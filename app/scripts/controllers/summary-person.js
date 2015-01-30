@@ -158,7 +158,7 @@ angular.module('poddDashboardApp')
             $scope.gridOptionsPerson.columnDefs = [
                 { field: 'parentAdministrationArea', headerCellClass: 'cell-center' },
                 { field: 'administrationArea', headerCellClass: 'cell-center' },
-                { field: 'fullname', headerCellClass: 'cell-center' },
+                { field: 'fullName', headerCellClass: 'cell-center' },
                 { field: 'status', cellClass: 'cell-center', headerCellClass: 'cell-center' },
                 { field: 'telephone', cellClass: 'cell-center', headerCellClass: 'cell-center' },
                 { field: 'projectMobileNumber', cellClass: 'cell-center', headerCellClass: 'cell-center' },
