@@ -5,7 +5,7 @@
         <i class="fa fa-times pull-right fa-size-18" ng-click="closeSummaryReport();gotoMainPage();"></i>
     </div>
 
-    <div class="scroller scroller-x scroller-y content-wrapper" perfect-scrollbar wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20" ng-if="!loadingReportView && !loadingReportViewError"  ng-transclude="true">
+    <div class="scroller scroller-x scroller-y content-wrapper" perfect-scrollbar wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20" ng-transclude="true">
         <div class="">
 
             <form role="form" ng-submit="search($parent.date)" class="search-block">
@@ -57,9 +57,9 @@
                 </div>
                 
                 <h3 class="subheading">ตารางสรุปการรายงานในแต่ละอปท. </h3>
-                <div id="gridReportShow" class="summary-grid-show-report grid-report" ui-grid="gridOptionsReportShow" ui-grid-pinning></div>
+                <div id="gridReportShow" class="summary-grid-show-report grid-summary" ui-grid="gridOptionsReportShow" ui-grid-pinning></div>
 
-                <div id="gridReport" class="summary-grid-report grid-report hide" ui-grid="gridOptionsReport" ui-grid-exporter></div>
+                <div id="gridReport" class="summary-grid-report grid-summary hide" ui-grid="gridOptionsReport" ui-grid-exporter></div>
 
                 <div class="custom-csv-link-location-report custom-csv-link-location">
                     <div ng-show="loadingLink" loader-spinner></div>
