@@ -48,7 +48,7 @@
 
 .info{
     font-family: 'ThaiSansNeueRegular';
-    
+
     .info-number{
       font-size: 200px;
       font-family: ThaiSansNeueBold;
@@ -100,7 +100,7 @@
 .info-section-one{
   padding-top: 80px;
   padding-bottom: 40px;
-  background: url('/images/bg.png') right bottom no-repeat;
+  background: url('../images/bg.png') right bottom no-repeat;
 }
 .info-section-two{
     background-color: #412954;
@@ -112,7 +112,7 @@
 .info-table{
     table-layout: fixed;
     background-color: #412954 !important;
-    
+
     th{
         color: #fff;
         border: none !important;
@@ -174,17 +174,17 @@
 .info-report-icon{
   width: 63px;
   height: 77px;
-  background: url('/images/ic-report.png');
+  background: url('../images/ic-report.png');
 }
 .info-icon-grade{
   width: 69px;
   height: 83px;
-  background: url('/images/ic-rating.png');
+  background: url('../images/ic-rating.png');
 }
 .info-icon-time{
   width: 67px;
   height: 67px;
-  background: url('/images/ic-time.png');
+  background: url('../images/ic-time.png');
 }
 
 .animal-icon{
@@ -198,19 +198,19 @@
 }
 
 .animal-type-cow{
-  background: url('/images/animal-cow.png');
+  background: url('../images/animal-cow.png');
 }
 .animal-type-buffalo{
-  background: url('/images/animal-buffalo.png');
+  background: url('../images/animal-buffalo.png');
 }
 .animal-type-pig{
-  background: url('/images/animal-pig.png');
+  background: url('../images/animal-pig.png');
 }
 .animal-type-dog{
-  background: url('/images/animal-dog.png');
+  background: url('../images/animal-dog.png');
 }
 .animal-type-chicken{
-  background: url('/images/animal-chicken.png');
+  background: url('../images/animal-chicken.png');
 }
 .animal-name{
   display: inline-block;
@@ -271,13 +271,13 @@
   text-indent: -999em;
 }
 .grade-a{
-  background: url('/images/gold.png'); 
+  background: url('../images/gold.png');
 }
 .grade-b{
-  background: url('/images/silver.png');
+  background: url('../images/silver.png');
 }
 .grade-c{
-  background: url('/images/copper.png');
+  background: url('../images/copper.png');
 }
 .info-grade-wrap{
   position: relative;
@@ -381,28 +381,28 @@
   margin: 45px auto;
   overflow: hidden;
   text-indent: -999em;
-  background: url('/images/morning.png');
+  background: url('../images/morning.png');
 }
 .period-img-afternoon{
   width: 290px;
   height: 217px;
   margin: 45px auto;
   overflow: hidden;
-  background: url('/images/afternoon.png');
+  background: url('../images/afternoon.png');
 }
 .period-img-evening{
   width: 275px;
   height: 217px;
   margin: 45px auto;
   overflow: hidden;
-  background: url('/images/evening.png');  
+  background: url('../images/evening.png');
 }
 .period-img-midnight{
   width: 275px;
   height: 217px;
   margin: 45px auto;
   overflow: hidden;
-  background: url('/images/midnight.png');
+  background: url('../images/midnight.png');
 }
 
 .info-notfound{
