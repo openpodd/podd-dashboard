@@ -5,7 +5,7 @@
         <i class="fa fa-times pull-right fa-size-18" ng-click="closeSummaryPerson();gotoMainPage();"></i>
     </div>
 
-    <div class="scroller scroller-x scroller-y content-wrapper" perfect-scrollbar wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"  ng-if="!loadingReportView && !loadingReportViewError" ng-transclude="true">
+    <div class="scroller scroller-x scroller-y content-wrapper" perfect-scrollbar wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20" ng-transclude="true">
         <div class="">
 
             <form role="form" ng-submit="search(date)" class="search-block">
@@ -63,7 +63,7 @@
                 <hr/>
                 
                 <h4 class="subheading">ตารางสรุปจำนวนผู้รายงานที่ต่ำกว่าเกณฑ์ทั้งสิ้น {{ totalPerson }} คน</h4>
-                <div id="gridPerson" class="summary-grid-person" ui-grid="gridOptionsPerson" ui-grid-exporter></div>
+                <div id="gridPerson" class="summary-grid-person grid-summary" ui-grid="gridOptionsPerson" ui-grid-exporter></div>
                 <div class="custom-csv-link-location-person custom-csv-link-location">
                     <div ng-show="loadingLink" loader-spinner></div>
                     <span class="ui-grid-exporter-csv-link">&nbsp</span>

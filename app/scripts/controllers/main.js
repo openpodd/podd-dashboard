@@ -436,6 +436,7 @@ angular.module('poddDashboardApp')
     };
 
     $scope.closeModal = function () {
+        shared.reportWatchId = '';
         ReportModal.close();
     };
 
