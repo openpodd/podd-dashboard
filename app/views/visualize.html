@@ -51,7 +51,7 @@
         <div class="col-xs-6">
           <div class="info-box">
             <h2 class="info-title"><i class="info-report-icon info-icon"></i> จำนวนรายงานทั้งหมด</h2>
-            <div class="animated zoomIn">
+            <div class="animated zoomIn foo-delay">
               <p class="text-center info-number number-of-reports"
                 count-up
                 count-to="data.prepared.graph1.totalReports"
@@ -91,7 +91,7 @@
         <div class="col-xs-6">
           <div class="info-box">
             <h2 class="info-title"><i class="info-icon-grade info-icon"></i> ประสิทธิภาพการรายงาน</h2>
-            <div class="info-grade-wrap animated zoomIn">
+            <div class="info-grade-wrap animated zoomIn foo-delay">
               <div class="info-grade grade-{{ data.prepared.graph3.grade }}"></div>
               <p class="text text-center" ng-show="data.prepared.graph3.grade == 'a'">เหรียญทอง</p>
               <p class="text text-center" ng-show="data.prepared.graph3.grade == 'b'">เหรียญเงิน</p>
@@ -106,7 +106,7 @@
         <div class="col-xs-6">
           <div class="info-box">
             <h2 class="info-title"><i class="info-icon-time info-icon"></i> ช่วงเวลาที่รายงานบ่อยที่สุด</h2>
-            <div class="animated zoomIn">
+            <div class="animated zoomIn foo-delay">
               <div class="period-img-{{ data.prepared.graph4.periodName }}"></div>
 
               <p class="text text-center period-{{ data.prepared.graph4.periodName }}"
@@ -130,7 +130,7 @@
 
     <!-- info-section-two -->
     <div class="info-section-two">
-      <div class="row animated fadeInUp">
+      <div class="row">
           <div class="col-xs-6">
             <h2 class="info-title text-center text-white">จำนวนสัตว์ป่วย/ตายทั้งหมด</h2>
             <angularchart
@@ -181,7 +181,7 @@
           </div>
       </div> <!-- row -->
 
-      <div class="info-repoter animated fadeInUp">
+      <div class="info-repoter">
 
         <!-- content row -->
         <div class="row table-header">

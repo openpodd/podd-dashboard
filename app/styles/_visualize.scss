@@ -89,7 +89,10 @@
     }
 
     &.ng-hide-add{
-        -webkit-animation: fadeOut 0.5s .2s alternate forwards;
+        -webkit-animation: fadeOut .5s .2s alternate forwards;
+    }
+    .foo-delay{
+      -webkit-animation-delay: 1s;
     }
 }
 .info-heading{
