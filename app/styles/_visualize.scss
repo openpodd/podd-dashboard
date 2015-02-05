@@ -82,6 +82,18 @@
     .text-light{
       font-family: ThaiSansNeueRegular;
     }
+
+    &.ng-hide-remove {
+        -webkit-animation: fadeIn .5s .2s alternate forwards;
+        opacity: 0;
+    }
+
+    &.ng-hide-add{
+        -webkit-animation: fadeOut .5s .2s alternate forwards;
+    }
+    .foo-delay{
+      -webkit-animation-delay: 1s;
+    }
 }
 .info-heading{
   font-size: 90px;
@@ -445,4 +457,9 @@
   width: 235px;
   margin: 0 0 0 10px;
   border: none;
+}
+
+.graph2-no-reports{
+  font-size: 26px;
+  margin: 120px 0 100px;
 }
