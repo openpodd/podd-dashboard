@@ -39,7 +39,7 @@
                     <tbody>
                     <tr ng-repeat="report in recentReports | orderBy:'-date' " id="report-{{ report.id }}"
                         ng-click="onClickReport(report)"
-                        ng-class="{ 'report-positive': !report.negative }">
+                        ng-class="{ 'report-positive': !report.negative, 'clickable': isClickable(report) }">
                         <td>
                           <i class="fa fa-flag flag-priority-{{ report.flag }}" ng-if="report.flag"></i>
                         </td>
@@ -89,7 +89,7 @@
               <tbody>
                 <tr ng-repeat="report in olderReports | orderBy:'-date' " id="report-{{ report.id }}"
                     ng-click="onClickReport(report)"
-                    ng-class="{ 'report-positive': !report.negative }">
+                    ng-class="{ 'report-positive': !report.negative, 'clickable': isClickable(report) }">
                   <td>
                     <i class="fa fa-flag flag-priority-{{ report.flag }}" ng-if="report.flag"></i>
                   </td>

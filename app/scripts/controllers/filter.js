@@ -81,6 +81,9 @@ angular.module('poddDashboardApp')
             console.log('Query result:', data);
 
             shared.filteredReports = data.results;
+            data.results.forEach(function (item) {
+                item.clickable = item.reportTypeName !== 'ปกติ';
+            });
             $scope.filterResultGridOptions.data = data.results;
 
             // Do group by administrationAreaId
@@ -225,7 +228,7 @@ angular.module('poddDashboardApp')
         enableRowSelection: true,
         enableRowHeaderSelection: false,
         multiSelect: false,
-        rowTemplate: '<div ng-class="{ \'report-negative\': row.entity.negative }">' +
+        rowTemplate: '<div ng-class="{ \'report-negative\': row.entity.negative, \'clickable\': row.entity.clickable }">' +
                      '<div ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name\"' +
                      '     class=\"ui-grid-cell\" ui-grid-cell ' +
                      '     ng-class=\"{ \'ui-grid-row-header-cell\': col.isRowHeader }\">' +

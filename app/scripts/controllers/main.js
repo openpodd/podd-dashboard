@@ -244,6 +244,10 @@ angular.module('poddDashboardApp')
         });
     };
 
+    $scope.isClickable = function (report) {
+        return report.reportTypeName !== 'ปกติ';
+    };
+
     $scope.loadmoreVillageReports = function (village, query) {
         query = query || {};
         var searcher;
@@ -359,7 +363,7 @@ angular.module('poddDashboardApp')
     };
 
     $scope.onClickReport = function (report) {
-        if ( report.negative ) {
+        if ( $scope.isClickable(report) ) {
             if ($state.is('main.filter')) {
                 $state.go('main.filter', { reportId: report.id });
             }

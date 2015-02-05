@@ -132,11 +132,11 @@ $badge-bad: #FF6D69;
         padding-left: 7px;
         text-align: center;
     }
-    > tbody > tr:hover {
+    > tbody > tr.clickable:hover {
 //        color: lighten(#909090, 30%);
         cursor: pointer;
     }
-    > tbody > tr.report-positive:hover {
+    > tbody > tr:hover {
         cursor: default;
     }
     tr:hover{
@@ -590,7 +590,7 @@ $badge-bad: #FF6D69;
 }
 
 .report-list-help li{
-    margin-top: 10px;    
+    margin-top: 10px;
 }
 
 .case-confirmation-box {

@@ -14,7 +14,7 @@
     .filter-result-item {
         overflow: hidden;
     }
-    
+
     .filter-title{
         font-size: 1em;
         margin: 10px 0 8px;
@@ -31,7 +31,7 @@
         width: 144px;
     }
 
-    .report-negative {
+    .clickable {
         cursor: pointer;
 
         .ui-grid-disable-selection {
@@ -75,10 +75,10 @@
     z-index: 99; /* above filter result */
 }
 
-.btn-info-search{ 
-    height: 38px; 
-    border: 1px solid #DDD; 
-    background-color: #ececec; 
+.btn-info-search{
+    height: 38px;
+    border: 1px solid #DDD;
+    background-color: #ececec;
     z-index: 99;
     margin-right: 0;
 
