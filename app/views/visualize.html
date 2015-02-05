@@ -69,6 +69,9 @@
             schema="data.schemas.graph2"
             options="data.options.graph2">
             </angularchart>
+            <div class="graph2-no-reports well text-center" ng-show="data.prepared.graph2.noReports">
+            ไม่มีข้อมูลการรายงาน
+            </div>
             <div class="graph1-legend">
               <div class="legend-positive">
                 <p class="info-number info-number-sm text-center" count-up count-to="data.prepared.graph2.positiveReports"></p>
@@ -79,9 +82,7 @@
                 <p class="text-center text-gray text-sm text text-light">รายงานเหตุผิดปกติ</p>
               </div>
             </div>
-            <div class="graph2-no-reports" ng-show="data.prepared.graph2.noReports">
-            ไม่มีข้อมูลการรายงาน
-            </div>
+            
           </div>
         <!-- </div> -->
       </div>
@@ -180,7 +181,7 @@
           </div>
       </div> <!-- row -->
 
-      <div class="info-repoter animated fadeInRight">
+      <div class="info-repoter animated fadeInUp">
 
         <!-- content row -->
         <div class="row table-header">
