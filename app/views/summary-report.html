@@ -10,11 +10,12 @@
 
             <form role="form" ng-submit="search($parent.date)" class="search-block">
                 <div class="input-group"> 
-                    <div class="input-group-btn" date-range-picker type="text" id="week_range_report" ng-model="$parent.$parent.date" options="$parent.$parent.dateOptions">
+                    <div class="input-group-btn" date-range-picker type="text" id="week_range_report" ng-model="$parent.date" options="$parent.dateOptions">
                         <button class="btn btn-default btn-info-search" type="button">
                             <span for="week_range_report" class="btn-text">เลือกวันที่ <i class="fa fa-calendar"></i></span>
                         </button>
                     </div>
+
                     <div class="view-textbox">
                         <span ng-hide="$parent.date.startDate.format()">
                             {{ $parent.date.startDate| date:'dd/MM/yyyy' }}
@@ -60,6 +61,9 @@
                 <div id="gridReportShow" class="summary-grid-show-report grid-summary" ui-grid="gridOptionsReportShow" ui-grid-pinning></div>
 
                 <div id="gridReport" class="summary-grid-report grid-summary hide" ui-grid="gridOptionsReport" ui-grid-exporter></div>
+
+                <button class="btn btn-default btn-info-search" type="button" ng-submit="exportReport()"> Export Data
+                </button>
 
                 <div class="custom-csv-link-location-report custom-csv-link-location">
                     <div ng-show="loadingLink" loader-spinner></div>
