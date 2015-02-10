@@ -43,7 +43,7 @@ angular.module('poddDashboardApp')
         data: [],
         columnDefs: [],
         exporterLinkLabel: 'ดาวน์โหลดข้อมูลไฟล์ CSV',
-        exporterLinkTemplate: '<span><a class="btn btn-primary btn-sm" href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\">LINK_LABEL</a></span>',
+        exporterLinkTemplate: '<span><a class="btn btn-primary btn-sm" download="สรุปรายงาน.csv" href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\">LINK_LABEL</a></span>',
         onRegisterApi: function(gridApi){
             $scope.gridApi = gridApi;
         }

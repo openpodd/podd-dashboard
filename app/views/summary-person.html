@@ -5,12 +5,12 @@
         <i class="fa fa-times pull-right fa-size-18" ng-click="closeSummaryPerson();gotoMainPage();"></i>
     </div>
 
-    <div class="scroller scroller-x scroller-y content-wrapper" perfect-scrollbar wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20" ng-transclude="true">
+    <div class="scroller scroller-x scroller-y content-wrapper content" perfect-scrollbar wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20" ng-transclude="true">
         <div class="">
 
             <form role="form" ng-submit="search(date)" class="search-block">
                 <div class="input-group">
-                    <div class="input-group-btn" date-range-picker type="text" id="week_range_person" class="btn btn-default btn-info-search form-control" ng-model="$parent.$parent.date" options="$parent.$parent.dateOptions">
+                    <div class="input-group-btn" date-range-picker type="text" id="week_range_person" class="btn btn-default btn-info-search form-control" ng-model="$parent.date" options="$parent.dateOptions">
                         <button class="btn btn-default btn-info-search" type="button">
                             <span for="week_range_person" class="btn-text">เลือกวันที่ <i class="fa fa-calendar"></i></span>
                         </button>
