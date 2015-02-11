@@ -165,7 +165,7 @@ angular.module('poddDashboardApp')
                 { field: 'totalReport', cellClass: 'cell-center', headerCellClass: 'cell-center' },
             ];
             $scope.gridOptionsPerson.data = results;
-            
+
             setTimeout(function(){
                 $scope.loadingLink = false;
                 $scope.exportPerson();
@@ -189,7 +189,7 @@ angular.module('poddDashboardApp')
         if ($state.current.name === 'main.summaryperson') {
             $scope.queryPerson = $window.decodeURIComponent(params.dates || '');
             $scope.percent = $window.decodeURIComponent(params.percent || '');
-            
+
             if ($scope.queryPerson) {
                 var splitDate = $scope.queryPerson.split('-');
                 $scope.date.startDate = moment(splitDate[0], 'DD/MM/YYYY');
@@ -197,7 +197,7 @@ angular.module('poddDashboardApp')
                 $scope.dateOptions.startDate = $scope.date.startDate;
                 $scope.dateOptions.endDate = $scope.date.endDate;
                 return $scope._search();
-            } 
+            }
 
             var date = {};
             if ($scope.date) {
@@ -206,7 +206,7 @@ angular.module('poddDashboardApp')
                 date.startDate = (moment().format('d') === '0' ? moment().day(-6) : moment().day(1));
                 date.endDate = (moment().format('d') === '0' ? moment().day(0) : moment().day(7));
             }
-            
+
             return $scope.search(date);
         }
     };

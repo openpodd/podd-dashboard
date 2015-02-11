@@ -151,8 +151,8 @@ angular.module('poddDashboardApp')
 
                     if (!header) {
                         var length = item.dates.length;
-                        
-                        var column = { field: date.date, 
+
+                        var column = { field: date.date,
                             headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ui-grid-cell-contents-collapse-2"><div class="ui-grid-collapse-2">' + date.date + '</div></div>',
                             cellTemplate: '<div class="ui-grid-cell-contents cell-center">\
                                 <span class="badge badge-zero ng-binding" ng-class="{ \'badge-good\': COL_FIELD.split(\',\')[0] !== \'0\'}" >{{ COL_FIELD.split(",")[0] }}</span> , \
@@ -162,9 +162,9 @@ angular.module('poddDashboardApp')
                         if (length > 12) {
                             column.width = 70;
                         }
-                        
+
                         showOptions.push(column);
-                        reportOptions.push({ field: 'P' + date.date, 
+                        reportOptions.push({ field: 'P' + date.date,
                             cellTemplate: '<div class="ui-grid-cell-contents cell-center" ng-class="{ gray: COL_FIELD == 0}">{{COL_FIELD}}</div>',
                             headerCellTemplate: '<div class="ui-grid-vertical-bar"></div><div class="ui-grid-cell-contents grid ui-grid-cell-contents-collapse-2"><div class="ui-grid-collapse-2">Good</div></div>'});
                         reportOptions.push({ field: 'N' + date.date,
@@ -234,12 +234,12 @@ angular.module('poddDashboardApp')
             $scope.queryReport = $window.decodeURIComponent(params.dates || '');
             if ($scope.queryReport) {
                 var splitDate = $scope.queryReport.split('-');
-                
+
                 $scope.date.startDate = moment(splitDate[0], 'DD/MM/YYYY');
                 $scope.date.endDate = moment(splitDate[1], 'DD/MM/YYYY');
 
                 return $scope._search();
-            } 
+            }
             var date = {};
             if ($scope.date) {
                 date = $scope.date;
