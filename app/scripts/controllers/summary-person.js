@@ -115,7 +115,7 @@ angular.module('poddDashboardApp')
 
         shared.summaryReports = {};
 
-        var object = { dates: $scope.queryPerson, type: 'percent', offset: ((new Date()).getTimezoneOffset() * -1 / 60) };
+        var object = { dates: $scope.queryPerson, type: 'percent', tz: ((new Date()).getTimezoneOffset() * -1 / 60) };
         if ($scope.percent) {
             object.percent = $scope.percent;
         }
