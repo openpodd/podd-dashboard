@@ -123,6 +123,18 @@
             พบผลลัพธ์จำนวน {{ (shared.filteredReports.length || 0) | number }} รายงาน
             <span ng-if="!empty">กระจายใน {{ shared.filterResults.length }} พื้นที่</span>
         </h3>
+
+        <div class="dropdown export-dropdown" role="group">
+          <button type="button" class="btn btn-default btn-xs dropdown-toggle" id="exportFilterResult"
+                  aria-expended="true'">
+              Download <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu" aria-labelledby='exportFilterResult'>
+            <li><a href="#" ng-click="csvExport($event)">CSV</a></li>
+            <li><a href="#">Excel</a></li>
+          </ul>
+        </div>
+
         <button class="btn btn-xs pull-right filter-result-list-button" type="button"
             ng-click="toggleTable()"
             ng-show="shared.filteredReports.length"
@@ -135,7 +147,11 @@
              class="scroller scroller-x scroller-y content-wrapper filter-wrapper"
              set-max-height="40" trigger-event="'forceResizeResultTable'">
 
-            <div ui-grid="filterResultGridOptions" ui-grid-selection ui-grid-resize-columns class="myGrid"></div>
+            <div ui-grid="filterResultGridOptions"
+                 ui-grid-selection
+                 ui-grid-resize-columns
+                 ui-grid-exporter
+                 class="myGrid"></div>
 
             <!-- <div class="row pager-info">
                 <div class="col-md-6 text-left pager-current-page">

@@ -9,7 +9,9 @@ angular.module('poddDashboardApp')
 })
 
 .controller('FilterCtrl', function ($scope, Search, shared, $window, dashboard,
-                                    $state, $stateParams, $q, $timeout, streaming) {
+                                    $state, $stateParams, $q, $timeout, streaming,
+                                    uiGridExporterService, uiGridExporterConstants,
+                                    $filter) {
 
     $scope.shared = shared;
 
@@ -247,7 +249,16 @@ angular.module('poddDashboardApp')
                 width: '5%',
                 cellTemplate: '<div class=\"ui-grid-cell-contents\">' +
                               '<i class="fa fa-flag flag-priority-{{COL_FIELD}}" ng-if="COL_FIELD"></i>' +
-                              '</div>'
+                              '</div>',
+                exportFilter: function (value) {
+                    return {
+                        1: 'Ignore',
+                        2: 'OK',
+                        3: 'Contact',
+                        4: 'Follow',
+                        5: 'Case'
+                    }[ parseInt(value) ];
+                }
             },
             {
                 name: 'วันที่รายงาน',
@@ -282,7 +293,7 @@ angular.module('poddDashboardApp')
             }
         ],
         onRegisterApi: function (gridApi) {
-            $scope.gridApi = gridApi;
+            window.gridApi = $scope.gridApi = gridApi;
 
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
                 if (row && row.isSelected) {
@@ -298,6 +309,109 @@ angular.module('poddDashboardApp')
             $scope.gridApi.selection.clearSelectedRows();
         }
     });
+
+    $scope.downloadFile = function downloadFile(fileName, content, mimeType) {
+        var D = document;
+        var a = D.createElement('a');
+        var strMimeType = mimeType;
+        var rawFile;
+
+        // IE10+
+        if (navigator.msSaveBlob) {
+            return navigator.msSaveBlob(new Blob(['\ufeff', content], {
+                type: strMimeType
+            }), fileName);
+        }
+
+        //html5 A[download]
+        if ('download' in a) {
+            var blob = new Blob([content], {
+                type: strMimeType
+            });
+            rawFile = URL.createObjectURL(blob);
+            a.setAttribute('download', fileName);
+        } else {
+            rawFile = 'data:' + strMimeType + ',' + encodeURIComponent(content);
+            a.setAttribute('target', '_blank');
+        }
+
+        a.href = rawFile;
+        a.setAttribute('style', 'display:none;');
+        D.body.appendChild(a);
+        setTimeout(function() {
+            if (a.click) {
+                a.click();
+              // Workaround for Safari 5
+            } else if (document.createEvent) {
+                var eventObj = document.createEvent('MouseEvents');
+                eventObj.initEvent('click', true, true);
+                a.dispatchEvent(eventObj);
+            }
+            D.body.removeChild(a);
+
+        }, 100);
+    };
+
+    uiGridExporterService.getCsv = function (columnDefs, exportData, separator) {
+        var self = this;
+
+        var csv = columnDefs.map(function (header) {
+            return self.formatFieldAsCsv(header.name || header.field);
+        }).join(separator) + '\n';
+
+        csv += exportData.map(function (row) {
+            return row.map(function (columnValue, index) {
+                if (columnDefs[index].exportFilter) {
+                    return applyFilters(columnDefs[index].exportFilter, columnValue);
+                }
+                else if (columnDefs[index].cellFilter) {
+                    return applyFilters(columnDefs[index].cellFilter, columnValue);
+                }
+                else {
+                    return self.formatFieldAsCsv(columnValue);
+                }
+            }).join(separator);
+        }).join('\n');
+
+        return csv;
+    };
+
+    function applyFilters(filters, value) {
+        if (angular.isFunction(filters)) {
+            return uiGridExporterService.formatFieldAsCsv(filters(value));
+        }
+        filters = filters.replace(/[\"\']+/g, '');
+        var result = null;
+        var filterList = filters.split('|') ? filters.split('|') : filters;
+
+        for (var filter in filterList) {
+            var functionSplit = null;
+
+            functionSplit = filterList[filter].split(':');
+            var filterFunction = $filter(functionSplit[0].replace(/\s+/g, ''));
+
+            if (typeof(filterFunction) === 'function') {
+                result = filterFunction(value, functionSplit[1]).toString();
+                value = result;
+            }
+        }
+
+        return uiGridExporterService.formatFieldAsCsv(result);
+    }
+
+    // Handle export function.
+    $scope.csvExport = function (e) {
+        e.preventDefault();
+        // uiGridExporterService.csvExport($scope.gridApi.grid, 'all', 'all');
+        var exporter = uiGridExporterService;
+        window.exporter = exporter;
+        var grid = $scope.gridApi.grid;
+
+        var exportData = exporter.getData(grid, uiGridExporterConstants.ALL, uiGridExporterConstants.ALL);
+        var csvContent = exporter.getCsv(grid.options.columnDefs, exportData, grid.options.exporterCsvColumnSeparator);
+
+        $scope.downloadFile('filtered.csv', csvContent, 'text/csv;charset=utf-8');
+    };
 
 })
 
