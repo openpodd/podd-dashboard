@@ -58,6 +58,8 @@ angular.module('poddDashboardApp')
     $scope._search = function () {
         console.log('Will search with query', $scope.query);
 
+        var query = {};
+
         // Mark as already did the search.
         $scope.didSearch = true;
 
@@ -77,7 +79,12 @@ angular.module('poddDashboardApp')
         // show result box.
         $scope.willShowResult = true;
 
-        return Search.query({ q: $scope.query }).$promise.then(function (data) {
+        query = {
+            q: $scope.query,
+            tz: (new Date()).getTimezoneOffset() / -60
+        };
+
+        return Search.query(query).$promise.then(function (data) {
             console.log('Query result:', data);
 
             shared.filteredReports = data.results;
