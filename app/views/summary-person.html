@@ -1,4 +1,4 @@
-<div class="l-info-section l-section l-full-width" ng-controller="SummaryPersonCtrl" ng-show="shared.summaryPersonMode" ng-cloak>
+<div class="summary-view l-info-section l-section l-full-width" ng-controller="SummaryPersonCtrl" ng-show="shared.summaryPersonMode" ng-cloak>
   <div class="l-detail-section l-section">
     <div class="title clearfix">
         <h2 class="pull-left"><i class="fa fa-stethoscope pull-left fa-size-22"></i>สรุปจำนวนอาสาที่รายงานต่ำกว่าเกณฑ์</h2>
@@ -6,7 +6,7 @@
     </div>
 
     <div class="scroller scroller-x scroller-y content-wrapper content" perfect-scrollbar wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20" ng-transclude="true">
-        <div class="">
+        <div class="summary-wrapper">
 
             <form role="form" ng-submit="search(date)" class="search-block">
                 <div class="input-group">
