@@ -15,8 +15,9 @@ var pushGCM = function pushGCM(message) {
         gcmMessage = new gcm.Message({
             registration_ids: data.androidRegistrationIds,
             data: {
-                type: data.type.toLowerCase(),
-                message: data.message
+                id: data.id,
+                message: data.message,
+                type: data.type.toLowerCase()
             }
         });
 
