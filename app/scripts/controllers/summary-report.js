@@ -11,7 +11,7 @@ angular.module('poddDashboardApp')
 
 .controller('SummaryReportCtrl', function ($scope, SummaryReport, User,
     streaming, FailRequest, shared, $location, $state, $stateParams, $window,
-    uiGridConstants, cfpLoadingBar, dateRangePickerConfig) {
+    uiGridConstants, cfpLoadingBar, dateRangePickerConfig, uiGridUtils) {
 
     console.log('init summary report ctrl');
 
@@ -249,6 +249,15 @@ angular.module('poddDashboardApp')
             }
             return $scope.search(date);
         }
+    };
+
+    // Handle export function.
+    $scope.csvExport = function () {
+        uiGridUtils.exportCsv($scope.gridApi.grid, 'summary-report.csv');
+    };
+
+    $scope.xlsxExport = function () {
+        uiGridUtils.exportXlsx($scope.gridApi.grid, 'sumary-report.xlsx');
     };
 
     $scope.doQueryOnParams($stateParams);

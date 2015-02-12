@@ -620,3 +620,24 @@ $badge-bad: #FF6D69;
     border: 1px solid #ddd;
     background-color: #fff;
 }
+
+.export-buttons {
+    margin-top: 10px;
+    clear: both;
+}
+
+.summary-view {
+    .l-detail-section {
+        overflow: hidden;
+    }
+    .content {
+        height: auto;
+        padding: 0;
+    }
+    .summary-list {
+        width: 100%;
+    }
+    .summary-wrapper {
+        padding: 20px 35px;
+    }
+}
