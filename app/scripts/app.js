@@ -74,7 +74,8 @@ angular
       /\/summary\/areas\/count-reports/,
       /\/summary\/users\/inactive/,
       /\/summary\/areas\/show-detail/,
-      /\/ping/
+      /\/ping/,
+      /\/users\/profile/
     ];
 
     function matchAPIUrls(url) {
@@ -152,6 +153,11 @@ angular
         url: '/visualize',
         templateUrl: 'views/visualize.html',
         controller: 'VisualizationCtrl'
+      })
+      .state('profile', {
+        url: '/profile',
+        templateUrl: 'views/profile.html',
+        controller: 'ProfileModeCtrl'
       })
       .state('login', {
         url: '/login',

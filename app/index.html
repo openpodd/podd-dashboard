@@ -226,6 +226,14 @@
                 <!-- end visualize menu -->
 
                 <li ng-show="shared.loggedIn" class="pd-nav-item" ng-cloak
+                    ng-class="{ 'active active-menu':isActiveMenu('profile') }">
+
+                  <a ng-href="#/profile" class="pd-nav-icon">
+                  <i class="fa fa-user fa-size-18"></i>
+                  <span class="pd-nav-text">ข้อมูลผู้ใช้</span></a>
+                </li>
+
+                <li ng-show="shared.loggedIn" class="pd-nav-item" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('logout') }">
 
                   <a ng-href="#/" ng-click="isShowNav=!isShowNav;logout();" class="pd-nav-icon">
@@ -341,6 +349,7 @@
         <script src="scripts/controllers/comment.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/filter.js"></script>
+        <script src="scripts/controllers/profile.js"></script>
         <script src="scripts/controllers/login.js"></script>
         <script src="scripts/controllers/notification.js"></script>
         <script src="scripts/controllers/summary-report.js"></script>

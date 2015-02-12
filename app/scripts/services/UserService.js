@@ -16,6 +16,14 @@ angular.module('poddDashboardApp')
             url: config.API_BASEPATH + '/ping/',
             method: 'GET',
             ignoreLoadingBar: true
+        },
+        profile: {
+            url: config.API_BASEPATH + '/users/profile/',
+            method: 'GET'
+        },
+        updatePassword: {
+            url: config.API_BASEPATH + '/users/profile/password/',
+            method: 'POST'
         }
     });
 })
