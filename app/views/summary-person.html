@@ -19,11 +19,11 @@
                         <span ng-hide="$parent.date.startDate.format()">
                             {{ $parent.date.startDate| date:'dd/MM/yyyy' }}
                         </span>
-                        {{ $parent.date.startDate.format()| date:'dd/MM/yyyy'}} - 
+                        {{ $parent.date.startDate.format()| date:'dd/MM/yyyy'}} -
                         <span ng-hide="$parent.date.endDate.format()">
                             {{ $parent.date.endDate| date:'dd/MM/yyyy' }}
                         </span>
-                        {{ $parent.date.endDate.format()| date:'dd/MM/yyyy'}}  
+                        {{ $parent.date.endDate.format()| date:'dd/MM/yyyy'}}
                     </div>
                     <div class="input-group-btn">
                         <button class="btn btn-default pd-btn-search" type="submit"><i class="fa fa-search fa-size-18"></i></button>
@@ -34,20 +34,20 @@
             <div ng-show="loading" loader-spinner></div>
             <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
             <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
-            
+
             <div class="summary-list" ng-show="results">
                 <h3 class="subheading pull-left" style="margin-bottom:20px;">สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }} </h3>
-                <p class="pull-right">ตั้งค่าเกณฑ์การวัดผู้ที่รายงานต่ำกว่าเกณฑ์ 
+                <p class="pull-right">ตั้งค่าเกณฑ์การวัดผู้ที่รายงานต่ำกว่าเกณฑ์
                         <select ng-model="percent"
                           ng-options="i for i in percentRange()"
                           ng-change="updatePercent(percent)">
                         </select> %
 <!--
-                        <code>  %</code> 
+                        <code>  %</code>
                         โดยดูจากผู้รายงานต่ำกว่าเกณฑ์มีจำนวนรายงานในช่วงวันที่ <code>{{ weekSearch }}</code> ต่ำกว่าหรือเท่ากับ <code>{{ minReport }} รายงาน</code></p>
--->                
+-->
                 <p class="clear">ตัวอย่างการคำนวนรายงานต่ำกว่าเกณฑ์:</p>
-                
+
                 <ul class="list-unstyled report-list-help">
                     <ul>
                        <li>สูตรการคำนวณ จำนวนรายงานที่ต่ำกว่าเกณฑ์ = คือ เปอร์เซ็นต์ / 100 * จำนวนวันที่ค้นหา </li>
@@ -59,19 +59,20 @@
                         </li>
                     </ul>
                 </ul>
-                
+
                 <hr/>
-                
+
                 <h4 class="subheading">ตารางสรุปจำนวนผู้รายงานที่ต่ำกว่าเกณฑ์ทั้งสิ้น {{ totalPerson }} คน</h4>
                 <div id="gridPerson" class="summary-grid-person grid-summary" ui-grid="gridOptionsPerson" ui-grid-exporter></div>
-                <div class="custom-csv-link-location-person custom-csv-link-location">
-                    <div ng-show="loadingLink" loader-spinner></div>
-                    <span class="ui-grid-exporter-csv-link">&nbsp</span>
+
+                <div class="export-buttons">
+                  <button class="btn btn-primary btn-sm" type="button" ng-click="csvExport();">ดาวน์โหลดข้อมูลไฟล์ CSV</button>
+                  <button class="btn btn-primary btn-sm" type="button" ng-click="xlsxExport();">ดาวน์โหลดข้อมูลไฟล์ Excel</button>
                 </div>
             </div>
-        
-        </div> 
-    </div> 
+
+        </div>
+    </div>
 
   </div>
 </div>

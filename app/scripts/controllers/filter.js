@@ -1,4 +1,4 @@
-/* global moment,utils */
+/* global moment */
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -10,7 +10,7 @@ angular.module('poddDashboardApp')
 
 .controller('FilterCtrl', function ($scope, Search, shared, $window, dashboard,
                                     $state, $stateParams, $q, $timeout, streaming,
-                                    uiGridExporterService, uiGridExporterConstants) {
+                                    uiGridUtils) {
 
     $scope.shared = shared;
 
@@ -312,24 +312,12 @@ angular.module('poddDashboardApp')
     // Handle export function.
     $scope.csvExport = function (e) {
         e.preventDefault();
-
-        var exporter = uiGridExporterService,
-            grid = $scope.gridApi.grid,
-            exportData = exporter.getData(grid, uiGridExporterConstants.ALL, uiGridExporterConstants.ALL),
-            csvContent = exporter.getCsv(grid.options.columnDefs, exportData, grid.options.exporterCsvColumnSeparator);
-
-        utils.downloadFile('filtered.csv', csvContent, 'text/csv;charset=utf-8');
+        uiGridUtils.exportCsv($scope.gridApi.grid, 'filtered.csv');
     };
 
     $scope.xlsxExport = function (e) {
         e.preventDefault();
-
-        var exporter = uiGridExporterService,
-            grid = $scope.gridApi.grid,
-            exportData = exporter.getData(grid, uiGridExporterConstants.ALL, uiGridExporterConstants.ALL),
-            xlsxContent = exporter.getXlsx(grid.options.columnDefs, exportData);
-
-        utils.downloadFile('filtered.xlsx', xlsxContent, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        uiGridUtils.exportXlsx($scope.gridApi.grid, 'filtered.xlsx');
     };
 
 })

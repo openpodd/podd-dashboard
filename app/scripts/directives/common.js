@@ -102,6 +102,31 @@ window.utils = window.utils || {
 
 angular.module('poddDashboardApp')
 
+.factory('uiGridUtils', function (uiGridExporterService, uiGridExporterConstants) {
+    /* global utils */
+    var exporter = uiGridExporterService,
+        all = uiGridExporterConstants.ALL;
+
+    return {
+        exportCsv: function (grid, filename) {
+            var exportData = exporter.getData(grid, all, all),
+                csvContent = exporter.getCsv(
+                    grid.options.columnDefs,
+                    exportData,
+                    grid.options.exporterCsvColumnSeparator
+                );
+
+            utils.downloadFile(filename, csvContent, 'text/csv;charset=utf-8');
+        },
+        exportXlsx: function (grid, filename) {
+            var exportData = exporter.getData(grid, all, all),
+                xlsxContent = exporter.getXlsx(grid.options.columnDefs, exportData);
+
+            utils.downloadFile(filename, xlsxContent, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        }
+    };
+})
+
 .run(function (uiGridExporterService, $filter) {
     /* global XLSX */
 

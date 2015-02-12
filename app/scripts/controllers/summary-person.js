@@ -10,7 +10,7 @@ angular.module('poddDashboardApp')
 
 .controller('SummaryPersonCtrl', function ($scope, SummaryPerson, User,
     streaming, FailRequest, shared, $location, $state, $stateParams, $window,
-    cfpLoadingBar, dateRangePickerConfig) {
+    cfpLoadingBar, dateRangePickerConfig, uiGridUtils) {
 
     console.log('init summary person ctrl');
 
@@ -214,6 +214,15 @@ angular.module('poddDashboardApp')
     $scope.exportPerson = function(){
         var element = angular.element(document.querySelectorAll('.custom-csv-link-location-person')); element.html('');
         $scope.gridApi.exporter.csvExport( 'all', 'all', element);
+    };
+
+    // Handle export function.
+    $scope.csvExport = function () {
+        uiGridUtils.exportCsv($scope.gridApi.grid, 'summary-person.csv');
+    };
+
+    $scope.xlsxExport = function () {
+        uiGridUtils.exportXlsx($scope.gridApi.grid, 'summary-person.xlsx');
     };
 
     $scope.doQueryOnParams($stateParams);
