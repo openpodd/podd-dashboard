@@ -56,10 +56,213 @@ window.utils = window.utils || {
             result[pair[0]] = decodeURIComponent(pair[1] || '');
         });
         return JSON.parse(JSON.stringify(result));
+    },
+    downloadFile: function downloadFile(fileName, content, mimeType) {
+        var D = document;
+        var a = D.createElement('a');
+        var strMimeType = mimeType;
+        var rawFile;
+
+        // IE10+
+        if (navigator.msSaveBlob) {
+            return navigator.msSaveBlob(new Blob(['\ufeff', content], {
+                type: strMimeType
+            }), fileName);
+        }
+
+        //html5 A[download]
+        if ('download' in a) {
+            var blob = new Blob([content], {
+                type: strMimeType
+            });
+            rawFile = URL.createObjectURL(blob);
+            a.setAttribute('download', fileName);
+        } else {
+            rawFile = 'data:' + strMimeType + ',' + encodeURIComponent(content);
+            a.setAttribute('target', '_blank');
+        }
+
+        a.href = rawFile;
+        a.setAttribute('style', 'display:none;');
+        D.body.appendChild(a);
+        setTimeout(function() {
+            if (a.click) {
+                a.click();
+              // Workaround for Safari 5
+            } else if (document.createEvent) {
+                var eventObj = document.createEvent('MouseEvents');
+                eventObj.initEvent('click', true, true);
+                a.dispatchEvent(eventObj);
+            }
+            D.body.removeChild(a);
+
+        }, 100);
     }
 };
 
 angular.module('poddDashboardApp')
+
+.run(function (uiGridExporterService, $filter) {
+    /* global XLSX */
+
+    function applyFilters(filters, value, fieldFormatter) {
+        fieldFormatter = fieldFormatter || uiGridExporterService.formatFieldAsCsv;
+
+        if (angular.isFunction(filters)) {
+            return fieldFormatter(filters(value));
+        }
+        filters = filters.replace(/[\"\']+/g, '');
+        var result = null;
+        var filterList = filters.split('|') ? filters.split('|') : filters;
+
+        for (var filter in filterList) {
+            var functionSplit = null;
+
+            functionSplit = filterList[filter].split(':');
+            var filterFunction = $filter(functionSplit[0].replace(/\s+/g, ''));
+
+            if (typeof(filterFunction) === 'function') {
+                result = filterFunction(value, functionSplit[1]).toString();
+                value = result;
+            }
+        }
+
+        return fieldFormatter(result);
+    }
+
+    /* @return formatted string */
+    function formatCell(columnDefs, fieldFormatter) {
+        fieldFormatter = fieldFormatter || uiGridExporterService.formatFieldAsCsv;
+
+        return function (columnValue, index) {
+            if (columnDefs[index].exportFilter) {
+                return applyFilters(columnDefs[index].exportFilter, columnValue, fieldFormatter);
+            }
+            else if (columnDefs[index].cellFilter) {
+                return applyFilters(columnDefs[index].cellFilter, columnValue, fieldFormatter);
+            }
+            else {
+                return fieldFormatter(columnValue);
+            }
+        };
+    }
+    // Inject new method for uiGridExporterService
+    uiGridExporterService.getCsv = function (columnDefs, exportData, separator) {
+        var self = this;
+
+        var csv = columnDefs.map(function (header) {
+            return self.formatFieldAsCsv(header.name || header.field);
+        }).join(separator) + '\n';
+
+        csv += exportData.map(function (row) {
+            return row.map( formatCell(columnDefs) ).join(separator);
+        }).join('\n');
+
+        return csv;
+    };
+
+    // @see: http://sheetjs.com/demos/writexlsx.html
+    function xlsxFieldFormatter (field) {
+        if (field === null) { // we want to catch anything null-ish, hence just == not ===
+            return '';
+        }
+        if (typeof(field) === 'number') {
+            return field;
+        }
+        if (typeof(field) === 'boolean') {
+            return (field ? 'TRUE' : 'FALSE');
+        }
+        if (typeof(field) === 'string') {
+            return field.replace(/"/g,'""');
+        }
+
+        return JSON.stringify(field);
+    }
+
+    function getSheetFromData(columnDefs, exportData) {
+        /* jshint camelcase:false */
+        var ws = {};
+        var range = {
+            s: { c: 10000000, r: 10000000 },
+            e: { c: 0, r:0 }
+        };
+
+        var headers = columnDefs.map(function (header) {
+            return header.name || header.field;
+        });
+        var data = [].concat([ headers ], exportData);
+
+        for (var R = 0; R !== data.length; ++R) {
+            for (var C = 0; C !== data[R].length; ++C) {
+                if (range.s.r > R) { range.s.r = R; }
+                if (range.s.c > C) { range.s.c = C; }
+                if (range.e.r < R) { range.e.r = R; }
+                if (range.e.c < C) { range.e.c = C; }
+
+                var cell = { v: data[R][C] };
+                if (cell.v === null) {
+                    continue;
+                }
+                var cell_ref = XLSX.utils.encode_cell({ c: C, r: R });
+
+                if (R > 0) {
+                    cell.v = formatCell(columnDefs, xlsxFieldFormatter)(cell.v, C);
+                }
+
+                if (typeof cell.v === 'number') {
+                    cell.t = 'n';
+                }
+                else if (typeof cell.v === 'boolean') {
+                    cell.t = 'b';
+                }
+                else if (cell.v instanceof Date) {
+                    cell.t = 'n'; cell.z = XLSX.SSF._table[14];
+                }
+                else {
+                    cell.t = 's';
+                }
+
+                ws[cell_ref] = cell;
+            }
+        }
+
+        if (range.s.c < 10000000) {
+            ws['!ref'] = XLSX.utils.encode_range(range);
+        }
+
+        return ws;
+    }
+
+    function Workbook() {
+        if (!(this instanceof Workbook)) {
+            return new Workbook();
+        }
+        this.SheetNames = [];
+        this.Sheets = {};
+    }
+
+    function s2ab(s) {
+        /* jshint bitwise:false */
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+
+        for (var i=0; i !== s.length; ++i) {
+            view[i] = s.charCodeAt(i) & 0xFF;
+        }
+        return buf;
+    }
+
+    uiGridExporterService.getXlsx = function (columnDefs, exportData) {
+        var wb = new Workbook(),
+            ws = getSheetFromData(columnDefs, exportData),
+            wsName = 'Sheet1';
+
+        wb.SheetNames.push(wsName);
+        wb.Sheets[wsName] = ws;
+
+        return s2ab(XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' }));
+    };
+})
 
 .filter('encodeURI', function ($window) {
     return function (text) {
