@@ -73,7 +73,8 @@ angular
       /\/users\/search/,
       /\/summary\/areas\/count-reports/,
       /\/summary\/users\/inactive/,
-      /\/summary\/areas\/show-detail/
+      /\/summary\/areas\/show-detail/,
+      /\/ping/
     ];
 
     function matchAPIUrls(url) {
@@ -110,9 +111,9 @@ angular
   })
 
   .run(function ($location, Auth) {
-      if ( ! Auth.verify() ) {
+      Auth.verify().catch(function () {
           $location.url('/login');
-      }
+      });
   })
 
   // .config(function ($routeProvider, $httpProvider, $stateProvider, $urlRouterProvider) {

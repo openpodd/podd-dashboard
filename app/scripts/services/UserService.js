@@ -11,14 +11,50 @@ angular.module('poddDashboardApp')
             url: config.API_BASEPATH + '/users/search/',
             method: 'GET',
             isArray: true
+        },
+        ping: {
+            url: config.API_BASEPATH + '/ping/',
+            method: 'GET',
+            ignoreLoadingBar: true
         }
     });
 })
 
-.factory('Auth', function (User, shared, $interval, $location) {
+.factory('Auth', function (User, shared, $interval, $location, $q) {
+    var checking = false;
+
     return {
+        verify: function () {
+            var deferred = $q.defer();
+
+            if ( ! $.cookie('token') ) {
+                shared.loggedIn = false;
+                deferred.reject();
+            }
+            else {
+                // ping to check if this token valid.
+                User.ping().$promise.then(function () {
+                    shared.loggedIn = true;
+                    deferred.resolve(true);
+                }).catch(function (resp) {
+                    if (resp.status === 401) {
+                        $.cookie('token', '');
+                        shared.loggedIn = false;
+                        deferred.reject();
+                    }
+                    else {
+                        deferred.resolve(false);
+                    }
+                });
+            }
+
+            return deferred.promise;
+        },
+
         login: function (username, password, cb) {
-            if (!$.cookie('token')) {
+            var self = this;
+
+            self.verify().catch(function () {
                 User.login({ username: username, password: password }).$promise.then(function (res) {
                     $.cookie('token', res.token);
                     $.cookie('userid', res.id);
@@ -28,34 +64,28 @@ angular.module('poddDashboardApp')
                 }).catch(function (err) {
                     cb(err);
                 });
-            }
-        },
-
-        verify: function () {
-            if ( ! $.cookie('token') ) {
-                shared.loggedIn = false;
-                return false;
-            }
-            else {
-                shared.loggedIn = true;
-                return true;
-            }
+            });
         },
 
         requireLogin: function ($scope) {
             var self = this;
 
             function check() {
-              self.verify();
+                if (checking) {
+                    return;
+                }
 
-              if (!shared.loggedIn) {
-                $location.url('/login');
-              }
+                checking = true;
+                self.verify().catch(function () {
+                    $location.url('/login');
+                }).finally(function () {
+                    checking = false;
+                });
             }
 
             // Loop check
             check();
-            var promise = $interval(check, 500);
+            var promise = $interval(check, 5000);
 
             $scope.$on('$destroy', function () {
                 $interval.cancel(promise);
