@@ -35,7 +35,9 @@ angular
     'ui.grid.pinning',
     'daterangepicker',
     'ui.select',
-    'angularChart'
+    'angularChart',
+    'angulartics',
+    'angulartics.google.analytics'
   ])
 
   // override z-index of ui.bootstrap

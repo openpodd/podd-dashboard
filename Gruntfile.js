@@ -168,7 +168,25 @@ module.exports = function (grunt) {
     wiredep: {
       app: {
         src: ['<%= yeoman.app %>/index.html'],
-        exclude: [ /leaflet-src.js/, /bootstrap.js/ ],
+        exclude: [
+            /leaflet-src.js/,
+            /bootstrap.js/,
+            /angulartics-adobe.js/,
+            /angulartics-chartbeat.js/,
+            /angulartics-cnzz.js/,
+            /angulartics-flurry.js/,
+            /angulartics-ga-cordova.js/,
+            /angulartics-gtm.js/,
+            /angulartics-kissmetrics.js/,
+            /angulartics-mixpanel.js/,
+            /angulartics-piwik.js/,
+            /angulartics-scroll.js/,
+            /angulartics-segmentio.js/,
+            /angulartics-splunk.js/,
+            /angulartics-woopra.js/,
+            /angulartics-marketo.js/,
+            /angulartics-intercom.js/
+        ],
         ignorePath:  /\.\.\//
       },
       sass: {

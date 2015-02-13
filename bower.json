@@ -35,7 +35,8 @@
     "angular-ui-select": "~0.9.6",
     "angular-chart": "~0.2.6",
     "countUp.js": "~1.3.2",
-    "js-xlsx": "~0.7.11"
+    "js-xlsx": "~0.7.11",
+    "angulartics": "~0.17.2"
   },
   "resolutions": {
     "angular": "~1.2.6"

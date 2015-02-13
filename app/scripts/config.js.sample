@@ -2,5 +2,6 @@ var config = {
     API_BASEPATH: 'http://localhost:8000',
     SOCKETIO_BASEPATH: 'http://localhost:8888',
     MAPBOX_ACCESS_TOKEN: '',
-    MAPBOX_MAP_ID: ''
+    MAPBOX_MAP_ID: '',
+    GA_TRACKING_ID: 'UA-xxxxxxx-x'
 };
