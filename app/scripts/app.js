@@ -156,8 +156,8 @@ angular
         templateUrl: 'views/visualize.html',
         controller: 'VisualizationCtrl'
       })
-      .state('profile', {
-        url: '/profile',
+      .state('main.profile', {
+        url: '^/profile',
         templateUrl: 'views/profile.html',
         controller: 'ProfileModeCtrl'
       })

@@ -5,6 +5,9 @@ angular.module('poddDashboardApp')
 .controller('ProfileModeCtrl', function (shared, Menu) {
     shared.profileMode = true;
     Menu.setActiveMenu('profile');
+
+    // clear
+    shared.reportWatchId = null;
 })
 
 .controller('ProfileCtrl', function ($scope, User) {

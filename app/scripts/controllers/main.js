@@ -447,9 +447,11 @@ angular.module('poddDashboardApp')
 
     $scope.gotoMainPage = function () {
         if ($state.is('main.filter')) {
+            Menu.setActiveMenu('filter');
             $state.go('main.filter', { reportId: undefined });
         }
         else {
+            Menu.setActiveMenu('home');
             $state.go('main');
         }
     };
