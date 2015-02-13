@@ -197,7 +197,8 @@ angular.module('poddDashboardApp')
         if (shared.filterMode) {
             query = {
                 q: 'administrationArea:' + village.id + ' AND ' + shared.filterQuery,
-                'page_size': 20
+                'page_size': 20,
+                tz: (new Date()).getTimezoneOffset() / -60
             };
             searcher = Search.query;
         }
