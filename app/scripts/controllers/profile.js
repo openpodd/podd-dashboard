@@ -2,11 +2,12 @@
 
 angular.module('poddDashboardApp')
 
-.controller('ProfileModeCtrl', function (shared, Menu) {
+.controller('ProfileModeCtrl', function ($scope, shared, Menu) {
     shared.profileMode = true;
     Menu.setActiveMenu('profile');
 
     // clear
+    $scope.$parent.closeReportList();
     shared.reportWatchId = null;
 })
 
