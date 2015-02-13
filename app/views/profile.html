@@ -11,12 +11,17 @@
     </div>
 
     <div class="scroller scroller-x scroller-y content-wrapper content" perfect-scrollbar wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20" ng-transclude="true">
-      <div class="summary-wrapper">
+      <div class="summary-wrapper profile-wrapper">
         <div class="row">
           <div class="col-lg-offset-3 col-lg-6">
             <div class="row">
-              <div class="col-lg-offset-3 col-lg-6">
-                <div class="thumbnail"><img ng-src="{{ profile.avatarUrl }}" /></div>
+              <div class="col-lg-offset-4 col-lg-4">
+                <div class="thumbnail">
+                  <img ng-src="{{ profile | avatarUrl:'original' }}"
+                       ng-if="profile.avatarUrl" />
+                  <img src="images/avatar.png"
+                       ng-if="!profile.avatarUrl" />
+                </div>
               </div>
             </div>
             <div class="row">
@@ -27,37 +32,40 @@
 
             <div class="row"><div class="col-lg-12">
               <form class="form-horizontal" ng-submit="submit($event);">
-                <div class="alert alert-danger" role="alert" ng-show="error">
-                  <span ng-if="errorCode == 1">กรุณากรอกรหัสผ่านใหม่</span>
-                  <span ng-if="errorCode == 11">รหัสผ่านใหม่ต้องมีความยาวไม่น้อยกว่า 4 ตัวอักษร</span>
-                  <span ng-if="errorCode == 2">กรุณากรอกเพื่อยืนยันรหัสผ่านใหม่</span>
-                  <span ng-if="errorCode == 3">กรุณากรอกช่องรหัสผ่านใหม่และช่องยืนยันรหัสผ่านใหม่ให้ตรงกัน</span>
-                  <span ng-if="errorCode == 4">เกิดข้อผิดพลาด กรุณาลองใหม่</span>
-                </div>
-
-                <div class="alert alert-danger alert-invisible" ng-show="!error">
-                  no error.
-                </div>
-
-                <div class="form-group">
-                  <label for="password1" class="col-sm-4 control-label">รหัสผ่านใหม่</label>
-                  <div class="col-sm-8">
-                    <input type="password" class="form-control" id="password1" placeholder="password" ng-model="password[0]">
+                <fieldset ng-disabled="submitting">
+                  <legend>เปลี่ยนรหัสผ่าน</legend>
+                  <div class="alert alert-danger" role="alert" ng-show="error">
+                    <span ng-if="errorCode == 1">กรุณากรอกรหัสผ่านใหม่</span>
+                    <span ng-if="errorCode == 11">รหัสผ่านใหม่ต้องมีความยาวไม่น้อยกว่า 4 ตัวอักษร</span>
+                    <span ng-if="errorCode == 2">กรุณากรอกเพื่อยืนยันรหัสผ่านใหม่</span>
+                    <span ng-if="errorCode == 3">กรุณากรอกช่องรหัสผ่านใหม่และช่องยืนยันรหัสผ่านใหม่ให้ตรงกัน</span>
+                    <span ng-if="errorCode == 4">เกิดข้อผิดพลาด กรุณาลองใหม่</span>
                   </div>
-                </div>
 
-                <div class="form-group">
-                  <label for="password1" class="col-sm-4 control-label">กรอกรหัสผ่านใหม่อีกครั้ง</label>
-                  <div class="col-sm-8">
-                    <input type="password" class="form-control" id="password1" placeholder="password" ng-model="password[1]">
+                  <div class="alert alert-success" role="alert" ng-show="success">
+                    เปลี่ยนรหัสผ่านเรียบร้อยแล้ว
                   </div>
-                </div>
 
-                <div class="form-group">
-                  <div class="col-sm-offset-4 col-sm-8">
-                    <button type="submit" class="btn btn-default">บันทึก</button>
+                  <div class="form-group" ng-class="{ 'has-error': errorCode == 1 }">
+                    <label for="password1" class="col-sm-4 control-label">รหัสผ่านใหม่</label>
+                    <div class="col-sm-8">
+                      <input type="password" class="form-control" id="password1" ng-model="password[0]">
+                    </div>
                   </div>
-                </div>
+
+                  <div class="form-group" ng-class="{ 'has-error': errorCode == 2 }">
+                    <label for="password1" class="col-sm-4 control-label">กรอกรหัสผ่านใหม่อีกครั้ง</label>
+                    <div class="col-sm-8">
+                      <input type="password" class="form-control" id="password1" ng-model="password[1]">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-8">
+                      <button type="submit" class="btn btn-default">บันทึก</button>
+                    </div>
+                  </div>
+                </fieldset>
               </form>
           </div></div>
         </div>

@@ -34,22 +34,29 @@ angular.module('poddDashboardApp')
             $scope.error = true;
             return 2;
         }
-        if ($scope.password[0].length < 4 || $scope.password[1].length < 4) {
-            $scope.error = true;
-            return 11;
-        }
         if ($scope.password[0].toString() !== $scope.password[1].toString()) {
             $scope.error = true;
             return 3;
         }
+        if ($scope.password[0].length < 4 || $scope.password[1].length < 4) {
+            $scope.error = true;
+            return 11;
+        }
+
 
         return null;
     }
 
+    $scope.submitting = false;
     $scope.submit = function (e) {
         e.preventDefault();
 
+        if ($scope.submitting) {
+            return;
+        }
+
         $scope.error = false;
+        $scope.success = false;
 
         $scope.errorCode = hasError();
         if ($scope.errorCode) {
@@ -57,15 +64,20 @@ angular.module('poddDashboardApp')
         }
         else {
             $scope.error = false;
-            User.updatePassword({ password: $scope.password}).$promise
+            $scope.submitting = true;
+            User.updatePassword({ password: $scope.password }).$promise
                 .then(function () {
                     $scope.error = false;
+                    $scope.success = true;
                     $scope.password[0] = '';
                     $scope.password[1] = '';
                 })
                 .catch(function () {
                     $scope.error = true;
                     $scope.errorCode = 4;
+                })
+                .finally(function () {
+                    $scope.submitting = false;
                 });
         }
     };
