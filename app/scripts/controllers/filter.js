@@ -336,12 +336,14 @@ angular.module('poddDashboardApp')
                     });
 
                     $element.on('click', function () {
-                        if (scope.query) {
-                            scope.query += ' AND ' + $element.text();
-                        }
-                        else {
-                            scope.query += '' + $element.text();
-                        }
+                        scope.$apply(function () {
+                            if (scope.query) {
+                                scope.query += ' AND ' + $element.text();
+                            }
+                            else {
+                                scope.query += '' + $element.text();
+                            }
+                        });
                     });
                 }
             };
