@@ -30,6 +30,10 @@ angular.module('poddDashboardApp')
             $scope.error = true;
             return 1;
         }
+        if ( ! $scope.password[0].match(/^\d+$/) ) {
+            $scope.error = true;
+            return 12;
+        }
         if ($scope.password[1] === '') {
             $scope.error = true;
             return 2;
@@ -65,7 +69,7 @@ angular.module('poddDashboardApp')
         else {
             $scope.error = false;
             $scope.submitting = true;
-            User.updatePassword({ password: $scope.password }).$promise
+            User.updatePassword({ password: $scope.password[0] }).$promise
                 .then(function () {
                     $scope.error = false;
                     $scope.success = true;
