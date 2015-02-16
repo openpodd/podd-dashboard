@@ -8,6 +8,7 @@ angular.module('poddDashboardApp')
     $scope.logout = function () {
         $scope.shared.loggedIn = false;
         shared.loggedIn = false;
+        shared.menuPermissions = [];
         $.removeCookie('token');
     };
 
@@ -17,6 +18,10 @@ angular.module('poddDashboardApp')
 
     $scope.isActiveMenu = function (name) {
         return Menu.isActiveMenu(name);
+    };
+
+    $scope.hasPermissionOnMenu = function (menu) {
+        return Menu.hasPermissionOnMenu(menu);
     };
 
 });

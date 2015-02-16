@@ -10,6 +10,10 @@ angular.module('poddDashboardApp')
 
         isActiveMenu: function (name) {
             return shared.activeMenuName === name;
+        },
+
+        hasPermissionOnMenu: function (menu) {
+            return shared.menuPermissions && shared.menuPermissions.indexOf(menu) >= 0;
         }
     };
 });

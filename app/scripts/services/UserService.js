@@ -67,6 +67,7 @@ angular.module('poddDashboardApp')
                     $.cookie('token', res.token);
                     $.cookie('userid', res.id);
                     shared.loggedIn = true;
+                    shared.menuPermissions = res.permissions;
 
                     cb(null, res);
                 }).catch(function (err) {
