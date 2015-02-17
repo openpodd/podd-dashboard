@@ -159,8 +159,21 @@ angular.module('poddDashboardApp')
             },
             function (isConfirm) {
                 if (isConfirm) {
-                    Flags.post(data);
-                }
+                    Flags.post(data).$promise.then(function(){
+
+                    }, function(error){
+                        if(error.status === 403){
+                            swal({
+                                title: '',
+                                type: 'warning',
+                                text: 'คุณไม่สามารถเปลี่ยนค่าระดับความสำคัญได้',
+                                confirmButtonText: 'ตกลง',
+                                confirmButtonClass: 'btn-danger',
+                            });
+                            $scope.flag.current = $scope.flag.old;
+                        }
+                    });
+                } 
                 else {
                     // reset if not confirm.
                     $scope.flag.current = $scope.flag.old;
