@@ -159,20 +159,7 @@ angular.module('poddDashboardApp')
             },
             function (isConfirm) {
                 if (isConfirm) {
-                    Flags.post(data).$promise.then(function(){
-
-                    }, function(error){
-                        if(error.status === 403){
-                            swal({
-                                title: '',
-                                type: 'warning',
-                                text: 'คุณไม่สามารถเปลี่ยนค่าระดับความสำคัญได้',
-                                confirmButtonText: 'ตกลง',
-                                confirmButtonClass: 'btn-danger',
-                            });
-                            $scope.flag.current = $scope.flag.old;
-                        }
-                    });
+                    $scope.sendFlag(data);
                 } 
                 else {
                     // reset if not confirm.
@@ -212,26 +199,50 @@ angular.module('poddDashboardApp')
                     .then(function () {
                         $scope.$broadcast('report:updateFollowUp', $scope.$parent.report.id);
                     })
-                    .catch(function () {
+                    .catch(function (err) {
                         $scope.flag.current = $scope.flag.old;
 
-                        swal({
-                            title: '',
-                            type: 'warning',
-                            text: 'เกิดข้อผิดพลาด กรุณาลองใหม่',
-                            confirmButtonText: 'ตกลง',
-                            confirmButtonClass: 'btn-danger',
-                        });
+                        $scope.showWarning(err);
                     });
                 }, function () {
                     $scope.flag.current = $scope.flag.old;
                 });
             }
             else {
-                Flags.post(data);
+                $scope.sendFlag(data);
             }
         }
 
+    };
+
+    $scope.sendFlag = function(data){
+        Flags.post(data).$promise.then(function(){
+
+        }, function(err){
+            $scope.flag.current = $scope.flag.old;
+            
+            $scope.showWarning(err);
+        });
+    };
+
+    $scope.showWarning = function(err){
+        if(err.status === 403){
+            swal({
+                title: '',
+                type: 'warning',
+                text: 'คุณไม่สามารถเปลี่ยนค่าระดับความสำคัญได้',
+                confirmButtonText: 'ตกลง',
+                confirmButtonClass: 'btn-danger',
+            });
+        }else{
+            swal({
+                title: '',
+                type: 'warning',
+                text: 'เกิดข้อผิดพลาด กรุณาลองใหม่',
+                confirmButtonText: 'ตกลง',
+                confirmButtonClass: 'btn-danger',
+            });
+        }
     };
 
     $scope.willShowConfirmationBox = function () {
