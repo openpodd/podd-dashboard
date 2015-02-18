@@ -2,7 +2,7 @@
 
 angular.module('poddDashboardApp')
 
-.factory('Menu', function (shared) {
+.factory('Menu', function (shared, storage) {
     return {
         setActiveMenu: function (name) {
             shared.activeMenuName = name;
@@ -13,7 +13,7 @@ angular.module('poddDashboardApp')
         },
 
         hasPermissionOnMenu: function (menu) {
-            return shared.menuPermissions && shared.menuPermissions.indexOf(menu) >= 0;
+            return storage.get('menuPermissions').indexOf(menu) >= 0;
         }
     };
 });
