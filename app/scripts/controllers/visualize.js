@@ -122,11 +122,11 @@ angular.module('poddDashboardApp')
 
                     /*jshint camelcase: false */
                     return {
-                        periodName: periodNames[period.start_time],
+                        periodName: periodNames[period.startTime],
                         totalReports: period.totalReports,
-                        periodRange: padLeft(period.start_time, 2) + ':00' +
+                        periodRange: padLeft(period.startTime, 2) + ':00' +
                                      ' - ' +
-                                     padLeft(period.end_time, 2) + ':00 น.'
+                                     padLeft(period.endTime, 2) + ':00 น.'
                     };
                     /*jshint camelcase: true */
                 }
