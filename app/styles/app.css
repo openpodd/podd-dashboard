@@ -1656,53 +1656,135 @@ mentio-menu {
       animation-duration: 0.7s;
       animation-iteration-count: infinite; }
 
-/* line 11, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/info.scss */
+/* line 1, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
+.selectize-control {
+  /* Align Selectize with input-group-btn */
+  top: 2px; }
+
+/* line 5, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
+.selectize-control > .selectize-dropdown {
+  top: 34px; }
+
+/* Reset right rounded corners, see Bootstrap input-groups.less */
+/* line 9, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
+.input-group > .selectize-control > .selectize-input {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0; }
+
+/* line 15, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
+.pd-section-left {
+  display: none; }
+
+/* line 18, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
+.fix-chart-row {
+  min-height: 450px; }
+
+/* line 23, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
+.info-container {
+  width: 100% !important;
+  padding: 0 !important;
+  background-color: #fff; }
+
+/* line 28, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
+.info-section-one, .info-section-two {
+  padding: 0 40px; }
+
+/* line 32, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
 .info {
   font-family: 'ThaiSansNeueRegular'; }
-  /* line 14, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/info.scss */
+  /* line 35, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
   .info .info-number {
-    font-size: 148px;
+    font-size: 200px;
     font-family: ThaiSansNeueBold;
-    line-height: 1em;
-    color: #59226D; }
-  /* line 20, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/info.scss */
+    line-height: 120px;
+    color: #59226D;
+    margin-bottom: 20px; }
+  /* line 42, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
+  .info .info-number-sm {
+    font-size: 100px;
+    line-height: 60px; }
+  /* line 46, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
   .info .text {
-    font-size: 36px;
+    font-size: 50px;
     font-family: ThaiSansNeueBold;
+    line-height: 40px;
     color: #59226D; }
+  /* line 52, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
+  .info .text-sm {
+    font-size: 35px;
+    line-height: 25px; }
+  /* line 56, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
+  .info .text-gray {
+    color: #333; }
 
-/* line 26, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/info.scss */
+/* line 60, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
 .info-heading {
-  font-size: 60px;
+  font-size: 90px;
   font-family: ThaiSansNeueBold;
-  color: #000; }
+  color: #000;
+  margin: 30px 0 50px; }
 
-/* line 32, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/info.scss */
+/* line 67, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
 .info-title {
-  font-size: 36px;
+  font-size: 56px;
   font-family: ThaiSansNeueBold;
-  color: #333; }
+  color: #333;
+  margin: 0 0 30px; }
 
-/* line 38, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/info.scss */
+/* line 74, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
 .info-section-two {
   background-color: #412954;
   color: #fff; }
 
-/* line 44, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/info.scss */
+/* line 80, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
 .info-table {
   table-layout: fixed;
   background-color: #412954 !important; }
-  /* line 48, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/info.scss */
+  /* line 84, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
   .info-table th {
     color: #fff;
     border: none !important; }
-  /* line 52, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/info.scss */
+  /* line 88, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
   .info-table td {
     border: none !important;
     font-size: 32px; }
-  /* line 56, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/info.scss */
+  /* line 92, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
   .info-table tbody tr:nth-child(odd) {
     background-color: #4e3466 !important; }
 
+/* line 101, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
+.info-icon {
+  display: inline-block;
+  margin-right: 20px;
+  vertical-align: middle; }
 
-/*# sourceMappingURL=info.css.map */
+/* line 106, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
+.info-report-icon {
+  width: 63px;
+  height: 77px;
+  background: url('/images/ic-report.png'); }
+
+/* line 114, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
+.graph1-legend {
+  position: relative;
+  top: -60px; }
+
+/* line 118, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
+.legend-negative {
+  width: 250px;
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+/* line 124, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
+.legend-positive {
+  width: 270px;
+  position: absolute;
+  right: 0;
+  top: 0; }
+
+/* line 131, /Users/Chatchai/Documents/OD-Git/podd-dashboard/app/styles/visualize */
+.bbbbb {
+  background: red; }
+
+/*# sourceMappingURL=app.css.map */
