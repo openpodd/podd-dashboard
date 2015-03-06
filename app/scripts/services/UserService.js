@@ -28,7 +28,7 @@ angular.module('poddDashboardApp')
     });
 })
 
-.factory('Auth', function (User, shared, $interval, $location, $q) {
+.factory('Auth', function (User, shared, $interval, $location, $q, storage) {
     var checking = false;
 
     return {
@@ -67,6 +67,7 @@ angular.module('poddDashboardApp')
                     $.cookie('token', res.token);
                     $.cookie('userid', res.id);
                     shared.loggedIn = true;
+                    storage.set('menuPermissions', res.permissions)
 
                     cb(null, res);
                 }).catch(function (err) {
