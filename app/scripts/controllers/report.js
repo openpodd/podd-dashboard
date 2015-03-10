@@ -160,7 +160,7 @@ angular.module('poddDashboardApp')
             function (isConfirm) {
                 if (isConfirm) {
                     $scope.sendFlag(data);
-                } 
+                }
                 else {
                     // reset if not confirm.
                     $scope.flag.current = $scope.flag.old;
@@ -216,25 +216,22 @@ angular.module('poddDashboardApp')
     };
 
     $scope.sendFlag = function(data){
-        Flags.post(data).$promise.then(function(){
-
-        }, function(err){
+        Flags.post(data).$promise.catch(function (err) {
             $scope.flag.current = $scope.flag.old;
-            
             $scope.showWarning(err);
         });
     };
 
-    $scope.showWarning = function(err){
-        if(err.status === 403){
+    $scope.showWarning = function (err) {
+        if (err.status === 403) {
             swal({
                 title: '',
                 type: 'warning',
-                text: 'คุณไม่สามารถเปลี่ยนค่าระดับความสำคัญได้',
+                text: 'คุณไม่มีสิทธิเปลี่ยนค่าระดับความสำคัญได้',
                 confirmButtonText: 'ตกลง',
                 confirmButtonClass: 'btn-danger',
             });
-        }else{
+        } else {
             swal({
                 title: '',
                 type: 'warning',
