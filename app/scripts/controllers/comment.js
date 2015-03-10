@@ -61,10 +61,12 @@ angular.module('poddDashboardApp')
             callError('ไม่สามารถอัพโหลดไฟล์ที่มีขนาดของไฟล์มากกว่า 10MB');
             return;
         }
+        
+        console.log($scope.message);
 
         var data = {
             reportId: $scope.$parent.report.id,
-            message: $scope.message.replace(/\@(\w+)/g, '@[$1]'),
+            message: $scope.message.replace(/\@([\w\-]+)/g, '@[$1]'),
             file: $scope.file,
         };
 
