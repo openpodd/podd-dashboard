@@ -130,15 +130,16 @@ angular.module('poddDashboardApp')
 .run(function (uiGridExporterService, $filter) {
     /* global XLSX */
 
-    function applyFilters(filters, value, fieldFormatter) {
+    function applyFilters(filters, field, fieldFormatter) {
+        var value = field.value;
         fieldFormatter = fieldFormatter || uiGridExporterService.formatFieldAsCsv;
 
         if (angular.isFunction(filters)) {
-            return fieldFormatter(filters(value));
+            return fieldFormatter({ value: filters(value) });
         }
         filters = filters.replace(/[\"\']+/g, '');
         var result = null;
-        var filterList = filters.split('|') ? filters.split('|') : filters;
+        var filterList = filters.split('|');
 
         for (var filter in filterList) {
             var functionSplit = null;
@@ -152,22 +153,22 @@ angular.module('poddDashboardApp')
             }
         }
 
-        return fieldFormatter(result);
+        return fieldFormatter({ value: result });
     }
 
     /* @return formatted string */
     function formatCell(columnDefs, fieldFormatter) {
         fieldFormatter = fieldFormatter || uiGridExporterService.formatFieldAsCsv;
 
-        return function (columnValue, index) {
+        return function (column, index) {
             if (columnDefs[index].exportFilter) {
-                return applyFilters(columnDefs[index].exportFilter, columnValue, fieldFormatter);
+                return applyFilters(columnDefs[index].exportFilter, column, fieldFormatter);
             }
             else if (columnDefs[index].cellFilter) {
-                return applyFilters(columnDefs[index].cellFilter, columnValue, fieldFormatter);
+                return applyFilters(columnDefs[index].cellFilter, column, fieldFormatter);
             }
             else {
-                return fieldFormatter(columnValue);
+                return fieldFormatter(column);
             }
         };
     }
@@ -176,7 +177,8 @@ angular.module('poddDashboardApp')
         var self = this;
 
         var csv = columnDefs.map(function (header) {
-            return self.formatFieldAsCsv(header.name || header.field);
+            var field = { value: header.name || header.field };
+            return self.formatFieldAsCsv(field);
         }).join(separator) + '\n';
 
         csv += exportData.map(function (row) {
@@ -188,20 +190,20 @@ angular.module('poddDashboardApp')
 
     // @see: http://sheetjs.com/demos/writexlsx.html
     function xlsxFieldFormatter (field) {
-        if (field === null) { // we want to catch anything null-ish, hence just == not ===
+        if (field.value === null) { // we want to catch anything null-ish, hence just == not ===
             return '';
         }
-        if (typeof(field) === 'number') {
-            return field;
+        if (typeof(field.value) === 'number') {
+            return field.value;
         }
-        if (typeof(field) === 'boolean') {
-            return (field ? 'TRUE' : 'FALSE');
+        if (typeof(field.value) === 'boolean') {
+            return (field.value ? 'TRUE' : 'FALSE');
         }
-        if (typeof(field) === 'string') {
-            return field.replace(/"/g,'""');
+        if (typeof(field.value) === 'string') {
+            return field.value.replace(/"/g,'""');
         }
 
-        return JSON.stringify(field);
+        return JSON.stringify(field.value);
     }
 
     function getSheetFromData(columnDefs, exportData) {

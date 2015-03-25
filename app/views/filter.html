@@ -126,10 +126,10 @@
 
         <div class="dropdown export-dropdown" role="group">
           <button type="button" class="btn btn-default btn-xs dropdown-toggle" id="exportFilterResult"
-                  aria-expended="true'">
+                  aria-expended="false" data-toggle="dropdown" aria-haspopup="true">
               Download <span class="caret"></span>
           </button>
-          <ul class="dropdown-menu" role="menu" aria-labelledby='exportFilterResult'>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="exportFilterResult">
             <li><a href="#" ng-click="csvExport($event)">CSV</a></li>
             <li><a href="#" ng-click="xlsxExport($event)">Excel</a></li>
           </ul>
