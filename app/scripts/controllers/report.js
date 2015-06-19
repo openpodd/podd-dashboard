@@ -3,6 +3,7 @@
 
 angular.module('poddDashboardApp')
 
+// DEPRECATED: will remove soon.
 .run(function ($templateCache, ReportType, shared, $q) {
     ReportType.query().$promise.then(function (reportTypes) {
         shared.reportTypeTemplateLoaded = false;

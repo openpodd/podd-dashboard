@@ -2,6 +2,7 @@
 
 angular.module('poddDashboardApp')
 
+// DEPRECATED: will use report.formDataExplanation instead.
 .directive('reportTypeFormData', function ($compile, $templateCache, shared) {
 
     function makeReportTypeTemplateUrl(report) {

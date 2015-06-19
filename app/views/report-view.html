@@ -88,7 +88,12 @@
               </tab>
 
               <tab heading="คำอธิบายรายงาน">
-                <div report-type-form-data report="$parent.report"></div>
+                <div ng-if="!$parent.report.formDataExplanation">
+                  <div report-type-form-data report="$parent.report"></div>
+                </div>
+                <div ng-if="$parent.report.formDataExplanation">
+                  <div ng-bind-html="$parent.report.formDataExplanation"></div>
+                </div>
               </tab>
 
               <tab heading="รายงานที่เกี่ยวข้อง">
