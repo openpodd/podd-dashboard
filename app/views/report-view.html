@@ -107,10 +107,10 @@
 
         <div class="report-print hide">
 
-          <h2>รายงาน #{{ report.id }}</h2>
+          <h3>รายงาน #{{ report.id }}</h3>
 
           <div class="report-image clearfix" ng-if="$parent.report.images.length">
-            <h3><i class="fa fa-picture-o fa-size-18"></i> รูปประกอบ</h3>
+            <h4><i class="fa fa-picture-o fa-size-18"></i> รูปประกอบ</h4>
 
             <div>
                 <div style="padding-right: 5px; padding-bottom: 5px; display: inline-block;" ng-repeat="image in $parent.report.images">
@@ -119,8 +119,9 @@
             </div>
           </div>
 
-          <h3><i class="fa fa-newspaper-o fa-size-18"></i> ข้อมูลรายงาน</h3>
-            <table class="table pd-white-table report-info" style="border: 0; margin-bottom: 20px;">
+          <h4><i class="fa fa-newspaper-o fa-size-18"></i> ข้อมูลรายงาน</h4>
+            <table class="table pd-white-table report-info" 
+                  style="border: 0; margin-bottom: 20px; font-size: 14px;">
               <tbody>
                 <tr>
                   <td width="200">สถานะรายงาน</td>
@@ -179,25 +180,6 @@
 
     </div>
   </div></div> <!-- end .content-wrapper .content -->
-
-<!--
-  <div class="l-comment-section l-section">
-    <div class="title">
-      <i class="fa fa-times fa-size-22 pull-left" ng-click="closeReportView()"></i>
-      <i class="fa fa-comments pull-left fa-size-22"></i>ความคิดเห็น <div class="b-noti">2</div>
-    </div>
-
-    <div class="content">
-
-      <div class="report-comments">
-
-        <div ng-include="'/views/comments.html'"></div>
-
-      </div> end .report-comments
-
-    </div>
-  </div>
--->
 
 </div>
 
