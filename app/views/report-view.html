@@ -105,6 +105,74 @@
 
         </div><!-- end .report-details -->
 
+        <div class="report-print hide">
+
+          <h2>รายงาน #{{ report.id }}</h2>
+
+          <div class="report-image clearfix" ng-if="$parent.report.images.length">
+            <h3><i class="fa fa-picture-o fa-size-18"></i> รูปประกอบ</h3>
+
+            <div>
+                <div style="padding-right: 5px; padding-bottom: 5px; display: inline-block;" ng-repeat="image in $parent.report.images">
+                    <img style="width: 300px; " src="{{ image.thumbnailUrl }}"/>
+                </div>
+            </div>
+          </div>
+
+          <h3><i class="fa fa-newspaper-o fa-size-18"></i> ข้อมูลรายงาน</h3>
+            <table class="table pd-white-table report-info" style="border: 0; margin-bottom: 20px;">
+              <tbody>
+                <tr>
+                  <td width="200">สถานะรายงาน</td>
+                  <td>{{ flag.current.color }}</td>
+                </tr>
+                <tr>
+                  <td width="200">วันที่รายงาน</td>
+                  <td>{{ $parent.report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</td>
+                </tr>
+                <tr>
+                  <td width="200">วันที่เกิดเหตุ</td>
+                  <td>{{ $parent.report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</td>
+                </tr>
+                <tr>
+                  <td width="200">ประเภทรายงาน</td>
+                  <td>{{ $parent.report.reportTypeName }}</td>
+                </tr>
+                <tr>
+                  <td width="200">รายละเอียด</td>
+                  <td>
+                    <div report-type-form-data report="$parent.report"></div>
+                    <div ng-bind-html="$parent.report.formDataExplanation"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="200">พื้นที่เกิดเหต</td>
+                  <td>{{ $parent.report.village.address }}</td>
+                </tr>
+                <tr>
+                  <td width="200">โดย</td>
+                  <td>{{ $parent.report.createdBy }}</td>
+                </tr>
+                <tr ng-show="$parent.report.createdByContact">
+                  <td width="200">ติดต่อ</td>
+                  <td>{{ $parent.report.createdByContact }}</td>
+                </tr>
+                <tr ng-show="$parent.report.createdByTelephone">
+                  <td width="200">เบอร์โทร</td>
+                  <td>{{ $parent.report.createdByTelephone }}</td>
+                </tr>
+                <tr ng-show="$parent.report.createdByProjectMobileNumber">
+                  <td width="200">เบอร์โทรของโครงการ</td>
+                  <td>{{ $parent.report.createdByProjectMobileNumber }}</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <button type="submit" class="btn btn-default"
+                  ng-click="printDiv()"><i class="fa fa-print fa-size-18"></i> ปริ้นรายละเอียดรายงาน</button>
+        </div>
         <div class="report-comments">
             <div ng-include="'/views/comments.html'"></div>
         </div>
