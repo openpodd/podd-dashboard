@@ -166,10 +166,10 @@ angular.module('poddDashboardApp')
             ];
             $scope.gridOptionsPerson.data = results;
 
-            setTimeout(function(){
-                $scope.loadingLink = false;
-                $scope.exportPerson();
-            }, 3000);
+            // setTimeout(function(){
+            //     $scope.loadingLink = false;
+            //     $scope.exportPerson();
+            // }, 3000);
 
         }).catch(function () {
             $scope.loading = false;

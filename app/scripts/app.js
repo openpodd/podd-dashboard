@@ -76,6 +76,7 @@ angular
       /\/users\/search/,
       /\/summary\/areas\/count-reports/,
       /\/summary\/users\/inactive/,
+      /\/summary\/users\/performance/,
       /\/summary\/areas\/show-detail/,
       /\/ping/,
       /\/users\/profile/
@@ -151,6 +152,11 @@ angular
         url: '^/summary/person?dates&percent&type',
         template: '',
         controller: 'SummaryPersonModeCtrl'
+      })
+      .state('main.summaryperformanceperson', {
+        url: '^/summary/performance-person?month&areaId',
+        template: '',
+        controller: 'SummaryPerformancePersonModeCtrl'
       })
       .state('visualize', {
         url: '/visualize',

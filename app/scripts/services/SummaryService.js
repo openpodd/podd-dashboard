@@ -20,4 +20,16 @@ angular.module('poddDashboardApp')
     });
 
     return resource;
+})
+
+
+.factory('SummaryPerformancePerson', function ($resource) {
+    var resource = $resource(config.API_BASEPATH + '/summary/users/performance/', {}, {
+        get: {
+            isArray: true
+        }
+    });
+
+    return resource;
 });
+

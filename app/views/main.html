@@ -4,16 +4,18 @@
      ng-hide="shared.summaryReportMode || shared.summaryPersonMode"
      ng-class="{ 'half-map': shared.showReportList }"></div>
 
-<div ng-include="'/views/report-list.html'" class="section-report" ng-hide="shared.summaryReportMode || shared.summaryPersonMode"></div>
+<div ng-include="'/views/report-list.html'" class="section-report" ng-hide="shared.summaryReportMode || shared.summaryPersonMode || shared.summaryPerformancePersonMode"></div>
 
 <div ng-include="'/views/filter.html'" class="section-filter" ng-show="shared.filterMode"></div>
 
 <div ng-include="'/views/report-view.html'" onload="initReportModal()"></div>
 
 
-<div ng-include="'/views/summary-report.html'"></div>
+<div ng-include="'/views/summary-report.html'" ng-show="shared.summaryReportMode"></div>
 
-<div ng-include="'/views/summary-person.html'"></div>
+<div ng-include="'/views/summary-person.html'" ng-show="shared.summaryPersonMode"></div>
+
+<div ng-include="'/views/summary-performance-person.html'" ng-show="shared.summaryPerformancePersonMode"></div>
 
 <!-- placeholder ui-view: intend to do nothing -->
 <div ui-view></div>

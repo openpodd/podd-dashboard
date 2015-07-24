@@ -1,0 +1,61 @@
+<div class="summary-view l-info-section l-section l-full-width" ng-controller="SummaryPerformancePersonCtrl" ng-show="shared.summaryPerformancePersonMode" ng-cloak>
+  <div class="l-detail-section l-section">
+    <div class="title clearfix">
+        <h2 class="pull-left"><i class="fa fa-stethoscope pull-left fa-size-22"></i>สรุปประสิทธิภาพการรายงานแต่ละอาสา</h2>
+        <i class="fa fa-times pull-right fa-size-18" ng-click="closeSummaryPerformancePerson();gotoMainPage();"></i>
+    </div>
+
+    <div class="scroller scroller-x scroller-y content-wrapper content" perfect-scrollbar wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20" ng-transclude="true">
+        <div class="summary-wrapper">
+            
+            <form role="form" ng-submit="search()" class="search-block">
+                <div class="input-group">
+                    <div class="select-option pull-left">
+
+                        พื้นที่: <ui-select
+                            class="pull-left"
+                            ng-model="areas.selectedArea"
+                            theme="selectize"
+                            title="Choose an area"
+                            ng-disabled="areas.randomize">
+                            <ui-select-match placeholder="Select areas">{{ areas.selectedArea.name }}</ui-select-match>
+                            <ui-select-choices
+                              group-by="'parentName'"
+                              repeat="area in areas.all | filter:$select.search | orderBy:['parentName', 'name']">
+                              <span ng-bind-html="area.name | highlight:$select.search"></span>
+                            </ui-select-choices>
+                        </ui-select>
+
+                        เดือน: 
+                        <select
+                            ng-model="months.selectedMonth"
+                            ng-options="month for month in months.months"></select>
+                        <select
+                            ng-model="months.selectedYear"
+                            ng-options="year for year in months.years"></select>
+                    </div>
+                    <div class="input-group-btn">
+                        <button class="btn btn-default pd-btn-search" type="submit"><i class="fa fa-search fa-size-18"></i></button>
+                    </div>
+                </div>
+            </form>
+
+            <div ng-show="loading" loader-spinner></div>
+            <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
+            <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
+
+            <div class="summary-list" ng-show="results">
+                
+                <div id="gridPerson" class="summary-grid-person grid-summary" ui-grid="gridOptionsPerson" ui-grid-exporter></div>
+
+                <div class="export-buttons">
+                  <button class="btn btn-primary btn-sm" type="button" ng-click="csvExport();">ดาวน์โหลดข้อมูลไฟล์ CSV</button>
+                  <button class="btn btn-primary btn-sm" type="button" ng-click="xlsxExport();">ดาวน์โหลดข้อมูลไฟล์ Excel</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+  </div>
+</div>
