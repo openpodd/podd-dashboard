@@ -9,37 +9,40 @@
         <div class="summary-wrapper">
             
             <form role="form" ng-submit="search()" class="search-block">
-                <div class="input-group">
-                    <div class="select-option pull-left">
-
-                        พื้นที่: <ui-select
-                            class="pull-left"
-                            ng-model="areas.selectedArea"
-                            theme="selectize"
-                            title="Choose an area"
-                            ng-disabled="areas.randomize">
-                            <ui-select-match placeholder="Select areas">{{ areas.selectedArea.name }}</ui-select-match>
-                            <ui-select-choices
-                              group-by="'parentName'"
-                              repeat="area in areas.all | filter:$select.search | orderBy:['parentName', 'name']">
-                              <span ng-bind-html="area.name | highlight:$select.search"></span>
-                            </ui-select-choices>
-                        </ui-select>
-
-                        เดือน: 
-                        <select
-                            ng-model="months.selectedMonth"
-                            ng-options="month for month in months.months"></select>
-                        <select
-                            ng-model="months.selectedYear"
-                            ng-options="year for year in months.years"></select>
+                <!-- <div class="input-group"> -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5>พื้นที่</h5> 
+                            <ui-select
+                                class=""
+                                ng-model="areas.selectedArea"
+                                theme="selectize"
+                                title="Choose an area"
+                                ng-disabled="areas.randomize">
+                                <ui-select-match placeholder="Select areas">{{ areas.selectedArea.name }}</ui-select-match>
+                                <ui-select-choices
+                                  group-by="'parentName'"
+                                  repeat="area in areas.all | filter:$select.search | orderBy:['parentName', 'name']">
+                                  <span ng-bind-html="area.name | highlight:$select.search"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="col-md-3">
+                            <h5>เดือน</h5> 
+                            <select
+                                ng-model="months.selectedMonth"
+                                ng-options="month for month in months.months"></select>
+                            <select
+                                ng-model="months.selectedYear"
+                                ng-options="year for year in months.years"></select>
+                        </div>
                     </div>
-                    <div class="input-group-btn">
+<!--                     <div class="input-group-btn">
                         <button class="btn btn-default pd-btn-search" type="submit"><i class="fa fa-search fa-size-18"></i></button>
-                    </div>
-                </div>
+                    </div> -->
+                <!-- </div> -->
             </form>
-
+            <hr/>
             <div ng-show="loading" loader-spinner></div>
             <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
             <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>

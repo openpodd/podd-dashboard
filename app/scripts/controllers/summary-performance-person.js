@@ -21,16 +21,25 @@ angular.module('poddDashboardApp')
         selectedYear: moment().year()
     };
 
+    var initArea = {
+            id: '',
+            parentName: '',
+            name: 'ทุกพื้นที่'
+        };
+
     $scope.areas = {
         all: [],
         selected: null,
     };
+
+    $scope.areas.selectedArea = initArea;
 
     // Fetch available adminisitration areas
     dashboard.getAdministrationAreas().$promise.then(function (data) {
         $scope.areas.all = data.filter(function (item) {
             return item.isLeaf;
         });
+        $scope.areas.all.push(initArea);
     });
 
     $scope.query = '';
@@ -154,11 +163,9 @@ angular.module('poddDashboardApp')
                 administrationAreaId: $window.decodeURIComponent(params.areaId || ''),
             };
 
-            console.log($scope.query);
-            if ($scope.query) {
+            if ($scope.query.month) {
                 return $scope._search();
             }
-
             return $scope.search();
         }
     };
@@ -176,6 +183,24 @@ angular.module('poddDashboardApp')
     $scope.xlsxExport = function () {
         uiGridUtils.exportXlsx($scope.gridApi.grid, 'summary-performance-person.xlsx');
     };
+
+    $scope.$watch('areas.selectedArea', function (newValue) {
+        if (newValue) {
+            $scope.search();
+        }
+    });
+
+    $scope.$watch('months.selectedMonth', function (newValue) {
+        if (newValue) {
+            $scope.search();
+        }
+    });
+
+    $scope.$watch('months.selectedYear', function (newValue) {
+        if (newValue) {
+            $scope.search();
+        }
+    });
 
     $scope.doQueryOnParams($stateParams);
     $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
