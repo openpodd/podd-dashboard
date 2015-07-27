@@ -166,6 +166,8 @@ angular.module('poddDashboardApp')
             if ($scope.query.month) {
                 return $scope._search();
             }
+            $scope.query.month = '';
+            $scope.query.administrationAreaId = initArea.id;
             return $scope.search();
         }
     };
