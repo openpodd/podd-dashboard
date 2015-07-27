@@ -115,7 +115,6 @@ angular.module('poddDashboardApp')
                     exportData,
                     grid.options.exporterCsvColumnSeparator
                 );
-
             utils.downloadFile(filename, csvContent, 'text/csv;charset=utf-8');
         },
         exportXlsx: function (grid, filename) {
@@ -175,9 +174,8 @@ angular.module('poddDashboardApp')
     // Inject new method for uiGridExporterService
     uiGridExporterService.getCsv = function (columnDefs, exportData, separator) {
         var self = this;
-
         var csv = columnDefs.map(function (header) {
-            var field = { value: header.name || header.field };
+            var field = header.name || header.field;
             return self.formatFieldAsCsv(field);
         }).join(separator) + '\n';
 
@@ -217,6 +215,7 @@ angular.module('poddDashboardApp')
         var headers = columnDefs.map(function (header) {
             return header.name || header.field;
         });
+
         var data = [].concat([ headers ], exportData);
 
         for (var R = 0; R !== data.length; ++R) {
@@ -227,13 +226,14 @@ angular.module('poddDashboardApp')
                 if (range.e.c < C) { range.e.c = C; }
 
                 var cell = { v: data[R][C] };
+
                 if (cell.v === null) {
                     continue;
                 }
                 var cell_ref = XLSX.utils.encode_cell({ c: C, r: R });
 
                 if (R > 0) {
-                    cell.v = formatCell(columnDefs, xlsxFieldFormatter)(cell.v, C);
+                    cell.w = formatCell(columnDefs, xlsxFieldFormatter)(cell.v, C);
                 }
 
                 if (typeof cell.v === 'number') {

@@ -136,7 +136,7 @@ angular.module('poddDashboardApp')
 
             // setTimeout(function(){
             //     $scope.loadingLink = false;
-            //     $scope.exportPerson();
+            //     $scope.exportPerformancePerson();
             // }, 3000);
 
         }).catch(function () {
@@ -146,7 +146,7 @@ angular.module('poddDashboardApp')
     };
 
     $scope.closeSummaryPerformancePerson = function () {
-        shared.summaryActivePersonMode = false;
+        shared.summaryPerformancePersonMode = false;
     };
 
     $scope.gotoMainPage = function () {
@@ -170,7 +170,7 @@ angular.module('poddDashboardApp')
         }
     };
 
-    $scope.exportPerson = function(){
+    $scope.exportPerformancePerson = function(){
         var element = angular.element(document.querySelectorAll('.custom-csv-link-location-person')); element.html('');
         $scope.gridApi.exporter.csvExport( 'all', 'all', element);
     };
