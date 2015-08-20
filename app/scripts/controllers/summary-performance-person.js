@@ -21,6 +21,11 @@ angular.module('poddDashboardApp')
         selectedYear: moment().year()
     };
 
+    if ($stateParams.month.match(/[01]?[0-9]\/20\d\d/)) {
+        $scope.month = $stateParams.month;
+        $scope.months.selectedMonth = $scope.months.months[$stateParams.month.split('/')[0] - 1];
+    }
+
     var initArea = {
             id: '',
             parentName: '',
@@ -76,12 +81,12 @@ angular.module('poddDashboardApp')
 
     $scope.search = function () {
         $scope.month = $scope.months.selectedMonth + '/' + $scope.months.selectedYear;
-        
+
         var areaId = '';
         if ($scope.areas.selectedArea) {
             areaId = $scope.areas.selectedArea.id;
         }
-        
+
         $state.go('main.summaryperformanceperson', { month: $scope.month, areaId: areaId });
     };
 
@@ -186,30 +191,37 @@ angular.module('poddDashboardApp')
         uiGridUtils.exportXlsx($scope.gridApi.grid, 'summary-performance-person.xlsx');
     };
 
-    $scope.$watch('areas.selectedArea', function (newValue) {
-        if (newValue) {
+    $scope.$watch('areas.selectedArea', function (newValue, oldValue) {
+        if (newValue && newValue !== oldValue) {
             $scope.search();
         }
     });
 
-    $scope.$watch('months.selectedMonth', function (newValue) {
-        if (newValue) {
+    $scope.$watch('months.selectedMonth', function (newValue, oldValue) {
+        if (newValue && newValue !== oldValue) {
             $scope.search();
         }
     });
 
-    $scope.$watch('months.selectedYear', function (newValue) {
-        if (newValue) {
+    $scope.$watch('months.selectedYear', function (newValue, oldValue) {
+        if (newValue && newValue !== oldValue) {
             $scope.search();
         }
     });
 
     $scope.doQueryOnParams($stateParams);
     $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
-        console.log('stateChangeSuccess', $state.current.name, params.dates);
+        console.log('stateChangeSuccess', $state.current.name, params.month);
         if ($state.current.name === 'main.summaryperformanceperson') {
+            if (params.month.match(/[01]?[0-9]\/20\d\d/)) {
+                $scope.month = params.month;
+                $scope.months.selectedMonth = $scope.months.months[params.month.split('/')[0] - 1];
+            }
             if (oldParams.month !== params.month || oldParams.areaId !== params.areaId) {
                 $scope.doQueryOnParams(params);
+            }
+            else {
+                $scope.search();
             }
         }
     });
