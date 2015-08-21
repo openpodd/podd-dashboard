@@ -9,6 +9,9 @@ angular.module('poddDashboardApp')
         $scope.shared.loggedIn = false;
         shared.loggedIn = false;
         shared.menuPermissions = [];
+        shared.summaryReportMode = false;
+        shared.summaryPersonMode = false;
+        shared.summaryPerformancePersonMode = false;
         $.removeCookie('token');
     };
 

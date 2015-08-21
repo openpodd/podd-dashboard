@@ -42,6 +42,7 @@ angular.module('poddDashboardApp')
         shared.showReportList = false;
         shared.summaryReportMode = false;
         shared.summaryPersonMode = false;
+        shared.summaryPerformancePersonMode = false;
 
         if (!mention.isNotified) {
             var data = {

@@ -4,6 +4,7 @@
 angular.module('poddDashboardApp')
 
 .controller('SummaryPerformancePersonModeCtrl', function (shared, Menu) {
+    // console.log('why hereeeeee init summary performance person ctrl');
     shared.summaryPerformancePersonMode = true;
     Menu.setActiveMenu('summary');
 })
@@ -187,26 +188,26 @@ angular.module('poddDashboardApp')
     };
 
     $scope.$watch('areas.selectedArea', function (newValue) {
-        if (newValue) {
+        if (shared.summaryPerformancePersonMode && newValue) {
             $scope.search();
         }
     });
 
     $scope.$watch('months.selectedMonth', function (newValue) {
-        if (newValue) {
+        if (shared.summaryPerformancePersonMode && newValue) {
             $scope.search();
         }
     });
 
     $scope.$watch('months.selectedYear', function (newValue) {
-        if (newValue) {
+        if (shared.summaryPerformancePersonMode && newValue) {
             $scope.search();
         }
     });
 
     $scope.doQueryOnParams($stateParams);
     $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
-        console.log('stateChangeSuccess', $state.current.name, params.dates);
+        console.log('stateChangeSuccess', $state.current.name, params.month);
         if ($state.current.name === 'main.summaryperformanceperson') {
             if (oldParams.month !== params.month || oldParams.areaId !== params.areaId) {
                 $scope.doQueryOnParams(params);
