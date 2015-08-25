@@ -68,6 +68,7 @@ angular
       /\/flags/,
       /\/reports/,
       /\/reportType/,
+      /\/reportStates/,
       /\/dashboard/,
       /\/administrationArea/,
       /\/mentions/,

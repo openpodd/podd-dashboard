@@ -1,3 +1,4 @@
+/* globals swal:false */
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -117,11 +118,100 @@ angular.module('poddDashboardApp')
     };
 })
 
-.directive('ReportView', function () {
+.directive('reportView', function () {
     return {
         strict: 'A',
         link: function () {
             // NOTE: see ReportService.js in factory ReportModal.
+        }
+    };
+})
+
+.directive('reportStateForm', function ($http, Reports, ReportState) {
+    return {
+        strict: 'A',
+        require: '^reportView',
+        templateUrl: 'views/report-state-form.html',
+        scope: {
+            report: '='
+        },
+        controller: function ($scope) {
+            // Do nothing if no report provided
+            if (!$scope.report) {
+                return;
+            }
+
+            var report = $scope.report;
+
+            ReportState
+                .query({ reportType: report.reportTypeId }).$promise
+                .then(function (reportStates) {
+                    var currentState = null;
+
+                    // Assign default value. This algo is not optimized because
+                    // it will not stop when find the right state.
+                    if (report.stateCode) {
+                        reportStates.forEach(function (state) {
+                            if (state.code === report.stateCode) {
+                                currentState = state;
+                            }
+                        });
+                    }
+
+                    $scope.states = {
+                        all: reportStates,
+                        current: currentState,
+                        original: currentState
+                    };
+                });
+
+            $scope.change = function () {
+                console.log('Is about to change state');
+                swal({
+                    title: '',
+                    type: 'warning',
+                    text: 'โปรดยืนยัน หากคุณต้องการเปลี่ยนค่าระดับความสำคัญใหม่',
+                    confirmButtonText: 'ตกลง',
+                    confirmButtonClass: 'btn-danger',
+                    showCancelButton: true,
+                    cancelButtonText: 'ยกเลิก'
+                }, function (confirm) {
+                    var data = {
+                        id: report.id,
+                        stateId: $scope.states.current.id
+                    };
+                    if (confirm) {
+                        Reports.saveState(data).$promise
+                            .then(function (resp) {
+                                report.stateCode = resp.stateCode;
+                                $scope.states.original = $scope.states.current;
+                            })
+                            .catch(function (err) {
+                                if (err.status === 403) {
+                                    swal({
+                                        title: '',
+                                        type: 'warning',
+                                        text: 'คุณไม่มีสิทธิเปลี่ยนค่าระดับความสำคัญได้',
+                                        confirmButtonText: 'ตกลง',
+                                        confirmButtonClass: 'btn-danger',
+                                    });
+                                } else {
+                                    swal({
+                                        title: '',
+                                        type: 'warning',
+                                        text: 'เกิดข้อผิดพลาด กรุณาลองใหม่',
+                                        confirmButtonText: 'ตกลง',
+                                        confirmButtonClass: 'btn-danger',
+                                    });
+                                }
+                                $scope.states.current = $scope.states.original;
+                            });
+                    }
+                    else {
+                        $scope.states.current = $scope.states.original;
+                    }
+                });
+            };
         }
     };
 });

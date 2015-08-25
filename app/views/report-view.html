@@ -41,6 +41,7 @@
                   ng-change="updateFlag(flag.current)">
             <!-- <option value="">-- ระดับความสำคัญ --</option> -->
           </select>
+          <div report-state-form report="$parent.report"></div>
         </div>
 
         <div class="report-image clearfix" ng-if="$parent.report.images.length">
@@ -120,7 +121,7 @@
           </div>
 
           <h4><i class="fa fa-newspaper-o fa-size-18"></i> ข้อมูลรายงาน</h4>
-            <table class="table pd-white-table report-info" 
+            <table class="table pd-white-table report-info"
                   style="border: 0; margin-bottom: 20px; font-size: 14px;">
               <tbody>
                 <tr>

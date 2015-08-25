@@ -6,6 +6,12 @@ angular.module('poddDashboardApp')
     return $resource(config.API_BASEPATH + '/reportTypes/:id');
 })
 
+.factory('ReportState', function ($resource) {
+    return $resource(config.API_BASEPATH + '/reportStates/:id', {
+        id: '@id'
+    });
+})
+
 .factory('ReportModal', function ($rootScope) {
     var modal;
 
@@ -69,6 +75,10 @@ angular.module('poddDashboardApp')
             },
             follow: {
                 url: config.API_BASEPATH + '/reports/:reportId/follow',
+                method: 'POST'
+            },
+            saveState: {
+                url: config.API_BASEPATH + '/reports/:reportId/state',
                 method: 'POST'
             }
         });
