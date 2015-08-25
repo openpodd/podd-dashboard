@@ -21,7 +21,7 @@ angular.module('poddDashboardApp')
         selectedYear: moment().year()
     };
 
-    if ($stateParams.month.match(/[01]?[0-9]\/20\d\d/)) {
+    if ($stateParams.month && $stateParams.month.match(/[01]?[0-9]\/20\d\d/)) {
         $scope.month = $stateParams.month;
         $scope.months.selectedMonth = $scope.months.months[$stateParams.month.split('/')[0] - 1];
     }
@@ -213,7 +213,7 @@ angular.module('poddDashboardApp')
     $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
         console.log('stateChangeSuccess', $state.current.name, params.month);
         if ($state.current.name === 'main.summaryperformanceperson') {
-            if (params.month.match(/[01]?[0-9]\/20\d\d/)) {
+            if (params.month && params.month.match(/[01]?[0-9]\/20\d\d/)) {
                 $scope.month = params.month;
                 $scope.months.selectedMonth = $scope.months.months[params.month.split('/')[0] - 1];
             }
