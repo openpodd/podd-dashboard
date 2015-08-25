@@ -3,28 +3,6 @@
 
 angular.module('poddDashboardApp')
 
-// DEPRECATED: will remove soon.
-.run(function ($templateCache, ReportType, shared, $q) {
-    ReportType.query().$promise.then(function (reportTypes) {
-        shared.reportTypeTemplateLoaded = false;
-
-        var promises = [];
-
-        reportTypes.forEach(function (item) {
-            // Loop to get each templates.
-            var promise = ReportType.get({ id: item.id }).$promise.then(function (reportType) {
-                $templateCache.put('reportType-' + item.id + '.html', reportType.template);
-                shared['reportTypeTemplateLoadedReportType' + item.id] = true;
-            });
-            promises.push(promise);
-        });
-
-        $q.all(promises).then(function () {
-            shared.reportTypeTemplateLoaded = true;
-        });
-    });
-})
-
 .config(function (LightboxProvider) {
     // set a custom template
     LightboxProvider.templateUrl = '/views/lightbox.html';
@@ -271,7 +249,7 @@ angular.module('poddDashboardApp')
       popupWin.document.open();
       popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="' + window.location.origin + '/styles/app.css" /></head><body onload="window.print()">' + printContents + '</html>');
       popupWin.document.close();
-    }; 
+    };
 })
 
 .controller('ReportImageLightboxCtrl', function ($scope, Map) {
@@ -317,4 +295,3 @@ angular.module('poddDashboardApp')
         }
     };
 });
-
