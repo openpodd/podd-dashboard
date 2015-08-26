@@ -294,7 +294,7 @@ $badge-bad: #FF6D69;
         }
     }
 }
-.report-view{
+.report-view {
     position: relative;
     background-color: #ECECEC;
     min-height: 200px;
@@ -302,6 +302,20 @@ $badge-bad: #FF6D69;
     img {
         max-width: 100%;
     }
+}
+[report-view] {
+  [report-state-form] {
+    display: inline-block;
+    min-width: 140px;
+    .ui-select-match {
+      display: block !important;
+    }
+    .ui-select-choices {
+      left: auto;
+      right: 0;
+      width: auto;
+    }
+  }
 }
 .report-thumbnails {
     margin-bottom: 30px;

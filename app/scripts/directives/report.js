@@ -127,7 +127,7 @@ angular.module('poddDashboardApp')
     };
 })
 
-.directive('reportStateForm', function ($http, Reports, ReportState) {
+.directive('reportStateForm', function ($http, $modal, Reports, ReportState) {
     return {
         strict: 'A',
         require: '^reportView',
@@ -165,52 +165,69 @@ angular.module('poddDashboardApp')
                     };
                 });
 
+            $scope.revert = function () {
+                $scope.$apply(function () {
+                    $scope.states.current = $scope.states.original;
+                });
+            };
+
             $scope.change = function () {
-                console.log('Is about to change state');
+                if ($scope.states.current === $scope.states.original) {
+                    return;
+                }
+
                 swal({
                     title: '',
                     type: 'warning',
-                    text: 'โปรดยืนยัน หากคุณต้องการเปลี่ยนค่าระดับความสำคัญใหม่',
+                    text: 'โปรดยืนยัน หากคุณต้องการเปลี่ยนสถานะรายงาน',
                     confirmButtonText: 'ตกลง',
                     confirmButtonClass: 'btn-danger',
                     showCancelButton: true,
                     cancelButtonText: 'ยกเลิก'
                 }, function (confirm) {
-                    var data = {
-                        id: report.id,
-                        stateId: $scope.states.current.id
-                    };
                     if (confirm) {
-                        Reports.saveState(data).$promise
-                            .then(function (resp) {
-                                report.stateCode = resp.stateCode;
-                                $scope.states.original = $scope.states.current;
-                            })
-                            .catch(function (err) {
-                                if (err.status === 403) {
-                                    swal({
-                                        title: '',
-                                        type: 'warning',
-                                        text: 'คุณไม่มีสิทธิเปลี่ยนค่าระดับความสำคัญได้',
-                                        confirmButtonText: 'ตกลง',
-                                        confirmButtonClass: 'btn-danger',
-                                    });
-                                } else {
-                                    swal({
-                                        title: '',
-                                        type: 'warning',
-                                        text: 'เกิดข้อผิดพลาด กรุณาลองใหม่',
-                                        confirmButtonText: 'ตกลง',
-                                        confirmButtonClass: 'btn-danger',
-                                    });
-                                }
-                                $scope.states.current = $scope.states.original;
-                            });
+                        $scope._change();
                     }
                     else {
-                        $scope.states.current = $scope.states.original;
+                        $scope.revert();
                     }
                 });
+            };
+
+            $scope._change = function () {
+                var data = {
+                    id: report.id,
+                    stateId: $scope.states.current.id
+                };
+                Reports.saveState(data).$promise
+                    .then(function (resp) {
+                        report.stateCode = resp.stateCode;
+                        $scope.states.original = $scope.states.current;
+                    })
+                    .catch(function (err) {
+                        $scope.showWarning(err);
+                        $scope.revert();
+                    });
+            };
+
+            $scope.showWarning = function (err) {
+                if (err.status === 403) {
+                    swal({
+                        title: '',
+                        type: 'warning',
+                        text: 'คุณไม่มีสิทธิเปลี่ยนสถานะของรายงานนี้ได้',
+                        confirmButtonText: 'ตกลง',
+                        confirmButtonClass: 'btn-danger',
+                    });
+                } else {
+                    swal({
+                        title: '',
+                        type: 'warning',
+                        text: 'เกิดข้อผิดพลาด กรุณาลองใหม่',
+                        confirmButtonText: 'ตกลง',
+                        confirmButtonClass: 'btn-danger',
+                    });
+                }
             };
         }
     };
