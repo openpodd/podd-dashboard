@@ -3,6 +3,7 @@
   <p ng-click="onClickReportFollowUp(reportFollowUpParent)" class="report-followup-title">
     รายงานหมายเลข #{{ reportFollowUpParent.id }}
   </p>
+  <p><small>รายงานเมื่อ <span ng-bind="reportFollowUpParent.date | amDateFormat:'วันddddที่ D MMMM YYYY เวลา HH:mm'"></span></small></p>
 </div>
 
 <div ng-if="!reportFollowUpParent && items">
@@ -12,6 +13,7 @@
       <div class="report-followup-title" ng-click="onClickReportFollowUp(item)">
         <p>รายงานหมายเลข #{{ item.id }}</p>
       </div>
+      <p><small>รายงานเมื่อ <span ng-bind="item.date | amDateFormat:'วันddddที่ D MMMM YYYY เวลา HH:mm'"></span></small></p>
     </li>
   </ul>
 </div>
