@@ -244,10 +244,11 @@ angular.module('poddDashboardApp')
         columnDefs: [
             {
                 name: '',
-                field: 'flag',
+                field: 'stateCode',
                 width: '5%',
                 cellTemplate: '<div class=\"ui-grid-cell-contents\">' +
-                              '<i class="fa fa-flag flag-priority-{{COL_FIELD}}" ng-if="COL_FIELD"></i>' +
+                              '<i class="fa fa-flag flag-state-code--{{COL_FIELD}}" ng-if="!row.entity.parent && COL_FIELD"></i>' +
+                              '<i class="fa fa-flag flag-follow-up-report" ng-if="row.entity.parent"></i>' +
                               '</div>',
                 exportFilter: function (value) {
                     return {
