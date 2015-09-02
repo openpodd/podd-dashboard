@@ -58,6 +58,7 @@ angular.module('poddDashboardApp')
 
         if (scope.report) {
             Reports.followUp({ reportId: scope.report.id }).$promise.then(function (data) {
+                scope.report.$hasFollowUp = true;
                 scope.items = data;
 
                 data.forEach(function (item) {
