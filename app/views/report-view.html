@@ -23,7 +23,7 @@
          ng-if="!loadingReportView && !loadingReportViewError"><div class="content">
 
       <div class="report-details">
-        <div class="priority-report pull-right">เปลี่ยนสถานะรายงาน :
+        <div class="priority-report pull-right" ng-if="!$parent.report.parent">เปลี่ยนสถานะรายงาน :
           <div report-state-form report="$parent.report"></div>
         </div>
 
