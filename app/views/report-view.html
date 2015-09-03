@@ -83,7 +83,7 @@
               <tab>
                 <tab-heading>
                   รายงานที่เกี่ยวข้อง
-                  <span class="badge mark-has-follow-up" ng-if="$parent.report.parent || $parent.report.$hasFollowUp">!</span>
+                  <span class="badge mark-has-follow-up" ng-if="$parent.report.parent || $parent.report.$hasFollowUp" ng-bind="$parent.report.followUpReportsCount"></span>
                 </tab-heading>
                 <div report-follow-up report="$parent.report"></div>
               </tab>
