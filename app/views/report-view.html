@@ -63,7 +63,7 @@
                   </thead>
 
                   <tbody>
-                    <tr ng-repeat="field in $parent.report.formData">
+                    <tr ng-repeat="field in $parent.report.originalFormData">
                       <td ng-bind="field.name"></td>
                       <td jump-to-filter name="field.name" value="field.value"></td>
                     </tr>
@@ -72,11 +72,8 @@
               </tab>
 
               <tab heading="คำอธิบายรายงาน">
-                <div ng-if="!$parent.report.formDataExplanation">
-                  <div report-type-form-data report="$parent.report"></div>
-                </div>
-                <div ng-if="$parent.report.formDataExplanation">
-                  <div ng-bind-html="$parent.report.formDataExplanation"></div>
+                <div ng-if="$parent.report.renderedOriginalFormData">
+                  <div ng-bind-html="$parent.report.renderedOriginalFormData"></div>
                 </div>
               </tab>
 
@@ -130,8 +127,7 @@
                 <tr>
                   <td width="200">รายละเอียด</td>
                   <td>
-                    <div report-type-form-data report="$parent.report"></div>
-                    <div ng-bind-html="$parent.report.formDataExplanation"></div>
+                    <div ng-bind-html="$parent.report.renderedOriginalFormData"></div>
                   </td>
                 </tr>
                 <tr>
