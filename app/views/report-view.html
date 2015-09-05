@@ -22,25 +22,9 @@
          refresh-on-change="report"
          ng-if="!loadingReportView && !loadingReportViewError"><div class="content">
 
-       <div class="case-confirmation-box" ng-show="willShowConfirmationBox()">
-         <div class="panel panel-default">
-           <div class="panel-heading">
-             <h3 class="panel-title">ยืนยันรายงานนี้เป็น Case ที่ต้องตอบสนอง?</h3>
-           </div>
-           <div class="panel-body text-center">
-             <button class="btn btn-danger" ng-click="confirmCase(report)">ยืนยัน</button>
-             <button class="btn btn-default" ng-click="noResponse(report)">ไม่ตอบสนอง</button>
-           </div>
-         </div>
-       </div>
-
       <div class="report-details">
-        <div class="priority-report pull-right">ติดตามรายงาน :
-          <select ng-model="flag.current"
-                  ng-options="flagItem as flagItem.color for flagItem in flagOptions"
-                  ng-change="updateFlag(flag.current)">
-            <!-- <option value="">-- ระดับความสำคัญ --</option> -->
-          </select>
+        <div class="priority-report pull-right" ng-if="!$parent.report.parent">เปลี่ยนสถานะรายงาน :
+          <div report-state-form report="$parent.report"></div>
         </div>
 
         <div class="report-image clearfix" ng-if="$parent.report.images.length">
@@ -79,7 +63,7 @@
                   </thead>
 
                   <tbody>
-                    <tr ng-repeat="field in $parent.report.formData">
+                    <tr ng-repeat="field in $parent.report.originalFormData">
                       <td ng-bind="field.name"></td>
                       <td jump-to-filter name="field.name" value="field.value"></td>
                     </tr>
@@ -88,15 +72,16 @@
               </tab>
 
               <tab heading="คำอธิบายรายงาน">
-                <div ng-if="!$parent.report.formDataExplanation">
-                  <div report-type-form-data report="$parent.report"></div>
-                </div>
-                <div ng-if="$parent.report.formDataExplanation">
-                  <div ng-bind-html="$parent.report.formDataExplanation"></div>
+                <div ng-if="$parent.report.renderedOriginalFormData">
+                  <div ng-bind-html="$parent.report.renderedOriginalFormData"></div>
                 </div>
               </tab>
 
-              <tab heading="รายงานที่เกี่ยวข้อง">
+              <tab>
+                <tab-heading>
+                  รายงานที่เกี่ยวข้อง
+                  <span class="badge mark-has-follow-up" ng-if="$parent.report.parent || $parent.report.$hasFollowUp" ng-bind="$parent.report.followUpReportsCount"></span>
+                </tab-heading>
                 <div report-follow-up report="$parent.report"></div>
               </tab>
             </tabset>
@@ -120,7 +105,7 @@
           </div>
 
           <h4><i class="fa fa-newspaper-o fa-size-18"></i> ข้อมูลรายงาน</h4>
-            <table class="table pd-white-table report-info" 
+            <table class="table pd-white-table report-info"
                   style="border: 0; margin-bottom: 20px; font-size: 14px;">
               <tbody>
                 <tr>
@@ -142,8 +127,7 @@
                 <tr>
                   <td width="200">รายละเอียด</td>
                   <td>
-                    <div report-type-form-data report="$parent.report"></div>
-                    <div ng-bind-html="$parent.report.formDataExplanation"></div>
+                    <div ng-bind-html="$parent.report.renderedOriginalFormData"></div>
                   </td>
                 </tr>
                 <tr>

@@ -41,7 +41,8 @@
                         ng-click="onClickReport(report)"
                         ng-class="{ 'report-positive': !report.negative, 'clickable': isClickable(report) }">
                         <td>
-                          <i class="fa fa-flag flag-priority-{{ report.flag }}" ng-if="report.flag"></i>
+                          <i class="fa fa-flag flag-state-code--{{ report.stateCode }}" ng-if="!report.parent && report.stateCode" ></i>
+                          <i class="fa fa-flag flag-follow-up-report" ng-if="report.parent" ></i>
                         </td>
                         <td ng-bind="report.date | amDateFormat:'D MMM YYYY HH:mm'"></td>
 <!--
@@ -91,7 +92,8 @@
                     ng-click="onClickReport(report)"
                     ng-class="{ 'report-positive': !report.negative, 'clickable': isClickable(report) }">
                   <td>
-                    <i class="fa fa-flag flag-priority-{{ report.flag }}" ng-if="report.flag"></i>
+                      <i class="fa fa-flag flag-state-code--{{ report.stateCode }}" ng-if="!report.parent && report.stateCode" ></i>
+                      <i class="fa fa-flag flag-follow-up-report" ng-if="report.parent" ></i>
                   </td>
                   <td ng-bind="report.date | amDateFormat:'D MMM YYYY HH:mm'"></td>
 <!--

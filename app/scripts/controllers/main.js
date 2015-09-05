@@ -396,16 +396,16 @@ angular.module('poddDashboardApp')
             console.log('loaded report data', data);
 
             var tmpFormData = [], index;
-            if (data.formData && !data.formData.forEach) {
-                for (index in data.formData) {
-                    if (data.formData.hasOwnProperty(index)) {
+            if (data.originalFormData && !data.originalFormData.forEach) {
+                for (index in data.originalFormData) {
+                    if (data.originalFormData.hasOwnProperty(index)) {
                         tmpFormData.push({
                             name: index,
-                            value: data.formData[index]
+                            value: data.originalFormData[index]
                         });
                     }
                 }
-                data.formData = tmpFormData;
+                data.originalFormData = tmpFormData;
             }
 
             // QUICKFIX: inject village into data.

@@ -1,71 +1,7 @@
+/* globals swal:false */
 'use strict';
 
 angular.module('poddDashboardApp')
-
-// DEPRECATED: will use report.formDataExplanation instead.
-.directive('reportTypeFormData', function ($compile, $templateCache, shared) {
-
-    function makeReportTypeTemplateUrl(report) {
-        if (report) {
-          return 'reportType-' + report.reportTypeId + '.html';
-        }
-        else {
-          return '';
-        }
-    }
-
-    return {
-        strict: 'A',
-        scope: {
-            report: '='
-        },
-        compile: function compile(/* element, attr */) {
-            return function (scope, $element/*, $attr */) {
-                scope.$watch('report', function (report) {
-                    console.log('DBG::reportTypeFormData', report);
-
-                    var newScope = scope.$new(true),
-                        checking = 'reportTypeTemplateLoadedReportType' + report.reportTypeId;
-                    // If it's come in array, convert it. Else just extend.
-                    // I make this to compat to this example template:
-                    // ```html
-                    //   <div>
-                    //     <span class="name">Animal Type</span>
-                    //     <span class="value">{{ animalType }}</span>
-                    //   </div>
-                    // ```
-                    if (report.formData instanceof Array) {
-                        report.formData.forEach(function (item) {
-                            newScope[item.name] = item.value;
-                        });
-                    }
-                    else {
-                        angular.extend(newScope, report.formData);
-                    }
-
-                    if (report) {
-                        scope.shared = shared;
-
-                        var watcher = scope.$watch('shared.' + checking, function (newValue) {
-                            var template = $templateCache.get( makeReportTypeTemplateUrl(report) );
-
-                            if ( shared[checking] || newValue ) {
-                                $element.html(template);
-                                $compile($element.contents())(newScope);
-
-                                // Unwatch when template loaded.
-                                watcher();
-                            }
-                        });
-                    }
-                    else {
-
-                    }
-                });
-            };
-        }
-    };
-})
 
 .directive('jumpToFilter', function ($compile) {
     var supportedFields = [ 'animalType', 'createdByName', 'area' ],
@@ -122,6 +58,16 @@ angular.module('poddDashboardApp')
 
         if (scope.report) {
             Reports.followUp({ reportId: scope.report.id }).$promise.then(function (data) {
+                if (data.length) {
+                    scope.report.$hasFollowUp = true;
+                    scope.report.followUpReports = data;
+                    if (scope.report.parent) {
+                        scope.report.followUpReportsCount = 1;
+                    }
+                    else {
+                        scope.report.followUpReportsCount = scope.report.followUpReports.length;
+                    }
+                }
                 scope.items = data;
 
                 data.forEach(function (item) {
@@ -182,11 +128,117 @@ angular.module('poddDashboardApp')
     };
 })
 
-.directive('ReportView', function () {
+.directive('reportView', function () {
     return {
         strict: 'A',
         link: function () {
             // NOTE: see ReportService.js in factory ReportModal.
+        }
+    };
+})
+
+.directive('reportStateForm', function ($http, $modal, Reports, ReportState) {
+    return {
+        strict: 'A',
+        require: '^reportView',
+        templateUrl: 'views/report-state-form.html',
+        scope: {
+            report: '='
+        },
+        controller: function ($scope) {
+            // Do nothing if no report provided
+            if (!$scope.report) {
+                return;
+            }
+
+            var report = $scope.report;
+
+            ReportState
+                .query({ reportType: report.reportTypeId }).$promise
+                .then(function (reportStates) {
+                    var currentState = null;
+
+                    // Assign default value. This algo is not optimized because
+                    // it will not stop when find the right state.
+                    if (report.stateCode) {
+                        reportStates.forEach(function (state) {
+                            if (state.code === report.stateCode) {
+                                currentState = state;
+                            }
+                        });
+                    }
+
+                    $scope.states = {
+                        all: reportStates,
+                        current: currentState,
+                        original: currentState
+                    };
+                });
+
+            $scope.revert = function () {
+                $scope.$apply(function () {
+                    $scope.states.current = $scope.states.original;
+                });
+            };
+
+            $scope.change = function () {
+                if ($scope.states.current === $scope.states.original) {
+                    return;
+                }
+
+                swal({
+                    title: '',
+                    type: 'warning',
+                    text: 'โปรดยืนยัน หากคุณต้องการเปลี่ยนสถานะรายงาน',
+                    confirmButtonText: 'ตกลง',
+                    confirmButtonClass: 'btn-danger',
+                    showCancelButton: true,
+                    cancelButtonText: 'ยกเลิก'
+                }, function (confirm) {
+                    if (confirm) {
+                        $scope._change();
+                    }
+                    else {
+                        $scope.revert();
+                    }
+                });
+            };
+
+            $scope._change = function () {
+                var data = {
+                    id: report.id,
+                    stateId: $scope.states.current.id
+                };
+                Reports.saveState(data).$promise
+                    .then(function (resp) {
+                        report.stateCode = resp.stateCode;
+                        $scope.states.original = $scope.states.current;
+                    })
+                    .catch(function (err) {
+                        $scope.showWarning(err);
+                        $scope.revert();
+                    });
+            };
+
+            $scope.showWarning = function (err) {
+                if (err.status === 403) {
+                    swal({
+                        title: '',
+                        type: 'warning',
+                        text: 'คุณไม่มีสิทธิเปลี่ยนสถานะของรายงานนี้ได้',
+                        confirmButtonText: 'ตกลง',
+                        confirmButtonClass: 'btn-danger',
+                    });
+                } else {
+                    swal({
+                        title: '',
+                        type: 'warning',
+                        text: 'เกิดข้อผิดพลาด กรุณาลองใหม่',
+                        confirmButtonText: 'ตกลง',
+                        confirmButtonClass: 'btn-danger',
+                    });
+                }
+            };
         }
     };
 });
