@@ -115,7 +115,8 @@ angular.module('poddDashboardApp')
         // NOTE: $digest() does not help
         if ($scope.currentVillage && $scope.currentVillage.id === data.administrationAreaId) {
             if ( isRecentReport(data) ) {
-                $scope.recentReports.splice(0, 0, data);
+                // $scope.recentReports.splice(0, 0, data);
+                updateReportList($scope.recentReports, data);
             }
             else {
                 $scope.olderReports.splice(0, 0, data);
@@ -123,6 +124,23 @@ angular.module('poddDashboardApp')
             $scope.reports = [].concat($scope.recentReports, $scope.olderReports);
         }
     });
+
+    function updateReportList(list, report) {
+        var foundIndex = -1;
+
+        list.forEach(function (item, index) {
+            if (item.id === report.id) {
+                foundIndex = index;
+            }
+        });
+
+        if (foundIndex !== -1) {
+            list[foundIndex] = report;
+        }
+        else {
+            list.splice(0, 0, report);
+        }
+    }
 
     streaming.on('report:image:new', function (data) {
         console.log('got new report image (in main.js)', data);
