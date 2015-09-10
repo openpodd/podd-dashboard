@@ -51,7 +51,7 @@
                  ng-src="{{ comment.createdBy | avatarUrl:'thumbnail' }}">
             <img src="images/avatar.png" alt="avatar" class="pull-left avatar avatar-w4"
                  ng-if="!comment.createdBy.avatarUrl">
-            <p class="comment-post" ng-bind-html="comment.message | htmlToPlainText | renderMention"></p>
+            <p class="comment-post" ng-bind-html="comment.message | htmlToPlainText | renderMention | renderTag"></p>
             <div class="comment-meta">
             <a href="{{ comment.fileUrl }}" target="_blank" ng-show="comment.fileUrl"><i class="fa fa-paperclip"></i> ดูไฟล์แนบ</a>
             <span class="">เมื่อ <span am-time-ago="comment.createdAt"></span></span>

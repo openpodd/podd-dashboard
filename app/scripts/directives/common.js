@@ -421,6 +421,12 @@ angular.module('poddDashboardApp')
     };
 })
 
+.filter('renderTag', function () {
+    return function (text) {
+        return text.replace(/\[tag:([^\]]+)\]/g, '<span class="label label-info">$1</span>');
+    };
+})
+
 .directive('loaderSpinner', function () {
     return {
         strict: 'A',
