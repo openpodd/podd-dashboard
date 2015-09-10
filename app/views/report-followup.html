@@ -6,7 +6,7 @@
   <p><small>รายงานเมื่อ <span ng-bind="reportFollowUpParent.date | amDateFormat:'วันddddที่ D MMMM YYYY เวลา HH:mm'"></span></small></p>
 </div>
 
-<div ng-if="!reportFollowUpParent && items">
+<div ng-if="!reportFollowUpParent && items.length > 0">
   <h4>รายงานที่ follow รายงานนี้ (Follow-up reports)</h4>
   <ul class="list-group report-followup-list" ng-show="items">
     <li class="list-group-item" ng-repeat="item in items">
