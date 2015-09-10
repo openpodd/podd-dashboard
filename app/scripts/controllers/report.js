@@ -35,6 +35,9 @@ angular.module('poddDashboardApp')
             $scope.activeImage = null;
 
             refreshFlag();
+            refreshTags();
+
+            console.log('report.change');
 
             $scope.$broadcast('rebuildScrollbar:reportView');
         }
@@ -97,12 +100,10 @@ angular.module('poddDashboardApp')
         current: null
     };
 
-    $scope.tags = [
-        { text: 'dog' },
-        { text: 'หมากัด' },
-    ];
+    $scope.tags = [];
 
     $scope.loadTags = function(query) {
+        console.log(query);
         return $scope.tags;
     };
 
@@ -129,6 +130,13 @@ angular.module('poddDashboardApp')
 
     function refreshFlag() {
         $scope.flag.current = $scope.flagOptions[ parseInt($scope.$parent.report.flag) - 1 ];
+    }
+
+    function refreshTags() {
+        $scope.tags = [];
+        for (var i = 0; i < $scope.report.tags.length; i++) {
+            $scope.tags.push({'text': $scope.report.tags[i]});
+        }
     }
 
     $scope.$watch('flag.current', function (newValue, oldValue) {
