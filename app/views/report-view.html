@@ -158,6 +158,28 @@
           <button type="submit" class="btn btn-default"
                   ng-click="printDiv()"><i class="fa fa-print fa-size-18"></i> ปริ้นรายละเอียดรายงาน</button>
         </div>
+        <div class="report-comments" style="margin-bottom: 10px;">
+          <h3 class="tag-title subheading"><i class="fa fa-tags fa-size-18"></i> Tags</h3>
+          <div class="tag-form clearfix">
+
+            <form role="form" ng-submit="postTags();">
+
+              <div clas="form-group">
+
+                <tags-input 
+                  ng-model="tags"
+                  on-tag-added="updateTags()"
+                  on-tag-removed="updateTags()"
+                >
+                  <auto-complete source="loadTags($query)"></auto-complete>
+                </tags-input>
+
+              </div>
+
+            </form>
+          </div>
+        </div>
+
         <div class="report-comments">
             <div ng-include="'/views/comments.html'"></div>
         </div>

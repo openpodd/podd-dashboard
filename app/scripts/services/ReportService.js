@@ -77,6 +77,10 @@ angular.module('poddDashboardApp')
                 url: config.API_BASEPATH + '/reports/:reportId/follow',
                 method: 'POST'
             },
+            tags: {
+                url: config.API_BASEPATH + '/reports/:reportId/tags',
+                method: 'POST'
+            },
             saveState: {
                 url: config.API_BASEPATH + '/reports/:reportId/state',
                 method: 'POST'

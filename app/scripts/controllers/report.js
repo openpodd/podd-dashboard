@@ -97,6 +97,27 @@ angular.module('poddDashboardApp')
         current: null
     };
 
+    $scope.tags = [
+        { text: 'dog' },
+        { text: 'หมากัด' },
+    ];
+
+    $scope.loadTags = function(query) {
+        return $scope.tags;
+    };
+
+    $scope.updateTags = function() {
+        Reports.tags({ reportId: $scope.report.id }, { 
+            tags: $scope.tags,
+        }).$promise
+        .then(function () {
+            console.log('Done');
+        })
+        .catch(function (err) {
+            $scope.showWarning(err);
+        });
+    };
+
     // TODO: get these configurations from server
     $scope.flagOptions = [
         { color: 'Ignore',   priority: 1 },

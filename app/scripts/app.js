@@ -38,7 +38,8 @@ angular
     'angularChart',
     'angulartics',
     'angulartics.google.analytics',
-    'angularLocalStorage'
+    'angularLocalStorage',
+    'ngTagsInput',
   ])
 
   // override z-index of ui.bootstrap

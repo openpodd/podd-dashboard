@@ -205,10 +205,10 @@ angular.module('poddDashboardApp')
             $scope.gridOptionsReportShow.columnDefs = showOptions;
             $scope.gridOptionsReportShow.data = showResults;
 
-            // setTimeout(function(){
-            //     $scope.loadingLink = false;
-            //     $scope.exportReport();
-            // }, 3000);
+            setTimeout(function(){
+                var w = angular.element($window);
+                w.resize();
+            }, 100);
 
         }).catch(function () {
             $scope.loading = false;

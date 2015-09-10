@@ -36,7 +36,7 @@
             <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
             <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
 
-            <div class="summary-list" ng-show="results">
+            <div class="summary-list" ng-show="results && !loading">
                 <h3 class="subheading">สรุปการรายงานตั้งแต่วันที่ {{ weekSearch }}</h3>
 
                 <div class="row">

@@ -47,7 +47,7 @@
             <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
             <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
 
-            <div ng-show="results">
+            <div ng-show="results && !loading">
 
                 <h3 class="subheading pull-left clear inline-table">ตารางสรุปประสิทธิภาพการรายงานของเดือน {{ months.selectedMonth }}/{{ months.selectedYear }} ของ{{ areas.selectedArea.name }} {{ areas.selectedArea.parentName }}</h3>
 
