@@ -119,16 +119,18 @@ angular.module('poddDashboardApp')
                 data.results.forEach(function (item) {
                     var village = shared.villages[ item.administrationAreaId ];
 
-                    if ( ! matchedVillages[ village.id ] ) {
-                        matchedVillages[ item.administrationAreaId ] = true;
-                        results.push(village);
-                    }
+                    if (village) {
+                        if (! matchedVillages[ village.id ] ) {
+                            matchedVillages[ item.administrationAreaId ] = true;
+                            results.push(village);
+                        }
 
-                    if (item.negative) {
-                        village.negative += 1;
-                    }
-                    else {
-                        village.positive += 1;
+                        if (item.negative) {
+                            village.negative += 1;
+                        }
+                        else {
+                            village.positive += 1;
+                        }
                     }
                 });
 
