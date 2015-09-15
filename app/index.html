@@ -184,12 +184,12 @@
             <ul class="pd-nav-list">
                 <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('home') }"
                     ng-click="setActiveMenu('home')">
-                  <a ng-href="#/" ng-click="shared.filterMode = false; shared.summaryReportMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;" class="pd-nav-icon">
+                  <a ng-href="#/" ng-click="shared.filterMode = false; shared.summaryReportMode = false; shared.summaryReportMonthMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;" class="pd-nav-icon">
                   <i class="fa fa-map-marker fa-size-22"></i>
                   <span class="pd-nav-text">เฝ้าระวัง</span></a>
                 </li>
                 <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('filter') }">
-                  <a ng-href="#/filter" ng-click="shared.filterMode = true; shared.summaryReportMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;" class="pd-nav-icon">
+                  <a ng-href="#/filter" ng-click="shared.filterMode = true; shared.summaryReportMode = false; shared.summaryReportMonthMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;" class="pd-nav-icon">
                   <i class="fa fa-search fa-size-18"></i>
                   <span class="pd-nav-text">ค้นหา</span></a>
                 </li>
@@ -213,9 +213,12 @@
                     <span class="pd-nav-icon"><i class="fa fa-bar-chart fa-size-18"></i></span>
                   <div class="pd-nav-submenu">
                       <ul class="">
-                          <li><a ng-href="#/summary/report" ng-click="shared.filterMode = false; shared.summaryReportMode = true; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;" class="" ng-if="hasPermissionOnMenu('view_dashboard_summary_report')">สรุปรายงาน</a></li>
-                          <li><a href="#/summary/person" ng-click="shared.filterMode = false; shared.summaryReportMode = false; shared.summaryPersonMode = true; shared.summaryPerformancePersonMode = false;" ng-if="hasPermissionOnMenu('view_dashboard_summary_inactive_users')">สรุปจำนวนอาสาที่รายงานต่ำกว่าเกณฑ์</a></li>
-                          <li><a href="#/summary/performance-person" ng-click="shared.filterMode = false; shared.summaryReportMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = true;" >สรุปประสิทธิภาพการรายงานของอาสา</a></li>
+                          <li><a ng-href="#/summary/report" ng-click="shared.filterMode = false; shared.summaryReportMode = true; shared.summaryReportMonthMode = false;
+                          shared.summaryPersonMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;" class="" ng-if="hasPermissionOnMenu('view_dashboard_summary_report')">สรุปรายงาน</a></li>
+                          <li><a ng-href="#/summary/report-month" ng-click="shared.filterMode = false; shared.summaryReportMode = false; shared.summaryReportMonthMode = true;
+                          shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;" class="" ng-if="hasPermissionOnMenu('view_dashboard_summary_report')">สรุปรายงานรายเดือน</a></li>
+                          <li><a href="#/summary/person" ng-click="shared.filterMode = false; shared.summaryReportMode = false; shared.summaryReportMonthMode = false; shared.summaryPersonMode = true; shared.summaryPerformancePersonMode = false;" ng-if="hasPermissionOnMenu('view_dashboard_summary_inactive_users')">สรุปจำนวนอาสาที่รายงานต่ำกว่าเกณฑ์</a></li>
+                          <li><a href="#/summary/performance-person" ng-click="shared.filterMode = false; shared.summaryReportMode = false; shared.summaryReportMonthMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = true;" >สรุปประสิทธิภาพการรายงานของอาสา</a></li>
                       </ul>
                   </div>
                 </li>
@@ -368,6 +371,7 @@
         <script src="scripts/controllers/summary-report.js"></script>
         <script src="scripts/controllers/summary-person.js"></script>
         <script src="scripts/controllers/summary-performance-person.js"></script>
+        <script src="scripts/controllers/summary-report-month.js"></script>
         <script src="scripts/controllers/visualize.js"></script>
         <!-- endbuild -->
 

@@ -31,5 +31,15 @@ angular.module('poddDashboardApp')
     });
 
     return resource;
-});
+})
 
+
+.factory('SummaryReportMonth', function ($resource) {
+    var resource = $resource(config.API_BASEPATH + '/summary/reports/', {}, {
+        get: {
+            isArray: true
+        }
+    });
+
+    return resource;
+});

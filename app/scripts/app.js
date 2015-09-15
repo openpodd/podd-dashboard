@@ -68,7 +68,7 @@ angular
       /\/api-token-auth/,
       /\/flags/,
       /\/reports/,
-      /\/reportType/,
+      /\/reportTypes/,
       /\/reportStates/,
       /\/dashboard/,
       /\/administrationArea/,
@@ -77,9 +77,10 @@ angular
       /\/reportComments/,
       /\/users\/search/,
       /\/summary\/areas\/count-reports/,
+      /\/summary\/areas\/show-detail/,
       /\/summary\/users\/inactive/,
       /\/summary\/users\/performance/,
-      /\/summary\/areas\/show-detail/,
+      /\/summary\/reports/,
       /\/ping/,
       /\/users\/profile/
     ];
@@ -149,6 +150,11 @@ angular
         url: '^/summary/report?dates&type',
         template: '',
         controller: 'SummaryReportModeCtrl'
+      })
+      .state('main.summaryreportmonth', {
+        url: '^/summary/report-month?month&areaId&typeIds&tags',
+        template: '',
+        controller: 'SummaryReportMonthModeCtrl'
       })
       .state('main.summaryperson', {
         url: '^/summary/person?dates&percent&type',
