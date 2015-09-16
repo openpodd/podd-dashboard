@@ -17,7 +17,7 @@ angular.module('poddDashboardApp')
 })
 
 .controller('ReportViewCtrl', function ($scope, streaming, Flags, Lightbox,
-                                        $modal, Search, Reports, $state) {
+                                        $modal, Search, Reports, $state, Tag) {
 
     $scope.userAlreadyClickImage = false;
     $scope.reportFlag = {};
@@ -101,10 +101,15 @@ angular.module('poddDashboardApp')
     };
 
     $scope.tags = [];
-
     $scope.loadTags = function(query) {
-        console.log(query);
-        return $scope.tags;
+        return Tag.get({ 'q': query }).$promise.then(function (data) {
+            var results = [];
+            data.forEach(function (item) {
+                results.push({ 'text': item.name });
+            });
+            return results;
+        });
+
     };
 
     $scope.updateTags = function() {

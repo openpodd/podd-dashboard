@@ -82,6 +82,7 @@ angular
       /\/summary\/users\/performance/,
       /\/summary\/reports/,
       /\/ping/,
+      /\/tags\/list/,
       /\/users\/profile/
     ];
 

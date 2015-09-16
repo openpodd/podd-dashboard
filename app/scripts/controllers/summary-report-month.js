@@ -11,7 +11,7 @@ angular.module('poddDashboardApp')
 
 .controller('SummaryReportMonthCtrl', function ($scope, SummaryReportMonth, dashboard, User,
     streaming, FailRequest, shared, $location, $state, $stateParams, $window,
-    cfpLoadingBar, dateRangePickerConfig, uiGridUtils, ReportTypes) {
+    cfpLoadingBar, dateRangePickerConfig, uiGridUtils, ReportTypes, Tag) {
 
     console.log('init summary report month ctrl');
 
@@ -274,6 +274,19 @@ angular.module('poddDashboardApp')
             $scope.types.selectedAll = false;
         }
     }, true);
+
+    $scope.loadTags = function(query) {
+        console.log(query);
+        return Tag.get({ 'q': query }).$promise.then(function (data) {
+            var results = [];
+            data.forEach(function (item) {
+                results.push({ 'text': item.name });
+            });
+            return results;
+        });
+
+    };
+
 
     $scope.doQueryOnParams($stateParams);
     $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {

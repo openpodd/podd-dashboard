@@ -55,14 +55,14 @@
 
                             <div class="col-md-3">
                                 <h5>Tag</h5> 
-                                <tags-input
-                                    style="margin:10px;width: 100%;"
-                                    ng-model="tags"
-                                    on-tag-added="updateTags()"
-                                    on-tag-removed="updateTags()"
-                                >
-                                    <auto-complete source="loadTags($query)"></auto-complete>
-                                </tags-input>
+                                
+                            <tags-input 
+                                style="margin:10px;width: 100%;"
+                                ng-model="tags"
+                            >
+                                <auto-complete source="loadTags($query)"></auto-complete>
+                            </tags-input>
+
                             </div>
 
                             <div class="col-md-3">
