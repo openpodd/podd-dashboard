@@ -12,11 +12,18 @@
                 <!-- <div class="input-group"> -->
                     <div class="row summary-search" style="width:100%">
 
+                        <div class="col-md-12" style="margin: 15px;">
+                            <h5>ประเภทรายงาน</h5> 
+                            <div class="summary-filter-table" ng-repeat="type in types.all">
+                                <input type="checkbox" ng-model="type.selected" /> {{ type.name }}
+                            </div>
+                        </div>
+
                         <div class="col-md-12">
-                            <h5>Filter</h5> 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <h5>เดือน</h5> 
                                 <select
+                                    style="margin: 10px;"
                                     ng-model="months.selectedMonth"
                                     ng-options="month for month in months.months"></select>
                                 <select
@@ -24,13 +31,7 @@
                                     ng-options="year for year in months.years"></select>
                             </div>
 
-                            <div class="col-md-3">
-                                <h5>ประเภทรายงาน</h5> 
-                                <div ng-repeat="type in types.all">
-                                    <input type="checkbox" ng-model="type.selected" /> {{ type.name }}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <h5>พื้นที่</h5> 
                                 <ui-select
                                     class=""
@@ -45,19 +46,24 @@
                                       <span ng-bind-html="area.name | highlight:$select.search"></span>
                                     </ui-select-choices>
                                 </ui-select>
+                            </div>
 
+                            <div class="col-md-3">
                                 <h5>Tag</h5> 
                                 <tags-input
-                                    style="margin:10px;"
+                                    style="margin:10px;width: 100%;"
                                     ng-model="tags"
                                     on-tag-added="updateTags()"
                                     on-tag-removed="updateTags()"
                                 >
                                     <auto-complete source="loadTags($query)"></auto-complete>
                                 </tags-input>
-                                
+                            </div>
+
+                            <div class="col-md-3">
+                                <h5 style="visibility: hidden;">**คลิ๊กเพื่อค้นหา**</h5>
                                 <div class="input-group-btn">
-                                    <button class="btn btn-default pd-btn-search" type="submit" style="width: 100%; margin:10px;"><i class="fa fa-search fa-size-18"></i></button>
+                                    <button class="btn btn-default pd-btn-search" type="submit" style="margin-left:10px;width: 100%"><i class="fa fa-search fa-size-18"></i></button>
                                 </div>
                             </div>
                         </div>
