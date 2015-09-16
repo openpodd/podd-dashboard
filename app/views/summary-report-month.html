@@ -13,9 +13,14 @@
                     <div class="row summary-search" style="width:100%">
 
                         <div class="col-md-12" style="margin: 15px;">
-                            <h5>ประเภทรายงาน</h5> 
+                            <h5>
+                                ประเภทรายงาน 
+                                <div class="summary-filter-table" ng-show="types.all.length" >
+                                    <input type="checkbox" ng-model="types.selectedAll" ng-click="checkAll()" style="margin-left: 15px;"/> เลือกทั้งหมด
+                                </div>
+                            </h5> 
                             <div class="summary-filter-table" ng-repeat="type in types.all">
-                                <input type="checkbox" ng-model="type.selected" /> {{ type.name }}
+                                <input type="checkbox" ng-model="type.selected"/> {{ type.name }}
                             </div>
                         </div>
 

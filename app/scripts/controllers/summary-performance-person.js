@@ -17,7 +17,7 @@ angular.module('poddDashboardApp')
 
     $scope.months = {
         months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-        years: [2015, 2014],
+        years: [2016, 2015, 2014],
         selectedMonth: moment().month() + 1,
         selectedYear: moment().year()
     };

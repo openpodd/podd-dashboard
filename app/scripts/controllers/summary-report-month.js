@@ -17,7 +17,7 @@ angular.module('poddDashboardApp')
 
     $scope.months = {
         months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-        years: [2015, 2014],
+        years: [2016, 2015, 2014],
         selectedMonth: moment().month() + 1,
         selectedYear: moment().year()
     };
@@ -41,6 +41,7 @@ angular.module('poddDashboardApp')
     $scope.types = {
         all: [],
         selected: null,
+        selectedAll: true,
     };
 
     $scope.tags = [];
@@ -62,6 +63,7 @@ angular.module('poddDashboardApp')
             results.push(item);
         });
         $scope.types.all = results;
+        $scope.types.selectedAll = true;
     });
 
     $scope.query = '';
@@ -105,18 +107,16 @@ angular.module('poddDashboardApp')
         }
 
         var typeIds = [];
-        for (var i = 0; i < $scope.types.all.length; i++) {
-            var type = $scope.types.all[i];
+        angular.forEach($scope.types.all, function(type){
             if (type.selected) {
                 typeIds.push(type.id);
             }
-        }
+        });
 
         var tags = [];
-        for (var j = 0; j < $scope.tags.length; j++) {
-            var tag = $scope.tags[j];
+        angular.forEach($scope.tags, function(tag){
             tags.push(tag.text);
-        }
+        });
 
         $state.go('main.summaryreportmonth', { month: $scope.month, areaId: areaId, typeIds: typeIds, tags: tags });
     };
@@ -251,6 +251,29 @@ angular.module('poddDashboardApp')
             // $scope.search();
         }
     });
+
+    $scope.checkAll = function () {
+        var selectedAll = $scope.types.selectedAll;
+        // console.log(selectedAll, $scope.types.selectedAll);
+        angular.forEach($scope.types.all, function(type){
+            type.selected = selectedAll;
+        });
+    };
+
+    $scope.$watch('types.all', function(newValue){
+        var count = 0;
+        angular.forEach(newValue, function(type){
+          if(type.selected){
+            count += 1;
+          }
+        });
+
+        if (newValue.length === count) {
+            $scope.types.selectedAll = true;
+        } else {
+            $scope.types.selectedAll = false;
+        }
+    }, true);
 
     $scope.doQueryOnParams($stateParams);
     $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
