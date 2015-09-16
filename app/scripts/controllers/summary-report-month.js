@@ -287,7 +287,6 @@ angular.module('poddDashboardApp')
 
     };
 
-
     $scope.doQueryOnParams($stateParams);
     $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
         console.log('stateChangeSuccess', $state.current.name, params.month);

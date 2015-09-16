@@ -112,12 +112,24 @@ angular.module('poddDashboardApp')
 
     };
 
+    $scope.tagsChanged = false;
     $scope.updateTags = function() {
+        $scope.tagsChanged = true;
+    };
+
+    $scope.saveTags = function() {
         Reports.tags({ reportId: $scope.report.id }, { 
             tags: $scope.tags,
         }).$promise
         .then(function () {
-            console.log('Done');
+            swal({
+                title: '',
+                type: 'success',
+                text: 'บันทึกเรียบร้อยแล้ว',
+                confirmButtonText: 'ตกลง',
+                confirmButtonClass: 'btn-success',
+            });
+            $scope.tagsChanged = false;
         })
         .catch(function (err) {
             $scope.showWarning(err);

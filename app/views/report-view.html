@@ -174,8 +174,11 @@
                   <auto-complete source="loadTags($query)"></auto-complete>
                 </tags-input>
 
-              </div>
+                <button class="btn btn-default" type="button" 
+                ng-show="tagsChanged" ng-click="saveTags()">
+                   บันทึก</button>
 
+              </div>
             </form>
           </div>
         </div>
