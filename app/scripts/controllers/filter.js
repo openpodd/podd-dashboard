@@ -179,6 +179,11 @@ angular.module('poddDashboardApp')
             $timeout(function () {
                 $($window).trigger('forceResizeResultTable');
             }, 100);
+
+            setTimeout(function(){
+                var w = angular.element($window);
+                w.resize();
+            }, 100);
         }
     };
 

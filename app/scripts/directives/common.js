@@ -115,6 +115,7 @@ angular.module('poddDashboardApp')
                     exportData,
                     grid.options.exporterCsvColumnSeparator
                 );
+            console.log(grid.options.columnDefs);
             utils.downloadFile(filename, csvContent, 'text/csv;charset=utf-8');
         },
         exportXlsx: function (grid, filename) {
@@ -176,8 +177,11 @@ angular.module('poddDashboardApp')
         var self = this;
         var csv = columnDefs.map(function (header) {
             var field = header.name || header.field;
-            return self.formatFieldAsCsv(field);
+            // return self.formatFieldAsCsv(field);
+            return field;
         }).join(separator) + '\n';
+
+        console.log(csv);
 
         csv += exportData.map(function (row) {
             return row.map( formatCell(columnDefs) ).join(separator);
@@ -226,6 +230,14 @@ angular.module('poddDashboardApp')
                 if (range.e.c < C) { range.e.c = C; }
 
                 var cell = { v: data[R][C] };
+
+                if (typeof cell.v === 'object') {
+                    if('value' in cell.v) {
+                        cell.v = cell.v.value;
+                    } else {
+                        continue;
+                    }
+                }
 
                 if (cell.v === null) {
                     continue;
