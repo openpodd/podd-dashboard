@@ -175,15 +175,32 @@ angular.module('poddDashboardApp')
                         '<a href="#/reports/{{ row.entity.id }}" target="_blank">{{ row.entity.id }}</a>' +
                         '</div>' 
                 },
-                { field: 'วันที่', headerCellClass: 'cell-center' },
-                { field: 'ชื่ออาสา', headerCellClass: 'cell-center' },
+                {
+                    field: 'สถานะ',
+                    width: '5%',
+                    cellTemplate: '<div class=\"ui-grid-cell-contents\">' +
+                                  '<i class="fa fa-flag flag-state-code--{{COL_FIELD}}" ng-if="!row.entity.parent && COL_FIELD"></i>' +
+                                  '<i class="fa fa-flag flag-follow-up-report" ng-if="row.entity.parent"></i>' +
+                                  '</div>',
+                    exportFilter: function (value) {
+                        return {
+                            1: 'Ignore',
+                            2: 'OK',
+                            3: 'Contact',
+                            4: 'Follow',
+                            5: 'Case'
+                        }[ parseInt(value) ];
+                    }
+                },
+                { field: 'วันที่', headerCellClass: 'cell-center', cellFilter: 'amDateFormat:\'D MMM YYYY\'' },
+                { field: 'พื้นที่', headerCellClass: 'cell-center' },
                 { field: 'ประเภทรายงาน', headerCellClass: 'cell-center' },
                 { field: 'หัวข้อ', headerCellClass: 'cell-center' },
                 { field: 'ป่วย', cellClass: 'cell-center', headerCellClass: 'cell-center' },
                 { field: 'ตาย', cellClass: 'cell-center', headerCellClass: 'cell-center' },
                 { field: 'ทั้งหมด', cellClass: 'cell-center', headerCellClass: 'cell-center' },
                 { field: 'ใกล้เคียง', cellClass: 'cell-center', headerCellClass: 'cell-center' },
-                { field: 'พื้นที่', headerCellClass: 'cell-center' },
+                { field: 'ชื่ออาสา', headerCellClass: 'cell-center' },
             ];
             $scope.gridOptionsReport.data = results;
 
