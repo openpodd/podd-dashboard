@@ -322,7 +322,7 @@ angular.module('poddDashboardApp')
                 $scope.month = params.month;
                 $scope.months.selectedMonth = $scope.months.months[params.month.split('/')[0] - 1];
             }
-            if (oldParams.month !== params.month || oldParams.areaId !== params.areaId) {
+            if (oldParams.month !== params.month || oldParams.areaId !== params.areaId || oldParams.typeIds !== params.typeIds) {
                 $scope.doQueryOnParams(params);
             }
             else {
