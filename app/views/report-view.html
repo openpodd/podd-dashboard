@@ -53,6 +53,12 @@
 
 
             <tabset ng-if="$parent.report" class="pd-tabs" >
+              <tab heading="คำอธิบายรายงาน">
+                <!-- <div ng-if="$parent.$parent.report.renderedOriginalFormData"> -->
+                  <div ng-bind-html="$parent.$parent.report.renderedOriginalFormData"></div>
+                <!-- </div> -->
+              </tab>
+
               <tab heading="ข้อมูลแบบสอบถาม">
                 {{ $parent.report }}
                 <table class="table pd-white-table">
@@ -70,12 +76,6 @@
                     </tr>
                   </tbody>
                 </table>
-              </tab>
-
-              <tab heading="คำอธิบายรายงาน">
-                <!-- <div ng-if="$parent.$parent.report.renderedOriginalFormData"> -->
-                  <div ng-bind-html="$parent.$parent.report.renderedOriginalFormData"></div>
-                <!-- </div> -->
               </tab>
 
               <tab>
@@ -167,7 +167,7 @@
 
               <div clas="form-group">
 
-                <tags-input 
+                <tags-input
                   ng-model="tags"
                   on-tag-added="updateTags()"
                   on-tag-removed="updateTags()"
@@ -175,7 +175,7 @@
                   <auto-complete source="loadTags($query)"></auto-complete>
                 </tags-input>
 
-                <button class="btn btn-default" type="button" 
+                <button class="btn btn-default" type="button"
                 ng-show="tagsChanged" ng-click="saveTags()">
                    บันทึก</button>
 
