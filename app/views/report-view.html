@@ -54,6 +54,7 @@
 
             <tabset ng-if="$parent.report" class="pd-tabs" >
               <tab heading="ข้อมูลแบบสอบถาม">
+                {{ $parent.report }}
                 <table class="table pd-white-table">
                   <thead>
                     <tr>
@@ -72,9 +73,9 @@
               </tab>
 
               <tab heading="คำอธิบายรายงาน">
-                <div ng-if="$parent.$parent.report.renderedOriginalFormData">
+                <!-- <div ng-if="$parent.$parent.report.renderedOriginalFormData"> -->
                   <div ng-bind-html="$parent.$parent.report.renderedOriginalFormData"></div>
-                </div>
+                <!-- </div> -->
               </tab>
 
               <tab>
