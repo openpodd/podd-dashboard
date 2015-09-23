@@ -89,15 +89,19 @@ angular.module('poddDashboardApp')
     }
 
     Map.prototype.getIconByStatus = function getIconByStatus(village) {
+        var icon;
+
         if (village.negative > 0) {
-            return this.iconRed;
+            icon = this.iconRed;
         }
         else if ( (village.positive + village.negative) > 0 ) {
-            return this.iconBlue;
+            icon = this.iconBlue;
         }
         else {
-            return this.iconGrey;
+            icon = this.iconGrey;
         }
+
+        return icon;
     };
 
     Map.prototype.setVillages = function setVillages(items, dontFitBound) {
@@ -121,7 +125,11 @@ angular.module('poddDashboardApp')
             village.marker = L.marker(location, {
                 icon: self.getIconByStatus(item),
                 riseOnHover: true,
-            }).addTo(self.villageMarkerLayer);
+            });
+            
+            if (village.positive !== 0 || village.negative !== 0) {
+                village.marker.addTo(self.villageMarkerLayer);
+            }
 
             $(village.marker._icon).tooltip({
                 title: item.address || item.name
