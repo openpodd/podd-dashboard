@@ -153,6 +153,18 @@ angular.module('poddDashboardApp')
             var results = [];
 
             data.forEach(function (item) {
+                // var tags = '-';
+                // if (item.Tags) {
+                //     angular.forEach(item.Tags, function(tag){
+                //         if (tags.indexOf('-') !== -1) {
+                //             tags = tags.replace('-', '');
+                //         }
+
+                //         tags = tags + tag + ' ';
+                //     });
+                // }
+                // item.Tags = tags;
+
                 results.push(item);
             });
 
@@ -177,30 +189,25 @@ angular.module('poddDashboardApp')
                 },
                 {
                     field: 'สถานะ',
-                    width: '5%',
-                    cellTemplate: '<div class=\"ui-grid-cell-contents\">' +
-                                  '<i class="fa fa-flag flag-state-code--{{COL_FIELD}}" ng-if="!row.entity.parent && COL_FIELD"></i>' +
-                                  '<i class="fa fa-flag flag-follow-up-report" ng-if="row.entity.parent"></i>' +
-                                  '</div>',
-                    exportFilter: function (value) {
-                        return {
-                            1: 'Ignore',
-                            2: 'OK',
-                            3: 'Contact',
-                            4: 'Follow',
-                            5: 'Case'
-                        }[ parseInt(value) ];
-                    }
+                    cellClass: 'cell-center', headerCellClass: 'cell-center'
                 },
                 { field: 'วันที่', headerCellClass: 'cell-center', cellFilter: 'amDateFormat:\'D MMM YYYY\'' },
                 { field: 'พื้นที่', headerCellClass: 'cell-center' },
                 { field: 'ประเภทรายงาน', headerCellClass: 'cell-center' },
                 { field: 'หัวข้อ', headerCellClass: 'cell-center' },
+                { field: 'โรค', headerCellClass: 'cell-center' },
+                { field: 'อาการ', headerCellClass: 'cell-center' },
                 { field: 'ป่วย', cellClass: 'cell-center', headerCellClass: 'cell-center' },
                 { field: 'ตาย', cellClass: 'cell-center', headerCellClass: 'cell-center' },
                 { field: 'ทั้งหมด', cellClass: 'cell-center', headerCellClass: 'cell-center' },
                 { field: 'ใกล้เคียง', cellClass: 'cell-center', headerCellClass: 'cell-center' },
                 { field: 'ชื่ออาสา', headerCellClass: 'cell-center' },
+                { field: 'Tags', headerCellClass: 'cell-center' },
+                // { field: 'Tags', headerCellClass: 'cell-center', 
+                //     cellTemplate:'<div class="cell-center">' +
+                //         '<a href="#/reports/{{ row.entity.id }}" target="_blank">{{ COL_FIELD }}</a>' +
+                //         '</div>'
+                // },
             ];
             $scope.gridOptionsReport.data = results;
 
@@ -235,6 +242,7 @@ angular.module('poddDashboardApp')
                 'tags__in': $window.decodeURIComponent(params.tags || '').split(','),
                 'negative': true,
                 'testFlag': false,
+                '_missing_': 'parent',
             };
 
             if ($scope.query.month) {
