@@ -174,7 +174,6 @@ angular.module('poddDashboardApp')
     }
     // Inject new method for uiGridExporterService
     uiGridExporterService.getCsv = function (columnDefs, exportData, separator) {
-        var self = this;
         var csv = columnDefs.map(function (header) {
             var field = header.name || header.field;
             // return self.formatFieldAsCsv(field);
@@ -435,7 +434,13 @@ angular.module('poddDashboardApp')
 
 .filter('renderTag', function () {
     return function (text) {
-        return text.replace(/\[tag:([^\]]+)\]/g, '<span class="label lable-tag">$1</span>');
+        return text.replace(/\[tag:([^\]]+)\]/g, '<span class="label label-tag">$1</span>');
+    };
+})
+
+.filter('renderReportTag', function () {
+    return function (text) {
+        return text.replace(/\#(\d+)/g, '<a class="label label-report" href="/#/reports/$1">#$1</a>');
     };
 })
 

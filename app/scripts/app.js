@@ -1,7 +1,19 @@
 'use strict';
 
 function htmlToPlainText(text) {
-  return String(text).replace(/<[^>]+>/gm, '');
+  var allowedTags = ['p', 'br'],
+      tmp = String(text);
+
+  allowedTags.forEach(function (tag) {
+    tmp = String(tmp).replace(new RegExp('<' + tag + '([^>]*)>', 'gm'), '[open_tag:' + tag + ':$1]');
+    tmp = String(tmp).replace(new RegExp('<\/' + tag + '>', 'gm'), '[close_tag:' + tag + ']');
+  });
+
+  tmp = tmp.replace(/<[^>]+>/gm, '');
+  tmp = tmp.replace(/\[open_tag\:([^\s])*?\:(.*?)\]/gm, '<$1$2>');
+  tmp = tmp.replace(/\[close_tag:([^\s])*?\]/gm, '<$1>');
+
+  return tmp;
 }
 
 
