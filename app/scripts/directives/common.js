@@ -440,7 +440,7 @@ angular.module('poddDashboardApp')
 
 .filter('renderReportTag', function () {
     return function (text) {
-        return text.replace(/\#(\d+)/g, '<a class="label label-report" href="/#/reports/$1">#$1</a>');
+        return text.replace(/\#(\d+)/g, '<a class="label label-report" href="#/reports/$1">#$1</a>');
     };
 })
 
