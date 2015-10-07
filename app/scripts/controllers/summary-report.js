@@ -134,14 +134,35 @@ angular.module('poddDashboardApp')
 
                 result.name = item.parentName + ' | ' + item.name;
                 showResult.name = item.parentName + ' | ' + item.name;
+
                 if(!header){
                     showOptions.push({ field: 'name', pinnedLeft: true,
-                        headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">Name</div>',
+                        headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">ชื่อ</div>',
                         width:320 });
 
                     reportOptions.push({ field: 'name',
-                        headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">Name</div>',
+                        headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">ชื่อ</div>',
                         width:320});
+
+                    showOptions.push({ field: 'total', pinnedRight: true,
+                        headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">รวม</div>',
+                        cellTemplate: '<div class="ui-grid-cell-contents cell-center">\
+                                <span class="badge badge-zero ng-binding" ng-class="{ \'badge-good\': COL_FIELD.split(\',\')[0] !== \'0\'}" >{{ COL_FIELD.split(",")[0] }}</span> , \
+                                <span class="badge badge-zero ng-binding" ng-class="{ \'badge-bad\': COL_FIELD.split(\',\')[1] !== \'0\'}" >{{ COL_FIELD.split(",")[1] }}</span>\
+                                </div>',
+                        width:100 });
+
+                    reportOptions.push({ field: 'positiveReport',
+                        headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">positiveReport</div>',
+                        width:100});
+
+                    reportOptions.push({ field: 'negativeReport',
+                        headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">negativeReport</div>',
+                        width:100});
+
+                    reportOptions.push({ field: 'totalReport',
+                        headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">totalReport</div>',
+                        width:100});
                 }
 
                 item.dates.forEach(function (date) {
@@ -180,7 +201,13 @@ angular.module('poddDashboardApp')
                 total += item.totalReport;
 
                 header = true;
+
+                result.positiveReport = item.positiveReport;
+                result.negativeReport = item.negativeReport;
+                result.totalReport = item.totalReport;
                 results.push(result);
+
+                showResult.total = item.positiveReport + ',' + item.negativeReport;
                 showResults.push(showResult);
             });
 
