@@ -2,7 +2,7 @@
 
 angular.module('poddDashboardApp')
 
-.controller('MenuCtrl', function ($scope, $http, shared, $location, Menu) {
+.controller('MenuCtrl', function ($scope, $http, shared, $location, Menu, storage) {
     $scope.shared = shared;
 
     $scope.logout = function () {
@@ -13,6 +13,7 @@ angular.module('poddDashboardApp')
         shared.summaryPersonMode = false;
         shared.summaryPerformancePersonMode = false;
         $.removeCookie('token');
+        storage.clearAll();
     };
 
     $scope.setActiveMenu = function (name) {

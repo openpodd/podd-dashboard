@@ -13,7 +13,13 @@ angular.module('poddDashboardApp')
         },
 
         hasPermissionOnMenu: function (menu) {
-            return storage.get('menuPermissions').indexOf(menu) >= 0;
+            var user = storage.get('user');
+            return storage.get('menuPermissions').indexOf(menu) >= 0 ||
+                   (user && (
+                     user.isStaff ||
+                     user.isSupervisor ||
+                     user.authorityAdmins.length > 0)
+                   );
         }
     };
 });
