@@ -90,12 +90,14 @@ angular
       /\/users\/search/,
       /\/summary\/areas\/count-reports/,
       /\/summary\/areas\/show-detail/,
+      /\/summary\/authorities\/show-detail/,
       /\/summary\/users\/inactive/,
       /\/summary\/users\/performance/,
       /\/summary\/reports/,
       /\/ping/,
       /\/tags\/list/,
-      /\/users\/profile/
+      /\/users\/profile/,
+      /\/authorities/
     ];
 
     function matchAPIUrls(url) {

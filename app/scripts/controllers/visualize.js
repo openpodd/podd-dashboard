@@ -35,10 +35,15 @@ angular.module('poddDashboardApp')
     $window.areas = $scope.areas;
 
     // Fetch available adminisitration areas
-    dashboard.getAdministrationAreas().$promise.then(function (data) {
-        $scope.areas.all = data.filter(function (item) {
-            return item.isLeaf;
-        });
+    // dashboard.getAdministrationAreas().$promise.then(function (data) {
+    //     console.log("----------", data);
+    //     $scope.areas.all = data.filter(function (item) {
+    //         return item.isLeaf;
+    //     });
+    // });
+    
+    dashboard.getAuthorities().$promise.then(function (data) {
+        $scope.areas.all = data;
     });
 
     $scope.data = {
@@ -385,7 +390,7 @@ angular.module('poddDashboardApp')
 
         var query = {
             month: $scope.months.selectedMonth + '/' + $scope.months.selectedYear,
-            administrationAreaId: $scope.areas.selected.id
+            authorityId: $scope.areas.selected.id
         };
 
         VisualizationData.get(query).$promise

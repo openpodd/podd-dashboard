@@ -11,6 +11,12 @@ angular.module('poddDashboardApp')
             method: 'GET',
             isArray: true,
             cache: true
+        },
+        getAuthorities: {
+            url: config.API_BASEPATH + '/authorities/' + '?short=true',
+            method: 'GET',
+            isArray: true,
+            cache: true
         }
     });
 
