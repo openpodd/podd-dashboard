@@ -179,12 +179,13 @@
 <div class="pd-section-nav" ng-controller="MenuCtrl">
     <div class="pd-section-left" ng-show="shared.loggedIn" ng-cloak>
     <div class="pd-small-nav" ng-click="isShowNav =! isShowNav">
-      <img src="images/logo-onehealth.svg" alt="" class="logo"/>
-      เมนู
+      <!-- <img src="images/logo-onehealth.svg" alt="" class="logo"/> -->
+      <i class="fa fa-bars fa-size-18"></i>
+      <span>เมนู</span>
     </div>
     <!--   <div ng-init="isShowNav = true"></div>-->
         <div class="pd-container" ng-show="isShowNav">
-           <img src="images/logo-onehealth.svg" alt="" class="logo"/>
+           <img src="images/logo-onehealth.svg" alt="" class="logo hide-phone"/>
             <ul class="pd-nav-list">
                 <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('home') }"
                     ng-click="setActiveMenu('home')">
@@ -231,10 +232,10 @@
                 <li class="pd-nav-item"
                     ng-class="{ 'active active-menu':isActiveMenu('visualize') }"
                     ng-if="hasPermissionOnMenu('view_dashboard_visualization')">
-                  <a ng-href="#/visualize"><span class="pd-nav-icon">
+                  <a ng-href="#/visualize" class="pd-nav-icon">
                     <i class="fa fa-pie-chart fa-size-18"></i>
                     <span class="pd-nav-text">สรุปข้อมูล</span>
-                  </span></a>
+                  </a>
                 </li>
                 <!-- end visualize menu -->
 

@@ -7,10 +7,14 @@
 .pd-small-nav{
     display: none;
     color: #fff;
-    padding: 0 15px;
+    padding: 10px 15px;
 
     .logo{
         display: inline;
+    }
+    span{
+        margin-left: 12px;
+        font: 24px/20px ThaiSansNeueRegular;
     }
 }
 
@@ -20,19 +24,25 @@
             display: block;
         }
     }
-    .pd-nav-item .pd-nav-text{
+    .pd-nav-item{
         @include respond-to(phone){
-            @include box-shadow(none);
-            @include border-radius(none);
-            position: static;
-            height: auto;
-            width: auto;
-            padding: 0;
-            line-height: auto;
-            background: transparent;
-            opacity: 1;   
+            text-align: left;
         }
-    }
+
+        .pd-nav-text{
+            @include respond-to(phone){
+                @include box-shadow(none);
+                @include border-radius(none);
+                position: static;
+                height: auto;
+                width: auto;
+                padding: 0;
+                line-height: auto;
+                background: transparent;
+                opacity: 1;   
+            }
+        }
+    } 
     .pd-section-left{
         @include respond-to(phone){
             position: static;
@@ -45,11 +55,18 @@
             width: auto;
         }   
     }
+    .pd-nav-icon{ //without adding margin-right
+        .pd-nav-text{
+            @include respond-to(phone){
+                margin-left: 15px;
+            }
+        }
+    }
 }
 
 .hide-phone{
     @include respond-to(phone){
-        display: none;
+        display: none !important;
     } 
 }
 
@@ -166,6 +183,13 @@ $nav-font-family: ThaiSansNeueRegular;
     &:hover{
         cursor: pointer;
         color: $nav-item-color-hover;
+        text-decoration: none;
+    }
+
+    i{
+        @include respond-to(phone){
+            margin: 0 5px;
+        }
     }
 }
 
@@ -251,9 +275,25 @@ $notifi-item-read: #ececec;
     @extend .notification-block;
 
     li{
+        @include respond-to(phone){
+            background-color: #292929;
+            border-bottom: 1px solid #292929;
+        }
+
         a{
             padding: 10px 20px;
             font: 20px/22px ThaiSansNeueRegular;
+
+            @include respond-to(phone){
+                color: #fff;
+            }
+
+            &:hover{
+                @include respond-to(phone){
+                    color: $nav-item-color-hover;
+                    background-color: $nav-item-bg-hover;
+                }                
+            }
         }
     }
 }
