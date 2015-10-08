@@ -432,6 +432,19 @@ angular.module('poddDashboardApp')
     };
 })
 
+.filter('renderTelephone', function () {
+    return function (text) {
+        return text.replace(/\@\[tel:([\w\-\.]+)\]/g, '<span class="label label-telephone">tel:$1</span>');
+    };
+})
+
+.filter('renderEmail', function () {
+    return function (text) {
+        return text.replace(/\@\[email:([\w\-\.\@]+)\]/g, '<span class="label label-email">$1</span>');
+    };
+})
+
+
 .filter('renderTag', function () {
     return function (text) {
         return text.replace(/\[tag:([^\]]+)\]/g, '<span class="label label-tag">$1</span>');
