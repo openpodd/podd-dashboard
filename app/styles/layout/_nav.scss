@@ -4,6 +4,55 @@
 // Nav
 //***************************
 
+.pd-small-nav{
+    display: none;
+    color: #fff;
+    padding: 0 15px;
+
+    .logo{
+        display: inline;
+    }
+}
+
+.pd-section-nav{
+    .pd-small-nav{
+        @include respond-to(phone){
+            display: block;
+        }
+    }
+    .pd-nav-item .pd-nav-text{
+        @include respond-to(phone){
+            @include box-shadow(none);
+            @include border-radius(none);
+            position: static;
+            height: auto;
+            width: auto;
+            padding: 0;
+            line-height: auto;
+            background: transparent;
+            opacity: 1;   
+        }
+    }
+    .pd-section-left{
+        @include respond-to(phone){
+            position: static;
+            width: auto;
+        }
+    }
+    .pd-nav-text{
+        @include respond-to(phone){
+            position: static;
+            width: auto;
+        }   
+    }
+}
+
+.hide-phone{
+    @include respond-to(phone){
+        display: none;
+    } 
+}
+
 $section-nav-bg: #333;
 $nav-item-color: #fff;
 $nav-item-color-hover: #404040;
@@ -178,6 +227,14 @@ $notifi-item-read: #ececec;
         &:hover{
             text-decoration: none;
         }
+    }
+
+    @include respond-to(phone){
+        @include box-shadow(none);
+        @include border-radius(0);
+        position: static;
+        width: auto;
+        display: block;
     }
 }
 .notifications-empty{

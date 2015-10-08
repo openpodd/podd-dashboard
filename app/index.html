@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
     <link rel="stylesheet" href="bower_components/c3/c3.css" />
     <link rel="stylesheet" href="bower_components/angular-circular-navigation/angular-circular-navigation.css" />
-    <link rel="stylesheet" href="bower_components/perfect-scrollbar/src/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="bower_components/perfect-scrollbar/min/perfect-scrollbar.min.css" />
     <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css" />
     <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.css" />
     <!-- endbower -->
@@ -178,8 +178,12 @@
 
 <div class="pd-section-nav" ng-controller="MenuCtrl">
     <div class="pd-section-left" ng-show="shared.loggedIn" ng-cloak>
+    <div class="pd-small-nav" ng-click="isShowNav =! isShowNav">
+      <img src="images/logo-onehealth.svg" alt="" class="logo"/>
+      เมนู
+    </div>
     <!--   <div ng-init="isShowNav = true"></div>-->
-        <div class="pd-container" >
+        <div class="pd-container" ng-show="isShowNav">
            <img src="images/logo-onehealth.svg" alt="" class="logo"/>
             <ul class="pd-nav-list">
                 <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('home') }"
@@ -199,7 +203,7 @@
                   <i class="fa fa-sign-in"></i>
                   <span class="pd-nav-text">เข้าสู่ระบบ</span></a>
                 </li>
-                <li ng-show="shared.loggedIn" class="pd-nav-item">
+                <li ng-show="shared.loggedIn" class="pd-nav-item hide-phone">
                     <span class="icon-bell pd-nav-icon">
                         <i class="fa fa-bell fa-size-18"></i>
                         <span class="alert-dotted" ng-show="shared.unread > 0">{{ shared.unread }}</span>
@@ -210,7 +214,8 @@
                     ng-click="setActiveMenu('summary')"
                     ng-if="hasPermissionOnMenu('view_dashboard_summary_report') ||
                     hasPermissionOnMenu('view_dashboard_summary_inactive_users')">
-                    <span class="pd-nav-icon"><i class="fa fa-bar-chart fa-size-18"></i></span>
+                    <span class="pd-nav-icon"><i class="fa fa-bar-chart fa-size-18"></i><span class="pd-nav-text">สรุปรายงาน</span></span>
+
                   <div class="pd-nav-submenu">
                       <ul class="">
                           <li><a ng-href="#/summary/report" ng-click="shared.filterMode = false; shared.summaryReportMode = true; shared.summaryReportMonthMode = false;
@@ -228,7 +233,7 @@
                     ng-if="hasPermissionOnMenu('view_dashboard_visualization')">
                   <a ng-href="#/visualize"><span class="pd-nav-icon">
                     <i class="fa fa-pie-chart fa-size-18"></i>
-                    <span class="pd-nav-text">Visualization</span>
+                    <span class="pd-nav-text">สรุปข้อมูล</span>
                   </span></a>
                 </li>
                 <!-- end visualize menu -->
@@ -237,7 +242,7 @@
                 <li class="pd-nav-item"
                     ng-click="setActiveMenu('summary')"
                     ng-if="hasPermissionOnMenu('view_dashboard_support')">
-                    <span class="pd-nav-icon"><i class="fa fa-bullhorn fa-size-18"></i></span>
+                    <span class="pd-nav-icon"><i class="fa fa-bullhorn fa-size-18"></i><span class="pd-nav-text">ระบบซัพพอร์ต</span></span>
                   <div class="pd-nav-submenu">
                       <ul class="">
                           <li><a target="_blank" href="http://goo.gl/KISUCG">แจ้งปัญหาการใช้งาน</a></li>
@@ -331,7 +336,8 @@
     <script src="bower_components/angulartics/src/angulartics.js"></script>
     <script src="bower_components/angulartics/src/angulartics-ga.js"></script>
     <script src="bower_components/angularLocalStorage/src/angularLocalStorage.js"></script>
-    <script src="bower_components/perfect-scrollbar/src/perfect-scrollbar.js"></script>
+    <script src="bower_components/perfect-scrollbar/min/perfect-scrollbar.min.js"></script>
+    <script src="bower_components/perfect-scrollbar/min/perfect-scrollbar.with-mousewheel.min.js"></script>
     <script src="bower_components/angular-perfect-scrollbar/src/angular-perfect-scrollbar.js"></script>
     <script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
     <script src="bower_components/angular-ui-grid/ui-grid.js"></script>

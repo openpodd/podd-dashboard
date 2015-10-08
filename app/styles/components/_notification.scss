@@ -1,0 +1,50 @@
+//***************************
+// Notification on Nav
+//***************************
+
+$notifi-border-bottom-color: #dadada;
+$notifi-item-bg: #eee;
+$notifi-item-read: #ececec;
+
+.notification-block{
+    li{
+        &.read{
+            // background-color: $notifi-item-read;
+        }
+
+        .fa-comment{
+            margin-right: 5px;
+        }
+
+        a{
+            padding: 7px 12px;
+            font : 13px / 18px "Helvetica Neue",Helvetica,Arial,sans-serif;
+        }
+    }
+}
+.notifications-empty{
+    color: #666;
+    
+    li{
+        border: none;
+        border-radius: 0 5px 5px 0;
+        padding: 11px 20px 11px;
+        background-color: $notifi-item-bg;
+    }
+}
+
+/*--- ALERT ICON ---*/
+.icon-bell{
+    position: relative;
+}
+.alert-dotted{
+    position: absolute;
+    display: block;
+    top: 9px;
+    right: 6px;
+    width: 12px;
+    height: 12px;
+    text-indent: -999em;
+    background-color: red;
+    border-radius: 10px;
+}
