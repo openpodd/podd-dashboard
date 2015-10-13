@@ -16,6 +16,9 @@
         margin-left: 12px;
         font: 24px/20px ThaiSansNeueRegular;
     }
+    i{
+        color: #5DB54F;
+    }
 }
 
 .pd-section-nav{
@@ -58,7 +61,7 @@
     .pd-nav-icon{ //without adding margin-right
         .pd-nav-text{
             @include respond-to(phone){
-                margin-left: 15px;
+                margin-left: 5px;
             }
         }
     }
@@ -111,15 +114,10 @@ $nav-font-family: ThaiSansNeueRegular;
     text-align: center;
     
     &:hover{
-        background-color: $nav-item-bg-hover;
-        color: $nav-item-color-hover;
-        
         .pd-nav-text{
             left: 42px;
             opacity: 1;
         }
-        
-        i{ color: $nav-item-color-hover; }
     }
     
     /* Hide Text */
@@ -153,6 +151,10 @@ $nav-font-family: ThaiSansNeueRegular;
             color: $nav-item-color;
             background-color: $nav-item-bg-active;
         }
+
+        &:hover .pd-nav-icon{
+            background-color: $nav-item-bg-active;
+        }
     }
 }
 
@@ -183,13 +185,20 @@ $nav-font-family: ThaiSansNeueRegular;
     &:hover{
         cursor: pointer;
         color: $nav-item-color-hover;
+        background-color: $nav-item-bg-hover;
         text-decoration: none;
     }
 
     i{
         @include respond-to(phone){
             margin: 0 5px;
+            width: 20px;
         }
+    }
+}
+span.pd-nav-icon{
+    i{
+        margin-right: 10px;
     }
 }
 
@@ -273,7 +282,13 @@ $notifi-item-read: #ececec;
 }
 .pd-nav-submenu{
     @extend .notification-block;
-
+    a{
+        &:hover{
+            text-decoration: none;
+            background-color: $nav-item-bg-hover;
+            color: $nav-item-color-hover;
+        }
+    }
     li{
         @include respond-to(phone){
             background-color: #292929;
@@ -286,13 +301,6 @@ $notifi-item-read: #ececec;
 
             @include respond-to(phone){
                 color: #fff;
-            }
-
-            &:hover{
-                @include respond-to(phone){
-                    color: $nav-item-color-hover;
-                    background-color: $nav-item-bg-hover;
-                }                
             }
         }
     }
