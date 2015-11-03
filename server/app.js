@@ -69,14 +69,16 @@ var pushAPNS = function pushAPNSmessage(message) {
 
     data.apnsRegistrationIds.forEach(function(apnsRegistrationId, i) {
 
-        var apnsDevice = new apns.Device(apnsRegistrationId),
-            apnsMessage = new apns.Notification({
-                expiry: Math.floor(Date.now() / 1000) + config.apns.expiry,
-                badge: 1,
-                sound: 'chime.aiff',
-                alert: data.message,
-                payload: {}
-            });
+        var apnsDevice = new apns.Device(apnsRegistrationId);
+        var apnsMessage = new apns.Notification();
+
+        apnsMessage.expiry = Math.floor(Date.now() / 1000) + config.apns.expiry,
+        apnsMessage.badge = data.badge;
+        apnsMessage.sound = "default";
+        apnsMessage.alert = data.message;
+        apnsMessage.payload = {'reportId': data.reportId};
+
+
 
         apnsConnection.pushNotification(apnsMessage, apnsDevice, function(err) {
             console.log('ERROR:', err);
