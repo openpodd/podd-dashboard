@@ -17,13 +17,15 @@ var pushGCM = function pushGCM(message) {
         data.androidRegistrationIds === undefined)
         return;
 
+    var reportId = data.reportId || null;
     var gcmObject = new gcm.AndroidGcm(data.GCMAPIKey),
         gcmMessage = new gcm.Message({
             registration_ids: data.androidRegistrationIds,
             data: {
                 id: data.id,
                 message: data.message,
-                type: data.type.toLowerCase()
+                type: data.type.toLowerCase(), 
+                reportId: reportId
             }
         });
 
