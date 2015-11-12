@@ -11,6 +11,10 @@
     @else if $media == tablet-landscape-desktop {
         @media (min-width: 768px) and (max-width: 979px) { @content; }
     }
+    /* Desktop */
+    @else if $media == desktop {
+        @media (min-width: 481px) { @content; }
+    }
     /* Large desktop */
     @else if $media == large-desktop {
         @media (min-width: 1200px) { @content; }

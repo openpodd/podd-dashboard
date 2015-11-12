@@ -22,7 +22,9 @@
          refresh-on-change="report"
          ng-if="!loadingReportView && !loadingReportViewError"><div class="content">
 
-      <hr>
+      <div class="priority-report pull-right" ng-if="!$parent.report.parent">เปลี่ยนสถานะรายงาน :
+        <div report-state-form report="$parent.report"></div>
+      </div>
 
       <div class="report-details">
         <div class="report-image clearfix" ng-if="$parent.report.images.length">
@@ -178,10 +180,6 @@
           </div>
         </div>
 
-
-        <div class="priority-report pull-right" ng-if="!$parent.report.parent">เปลี่ยนสถานะรายงาน :
-        <div report-state-form report="$parent.report"></div>
-      </div>
       <div style="margin-bottom: 20px;">
         <button type="submit" class="btn btn-default"
                 ng-click="printDiv()"><i class="fa fa-print fa-size-18"></i> พิมพ์</button>

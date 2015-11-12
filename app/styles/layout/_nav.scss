@@ -27,6 +27,13 @@
             display: block;
         }
     }
+
+    .pd-container{
+        @include respond-to(desktop){
+            display: block !important;
+        }
+    }
+
     .pd-nav-item{
         @include respond-to(phone){
             text-align: left;
@@ -198,7 +205,9 @@ $nav-font-family: ThaiSansNeueRegular;
 }
 span.pd-nav-icon{
     i{
-        margin-right: 10px;
+        @include respond-to(phone){
+            margin-right: 10px;
+        }
     }
 }
 
