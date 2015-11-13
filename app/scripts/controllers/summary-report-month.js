@@ -286,14 +286,13 @@ angular.module('poddDashboardApp')
         }
     });
 
-    $scope.tagReports = [];
     $scope.tagReportIds = [];
     $scope.$watch('gridOptionsReport.data', function (newValue, oldValue) {
         if (shared.summaryReportMonthMode && newValue && newValue !== oldValue) {
             // $scope.search();
             var results = [];
             $scope.gridOptionsReport.data.forEach(function (item) {
-                if (item.checkbox == true) {
+                if (item.checkbox === true) {
                     results.push(item.id);
                 }
             });
@@ -304,18 +303,19 @@ angular.module('poddDashboardApp')
 
     $scope.tagInput = [];
     $scope.doTag = function () {
-        var tags = []
+        var tags = [];
+        
         $scope.tagInput.forEach(function (item) {
             tags.push(item.text);
         });
 
-        if (tagInput.length == 0) {
+        if ($scope.tagInput.length === 0) {
             return;
         }
 
         $scope.gridOptionsReport.data.forEach(function (item) {
-            if (item.checkbox == true) {
-                item.Tags = item.Tags + tags;
+            if (item.checkbox === true) {
+                item.Tags = tags;
             }
         });
 
