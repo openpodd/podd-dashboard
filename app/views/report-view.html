@@ -22,11 +22,11 @@
          refresh-on-change="report"
          ng-if="!loadingReportView && !loadingReportViewError"><div class="content">
 
-      <div class="report-details">
-        <div class="priority-report pull-right" ng-if="!$parent.report.parent">เปลี่ยนสถานะรายงาน :
-          <div report-state-form report="$parent.report"></div>
-        </div>
+      <div class="priority-report pull-right" ng-if="!$parent.report.parent">เปลี่ยนสถานะรายงาน :
+        <div report-state-form report="$parent.report"></div>
+      </div>
 
+      <div class="report-details">
         <div class="report-image clearfix" ng-if="$parent.report.images.length">
           <h3 class="subheading pull-left"><i class="fa fa-picture-o fa-size-18"></i> รูปประกอบ</h3>
 
@@ -52,7 +52,7 @@
          </ul>
 
 
-            <tabset ng-if="$parent.report" class="pd-tabs" >
+            <tabset ng-if="$parent.report" class="pd-tabs" justified="true" >
               <tab heading="คำอธิบายรายงาน">
                 <!-- <div ng-if="$parent.$parent.report.renderedOriginalFormData"> -->
                   <div ng-bind-html="$parent.$parent.report.renderedOriginalFormData"></div>
@@ -155,10 +155,6 @@
             </table>
         </div>
 
-        <div style="margin-bottom: 20px;">
-          <button type="submit" class="btn btn-default"
-                  ng-click="printDiv()"><i class="fa fa-print fa-size-18"></i> ปริ้นรายละเอียดรายงาน</button>
-        </div>
         <div class="report-comments" style="margin-bottom: 10px;">
           <h3 class="tag-title subheading"><i class="fa fa-tags fa-size-18"></i> Tags</h3>
           <div class="tag-form clearfix">
@@ -184,6 +180,11 @@
           </div>
         </div>
 
+      <div style="margin-bottom: 20px;">
+        <button type="submit" class="btn btn-default"
+                ng-click="printDiv()"><i class="fa fa-print fa-size-18"></i> พิมพ์</button>
+      </div>
+        
         <div class="report-comments">
             <div ng-include="'/views/comments.html'"></div>
         </div>

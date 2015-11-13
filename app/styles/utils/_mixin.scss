@@ -1,3 +1,38 @@
+@mixin respond-to($media) {
+    /* Landscape phones and down */
+    @if $media == phone {
+        @media (max-width: 480px) { @content; }
+    }
+    /* Landscape phone to portrait tablet */
+    @else if $media == tablet-portrait {
+        @media (max-width: 767px) {@content; }
+    }
+    /* Portrait tablet to landscape and desktop */
+    @else if $media == tablet-landscape-desktop {
+        @media (min-width: 768px) and (max-width: 979px) { @content; }
+    }
+    /* Desktop */
+    @else if $media == desktop {
+        @media (min-width: 481px) { @content; }
+    }
+    /* Large desktop */
+    @else if $media == large-desktop {
+        @media (min-width: 1200px) { @content; }
+    }
+    // Non-Retina
+    @else if $media == non-retina {
+        @media screen and (-webkit-max-device-pixel-ratio: 1) { @content; }
+    }
+    // Retina Only
+    @else if $media == retina {
+        @media screen and (-webkit-min-device-pixel-ratio: 2) { @content; }
+    }
+    // Specific max width
+    @else {
+        @media only screen and (max-width: #{$media}px) { @content; }
+    }
+}
+
 @mixin image-2x($image, $width, $height) {
   @media (min--moz-device-pixel-ratio: 1.3),
          (-o-min-device-pixel-ratio: 2.6/2),
