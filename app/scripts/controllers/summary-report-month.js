@@ -11,7 +11,7 @@ angular.module('poddDashboardApp')
 
 .controller('SummaryReportMonthCtrl', function ($scope, SummaryReportMonth, dashboard, User,
     streaming, FailRequest, shared, $location, $state, $stateParams, $window,
-    cfpLoadingBar, dateRangePickerConfig, uiGridUtils, ReportTypes, Tag) {
+    cfpLoadingBar, dateRangePickerConfig, uiGridUtils, ReportTypes, Tag, ReportTags) {
 
     console.log('init summary report month ctrl');
 
@@ -304,7 +304,7 @@ angular.module('poddDashboardApp')
     $scope.tagInput = [];
     $scope.doTag = function () {
         var tags = [];
-        
+
         $scope.tagInput.forEach(function (item) {
             tags.push(item.text);
         });
@@ -317,6 +317,15 @@ angular.module('poddDashboardApp')
             if (item.checkbox === true) {
                 item.Tags = tags;
             }
+        });
+
+        var params = {
+            reportIds: $scope.tagReportIds,
+            tags: $scope.tagInput
+        };
+
+        ReportTags.post(params).$promise.then(function () {
+            // console.log('success');
         });
 
     };
@@ -345,7 +354,6 @@ angular.module('poddDashboardApp')
     }, true);
 
     $scope.loadTags = function(query) {
-        console.log(query);
         return Tag.get({ 'q': query }).$promise.then(function (data) {
             var results = [];
             data.forEach(function (item) {
