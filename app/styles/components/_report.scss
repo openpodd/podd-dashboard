@@ -208,6 +208,14 @@ $badge-bad: #FF6D69;
         padding: 15px 10px 10px;
         background-color: #fff;
     }
+
+    .tab-pane{
+        border: 1px solid #eee;
+    }
+
+    .nav-tabs.nav-justified > .active > a{
+        border: 1px solid #eee;
+    }
 }
 
 .nav-tabs{

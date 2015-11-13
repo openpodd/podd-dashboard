@@ -106,6 +106,14 @@ $comment-section-bg: #333;
         -moz-animation: fadeOutLeft .5s .2s alternate forwards;
         -webkit-animation: fadeOutLeft .5s .2s alternate forwards;
     }
+
+    @include respond-to(tablet-portrait){
+        width: calc(100% - 50px);
+    }
+    @include respond-to(phone){
+        width: 100%;
+        left: 0;
+    }
 }
 .l-info-section{ /* Wrapping detail & comment section */
     top: 0;
@@ -133,6 +141,11 @@ $comment-section-bg: #333;
             background-color: #fff;
         }
     }
+
+    @include respond-to(tablet-portrait){ // Full Width
+        width: 100%;
+        z-index: 9996;
+    }
 }
 .l-detail-section{
     top: 0;
@@ -149,6 +162,22 @@ $comment-section-bg: #333;
     
     .content{
         padding: 20px 35px;
+    }
+
+    @include respond-to(tablet-landscape-desktop){
+        .content{
+            padding-left: 14px;
+            padding-right: 14px;
+        }
+    }
+    @include respond-to(tablet-portrait){
+        .content{
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+    }
+    @include respond-to(phone){
+        border-left: none;
     }
 }
 .l-comment-section{
