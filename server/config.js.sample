@@ -3,4 +3,7 @@ module.exports = {
         time_to_live: 86400
     },
     sentryDSN: 'http://x:y@localhost:9000/0',
+    apns: {
+        key: ''
+    }
 };
