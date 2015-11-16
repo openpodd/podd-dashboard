@@ -97,7 +97,8 @@ angular
       /\/ping/,
       /\/tags\/list/,
       /\/users\/profile/,
-      /\/authorities/
+      /\/authorities/,
+      /\/reportTags/
     ];
 
     function matchAPIUrls(url) {

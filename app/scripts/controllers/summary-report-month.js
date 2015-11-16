@@ -11,7 +11,7 @@ angular.module('poddDashboardApp')
 
 .controller('SummaryReportMonthCtrl', function ($scope, SummaryReportMonth, dashboard, User,
     streaming, FailRequest, shared, $location, $state, $stateParams, $window,
-    cfpLoadingBar, dateRangePickerConfig, uiGridUtils, ReportTypes, Tag) {
+    cfpLoadingBar, dateRangePickerConfig, uiGridUtils, ReportTypes, Tag, ReportTags) {
 
     console.log('init summary report month ctrl');
 
@@ -151,6 +151,9 @@ angular.module('poddDashboardApp')
             console.log('Query result:', data);
 
             var results = [];
+            var header = false;
+
+            var dataOptions = [];
 
             data.forEach(function (item) {
                 // var tags = '-';
@@ -165,7 +168,27 @@ angular.module('poddDashboardApp')
                 // }
                 // item.Tags = tags;
 
-                results.push(item);
+                if (!header) {
+                    dataOptions.push(
+                        { 
+                            name: '',
+                            field: 'checkbox', 
+                            pinnedLeft: true,
+                            cellTemplate: '<input type="checkbox" ng-model="row.entity.checkbox" ng-click="$event.stopPropagation();getExternalScopes().showMe(row.entity.id)"/>',
+                            width: 30, 
+                        });
+
+                    angular.forEach(item, function(value, key) {
+                        dataOptions.push({ field: key, headerCellClass: 'cell-center' });
+                    });
+
+                    header = true;
+                }
+
+                if (item.id !== '-') {
+                    item.checkbox = false;
+                    results.push(item);
+                }
             });
 
             $scope.results = results;
@@ -181,34 +204,7 @@ angular.module('poddDashboardApp')
 
             $scope.month = $scope.query;
             $scope.gridOptionsReport.enableSorting = true;
-            // $scope.gridOptionsReport.columnDefs = [
-            //     { field: 'id', cellClass: 'cell-center', headerCellClass: 'cell-center', 
-            //         cellTemplate:'<div>' +
-            //             '<a href="#/reports/{{ row.entity.id }}" target="_blank">{{ row.entity.id }}</a>' +
-            //             '</div>' 
-            //     },
-            //     {
-            //         field: 'สถานะ',
-            //         cellClass: 'cell-center', headerCellClass: 'cell-center'
-            //     },
-            //     { field: 'วันที่', headerCellClass: 'cell-center', cellFilter: 'amDateFormat:\'D MMM YYYY\'' },
-            //     { field: 'พื้นที่', headerCellClass: 'cell-center' },
-            //     { field: 'ประเภทรายงาน', headerCellClass: 'cell-center' },
-            //     { field: 'หัวข้อ', headerCellClass: 'cell-center' },
-            //     { field: 'โรค', headerCellClass: 'cell-center' },
-            //     { field: 'อาการ', headerCellClass: 'cell-center' },
-            //     { field: 'ป่วย', cellClass: 'cell-center', headerCellClass: 'cell-center' },
-            //     { field: 'ตาย', cellClass: 'cell-center', headerCellClass: 'cell-center' },
-            //     { field: 'ทั้งหมด', cellClass: 'cell-center', headerCellClass: 'cell-center' },
-            //     { field: 'ใกล้เคียง', cellClass: 'cell-center', headerCellClass: 'cell-center' },
-            //     { field: 'ชื่ออาสา', headerCellClass: 'cell-center' },
-            //     { field: 'Tags', headerCellClass: 'cell-center' },
-            //     // { field: 'Tags', headerCellClass: 'cell-center', 
-            //     //     cellTemplate:'<div class="cell-center">' +
-            //     //         '<a href="#/reports/{{ row.entity.id }}" target="_blank">{{ COL_FIELD }}</a>' +
-            //     //         '</div>'
-            //     // },
-            // ];
+            $scope.gridOptionsReport.columnDefs = dataOptions;
             $scope.gridOptionsReport.data = results;
 
             setTimeout(function(){
@@ -246,6 +242,9 @@ angular.module('poddDashboardApp')
             };
 
             if ($scope.query.month) {
+                $scope.months.selectedMonth = parseInt($scope.query.month.split('/')[0]);
+                $scope.months.selectedYear = parseInt($scope.query.month.split('/')[1]);
+
                 return $scope._search();
             }
 
@@ -287,6 +286,50 @@ angular.module('poddDashboardApp')
         }
     });
 
+    $scope.tagReportIds = [];
+    $scope.$watch('gridOptionsReport.data', function (newValue, oldValue) {
+        if (shared.summaryReportMonthMode && newValue && newValue !== oldValue) {
+            // $scope.search();
+            var results = [];
+            $scope.gridOptionsReport.data.forEach(function (item) {
+                if (item.checkbox === true) {
+                    results.push(item.id);
+                }
+            });
+
+            $scope.tagReportIds = results;
+        }
+    }, true);
+
+    $scope.tagInput = [];
+    $scope.doTag = function () {
+        var tags = [];
+
+        $scope.tagInput.forEach(function (item) {
+            tags.push(item.text);
+        });
+
+        if ($scope.tagInput.length === 0) {
+            return;
+        }
+
+        $scope.gridOptionsReport.data.forEach(function (item) {
+            if (item.checkbox === true) {
+                item.Tags = tags;
+            }
+        });
+
+        var params = {
+            reportIds: $scope.tagReportIds,
+            tags: $scope.tagInput
+        };
+
+        ReportTags.post(params).$promise.then(function () {
+            // console.log('success');
+        });
+
+    };
+
     $scope.checkAll = function () {
         var selectedAll = $scope.types.selectedAll;
         // console.log(selectedAll, $scope.types.selectedAll);
@@ -311,7 +354,6 @@ angular.module('poddDashboardApp')
     }, true);
 
     $scope.loadTags = function(query) {
-        console.log(query);
         return Tag.get({ 'q': query }).$promise.then(function (data) {
             var results = [];
             data.forEach(function (item) {

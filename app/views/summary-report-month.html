@@ -81,9 +81,33 @@
 
             <div ng-show="results.length && !loading">
 
-                <h3 class="subheading pull-left clear inline-table">ตารางสรุปรายงานเดือน {{ months.selectedMonth }}/{{ months.selectedYear }} ของ{{ areas.selectedArea.name }} {{ areas.selectedArea.parentName }}</h3>
+                <h3 class="subheading pull-left clear inline-table" style="width: 100%">ตารางสรุปรายงานเดือน {{ months.selectedMonth }}/{{ months.selectedYear }} ของ{{ areas.selectedArea.name }} {{ areas.selectedArea.parentName }}</h3>
 
-                <div id="gridReportMonth" class="summary-grid-report grid-summary clear inline-table" ui-grid="gridOptionsReport" ui-grid-exporter></div>
+                <div ng-show="tagReportIds.length" class="pull-left clear inline-table alert alert-warning" style="margin:10px;width: 100%" >
+
+                    <form role="form" ng-submit="doTag()">
+
+                        <div class="col-md-12">
+                            <h4>คุณต้องการเพิ่มแท็กในรายงานหรือไม่ ?</h4> 
+                            <h5>รายการรายงานที่ต้องการแท็ก {{  tagReportIds }}</h5>
+                            <tags-input 
+                                style="margin:10px;width: 100%;"
+                                ng-model="tagInput"
+                            >
+                                <auto-complete source="loadTags($query)"></auto-complete>
+                            </tags-input>
+
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default pd-btn-search" type="submit" style="margin-left:10px;width: 100%"><i class="fa fa-tags"></i> แท็กรายงาน</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="gridReportMonth" external-scopes="reports" class="summary-grid-report grid-summary clear inline-table" ui-grid="gridOptionsReport" ui-grid-exporter></div>
 
                 <div class="export-buttons">
                   <button class="btn btn-primary btn-sm" type="button" ng-click="csvExport();">ดาวน์โหลดข้อมูลไฟล์ CSV</button>

@@ -97,4 +97,12 @@ angular.module('poddDashboardApp')
         });
 
     return resource;
+})
+
+.factory('ReportTags', function ($resource) {
+    return $resource(config.API_BASEPATH + '/reportTags/', {}, {
+        post: {
+            method: 'POST'
+        }
+    });
 });
