@@ -198,6 +198,12 @@
                   <i class="fa fa-search fa-size-18"></i>
                   <span class="pd-nav-text">ค้นหา</span></a>
                 </li>
+                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('scenario') }">
+                  <a ng-href="#/scenario" ng-click="shared.scenario" class="pd-nav-icon">
+                    <i class="fa fa-search fa-size-18"></i>
+                    <span class="pd-nav-text">Scenario Map</span>
+                  </a>
+                </li>
                 <li ng-hide="shared.loggedIn" class="pd-nav-item" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('login') }">
                   <a ng-href="#/login" ng-click="isShowNav=!isShowNav" class="pd-nav-icon">
@@ -372,6 +378,7 @@
         <script src="scripts/controllers/comment.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/filter.js"></script>
+        <script src="scripts/controllers/scenario.js"></script>
         <script src="scripts/controllers/profile.js"></script>
         <script src="scripts/controllers/login.js"></script>
         <script src="scripts/controllers/notification.js"></script>

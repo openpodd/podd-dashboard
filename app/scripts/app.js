@@ -162,6 +162,11 @@ angular
         template: '',
         controller: 'FilterModeCtrl'
       })
+      .state('scenario', {
+        url: '/scenario',
+        templateUrl: 'views/scenario.html',
+        controller: 'ScenarioModeCtrl'
+      })
       .state('main.summaryreport', {
         url: '^/summary/report?dates&type',
         template: '',
