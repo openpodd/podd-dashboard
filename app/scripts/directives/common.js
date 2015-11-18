@@ -241,6 +241,11 @@ angular.module('poddDashboardApp')
                 if (cell.v === null) {
                     continue;
                 }
+
+                if(Object.prototype.toString.call(cell.v) === '[object Array]') {
+                    cell.v = cell.v.toString();
+                }
+
                 var cell_ref = XLSX.utils.encode_cell({ c: C, r: R });
 
                 if (R > 0) {
