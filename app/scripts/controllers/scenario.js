@@ -7,10 +7,11 @@ angular.module('poddDashboardApp')
   Menu.setActiveMenu('scenario');
 })
 
-.controller('ScenarioCtrl', function ($scope, Menu, Map, Reports) {
+.controller('ScenarioCtrl', function ($scope, Menu, Map, Reports, $compile) {
   Menu.setActiveMenu('scenario');
 
   L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
+
 
   var options = {
     zoomControl: false
@@ -34,10 +35,13 @@ angular.module('poddDashboardApp')
       position: 'topright',
     },
     onAdd: function () {
-      var container = $('.layers-control')[0];
-      return container;
+      var $container = $('.layers-control');
+      $compile($container)($scope);
+      return $container[0];
     }
   });
+  // TODO: this can cause:
+  // `TypeError: Cannot read property 'childNodes' of undefined`
   leafletMap.addControl(new LayersControl());
 
   var query = {
@@ -64,18 +68,49 @@ angular.module('poddDashboardApp')
       gisLayer: gisLayer
     }
   };
+  $scope.layers = layers;
 
-  Reports.list(query).$promise.then(function (resp) {
-    resp.results.forEach(function (item) {
-      var location = [
-        item.reportLocation.coordinates[1],
-        item.reportLocation.coordinates[0]
-      ];
-      L.marker(location).addTo(reportsLayer);
+  $scope.toggleReportsLayer = function (forceValue) {
+    var nextValue = angular.isUndefined(forceValue) ?
+                      !layers.form.report :
+                      forceValue;
+
+    if (nextValue) {
+      reportsLayer.addTo(leafletMap);
+    }
+    else {
+      leafletMap.removeLayer(reportsLayer);
+    }
+  };
+
+  $scope.toggleGISLayer = function (forceValue) {
+    var nextValue = angular.isUndefined(forceValue) ?
+                      !layers.form.gis :
+                      forceValue;
+
+    if (nextValue) {
+      gisLayer.addTo(leafletMap);
+    }
+    else {
+      leafletMap.removeLayer(gisLayer);
+    }
+  };
+
+  function refreshReportsLayerData() {
+    Reports.list(query).$promise.then(function (resp) {
+      resp.results.forEach(function (item) {
+        var location = [
+          item.reportLocation.coordinates[1],
+          item.reportLocation.coordinates[0]
+        ];
+        L.marker(location).addTo(reportsLayer);
+      });
+
+      // fit bound.
+      var bounds = reportsLayer.getBounds();
+      leafletMap.fitBounds(bounds);
     });
+  }
+  refreshReportsLayerData();
 
-    // fit bound.
-    var bounds = reportsLayer.getBounds();
-    leafletMap.fitBounds(bounds);
-  });
 });

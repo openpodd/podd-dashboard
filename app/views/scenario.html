@@ -1,19 +1,20 @@
 <div class="container" id="scenario-map" ng-controller="ScenarioCtrl">
   <div id="map"></div>
+
   <div class="layers-control">
     <section class="group-1">
       <h3>Layers</h3>
 
       <div>
         <label>
-          <input type="checkbox" ng-model="layers.form.report">
+          <input type="checkbox" ng-model="layers.form.report" ng-change="toggleReportsLayer(layers.form.report)">
           Report
         </label>
       </div>
 
       <div>
         <label>
-          <input type="checkbox" ng-model="layers.form.gis">
+          <input type="checkbox" ng-model="layers.form.gis" ng-change="toggleGISLayer(layers.form.gis)">
           GIS
         </label>
       </div>
