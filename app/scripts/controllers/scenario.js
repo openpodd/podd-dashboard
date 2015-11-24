@@ -13,11 +13,58 @@ angular.module('poddDashboardApp')
   L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
 
 
+  var options = {
+    zoomControl: false
+  };
+  var leafletMap = config.MAPBOX_MAP_ID ?
+                      L.mapbox.map('map', config.MAPBOX_MAP_ID, options) :
+                      L.map('map', options);
+
+  // TODO: set default center to CNX
+  var center = [13.791177699, 100.58814079],
+      zoomLevel = 15,
+      map = new Map( leafletMap.setView(center, zoomLevel) );
+
+  // Zoom control.
+  leafletMap.addControl(new L.control.zoom({
+    position: 'topleft'
+  }));
+  // Custom map control.
+  var LayersControl = L.Control.extend({
+    options: {
+      position: 'topright',
+    },
+    onAdd: function () {
+      var $container = $('.layers-control');
+      $compile($container)($scope);
+      return $container[0];
+    }
+  });
+
+  // TODO: this can cause:
+  // `TypeError: Cannot read property 'childNodes' of undefined`
+  // leafletMap.addControl(new LayersControl());
+
+  var reportsLayer = new L.featureGroup().addTo(leafletMap),
+      gisLayer = new L.featureGroup().addTo(leafletMap);
+
+  var layers = {
+    form: {
+      report: true,
+      gis: true
+    },
+    layers: {
+      report: reportsLayer,
+      gisLayer: gisLayer
+    }
+  };
+  $scope.layers = layers;
+
 // TODO: this move to function:
 // Graph Control
 var parseDate = d3.time.format('%m/%Y').parse;
 var FormatMonthDate = d3.time.format('%b %Y');
-var FormatDayDate = d3.time.format('%d %b %Y');
+var FormatDayDate = d3.time.format('%Y-%m-%d');
 
 var margin = {top: 10, right: 50, bottom: 20, left: 20},
     defaultExtent = [parseDate('01/2015'), parseDate('12/2015')],
@@ -41,6 +88,12 @@ var brush = d3.svg.brush()
 
         if (!brush.empty()) { 
           $scope.window = [ FormatDayDate(brush.extent()[0]), FormatDayDate(brush.extent()[1]) ];
+          reportsLayer.clearLayers();
+          
+          query['date__lte'] = FormatDayDate(brush.extent()[1]);
+          query['date__gte'] = FormatDayDate(brush.extent()[0]);
+          
+          refreshReportsLayerData();
         }
        
       }
@@ -154,7 +207,7 @@ function playDemo() {
 }
 
 var demoInterval = null;
-var speed = 20;
+var speed = 1000;
 
 $scope.play = function () {
   setTimeout(function() {
@@ -164,7 +217,7 @@ $scope.play = function () {
 };
 
 $scope.speedDown = function () {
-  if (speed < 100) {
+  if (speed < 1000) {
     speed += 10;
   }
 };
@@ -202,59 +255,19 @@ $scope.replay = function () {
 
 // End Graph Control
 
-  var options = {
-    zoomControl: false
-  };
-  var leafletMap = config.MAPBOX_MAP_ID ?
-                      L.mapbox.map('map', config.MAPBOX_MAP_ID, options) :
-                      L.map('map', options);
-
-  // TODO: set default center to CNX
-  var center = [13.791177699, 100.58814079],
-      zoomLevel = 15,
-      map = new Map( leafletMap.setView(center, zoomLevel) );
-
-  // Zoom control.
-  leafletMap.addControl(new L.control.zoom({
-    position: 'topleft'
-  }));
-  // Custom map control.
-  var LayersControl = L.Control.extend({
-    options: {
-      position: 'topright',
-    },
-    onAdd: function () {
-      var $container = $('.layers-control');
-      $compile($container)($scope);
-      return $container[0];
-    }
-  });
 
   var query = {
     // TODO: set default bounds
-    bottom: 98.1298828125,
-    left: 17.764381077782076,
-    top: 99.810791015625,
-    right: 19.647760955697354,
-    negative: true,
-    'page_size': 10,
-    lite: true
+    'bottom': 98.1298828125,
+    'left': 17.764381077782076,
+    'top': 99.810791015625,
+    'right': 19.647760955697354,
+    'date__lte': $scope.window[1],
+    'date__gte': $scope.window[0],
+    'negative': true,
+    'page_size': 100,
+    'lite': true
   };
-
-  var reportsLayer = new L.featureGroup().addTo(leafletMap),
-      gisLayer = new L.featureGroup().addTo(leafletMap);
-
-  var layers = {
-    form: {
-      report: true,
-      gis: true
-    },
-    layers: {
-      report: reportsLayer,
-      gisLayer: gisLayer
-    }
-  };
-  $scope.layers = layers;
 
   $scope.toggleReportsLayer = function (forceValue) {
     var nextValue = angular.isUndefined(forceValue) ?
@@ -298,9 +311,5 @@ $scope.replay = function () {
     });
   }
   refreshReportsLayerData();
-
-  // TODO: this can cause:
-  // `TypeError: Cannot read property 'childNodes' of undefined`
-  // leafletMap.addControl(new LayersControl());
 
 });
