@@ -27,27 +27,86 @@ angular.module('poddDashboardApp')
     position: 'topleft'
   }));
 
-  var reportsLayer = new L.featureGroup().addTo(leafletMap),
-      gisLayer = new L.WFS({
-        url: config.GIS_BASEPATH,
-        typeNS: 'poddgis_vet',
-        typeName: 'water_body_cm',
-        // typeName: 'Road',
-        geometryField: 'geom',
-        crs: L.CRS.EPSG4326
-      }).addTo(leafletMap);
+  var defaultIconOptions = {
+    className: 'scene-marker-wrapper',
+    iconSize: [ 48, 48 ],
+    iconAnchor: [ 24, 24 ]
+  };
+  var getIconType = function (iconType) {
+    return angular.extend({}, defaultIconOptions, {
+      html: '<div class="scene-marker">' +
+              '<div class="marker-icon marker-icon-' + iconType + '-wrapper">' +
+                '<div class="marker-icon-animal marker-icon-' + iconType + '"></div>' +
+              '</div>' +
+            '</div>'
+    });
+  };
+  var icons = {
+    pig: L.divIcon(getIconType('pig')),
+    dog: L.divIcon(getIconType('dog')),
+    buffalo: L.divIcon(getIconType('buffalo')),
+    cow: L.divIcon(getIconType('cow')),
+    chicken: L.divIcon(getIconType('chicken')),
+    sheep: L.divIcon(getIconType('sheep'))
+  };
 
-  var layers = {
-    form: {
-      report: true,
-      gis: true
+  var getGISLayer = function (typeName, iconName) {
+    return new L.WFS({
+      url: config.GIS_BASEPATH,
+      typeNS: 'poddgis_vet',
+      typeName: typeName,
+      geometryField: 'geom',
+      crs: L.CRS.EPSG4326
+    }, new L.Format.GeoJSON({
+      crs: L.CRS.EPSG4326,
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, { icon: icons[iconName] });
+      }
+    }));
+  };
+
+  $scope.layers = {
+    report: {
+      name: 'Reports',
+      layer: new L.featureGroup().addTo(leafletMap),
+      show: true
     },
-    layers: {
-      report: reportsLayer,
-      gisLayer: gisLayer
+    gis: {
+      pig: {
+        name: 'Pig Farm',
+        layer: getGISLayer('pig_farm', 'pig').addTo(leafletMap),
+        show: true
+      },
+      cow: {
+        name: 'Cow & Buffalo Farm',
+        layer: getGISLayer('cowsandbuffalos_farm', 'cow').addTo(leafletMap),
+        show: true
+      },
+      dog: {
+        name: 'Dog Farm',
+        layer: getGISLayer('dog_farm', 'dog').addTo(leafletMap),
+        show: true
+      },
+      chicken: {
+        name: 'Chicken Farm',
+        layer: getGISLayer('poultry_farm', 'chicken').addTo(leafletMap),
+        show: true
+      }
     }
   };
-  $scope.layers = layers;
+
+  $scope.toggleLayer = function (layerDef, forceValue) {
+    var nextValue = angular.isUndefined(forceValue) ?
+                      !layerDef.show :
+                      forceValue;
+
+    if (nextValue) {
+      layerDef.layer.addTo(leafletMap);
+    }
+    else {
+      leafletMap.removeLayer(layerDef.layer);
+    }
+  };
 
 // TODO: this move to function:
 // Graph Control
@@ -78,7 +137,7 @@ var brush = d3.svg.brush()
         if (!brush.empty()) {
           /*jshint -W064 */
           $scope.window = [ FormatDayDate(brush.extent()[0]), FormatDayDate(brush.extent()[1]) ];
-          reportsLayer.clearLayers();
+          $scope.layers.report.layer.clearLayers();
 
           query.date__lte = FormatDayDate(brush.extent()[1]);
           query.date__gte = FormatDayDate(brush.extent()[0]);
@@ -260,32 +319,6 @@ $scope.replay = function () {
     'lite': true
   };
 
-  $scope.toggleReportsLayer = function (forceValue) {
-    var nextValue = angular.isUndefined(forceValue) ?
-                      !layers.form.report :
-                      forceValue;
-
-    if (nextValue) {
-      reportsLayer.addTo(leafletMap);
-    }
-    else {
-      leafletMap.removeLayer(reportsLayer);
-    }
-  };
-
-  $scope.toggleGISLayer = function (forceValue) {
-    var nextValue = angular.isUndefined(forceValue) ?
-                      !layers.form.gis :
-                      forceValue;
-
-    if (nextValue) {
-      gisLayer.addTo(leafletMap);
-    }
-    else {
-      leafletMap.removeLayer(gisLayer);
-    }
-  };
-
   function refreshReportsLayerData() {
     Reports.list(query).$promise.then(function (resp) {
       resp.results.forEach(function (item) {
@@ -293,11 +326,11 @@ $scope.replay = function () {
           item.reportLocation.coordinates[1],
           item.reportLocation.coordinates[0]
         ];
-        L.marker(location).addTo(reportsLayer);
+        L.marker(location).addTo($scope.layers.report.layer);
       });
 
       // fit bound.
-      var bounds = reportsLayer.getBounds();
+      var bounds = $scope.layers.report.layer.getBounds();
       leafletMap.fitBounds(bounds);
     });
   }
