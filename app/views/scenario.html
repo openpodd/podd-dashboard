@@ -24,7 +24,19 @@
       </div>
 
     </section>
-  </div> 
+  </div>
+
+  <div class="scenario-map-report-list">
+    <ul>
+      <li ng-repeat="marker in reportMarkers" ng-class="{active: marker.isActive}" id="report-item-{{ marker.item.id.split('.')[2] }}">
+        <div class="active-line"></div>
+        <a ng-href="/#/reports/{{ marker.item.id.split('.')[2] }}">
+          <img ng-src="{{ marker.item.firstImageThumbnail }}" alt=""/>
+          <p>เกิดเหตุเมื่อ {{ marker.item.incidentDate }}</p>
+        </a>
+      </li>
+    </ul>
+  </div>
 
   <div id="footer" style="
     position: fixed;

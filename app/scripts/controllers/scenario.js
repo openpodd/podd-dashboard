@@ -7,7 +7,7 @@ angular.module('poddDashboardApp')
   Menu.setActiveMenu('scenario');
 })
 
-.controller('ScenarioCtrl', function ($scope, Menu, Reports, $compile, $interval, $stateParams) {
+.controller('ScenarioCtrl', function ($scope, Menu, Reports, $compile, $interval, $stateParams, $anchorScroll, $location) {
   Menu.setActiveMenu('scenario');
 
   L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
@@ -40,18 +40,8 @@ angular.module('poddDashboardApp')
   });
   // TODO: this can cause:
   // `TypeError: Cannot read property 'childNodes' of undefined`
-  leafletMap.addControl(new LayersControl());
+  // leafletMap.addControl(new LayersControl());
 
-  var query = {
-    // TODO: set default bounds
-    bottom: $stateParams.bottom || 198.1298828125,
-    left: $stateParams.left || 17.764381077782076,
-    top: $stateParams.top || 99.810791015625,
-    right: $stateParams.right || 19.647760955697354,
-    negative: true,
-    page_size: 100,
-    lite: true
-  };
 
   var reportsLayer = new L.featureGroup().addTo(leafletMap),
       gisLayer = new L.WFS({
@@ -96,6 +86,8 @@ var xAxis = d3.svg.axis().scale(x).orient('bottom').tickFormat(FormatMonthDate).
 
 var brushTransition;
 
+$scope.reportMarkers = [];
+
 var brush = d3.svg.brush()
     .x(x)
     .on('brushend', function () {
@@ -107,7 +99,7 @@ var brush = d3.svg.brush()
           // 
           if (!play) {
             reportsLayer.clearLayers();
-            items = [];
+            $scope.reportMarkers = [];
           }
 
           query.date__lte = FormatDayDate(brush.extent()[1]);
@@ -289,16 +281,17 @@ $scope.replay = function () {
 
   var query = {
     // TODO: set default bounds
-    'bottom': 98.1298828125,
-    'left': 17.764381077782076,
-    'top': 99.810791015625,
-    'right': 19.647760955697354,
-    'date__lte': $scope.window[1],
-    'date__gte': $scope.window[0],
-    'negative': true,
-    'page_size': 1000,
-    'lite': true
+    bottom: $stateParams.bottom || 99.810791015625,
+    left: $stateParams.left || 17.764381077782076,
+    top: $stateParams.top || 198.1298828125,
+    right: $stateParams.right || 19.647760955697354,
+    date__lte: $scope.window[1],
+    date__gte: $scope.window[0],
+    negative: true,
+    page_size: 1000,
+    lite: true
   };
+
 
   $scope.toggleReportsLayer = function (forceValue) {
     var nextValue = angular.isUndefined(forceValue) ?
@@ -331,8 +324,7 @@ $scope.replay = function () {
     '#000000', '#000000', '#ffff00', '#00ff00', '#ffff00', 
     '#ffff00', '#00ff00', '#000000', '#00ff00', '#000000']
   
-  var items = []; 
-  
+
   var lastLayer = null;
 
   function refreshReportsLayerData() {
@@ -349,10 +341,45 @@ $scope.replay = function () {
           item.reportLocation.coordinates[0]
         ];
         var marker = L.marker(location, {
-            icon: L.mapbox.marker.icon({
+          icon: L.mapbox.marker.icon({
               'marker-color': colors[item.reportTypeId],
           })
         });
+
+        marker.item = item;
+
+        marker.on('mouseover', function () {
+          var self = this;
+          $scope.$apply(function () {
+            self.isActive = true;
+          })
+        });
+
+        marker.on('mouseout', function () {
+          var self = this;
+          $scope.$apply(function () {
+            self.isActive = false;
+          })
+        });
+
+        marker.on('click', function () {
+          console.log('click');
+          var self = this;
+
+          var newHash = 'report-item-' + self.item.id.split('.')[2]
+
+          $scope.$apply(function () {
+
+            if ($location.hash() !== newHash) {
+              $location.hash(newHash);
+            }
+            else {
+              $anchorScroll();
+            }
+          });
+
+        });
+
         
         // console.log(items.indexOf(item.id) != -1);
 
@@ -361,7 +388,9 @@ $scope.replay = function () {
         // }
 
         marker.addTo(drawnItems);
-        items.push(item.id);
+        $scope.reportMarkers.push(marker);
+        console.log(marker.item);
+        console.log($scope.reportMarkers);
       });
 
 
