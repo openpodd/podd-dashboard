@@ -43,7 +43,10 @@
     "angular-circular-navigation": "~0.2.1",
     "Leaflet-WFST": "~1.0.0",
     "leaflet.wms": "~0.1.0",
-    "d3": "~3.5.9"
+    "d3": "~3.5.9",
+    "bower": "*",
+    "install": "~1.0.4",
+    "leaflet.markercluster": "~0.4.0"
   },
   "resolutions": {
     "angular": "~1.3.15",
