@@ -40,52 +40,55 @@
         </div> <!-- end of .report-images -->
 
         <h2 class="subheading"><i class="fa fa-newspaper-o fa-size-18"></i> ข้อมูลรายงาน</h2>
-         <ul class="pd-report-info">
-             <li>วันที่รายงาน - {{ $parent.report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</li>
-             <li>วันที่เกิดเหตุ - {{ $parent.report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</li>
-             <li>ประเภทรายงาน - {{ $parent.report.reportTypeName }}</li>
-             <li>พื้นที่เกิดเหตุ - <span jump-to-filter name=" 'area' " value="$parent.report.village.address" wrap-with-quote="true"></span></li>
-             <li>โดย - <span jump-to-filter name=" 'createdByName' " value="$parent.report.createdBy"></span></li>
-             <li ng-show="$parent.report.createdByContact">ติดต่อ - {{ $parent.report.createdByContact }}</li>
-             <li ng-show="$parent.report.createdByTelephone">เบอร์โทร - <a href="tel:">{{ $parent.report.createdByTelephone }}</a></li>
-             <li ng-show="$parent.report.createdByProjectMobileNumber">เบอร์โทรของโครงการ - <a href="tel:">{{ $parent.report.createdByProjectMobileNumber }}</a></li>
-         </ul>
+          <ul class="pd-report-info">
+            <li>วันที่รายงาน - {{ $parent.report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</li>
+            <li>วันที่เกิดเหตุ - {{ $parent.report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</li>
+            <li>ประเภทรายงาน - {{ $parent.report.reportTypeName }}</li>
+            <li>พื้นที่เกิดเหตุ - <span jump-to-filter name=" 'area' " value="$parent.report.village.address" wrap-with-quote="true"></span></li>
+            <li>โดย - <span jump-to-filter name=" 'createdByName' " value="$parent.report.createdBy"></span></li>
+            <li ng-show="$parent.report.createdByContact">ติดต่อ - {{ $parent.report.createdByContact }}</li>
+            <li ng-show="$parent.report.createdByTelephone">เบอร์โทร - <a href="tel:">{{ $parent.report.createdByTelephone }}</a></li>
+            <li ng-show="$parent.report.createdByProjectMobileNumber">เบอร์โทรของโครงการ - <a href="tel:">{{ $parent.report.createdByProjectMobileNumber }}</a></li>
+          </ul>
 
 
-            <tabset ng-if="$parent.report" class="pd-tabs" justified="true" >
-              <tab heading="คำอธิบายรายงาน">
-                <!-- <div ng-if="$parent.$parent.report.renderedOriginalFormData"> -->
-                  <div ng-bind-html="$parent.$parent.report.renderedOriginalFormData"></div>
-                <!-- </div> -->
-              </tab>
+          <tabset ng-if="$parent.report" class="pd-tabs" justified="true" >
+            <tab heading="คำอธิบายรายงาน">
+              <!-- <div ng-if="$parent.$parent.report.renderedOriginalFormData"> -->
+                <div ng-bind-html="$parent.$parent.report.renderedOriginalFormData"></div>
+              <!-- </div> -->
+            </tab>
 
-              <tab heading="ข้อมูลแบบสอบถาม">
-                {{ $parent.report }}
-                <table class="table pd-white-table">
-                  <thead>
-                    <tr>
-                      <th>คำถาม</th>
-                      <th>คำตอบ</th>
-                    </tr>
-                  </thead>
+            <tab heading="ข้อมูลแบบสอบถาม">
+              {{ $parent.report }}
+              <table class="table pd-white-table">
+                <thead>
+                  <tr>
+                    <th>คำถาม</th><th>คำตอบ</th>
+                  </tr>
+                </thead>
 
-                  <tbody>
-                    <tr ng-repeat="field in $parent.$parent.report.originalFormData">
-                      <td ng-bind="field.name"></td>
-                      <td jump-to-filter name="field.name" value="field.value"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </tab>
+                <tbody>
+                  <tr ng-repeat="field in $parent.$parent.report.originalFormData">
+                    <td ng-bind="field.name"></td>
+                    <td jump-to-filter name="field.name" value="field.value"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </tab>
 
-              <tab>
-                <tab-heading>
-                  รายงานที่เกี่ยวข้อง
-                  <span class="badge mark-has-follow-up" ng-if="$parent.$parent.$parent.report.parent || $parent.$parent.$parent.report.$hasFollowUp" ng-bind="$parent.$parent.$parent.report.followUpReportsCount"></span>
-                </tab-heading>
-                <div report-follow-up report="$parent.$parent.report"></div>
-              </tab>
-            </tabset>
+            <tab>
+              <tab-heading>
+                รายงานที่เกี่ยวข้อง
+                <span class="badge mark-has-follow-up" ng-if="$parent.$parent.$parent.report.parent || $parent.$parent.$parent.report.$hasFollowUp" ng-bind="$parent.$parent.$parent.report.followUpReportsCount"></span>
+              </tab-heading>
+              <div report-follow-up report="$parent.$parent.report"></div>
+            </tab>
+          </tabset>
+
+          <ul class="pd-report-info">
+            <li><a ng-show="$parent.report.boundary" ng-href="#/scenario?bottom={{ $parent.report.boundary.bottom }}&left={{ $parent.report.boundary.left }}&top={{ $parent.report.boundary.top }}&right={{ $parent.report.boundary.right }}">ดูเหตุการณ์ที่เกิดขึ้นบริเวณนี้</a></li>
+          </ul>
 
 <!--          </div></div> end .report-fields -->
 
@@ -154,6 +157,7 @@
               </tbody>
             </table>
         </div>
+
 
         <div class="report-comments" style="margin-bottom: 10px;">
           <h3 class="tag-title subheading"><i class="fa fa-tags fa-size-18"></i> Tags</h3>

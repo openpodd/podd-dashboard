@@ -7,7 +7,7 @@ angular.module('poddDashboardApp')
   Menu.setActiveMenu('scenario');
 })
 
-.controller('ScenarioCtrl', function ($scope, Menu, Reports, $compile, $interval) {
+.controller('ScenarioCtrl', function ($scope, Menu, Reports, $compile, $interval, $stateParams) {
   Menu.setActiveMenu('scenario');
 
   L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
@@ -26,6 +26,32 @@ angular.module('poddDashboardApp')
   leafletMap.addControl(new L.control.zoom({
     position: 'topleft'
   }));
+
+  // Custom map control.
+  var LayersControl = L.Control.extend({
+    options: {
+      position: 'topright',
+    },
+    onAdd: function () {
+      var $container = $('.layers-control');
+      $compile($container)($scope);
+      return $container[0];
+    }
+  });
+  // TODO: this can cause:
+  // `TypeError: Cannot read property 'childNodes' of undefined`
+  leafletMap.addControl(new LayersControl());
+
+  var query = {
+    // TODO: set default bounds
+    bottom: $stateParams.bottom || 198.1298828125,
+    left: $stateParams.left || 17.764381077782076,
+    top: $stateParams.top || 99.810791015625,
+    right: $stateParams.right || 19.647760955697354,
+    negative: true,
+    page_size: 100,
+    lite: true
+  };
 
   var reportsLayer = new L.featureGroup().addTo(leafletMap),
       gisLayer = new L.WFS({
