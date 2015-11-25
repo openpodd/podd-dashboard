@@ -7,7 +7,7 @@ angular.module('poddDashboardApp')
   Menu.setActiveMenu('scenario');
 })
 
-.controller('ScenarioCtrl', function ($scope, Menu, Reports, $compile, $interval) {
+.controller('ScenarioCtrl', function ($scope, Menu, Reports, $compile, $interval, $stateParams) {
   Menu.setActiveMenu('scenario');
 
   L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
@@ -137,7 +137,10 @@ var brush = d3.svg.brush()
         if (!brush.empty()) {
           /*jshint -W064 */
           $scope.window = [ FormatDayDate(brush.extent()[0]), FormatDayDate(brush.extent()[1]) ];
-          $scope.layers.report.layer.clearLayers();
+          if (!play) {
+            $scope.layers.report.layer.clearLayers();
+            items = [];
+          }
 
           query.date__lte = FormatDayDate(brush.extent()[1]);
           query.date__gte = FormatDayDate(brush.extent()[0]);
@@ -237,10 +240,14 @@ function playDemo() {
   }
 
   var dateStart = brush.extent()[0];
-  dateStart.setDate(dateStart.getDate() + 1);
+  dateStart.setDate(dateStart.getDate() + 7);
 
   var dateEnd = brush.extent()[1];
-  dateEnd.setDate(dateEnd.getDate() + 1);
+  if (dateEnd.getDate() + 7 > parseDate('12/2015')) {
+    dateEnd = parseDate('12/2015');
+  } else {
+    dateEnd.setDate(dateEnd.getDate() + 7);
+  }
 
   if (brush.extent()[1] > parseDate('12/2015')) {
     return;
@@ -258,8 +265,11 @@ function playDemo() {
 
 var demoInterval = null;
 var speed = 1000;
+var play = false;
 
 $scope.play = function () {
+  play = true;
+
   setTimeout(function() {
     playDemo();
     demoInterval = $interval(playDemo, speed);
@@ -279,11 +289,14 @@ $scope.speedUp = function () {
 };
 
 $scope.pause = function () {
+  play = false;
+
   $interval.cancel(demoInterval);
   demoInterval = null;
 };
 
 $scope.replay = function () {
+  play = false;
 
   var diff = Math.floor((brush.extent()[1] - brush.extent()[0]) / (1000*60*60*24));
 
@@ -315,23 +328,59 @@ $scope.replay = function () {
     'date__lte': $scope.window[1],
     'date__gte': $scope.window[0],
     'negative': true,
-    'page_size': 100,
+    'page_size': 1000,
     'lite': true
   };
 
+  var colors = [ '#ff0000',
+    '#ff0000', '#ff0000', '#ff0000', '#ff0000', '#ff0000',
+    '#000000', '#000000', '#ffff00', '#00ff00', '#ffff00',
+    '#ffff00', '#00ff00', '#000000', '#00ff00', '#000000']
+
+  var items = [];
+
+  var lastLayer = null;
+
   function refreshReportsLayerData() {
     Reports.list(query).$promise.then(function (resp) {
+
+      var drawnItems = new L.FeatureGroup();
+      $scope.layers.report.layer.addLayer(drawnItems);
+
+      // var clusterGroup = new L.MarkerClusterGroup().addTo(drawnItems);
+
       resp.results.forEach(function (item) {
         var location = [
           item.reportLocation.coordinates[1],
           item.reportLocation.coordinates[0]
         ];
-        L.marker(location).addTo($scope.layers.report.layer);
+        var marker = L.marker(location, {
+            icon: L.mapbox.marker.icon({
+              'marker-color': colors[item.reportTypeId],
+          })
+        });
+
+        // console.log(items.indexOf(item.id) != -1);
+
+        // if (items.indexOf(item.id) != -1) {
+        //   return;
+        // }
+
+        marker.addTo(drawnItems);
+        items.push(item.id);
       });
+
+
+      if( play && lastLayer !== null) {
+        $scope.layers.report.layer.removeLayer(lastLayer)
+      }
+
+      lastLayer = drawnItems;
 
       // fit bound.
       var bounds = $scope.layers.report.layer.getBounds();
       leafletMap.fitBounds(bounds);
+
     });
   }
   refreshReportsLayerData();
