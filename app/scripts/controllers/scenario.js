@@ -7,7 +7,7 @@ angular.module('poddDashboardApp')
   Menu.setActiveMenu('scenario');
 })
 
-.controller('ScenarioCtrl', function ($scope, Menu, Map, Reports, $compile) {
+.controller('ScenarioCtrl', function ($scope, Menu, Map, Reports, $compile, $stateParams) {
   Menu.setActiveMenu('scenario');
 
   L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
@@ -46,12 +46,12 @@ angular.module('poddDashboardApp')
 
   var query = {
     // TODO: set default bounds
-    bottom: 98.1298828125,
-    left: 17.764381077782076,
-    top: 99.810791015625,
-    right: 19.647760955697354,
+    bottom: $stateParams.bottom || 198.1298828125,
+    left: $stateParams.left || 17.764381077782076,
+    top: $stateParams.top || 99.810791015625,
+    right: $stateParams.right || 19.647760955697354,
     negative: true,
-    'page_size': 10,
+    page_size: 100,
     lite: true
   };
 
