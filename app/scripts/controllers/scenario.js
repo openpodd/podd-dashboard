@@ -27,56 +27,134 @@ angular.module('poddDashboardApp')
     position: 'topleft'
   }));
 
-  // Custom map control.
-  var LayersControl = L.Control.extend({
-    options: {
-      position: 'topright',
+  var defaultIconOptions = {
+    className: 'scene-marker-wrapper',
+    iconSize: [ 48, 48 ],
+    iconAnchor: [ 24, 24 ]
+  };
+  var getIconType = function (iconType) {
+    return angular.extend({}, defaultIconOptions, {
+      html: '<div class="scene-marker">' +
+              '<div class="marker-icon marker-icon-' + iconType + '-wrapper">' +
+                '<div class="marker-icon-animal marker-icon-' + iconType + '"></div>' +
+              '</div>' +
+            '</div>'
+    });
+  };
+  var icons = {
+    pig: L.divIcon(getIconType('pig')),
+    dog: L.divIcon(getIconType('dog')),
+    buffalo: L.divIcon(getIconType('buffalo')),
+    cow: L.divIcon(getIconType('cow')),
+    chicken: L.divIcon(getIconType('chicken')),
+    sheep: L.divIcon(getIconType('sheep'))
+  };
+
+  var getGISLayer = function (typeName, iconName) {
+    return new L.WFS({
+      url: config.GIS_BASEPATH,
+      typeNS: 'poddgis_vet',
+      typeName: typeName,
+      geometryField: 'geom',
+      crs: L.CRS.EPSG4326
+    }, new L.Format.GeoJSON({
+      crs: L.CRS.EPSG4326,
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, { icon: icons[iconName] });
+      }
+    }));
+  };
+
+  $scope.layers = {
+    report: {
+      name: 'Reports',
+      layer: new L.featureGroup().addTo(leafletMap),
+      show: true
     },
-    onAdd: function () {
-      var $container = $('.layers-control');
-      $compile($container)($scope);
-      return $container[0];
+    gis: {
+      pig: {
+        name: 'Pig Farm',
+        layer: getGISLayer('pig_farm', 'pig').addTo(leafletMap),
+        show: true
+      },
+      cow: {
+        name: 'Cow & Buffalo Farm',
+        layer: getGISLayer('cowsandbuffalos_farm', 'cow').addTo(leafletMap),
+        show: true
+      },
+      dog: {
+        name: 'Dog Farm',
+        layer: getGISLayer('dog_farm', 'dog').addTo(leafletMap),
+        show: true
+      },
+      chicken: {
+        name: 'Chicken Farm',
+        layer: getGISLayer('poultry_farm', 'chicken').addTo(leafletMap),
+        show: true
+      }
     }
+  };
+
+  var bounds = $scope.layers.report.layer.getBounds();
+
+  leafletMap.on('moveend', function(e) {
+     bounds = leafletMap.getBounds();
+     query.top = bounds.getWest();
+     query.right = bounds.getNorth();
+     query.left = bounds.getSouth();
+     query.bottom = bounds.getEast();
+
+     $scope.layers.report.layer.clearLayers();
+     refreshReportsLayerDataWithSummary();
+     // console.log(bounds);
   });
+
   // TODO: this can cause:
   // `TypeError: Cannot read property 'childNodes' of undefined`
   // leafletMap.addControl(new LayersControl());
 
 
-  var reportsLayer = new L.featureGroup().addTo(leafletMap),
-      gisLayer = new L.WFS({
-        url: config.GIS_BASEPATH,
-        typeNS: 'poddgis_vet',
-        typeName: 'water_body_cm',
-        // typeName: 'Road',
-        geometryField: 'geom',
-        crs: L.CRS.EPSG4326
-      }).addTo(leafletMap);
+  $scope.toggleLayer = function (layerDef, forceValue) {
+    var nextValue = angular.isUndefined(forceValue) ?
+                      !layerDef.show :
+                      forceValue;
 
-  var layers = {
-    form: {
-      report: true,
-      gis: true
-    },
-    layers: {
-      report: reportsLayer,
-      gisLayer: gisLayer
+    if (nextValue) {
+      layerDef.layer.addTo(leafletMap);
+    }
+    else {
+      leafletMap.removeLayer(layerDef.layer);
     }
   };
-  $scope.layers = layers;
 
 // TODO: this move to function:
 // Graph Control
 var parseDate = d3.time.format('%m/%Y').parse;
+var parseDayDate = d3.time.format('%Y-%m-%d').parse;
 var FormatMonthDate = d3.time.format('%b %Y');
 var FormatDayDate = d3.time.format('%Y-%m-%d');
 
 var margin = {top: 10, right: 50, bottom: 20, left: 20},
-    defaultExtent = [parseDate('01/2015'), parseDate('12/2015')],
+    defaultExtent = [parseDate('11/2015'), parseDate('12/2015')],
     width = 800 - margin.left - margin.right,
     height = 100 - margin.top - margin.bottom;
 
 $scope.window = [ FormatDayDate(defaultExtent[0]), FormatDayDate(defaultExtent[1]) ];
+
+
+  var query = {
+    // TODO: set default bounds
+    'bottom': $stateParams.bottom || 198.1298828125,
+    'left': $stateParams.left || 17.764381077782076,
+    'top': $stateParams.top || 99.810791015625,
+    'right': $stateParams.right || 19.647760955697354,
+    'date__lte': $scope.window[1],
+    'date__gte': $scope.window[0],
+    'negative': true,
+    'page_size': 1000,
+    'lite': true
+  };
+
 
 var x = d3.time.scale().range([0, width]),
     y = d3.scale.linear().range([height, 0]);
@@ -90,25 +168,27 @@ $scope.reportMarkers = [];
 
 var brush = d3.svg.brush()
     .x(x)
+    .extent(defaultExtent)
     .on('brushend', function () {
         brushTransition = d3.select(this);
 
         if (!brush.empty()) {
           /*jshint -W064 */
           $scope.window = [ FormatDayDate(brush.extent()[0]), FormatDayDate(brush.extent()[1]) ];
-          // 
           if (!play) {
-            reportsLayer.clearLayers();
+            $scope.layers.report.layer.clearLayers();
             $scope.reportMarkers = [];
           }
+
 
           query.date__lte = FormatDayDate(brush.extent()[1]);
           query.date__gte = FormatDayDate(brush.extent()[0]);
           /*jshint: +W064 */
 
-          refreshReportsLayerData();
+          refreshReportsLayerData(false);
         }
 
+        d3.select(this).call(brush.extent(brush.extent()));
       }
     );
 
@@ -119,8 +199,12 @@ var area = d3.svg.area()
     })
     .y0(height)
     .y1(function(d) {
-      return y(d.negative);
+      return y(d.count);
     });
+
+var line = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.count); });
 
 var svg = d3.select('#chart').append('svg')
     .attr('width', width + margin.left + margin.right)
@@ -136,51 +220,41 @@ var context = svg.append('g')
     .attr('class', 'context')
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-var read = function() {
-
-  var tempData = [
-    { 'date': '01/2015', 'negative': 1 },
-    { 'date': '02/2015', 'negative': 5 },
-    { 'date': '03/2015', 'negative': 5 },
-    { 'date': '04/2015', 'negative': 3 },
-    { 'date': '05/2015', 'negative': 1 },
-    { 'date': '06/2015', 'negative': 10 },
-    { 'date': '07/2015', 'negative': 0 },
-    { 'date': '08/2015', 'negative': 3 },
-    { 'date': '09/2015', 'negative': 1 },
-    { 'date': '10/2015', 'negative': 4 },
-    { 'date': '11/2015', 'negative': 5 },
-    { 'date': '12/2015', 'negative': 6 },
-  ];
+var read = function(tempData) {
 
   var data = [];
 
   tempData.forEach(function(d) {
     data.push({
-      'date': parseDate(d.date),
-      'negative': d.negative
+      'date': parseDayDate(d.date),
+      'count': d.count
     });
   });
 
   x.domain(d3.extent(data.map(function(d) { return d.date; })));
-  y.domain([0, d3.max(data.map(function(d) { return d.negative; }))]);
+  y.domain([0, d3.max(data.map(function(d) { return d.count; }))]);
 
-  context.append('path')
+  // context.append('path')
+  //     .datum(data)
+  //     .attr('class', 'area')
+  //     .attr('d', area);
+
+  context.append("path")
       .datum(data)
-      .attr('class', 'area')
-      .attr('d', area);
+      .attr("class", "line")
+      .attr("d", line);
 
   context.append('g')
       .attr('class', 'x axis')
       .attr('transform', 'translate(0,' + height + ')')
       .call(xAxis);
 
-  context.append('text')
-    .attr('class', 'x label')
-    .attr('text-anchor', 'end')
-    .attr('x', width - 5)
-    .attr('y', height - 6)
-    .text('number of negative reports per month (times)');
+  // context.append('text')
+  //   .attr('class', 'x label')
+  //   .attr('text-anchor', 'end')
+  //   .attr('x', width - 5)
+  //   .attr('y', height - 6)
+  //   .text('number of negative reports per month (times)');
 
   context.append('g')
       .attr('class', 'x brush')
@@ -190,8 +264,6 @@ var read = function() {
       .attr('y', -6)
       .attr('height', height + 7);
 };
-
-read();
 
 function playDemo() {
 
@@ -203,15 +275,11 @@ function playDemo() {
   dateStart.setDate(dateStart.getDate() + 7);
 
   var dateEnd = brush.extent()[1];
-  if (dateEnd.getDate() + 7 > parseDate('12/2015')) {
-    dateEnd = parseDate('12/2015');
-  } else {
-    dateEnd.setDate(dateEnd.getDate() + 7);
-  }
+  dateEnd.setDate(dateEnd.getDate() + 7);
 
-  if (brush.extent()[1] > parseDate('12/2015')) {
-    return;
-  }
+  if (dateEnd.getTime() > parseDate('12/2015').getTime()) {
+    dateEnd = parseDate('12/2015');
+  } 
 
   var targetExtent = [dateStart, dateEnd];
 
@@ -220,11 +288,15 @@ function playDemo() {
       .call(brush.extent(targetExtent))
       .call(brush.event);
 
-  return;
+  if (dateEnd.getTime() == parseDate('12/2015').getTime()) {
+    $interval.cancel(demoInterval);
+    demoInterval = null;
+  }
+
 }
 
 var demoInterval = null;
-var speed = 1000;
+var speed = 500;
 var play = false;
 
 $scope.play = function () {
@@ -274,10 +346,15 @@ $scope.replay = function () {
 
   $interval.cancel(demoInterval);
   demoInterval = null;
+
 };
 
 // End Graph Control
 
+  var colors = [ '#ff0000',
+    '#ff0000', '#ff0000', '#ff0000', '#ff0000', '#ff0000',
+    '#000000', '#000000', '#ffff00', '#00ff00', '#ffff00',
+    '#ffff00', '#00ff00', '#000000', '#00ff00', '#000000']
 
   var query = {
     // TODO: set default bounds
@@ -298,24 +375,16 @@ $scope.replay = function () {
                       !layers.form.report :
                       forceValue;
 
-    if (nextValue) {
-      reportsLayer.addTo(leafletMap);
-    }
-    else {
-      leafletMap.removeLayer(reportsLayer);
-    }
-  };
+  var lastLayer = null;
 
-  $scope.toggleGISLayer = function (forceValue) {
-    var nextValue = angular.isUndefined(forceValue) ?
-                      !layers.form.gis :
-                      forceValue;
+  function refreshReportsLayerData(refreshGraph) {
 
-    if (nextValue) {
-      gisLayer.addTo(leafletMap);
-    }
-    else {
-      leafletMap.removeLayer(gisLayer);
+    if (refreshGraph) {
+      query.date__gte = FormatDayDate(parseDate('01/2015'));
+      query.date__lte = FormatDayDate(parseDate('12/2015'));
+      query.withSummary = true;
+    } else {
+      delete query.withSummary;
     }
   };
 
@@ -327,11 +396,10 @@ $scope.replay = function () {
 
   var lastLayer = null;
 
-  function refreshReportsLayerData() {
     Reports.list(query).$promise.then(function (resp) {
 
       var drawnItems = new L.FeatureGroup();
-      reportsLayer.addLayer(drawnItems);
+      $scope.layers.report.layer.addLayer(drawnItems);
 
       // var clusterGroup = new L.MarkerClusterGroup().addTo(drawnItems);
 
@@ -393,19 +461,44 @@ $scope.replay = function () {
         console.log($scope.reportMarkers);
       });
 
-
       if( play && lastLayer !== null) {
-        reportsLayer.removeLayer(lastLayer)
+        $scope.layers.report.layer.removeLayer(lastLayer)
       }
 
       lastLayer = drawnItems;
 
       // fit bound.
-      var bounds = reportsLayer.getBounds();
       leafletMap.fitBounds(bounds);
+
+      if (refreshGraph) {
+        svg.remove();
+        svg = d3.select('#chart').append('svg')
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom);
+
+        svg.append('defs').append('clipPath')
+            .attr('id', 'clip')
+          .append('rect')
+            .attr('width', width)
+            .attr('height', height);
+
+        context = svg.append('g')
+            .attr('class', 'context')
+            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+        // console.log(resp.summary);
+        if (resp.summary)
+         read(resp.summary);
+      }
 
     });
   }
-  refreshReportsLayerData();
+
+  function refreshReportsLayerDataWithSummary() {
+    console.log('refresh graph');
+    refreshReportsLayerData(true);
+  }
+
+  // refreshReportsLayerDataWithSummary();
 
 });

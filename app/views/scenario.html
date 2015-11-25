@@ -1,24 +1,47 @@
 <div class="container" id="scenario-map" ng-controller="ScenarioCtrl">
-  
+
   <div id="map"></div>
 
   <div class="layers-control">
     <section class="group-1">
-      <h3>Layers</h3>
-
       <div>
         <label>
-          <input type="checkbox" ng-model="layers.form.report" ng-change="toggleReportsLayer(layers.form.report)">
+          <input type="checkbox" ng-model="layers.report.show" ng-change="toggleLayer(layers.report, layers.report.show)">
           Report
         </label>
       </div>
 
-      <div>
-        <label>
-          <input type="checkbox" ng-model="layers.form.gis" ng-change="toggleGISLayer(layers.form.gis)">
-          GIS
-        </label>
+      <div class="scene-gis-control">
+        <h4>GIS Data</h4>
+        <div>
+          <label>
+            <input type="checkbox" ng-model="layers.gis.pig.show" ng-change="toggleLayer(layers.gis.pig, layers.gis.pig.show)">
+            {{ layers.gis.pig.name }}
+          </label>
+        </div>
+
+        <div>
+          <label>
+            <input type="checkbox" ng-model="layers.gis.cow.show" ng-change="toggleLayer(layers.gis.cow, layers.gis.cow.show)">
+            {{ layers.gis.cow.name }}
+          </label>
+        </div>
+
+        <div>
+          <label>
+            <input type="checkbox" ng-model="layers.gis.dog.show" ng-change="toggleLayer(layers.gis.dog, layers.gis.dog.show)">
+            {{ layers.gis.dog.name }}
+          </label>
+        </div>
+
+        <div>
+          <label>
+            <input type="checkbox" ng-model="layers.gis.chicken.show" ng-change="toggleLayer(layers.gis.chicken, layers.gis.chicken.show)">
+            {{ layers.gis.chicken.name }}
+          </label>
+        </div>
       </div>
+
       <div>
 
       </div>
@@ -37,6 +60,7 @@
       </li>
     </ul>
   </div>
+
 
   <div id="footer" style="
     position: fixed;
