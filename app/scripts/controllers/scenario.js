@@ -95,6 +95,20 @@ angular.module('poddDashboardApp')
     }
   };
 
+  var bounds = $scope.layers.report.layer.getBounds();
+
+  leafletMap.on('moveend', function(e) {
+     bounds = leafletMap.getBounds();
+     query.top = bounds.getWest();
+     query.right = bounds.getNorth();
+     query.left = bounds.getSouth();
+     query.bottom = bounds.getEast();
+
+     $scope.layers.report.layer.clearLayers();
+     refreshReportsLayerDataWithSummary();
+     // console.log(bounds);
+  });
+
   $scope.toggleLayer = function (layerDef, forceValue) {
     var nextValue = angular.isUndefined(forceValue) ?
                       !layerDef.show :
@@ -111,15 +125,31 @@ angular.module('poddDashboardApp')
 // TODO: this move to function:
 // Graph Control
 var parseDate = d3.time.format('%m/%Y').parse;
+var parseDayDate = d3.time.format('%Y-%m-%d').parse;
 var FormatMonthDate = d3.time.format('%b %Y');
 var FormatDayDate = d3.time.format('%Y-%m-%d');
 
 var margin = {top: 10, right: 50, bottom: 20, left: 20},
-    defaultExtent = [parseDate('01/2015'), parseDate('12/2015')],
+    defaultExtent = [parseDate('11/2015'), parseDate('12/2015')],
     width = 800 - margin.left - margin.right,
     height = 100 - margin.top - margin.bottom;
 
 $scope.window = [ FormatDayDate(defaultExtent[0]), FormatDayDate(defaultExtent[1]) ];
+
+
+  var query = {
+    // TODO: set default bounds
+    'bottom': $stateParams.bottom || 198.1298828125,
+    'left': $stateParams.left || 17.764381077782076,
+    'top': $stateParams.top || 99.810791015625,
+    'right': $stateParams.right || 19.647760955697354,
+    'date__lte': $scope.window[1],
+    'date__gte': $scope.window[0],
+    'negative': true,
+    'page_size': 1000,
+    'lite': true
+  };
+
 
 var x = d3.time.scale().range([0, width]),
     y = d3.scale.linear().range([height, 0]);
@@ -131,6 +161,7 @@ var brushTransition;
 
 var brush = d3.svg.brush()
     .x(x)
+    .extent(defaultExtent)
     .on('brushend', function () {
         brushTransition = d3.select(this);
 
@@ -142,13 +173,15 @@ var brush = d3.svg.brush()
             items = [];
           }
 
+
           query.date__lte = FormatDayDate(brush.extent()[1]);
           query.date__gte = FormatDayDate(brush.extent()[0]);
           /*jshint: +W064 */
 
-          refreshReportsLayerData();
+          refreshReportsLayerData(false);
         }
 
+        d3.select(this).call(brush.extent(brush.extent()));
       }
     );
 
@@ -159,8 +192,12 @@ var area = d3.svg.area()
     })
     .y0(height)
     .y1(function(d) {
-      return y(d.negative);
+      return y(d.count);
     });
+
+var line = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.count); });
 
 var svg = d3.select('#chart').append('svg')
     .attr('width', width + margin.left + margin.right)
@@ -176,51 +213,41 @@ var context = svg.append('g')
     .attr('class', 'context')
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-var read = function() {
-
-  var tempData = [
-    { 'date': '01/2015', 'negative': 1 },
-    { 'date': '02/2015', 'negative': 5 },
-    { 'date': '03/2015', 'negative': 5 },
-    { 'date': '04/2015', 'negative': 3 },
-    { 'date': '05/2015', 'negative': 1 },
-    { 'date': '06/2015', 'negative': 10 },
-    { 'date': '07/2015', 'negative': 0 },
-    { 'date': '08/2015', 'negative': 3 },
-    { 'date': '09/2015', 'negative': 1 },
-    { 'date': '10/2015', 'negative': 4 },
-    { 'date': '11/2015', 'negative': 5 },
-    { 'date': '12/2015', 'negative': 6 },
-  ];
+var read = function(tempData) {
 
   var data = [];
 
   tempData.forEach(function(d) {
     data.push({
-      'date': parseDate(d.date),
-      'negative': d.negative
+      'date': parseDayDate(d.date),
+      'count': d.count
     });
   });
 
   x.domain(d3.extent(data.map(function(d) { return d.date; })));
-  y.domain([0, d3.max(data.map(function(d) { return d.negative; }))]);
+  y.domain([0, d3.max(data.map(function(d) { return d.count; }))]);
 
-  context.append('path')
+  // context.append('path')
+  //     .datum(data)
+  //     .attr('class', 'area')
+  //     .attr('d', area);
+
+  context.append("path")
       .datum(data)
-      .attr('class', 'area')
-      .attr('d', area);
+      .attr("class", "line")
+      .attr("d", line);
 
   context.append('g')
       .attr('class', 'x axis')
       .attr('transform', 'translate(0,' + height + ')')
       .call(xAxis);
 
-  context.append('text')
-    .attr('class', 'x label')
-    .attr('text-anchor', 'end')
-    .attr('x', width - 5)
-    .attr('y', height - 6)
-    .text('number of negative reports per month (times)');
+  // context.append('text')
+  //   .attr('class', 'x label')
+  //   .attr('text-anchor', 'end')
+  //   .attr('x', width - 5)
+  //   .attr('y', height - 6)
+  //   .text('number of negative reports per month (times)');
 
   context.append('g')
       .attr('class', 'x brush')
@@ -230,8 +257,6 @@ var read = function() {
       .attr('y', -6)
       .attr('height', height + 7);
 };
-
-read();
 
 function playDemo() {
 
@@ -243,15 +268,11 @@ function playDemo() {
   dateStart.setDate(dateStart.getDate() + 7);
 
   var dateEnd = brush.extent()[1];
-  if (dateEnd.getDate() + 7 > parseDate('12/2015')) {
-    dateEnd = parseDate('12/2015');
-  } else {
-    dateEnd.setDate(dateEnd.getDate() + 7);
-  }
+  dateEnd.setDate(dateEnd.getDate() + 7);
 
-  if (brush.extent()[1] > parseDate('12/2015')) {
-    return;
-  }
+  if (dateEnd.getTime() > parseDate('12/2015').getTime()) {
+    dateEnd = parseDate('12/2015');
+  } 
 
   var targetExtent = [dateStart, dateEnd];
 
@@ -260,11 +281,15 @@ function playDemo() {
       .call(brush.extent(targetExtent))
       .call(brush.event);
 
-  return;
+  if (dateEnd.getTime() == parseDate('12/2015').getTime()) {
+    $interval.cancel(demoInterval);
+    demoInterval = null;
+  }
+
 }
 
 var demoInterval = null;
-var speed = 1000;
+var speed = 500;
 var play = false;
 
 $scope.play = function () {
@@ -314,23 +339,10 @@ $scope.replay = function () {
 
   $interval.cancel(demoInterval);
   demoInterval = null;
+
 };
 
 // End Graph Control
-
-
-  var query = {
-    // TODO: set default bounds
-    'bottom': 98.1298828125,
-    'left': 17.764381077782076,
-    'top': 99.810791015625,
-    'right': 19.647760955697354,
-    'date__lte': $scope.window[1],
-    'date__gte': $scope.window[0],
-    'negative': true,
-    'page_size': 1000,
-    'lite': true
-  };
 
   var colors = [ '#ff0000',
     '#ff0000', '#ff0000', '#ff0000', '#ff0000', '#ff0000',
@@ -341,7 +353,16 @@ $scope.replay = function () {
 
   var lastLayer = null;
 
-  function refreshReportsLayerData() {
+  function refreshReportsLayerData(refreshGraph) {
+
+    if (refreshGraph) {
+      query.date__gte = FormatDayDate(parseDate('01/2015'));
+      query.date__lte = FormatDayDate(parseDate('12/2015'));
+      query.withSummary = true;
+    } else {
+      delete query.withSummary;
+    }
+
     Reports.list(query).$promise.then(function (resp) {
 
       var drawnItems = new L.FeatureGroup();
@@ -360,16 +381,9 @@ $scope.replay = function () {
           })
         });
 
-        // console.log(items.indexOf(item.id) != -1);
-
-        // if (items.indexOf(item.id) != -1) {
-        //   return;
-        // }
-
         marker.addTo(drawnItems);
         items.push(item.id);
       });
-
 
       if( play && lastLayer !== null) {
         $scope.layers.report.layer.removeLayer(lastLayer)
@@ -378,11 +392,37 @@ $scope.replay = function () {
       lastLayer = drawnItems;
 
       // fit bound.
-      var bounds = $scope.layers.report.layer.getBounds();
       leafletMap.fitBounds(bounds);
+
+      if (refreshGraph) {
+        svg.remove();
+        svg = d3.select('#chart').append('svg')
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom);
+
+        svg.append('defs').append('clipPath')
+            .attr('id', 'clip')
+          .append('rect')
+            .attr('width', width)
+            .attr('height', height);
+
+        context = svg.append('g')
+            .attr('class', 'context')
+            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+        // console.log(resp.summary);
+        if (resp.summary)
+         read(resp.summary);
+      }
 
     });
   }
-  refreshReportsLayerData();
+
+  function refreshReportsLayerDataWithSummary() {
+    console.log('refresh graph');
+    refreshReportsLayerData(true);
+  }
+
+  // refreshReportsLayerDataWithSummary();
 
 });
