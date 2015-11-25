@@ -1,7 +1,12 @@
 .layers-control {
+  position: absolute;
+  top: 16px;
+  right: 16px;
   width: 300px;
   height: 200px;
+  padding: 8px;
   background-color: white;
+  z-index: 999;
 }
 
 #scenario-map {
@@ -42,5 +47,3 @@ menu {
   text-align: center;
   position: relative;
 }
-
-

@@ -1,4 +1,4 @@
-/* global L */
+/* global L, d3 */
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -7,43 +7,25 @@ angular.module('poddDashboardApp')
   Menu.setActiveMenu('scenario');
 })
 
-.controller('ScenarioCtrl', function ($scope, Menu, Map, Reports, $compile, $interval) {
+.controller('ScenarioCtrl', function ($scope, Menu, Reports, $compile, $interval) {
   Menu.setActiveMenu('scenario');
 
   L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
 
 
   var options = {
+    center: [13.791177699, 100.58814079],
+    zoomLevel: 15,
     zoomControl: false
   };
   var leafletMap = config.MAPBOX_MAP_ID ?
                       L.mapbox.map('map', config.MAPBOX_MAP_ID, options) :
                       L.map('map', options);
 
-  // TODO: set default center to CNX
-  var center = [13.791177699, 100.58814079],
-      zoomLevel = 15,
-      map = new Map( leafletMap.setView(center, zoomLevel) );
-
   // Zoom control.
   leafletMap.addControl(new L.control.zoom({
     position: 'topleft'
   }));
-  // Custom map control.
-  var LayersControl = L.Control.extend({
-    options: {
-      position: 'topright',
-    },
-    onAdd: function () {
-      var $container = $('.layers-control');
-      $compile($container)($scope);
-      return $container[0];
-    }
-  });
-
-  // TODO: this can cause:
-  // `TypeError: Cannot read property 'childNodes' of undefined`
-  // leafletMap.addControl(new LayersControl());
 
   var reportsLayer = new L.featureGroup().addTo(leafletMap),
       gisLayer = new L.WFS({
@@ -93,27 +75,29 @@ var brush = d3.svg.brush()
     .on('brushend', function () {
         brushTransition = d3.select(this);
 
-        if (!brush.empty()) { 
+        if (!brush.empty()) {
+          /*jshint -W064 */
           $scope.window = [ FormatDayDate(brush.extent()[0]), FormatDayDate(brush.extent()[1]) ];
           reportsLayer.clearLayers();
-          
-          query['date__lte'] = FormatDayDate(brush.extent()[1]);
-          query['date__gte'] = FormatDayDate(brush.extent()[0]);
-          
+
+          query.date__lte = FormatDayDate(brush.extent()[1]);
+          query.date__gte = FormatDayDate(brush.extent()[0]);
+          /*jshint: +W064 */
+
           refreshReportsLayerData();
         }
-       
+
       }
     );
 
 var area = d3.svg.area()
     .interpolate('monotone')
-    .x(function(d) { 
-      return x(d.date); 
+    .x(function(d) {
+      return x(d.date);
     })
     .y0(height)
-    .y1(function(d) { 
-      return y(d.negative); 
+    .y1(function(d) {
+      return y(d.negative);
     });
 
 var svg = d3.select('#chart').append('svg')
@@ -188,7 +172,7 @@ var read = function() {
 read();
 
 function playDemo() {
-    
+
   if (brush.empty()) {
     return;
   }
@@ -243,7 +227,7 @@ $scope.pause = function () {
 $scope.replay = function () {
 
   var diff = Math.floor((brush.extent()[1] - brush.extent()[0]) / (1000*60*60*24));
-  
+
   var dateStart = parseDate('01/2015');
 
   var dateEnd = parseDate('01/2015');
