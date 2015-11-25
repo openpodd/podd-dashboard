@@ -1,7 +1,12 @@
 .layers-control {
+  position: absolute;
+  top: 16px;
+  right: 16px;
   width: 300px;
   height: 200px;
+  padding: 8px;
   background-color: white;
+  z-index: 999;
 }
 
 #scenario-map {
@@ -12,4 +17,33 @@
   .leaflet-right {
     right: 0;
   }
+}
+
+svg {
+  font: 10px sans-serif;
+}
+
+.area {
+  fill: steelblue;
+  clip-path: url(#clip);
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.brush .extent {
+  stroke: #fff;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
+
+
+menu {
+  margin: 2em auto;
+  text-align: center;
+  position: relative;
 }

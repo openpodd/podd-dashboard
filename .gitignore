@@ -3,5 +3,6 @@ dist
 .tmp
 .sass-cache
 .idea
+.idea/workspace.xml
 bower_components
 config.js
