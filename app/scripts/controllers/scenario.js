@@ -108,7 +108,6 @@ angular.module('poddDashboardApp')
      refreshReportsLayerDataWithSummary();
      // console.log(bounds);
   });
-
   // TODO: this can cause:
   // `TypeError: Cannot read property 'childNodes' of undefined`
   // leafletMap.addControl(new LayersControl());
@@ -178,6 +177,7 @@ var brush = d3.svg.brush()
           if (!play) {
             $scope.layers.report.layer.clearLayers();
             $scope.reportMarkers = [];
+
           }
 
 
@@ -371,9 +371,10 @@ $scope.replay = function () {
 
 
   $scope.toggleReportsLayer = function (forceValue) {
-    var nextValue = angular.isUndefined(forceValue) ?
-                      !layers.form.report :
-                      forceValue;
+      var nextValue = angular.isUndefined(forceValue) ?
+          !layers.form.report :
+          forceValue;
+  }
 
   var lastLayer = null;
 
@@ -386,15 +387,6 @@ $scope.replay = function () {
     } else {
       delete query.withSummary;
     }
-  };
-
-  var colors = [ '#ff0000', 
-    '#ff0000', '#ff0000', '#ff0000', '#ff0000', '#ff0000',
-    '#000000', '#000000', '#ffff00', '#00ff00', '#ffff00', 
-    '#ffff00', '#00ff00', '#000000', '#00ff00', '#000000']
-  
-
-  var lastLayer = null;
 
     Reports.list(query).$promise.then(function (resp) {
 
@@ -454,6 +446,7 @@ $scope.replay = function () {
         // if (items.indexOf(item.id) != -1) {
         //   return;
         // }
+
 
         marker.addTo(drawnItems);
         $scope.reportMarkers.push(marker);

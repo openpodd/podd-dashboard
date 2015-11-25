@@ -56,6 +56,7 @@
         <a ng-href="/#/reports/{{ marker.item.id.split('.')[2] }}">
           <img ng-src="{{ marker.item.firstImageThumbnail }}" alt=""/>
           <p>เกิดเหตุเมื่อ {{ marker.item.incidentDate }}</p>
+          <p ng-bind-html="marker.item.formDataExplanation"></p>
         </a>
       </li>
     </ul>
