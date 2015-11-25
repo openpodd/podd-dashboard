@@ -56,7 +56,14 @@ angular.module('poddDashboardApp')
   };
 
   var reportsLayer = new L.featureGroup().addTo(leafletMap),
-      gisLayer = new L.featureGroup().addTo(leafletMap);
+      gisLayer = new L.WFS({
+        url: config.GIS_BASEPATH,
+        typeNS: 'poddgis_vet',
+        typeName: 'water_body_cm',
+        // typeName: 'Road',
+        geometryField: 'geom',
+        crs: L.CRS.EPSG4326
+      }).addTo(leafletMap);
 
   var layers = {
     form: {
