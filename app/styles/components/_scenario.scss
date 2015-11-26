@@ -1,12 +1,13 @@
 .layers-control {
   position: absolute;
-  top: 16px;
-  right: 24%;
-  width: 300px;
-  height: 200px;
-  padding: 8px;
-  background-color: white;
+  top: 10px;
+  right: 20%;
+  padding: 15px 30px 15px 20px;
+  background-color: rgba(128, 128, 128, 0.2);
   z-index: 999;
+  margin-right: 10px;
+  border-bottom: solid 1px #DDD;
+  border-left: solid 1px #DDD;
 }
 
 
@@ -17,6 +18,58 @@
   }
   .leaflet-right {
     right: 0;
+  }
+
+
+  .leaflet-popup-content {
+    margin: 0;
+    padding: 12px 15px;
+    font-size: 13px;
+    line-height: 18px;
+
+    p {
+      font-size: 13px;
+      line-height: 18px;
+      margin: 0;
+    }
+  }
+
+  #footer {
+    position: absolute;
+    overflow: hidden;
+    left: 0;
+    padding-left: 50px;
+    bottom: 0;
+    height: 100px;
+    width:80%;
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  #map {
+    left: 0;
+    padding-left: 50px;
+    right: auto;
+    width: 80%;
+
+    .leaflet-control-attribution {
+      display: none;
+    }
+  }
+
+}
+
+#timeline-wrapper {
+  padding: 20px;
+
+  strong  {
+    font-size: 12px;
+  }
+  menu {
+    font-size: 75%;
+    padding: 0;
+    margin: 0 15px;
+    display: inline-block;
+
   }
 }
 
@@ -40,6 +93,7 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;
+
   }
 
   .marker-icon-pig-wrapper {
@@ -67,6 +121,27 @@
     background-image: url(../../images/markers/ic2-chicken.png);
   }
 }
+.scene-report-marker {
+  // position: absolute;
+  // top: 6px;
+  // left: 6px;
+  width: 39px;
+  height: 52px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+
+  &.scene-report-marker-human {
+    background-image: url(../../images/markers/pin-human.png);
+  }
+  &.scene-report-marker-animal {
+    background-image: url(../../images/markers/pin-animal.png);
+  }
+  &.scene-report-marker-environment {
+    background-image: url(../../images/markers/pin-environment.png);
+  }
+}
+
 
 
 svg {
@@ -155,18 +230,5 @@ menu {
     height: 100%;
     background-color: #006DCC;
     display: none;
-  }
-}
-
-#scenario-map .leaflet-popup-content {
-  margin: 0;
-  padding: 12px 15px;
-  font-size: 13px;
-  line-height: 18px;
-
-  p {
-    font-size: 13px;
-    line-height: 18px;
-    margin: 0;
   }
 }

@@ -3,5 +3,8 @@ var config = {
     SOCKETIO_BASEPATH: 'http://localhost:8888',
     MAPBOX_ACCESS_TOKEN: '',
     MAPBOX_MAP_ID: '',
-    GA_TRACKING_ID: 'UA-xxxxxxx-x'
+    GA_TRACKING_ID: 'UA-xxxxxxx-x',
+    GIS_BASEPATH: 'http://gis.cmonehealth.org/geoserver/wfs',
+    GIS_USERNAME: 'admin',
+    GIS_PASSWORD: 'xxxxx'
 };
