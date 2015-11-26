@@ -50,13 +50,21 @@
   </div>
 
   <div class="scenario-map-report-list">
-    <ul>
-      <li ng-repeat="marker in reportMarkers" ng-class="{active: marker.isActive}" id="report-item-{{ marker.item.id.split('.')[2] }}">
+    <div loader-spinner ng-if="loadingReportMarkers"></div>
+    <ul ng-hide="loadingReportMarkers || playing">
+      <li ng-repeat="marker in reportMarkers"
+          ng-class="{active: marker.isActive}"
+          id="report-item-{{ marker.item.id.split('.')[2] }}"
+          ng-mouseenter="marker.isActive = true"
+          ng-mouseleave="marker.isActive = false"
+          class="report-item">
+
         <div class="active-line"></div>
         <a ng-href="/#/reports/{{ marker.item.id.split('.')[2] }}">
-          <img ng-src="{{ marker.item.firstImageThumbnail }}" alt=""/>
-          <p>เกิดเหตุเมื่อ {{ marker.item.incidentDate }}</p>
+          <p ng-if="marker.item.firstImageThumbnail"><img  ng-src="{{ marker.item.firstImageThumbnail }}" alt=""/></p>
           <p ng-bind-html="marker.item.formDataExplanation"></p>
+          <p class="incident-date">เมื่อวันที่ {{ marker.item.incidentDate }}</p>
+
         </a>
       </li>
     </ul>
