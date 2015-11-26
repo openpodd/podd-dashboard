@@ -138,10 +138,32 @@ menu {
     list-style: none;
     padding: 0;
     margin: 0;
+    padding-left: 1px;
+    border-left: solid 1px #DDD;
   }
 
   li {
     position: relative;
+    border-bottom: solid 1px #DDD;
+  }
+
+  a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  .report-item {
+    padding: 25px 20px;
+    overflow: hidden;
+  }
+  .incident-date {
+    color: #888;
+    margin-bottom: 5px;
   }
 
   .active .active-line {
@@ -155,5 +177,18 @@ menu {
     height: 100%;
     background-color: #006DCC;
     display: none;
+  }
+}
+
+#scenario-map .leaflet-popup-content {
+  margin: 0;
+  padding: 12px 15px;
+  font-size: 13px;
+  line-height: 18px;
+
+  p {
+    font-size: 13px;
+    line-height: 18px;
+    margin: 0;
   }
 }

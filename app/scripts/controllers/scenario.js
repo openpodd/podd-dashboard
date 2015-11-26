@@ -26,6 +26,7 @@ angular.module('poddDashboardApp')
   leafletMap.addControl(new L.control.zoom({
     position: 'topleft'
   }));
+  leafletMap.scrollWheelZoom.disable();
 
   var defaultIconOptions = {
     className: 'scene-marker-wrapper',
@@ -110,14 +111,16 @@ angular.module('poddDashboardApp')
   var bounds = $scope.layers.report.layer.getBounds();
 
   leafletMap.on('moveend', function() {
-     bounds = leafletMap.getBounds();
-     query.top = bounds.getWest();
-     query.right = bounds.getNorth();
-     query.left = bounds.getSouth();
-     query.bottom = bounds.getEast();
+    $scope.pause();
+    
+    bounds = leafletMap.getBounds();
+    query.top = bounds.getWest();
+    query.right = bounds.getNorth();
+    query.left = bounds.getSouth();
+    query.bottom = bounds.getEast();
 
-     $scope.layers.report.layer.clearLayers();
-     refreshReportsLayerDataWithSummary();
+    $scope.layers.report.layer.clearLayers();
+    refreshReportsLayerDataWithSummary();
      // console.log(bounds);
   });
 
@@ -200,7 +203,7 @@ var brush = d3.svg.brush()
 
           /*jshint -W064 */
           $scope.window = [ formatDayDate(brush.extent()[0]), formatDayDate(brush.extent()[1]) ];
-          if (!play) {
+          if (!$scope.playing) {
             $scope.layers.report.layer.clearLayers();
             $scope.reportMarkers = [];
 
@@ -296,7 +299,8 @@ var read = function(tempData) {
 };
 
 function playDemo() {
-  if (brush.empty() || play === false || $scope.diff < 0) {
+
+  if (brush.empty() || $scope.playing === false || $scope.diff < 0) {
     $scope.pause();
     return;
   }
@@ -343,10 +347,10 @@ function playDemo() {
 
 var demoInterval = null;
 var speed = 500;
-var play = false;
+$scope.playing = false;
 
 $scope.play = function () {
-  play = true;
+  $scope.playing = true;
   speed = $scope.diff * 500 / 10;
 
   setTimeout(function() {
@@ -368,7 +372,7 @@ $scope.speedUp = function () {
 };
 
 $scope.pause = function () {
-  play = false;
+  $scope.playing = false;
 
   $interval.cancel(demoInterval);
   demoInterval = null;
@@ -376,7 +380,7 @@ $scope.pause = function () {
 
 $scope.diff = 0;
 $scope.replay = function () {
-  play = false;
+  $scope.playing = false;
 
   $scope.diff = Math.abs(Math.floor((brush.extent()[1] - brush.extent()[0]) / (1000*60*60*24)));
 
@@ -457,6 +461,7 @@ $scope.replay = function () {
       delete query.withSummary;
     }
 
+    $scope.loadingReportMarkers = true;
     Reports.list(query).$promise.then(function (resp) {
 
       var drawnItems = new L.FeatureGroup();
@@ -478,11 +483,13 @@ $scope.replay = function () {
         });
 
         marker.item = item;
+        marker.bindPopup(item.formDataExplanation);
 
         marker.on('mouseover', function () {
           var self = this;
           $scope.$apply(function () {
             self.isActive = true;
+            self.openPopup();
           });
         });
 
@@ -490,6 +497,7 @@ $scope.replay = function () {
           var self = this;
           $scope.$apply(function () {
             self.isActive = false;
+            self.closePopup();
           });
         });
 
@@ -520,12 +528,18 @@ $scope.replay = function () {
 
 
         marker.addTo(drawnItems);
-        $scope.reportMarkers.push(marker);
-        // console.log(marker.item);
-        // console.log($scope.reportMarkers);
+
+        if (!$scope.playing) {
+          $scope.reportMarkers.push(marker);
+        }
       });
 
-      if( play && lastLayer !== null) {
+      if (!$scope.playing) {
+          $scope.loadingReportMarkers = false;
+      }
+
+
+      if( $scope.playing && lastLayer !== null) {
         $scope.layers.report.layer.removeLayer(lastLayer);
       }
 
