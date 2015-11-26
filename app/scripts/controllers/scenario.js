@@ -99,14 +99,16 @@ angular.module('poddDashboardApp')
   var bounds = $scope.layers.report.layer.getBounds();
 
   leafletMap.on('moveend', function() {
-     bounds = leafletMap.getBounds();
-     query.top = bounds.getWest();
-     query.right = bounds.getNorth();
-     query.left = bounds.getSouth();
-     query.bottom = bounds.getEast();
+    $scope.pause();
+    
+    bounds = leafletMap.getBounds();
+    query.top = bounds.getWest();
+    query.right = bounds.getNorth();
+    query.left = bounds.getSouth();
+    query.bottom = bounds.getEast();
 
-     $scope.layers.report.layer.clearLayers();
-     refreshReportsLayerDataWithSummary();
+    $scope.layers.report.layer.clearLayers();
+    refreshReportsLayerDataWithSummary();
      // console.log(bounds);
   });
 
@@ -277,7 +279,8 @@ var read = function(tempData) {
 };
 
 function playDemo() {
-  if (brush.empty() || play === false || $scope.diff < 0) {
+
+  if (brush.empty() || $scope.playing === false || $scope.diff < 0) {
     $scope.pause();
     return;
   }
