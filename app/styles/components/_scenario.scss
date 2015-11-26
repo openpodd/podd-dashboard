@@ -18,6 +18,58 @@
   .leaflet-right {
     right: 0;
   }
+
+
+  .leaflet-popup-content {
+    margin: 0;
+    padding: 12px 15px;
+    font-size: 13px;
+    line-height: 18px;
+
+    p {
+      font-size: 13px;
+      line-height: 18px;
+      margin: 0;
+    }
+  }
+
+  #footer {
+    position: absolute;
+    overflow: hidden;
+    left: 0;
+    padding-left: 50px;
+    bottom: 0;
+    height: 100px;
+    width:80%;
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  #map {
+    left: 0;
+    padding-left: 50px;
+    right: auto;
+    width: 80%;
+
+    .leaflet-control-attribution {
+      display: none;
+    }
+  }
+
+}
+
+.timeline-wrapper {
+  padding: 20px;
+
+  strong  {
+    font-size: 12px;
+  }
+  menu {
+    font-size: 75%;
+    padding: 0;
+    margin: 0 15px;
+    display: inline-block;
+
+  }
 }
 
 .scene-marker {
@@ -177,18 +229,5 @@ menu {
     height: 100%;
     background-color: #006DCC;
     display: none;
-  }
-}
-
-#scenario-map .leaflet-popup-content {
-  margin: 0;
-  padding: 12px 15px;
-  font-size: 13px;
-  line-height: 18px;
-
-  p {
-    font-size: 13px;
-    line-height: 18px;
-    margin: 0;
   }
 }
