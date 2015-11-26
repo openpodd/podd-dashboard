@@ -28,8 +28,8 @@
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background-color: #000;
-    box-shadow: 2px 2px 8px -1px rgba(0, 0, 0, 0.75);
+    // background-color: #FFF;
+    // box-shadow: 2px 2px 8px -1px rgba(0, 0, 0, 0.75);
   }
   .marker-icon-animal {
     position: absolute;
@@ -43,28 +43,28 @@
   }
 
   .marker-icon-pig-wrapper {
-    background-color: rgba(240, 155, 238, 1);
+    // background-color: rgba(240, 155, 238, 1);
   }
   .marker-icon-pig {
-    background-image: url(../../images/markers/pig.png);
+    background-image: url(../../images/markers/ic2-pig.png);
   }
   .marker-icon-cow-wrapper {
-    background-color: rgba(187, 87, 14, 1);
+    // background-color: rgba(187, 87, 14, 1);
   }
   .marker-icon-cow {
-    background-image: url(../../images/markers/cow.png);
+    background-image: url(../../images/markers/ic2-cow.png);
   }
   .marker-icon-dog-wrapper {
-    background-color: rgba(223, 71, 94, 1);
+    // background-color: rgba(223, 71, 94, 1);
   }
   .marker-icon-dog {
-    background-image: url(../../images/markers/dog.png);
+    background-image: url(../../images/markers/ic2-dog.png);
   }
   .marker-icon-chicken-wrapper {
-    background-color: rgba(71, 164, 223, 1);
+    // background-color: rgba(71, 164, 223, 1);
   }
   .marker-icon-chicken {
-    background-image: url(../../images/markers/chicken.png);
+    background-image: url(../../images/markers/ic2-chicken.png);
   }
 }
 
