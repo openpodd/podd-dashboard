@@ -139,7 +139,7 @@ var now = parseDayDate(formatDayDate(new Date()));
 var margin = {top: 10, right: 50, bottom: 20, left: 20},
     defaultExtent = [parseDate('11/2015'), new Date()],
     width = 800 - margin.left - margin.right,
-    height = 100 - margin.top - margin.bottom;
+    height = 50 - margin.top - margin.bottom;
 
 $scope.window = [ formatDayDate(defaultExtent[0]), formatDayDate(defaultExtent[1]) ];
 
