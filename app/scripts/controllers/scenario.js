@@ -112,7 +112,7 @@ angular.module('poddDashboardApp')
 
   leafletMap.on('moveend', function() {
     $scope.pause();
-    
+
     bounds = leafletMap.getBounds();
     query.top = bounds.getWest();
     query.right = bounds.getNorth();
@@ -154,6 +154,12 @@ var margin = {top: 10, right: 50, bottom: 20, left: 20},
     defaultExtent = [parseDate('11/2015'), new Date()],
     width = 800 - margin.left - margin.right,
     height = 50 - margin.top - margin.bottom;
+
+var calChartWidth = function () {
+    width = angular.element(document.getElementById('timeline-wrapper')).width();
+    width = width - margin.left - margin.right;
+};
+calChartWidth();
 
 $scope.window = [ formatDayDate(defaultExtent[0]), formatDayDate(defaultExtent[1]) ];
 
