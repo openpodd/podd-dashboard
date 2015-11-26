@@ -7,7 +7,7 @@ angular.module('poddDashboardApp')
   Menu.setActiveMenu('scenario');
 })
 
-.controller('ScenarioCtrl', function ($scope, Menu, Reports, $compile, $interval, $stateParams, $anchorScroll, $location) {
+.controller('ScenarioCtrl', function ($scope, Menu, Reports, $compile, $interval, $stateParams, $anchorScroll, $location, $state) {
   Menu.setActiveMenu('scenario');
 
   L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
@@ -97,21 +97,29 @@ angular.module('poddDashboardApp')
   };
 
   var bounds = $scope.layers.report.layer.getBounds();
+  var zoom = $scope.layers.report.layer.getBounds();
 
   leafletMap.on('moveend', function() {
+    changeBound();
+  });
+
+  function changeBound() {
     $scope.pause();
     
     bounds = leafletMap.getBounds();
-    query.top = bounds.getWest();
-    query.right = bounds.getNorth();
-    query.left = bounds.getSouth();
-    query.bottom = bounds.getEast();
+    zoom = leafletMap.getZoom();
 
-    $scope.layers.report.layer.clearLayers();
-    refreshReportsLayerDataWithSummary();
-     // console.log(bounds);
-  });
+    $state.go('scenario', { 
+        top: bounds.getWest(),
+        right: bounds.getNorth(),
+        left: bounds.getSouth(),
+        bottom: bounds.getEast(),
+        zoom: zoom
+    });
+  
 
+
+  }
   // TODO: this can cause:
   // `TypeError: Cannot read property 'childNodes' of undefined`
   // leafletMap.addControl(new LayersControl());
@@ -159,7 +167,6 @@ $scope.window = [ formatDayDate(defaultExtent[0]), formatDayDate(defaultExtent[1
     'lite': true
   };
 
-
 var x = d3.time.scale().range([0, width]),
     y = d3.scale.linear().range([height, 0]);
 
@@ -183,10 +190,10 @@ var brush = d3.svg.brush()
 
           /*jshint -W064 */
           $scope.window = [ formatDayDate(brush.extent()[0]), formatDayDate(brush.extent()[1]) ];
-          if (!$scope.playing) {
-            $scope.layers.report.layer.clearLayers();
-            $scope.reportMarkers = [];
 
+
+          if (!$scope.playing) {
+            $scope.reportMarkers = [];
           }
 
           query.date__lte = formatDayDate(brush.extent()[1]);
@@ -331,7 +338,8 @@ $scope.playing = false;
 
 $scope.play = function () {
   $scope.playing = true;
-  speed = $scope.diff * 500 / 10;
+  speed = Math.floor(30000 * $scope.diff/ (100 * Math.pow($scope.diff, 1/2)));
+  console.log(speed);
 
   setTimeout(function() {
     playDemo();
@@ -392,7 +400,7 @@ $scope.replay = function () {
       var nextValue = angular.isUndefined(forceValue) ?
           !layers.form.report :
           forceValue;
-  }
+  };
 
   var lastLayer = null;
 
@@ -409,60 +417,62 @@ $scope.replay = function () {
     $scope.loadingReportMarkers = true;
     Reports.list(query).$promise.then(function (resp) {
 
-      var drawnItems = new L.FeatureGroup();
-      $scope.layers.report.layer.addLayer(drawnItems);
 
       // var clusterGroup = new L.MarkerClusterGroup().addTo(drawnItems);
+      if (!refreshGraph) {
 
-      resp.results.forEach(function (item) {
-        var location = [
-          item.reportLocation.coordinates[1],
-          item.reportLocation.coordinates[0]
-        ];
-        var marker = L.marker(location, {
-          icon: L.mapbox.marker.icon({
-              'marker-color': colors[item.reportTypeId],
-          })
-        });
+        var drawnItems = new L.FeatureGroup();
+        $scope.layers.report.layer.addLayer(drawnItems);
 
-        marker.item = item;
-        marker.bindPopup(item.formDataExplanation);
-
-        marker.on('mouseover', function () {
-          var self = this;
-          $scope.$apply(function () {
-            self.isActive = true;
-            self.openPopup();
-          });
-        });
-
-        marker.on('mouseout', function () {
-          var self = this;
-          $scope.$apply(function () {
-            self.isActive = false;
-            self.closePopup();
-          });
-        });
-
-        marker.on('click', function () {
-          console.log('click');
-          var self = this;
-
-          var newHash = 'report-item-' + self.item.id.split('.')[2];
-
-          $scope.$apply(function () {
-
-            if ($location.hash() !== newHash) {
-              $location.hash(newHash);
-            }
-            else {
-              $anchorScroll();
-            }
+        resp.results.forEach(function (item) {
+          var location = [
+            item.reportLocation.coordinates[1],
+            item.reportLocation.coordinates[0]
+          ];
+          var marker = L.marker(location, {
+            icon: L.mapbox.marker.icon({
+                'marker-color': colors[item.reportTypeId],
+            })
           });
 
-        });
+          marker.item = item;
+          marker.bindPopup(item.formDataExplanation);
 
+          marker.on('mouseover', function () {
+            var self = this;
+            $scope.$apply(function () {
+              self.isActive = true;
+              self.openPopup();
+            });
+          });
 
+          marker.on('mouseout', function () {
+            var self = this;
+            $scope.$apply(function () {
+              self.isActive = false;
+              self.closePopup();
+            });
+          });
+
+          marker.on('click', function () {
+            console.log('click');
+            var self = this;
+
+            var newHash = 'report-item-' + self.item.id.split('.')[2];
+
+            $scope.$apply(function () {
+
+              if ($location.hash() !== newHash) {
+                $location.hash(newHash);
+              }
+              else {
+                $anchorScroll();
+              }
+            });
+
+          });
+
+      
         // console.log(items.indexOf(item.id) != -1);
 
         // if (items.indexOf(item.id) != -1) {
@@ -470,28 +480,32 @@ $scope.replay = function () {
         // }
 
 
-        marker.addTo(drawnItems);
+          marker.addTo(drawnItems);
+
+          if (!$scope.playing) {
+            $scope.reportMarkers.push(marker);
+          }
+        });
+
+
 
         if (!$scope.playing) {
-          $scope.reportMarkers.push(marker);
+            $scope.loadingReportMarkers = false;
         }
-      });
 
-      if (!$scope.playing) {
-          $scope.loadingReportMarkers = false;
+        if(lastLayer !== null) {
+          $scope.layers.report.layer.removeLayer(lastLayer);
+        }
+
+        lastLayer = drawnItems;
+
       }
 
-
-      if( $scope.playing && lastLayer !== null) {
-        $scope.layers.report.layer.removeLayer(lastLayer);
-      }
-
-      lastLayer = drawnItems;
 
       // fit bound.
-      leafletMap.fitBounds(bounds);
+      // leafletMap.fitBounds(bounds);
 
-      if (refreshGraph) {
+      else {
         svg.remove();
         svg = d3.select('#chart').append('svg')
             .attr('width', width + margin.left + margin.right)
@@ -511,6 +525,7 @@ $scope.replay = function () {
         if (resp.summary) {
          read(resp.summary);
         }
+
       }
 
     });
@@ -522,5 +537,29 @@ $scope.replay = function () {
   }
 
   // refreshReportsLayerDataWithSummary();
+
+  $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
+      console.log('stateChangeSuccess', $state.current.name);
+      if ($state.current.name === 'scenario') {
+          
+          query.top = $stateParams.top || 99.810791015625;
+          query.right = $stateParams.right || 19.647760955697354;
+          query.left = $stateParams.left || 17.764381077782076;
+          query.bottom = $stateParams.bottom || 198.1298828125;
+          
+          zoom = $stateParams.zoom || 15;
+
+          var southWest = L.latLng(query.left, query.bottom),
+              northEast = L.latLng(query.right, query.top);
+          
+          bounds = L.latLngBounds(southWest, northEast);
+          leafletMap.fitBounds(bounds);
+          leafletMap.setZoom(zoom);
+
+          setTimeout(function() {
+            refreshReportsLayerDataWithSummary();
+          }, 1);
+      }
+  });
 
 });

@@ -163,7 +163,7 @@ angular
         controller: 'FilterModeCtrl'
       })
       .state('scenario', {
-        url: '/scenario?bottom&left&top&right',
+        url: '/scenario?bottom&left&top&right&zoom',
         templateUrl: 'views/scenario.html',
         controller: 'ScenarioModeCtrl'
       })
