@@ -388,7 +388,7 @@ $scope.replay = function () {
       var nextValue = angular.isUndefined(forceValue) ?
           !layers.form.report :
           forceValue;
-  };
+  }
 
   var lastLayer = null;
 
@@ -454,7 +454,7 @@ $scope.replay = function () {
 
         });
 
-        
+
         // console.log(items.indexOf(item.id) != -1);
 
         // if (items.indexOf(item.id) != -1) {
