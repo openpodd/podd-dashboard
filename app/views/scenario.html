@@ -80,14 +80,14 @@
     background: rgba(255, 255, 255, 0.5);
     ">
     <div style="margin: 20px;">
-      <strong>ค้นหา: {{ window[0] }} ถึง {{ window[1] }}</strong>
+      <strong>ค้นหา: {{ window[0] }} ถึง {{ window[1] }} ในช่วงระยะเวลา {{ diff }} วัน</strong>
       <div id="chart" style="margin:0px"></div>
         <menu class="small">
-          <button ng-click="speedDown()" class="speedDown"><i class="fa fa-backward"></i></button>
+          <!-- <button ng-click="speedDown()" class="speedDown"><i class="fa fa-backward"></i></button> -->
           <button ng-click="play()" class="play"><i class="fa fa-play"></i></button>
           <button ng-click="pause()" class="pause"><i class="fa fa-pause"></i></button>
           <button ng-click="replay()" class="stop"><i class="fa fa-stop"></i></button>
-          <button ng-click="speedUp()" class="speedUp"><i class="fa fa-forward"></i></button>
+          <!-- <button ng-click="speedUp()" class="speedUp"><i class="fa fa-forward"></i></button> -->
         </menu>
     </div>
   </div>

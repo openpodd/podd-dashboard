@@ -98,7 +98,7 @@ angular.module('poddDashboardApp')
 
   var bounds = $scope.layers.report.layer.getBounds();
 
-  leafletMap.on('moveend', function(e) {
+  leafletMap.on('moveend', function() {
      bounds = leafletMap.getBounds();
      query.top = bounds.getWest();
      query.right = bounds.getNorth();
@@ -109,6 +109,7 @@ angular.module('poddDashboardApp')
      refreshReportsLayerDataWithSummary();
      // console.log(bounds);
   });
+
   // TODO: this can cause:
   // `TypeError: Cannot read property 'childNodes' of undefined`
   // leafletMap.addControl(new LayersControl());
@@ -131,15 +132,16 @@ angular.module('poddDashboardApp')
 // Graph Control
 var parseDate = d3.time.format('%m/%Y').parse;
 var parseDayDate = d3.time.format('%Y-%m-%d').parse;
-var FormatMonthDate = d3.time.format('%b %Y');
-var FormatDayDate = d3.time.format('%Y-%m-%d');
+var formatMonthDate = d3.time.format('%b %Y');
+var formatDayDate = d3.time.format('%Y-%m-%d');
+var now = parseDayDate(formatDayDate(new Date()));
 
 var margin = {top: 10, right: 50, bottom: 20, left: 20},
-    defaultExtent = [parseDate('11/2015'), parseDate('12/2015')],
+    defaultExtent = [parseDate('11/2015'), new Date()],
     width = 800 - margin.left - margin.right,
     height = 100 - margin.top - margin.bottom;
 
-$scope.window = [ FormatDayDate(defaultExtent[0]), FormatDayDate(defaultExtent[1]) ];
+$scope.window = [ formatDayDate(defaultExtent[0]), formatDayDate(defaultExtent[1]) ];
 
 
   var query = {
@@ -159,7 +161,7 @@ $scope.window = [ FormatDayDate(defaultExtent[0]), FormatDayDate(defaultExtent[1
 var x = d3.time.scale().range([0, width]),
     y = d3.scale.linear().range([height, 0]);
 
-var xAxis = d3.svg.axis().scale(x).orient('bottom').tickFormat(FormatMonthDate).ticks(12),
+var xAxis = d3.svg.axis().scale(x).orient('bottom').tickFormat(formatMonthDate).ticks(12),
     yAxis = d3.svg.axis().scale(y).orient('left');
 
 var brushTransition;
@@ -169,21 +171,24 @@ $scope.reportMarkers = [];
 var brush = d3.svg.brush()
     .x(x)
     .extent(defaultExtent)
+    .on('brushstart', function () {})
+    .on('brush', function () {})
     .on('brushend', function () {
         brushTransition = d3.select(this);
 
         if (!brush.empty()) {
+          $scope.diff = Math.floor((brush.extent()[1] - brush.extent()[0]) / (1000*60*60*24));
+
           /*jshint -W064 */
-          $scope.window = [ FormatDayDate(brush.extent()[0]), FormatDayDate(brush.extent()[1]) ];
+          $scope.window = [ formatDayDate(brush.extent()[0]), formatDayDate(brush.extent()[1]) ];
           if (!$scope.playing) {
             $scope.layers.report.layer.clearLayers();
             $scope.reportMarkers = [];
 
           }
 
-
-          query.date__lte = FormatDayDate(brush.extent()[1]);
-          query.date__gte = FormatDayDate(brush.extent()[0]);
+          query.date__lte = formatDayDate(brush.extent()[1]);
+          query.date__gte = formatDayDate(brush.extent()[0]);
           /*jshint: +W064 */
 
           refreshReportsLayerData(false);
@@ -207,9 +212,14 @@ var line = d3.svg.line()
     .x(function(d) { return x(d.date); })
     .y(function(d) { return y(d.count); });
 
-var svg = d3.select('#chart').append('svg')
+var svg = d3.select('#chart')
+    .on('click', function(){
+       $scope.pause();
+    })
+    .append('svg')
     .attr('width', width + margin.left + margin.right)
     .attr('height', height + margin.top + margin.bottom);
+
 
 svg.append('defs').append('clipPath')
     .attr('id', 'clip')
@@ -240,10 +250,10 @@ var read = function(tempData) {
   //     .attr('class', 'area')
   //     .attr('d', area);
 
-  context.append("path")
+  context.append('path')
       .datum(data)
-      .attr("class", "line")
-      .attr("d", line);
+      .attr('class', 'line')
+      .attr('d', line);
 
   context.append('g')
       .attr('class', 'x axis')
@@ -267,20 +277,38 @@ var read = function(tempData) {
 };
 
 function playDemo() {
+  if (brush.empty() || play === false || $scope.diff < 0) {
+    $scope.pause();
+    return;
+  }
+  var stopPlaying = false;
 
-  if (brush.empty()) {
+  var dateStart = brush.extent()[0];
+  dateStart.setDate(dateStart.getDate() + $scope.diff);
+
+  if (dateStart.getTime() >= now) {
+    dateStart = now;
+    dateStart.setDate(dateStart.getDate() - $scope.diff);
+  } 
+
+  var dateEnd = brush.extent()[1];
+
+  if (dateEnd.getTime() === now) {
+    $scope.pause();
     return;
   }
 
-  var dateStart = brush.extent()[0];
-  dateStart.setDate(dateStart.getDate() + 7);
-
-  var dateEnd = brush.extent()[1];
-  dateEnd.setDate(dateEnd.getDate() + 7);
-
-  if (dateEnd.getTime() > parseDate('12/2015').getTime()) {
-    dateEnd = parseDate('12/2015');
+  dateEnd.setDate(dateEnd.getDate() + $scope.diff);
+  if (dateEnd.getTime() > now) {
+    dateEnd = now;
+    stopPlaying = true;
   } 
+
+  var diff = Math.floor((dateEnd - dateStart) / (1000*60*60*24));
+  if ($scope.diff > diff) {
+    dateEnd = new Date();
+    stopPlaying = true;
+  }
 
   var targetExtent = [dateStart, dateEnd];
 
@@ -289,11 +317,9 @@ function playDemo() {
       .call(brush.extent(targetExtent))
       .call(brush.event);
 
-  if (dateEnd.getTime() == parseDate('12/2015').getTime()) {
-    $interval.cancel(demoInterval);
-    demoInterval = null;
+  if (stopPlaying) {
+    $scope.pause();
   }
-
 }
 
 var demoInterval = null;
@@ -302,11 +328,12 @@ $scope.playing = false;
 
 $scope.play = function () {
   $scope.playing = true;
+  speed = $scope.diff * 500 / 10;
 
   setTimeout(function() {
     playDemo();
     demoInterval = $interval(playDemo, speed);
-  }, 100);
+  }, 1);
 };
 
 $scope.speedDown = function () {
@@ -328,15 +355,16 @@ $scope.pause = function () {
   demoInterval = null;
 };
 
+$scope.diff = 0;
 $scope.replay = function () {
   $scope.playing = false;
 
-  var diff = Math.floor((brush.extent()[1] - brush.extent()[0]) / (1000*60*60*24));
+  $scope.diff = Math.abs(Math.floor((brush.extent()[1] - brush.extent()[0]) / (1000*60*60*24)));
 
   var dateStart = parseDate('01/2015');
 
   var dateEnd = parseDate('01/2015');
-  dateEnd.setDate(dateEnd.getDate() + diff);
+  dateEnd.setDate(dateEnd.getDate() + $scope.diff);
 
   var targetExtent = [dateStart, dateEnd];
 
@@ -355,21 +383,7 @@ $scope.replay = function () {
   var colors = [ '#ff0000',
     '#ff0000', '#ff0000', '#ff0000', '#ff0000', '#ff0000',
     '#000000', '#000000', '#ffff00', '#00ff00', '#ffff00',
-    '#ffff00', '#00ff00', '#000000', '#00ff00', '#000000']
-
-  var query = {
-    // TODO: set default bounds
-    bottom: $stateParams.bottom || 99.810791015625,
-    left: $stateParams.left || 17.764381077782076,
-    top: $stateParams.top || 198.1298828125,
-    right: $stateParams.right || 19.647760955697354,
-    date__lte: $scope.window[1],
-    date__gte: $scope.window[0],
-    negative: true,
-    page_size: 1000,
-    lite: true
-  };
-
+    '#ffff00', '#00ff00', '#000000', '#00ff00', '#000000'];
 
   $scope.toggleReportsLayer = function (forceValue) {
       var nextValue = angular.isUndefined(forceValue) ?
@@ -382,8 +396,8 @@ $scope.replay = function () {
   function refreshReportsLayerData(refreshGraph) {
 
     if (refreshGraph) {
-      query.date__gte = FormatDayDate(parseDate('01/2015'));
-      query.date__lte = FormatDayDate(parseDate('12/2015'));
+      query.date__gte = formatDayDate(parseDate('01/2015'));
+      query.date__lte = formatDayDate(new Date());
       query.withSummary = true;
     } else {
       delete query.withSummary;
@@ -416,7 +430,7 @@ $scope.replay = function () {
           $scope.$apply(function () {
             self.isActive = true;
             self.openPopup();
-          })
+          });
         });
 
         marker.on('mouseout', function () {
@@ -424,14 +438,14 @@ $scope.replay = function () {
           $scope.$apply(function () {
             self.isActive = false;
             self.closePopup();
-          })
+          });
         });
 
         marker.on('click', function () {
           console.log('click');
           var self = this;
 
-          var newHash = 'report-item-' + self.item.id.split('.')[2]
+          var newHash = 'report-item-' + self.item.id.split('.')[2];
 
           $scope.$apply(function () {
 
@@ -445,7 +459,7 @@ $scope.replay = function () {
 
         });
 
-        
+
         // console.log(items.indexOf(item.id) != -1);
 
         // if (items.indexOf(item.id) != -1) {
@@ -454,11 +468,10 @@ $scope.replay = function () {
 
 
         marker.addTo(drawnItems);
+
         if (!$scope.playing) {
           $scope.reportMarkers.push(marker);
         }
-        console.log(marker.item);
-        console.log($scope.reportMarkers);
       });
 
       if (!$scope.playing) {
@@ -467,7 +480,7 @@ $scope.replay = function () {
 
 
       if( $scope.playing && lastLayer !== null) {
-        $scope.layers.report.layer.removeLayer(lastLayer)
+        $scope.layers.report.layer.removeLayer(lastLayer);
       }
 
       lastLayer = drawnItems;
@@ -492,8 +505,9 @@ $scope.replay = function () {
             .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
         // console.log(resp.summary);
-        if (resp.summary)
+        if (resp.summary) {
          read(resp.summary);
+        }
       }
 
     });
