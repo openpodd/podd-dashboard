@@ -42,13 +42,25 @@ angular.module('poddDashboardApp')
             '</div>'
     });
   };
+  var getReportCategoryIcon = function (category) {
+    return {
+      className: 'scene-report-marker-wrapper',
+      iconSize: [ 39, 52 ],
+      iconAnchor: [ 19, 52 ],
+      html: '<div class="scene-report-marker scene-report-marker-' + category + '"></div>'
+    };
+  };
   var icons = {
     pig: L.divIcon(getIconType('pig')),
     dog: L.divIcon(getIconType('dog')),
     buffalo: L.divIcon(getIconType('buffalo')),
     cow: L.divIcon(getIconType('cow')),
     chicken: L.divIcon(getIconType('chicken')),
-    sheep: L.divIcon(getIconType('sheep'))
+    sheep: L.divIcon(getIconType('sheep')),
+    // report marker
+    human: L.divIcon(getReportCategoryIcon('human')),
+    animal: L.divIcon(getReportCategoryIcon('animal')),
+    environment: L.divIcon(getReportCategoryIcon('environment')),
   };
 
   var getGISLayer = function (typeName, iconName) {
@@ -75,23 +87,23 @@ angular.module('poddDashboardApp')
     gis: {
       pig: {
         name: 'Pig Farm',
-        layer: getGISLayer('pig_farm', 'pig').addTo(leafletMap),
-        show: true
+        layer: getGISLayer('pig_farm', 'pig'),
+        show: false
       },
       cow: {
         name: 'Cow & Buffalo Farm',
-        layer: getGISLayer('cowsandbuffalos_farm', 'cow').addTo(leafletMap),
-        show: true
+        layer: getGISLayer('cowsandbuffalos_farm', 'cow'),
+        show: false
       },
       dog: {
         name: 'Dog Farm',
-        layer: getGISLayer('dog_farm', 'dog').addTo(leafletMap),
-        show: true
+        layer: getGISLayer('dog_farm', 'dog'),
+        show: false
       },
       chicken: {
         name: 'Chicken Farm',
-        layer: getGISLayer('poultry_farm', 'chicken').addTo(leafletMap),
-        show: true
+        layer: getGISLayer('poultry_farm', 'chicken'),
+        show: false
       }
     }
   };
@@ -99,14 +111,16 @@ angular.module('poddDashboardApp')
   var bounds = $scope.layers.report.layer.getBounds();
 
   leafletMap.on('moveend', function() {
-     bounds = leafletMap.getBounds();
-     query.top = bounds.getWest();
-     query.right = bounds.getNorth();
-     query.left = bounds.getSouth();
-     query.bottom = bounds.getEast();
+    $scope.pause();
+    
+    bounds = leafletMap.getBounds();
+    query.top = bounds.getWest();
+    query.right = bounds.getNorth();
+    query.left = bounds.getSouth();
+    query.bottom = bounds.getEast();
 
-     $scope.layers.report.layer.clearLayers();
-     refreshReportsLayerDataWithSummary();
+    $scope.layers.report.layer.clearLayers();
+    refreshReportsLayerDataWithSummary();
      // console.log(bounds);
   });
 
@@ -152,7 +166,15 @@ $scope.window = [ formatDayDate(defaultExtent[0]), formatDayDate(defaultExtent[1
     'right': $stateParams.right || 19.647760955697354,
     'date__lte': $scope.window[1],
     'date__gte': $scope.window[0],
+    // 'reportTypeId': [
+    //   1, 2, 3, 5, 6, 9, 10,
+    //   11, 12, 14,
+    //   20, 21, 22, 29,
+    //   30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
+    //   40, 41, 42, 43, 44
+    // ],
     'negative': true,
+    'testFlag': false,
     'page_size': 1000,
     'lite': true
   };
@@ -277,7 +299,8 @@ var read = function(tempData) {
 };
 
 function playDemo() {
-  if (brush.empty() || play === false || $scope.diff < 0) {
+
+  if (brush.empty() || $scope.playing === false || $scope.diff < 0) {
     $scope.pause();
     return;
   }
@@ -289,7 +312,7 @@ function playDemo() {
   if (dateStart.getTime() >= now) {
     dateStart = now;
     dateStart.setDate(dateStart.getDate() - $scope.diff);
-  } 
+  }
 
   var dateEnd = brush.extent()[1];
 
@@ -302,7 +325,7 @@ function playDemo() {
   if (dateEnd.getTime() > now) {
     dateEnd = now;
     stopPlaying = true;
-  } 
+  }
 
   var diff = Math.floor((dateEnd - dateStart) / (1000*60*60*24));
   if ($scope.diff > diff) {
@@ -379,11 +402,46 @@ $scope.replay = function () {
 };
 
 // End Graph Control
-
-  var colors = [ '#ff0000',
-    '#ff0000', '#ff0000', '#ff0000', '#ff0000', '#ff0000',
-    '#000000', '#000000', '#ffff00', '#00ff00', '#ffff00',
-    '#ffff00', '#00ff00', '#000000', '#00ff00', '#000000'];
+  var reportTypeIcons = {
+    1: icons.animal, // สัตว์กัด
+    2: icons.animal, // สัตว์ป่วยตาย
+    3: icons.animal, // สัตว์แพทย์
+    // 4: icons.animal,
+    5: icons.animal, // นก
+    6: icons.animal, // ปลา
+    7: icons.animal, // อื่นๆ
+    8: icons.animal, // ทดสอบ ป่วยตาย
+    9: icons.environment, // สิ่งแวดล้อม
+    10: icons.human, // คุ้มครองผ
+    11: icons.human, // อาหาร
+    12: icons.human, // โรคสัตว์และคน
+    13: icons.animal, // ทดสอบ สัตว์กัด
+    14: icons.environment, // ภัยธรรม
+    15: icons.human, // ทดสอบอาหาร
+    16: icons.human, // ทดสอบสัตว์สู่คน
+    17: icons.environment, // ทดสอบภัยธรรมชาติ
+    18: icons.environment, // ทดสอบสิ่งแวดล้อม
+    19: icons.human, // ทดสอบคุ้มครองผู้
+    20: icons.human, // human event
+    21: icons.animal, // animal event
+    22: icons.animal, // สัตว์กัด
+    29: icons.human, // อาหารพิษ
+    30: icons.human, // เขียง
+    31: icons.human, // สงสัยปนเปื้อน
+    32: icons.human, // เนื้อถูก
+    33: icons.human, // น้ำมัน
+    34: icons.human, // ยาปลอม
+    35: icons.human, // สมุนไพร
+    36: icons.human, // เครื่องสำอางค์
+    37: icons.environment, // เสียงดัง
+    38: icons.animal, // สัตว์ป่วยตาย
+    39: icons.environment, // ขยะ
+    40: icons.environment, // น้ำเสีย
+    41: icons.environment, // ยุง
+    42: icons.environment, // ควัน
+    43: icons.environment, // ไฟป่า
+    44: icons.environment // น้ำป่า
+  };
 
   $scope.toggleReportsLayer = function (forceValue) {
       var nextValue = angular.isUndefined(forceValue) ?
@@ -412,14 +470,16 @@ $scope.replay = function () {
       // var clusterGroup = new L.MarkerClusterGroup().addTo(drawnItems);
 
       resp.results.forEach(function (item) {
+        // validate if item not report type 0.
+        if (item.reportTypeId === 0) return;
+
         var location = [
           item.reportLocation.coordinates[1],
           item.reportLocation.coordinates[0]
         ];
+
         var marker = L.marker(location, {
-          icon: L.mapbox.marker.icon({
-              'marker-color': colors[item.reportTypeId],
-          })
+          icon: reportTypeIcons[item.reportTypeId]
         });
 
         marker.item = item;

@@ -92,6 +92,7 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;
+
   }
 
   .marker-icon-pig-wrapper {
@@ -119,6 +120,27 @@
     background-image: url(../../images/markers/ic2-chicken.png);
   }
 }
+.scene-report-marker {
+  // position: absolute;
+  // top: 6px;
+  // left: 6px;
+  width: 39px;
+  height: 52px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+
+  &.scene-report-marker-human {
+    background-image: url(../../images/markers/pin-human.png);
+  }
+  &.scene-report-marker-animal {
+    background-image: url(../../images/markers/pin-animal.png);
+  }
+  &.scene-report-marker-environment {
+    background-image: url(../../images/markers/pin-environment.png);
+  }
+}
+
 
 
 svg {
