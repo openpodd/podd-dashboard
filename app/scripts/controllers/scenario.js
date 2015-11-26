@@ -279,7 +279,7 @@ function playDemo() {
 
   if (dateEnd.getTime() > parseDate('12/2015').getTime()) {
     dateEnd = parseDate('12/2015');
-  } 
+  }
 
   var targetExtent = [dateStart, dateEnd];
 
@@ -369,13 +369,6 @@ $scope.replay = function () {
     lite: true
   };
 
-
-  $scope.toggleReportsLayer = function (forceValue) {
-      var nextValue = angular.isUndefined(forceValue) ?
-          !layers.form.report :
-          forceValue;
-  }
-
   var lastLayer = null;
 
   function refreshReportsLayerData(refreshGraph) {
@@ -440,7 +433,7 @@ $scope.replay = function () {
 
         });
 
-        
+
         // console.log(items.indexOf(item.id) != -1);
 
         // if (items.indexOf(item.id) != -1) {
