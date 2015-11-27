@@ -22,6 +22,19 @@
   border-left: solid 1px #DDD;
 }
 
+.filter-control {
+  position: absolute;
+  top: 10px;
+  left: 94px;
+  z-index: 999;
+  width: 496px;
+  margin-right: 40%;
+
+  .filter-help {
+    width: 496px;
+  }
+}
+
 #scenario-map {
   .leaflet-top {
     top: 0;
@@ -81,6 +94,9 @@
     margin: 0 15px;
     display: inline-block;
 
+  }
+  .diff {
+    width: 40px;
   }
 }
 
@@ -149,7 +165,7 @@
     background-image: url(../../images/markers/pin-animal.png);
   }
   &.scene-report-marker-environment {
-    background-image: url(../../images/markers/pin-environment.png);
+    background-image: url(../../images/markers/pin-env.png);
   }
 }
 

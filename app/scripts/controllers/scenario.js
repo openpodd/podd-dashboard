@@ -10,6 +10,29 @@ angular.module('poddDashboardApp')
 .controller('ScenarioCtrl', function ($scope, Menu, Reports, $compile, $interval, $stateParams, $anchorScroll, $location, $state, $timeout) {
   Menu.setActiveMenu('scenario');
 
+  $scope.query = $stateParams.q || '';
+  $scope.toggleHelp = function () {
+    $scope.help = !$scope.help;
+  };
+  $scope.closeHelp = function () {
+    $scope.help = false;
+  };
+  $scope.search = function () {
+    $scope.willShowResult = true;
+    $scope.loading = true;
+
+    $timeout(function () {
+      // change just the URL query params.
+      $state.go('scenario', {
+        q: $scope.query
+      }, { notify: false });
+
+      // do the real query.
+      $scope._query.q = $scope.query;
+      refreshReportsLayerDataWithSummary();
+    }, 0);
+  };
+
   L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
 
 
@@ -47,6 +70,7 @@ angular.module('poddDashboardApp')
       className: 'scene-report-marker-wrapper',
       iconSize: [ 39, 52 ],
       iconAnchor: [ 19, 52 ],
+      popupAnchor: [0, -52],
       html: '<div class="scene-report-marker scene-report-marker-' + category + '"></div>'
     };
   };
@@ -122,19 +146,19 @@ angular.module('poddDashboardApp')
     zoom = leafletMap.getZoom();
 
     $timeout(function () {
-      $state.go('scenario', { 
+      $state.go('scenario', {
           top: bounds.getWest(),
           right: bounds.getNorth(),
           left: bounds.getSouth(),
           bottom: bounds.getEast(),
           zoom: zoom
       }, { notify:false });
-      
+
       query.top = bounds.getWest();
       query.right = bounds.getNorth();
       query.left = bounds.getSouth();
       query.bottom = bounds.getEast();
-      
+
       setTimeout(function() {
         refreshReportsLayerDataWithSummary();
       }, 100);
@@ -158,30 +182,31 @@ angular.module('poddDashboardApp')
     }
   };
 
-// TODO: this move to function:
-// Graph Control
-var parseDate = d3.time.format('%m/%Y').parse;
-var parseDayDate = d3.time.format('%Y-%m-%d').parse;
-var formatMonthDate = d3.time.format('%b %Y');
-var formatDayDate = d3.time.format('%Y-%m-%d');
-var now = parseDayDate(formatDayDate(new Date()));
+  // TODO: this move to function:
+  // Graph Control
+  var parseDate = d3.time.format('%m/%Y').parse;
+  var parseDayDate = d3.time.format('%Y-%m-%d').parse;
+  var formatMonthDate = d3.time.format('%b %Y');
+  var formatDayDate = d3.time.format('%Y-%m-%d');
+  var now = parseDayDate(formatDayDate(new Date()));
 
-var margin = {top: 10, right: 50, bottom: 20, left: 20},
-    defaultExtent = [parseDate('11/2015'), new Date()],
-    width = 800 - margin.left - margin.right,
-    height = 50 - margin.top - margin.bottom;
+  var margin = {top: 10, right: 50, bottom: 20, left: 20},
+      defaultExtent = [parseDate('11/2015'), new Date()],
+      width = 800 - margin.left - margin.right,
+      height = 50 - margin.top - margin.bottom;
 
-var calChartWidth = function () {
-    width = angular.element(document.getElementById('timeline-wrapper')).width();
-    width = width - margin.left - margin.right;
-};
-calChartWidth();
+  var calChartWidth = function () {
+      width = angular.element(document.getElementById('timeline-wrapper')).width();
+      width = width - margin.left - margin.right;
+  };
+  calChartWidth();
 
-$scope.window = [ formatDayDate(defaultExtent[0]), formatDayDate(defaultExtent[1]) ];
+  $scope.window = [ formatDayDate(defaultExtent[0]), formatDayDate(defaultExtent[1]) ];
 
 
   var query = {
     // TODO: set default bounds
+    'q': $stateParams.q || '',
     'bottom': $stateParams.bottom || 198.1298828125,
     'left': $stateParams.left || 17.764381077782076,
     'top': $stateParams.top || 99.810791015625,
@@ -200,18 +225,35 @@ $scope.window = [ formatDayDate(defaultExtent[0]), formatDayDate(defaultExtent[1
     'page_size': 1000,
     'lite': true
   };
+  function _refreshQuery(params) {
+    $scope._query = {
+      'q': params.q || '',
+      'bottom': params.bottom || 198.1298828125,
+      'left': params.left || 17.764381077782076,
+      'top': params.top || 99.810791015625,
+      'right': params.right || 19.647760955697354,
+      'date__lte': $scope.window[1],
+      'date__gte': $scope.window[0],
+      'negative': true,
+      'testFlag': false,
+      'page_size': 1000,
+      'lite': true
+    };
+  }
+  $scope._query = query;
 
-var x = d3.time.scale().range([0, width]),
-    y = d3.scale.linear().range([height, 0]);
+  var x = d3.time.scale().range([0, width]),
+      y = d3.scale.linear().range([height, 0]);
 
-var xAxis = d3.svg.axis().scale(x).orient('bottom').tickFormat(formatMonthDate).ticks(12),
-    yAxis = d3.svg.axis().scale(y).orient('left');
+  var xAxis = d3.svg.axis().scale(x).orient('bottom').tickFormat(formatMonthDate).ticks(12),
+      yAxis = d3.svg.axis().scale(y).orient('left');
 
-var brushTransition;
+  var brushTransition;
 
-$scope.reportMarkers = [];
+  $scope.diff = 1;
+  $scope.reportMarkers = [];
 
-var brush = d3.svg.brush()
+  var brush = d3.svg.brush()
     .x(x)
     .extent(defaultExtent)
     .on('brushstart', function () {})
@@ -220,7 +262,10 @@ var brush = d3.svg.brush()
         brushTransition = d3.select(this);
 
         if (!brush.empty()) {
-          $scope.diff = Math.floor((brush.extent()[1] - brush.extent()[0]) / (1000*60*60*24));
+
+          if (!$scope.diff) {
+            $scope.diff = Math.floor((brush.extent()[1] - brush.extent()[0]) / (1000*60*60*24));
+          }
 
           /*jshint -W064 */
           $scope.window = [ formatDayDate(brush.extent()[0]), formatDayDate(brush.extent()[1]) ];
@@ -241,7 +286,7 @@ var brush = d3.svg.brush()
       }
     );
 
-var area = d3.svg.area()
+  var area = d3.svg.area()
     .interpolate('monotone')
     .x(function(d) {
       return x(d.date);
@@ -251,11 +296,11 @@ var area = d3.svg.area()
       return y(d.count);
     });
 
-var line = d3.svg.line()
+  var line = d3.svg.line()
     .x(function(d) { return x(d.date); })
     .y(function(d) { return y(d.count); });
 
-var svg = d3.select('#chart')
+  var svg = d3.select('#chart')
     .on('click', function(){
        $scope.pause();
     })
@@ -264,17 +309,17 @@ var svg = d3.select('#chart')
     .attr('height', height + margin.top + margin.bottom);
 
 
-svg.append('defs').append('clipPath')
-    .attr('id', 'clip')
-  .append('rect')
-    .attr('width', width)
-    .attr('height', height);
+  svg.append('defs').append('clipPath')
+      .attr('id', 'clip')
+    .append('rect')
+      .attr('width', width)
+      .attr('height', height);
 
-var context = svg.append('g')
+  var context = svg.append('g')
     .attr('class', 'context')
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-var read = function(tempData) {
+  var read = function(tempData) {
 
   var data = [];
 
@@ -399,16 +444,15 @@ $scope.pause = function () {
   demoInterval = null;
 };
 
-$scope.diff = 0;
 $scope.replay = function () {
   $scope.playing = false;
 
-  $scope.diff = Math.abs(Math.floor((brush.extent()[1] - brush.extent()[0]) / (1000*60*60*24)));
+  var diff = Math.abs(Math.floor((brush.extent()[1] - brush.extent()[0]) / (1000 * 60 * 60 * 24)));
 
   var dateStart = parseDate('01/2015');
 
   var dateEnd = parseDate('01/2015');
-  dateEnd.setDate(dateEnd.getDate() + $scope.diff);
+  dateEnd.setDate(dateEnd.getDate() + diff);
 
   var targetExtent = [dateStart, dateEnd];
 
@@ -484,7 +528,8 @@ $scope.replay = function () {
 
     $scope.loadingReportMarkers = true;
     Reports.list(query).$promise.then(function (resp) {
-
+      $scope.loading = false;
+      $scope.willShowResult = false;
 
       // var clusterGroup = new L.MarkerClusterGroup().addTo(drawnItems);
       if (!refreshGraph) {
@@ -539,7 +584,7 @@ $scope.replay = function () {
 
           });
 
-      
+
         // console.log(items.indexOf(item.id) != -1);
 
         // if (items.indexOf(item.id) != -1) {
@@ -595,6 +640,10 @@ $scope.replay = function () {
 
       }
 
+    }).catch(function (err) {
+      console.log(err);
+      $scope.loading = false;
+      $scope.willShowResult = false;
     });
   }
 
@@ -602,5 +651,11 @@ $scope.replay = function () {
     console.log('refresh graph');
     refreshReportsLayerData(true);
   }
+
+  $scope.$on('$stateChangeStart', function (e, toState, toParams) {
+    e.preventDefault();
+    $scope.query = toParams.q;
+    $scope.search();
+  });
 
 });
