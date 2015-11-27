@@ -655,7 +655,7 @@ $scope.replay = function () {
     if (toState.name !== 'scenario') {
       return;
     }
-    
+
     e.preventDefault();
     $scope.query = toParams.q;
     $scope.search();
