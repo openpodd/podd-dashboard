@@ -7,7 +7,7 @@ angular.module('poddDashboardApp')
   Menu.setActiveMenu('scenario');
 })
 
-.controller('ScenarioCtrl', function ($scope, Menu, Reports, $compile, $interval, $stateParams, $anchorScroll, $location, $state) {
+.controller('ScenarioCtrl', function ($scope, Menu, Reports, $compile, $interval, $stateParams, $anchorScroll, $location, $state, $timeout) {
   Menu.setActiveMenu('scenario');
 
   L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
@@ -121,16 +121,15 @@ angular.module('poddDashboardApp')
     bounds = leafletMap.getBounds();
     zoom = leafletMap.getZoom();
 
-    $state.go('scenario', { 
-        top: bounds.getWest(),
-        right: bounds.getNorth(),
-        left: bounds.getSouth(),
-        bottom: bounds.getEast(),
-        zoom: zoom
-    });
-  
-
-
+    $timeout(function () {
+      $state.go('scenario', {
+          top: bounds.getWest(),
+          right: bounds.getNorth(),
+          left: bounds.getSouth(),
+          bottom: bounds.getEast(),
+          zoom: zoom
+      });
+    }, 0);
   }
   // TODO: this can cause:
   // `TypeError: Cannot read property 'childNodes' of undefined`
