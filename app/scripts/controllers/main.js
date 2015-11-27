@@ -56,10 +56,8 @@ angular.module('poddDashboardApp')
     $scope.$watch('layer', function (newValue) {
         if (newValue) {
             map.clearVillages();
+            map.clearReportLocations();
             if (newValue === 'report') {
-
-                console.log($scope.reportLocations);
-
                 if ($scope.reportLocations.length === 0) {
                     refreshReportLocations();
                 } else {
@@ -73,6 +71,8 @@ angular.module('poddDashboardApp')
     });
 
     function refreshDashboard() {
+        $scope.layer = 'area';
+        
         dashboard.get().$promise.then(function (villages) {
             $scope.villages = villages;
 
@@ -538,6 +538,7 @@ angular.module('poddDashboardApp')
                   old.name === 'main.summaryperson' ) {
                 shared.villages = {};
                 map.clearVillages();
+                map.clearReportLocations();
                 refreshDashboard();
             }
         }
@@ -551,6 +552,7 @@ angular.module('poddDashboardApp')
         if (newValue) {
             $scope.$broadcast('filter:clearQuery', true);
             map.clearVillages();
+            map.clearReportLocations();
             $scope.closeModal();
         }
     });
@@ -581,6 +583,7 @@ angular.module('poddDashboardApp')
             shared.forceReportViewOpen = false;
 
             map.clearVillages();
+            map.clearReportLocations();
             map.setVillages(newValue);
         }
     });
