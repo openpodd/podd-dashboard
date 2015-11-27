@@ -7,15 +7,15 @@ angular.module('poddDashboardApp')
   Menu.setActiveMenu('scenario');
 })
 
-.controller('ScenarioCtrl', function ($scope, Menu, Reports, $compile, $interval, $stateParams, $anchorScroll, $location, $state) {
+.controller('ScenarioCtrl', function ($scope, Menu, Reports, $compile, $interval, $stateParams, $anchorScroll, $location, $state, $timeout) {
   Menu.setActiveMenu('scenario');
 
   L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
 
 
   var options = {
-    center: [13.791177699, 100.58814079],
-    zoomLevel: 15,
+    center: [ 18.781516724349704, 98.98681640625 ],
+    zoomLevel: 8,
     zoomControl: false
   };
   var leafletMap = config.MAPBOX_MAP_ID ?
@@ -121,23 +121,24 @@ angular.module('poddDashboardApp')
     bounds = leafletMap.getBounds();
     zoom = leafletMap.getZoom();
 
-    $state.go('scenario', { 
-        top: bounds.getWest(),
-        right: bounds.getNorth(),
-        left: bounds.getSouth(),
-        bottom: bounds.getEast(),
-        zoom: zoom
-    }, { notify:false });
-    
-    query.top = bounds.getWest();
-    query.right = bounds.getNorth();
-    query.left = bounds.getSouth();
-    query.bottom = bounds.getEast();
-    
-    setTimeout(function() {
-      refreshReportsLayerDataWithSummary();
-    }, 100);
-
+    $timeout(function () {
+      $state.go('scenario', { 
+          top: bounds.getWest(),
+          right: bounds.getNorth(),
+          left: bounds.getSouth(),
+          bottom: bounds.getEast(),
+          zoom: zoom
+      }, { notify:false });
+      
+      query.top = bounds.getWest();
+      query.right = bounds.getNorth();
+      query.left = bounds.getSouth();
+      query.bottom = bounds.getEast();
+      
+      setTimeout(function() {
+        refreshReportsLayerDataWithSummary();
+      }, 100);
+    }, 0);
   }
 
   // TODO: this can cause:
