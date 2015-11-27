@@ -55,7 +55,8 @@ angular.module('poddDashboardApp')
   var defaultIconOptions = {
     className: 'scene-marker-wrapper',
     iconSize: [ 48, 48 ],
-    iconAnchor: [ 24, 24 ]
+    iconAnchor: [ 24, 24 ],
+    popupAnchor: [ 0, -12 ]
   };
   var getIconType = function (iconType) {
     return angular.extend({}, defaultIconOptions, {
@@ -98,7 +99,32 @@ angular.module('poddDashboardApp')
     }, new L.Format.GeoJSON({
       crs: L.CRS.EPSG4326,
       pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, { icon: icons[iconName] });
+        var marker = L.marker(latlng, {
+          icon: icons[iconName],
+          riseOnHover: true
+        });
+
+        marker.bindPopup(
+          feature.properties.detail + ' ' +
+          feature.properties.local_gove + ' อำเภอ' +
+          feature.properties.amphoe
+        );
+
+        marker.on('mouseover', function () {
+          var self = this;
+          $scope.$apply(function () {
+            self.openPopup();
+          });
+        });
+
+        marker.on('mouseout', function () {
+          var self = this;
+          $scope.$apply(function () {
+            self.closePopup();
+          });
+        });
+
+        return marker;
       }
     }));
   };
@@ -547,7 +573,8 @@ $scope.replay = function () {
           ];
 
           var marker = L.marker(location, {
-            icon: reportTypeIcons[item.reportTypeId]
+            icon: reportTypeIcons[item.reportTypeId],
+            riseOnHover: true
           });
 
           marker.item = item;
