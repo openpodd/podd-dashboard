@@ -70,6 +70,7 @@ angular.module('poddDashboardApp')
       className: 'scene-report-marker-wrapper',
       iconSize: [ 39, 52 ],
       iconAnchor: [ 19, 52 ],
+      popupAnchor: [0, -52],
       html: '<div class="scene-report-marker scene-report-marker-' + category + '"></div>'
     };
   };
@@ -249,6 +250,7 @@ angular.module('poddDashboardApp')
 
   var brushTransition;
 
+  $scope.diff = 1;
   $scope.reportMarkers = [];
 
   var brush = d3.svg.brush()
@@ -260,7 +262,10 @@ angular.module('poddDashboardApp')
         brushTransition = d3.select(this);
 
         if (!brush.empty()) {
-          $scope.diff = Math.floor((brush.extent()[1] - brush.extent()[0]) / (1000*60*60*24));
+
+          if (!$scope.diff) {
+            $scope.diff = Math.floor((brush.extent()[1] - brush.extent()[0]) / (1000*60*60*24));
+          }
 
           /*jshint -W064 */
           $scope.window = [ formatDayDate(brush.extent()[0]), formatDayDate(brush.extent()[1]) ];
@@ -439,16 +444,15 @@ $scope.pause = function () {
   demoInterval = null;
 };
 
-$scope.diff = 0;
 $scope.replay = function () {
   $scope.playing = false;
 
-  $scope.diff = Math.abs(Math.floor((brush.extent()[1] - brush.extent()[0]) / (1000*60*60*24)));
+  var diff = Math.abs(Math.floor((brush.extent()[1] - brush.extent()[0]) / (1000 * 60 * 60 * 24)));
 
   var dateStart = parseDate('01/2015');
 
   var dateEnd = parseDate('01/2015');
-  dateEnd.setDate(dateEnd.getDate() + $scope.diff);
+  dateEnd.setDate(dateEnd.getDate() + diff);
 
   var targetExtent = [dateStart, dateEnd];
 
