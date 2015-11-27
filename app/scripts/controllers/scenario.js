@@ -18,6 +18,7 @@ angular.module('poddDashboardApp')
     $scope.help = false;
   };
   $scope.search = function () {
+    $scope.closeHelp();
     $scope.willShowResult = true;
     $scope.loading = true;
 
