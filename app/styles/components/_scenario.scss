@@ -10,6 +10,18 @@
   border-left: solid 1px #DDD;
 }
 
+.layers-control-top{
+  position: absolute;
+  top: 10px;
+  left: 70px;
+  padding: 15px 30px 15px 20px;
+  background-color: rgba(256, 256, 256, 0.6);
+  z-index: 999;
+  margin-right: 10px;
+  border-bottom: solid 1px #DDD;
+  border-left: solid 1px #DDD;
+}
+
 .filter-control {
   position: absolute;
   top: 10px;
@@ -22,7 +34,6 @@
     width: 496px;
   }
 }
-
 
 #scenario-map {
   .leaflet-top {

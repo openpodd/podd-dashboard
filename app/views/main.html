@@ -4,6 +4,21 @@
      ng-hide="shared.summaryReportMode || shared.summaryPersonMode"
      ng-class="{ 'half-map': shared.showReportList }"></div>
 
+
+<div class="layers-control-top" ng-hide="shared.filterMode === true">
+    <div>
+      <h4>Display</h4>
+      <label>
+        <input type="radio" ng-model="layer" value="area">
+        Administration Area
+      </label> <br/>
+      <label>
+        <input type="radio" ng-model="layer" value="report">
+        Report ( DoDD )
+      </label>
+    </div>
+</div>
+
 <div ng-include="'/views/report-list.html'" class="section-report" ng-hide="shared.summaryReportMode || shared.summaryPersonMode || shared.summaryPerformancePersonMode"></div>
 
 <div ng-include="'/views/filter.html'" class="section-filter" ng-show="shared.filterMode"></div>
