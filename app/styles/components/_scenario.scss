@@ -100,6 +100,19 @@
   }
 }
 
+.scene-gis-choice {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  img {
+    width: 32px;
+  }
+}
+
 .scene-marker {
   width: 48px;
   height: 48px;
@@ -127,25 +140,25 @@
     // background-color: rgba(240, 155, 238, 1);
   }
   .marker-icon-pig {
-    background-image: url(../images/markers/ic2-pig.png);
+    background-image: url(../images/markers/ic3-pig.png);
   }
   .marker-icon-cow-wrapper {
     // background-color: rgba(187, 87, 14, 1);
   }
   .marker-icon-cow {
-    background-image: url(../images/markers/ic2-cow.png);
+    background-image: url(../images/markers/ic3-cow.png);
   }
   .marker-icon-dog-wrapper {
     // background-color: rgba(223, 71, 94, 1);
   }
   .marker-icon-dog {
-    background-image: url(../images/markers/ic2-dog.png);
+    background-image: url(../images/markers/ic3-dog.png);
   }
   .marker-icon-chicken-wrapper {
     // background-color: rgba(71, 164, 223, 1);
   }
   .marker-icon-chicken {
-    background-image: url(../images/markers/ic2-chicken.png);
+    background-image: url(../images/markers/ic3-chicken.png);
   }
 }
 .scene-report-marker {
