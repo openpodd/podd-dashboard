@@ -14,8 +14,8 @@ angular.module('poddDashboardApp')
 
 
   var options = {
-    center: [13.791177699, 100.58814079],
-    zoomLevel: 15,
+    center: [ 18.781516724349704, 98.98681640625 ],
+    zoomLevel: 8,
     zoomControl: false
   };
   var leafletMap = config.MAPBOX_MAP_ID ?
@@ -601,17 +601,17 @@ $scope.replay = function () {
   $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
       console.log('stateChangeSuccess', $state.current.name);
       if ($state.current.name === 'scenario') {
-          
-          query.top = $stateParams.top || 99.810791015625;
-          query.right = $stateParams.right || 19.647760955697354;
-          query.left = $stateParams.left || 17.764381077782076;
-          query.bottom = $stateParams.bottom || 198.1298828125;
-          
-          zoom = $stateParams.zoom || 15;
+
+          query.top = $stateParams.top || 99.9261474609375;
+          query.right = $stateParams.right || 20.16941122761028;
+          query.left = $stateParams.left || 17.240497931237368;
+          query.bottom = $stateParams.bottom || 97.679443359375;
+
+          zoom = $stateParams.zoom || 8;
 
           var southWest = L.latLng(query.left, query.bottom),
               northEast = L.latLng(query.right, query.top);
-          
+
           bounds = L.latLngBounds(southWest, northEast);
           leafletMap.fitBounds(bounds);
           leafletMap.setZoom(zoom);
