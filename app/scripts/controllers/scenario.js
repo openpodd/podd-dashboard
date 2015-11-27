@@ -127,15 +127,22 @@ angular.module('poddDashboardApp')
         left: bounds.getSouth(),
         bottom: bounds.getEast(),
         zoom: zoom
-    });
-  
-
+    }, { notify:false });
+    
+    query.top = bounds.getWest();
+    query.right = bounds.getNorth();
+    query.left = bounds.getSouth();
+    query.bottom = bounds.getEast();
+    
+    setTimeout(function() {
+      refreshReportsLayerDataWithSummary();
+    }, 100);
 
   }
+
   // TODO: this can cause:
   // `TypeError: Cannot read property 'childNodes' of undefined`
   // leafletMap.addControl(new LayersControl());
-
 
   $scope.toggleLayer = function (layerDef, forceValue) {
     var nextValue = angular.isUndefined(forceValue) ?
@@ -322,20 +329,19 @@ function playDemo() {
   var dateStart = brush.extent()[0];
   dateStart.setDate(dateStart.getDate() + $scope.diff);
 
-  if (dateStart.getTime() >= now) {
+  if (dateStart.getTime() >= now.getTime()) {
     dateStart = now;
     dateStart.setDate(dateStart.getDate() - $scope.diff);
   }
 
   var dateEnd = brush.extent()[1];
-
   if (dateEnd.getTime() === now) {
     $scope.pause();
     return;
   }
 
   dateEnd.setDate(dateEnd.getDate() + $scope.diff);
-  if (dateEnd.getTime() > now) {
+  if (dateEnd.getTime() > now.getTime()) {
     dateEnd = now;
     stopPlaying = true;
   }
@@ -595,31 +601,5 @@ $scope.replay = function () {
     console.log('refresh graph');
     refreshReportsLayerData(true);
   }
-
-  // refreshReportsLayerDataWithSummary();
-
-  $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
-      console.log('stateChangeSuccess', $state.current.name);
-      if ($state.current.name === 'scenario') {
-          
-          query.top = $stateParams.top || 99.810791015625;
-          query.right = $stateParams.right || 19.647760955697354;
-          query.left = $stateParams.left || 17.764381077782076;
-          query.bottom = $stateParams.bottom || 198.1298828125;
-          
-          zoom = $stateParams.zoom || 15;
-
-          var southWest = L.latLng(query.left, query.bottom),
-              northEast = L.latLng(query.right, query.top);
-          
-          bounds = L.latLngBounds(southWest, northEast);
-          leafletMap.fitBounds(bounds);
-          leafletMap.setZoom(zoom);
-
-          setTimeout(function() {
-            refreshReportsLayerDataWithSummary();
-          }, 1);
-      }
-  });
 
 });
