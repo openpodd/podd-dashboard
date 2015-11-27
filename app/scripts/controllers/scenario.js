@@ -250,7 +250,7 @@ angular.module('poddDashboardApp')
 
   var brushTransition;
 
-  $scope.diff = 1;
+  $scope.diffByTime = 1;
   $scope.reportMarkers = [];
 
   var brush = d3.svg.brush()
@@ -373,20 +373,20 @@ function playDemo() {
   var stopPlaying = false;
 
   var dateStart = brush.extent()[0];
-  dateStart.setDate(dateStart.getDate() + $scope.diff);
+  dateStart.setDate(dateStart.getDate() + $scope.diffByTime);
 
   if (dateStart.getTime() >= now.getTime()) {
     dateStart = now;
-    dateStart.setDate(dateStart.getDate() - $scope.diff);
+    dateStart.setDate(dateStart.getDate() - $scope.diffByTime);
   }
 
   var dateEnd = brush.extent()[1];
-  if (dateEnd.getTime() === now) {
+  if (dateEnd.getTime() === now.getTime()) {
     $scope.pause();
     return;
   }
 
-  dateEnd.setDate(dateEnd.getDate() + $scope.diff);
+  dateEnd.setDate(dateEnd.getDate() + $scope.diffByTime);
   if (dateEnd.getTime() > now.getTime()) {
     dateEnd = now;
     stopPlaying = true;
@@ -416,7 +416,7 @@ $scope.playing = false;
 
 $scope.play = function () {
   $scope.playing = true;
-  speed = Math.floor(30000 * $scope.diff/ (100 * Math.pow($scope.diff, 1/2)));
+  speed = Math.floor(30000 * $scope.diffByTime/ (100 * Math.pow($scope.diffByTime, 1/2)));
   console.log(speed);
 
   setTimeout(function() {
@@ -518,6 +518,8 @@ $scope.replay = function () {
 
   function refreshReportsLayerData(refreshGraph) {
 
+    console.log('scenario', refreshGraph);
+
     if (refreshGraph) {
       query.date__gte = formatDayDate(parseDate('01/2015'));
       query.date__lte = formatDayDate(new Date());
@@ -611,13 +613,10 @@ $scope.replay = function () {
 
         lastLayer = drawnItems;
 
-      }
+      } else {
 
+        d3.select('#chart').html('');
 
-      // fit bound.
-      // leafletMap.fitBounds(bounds);
-
-      else {
         svg.remove();
         svg = d3.select('#chart').append('svg')
             .attr('width', width + margin.left + margin.right)
@@ -633,7 +632,7 @@ $scope.replay = function () {
             .attr('class', 'context')
             .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-        // console.log(resp.summary);
+        console.log(refreshGraph, resp.summary);
         if (resp.summary) {
          read(resp.summary);
         }

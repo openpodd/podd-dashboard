@@ -152,7 +152,10 @@
     <div id="timeline-wrapper">
 
       <div class="timeline-header">
-        <strong>แสดงรายงาน ตั้งแต่วันที่ {{ window[0] }} ถึง {{ window[1] }} รวมเป็นช่วงระยะเวลา {{ diff }} วัน</strong>
+        <strong>
+          แสดงรายงาน ตั้งแต่วันที่ {{ window[0] }} ถึง {{ window[1] }}  เป็นช่วงระยะเวลา {{ diff }} วัน
+          โดยทำการเลื่อนเวลาทีละ <input class="diff" type="number" ng-model="diffByTime" min="1" width="40"/> วัน
+        </strong>
         <menu>
           <!-- <button ng-click="speedDown()" class="speedDown"><i class="fa fa-backward"></i></button> -->
           <button ng-click="play()" class="play"><i class="fa fa-play"></i></button>
@@ -160,7 +163,6 @@
           <button ng-click="replay()" class="stop"><i class="fa fa-stop"></i></button>
           <!-- <button ng-click="speedUp()" class="speedUp"><i class="fa fa-forward"></i></button> -->
         </menu>
-        <input class="diff" type="number" ng-model="diff" min="1" width="40"/>
       </div>
 
       <div id="chart"></div>
