@@ -127,25 +127,25 @@
     // background-color: rgba(240, 155, 238, 1);
   }
   .marker-icon-pig {
-    background-image: url(../../images/markers/ic2-pig.png);
+    background-image: url(../images/markers/ic2-pig.png);
   }
   .marker-icon-cow-wrapper {
     // background-color: rgba(187, 87, 14, 1);
   }
   .marker-icon-cow {
-    background-image: url(../../images/markers/ic2-cow.png);
+    background-image: url(../images/markers/ic2-cow.png);
   }
   .marker-icon-dog-wrapper {
     // background-color: rgba(223, 71, 94, 1);
   }
   .marker-icon-dog {
-    background-image: url(../../images/markers/ic2-dog.png);
+    background-image: url(../images/markers/ic2-dog.png);
   }
   .marker-icon-chicken-wrapper {
     // background-color: rgba(71, 164, 223, 1);
   }
   .marker-icon-chicken {
-    background-image: url(../../images/markers/ic2-chicken.png);
+    background-image: url(../images/markers/ic2-chicken.png);
   }
 }
 .scene-report-marker {
@@ -159,13 +159,13 @@
   background-size: contain;
 
   &.scene-report-marker-human {
-    background-image: url(../../images/markers/pin-human.png);
+    background-image: url(../images/markers/pin-human.png);
   }
   &.scene-report-marker-animal {
-    background-image: url(../../images/markers/pin-animal.png);
+    background-image: url(../images/markers/pin-animal.png);
   }
   &.scene-report-marker-environment {
-    background-image: url(../../images/markers/pin-env.png);
+    background-image: url(../images/markers/pin-env.png);
   }
 }
 
