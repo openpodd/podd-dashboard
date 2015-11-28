@@ -290,9 +290,7 @@ angular.module('poddDashboardApp')
 
         if (!brush.empty()) {
 
-          if (!$scope.diff) {
-            $scope.diff = Math.floor((brush.extent()[1] - brush.extent()[0]) / (1000*60*60*24));
-          }
+          $scope.diff = Math.floor((brush.extent()[1] - brush.extent()[0]) / (1000*60*60*24));
 
           /*jshint -W064 */
           $scope.window = [ formatDayDate(brush.extent()[0]), formatDayDate(brush.extent()[1]) ];
