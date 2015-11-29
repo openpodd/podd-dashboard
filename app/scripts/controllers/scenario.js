@@ -295,7 +295,6 @@ angular.module('poddDashboardApp')
           /*jshint -W064 */
           $scope.window = [ formatDayDate(brush.extent()[0]), formatDayDate(brush.extent()[1]) ];
 
-
           if (!$scope.playing) {
             $scope.reportMarkers = [];
           }
@@ -395,6 +394,11 @@ function playDemo() {
     $scope.pause();
     return;
   }
+
+  if (isNaN($scope.diff)) {
+    $scope.diff = 15;
+  }
+
   var stopPlaying = false;
 
   var dateStart = brush.extent()[0];
