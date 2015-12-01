@@ -143,7 +143,7 @@
           class="report-item">
 
         <div class="active-line"></div>
-        <a ng-href="#/reports/{{ marker.item.id.split('.')[2] }}">
+        <a ng-href="#/reports/{{ marker.item.id.split('.')[2] }}" target="_blank">
           <p ng-if="marker.item.firstImageThumbnail"><img  ng-src="{{ marker.item.firstImageThumbnail }}" alt=""/></p>
           <p ng-bind-html="marker.item.formDataExplanation"></p>
           <p class="incident-date">เมื่อวันที่ {{ marker.item.incidentDate }}</p>
