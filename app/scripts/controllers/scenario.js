@@ -440,18 +440,17 @@ function playDemo() {
 }
 
 var demoInterval = null;
-var speed = 500;
+var speed = 1000;
 $scope.playing = false;
 
 $scope.play = function () {
   $scope.playing = true;
-  speed = Math.floor(30000 * $scope.diffByTime/ (100 * Math.pow($scope.diffByTime, 1/2)));
-  console.log(speed);
+  //speed = Math.floor(30000 * $scope.diffByTime/ (100 * Math.pow($scope.diffByTime, 1/2)));
 
   setTimeout(function() {
     playDemo();
     demoInterval = $interval(playDemo, speed);
-  }, 1);
+  }, 0);
 };
 
 $scope.speedDown = function () {
