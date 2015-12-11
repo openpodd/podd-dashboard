@@ -6,10 +6,10 @@ angular.module('poddDashboardApp')
 .controller('MainCtrl', [
     '$scope', 'dashboard', 'streaming', 'Map', 'Reports', 'ReportModal',
     'shared', 'Auth', 'Search', 'Menu', 'Mentions', 'Flags', 'FailRequest',
-    '$location', '$state', '$window',
+    '$location', '$state', '$window', '$timeout',
     function ($scope, dashboard, streaming,
                Map, Reports, ReportModal, shared, Auth, Search, Menu, Mentions,
-               Flags, FailRequest, $location, $state, $window) {
+               Flags, FailRequest, $location, $state, $window, $timeout) {
 
     console.log('IN MainCtrl');
 
@@ -61,7 +61,7 @@ angular.module('poddDashboardApp')
                 if ($scope.reportLocations.length === 0) {
                     refreshReportLocations();
                 } else {
-                    map.setReportLocations($scope.reportLocations);    
+                    map.setReportLocations($scope.reportLocations);
                 }
 
             } else {
@@ -72,7 +72,7 @@ angular.module('poddDashboardApp')
 
     function refreshDashboard() {
         $scope.layer = 'area';
-        
+
         dashboard.get().$promise.then(function (villages) {
             $scope.villages = villages;
 
@@ -408,10 +408,12 @@ angular.module('poddDashboardApp')
             var reportId = data.id;
             // $scope.viewReport(reportId);
             if (!$state.is('main.filter')) {
-                $state.go('main.report', { reportId: reportId });
+                $timeout(function () {
+                  $state.go('main.report', { reportId: parseInt(reportId) });
+                });
             }
         }
-        
+
     });
 
     $scope.closeReportList = function () {
