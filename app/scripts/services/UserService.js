@@ -95,11 +95,11 @@ angular.module('poddDashboardApp')
 
             // Loop check
             check();
-            var promise = $interval(check, 5000);
+            // var promise = $interval(check, 5000);
 
-            $scope.$on('$destroy', function () {
-                $interval.cancel(promise);
-            });
+            // $scope.$on('$destroy', function () {
+            //     $interval.cancel(promise);
+            // });
         }
     };
 })
