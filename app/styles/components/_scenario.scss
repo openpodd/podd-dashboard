@@ -1,0 +1,274 @@
+.layers-control {
+  position: absolute;
+  top: 10px;
+  right: 20%;
+  padding: 15px 30px 15px 20px;
+  background-color: rgba(128, 128, 128, 0.2);
+  z-index: 999;
+  margin-right: 10px;
+  border-bottom: solid 1px #DDD;
+  border-left: solid 1px #DDD;
+}
+
+.layers-control-top{
+  position: absolute;
+  top: 10px;
+  left: 70px;
+  padding: 15px 30px 15px 20px;
+  background-color: rgba(256, 256, 256, 0.6);
+  z-index: 999;
+  margin-right: 10px;
+  border-bottom: solid 1px #DDD;
+  border-left: solid 1px #DDD;
+}
+
+.filter-control {
+  position: absolute;
+  top: 10px;
+  left: 94px;
+  z-index: 999;
+  width: 526px;
+  margin-right: 42%;
+
+  .filter-help {
+    width: 526px;
+  }
+}
+
+#scenario-map {
+  .leaflet-top {
+    top: 0;
+    right: auto;
+  }
+  .leaflet-right {
+    right: 0;
+  }
+
+
+  .leaflet-popup-content {
+    margin: 0;
+    padding: 12px 15px;
+    font-size: 13px;
+    line-height: 18px;
+
+    p {
+      font-size: 13px;
+      line-height: 18px;
+      margin: 0;
+    }
+  }
+
+  #footer {
+    position: absolute;
+    overflow: hidden;
+    left: 0;
+    padding-left: 50px;
+    bottom: 0;
+    height: 100px;
+    width:80%;
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  #map {
+    left: 0;
+    padding-left: 50px;
+    right: auto;
+    width: 80%;
+
+    .leaflet-control-attribution {
+      display: none;
+    }
+  }
+
+}
+
+#timeline-wrapper {
+  padding: 20px;
+
+  strong  {
+    font-size: 12px;
+  }
+  menu {
+    font-size: 75%;
+    padding: 0;
+    margin: 0 15px;
+    display: inline-block;
+
+  }
+  .diff {
+    width: 40px;
+  }
+}
+
+.scene-gis-choice {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  img {
+    width: 32px;
+  }
+}
+
+.scene-marker {
+  width: 48px;
+  height: 48px;
+
+  .marker-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    // background-color: #FFF;
+    // box-shadow: 2px 2px 8px -1px rgba(0, 0, 0, 0.75);
+  }
+  .marker-icon-animal {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 36px;
+    height: 36px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+
+  }
+
+  .marker-icon-pig-wrapper {
+    // background-color: rgba(240, 155, 238, 1);
+  }
+  .marker-icon-pig {
+    background-image: url(../images/markers/ic3-pig.png);
+  }
+  .marker-icon-cow-wrapper {
+    // background-color: rgba(187, 87, 14, 1);
+  }
+  .marker-icon-cow {
+    background-image: url(../images/markers/ic3-cow.png);
+  }
+  .marker-icon-dog-wrapper {
+    // background-color: rgba(223, 71, 94, 1);
+  }
+  .marker-icon-dog {
+    background-image: url(../images/markers/ic3-dog.png);
+  }
+  .marker-icon-chicken-wrapper {
+    // background-color: rgba(71, 164, 223, 1);
+  }
+  .marker-icon-chicken {
+    background-image: url(../images/markers/ic3-chicken.png);
+  }
+}
+.scene-report-marker {
+  // position: absolute;
+  // top: 6px;
+  // left: 6px;
+  width: 39px;
+  height: 52px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+
+  &.scene-report-marker-human {
+    background-image: url(../images/markers/pin-human.png);
+  }
+  &.scene-report-marker-animal {
+    background-image: url(../images/markers/pin-animal.png);
+  }
+  &.scene-report-marker-environment {
+    background-image: url(../images/markers/pin-env.png);
+  }
+}
+
+
+
+svg {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.brush .extent {
+  stroke: #fff;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
+
+
+menu {
+  margin: 2em auto;
+  text-align: center;
+  position: relative;
+}
+
+.scenario-map-report-list {
+  width: 20%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #FFF;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    padding-left: 1px;
+    border-left: solid 1px #DDD;
+  }
+
+  li {
+    position: relative;
+    border-bottom: solid 1px #DDD;
+  }
+
+  a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  .report-item {
+    padding: 25px 20px;
+    overflow: hidden;
+  }
+  .incident-date {
+    color: #888;
+    margin-bottom: 5px;
+  }
+
+  .active .active-line {
+    display: block;
+  }
+  .active-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background-color: #006DCC;
+    display: none;
+  }
+}

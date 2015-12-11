@@ -55,8 +55,10 @@ angular.module('poddDashboardApp')
         // Group marker for better management.
         this.radarMarkerLayer = new L.featureGroup().addTo(this.leaflet);
         this.villageMarkerLayer = new L.featureGroup().addTo(this.leaflet);
+        this.reportLocationMarkerLayer = new L.featureGroup().addTo(this.leaflet);
 
         this.villages = {};
+        this.reportLocations = {};
 
         L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
         this.iconRed = L.AwesomeMarkers.icon({
@@ -70,6 +72,10 @@ angular.module('poddDashboardApp')
         this.iconGrey = L.AwesomeMarkers.icon({
             icon: 'home',
             markerColor: 'cadetblue'
+        });
+        this.iconPublic = L.AwesomeMarkers.icon({
+            icon: 'home',
+            markerColor: 'white'
         });
 
         // Make radar, wink wink!
@@ -156,8 +162,58 @@ angular.module('poddDashboardApp')
         }
     };
 
+    Map.prototype.setReportLocations = function setReportLocations(items, dontFitBound) {
+        var self = this, bounds;
+
+        items = items.forEach ? items : [ items ];
+
+        items.forEach(function (item) {
+            
+            var report = item;
+            var location; 
+
+            report.id = report.id.replace('reports.report.', '');
+
+            if (report.reportLocation === null) {
+                return;
+
+            } else {
+                location = [
+                    item.reportLocation.coordinates[1],
+                    item.reportLocation.coordinates[0]
+                ];
+            }
+
+            report.marker = L.marker(location, {
+                icon: self.getIconByStatus({ negative: item.negative? 2: 0, positive: 1}),
+                riseOnHover: true,
+            });
+
+            report.marker.on('click', function () {
+               self.container.trigger('clicked:report', item);
+            });
+
+
+            report.marker.addTo(self.reportLocationMarkerLayer);
+        
+        });
+
+        if (items.length && !dontFitBound) {
+            bounds = self.reportLocationMarkerLayer.getBounds();
+            self.leaflet.fitBounds(bounds);
+            // then zoom out include padding of the web page.
+            bounds = self.leaflet.padBoundsByPixel(bounds, 60);
+            self.leaflet.fitBounds(bounds);
+        }
+    };
+
     Map.prototype.clearVillages = function clearVillages() {
         this.villageMarkerLayer.clearLayers();
+        this.unwinkAll();
+    };
+
+    Map.prototype.clearReportLocations = function clearReportLocations() {
+        this.reportLocationMarkerLayer.clearLayers();
         this.unwinkAll();
     };
 
@@ -254,6 +310,10 @@ angular.module('poddDashboardApp')
 
     Map.prototype.onClickVillage = function onClickVillage(cb) {
         this.container.on('clicked:village', cb);
+    };
+
+    Map.prototype.onClickReportLocation = function onClickVillage(cb) {
+        this.container.on('clicked:report', cb);
     };
 
     return Map;

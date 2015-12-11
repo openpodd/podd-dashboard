@@ -215,7 +215,11 @@ module.exports = function (grunt) {
       },
       dist: {
         options: {
-          generatedImagesDir: '<%= yeoman.dist %>/images/generated'
+          generatedImagesDir: '<%= yeoman.dist %>/images/generated',
+          httpImagesPath: '/dashboard/images',
+          httpFontsPath: '/dashboard/styles/fonts',
+          relativeAssets: true,
+          trace: false
         }
       },
       server: {

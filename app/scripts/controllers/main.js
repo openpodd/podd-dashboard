@@ -49,8 +49,32 @@ angular.module('poddDashboardApp')
         zoomLevel = 15,
         map = new Map( leafletMap.setView(center, zoomLevel) );
 
+    $scope.villages = [];
+    $scope.reportLocations = [];
+
+    $scope.layer = 'area';
+    $scope.$watch('layer', function (newValue) {
+        if (newValue) {
+            map.clearVillages();
+            map.clearReportLocations();
+            if (newValue === 'report') {
+                if ($scope.reportLocations.length === 0) {
+                    refreshReportLocations();
+                } else {
+                    map.setReportLocations($scope.reportLocations);    
+                }
+
+            } else {
+                map.setVillages($scope.villages);
+            }
+        }
+    });
+
     function refreshDashboard() {
+        $scope.layer = 'area';
+        
         dashboard.get().$promise.then(function (villages) {
+            $scope.villages = villages;
 
             if ($state.current.name !== 'main.filter') {
                 map.setVillages(villages);
@@ -64,6 +88,23 @@ angular.module('poddDashboardApp')
                 shared.villages[ item.id ] = item;
             });
 
+        });
+    }
+
+    function refreshReportLocations() {
+
+        var query = {
+            'isPublic': true,
+            'page_size': 10000,
+            'lite': true
+        };
+
+        Reports.list(query).$promise.then(function (reports) {
+            $scope.reportLocations = reports.results;
+
+            if ($state.current.name !== 'main.filter') {
+                map.setReportLocations($scope.reportLocations);
+            }
         });
     }
 
@@ -361,6 +402,18 @@ angular.module('poddDashboardApp')
         });
     });
 
+    map.onClickReportLocation(function (event, data) {
+        // console.log('clicked on report', data);
+        if (data.negative) {
+            var reportId = data.id;
+            // $scope.viewReport(reportId);
+            if (!$state.is('main.filter')) {
+                $state.go('main.report', { reportId: reportId });
+            }
+        }
+        
+    });
+
     $scope.closeReportList = function () {
         $scope.reports = null;
         $scope.recentReports = null;
@@ -485,6 +538,7 @@ angular.module('poddDashboardApp')
                   old.name === 'main.summaryperson' ) {
                 shared.villages = {};
                 map.clearVillages();
+                map.clearReportLocations();
                 refreshDashboard();
             }
         }
@@ -498,6 +552,7 @@ angular.module('poddDashboardApp')
         if (newValue) {
             $scope.$broadcast('filter:clearQuery', true);
             map.clearVillages();
+            map.clearReportLocations();
             $scope.closeModal();
         }
     });
@@ -528,6 +583,7 @@ angular.module('poddDashboardApp')
             shared.forceReportViewOpen = false;
 
             map.clearVillages();
+            map.clearReportLocations();
             map.setVillages(newValue);
         }
     });

@@ -1,0 +1,178 @@
+<div class="container" id="scenario-map" ng-controller="ScenarioCtrl">
+
+  <div id="map"></div>
+
+  <div class="filter-control report-filter">
+    <form role="form" ng-submit="search()">
+      <div class="input-group">
+
+        <span class="input-group-btn" ng-class="{ 'open': help }">
+            <button class="btn btn-default btn-info-search" type="button" ng-click="toggleHelp()">
+                <i class="fa fa-info"></i>
+            </button>
+
+            <div class="filter-help" ng-show="help" set-max-height="30">
+                <a href=""><i class="fa fa-times pull-right" ng-click="closeHelp()"></i></a>
+
+                <h4 style="margin-bottom:20px;"><i class="fa fa-info-circle"></i> ช่วยเหลือ รูปแบบการค้นหา:</h3>
+                <p>
+
+                    <ul class="list-unstyled filter-list-help">
+                        <li>
+                            ค้นหาโดยใช้รูปแบบ <em>field:value</em> ตัวอย่าง:
+                            <ul>
+                                <li><code filter-this>animalType:ไก่</code>
+                                <span class="explain">คือ หาประเภทของสัตว์</span></li>
+                                <li><code filter-this>sickCount:10</code>
+                                <span class="explain">คือ หาจำนวนสัตว์ป่วย</span></li>
+                                <li><code filter-this>createdByName:นายฉัตรชัย</code>
+                                <span class="explain">คือ หาจากผู้รายงาน</span></li>
+                                <li><code filter-this>area:อำเภอหางดง</code>
+                                <span class="explain">คือ หาจากพื้นที่ที่รายงาน</span></li>
+                                <li><code filter-this>negative:true</code>
+                                <span class="explain">คือ หาจากรายงานผิดปกติ</span></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            ค้นหาโดยใช้การกำหนดช่วง ตัวอย่าง:
+                            <ul>
+                                <li>
+                                    <code filter-this>sickCount:[1 TO 3]</code>
+                                    <span class="explain">คือ หาจำนวนสัตว์ป่วย ตั้งแต่ 1 ถึง 3 ตัว</span>
+                                </li>
+
+                                <li>
+                                    <code filter-this>sickCount:[1 TO *]</code>
+                                    <span class="explain">คือ หาจำนวนสัตว์ป่วย ตั้งแต่ 1 ตัวเป็นต้นไป</span>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            ค้นหาโดยแบบขั้นสูง ตัวอย่าง:
+                            <ul>
+                                <li>
+                                    <code filter-this>(animalType:แมว AND sickCount:10) OR sickCount:[3 TO *]</code><br>
+                                    <span class="explain">คือ หาจำนวนแมวป่วยสิบตัว หรือ สัตว์อะไรก็ได้ที่ป่วย 3 ตัวขึ้นไป</span>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </p>
+            </div><!-- end .filter-help -->
+        </span>
+
+        <input ng-model="query" type="text" class="form-control"
+               placeholder="ตัวอย่าง. animalType:ไก่">
+
+        <span class="input-group-btn">
+            <button class="btn btn-default pd-btn-search" type="submit"><i class="fa fa-search fa-size-18"></i></button>
+        </span>
+      </div>
+    </form>
+
+    <div class="filter-result" ng-show="willShowResult">
+      <div class="filter-loading" ng-show="loading">
+          กำลังค้นหา &hellip;
+      </div>
+    </div>
+  </div>
+
+  <div class="layers-control">
+    <section class="group-1">
+      <div class="scene-gis-choice">
+        <label>
+          <img src="images/markers/pin-animal.png" />
+          <input type="checkbox" ng-model="layers.report.show"
+          disabled="disabled" ng-change="toggleLayer(layers.report, layers.report.show)">
+          Report
+        </label>
+      </div>
+
+      <div class="scene-gis-control">
+        <h4>GIS Data</h4>
+        <div class="scene-gis-choice">
+          <label>
+            <img src="images/markers/ic3-pig.png" />
+            <input type="checkbox" ng-model="layers.gis.pig.show" ng-change="toggleLayer(layers.gis.pig, layers.gis.pig.show)">
+            {{ layers.gis.pig.name }}
+          </label>
+        </div>
+
+        <div class="scene-gis-choice">
+          <label>
+            <img src="images/markers/ic3-cow.png" />
+            <input type="checkbox" ng-model="layers.gis.cow.show" ng-change="toggleLayer(layers.gis.cow, layers.gis.cow.show)">
+            {{ layers.gis.cow.name }}
+          </label>
+        </div>
+
+        <div class="scene-gis-choice">
+          <label>
+            <img src="images/markers/ic3-dog.png" />
+            <input type="checkbox" ng-model="layers.gis.dog.show" ng-change="toggleLayer(layers.gis.dog, layers.gis.dog.show)">
+            {{ layers.gis.dog.name }}
+          </label>
+        </div>
+
+        <div class="scene-gis-choice">
+          <label>
+            <img src="images/markers/ic3-chicken.png" />
+            <input type="checkbox" ng-model="layers.gis.chicken.show" ng-change="toggleLayer(layers.gis.chicken, layers.gis.chicken.show)">
+            {{ layers.gis.chicken.name }}
+          </label>
+        </div>
+      </div>
+
+      <div>
+
+      </div>
+
+    </section>
+  </div>
+
+  <div class="scenario-map-report-list">
+    <div loader-spinner ng-if="loadingReportMarkers"></div>
+    <ul ng-hide="loadingReportMarkers || playing">
+      <li ng-repeat="marker in reportMarkers"
+          ng-class="{active: marker.isActive}"
+          id="report-item-{{ marker.item.id.split('.')[2] }}"
+          ng-mouseenter="marker.isActive = true"
+          ng-mouseleave="marker.isActive = false"
+          class="report-item">
+
+        <div class="active-line"></div>
+        <a ng-href="#/reports/{{ marker.item.id.split('.')[2] }}" target="_blank">
+          <p ng-if="marker.item.firstImageThumbnail"><img  ng-src="{{ marker.item.firstImageThumbnail }}" alt=""/></p>
+          <p ng-bind-html="marker.item.formDataExplanation"></p>
+          <p class="incident-date">เมื่อวันที่ {{ marker.item.incidentDate }}</p>
+
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div id="footer">
+    <div id="timeline-wrapper">
+
+      <div class="timeline-header">
+        <strong>
+          แสดงรายงาน ตั้งแต่วันที่ {{ window[0] }} ถึง {{ window[1] }}  เป็นช่วงระยะเวลา {{ diff }} วัน
+          โดยทำการเลื่อนเวลาทีละ <input class="diff" type="number" ng-model="diffByTime" min="1" width="40"/> วัน
+        </strong>
+        <menu>
+          <!-- <button ng-click="speedDown()" class="speedDown"><i class="fa fa-backward"></i></button> -->
+          <button ng-click="play()" class="play"><i class="fa fa-play"></i></button>
+          <button ng-click="pause()" class="pause"><i class="fa fa-pause"></i></button>
+          <button ng-click="replay()" class="stop"><i class="fa fa-stop"></i></button>
+          <!-- <button ng-click="speedUp()" class="speedUp"><i class="fa fa-forward"></i></button> -->
+        </menu>
+      </div>
+
+      <div id="chart"></div>
+
+    </div>
+  </div>
+
+</div>

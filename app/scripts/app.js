@@ -51,7 +51,7 @@ angular
     'angulartics',
     'angulartics.google.analytics',
     'angularLocalStorage',
-    'ngTagsInput',
+    'ngTagsInput'
   ])
 
   // override z-index of ui.bootstrap
@@ -161,6 +161,11 @@ angular
         url: '^/filter?q&reportId',
         template: '',
         controller: 'FilterModeCtrl'
+      })
+      .state('scenario', {
+        url: '/scenario?bottom&left&top&right&zoom&q',
+        templateUrl: 'views/scenario.html',
+        controller: 'ScenarioModeCtrl'
       })
       .state('main.summaryreport', {
         url: '^/summary/report?dates&type',
