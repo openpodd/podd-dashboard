@@ -141,7 +141,12 @@ angular
   })
 
   // .config(function ($routeProvider, $httpProvider, $stateProvider, $urlRouterProvider) {
-  .config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
+  .config(function (
+      $httpProvider, $stateProvider, $urlRouterProvider,
+      $compileProvider
+    ) {
+
+    $compileProvider.debugInfoEnabled(false);
     $httpProvider.interceptors.push('addTrailingSlashInterceptor');
 
     $urlRouterProvider.otherwise('/');
