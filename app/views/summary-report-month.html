@@ -5,20 +5,20 @@
         <i class="fa fa-times pull-right fa-size-18" ng-click="closeSummaryReportMonth();gotoMainPage();"></i>
     </div>
 
-    <div class="scroller scroller-x scroller-y content-wrapper content" perfect-scrollbar wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20" ng-transclude="true">
+    <div class="content-wrapper content" ng-transclude="true">
         <div class="summary-wrapper">
-            
+
             <form role="form" ng-submit="search()" class="search-block">
                 <!-- <div class="input-group"> -->
                     <div class="row summary-search" style="width:100%">
 
                         <div class="col-md-12" style="margin: 15px;">
                             <h5>
-                                ประเภทรายงาน 
+                                ประเภทรายงาน
                                 <div class="summary-filter-table" ng-show="types.all.length" >
                                     <input type="checkbox" ng-model="types.selectedAll" ng-click="checkAll()" style="margin-left: 15px;"/> เลือกทั้งหมด
                                 </div>
-                            </h5> 
+                            </h5>
                             <div class="summary-filter-table" ng-repeat="type in types.all">
                                 <input type="checkbox" ng-model="type.selected"/> {{ type.name }}
                             </div>
@@ -26,7 +26,7 @@
 
                         <div class="col-md-12">
                             <div class="col-md-2">
-                                <h5>เดือน</h5> 
+                                <h5>เดือน</h5>
                                 <select
                                     style="margin: 10px;"
                                     ng-model="months.selectedMonth"
@@ -37,7 +37,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <h5>พื้นที่</h5> 
+                                <h5>พื้นที่</h5>
                                 <ui-select
                                     class=""
                                     ng-model="areas.selectedArea"
@@ -54,9 +54,9 @@
                             </div>
 
                             <div class="col-md-3">
-                                <h5>Tag</h5> 
-                                
-                            <tags-input 
+                                <h5>Tag</h5>
+
+                            <tags-input
                                 style="margin:10px;width: 100%;"
                                 ng-model="tags"
                             >
@@ -88,9 +88,9 @@
                     <form role="form" ng-submit="doTag()">
 
                         <div class="col-md-12">
-                            <h4>คุณต้องการเพิ่มแท็กในรายงานหรือไม่ ?</h4> 
+                            <h4>คุณต้องการเพิ่มแท็กในรายงานหรือไม่ ?</h4>
                             <h5>รายการรายงานที่ต้องการแท็ก {{  tagReportIds }}</h5>
-                            <tags-input 
+                            <tags-input
                                 style="margin:10px;width: 100%;"
                                 ng-model="tagInput"
                             >

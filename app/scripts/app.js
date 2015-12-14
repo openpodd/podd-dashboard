@@ -37,7 +37,7 @@ angular
     'angularMoment',
     'ui.bootstrap',
     'angularFileUpload',
-    'perfect_scrollbar',
+    // 'perfect_scrollbar',
     'bootstrapLightbox',
     'ui.router',
     'ui.grid',

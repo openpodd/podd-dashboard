@@ -108,7 +108,7 @@
       <div class="filter-error" ng-show="error">
           เกิดข้อผิดพลาด
       </div>
-      
+
       <div class="filter-empty" ng-show="empty">
           ไม่พบผลการค้นหาที่กำหนด
       </div>
@@ -146,7 +146,7 @@
         </button>
 
         <div ng-show="showTable && shared.filteredReports"
-             class="scroller scroller-x scroller-y content-wrapper filter-wrapper"
+             class="content-wrapper filter-wrapper"
              set-max-height="40" trigger-event="'forceResizeResultTable'">
 
             <div ui-grid="filterResultGridOptions"

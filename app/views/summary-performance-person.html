@@ -5,14 +5,14 @@
         <i class="fa fa-times pull-right fa-size-18" ng-click="closeSummaryPerformancePerson();gotoMainPage();"></i>
     </div>
 
-    <div class="scroller scroller-x scroller-y content-wrapper content" perfect-scrollbar wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20" ng-transclude="true">
+    <div class="content-wrapper content" ng-transclude="true">
         <div class="summary-wrapper">
-            
+
             <form role="form" ng-submit="search()" class="search-block">
                 <!-- <div class="input-group"> -->
                     <div class="row summary-search">
                         <div class="col-md-6">
-                            <h5>พื้นที่</h5> 
+                            <h5>พื้นที่</h5>
                             <ui-select
                                 class=""
                                 ng-model="areas.selectedArea"
@@ -28,7 +28,7 @@
                             </ui-select>
                         </div>
                         <div class="col-md-6">
-                            <h5>เดือน</h5> 
+                            <h5>เดือน</h5>
                             <select
                                 ng-model="months.selectedMonth"
                                 ng-options="month for month in months.months"></select>

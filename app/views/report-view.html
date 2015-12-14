@@ -16,10 +16,7 @@
       เกิดข้อผิดพลาด ไม่สามารถดึงข้อมูลรายงานได้
     </div>
 
-    <div class="scroller scroller-x scroller-y content-wrapper"
-         perfect-scrollbar
-         wheel-propagation="true" wheel-speed="10" min-scrollbar-length="20"
-         refresh-on-change="report"
+    <div class="content-wrapper"
          ng-if="!loadingReportView && !loadingReportViewError"><div class="content">
 
       <div class="priority-report pull-right" ng-if="!$parent.report.parent">เปลี่ยนสถานะรายงาน :
@@ -188,7 +185,7 @@
         <button type="submit" class="btn btn-default"
                 ng-click="printDiv()"><i class="fa fa-print fa-size-18"></i> พิมพ์</button>
       </div>
-        
+
         <div class="report-comments">
             <div ng-include="'/views/comments.html'"></div>
         </div>
