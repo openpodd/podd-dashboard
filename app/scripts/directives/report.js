@@ -1,4 +1,4 @@
-/* globals swal:false */
+/* globals swal:false, L */
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -240,5 +240,183 @@ angular.module('poddDashboardApp')
                 }
             };
         }
+    };
+})
+
+.directive('responseMap', function ($timeout) {
+    var map;
+
+    var redPath = {
+      fillColor: '#d75c5c',
+      color: '#ff4949'
+    };
+    var yellowPath = {
+      fillColor: '#fee8a9',
+      color: '#ffb149'
+    };
+    var greenPath = {
+      fillColor: '#8fff53',
+      color: '#4dcd07'
+    };
+    var iconRed = L.AwesomeMarkers.icon({
+        icon: 'exclamation',
+        markerColor: 'red'
+    });
+    var iconOrange = L.AwesomeMarkers.icon({
+        icon: 'home',
+        markerColor: 'orange'
+    });
+    var iconGreen = L.AwesomeMarkers.icon({
+        icon: 'home',
+        markerColor: 'green'
+    });
+
+    function init(report, element) {
+      L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
+
+      var options = {
+        center: [
+          report.reportLocation.coordinates[1],
+          report.reportLocation.coordinates[0]
+        ],
+        zoom: 11
+      };
+
+      map = config.MAPBOX_MAP_ID ?
+              L.mapbox.map(element, config.MAPBOX_MAP_ID, options) :
+              L.map(element, options);
+    }
+
+    function insertMarker(obj, location, tooltipText, icon, whenHover) {
+      var marker = new L.Marker(location, { clickable: true, icon: icon }).addTo(map);
+      if (tooltipText) {
+        $(marker._icon).tooltip({
+            title: tooltipText
+        });
+      }
+      console.log('-> 0 whenHover', whenHover);
+      if (whenHover) {
+        marker.on('mouseover', function (e) {
+          console.log('-> 1 whenHover');
+          whenHover(e, obj);
+        });
+      }
+      return marker;
+    }
+
+    function insertCircle(location, radiusInMetre, pathOptions) {
+      var marker = L.circle(location, radiusInMetre, pathOptions).addTo(map);
+      return marker;
+    }
+
+    function _mockGetRedVillages() {
+      /*jshint -W109*/
+      return [
+        {
+          "id": 3000,
+          "name": "หมู่บ้าน 1",
+          "isLeaf": true,
+          "address": "หมู่บ้าน 1",
+          "location": {
+            "type": "Point",
+            "coordinates": [
+              98.98544311523436,
+              18.789642576019368
+            ]
+          }
+        }
+      ];
+      /*jshint +W109*/
+    }
+
+    function _mockGetYellowVillages() {
+      /*jshint -W109*/
+      return [
+        {
+          "id": 3001,
+          "name": "หมู่บ้าน 2",
+          "isLeaf": true,
+          "address": "หมู่บ้าน 2",
+          "location": {
+            "type": "Point",
+            "coordinates": [
+              99.00913238525389,
+              18.806868084732237
+            ]
+          }
+        }
+      ];
+      /*jshint +W109*/
+    }
+
+    function _mockGetGreenVillages() {
+      /*jshint -W109*/
+      return [
+        {
+          "id": 3002,
+          "name": "หมู่บ้าน 3",
+          "isLeaf": true,
+          "address": "หมู่บ้าน 3",
+          "location": {
+            "type": "Point",
+            "coordinates": [
+              99.07161712646483,
+              18.864381997011954
+            ]
+          }
+        }
+      ];
+      /*jshint +W109*/
+    }
+
+    return {
+      strict: 'A',
+      scope: {
+        report: '=',
+        whenHover: '&'
+      },
+      link: function ($scope, $element) {
+        var report = $scope.report;
+
+        var location = [
+          report.reportLocation.coordinates[1],
+          report.reportLocation.coordinates[0]
+        ];
+
+        init(report, $element[0]);
+        console.log('-> scope', $scope);
+
+        _mockGetRedVillages().forEach(function (item) {
+          var location = [
+            item.location.coordinates[1],
+            item.location.coordinates[0]
+          ];
+          insertMarker(item, location, item.address || item.name, iconRed, $scope.whenHover);
+        });
+
+        _mockGetYellowVillages().forEach(function (item) {
+          var location = [
+            item.location.coordinates[1],
+            item.location.coordinates[0]
+          ];
+          insertMarker(item, location, item.address || item.name, iconOrange, $scope.whenHover);
+        });
+
+        _mockGetGreenVillages().forEach(function (item) {
+          var location = [
+            item.location.coordinates[1],
+            item.location.coordinates[0]
+          ];
+          insertMarker(item, location, item.address || item.name, iconGreen, $scope.whenHover);
+        });
+
+        insertCircle(location, 10000, greenPath);
+        insertCircle(location, 3000, yellowPath);
+        insertCircle(location, 1000, redPath);
+
+        $timeout(function () {
+          map.invalidateSize();
+        }, 100);
+      }
     };
 });

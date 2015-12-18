@@ -85,6 +85,7 @@
 
           <ul class="pd-report-info">
             <li><a ng-show="$parent.report.boundary" ng-href="#/scenario?bottom={{ $parent.report.boundary.bottom }}&left={{ $parent.report.boundary.left }}&top={{ $parent.report.boundary.top }}&right={{ $parent.report.boundary.right }}">ดูเหตุการณ์ที่เกิดขึ้นบริเวณนี้</a></li>
+            <li><button ng-click="viewResponseMap($parent.report)">Response Map</button></li>
           </ul>
 
 <!--          </div></div> end .report-fields -->
@@ -194,6 +195,47 @@
   </div></div> <!-- end .content-wrapper .content -->
 
 </div>
+
+<script type="text/ng-template" id="reports-response-map.html">
+<div class="report-response-map">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
+    <h3 class="modal-title subheading">Response Map</h3>
+  </div>
+
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div response-map class="response-map" report="report" when-hover="whenHover"></div>
+      </div>
+
+      <div class="col-md-6">
+        <div ng-repeat="group in groups">
+          <h3>{{ group.name }}</h3>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>พื้นที่</th>
+                <th>ผู้รับการแจ้งเตือน</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="village in group.villages">
+                <td>{{ village.address }}</td>
+                <td>
+                  <textarea></textarea>
+                </td>
+                <td><button class="btn">ส่ง</button></td>
+                <td><button class="btn">บันทึก</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  </div>
+</div>
+</script>
 
 <script type="text/ng-template" id="reports-to-follow.html">
 <div class="reports-to-follow">
