@@ -98,7 +98,8 @@ angular
       /\/tags\/list/,
       /\/users\/profile/,
       /\/authorities/,
-      /\/reportTags/
+      /\/reportTags/,
+      /\/planReports/
     ];
 
     function matchAPIUrls(url) {
@@ -146,6 +147,7 @@ angular
       $compileProvider
     ) {
 
+    console.log('->', $compileProvider.aHrefSanitizationWhitelist());
     $compileProvider.debugInfoEnabled(false);
     $httpProvider.interceptors.push('addTrailingSlashInterceptor');
 

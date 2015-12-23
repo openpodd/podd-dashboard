@@ -462,6 +462,12 @@ angular.module('poddDashboardApp')
     };
 })
 
+.filter('renderPlanReportTag', function () {
+    return function (text) {
+        return text.replace(/\[plan-report:(\d+)\]/g, '<a class="label label-plan-report" data-plan-report-id="$1" data="xx$1">Plan: $1</a>');
+    };
+})
+
 .directive('loaderSpinner', function () {
     return {
         strict: 'A',

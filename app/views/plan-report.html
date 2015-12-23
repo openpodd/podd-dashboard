@@ -1,0 +1,61 @@
+<div class="flipper-container" set-max-height="62">
+<div class="flipper" ng-class="{ 'flipped': flipped }">
+  <div class="report-response-map front">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
+
+      <button type="button" ng-click="flipped=true" class="pull-right">
+        <span class="fa fa-list"></span>
+      </button>
+
+      <h3 class="modal-title subheading">แผนที่ตอบสนอง</h3>
+    </div>
+
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div response-map class="response-map" plan-report="planReport" when-hover="whenHover($obj)"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="back">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
+
+      <button type="button" ng-click="flipped=false" class="pull-right">
+        <span class="fa fa-map"></span>
+      </button>
+
+      <h3 class="modal-title subheading">รายการพื้นที่ตอบสนอง</h3>
+    </div>
+
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div ng-repeat="level in planReport.log.plan.levels">
+            <h3>{{ level.name }}</h3>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>พื้นที่</th>
+                  <th>ผู้รับการแจ้งเตือน</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="area in planReport.log.level_areas[level.code]">
+                  <td>{{ area.address }}</td>
+                  <td>
+                    {{ area.contacts }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
