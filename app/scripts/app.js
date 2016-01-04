@@ -99,7 +99,9 @@ angular
       /\/users\/profile/,
       /\/authorities/,
       /\/reportTags/,
-      /\/planReports/
+      /\/planReports/,
+      /\/administrationArea\/contacts/,
+      /\/administrationArea\/contacts\/update/
     ];
 
     function matchAPIUrls(url) {
@@ -177,6 +179,11 @@ angular
         url: '/plans',
         templateUrl: 'views/plans.html',
         controller: 'PlansModeCtrl'
+      })
+      .state('contacts', {
+        url: '/contacts',
+        templateUrl: 'views/contacts.html',
+        controller: 'ContactsModeCtrl'
       })
       .state('main.summaryreport', {
         url: '^/summary/report?dates&type',
