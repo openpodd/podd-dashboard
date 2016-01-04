@@ -206,6 +206,12 @@
                     <span class="pd-nav-text">Scenario Map</span>
                   </a>
                 </li>
+                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('plans') }">
+                  <a ng-href="#/plans" class="pd-nav-icon">
+                    <i class="fa fa-list-ol fa-size-18"></i>
+                    <span class="pd-nav-text">Plan List</span>
+                  </a>
+                </li>
                 <li ng-hide="shared.loggedIn" class="pd-nav-item" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('login') }">
                   <a ng-href="#/login" ng-click="isShowNav=!isShowNav" class="pd-nav-icon">
@@ -391,6 +397,7 @@
         <script src="scripts/controllers/summary-performance-person.js"></script>
         <script src="scripts/controllers/summary-report-month.js"></script>
         <script src="scripts/controllers/visualize.js"></script>
+        <script src="scripts/controllers/plans.js"></script>
         <!-- endbuild -->
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->

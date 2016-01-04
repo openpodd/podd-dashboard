@@ -1,0 +1,35 @@
+<div class="l-info-section l-section l-full-width" ng-controller="PlansCtrl">
+  <div class="l-detail-section l-section">
+    <div class="title clearfix">
+      <h2 class="pull-left"><i class="fa fa-list-ol pull-left fa-size-22"></i>รายการแผนรับมือโรคระบาด</h2>
+    </div>
+
+    <div class="content-wrapper content">
+      <div class="plans-list">
+        <div class="row" ng-repeat="planReport in planReports">
+          <div class="col-md-12">
+            <div class="well">
+              <p>แผนรับมือ {{ planReport.log.plan.name }} ของรายงานหมายเลข #{{ planReport.report }}</p>
+
+              <p>
+                <span class="plan-report-created-at">เมื่อ <span am-time-ago="planReport.createdAt" tooltip="{{ planReport.createdAt | amCalendar }}"></span></span>
+              </p>
+
+              <div class="">
+                <div>พื้นที่ในความรับผิดชอบของคุณ</div>
+                <div ng-repeat="level in planReport.log.plan.levels">
+                  <h4 ng-bind="level.name"></h4>
+                  <ul class="list-unstyled">
+                    <li ng-repeat="area in planReport.log.my_level_areas[level.code]">
+                      {{ area.address || area.name }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /plan-list -->
+    </div>
+  </div>
+</div>

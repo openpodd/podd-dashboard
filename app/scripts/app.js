@@ -147,7 +147,6 @@ angular
       $compileProvider
     ) {
 
-    console.log('->', $compileProvider.aHrefSanitizationWhitelist());
     $compileProvider.debugInfoEnabled(false);
     $httpProvider.interceptors.push('addTrailingSlashInterceptor');
 
@@ -173,6 +172,11 @@ angular
         url: '/scenario?bottom&left&top&right&zoom&q',
         templateUrl: 'views/scenario.html',
         controller: 'ScenarioModeCtrl'
+      })
+      .state('plans', {
+        url: '/plans',
+        templateUrl: 'views/plans.html',
+        controller: 'PlansModeCtrl'
       })
       .state('main.summaryreport', {
         url: '^/summary/report?dates&type',
