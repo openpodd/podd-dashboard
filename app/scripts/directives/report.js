@@ -271,14 +271,11 @@ angular.module('poddDashboardApp')
         markerColor: 'green'
     });
 
-    function init(report, element) {
+    function init(center, element) {
       L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
 
       var options = {
-        center: [
-          report.reportLocation.coordinates[1],
-          report.reportLocation.coordinates[0]
-        ],
+        center: center,
         zoom: 11
       };
 
@@ -294,11 +291,10 @@ angular.module('poddDashboardApp')
             title: tooltipText
         });
       }
-      console.log('-> 0 whenHover', whenHover);
+
       if (whenHover) {
-        marker.on('mouseover', function (e) {
-          console.log('-> 1 whenHover');
-          whenHover(e, obj);
+        marker.on('mouseover', function () {
+          whenHover({ $obj: obj });
         });
       }
       return marker;
@@ -309,110 +305,70 @@ angular.module('poddDashboardApp')
       return marker;
     }
 
-    function _mockGetRedVillages() {
-      /*jshint -W109*/
-      return [
-        {
-          "id": 3000,
-          "name": "หมู่บ้าน 1",
-          "isLeaf": true,
-          "address": "หมู่บ้าน 1",
-          "location": {
-            "type": "Point",
-            "coordinates": [
-              98.98544311523436,
-              18.789642576019368
-            ]
-          }
-        }
-      ];
-      /*jshint +W109*/
-    }
-
-    function _mockGetYellowVillages() {
-      /*jshint -W109*/
-      return [
-        {
-          "id": 3001,
-          "name": "หมู่บ้าน 2",
-          "isLeaf": true,
-          "address": "หมู่บ้าน 2",
-          "location": {
-            "type": "Point",
-            "coordinates": [
-              99.00913238525389,
-              18.806868084732237
-            ]
-          }
-        }
-      ];
-      /*jshint +W109*/
-    }
-
-    function _mockGetGreenVillages() {
-      /*jshint -W109*/
-      return [
-        {
-          "id": 3002,
-          "name": "หมู่บ้าน 3",
-          "isLeaf": true,
-          "address": "หมู่บ้าน 3",
-          "location": {
-            "type": "Point",
-            "coordinates": [
-              99.07161712646483,
-              18.864381997011954
-            ]
-          }
-        }
-      ];
-      /*jshint +W109*/
+    function isBlacklisted(area) {
+      var testString = area.address + area.name;
+      if (testString.match(/(องค์การ|เทศบาล|อำเภอ|จังหวัด)/)) {
+        return true;
+      }
     }
 
     return {
       strict: 'A',
       scope: {
-        report: '=',
+        planReport: '=',
         whenHover: '&'
       },
       link: function ($scope, $element) {
-        var report = $scope.report;
+        var planReport = $scope.planReport;
+        var redAreas = planReport.log.level_areas.red;
+        var yellowAreas = planReport.log.level_areas.yellow;
+        var greenAreas = planReport.log.level_areas.green;
 
-        var location = [
-          report.reportLocation.coordinates[1],
-          report.reportLocation.coordinates[0]
+        var center = [
+          redAreas[0].location.coordinates[1],
+          redAreas[0].location.coordinates[0]
         ];
+        init(center, $element[0]);
 
-        init(report, $element[0]);
-        console.log('-> scope', $scope);
-
-        _mockGetRedVillages().forEach(function (item) {
+        redAreas.forEach(function (item) {
           var location = [
             item.location.coordinates[1],
             item.location.coordinates[0]
           ];
-          insertMarker(item, location, item.address || item.name, iconRed, $scope.whenHover);
+          if (!isBlacklisted(item)) {
+            insertMarker(item, location, item.address || item.name, iconRed, $scope.whenHover);
+          }
         });
 
-        _mockGetYellowVillages().forEach(function (item) {
+        yellowAreas.forEach(function (item) {
           var location = [
             item.location.coordinates[1],
             item.location.coordinates[0]
           ];
-          insertMarker(item, location, item.address || item.name, iconOrange, $scope.whenHover);
+          if (!isBlacklisted(item)) {
+            insertMarker(item, location, item.address || item.name, iconOrange, $scope.whenHover);
+          }
         });
 
-        _mockGetGreenVillages().forEach(function (item) {
+        greenAreas.forEach(function (item) {
           var location = [
             item.location.coordinates[1],
             item.location.coordinates[0]
           ];
-          insertMarker(item, location, item.address || item.name, iconGreen, $scope.whenHover);
+          if (!isBlacklisted(item)) {
+            insertMarker(item, location, item.address || item.name, iconGreen, $scope.whenHover);
+          }
         });
 
-        insertCircle(location, 10000, greenPath);
-        insertCircle(location, 3000, yellowPath);
-        insertCircle(location, 1000, redPath);
+        // make a circle to show radius.
+        var levels = {};
+        planReport.log.plan.levels.forEach(function (item) {
+          levels[item.code] = item;
+        });
+
+        insertCircle(center, levels.green.distance, greenPath);
+        insertCircle(center, levels.yellow.distance, yellowPath);
+        insertCircle(center, Math.max(levels.red.distance, 1000), redPath);
 
         $timeout(function () {
           map.invalidateSize();

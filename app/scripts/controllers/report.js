@@ -18,7 +18,7 @@ angular.module('poddDashboardApp')
 
 .controller('ReportViewCtrl', function ($scope, streaming, Flags, Lightbox,
                                         $modal, Search, Reports, $state, Tag,
-                                        $timeout) {
+                                        $timeout, PlanReport) {
 
     $scope.userAlreadyClickImage = false;
     $scope.reportFlag = {};
@@ -297,100 +297,6 @@ angular.module('poddDashboardApp')
       popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="' + window.location.origin + '/styles/app.css" /></head><body onload="window.print()">' + printContents + '</html>');
       popupWin.document.close();
     };
-
-    function _mockGetRedVillages() {
-      /*jshint -W109*/
-      return [
-        {
-          "id": 3000,
-          "name": "หมู่บ้าน 1",
-          "isLeaf": true,
-          "address": "หมู่บ้าน 1",
-          "location": {
-            "type": "Point",
-            "coordinates": [
-              98.98544311523436,
-              18.789642576019368
-            ]
-          }
-        }
-      ];
-      /*jshint +W109*/
-    }
-
-    function _mockGetYellowVillages() {
-      /*jshint -W109*/
-      return [
-        {
-          "id": 3001,
-          "name": "หมู่บ้าน 2",
-          "isLeaf": true,
-          "address": "หมู่บ้าน 2",
-          "location": {
-            "type": "Point",
-            "coordinates": [
-              99.00913238525389,
-              18.806868084732237
-            ]
-          }
-        }
-      ];
-      /*jshint +W109*/
-    }
-
-    function _mockGetGreenVillages() {
-      /*jshint -W109*/
-      return [
-        {
-          "id": 3002,
-          "name": "หมู่บ้าน 3",
-          "isLeaf": true,
-          "address": "หมู่บ้าน 3",
-          "location": {
-            "type": "Point",
-            "coordinates": [
-              99.07161712646483,
-              18.864381997011954
-            ]
-          }
-        }
-      ];
-      /*jshint +W109*/
-    }
-
-    $scope.viewResponseMap = function (report) {
-      var scope = $scope.$new();
-      scope.report = report;
-      var modalInstance = $modal.open({
-        templateUrl: 'reports-response-map.html',
-        scope: scope,
-        size: 'lg',
-        controller: ['$scope', function (scope) {
-          scope.groups = [
-            {
-              name: 'Red',
-              villages: _mockGetRedVillages()
-            },
-            {
-              name: 'Yellow',
-              villages: _mockGetYellowVillages()
-            },
-            {
-              name: 'Green',
-              villages: _mockGetGreenVillages()
-            }
-          ];
-
-          scope.whenHover = function (e, obj) {
-            console.log(e, obj);
-          };
-
-          scope.close = function () {
-            modalInstance.dismiss();
-          };
-        }]
-      });
-    };
 })
 
 .controller('ReportImageLightboxCtrl', function ($scope, Map) {
@@ -435,4 +341,14 @@ angular.module('poddDashboardApp')
             map.leaflet.invalidateSize();
         }
     };
-});
+})
+
+.controller('PlanReportModalCtrl', function ($scope, $modalInstance) {
+    $scope.close = function () {
+        $modalInstance.dismiss();
+    };
+
+    $scope.flipped = false;
+})
+
+;

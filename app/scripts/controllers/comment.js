@@ -3,7 +3,7 @@
 
 angular.module('poddDashboardApp')
 
-.controller('CommentsCtrl', function ($scope, Comments, User, streaming, FailRequest, shared) {
+.controller('CommentsCtrl', function ($scope, Comments, User, streaming, FailRequest, shared, PlanReport, $modal) {
 
     console.log('init comment ctrl');
 
@@ -61,7 +61,7 @@ angular.module('poddDashboardApp')
             callError('ไม่สามารถอัพโหลดไฟล์ที่มีขนาดของไฟล์มากกว่า 10MB');
             return;
         }
-        
+
         console.log($scope.message);
 
         var data = {
@@ -115,6 +115,32 @@ angular.module('poddDashboardApp')
 
     $scope.clearFile = function() {
         clearFile();
+    };
+
+    $scope.commentBodyClick = function ($event) {
+      var planReportId = $($event.target).text();
+      planReportId = planReportId.replace(/.*(\d+).*?/, '$1');
+      if (planReportId) {
+        $scope.viewPlanReport(planReportId);
+      }
+    };
+
+    $scope.viewPlanReport = function (planReportId) {
+      PlanReport.get({ id: planReportId }).$promise.then(function (resp) {
+        $scope._viewResponseMap(resp);
+      });
+    };
+
+    $scope._viewResponseMap = function (planReport) {
+      var scope = $scope.$new();
+      scope.planReport = planReport;
+
+      var modalInstance = $modal.open({
+        templateUrl: 'views/plan-report.html',
+        scope: scope,
+        size: 'lg',
+        controller: 'PlanReportModalCtrl'
+      });
     };
 
     streaming.on('report:comment:new', function (data) {
