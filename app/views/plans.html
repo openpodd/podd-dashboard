@@ -4,32 +4,80 @@
       <h2 class="pull-left"><i class="fa fa-list-ol pull-left fa-size-22"></i>รายการแผนรับมือโรคระบาด</h2>
     </div>
 
-    <div class="content-wrapper content">
+    <div class="content-wrapper"><div class="content">
+      <div class="plans-list-legend">
+        <div class="well">
+          <h4>คำอธิบาย</h4>
+          <div class="row">
+            <div class="col-md-4"><span class="label label-danger">Red</span> โซนสีแดง คือหมู่บ้านที่เกิดเหตุ</div>
+            <div class="col-md-4"><span class="label label-warning">Yellow</span> โซนสีเหลือง คือระยะจากจุดเกิดเหตุ 3 กม.</div>
+            <div class="col-md-4"><span class="label label-success">Green</span> โซนสีเขียว คือระยะจากจุดเกิดเหตุ 10 กม.</div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <p></p><a href="#/">อ่านข้อมูลเพิ่มเติม</a></div></p>
+            </div>
+        </div>
+      </div>
+      
       <div class="plans-list">
-        <div class="row" ng-repeat="planReport in planReports">
+        <div class="row plan-list-item" ng-repeat="planReport in planReports">
           <div class="col-md-12">
             <div class="well">
-              <p>แผนรับมือ {{ planReport.log.plan.name }} ของรายงานหมายเลข #{{ planReport.report }}</p>
 
-              <p>
-                <span class="plan-report-created-at">เมื่อ <span am-time-ago="planReport.createdAt" tooltip="{{ planReport.createdAt | amCalendar }}"></span></span>
-              </p>
-
-              <div class="">
-                <div>พื้นที่ในความรับผิดชอบของคุณ</div>
-                <div ng-repeat="level in planReport.log.plan.levels">
-                  <h4 ng-bind="level.name"></h4>
-                  <ul class="list-unstyled">
-                    <li ng-repeat="area in planReport.log.my_level_areas[level.code]">
-                      {{ area.address || area.name }}
-                    </li>
-                  </ul>
+              <div class="row">
+                <div class="col-md-8 list-item-main-section">
+                  <div class="list-item-header">
+                    <h3>แผนรับมือ {{ planReport.log.plan.name }} ของรายงาน {{ planReport.reportTypeName }} หมายเลข #{{ planReport.report }}</h3>
+                  </div>
+    
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th colspan="2">พื้นที่ในความรับผิดชอบของท่าน</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="level in planReport.log.plan.levels">
+                        <td class="label-code">
+                          <span ng-if="level.code == 'red'" ng-bind="level.name" class="label label-danger"></span>
+                          <span ng-if="level.code == 'yellow'" ng-bind="level.name" class="label label-warning"></span>
+                          <span ng-if="level.code == 'green'" ng-bind="level.name" class="label label-success"></span>
+                        </td>
+                        <td>
+                          <span ng-repeat="area in planReport.log.my_level_areas[level.code]">
+                            {{ area.address || area.name }}
+                            <span ng-if="!$last">, </span>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table><!-- /end table -->
+                </div><!-- /end first col -->
+                <div class="col-md-4 list-item-meta">
+                  <div class="row">
+                    <div class="list-item-meta-label col-md-5">เมื่อ</div>
+                    <div class="list-item-meta-value col-md-7"><span class="plan-report-created-at" am-time-ago="planReport.createdAt" tooltip="{{ planReport.createdAt | amCalendar }}"></span></div>
+                  </div>
+                  <div class="row">
+                    <div class="list-item-meta-label col-md-5">สถานะปัจจุบัน</div>
+                    <div class="list-item-meta-value col-md-7">{{ planReport.reportStateName }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="list-item-meta-label col-md-5">จำนวนพื้นที่ที่ได้รับผลกระทบ</div>
+                    <div class="list-item-meta-value col-md-7">{{ planReport.affectedAreasCount }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="list-item-meta-view-button col-md-12">
+                      <a ng-href="#/reports/{{ planReport.report }}" target="_blank" class="view-button btn btn-primary">ดูรายงาน</a>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </div><!-- /end row -->
             </div>
           </div>
         </div>
       </div><!-- /plan-list -->
-    </div>
+    </div></div>
   </div>
 </div>

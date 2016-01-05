@@ -19,6 +19,12 @@ angular.module('poddDashboardApp')
           { name: 'Green', code: 'green' }
         ];
       }
+      
+      var levelAreas = item.log.level_areas;
+      item.affectedAreasCount = 0;
+      item.log.plan.levels.forEach(function (plan) {
+        item.affectedAreasCount += levelAreas[plan.code].length;
+      });
     });
   });
 })
