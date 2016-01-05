@@ -22,8 +22,11 @@ angular.module('poddDashboardApp')
       
       var levelAreas = item.log.level_areas;
       item.affectedAreasCount = 0;
+      item.myLevelAreasCount = 0;
+      
       item.log.plan.levels.forEach(function (plan) {
         item.affectedAreasCount += levelAreas[plan.code].length;
+        item.myLevelAreasCount += item.log.my_level_areas[plan.code].length;
       });
     });
   });
