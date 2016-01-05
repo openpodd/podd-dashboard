@@ -15,6 +15,24 @@ angular.module('poddDashboardApp')
     return resource;
 })
 
+.factory('AdministrationArea', function ($resource) {
+    var resource = $resource(config.API_BASEPATH + '/administrationArea/', {}, {
+        get: {
+            isArray: true
+        },
+        contacts: {
+            url: config.API_BASEPATH + '/administrationArea/contacts/',
+            method: 'GET',
+            isArray: true
+        },
+        updateContacts: {
+            url: config.API_BASEPATH + '/administrationArea/contacts/update/',
+            method: 'POST'
+        }
+    });
+    return resource;
+})
+
 .factory('ReportState', function ($resource) {
     return $resource(config.API_BASEPATH + '/reportStates/:id', {
         id: '@id'

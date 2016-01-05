@@ -2,7 +2,7 @@
 
 angular.module('poddDashboardApp')
 
-.controller('NotificationsCtrl', function ($scope, Mentions, shared, streaming) {
+.controller('NotificationsCtrl', function ($scope, Mentions, shared, streaming, $state) {
     console.log('init notification ctrl');
     $scope.shared = shared;
     $scope.unread = 0;
@@ -58,6 +58,11 @@ angular.module('poddDashboardApp')
 
         $scope.shared.reportWatchId = mention.reportId;
         shared.reportWatchId = mention.reportId;
+
+        if ($state.current.name === 'scenario') {
+            $state.go('main.report', { reportId: parseInt(mention.reportId) });
+        }        
+
     };
 
     streaming.on('mention:new', function (data) {

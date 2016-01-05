@@ -3,11 +3,13 @@
 
 angular.module('poddDashboardApp')
 
-.controller('ScenarioModeCtrl', function (Menu) {
+.controller('ScenarioModeCtrl', function (shared, Menu) {
+  shared.summaryScenarioMode = true;
   Menu.setActiveMenu('scenario');
 })
 
-.controller('ScenarioCtrl', function ($scope, Menu, Reports, $compile, $interval, $stateParams, $anchorScroll, $location, $state, $timeout) {
+.controller('ScenarioCtrl', function ($scope, Menu, Reports, $compile, $interval, 
+    $stateParams, $anchorScroll, $location, $state, $timeout, shared, $window) {
   Menu.setActiveMenu('scenario');
 
   $scope.query = $stateParams.q || '';
@@ -22,6 +24,7 @@ angular.module('poddDashboardApp')
     $scope.willShowResult = true;
     $scope.loading = true;
 
+    // console.log('------->',query);
     $timeout(function () {
       // change just the URL query params.
       $state.go('scenario', {
@@ -169,6 +172,10 @@ angular.module('poddDashboardApp')
   function changeBound() {
     $scope.pause();
 
+    if ($state.current.name !== 'scenario') {
+      return;
+    }
+
     bounds = leafletMap.getBounds();
     zoom = leafletMap.getZoom();
 
@@ -229,7 +236,6 @@ angular.module('poddDashboardApp')
   calChartWidth();
 
   $scope.window = [ formatDayDate(defaultExtent[0]), formatDayDate(defaultExtent[1]) ];
-
 
   var query = {
     // TODO: set default bounds
@@ -546,8 +552,6 @@ $scope.replay = function () {
 
   function refreshReportsLayerData(refreshGraph) {
 
-    console.log('scenario', refreshGraph);
-
     if (refreshGraph) {
       query.date__gte = formatDayDate(parseDate('01/2015'));
       query.date__lte = formatDayDate(new Date());
@@ -661,7 +665,7 @@ $scope.replay = function () {
             .attr('class', 'context')
             .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-        console.log(refreshGraph, resp.summary);
+        // console.log(refreshGraph, resp.summary);
         if (resp.summary) {
          read(resp.summary);
         }
@@ -680,14 +684,38 @@ $scope.replay = function () {
     refreshReportsLayerData(true);
   }
 
-  $scope.$on('$stateChangeStart', function (e, toState, toParams) {
-    if (toState.name !== 'scenario') {
-      return;
-    }
+  $scope.doQueryOnParams = function (params) {
+      if ($state.current.name === 'scenario') {
 
-    e.preventDefault();
-    $scope.query = toParams.q;
-    $scope.search();
+          // console.log(params);
+
+          query.top = $window.decodeURIComponent(params.top || 99.810791015625);
+          query.bottom = $window.decodeURIComponent(params.bottom || 198.1298828125);
+          query.left = $window.decodeURIComponent(params.left || 17.764381077782076);
+          query.right = $window.decodeURIComponent(params.right || 19.647760955697354);
+
+          if (typeof params.q === 'undefined')
+            delete query.q;
+          
+          var southWest = L.latLng(query.right, query.top),
+              northEast = L.latLng(query.left, query.bottom),
+              bounds = L.latLngBounds(southWest, northEast);
+
+          leafletMap.fitBounds(bounds);
+          return $scope.search();
+      }
+  };
+
+
+  $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
+      console.log('stateChangeSuccess', $state.current.name, params);
+      if ($state.current.name === 'scenario') {
+          if (oldParams !== params) {
+              $scope.doQueryOnParams(params);
+          }else {
+              $scope.search();
+          }
+      }
   });
 
 });
