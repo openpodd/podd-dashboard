@@ -22,8 +22,7 @@ angular.module('poddDashboardApp')
         },
         contacts: {
             url: config.API_BASEPATH + '/administrationArea/contacts/',
-            method: 'GET',
-            isArray: true
+            method: 'GET'
         },
         updateContacts: {
             url: config.API_BASEPATH + '/administrationArea/contacts/update/',

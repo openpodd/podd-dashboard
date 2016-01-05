@@ -44,3 +44,43 @@
   border-bottom: 1px dashed #999;
   cursor: help;
 }
+
+.plans-list {
+
+  .label {
+    width: 80px;
+    display: inline-block;
+    font-size: 100%;
+  }
+
+  td.label-code {
+    width: 100px;
+  }
+  
+  .well h3 {
+    margin-top: 0px;
+  }
+  
+  .list-item-meta {
+    font-size: 1.2em;
+    
+    .row {
+      margin-bottom: 8px;
+    }
+  }
+  
+  .list-item-meta-label {
+    text-align: right;
+    font-weight: bolder;
+  }
+  
+  .list-item-meta-view-button {
+    text-align: center;
+    .view-button {
+      width: 60%;
+      margin-top: 60px;
+      font-size: 1.4em;
+    }
+  }
+
+}
