@@ -19,21 +19,12 @@
         </form>
       </div>
 
-      <div class="" ng-show="willShowResult">
-        <div class="filter-loading" ng-show="loading">
-            กำลังค้นหา &hellip;
-        </div>
-
-        <div class="filter-error" ng-show="error">
-            เกิดข้อผิดพลาด
-        </div>
-
-        <div class="filter-empty" ng-show="empty">
-            ไม่พบผลการค้นหาที่กำหนด
-        </div>
-      </div>
+      <div ng-show="loading" loader-spinner></div>
+      <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
+      <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
 
       <div class="contact-list" ng-show="!loading && !willShowResult">
+
         <table class="table table-hover">
           <thead>
             <tr>
@@ -46,6 +37,11 @@
             <tr ng-repeat="area in administrationAreas">
               <td>
                 {{ area.parentName}}
+
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" ng-show="area.parentName" ng-click="selectedArea(area)">
+                  แก้ไข
+                </button>
+
               </td>
               <td>
                 {{ area.name}}
@@ -57,8 +53,33 @@
           </tbody>
         </table>
 
-        
+        <div class="loadmore" ng-show="canLoadMore">
+          <button class="btn btn-default center-block" type="button" ng-click="loadMore()" ng-disabled="disabledLoadmoreBtn">{{ disabledLoadmoreBtn ? 'Loading...' : 'Load more...' }}</button>
+        </div>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">{{ selected }}</h4>
+              </div>
+              <div class="modal-body">
+                ...
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                <button type="button" class="btn btn-primary">อัพเดท</button>
+              </div>
+            </div>
+          </div>
+        </div>        
+
       </div><!-- /contact-list -->
     </div>
+
+
   </div>
 </div>
