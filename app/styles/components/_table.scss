@@ -1,14 +1,9 @@
-.pd-table-phonebook{
-  thead{
-    background-color: #eee;
+.panel-phonebook{
+  .subheading{
+    margin-bottom: 0;
   }
-  .pd-table-phonebook-group{
-    width: 250px;
-  }
-  .pd-table-phonebook-area{
-    width: 120px;
-  }
-  .pd-table-phonebook-contact{
-
+  .panel-phonebook-contact{
+    margin: 0;
+    padding-left: 20px;
   }
 }
