@@ -36,6 +36,9 @@ if (moment) {
     // instead of short name.
     moment.defineLocale('th', {
         monthsShort : 'ม.ค._ก.พ._มี.ค._เม.ย._พ.ค._มิ.ย._ก.ค._ส.ค._ก.ย._ต.ค._พ.ย._ธ.ค.'.split('_'),
+        calendar: {
+          sameElse: 'DD/MM/YYYY HH:mm'
+        }
     });
 }
 
