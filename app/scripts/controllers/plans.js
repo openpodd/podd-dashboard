@@ -22,7 +22,7 @@ angular.module('poddDashboardApp')
     
     var query = {
       page: page,
-      page_size: 1
+      page_size: 20
     };
     
     PlanReport.query(query).$promise
