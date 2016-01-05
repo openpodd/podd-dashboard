@@ -25,10 +25,9 @@ angular.module('poddDashboardApp')
   };
 
   $scope.canLoadMore = true;
-  $scope.parentName = '';
 
   $scope.search = function () {
-    page = 1;
+    $scope.query.page = 1;
 
     $scope.willShowResult = true;
     $scope.loading = true;
@@ -36,21 +35,11 @@ angular.module('poddDashboardApp')
     $scope.empty = false;
     $scope.error = false;
 
+    $scope.canLoadMore = true;
+
     AdministrationArea.contacts($scope.query).$promise.then(function (resp) {
-      $scope.administrationAreas = [];
-      $scope.parentName = '';
-
-      angular.forEach(resp.results, function(value, key) {
-        if ($scope.parentName !== value.parentName) {
-          $scope.parentName = value.parentName;
-        } else {
-          value.parentName = '';
-        }
-
-        $scope.administrationAreas.push(value);
-
-      });
-
+      $scope.administrationAreas = resp.results;
+      
       $scope.willShowResult = false;
       $scope.loading = false;
 
@@ -83,12 +72,6 @@ angular.module('poddDashboardApp')
     AdministrationArea.contacts($scope.query).$promise.then(function (resp) {
 
       angular.forEach(resp.results, function(value, key) {
-        if ($scope.parentName !== value.parentName) {
-          $scope.parentName = value.parentName;
-        } else {
-          value.parentName = '';
-        }
-
         $scope.administrationAreas.push(value);
 
       });
@@ -109,10 +92,33 @@ angular.module('poddDashboardApp')
   $scope.search();
 
   $scope.selected = '';
+  $scope.oldSelectedContact = '';
 
   $scope.selectedArea = function(area) {
-    $scope.selected = area.parentName;
+    $scope.selected = area;
+    $scope.oldSelectedContact = area.contacts;
+    $scope.newSelectedContact = area.contacts;
+  };
 
+  $scope.disabledUpdateBtn = false;
+  $scope.saveContact = function() {
+    var params = [{
+      'id':  $scope.selected.id,
+      'contacts': $scope.newSelectedContact
+    }];
+
+    $scope.disabledUpdateBtn = true;
+    AdministrationArea.updateContacts(params).$promise.then(function (resp) {
+      $scope.selected.contacts = $scope.newSelectedContact;
+      $scope.disabledUpdateBtn = false;
+      $('#contactModal').modal('toggle');
+
+    }).catch(function () {
+      $scope.selected.contacts = $scope.oldSelectedContact;
+      $scope.disabledUpdateBtn = false;
+      $('#contactModal').modal('toggle');
+
+    });
   };
 
 })
