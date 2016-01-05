@@ -21,7 +21,11 @@
       </div>
       
       <div class="plans-list">
-        <div class="row plan-list-item" ng-repeat="planReport in planReports">
+        <div class="row plan-list-item" ng-if="planReports.length === 0">
+          <div class="well text-center">ยังไม่มีแผนรับมือ</div>
+        </div>
+        
+        <div class="row plan-list-item" ng-repeat="planReport in planReports" ng-if="planReports.length > 0">
           <div class="col-md-12">
             <div class="well">
 
@@ -83,6 +87,10 @@
           </div>
         </div>
       </div><!-- /plan-list -->
+      
+      <div class="loadmore" ng-cloak>
+        <button class="btn btn-default center-block" type="button" ng-show="!endPageList" ng-click="loadMore()" ng-disabled="loading">{{ loading ? 'Loading...' : 'Load more...' }}</button>
+      </div>
     </div></div>
   </div>
 </div>
