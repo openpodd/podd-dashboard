@@ -27,9 +27,10 @@ angular.module('poddDashboardApp')
     
     PlanReport.query(query).$promise
       .then(function (resp) {
-        if (!resp.length) {
+        if (resp.length < query.page_size) {
           $scope.endPageList = true;
-          return;
+          // end process if empty list.
+          if (resp.length === 0) return;
         }
         
         resp.forEach(function (item) {
