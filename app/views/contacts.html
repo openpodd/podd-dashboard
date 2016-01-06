@@ -51,7 +51,8 @@
 
             <div class="well contact-info">
               <b>Name:</b>
-              <a ng-repeat="alphabet in alphabets" ng-click="searchByAlphabet(alphabet)">{{ alphabet }}</a>
+              <a ng-repeat="alphabet in alphabets" ng-click="searchByAlphabet(alphabet)" ng-class="{badge: alphabet === _query.alphabet}" >{{ alphabet }}</a>
+              <a  ng-click="clearAlphabet()">[ไม่ต้องการหาตามอักษร]</a>
             </pre>
 
         </form>

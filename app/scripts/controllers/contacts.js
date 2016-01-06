@@ -41,12 +41,17 @@ angular.module('poddDashboardApp')
 
   $scope.search = function () {
     $scope._query.name = $scope.query;
-    $state.go('contacts', { q: $scope._query.name });
+    $state.go('contacts', { q: $scope._query.name, alphabet: $scope._query.alphabet });
   };
 
   $scope.searchByAlphabet = function (alphabet) {
-    $scope._query.name = alphabet;
-    $state.go('contacts', { q: $scope._query.name });
+    $scope._query.alphabet = alphabet;
+    $state.go('contacts', { q: $scope._query.name, alphabet: $scope._query.alphabet });
+  };
+
+   $scope.clearAlphabet = function (alphabet) {
+    delete $scope._query.alphabet;
+    $state.go('contacts', { q: $scope._query.name, alphabet: '' });
   };
 
   $scope._search = function () {
@@ -148,9 +153,9 @@ angular.module('poddDashboardApp')
 
       if ($state.current.name === 'contacts') {
 
-          $scope._query.name = $window.decodeURIComponent(params.q || '');
+          $scope._query.name = $window.decodeURIComponent(params.q || '').replace(' ', '');
+          $scope._query.alphabet = $window.decodeURIComponent(params.alphabet || '');
               
-
           if ($scope._query.name === '') {
             delete $scope._query.q;
           }
