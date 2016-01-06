@@ -72,14 +72,18 @@
   .list-item-meta-label {
     text-align: right;
     font-weight: bolder;
+    font-size: .9em;
+  }
+  .list-item-meta-value{
+    font-size: .9em;
   }
   
   .list-item-meta-view-button {
     text-align: center;
     .view-button {
       width: 60%;
-      margin-top: 60px;
-      font-size: 1.4em;
+      margin-top: 50px;
+      // font-size: 1.4em;
     }
   }
 

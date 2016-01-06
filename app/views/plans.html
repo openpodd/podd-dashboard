@@ -6,19 +6,21 @@
 
     <div class="content-wrapper"><div class="content">
       <div class="plans-list-legend">
-        <div class="well">
-          <h4>คำอธิบาย</h4>
-          <div class="row">
-            <div class="col-md-4"><span class="label label-danger">Red</span> โซนสีแดง คือหมู่บ้านที่เกิดเหตุ</div>
-            <div class="col-md-4"><span class="label label-warning">Yellow</span> โซนสีเหลือง คือระยะจากจุดเกิดเหตุ 3 กม.</div>
-            <div class="col-md-4"><span class="label label-success">Green</span> โซนสีเขียว คือระยะจากจุดเกิดเหตุ 10 กม.</div>
+        <div class="panel panel-default">
+          <div class="panel-heading">คำอธิบาย <a href="#/" class="pull-right">อ่านข้อมูลเพิ่มเติม >></a></div>
+          <div class="panel-body">
+            <div class="row">
+                <div class="col-md-4"><span class="label label-danger">Red</span> โซนสีแดง คือหมู่บ้านที่เกิดเหตุ</div>
+                <div class="col-md-4"><span class="label label-warning">Yellow</span> โซนสีเหลือง คือระยะจากจุดเกิดเหตุ 3 กม.</div>
+                <div class="col-md-4"><span class="label label-success">Green</span> โซนสีเขียว คือระยะจากจุดเกิดเหตุ 10 กม.</div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  
+                </div>
+              </div>
           </div>
-          <div class="row">
-            <div class="col-md-12">
-              <p></p><a href="#/">อ่านข้อมูลเพิ่มเติม</a></div></p>
-            </div>
         </div>
-      </div>
       
       <div class="plans-list">
         <div class="row plan-list-item" ng-if="!loading && planReports.length === 0">
@@ -32,7 +34,7 @@
               <div class="row">
                 <div class="col-md-8 list-item-main-section">
                   <div class="list-item-header">
-                    <h3>แผนรับมือ {{ planReport.log.plan.name }} ของรายงาน {{ planReport.reportTypeName }} หมายเลข #{{ planReport.report }}</h3>
+                    <h2 class="subheading">แผนรับมือ {{ planReport.log.plan.name }} ของรายงาน {{ planReport.reportTypeName }} หมายเลข #{{ planReport.report }}</h2>
                   </div>
     
                   <table class="table">

@@ -346,7 +346,11 @@ angular.module('poddDashboardApp')
                     $element.on('click', function () {
                         scope.$apply(function () {
                             if (scope.query) {
-                                scope.query += ' AND ' + $element.text();
+                                if (scope.isOnlyq) {
+                                    scope.query = $element.text().replace(' ', '');
+                                } else {
+                                    scope.query += ' AND ' + $element.text();
+                                }
                             }
                             else {
                                 scope.query += '' + $element.text();
