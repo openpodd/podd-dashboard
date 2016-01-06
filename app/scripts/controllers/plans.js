@@ -1,3 +1,4 @@
+/*globals swal*/
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -15,14 +16,14 @@ angular.module('poddDashboardApp')
   $scope.planReports = [];
 
   function fetch(page) {
-    if ($scope.loading) return;
+    if ($scope.loading) { return; }
     $scope.loading = true;
 
     page = page || 1;
 
     var query = {
       page: page,
-      page_size: 20
+      'page_size': 20
     };
 
     PlanReport.query(query).$promise
@@ -30,7 +31,7 @@ angular.module('poddDashboardApp')
         if (resp.length < query.page_size) {
           $scope.endPageList = true;
           // end process if empty list.
-          if (resp.length === 0) return;
+          if (resp.length === 0) { return; }
         }
 
         resp.forEach(function (item) {
@@ -94,20 +95,30 @@ angular.module('poddDashboardApp')
       }
       area.working = true;
 
-      var save = false;
       var data = {
         id: planReport.id,
         area: area.id,
         contacts: area.newContacts,
-        save: save
+        save: area.saveContacts,
+        append: true
       };
 
       PlanReport.resendNotification(data).$promise
-        .then(function (resp) {
-          console.log('-> success', resp);
+        .then(function () {
+          area.newContacts = '';
+          swal({
+            title: 'เรียบร้อย',
+            text: 'ระบบได้ส่งข้อความแจ้งเตือนเรียบร้อยแล้ว',
+            type: 'success'
+          });
         })
         .catch(function (err) {
           console.log('-> error', err);
+          swal({
+            title: 'ผิดพลาด',
+            text: 'เกิดปัญหาบางอย่าง กรุณาลองอีกครั้ง',
+            type: 'error'
+          });
         })
         .finally(function () {
           area.working = false;
