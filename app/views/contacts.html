@@ -48,8 +48,15 @@
               </span>
 
             </div>
+
+            <div class="well contact-info">
+              <b>Name:</b>
+              <a ng-repeat="alphabet in alphabets" ng-click="searchByAlphabet(alphabet)">{{ alphabet }}</a>
+            </pre>
+
         </form>
       </div>
+
 
       <div ng-show="loading" loader-spinner></div>
       <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>

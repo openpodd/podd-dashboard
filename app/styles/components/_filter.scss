@@ -110,3 +110,16 @@
 .contact-detail {
     min-height: 150px;
 }
+
+.contact-info {
+    margin-top: 10px;
+
+    b{
+        margin-right: 10px;
+    }
+
+    a{
+        margin-right: 10px;
+        cursor: pointer;
+    }
+}

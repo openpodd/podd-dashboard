@@ -18,7 +18,7 @@ angular.module('poddDashboardApp')
   $scope.loading = true;
 
   $scope.isOnlyq = true;
-  
+
   var page = 1;
   var pageSize = 10;
 
@@ -41,6 +41,11 @@ angular.module('poddDashboardApp')
 
   $scope.search = function () {
     $scope._query.name = $scope.query;
+    $state.go('contacts', { q: $scope._query.name });
+  };
+
+  $scope.searchByAlphabet = function (alphabet) {
+    $scope._query.name = alphabet;
     $state.go('contacts', { q: $scope._query.name });
   };
 
@@ -79,6 +84,8 @@ angular.module('poddDashboardApp')
     });
   
   };
+
+  $scope.alphabets = ("กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ").split("");
 
   $scope.loadMore = function () {
     page ++;
