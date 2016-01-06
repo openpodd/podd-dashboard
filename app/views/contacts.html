@@ -10,7 +10,37 @@
         <form role="form" ng-submit="search()" class="search-block">
             <div class="input-group">
 
-              <input ng-model="query.name" type="text" class="form-control"
+                <span class="input-group-btn" ng-class="{ 'open': help }">
+                  <button class="btn btn-default btn-info-search" type="button" ng-click="toggleHelp()">
+                      <i class="fa fa-info"></i>
+                  </button>
+
+                  <div class="filter-help" ng-show="help" set-max-height="30">
+                      <a href=""><i class="fa fa-times pull-right" ng-click="closeHelp()"></i></a>
+
+                      <h4 style="margin-bottom:20px;"><i class="fa fa-info-circle"></i> ช่วยเหลือ รูปแบบการค้นหา:</h3>
+                      <p>
+
+                          <ul class="list-unstyled filter-list-help">
+                              <li>
+                                  ค้นหาโดยใช้รูปแบบ ตัวอย่าง:
+                                  <ul>
+                                      <li><code filter-this>ต้นกุก</code>
+                                      <span class="explain">คือ รายชื่อหมู่บ้านต้นกุก</span></li>
+                                      <li><code filter-this>อำเภอฝาง</code>
+                                      <span class="explain">รายชื่อหมู่บ้านของอำเภอเมือง</span></li>
+                                      <li><code filter-this>เทศบาลตำบลสุเทพ</code>
+                                      <span class="explain">คือ รายชื่อหมู่บ้านของเทศบาลตำบลสุเทพ</span></li>
+                                      <li><code filter-this>องค์การบริหารส่วนตำบลสบเปิง</code>
+                                      <span class="explain">คือ รายชื่อหมู่บ้านขององค์การบริหารส่วนตำบลสบเปิง</span></li>
+                                  </ul>
+                              </li>
+                          </ul>
+                      </p>
+                  </div><!-- end .filter-help -->
+              </span>
+
+              <input ng-model="query" type="text" class="form-control"
                placeholder="ตัวอย่าง. เทศบาลตำบลยางเนิ้ง">
               
               <span class="input-group-btn">

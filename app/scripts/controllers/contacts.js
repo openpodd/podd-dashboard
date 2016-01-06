@@ -11,15 +11,18 @@ angular.module('poddDashboardApp')
       $state, $stateParams, $window) {
   Menu.setActiveMenu('contacts');
 
+  $scope.query = $stateParams.q || '';
   $scope.administrationAreas = [];
 
   $scope.willShowResult = true;
   $scope.loading = true;
 
+  $scope.isOnlyq = true;
+  
   var page = 1;
   var pageSize = 10;
 
-  $scope.query = {
+  $scope._query = {
     'parentName': 'ตำบล',
     'page_size': pageSize,
     'page': page
@@ -28,12 +31,21 @@ angular.module('poddDashboardApp')
   $scope.canLoadMore = true;
 
 
+  $scope.toggleHelp = function () {
+      $scope.help = !$scope.help;
+  };
+
+  $scope.closeHelp = function () {
+      $scope.help = false;
+  };
+
   $scope.search = function () {
-    $state.go('contacts', { q: $scope.query.name });
+    $scope._query.name = $scope.query;
+    $state.go('contacts', { q: $scope._query.name });
   };
 
   $scope._search = function () {
-    $scope.query.page = 1;
+    $scope._query.page = 1;
 
     $scope.willShowResult = true;
     $scope.loading = true;
@@ -43,7 +55,7 @@ angular.module('poddDashboardApp')
 
     $scope.canLoadMore = true;
 
-    AdministrationArea.contacts($scope.query).$promise.then(function (resp) {
+    AdministrationArea.contacts($scope._query).$promise.then(function (resp) {
       $scope.administrationAreas = resp.results;
       
       $scope.willShowResult = false;
@@ -71,11 +83,11 @@ angular.module('poddDashboardApp')
   $scope.loadMore = function () {
     page ++;
 
-    $scope.query.page = page;
+    $scope._query.page = page;
     
     $scope.disabledLoadmoreBtn = true;
 
-    AdministrationArea.contacts($scope.query).$promise.then(function (resp) {
+    AdministrationArea.contacts($scope._query).$promise.then(function (resp) {
 
       angular.forEach(resp.results, function(value, key) {
         $scope.administrationAreas.push(value);
@@ -125,29 +137,29 @@ angular.module('poddDashboardApp')
     });
   };
 
-    $scope.doQueryOnParams = function (params) {
+  $scope.do_queryOnParams = function (params) {
 
-        if ($state.current.name === 'contacts') {
+      if ($state.current.name === 'contacts') {
 
-            $scope.query.name = $window.decodeURIComponent(params.q || '');
-                
+          $scope._query.name = $window.decodeURIComponent(params.q || '');
+              
 
-            if ($scope.query.name === '') {
-              delete $scope.query.q;
-            }
+          if ($scope._query.name === '') {
+            delete $scope._query.q;
+          }
 
-            return $scope._search();
-        }
-    };
+          return $scope._search();
+      }
+  };
 
-    $scope.doQueryOnParams($stateParams);
-    $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
-        if ($state.current.name === 'contacts') {
-            if (oldParams !== params) {
-                $scope.doQueryOnParams(params);
-            }
-        }
-    });
+  $scope.do_queryOnParams($stateParams);
+  $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
+      if ($state.current.name === 'contacts') {
+          if (oldParams !== params) {
+              $scope.do_queryOnParams(params);
+          }
+      }
+  });
 
 })
 
