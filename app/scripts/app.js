@@ -181,7 +181,7 @@ angular
         controller: 'PlansModeCtrl'
       })
       .state('contacts', {
-        url: '/contacts',
+        url: '/contacts?q',
         templateUrl: 'views/contacts.html',
         controller: 'ContactsModeCtrl'
       })

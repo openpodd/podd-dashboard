@@ -59,7 +59,8 @@ angular.module('poddDashboardApp')
         $scope.shared.reportWatchId = mention.reportId;
         shared.reportWatchId = mention.reportId;
 
-        if ($state.current.name === 'scenario') {
+        if ($state.current.name === 'scenario' ||
+            $state.current.name === 'contacts') {
             $state.go('main.report', { reportId: parseInt(mention.reportId) });
         }        
 

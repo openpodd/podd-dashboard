@@ -7,7 +7,8 @@ angular.module('poddDashboardApp')
 
 })
 
-.controller('ContactsCtrl', function ($scope, Menu, AdministrationArea) {
+.controller('ContactsCtrl', function ($scope, Menu, AdministrationArea, 
+      $state, $stateParams, $window) {
   Menu.setActiveMenu('contacts');
 
   $scope.administrationAreas = [];
@@ -26,7 +27,12 @@ angular.module('poddDashboardApp')
 
   $scope.canLoadMore = true;
 
+
   $scope.search = function () {
+    $state.go('contacts', { q: $scope.query.name });
+  };
+
+  $scope._search = function () {
     $scope.query.page = 1;
 
     $scope.willShowResult = true;
@@ -89,8 +95,6 @@ angular.module('poddDashboardApp')
 
   };
 
-  $scope.search();
-
   $scope.selected = '';
   $scope.oldSelectedContact = '';
 
@@ -120,6 +124,30 @@ angular.module('poddDashboardApp')
 
     });
   };
+
+    $scope.doQueryOnParams = function (params) {
+
+        if ($state.current.name === 'contacts') {
+
+            $scope.query.name = $window.decodeURIComponent(params.q || '');
+                
+
+            if ($scope.query.name === '') {
+              delete $scope.query.q;
+            }
+
+            return $scope._search();
+        }
+    };
+
+    $scope.doQueryOnParams($stateParams);
+    $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
+        if ($state.current.name === 'contacts') {
+            if (oldParams !== params) {
+                $scope.doQueryOnParams(params);
+            }
+        }
+    });
 
 })
 
