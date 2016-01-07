@@ -124,6 +124,7 @@ angular.module('poddDashboardApp')
 
   $scope.selectedArea = function(area) {
     $scope.selected = area;
+    $scope.isSave = false;
     $scope.oldSelectedContact = area.contacts;
     $scope.newSelectedContact = area.contacts;
   };
@@ -139,14 +140,24 @@ angular.module('poddDashboardApp')
     AdministrationArea.updateContacts(params).$promise.then(function (resp) {
       $scope.selected.contacts = $scope.newSelectedContact;
       $scope.disabledUpdateBtn = false;
-      $('#contactModal').modal('toggle');
+      $scope.isSave = true;
+      // $('#contactModal').modal('toggle');
 
     }).catch(function () {
       $scope.selected.contacts = $scope.oldSelectedContact;
       $scope.disabledUpdateBtn = false;
-      $('#contactModal').modal('toggle');
+      $scope.isSave = false;
+      // $('#contactModal').modal('toggle');
 
     });
+  };
+
+  $scope.testMessage = '[ทดลองส่งข้อความจาก PODD]  พบโรคห่าไก่ระบาดในหมู่บ้านของท่าน แนะนำให้'
+          + 'กระจายข่าวผ่านเสียงตามสายทันที'
+          + 'ร่วมหารือกับ อปท.และปศอ. เพื่อควบคุมโรค'           
+
+  $scope.testSendSMS = function() {
+      $('#contactModal').modal('toggle');
   };
 
   $scope.do_queryOnParams = function (params) {
