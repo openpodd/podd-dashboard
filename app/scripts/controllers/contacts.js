@@ -8,7 +8,7 @@ angular.module('poddDashboardApp')
 })
 
 .controller('ContactsCtrl', function ($scope, Menu, AdministrationArea, 
-      $state, $stateParams, $window) {
+      $state, $stateParams, $window, Notification) {
   Menu.setActiveMenu('contacts');
 
   $scope.query = $stateParams.q || '';
@@ -121,9 +121,11 @@ angular.module('poddDashboardApp')
 
   $scope.selected = '';
   $scope.oldSelectedContact = '';
+  $scope.newSelectedContact = '';
 
   $scope.selectedArea = function(area) {
     $scope.selected = area;
+    $scope.isSave = false;
     $scope.oldSelectedContact = area.contacts;
     $scope.newSelectedContact = area.contacts;
   };
@@ -135,18 +137,52 @@ angular.module('poddDashboardApp')
       'contacts': $scope.newSelectedContact
     }];
 
-    $scope.disabledUpdateBtn = true;
-    AdministrationArea.updateContacts(params).$promise.then(function (resp) {
-      $scope.selected.contacts = $scope.newSelectedContact;
-      $scope.disabledUpdateBtn = false;
-      $('#contactModal').modal('toggle');
+    if ($scope.newSelectedContact !== null && 
+        $scope.newSelectedContact.replace(' ', '') !== '') {
 
-    }).catch(function () {
-      $scope.selected.contacts = $scope.oldSelectedContact;
-      $scope.disabledUpdateBtn = false;
-      $('#contactModal').modal('toggle');
+        $scope.disabledUpdateBtn = true;
+        AdministrationArea.updateContacts(params).$promise.then(function (resp) {
+          $scope.selected.contacts = $scope.newSelectedContact;
+          $scope.disabledUpdateBtn = false;
+          $scope.isSave = true;
 
-    });
+        }).catch(function () {
+          $scope.selected.contacts = $scope.oldSelectedContact;
+          $scope.disabledUpdateBtn = false;
+          $scope.isSave = false;
+      });
+
+    } else {
+      swal('', 'คุณยังไม่ได้ระบุข้อมูลการติดต่อ', 'warning')
+    }
+    
+  };
+
+  $scope.testMessage = '[ทดลองส่งข้อความจาก PODD]  พบโรคห่าไก่ระบาดในหมู่บ้านของท่าน แนะนำให้'
+          + ' กระจายข่าวผ่านเสียงตามสายทันที'
+          + ' ร่วมหารือกับ อปท.และปศอ. เพื่อควบคุมโรค'           
+
+  $scope.testSendSMS = function() {
+
+      if ($scope.selected.contacts !== null && 
+          $scope.selected.contacts.replace(' ', '') !== '') {
+
+        var params = {
+          users: $scope.selected.contacts,
+          message: $scope.testMessage
+        }
+
+        Notification.test(params).$promise.then(function (resp) {
+          swal('สำเร็จ', 'ระบบ PODD ได้ส่งข้อความแล้ว', 'success')
+
+        }).catch(function () {
+          swal('เกิดข้อผิดพลาด', 'ระบบ PODD ไม่สามารถส่งข้อความได้', 'error')
+
+        });
+
+      } 
+      
+      $('#contactModal').modal('toggle');
   };
 
   $scope.do_queryOnParams = function (params) {
