@@ -105,6 +105,7 @@ angular.module('poddDashboardApp')
 
       PlanReport.resendNotification(data).$promise
         .then(function () {
+          area.contacts = area.contacts + ',' + area.newContacts;
           area.newContacts = '';
           swal({
             title: 'เรียบร้อย',
