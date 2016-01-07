@@ -42,7 +42,7 @@
 
               <input ng-model="query" type="text" class="form-control"
                placeholder="ตัวอย่าง. เทศบาลตำบลยางเนิ้ง">
-              
+
               <span class="input-group-btn">
                   <button class="btn btn-default pd-btn-search" type="submit"><i class="fa fa-search fa-size-18"></i></button>
               </span>
@@ -69,11 +69,11 @@
           <div class="col-md-6">
               <div class="panel panel-default panel-phonebook" ng-repeat="area in administrationAreas" ng-if="$index % 2 === 0">
                 <div class="panel-heading">
-                  <h3 class="subheading">หมู่บ้าน : {{ area.name }} <small>{{ area.parentName }}</small> <a class="btn btn-primary btn-xs pull-right" role="button" data-toggle="modal" data-target="#contactModal" ng-click="selectedArea(area)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> แก้ไข</a></h3> 
+                  <h3 class="subheading">หมู่บ้าน : {{ area.name }} <small>{{ area.parentName }}</small> <a class="btn btn-primary btn-xs pull-right" role="button" data-toggle="modal" data-target="#contactModal" ng-click="selectedArea(area)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> แก้ไข</a></h3>
                 </div>
                 <div class="panel-body contact-detail">
                   <ul class="panel-phonebook-contact" ng-show="area.contacts">
-                    <li ng-repeat="contact in area.contacts.split(',')" ng-show="contact">{{ contact }}</li>
+                    <li ng-repeat="contact in area.contacts.split(',') track by $index" ng-show="contact">{{ contact }}</li>
                   </ul>
                   <div class="" ng-show="!area.contacts">ไม่มีข้อมูล</div>
 
@@ -83,7 +83,7 @@
           <div class="col-md-6">
               <div class="panel panel-default panel-phonebook" ng-repeat="area in administrationAreas" ng-if="$index % 2 !== 0">
                 <div class="panel-heading">
-                  <h3 class="subheading">หมู่บ้าน : {{ area.name }} <small>{{ area.parentName }}</small> <a class="btn btn-primary btn-xs pull-right" role="button" data-toggle="modal" data-target="#contactModal" ng-click="selectedArea(area)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> แก้ไข</a></h3> 
+                  <h3 class="subheading">หมู่บ้าน : {{ area.name }} <small>{{ area.parentName }}</small> <a class="btn btn-primary btn-xs pull-right" role="button" data-toggle="modal" data-target="#contactModal" ng-click="selectedArea(area)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> แก้ไข</a></h3>
                 </div>
                 <div class="panel-body contact-detail">
                   <ul class="panel-phonebook-contact" ng-show="area.contacts">
@@ -109,7 +109,7 @@
               </div>
               <div class="modal-body">
                 <h3>ข้อมูลติดต่อ</h3>
-                
+
                 <pre><small><b>ตัวอย่าง:</b> นายกสมใจ อินทนนท์ 081-9414023, รองนายกสมชาย บุญมาก 089-9210033</small></pre>
 
                 <textarea class="no-resize" style="width: 100%; height: 150px;" ng-model="newSelectedContact" ng-disabled="isSave">
@@ -131,7 +131,7 @@
               </div>
             </div>
           </div>
-        </div>        
+        </div>
 
       </div><!-- /contact-list -->
     </div>

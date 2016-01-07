@@ -286,7 +286,7 @@ html, body{
 
 
 .sweet-alert {
-    z-index: 9998;
+    z-index: 9999999;
 
     p.lead {
         margin-top: 1.5em;
@@ -301,7 +301,7 @@ html, body{
 }
 
 .sweet-overlay{
-    z-index: 9998;
+    z-index: 9999998;
 }
 
 /* FILE UPLOAD */

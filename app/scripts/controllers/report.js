@@ -343,12 +343,4 @@ angular.module('poddDashboardApp')
     };
 })
 
-.controller('PlanReportModalCtrl', function ($scope, $modalInstance) {
-    $scope.close = function () {
-        $modalInstance.dismiss();
-    };
-
-    $scope.flipped = false;
-})
-
 ;
