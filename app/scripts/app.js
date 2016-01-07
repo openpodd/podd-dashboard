@@ -101,7 +101,8 @@ angular
       /\/reportTags/,
       /\/planReports/,
       /\/administrationArea\/contacts/,
-      /\/administrationArea\/contacts\/update/
+      /\/administrationArea\/contacts\/update/,
+      /\/notifications\/test/
     ];
 
     function matchAPIUrls(url) {

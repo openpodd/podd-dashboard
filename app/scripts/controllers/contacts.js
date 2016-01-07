@@ -8,7 +8,7 @@ angular.module('poddDashboardApp')
 })
 
 .controller('ContactsCtrl', function ($scope, Menu, AdministrationArea, 
-      $state, $stateParams, $window) {
+      $state, $stateParams, $window, Notification) {
   Menu.setActiveMenu('contacts');
 
   $scope.query = $stateParams.q || '';
@@ -153,10 +153,28 @@ angular.module('poddDashboardApp')
   };
 
   $scope.testMessage = '[ทดลองส่งข้อความจาก PODD]  พบโรคห่าไก่ระบาดในหมู่บ้านของท่าน แนะนำให้'
-          + 'กระจายข่าวผ่านเสียงตามสายทันที'
-          + 'ร่วมหารือกับ อปท.และปศอ. เพื่อควบคุมโรค'           
+          + ' กระจายข่าวผ่านเสียงตามสายทันที'
+          + ' ร่วมหารือกับ อปท.และปศอ. เพื่อควบคุมโรค'           
 
   $scope.testSendSMS = function() {
+
+      if ($scope.selected.contacts !== '') {
+
+        var params = {
+          users: $scope.selected.contacts,
+          message: $scope.testMessage
+        }
+
+        Notification.test(params).$promise.then(function (resp) {
+          swal("สำเร็จ", "ระบบ PODD ได้ส่งข้อความแล้ว", "success")
+
+        }).catch(function () {
+          swal("เกิดข้อผิดพลาด", "", "error")
+
+        });
+
+      } 
+      
       $('#contactModal').modal('toggle');
   };
 
