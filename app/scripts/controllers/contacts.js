@@ -1,3 +1,5 @@
+/*global swal */
+
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -90,7 +92,7 @@ angular.module('poddDashboardApp')
   
   };
 
-  $scope.alphabets = ("กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ").split("");
+  $scope.alphabets = ('กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ').split('');
 
   $scope.loadMore = function () {
     page ++;
@@ -153,14 +155,14 @@ angular.module('poddDashboardApp')
       });
 
     } else {
-      swal('', 'คุณยังไม่ได้ระบุข้อมูลการติดต่อ', 'warning')
+      swal('', 'คุณยังไม่ได้ระบุข้อมูลการติดต่อ', 'warning');
     }
     
   };
 
-  $scope.testMessage = '[ทดลองส่งข้อความจาก PODD]  พบโรคห่าไก่ระบาดในหมู่บ้านของท่าน แนะนำให้'
-          + ' กระจายข่าวผ่านเสียงตามสายทันที'
-          + ' ร่วมหารือกับ อปท.และปศอ. เพื่อควบคุมโรค'           
+  $scope.testMessage = '[ทดลองส่งข้อความจาก PODD]  พบโรคห่าไก่ระบาดในหมู่บ้านของท่าน แนะนำให้' + 
+          ' กระจายข่าวผ่านเสียงตามสายทันที' + 
+          ' ร่วมหารือกับ อปท.และปศอ. เพื่อควบคุมโรค'  ;         
 
   $scope.testSendSMS = function() {
 
@@ -170,22 +172,22 @@ angular.module('poddDashboardApp')
         var params = {
           users: $scope.selected.contacts,
           message: $scope.testMessage
-        }
+        };
 
         Notification.test(params).$promise.then(function (resp) {
-          swal('สำเร็จ', 'ระบบ PODD ได้ส่งข้อความแล้ว', 'success')
+          swal('สำเร็จ', 'ระบบ PODD ได้ส่งข้อความแล้ว', 'success');
 
         }).catch(function () {
-          swal('เกิดข้อผิดพลาด', 'ระบบ PODD ไม่สามารถส่งข้อความได้', 'error')
+          swal('เกิดข้อผิดพลาด', 'ระบบ PODD ไม่สามารถส่งข้อความได้', 'error');
 
         });
 
-      } 
+      }
       
       $('#contactModal').modal('toggle');
   };
 
-  $scope.do_queryOnParams = function (params) {
+  $scope.doQueryOnParams = function (params) {
 
       if ($state.current.name === 'contacts') {
 
@@ -200,11 +202,11 @@ angular.module('poddDashboardApp')
       }
   };
 
-  $scope.do_queryOnParams($stateParams);
+  $scope.doQueryOnParams($stateParams);
   $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
       if ($state.current.name === 'contacts') {
           if (oldParams !== params) {
-              $scope.do_queryOnParams(params);
+              $scope.doQueryOnParams(params);
           }
       }
   });
