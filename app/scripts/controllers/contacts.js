@@ -25,9 +25,10 @@ angular.module('poddDashboardApp')
   var pageSize = 10;
 
   $scope._query = {
-    'parentName': 'ตำบล',
-    'page_size': pageSize,
-    'page': page
+    keywords: ['ตำบล', 'บ้าน'],
+    page_size: pageSize,
+    page: page,
+    name__startsWith: 'บ้าน'
   };
 
   $scope.canLoadMore = true;
@@ -42,18 +43,18 @@ angular.module('poddDashboardApp')
   };
 
   $scope.search = function () {
-    $scope._query.name = $scope.query;
-    $state.go('contacts', { q: $scope._query.name, alphabet: $scope._query.alphabet });
+    $scope._query.keywords.push($scope.query);
+    $state.go('contacts', { q: $scope.query, alphabet: $scope._query.alphabet });
   };
 
   $scope.searchByAlphabet = function (alphabet) {
     $scope._query.alphabet = alphabet;
-    $state.go('contacts', { q: $scope._query.name, alphabet: $scope._query.alphabet });
+    $state.go('contacts', { q: $scope.query, alphabet: $scope._query.alphabet });
   };
 
-   $scope.clearAlphabet = function (alphabet) {
+   $scope.clearAlphabet = function () {
     delete $scope._query.alphabet;
-    $state.go('contacts', { q: $scope._query.name, alphabet: '' });
+    $state.go('contacts', { q: $scope.query, alphabet: '' });
   };
 
   $scope._search = function () {
@@ -191,11 +192,13 @@ angular.module('poddDashboardApp')
 
       if ($state.current.name === 'contacts') {
 
-          $scope._query.name = $window.decodeURIComponent(params.q || '').replace(' ', '');
+          var name = $window.decodeURIComponent(params.q || '').replace(' ', '');
           $scope._query.alphabet = $window.decodeURIComponent(params.alphabet || '');
               
-          if ($scope._query.name === '') {
+          if (name === '') {
             delete $scope._query.q;
+          } else {
+            $scope._query.keywords.push(name);
           }
 
           return $scope._search();
