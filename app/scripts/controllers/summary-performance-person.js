@@ -41,11 +41,15 @@ angular.module('poddDashboardApp')
     $scope.areas.selectedArea = initArea;
 
     // Fetch available adminisitration areas
-    dashboard.getAdministrationAreas().$promise.then(function (data) {
-        $scope.areas.all = data.filter(function (item) {
-            return item.isLeaf;
-        });
-        $scope.areas.all.push(initArea);
+    // dashboard.getAdministrationAreas().$promise.then(function (data) {
+    //     $scope.areas.all = data.filter(function (item) {
+    //         return item.isLeaf;
+    //     });
+    //     $scope.areas.all.push(initArea);
+    // });
+
+    dashboard.getAuthorities().$promise.then(function (data) {
+        $scope.areas.all = data;
     });
 
     $scope.query = '';
@@ -109,6 +113,9 @@ angular.module('poddDashboardApp')
 
         shared.summaryReports = {};
 
+        if ($scope.query.authorityId === '')
+            delete $scope.query.authorityId
+
         SummaryPerformancePerson.query($scope.query).$promise.then(function (data) {
             console.log('Query result:', data);
 
@@ -132,8 +139,8 @@ angular.module('poddDashboardApp')
             $scope.month = $scope.query;
             $scope.gridOptionsPerson.enableSorting = true;
             $scope.gridOptionsPerson.columnDefs = [
-                { field: 'administrationAreaParentName', headerCellClass: 'cell-center' },
-                { field: 'administrationArea', headerCellClass: 'cell-center' },
+                // { field: 'administrationAreaParentName', headerCellClass: 'cell-center' },
+                // { field: 'administrationArea', headerCellClass: 'cell-center' },
                 { field: 'fullName', headerCellClass: 'cell-center' },
                 { field: 'numberOfActiveDays', cellClass: 'cell-center', headerCellClass: 'cell-center' },
                 { field: 'grade', cellClass: 'cell-center', headerCellClass: 'cell-center' },
@@ -166,14 +173,14 @@ angular.module('poddDashboardApp')
 
             $scope.query = {
                 month: $window.decodeURIComponent(params.month || ''),
-                administrationAreaId: $window.decodeURIComponent(params.areaId || ''),
+                authorityId: $window.decodeURIComponent(params.areaId || ''),
             };
 
             if ($scope.query.month) {
                 return $scope._search();
             }
             $scope.query.month = '';
-            $scope.query.administrationAreaId = initArea.id;
+            $scope.query.authorityId = initArea.id;
             return $scope.search();
         }
     };
