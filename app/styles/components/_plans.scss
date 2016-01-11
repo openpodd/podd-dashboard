@@ -88,3 +88,33 @@
   }
 
 }
+
+.red-zone{
+  background-color: #d9534f !important;
+  color: #fff !important;
+
+  small{
+    color: #fff !important;    
+  }
+}
+.yellow-zone{
+  background-color: #f0ad4e !important;
+  color: #fff !important;
+
+  small{
+    color: #fff !important;    
+  }
+}
+.green-zone{
+  background-color: #5cb85c !important;
+  color: #fff !important;
+
+  small{
+    color: #fff !important;    
+  }
+}
+.zone-item-row{
+    border-bottom: 1px solid #eee;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}

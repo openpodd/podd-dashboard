@@ -1,3 +1,5 @@
+/*global swal */
+
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -23,9 +25,10 @@ angular.module('poddDashboardApp')
   var pageSize = 10;
 
   $scope._query = {
-    'parentName': 'ตำบล',
-    'page_size': pageSize,
-    'page': page
+    keywords: ['ตำบล', 'บ้าน'],
+    page_size: pageSize,
+    page: page,
+    name__startsWith: 'บ้าน'
   };
 
   $scope.canLoadMore = true;
@@ -40,18 +43,18 @@ angular.module('poddDashboardApp')
   };
 
   $scope.search = function () {
-    $scope._query.name = $scope.query;
-    $state.go('contacts', { q: $scope._query.name, alphabet: $scope._query.alphabet });
+    $scope._query.keywords.push($scope.query);
+    $state.go('contacts', { q: $scope.query, alphabet: $scope._query.alphabet });
   };
 
   $scope.searchByAlphabet = function (alphabet) {
     $scope._query.alphabet = alphabet;
-    $state.go('contacts', { q: $scope._query.name, alphabet: $scope._query.alphabet });
+    $state.go('contacts', { q: $scope.query, alphabet: $scope._query.alphabet });
   };
 
-   $scope.clearAlphabet = function (alphabet) {
+   $scope.clearAlphabet = function () {
     delete $scope._query.alphabet;
-    $state.go('contacts', { q: $scope._query.name, alphabet: '' });
+    $state.go('contacts', { q: $scope.query, alphabet: '' });
   };
 
   $scope._search = function () {
@@ -90,7 +93,7 @@ angular.module('poddDashboardApp')
   
   };
 
-  $scope.alphabets = ("กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ").split("");
+  $scope.alphabets = ('กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ').split('');
 
   $scope.loadMore = function () {
     page ++;
@@ -153,14 +156,14 @@ angular.module('poddDashboardApp')
       });
 
     } else {
-      swal('', 'คุณยังไม่ได้ระบุข้อมูลการติดต่อ', 'warning')
+      swal('', 'คุณยังไม่ได้ระบุข้อมูลการติดต่อ', 'warning');
     }
     
   };
 
-  $scope.testMessage = '[ทดลองส่งข้อความจาก PODD]  พบโรคห่าไก่ระบาดในหมู่บ้านของท่าน แนะนำให้'
-          + ' กระจายข่าวผ่านเสียงตามสายทันที'
-          + ' ร่วมหารือกับ อปท.และปศอ. เพื่อควบคุมโรค'           
+  $scope.testMessage = '[ทดลองส่งข้อความจาก PODD]  พบโรคห่าไก่ระบาดในหมู่บ้านของท่าน แนะนำให้' + 
+          ' กระจายข่าวผ่านเสียงตามสายทันที' + 
+          ' ร่วมหารือกับ อปท.และปศอ. เพื่อควบคุมโรค'  ;         
 
   $scope.testSendSMS = function() {
 
@@ -170,41 +173,43 @@ angular.module('poddDashboardApp')
         var params = {
           users: $scope.selected.contacts,
           message: $scope.testMessage
-        }
+        };
 
         Notification.test(params).$promise.then(function (resp) {
-          swal('สำเร็จ', 'ระบบ PODD ได้ส่งข้อความแล้ว', 'success')
+          swal('สำเร็จ', 'ระบบ PODD ได้ส่งข้อความแล้ว', 'success');
 
         }).catch(function () {
-          swal('เกิดข้อผิดพลาด', 'ระบบ PODD ไม่สามารถส่งข้อความได้', 'error')
+          swal('เกิดข้อผิดพลาด', 'ระบบ PODD ไม่สามารถส่งข้อความได้', 'error');
 
         });
 
-      } 
+      }
       
       $('#contactModal').modal('toggle');
   };
 
-  $scope.do_queryOnParams = function (params) {
+  $scope.doQueryOnParams = function (params) {
 
       if ($state.current.name === 'contacts') {
 
-          $scope._query.name = $window.decodeURIComponent(params.q || '').replace(' ', '');
+          var name = $window.decodeURIComponent(params.q || '').replace(' ', '');
           $scope._query.alphabet = $window.decodeURIComponent(params.alphabet || '');
               
-          if ($scope._query.name === '') {
+          if (name === '') {
             delete $scope._query.q;
+          } else {
+            $scope._query.keywords.push(name);
           }
 
           return $scope._search();
       }
   };
 
-  $scope.do_queryOnParams($stateParams);
+  $scope.doQueryOnParams($stateParams);
   $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
       if ($state.current.name === 'contacts') {
           if (oldParams !== params) {
-              $scope.do_queryOnParams(params);
+              $scope.doQueryOnParams(params);
           }
       }
   });
