@@ -47,11 +47,8 @@ angular.module('poddDashboardApp')
     $scope.tags = [];
     $scope.areas.selectedArea = initArea;
 
-    // Fetch available adminisitration areas
-    dashboard.getAdministrationAreas().$promise.then(function (data) {
-        $scope.areas.all = data.filter(function (item) {
-            return item.isLeaf;
-        });
+    dashboard.getAuthorities().$promise.then(function (data) {
+        $scope.areas.all = data;
         $scope.areas.all.push(initArea);
     });
 
@@ -139,8 +136,8 @@ angular.module('poddDashboardApp')
 
         shared.summaryReports = {};
 
-        if (!$scope.query.administrationArea) {
-            delete $scope.query.administrationArea;
+        if (!$scope.query.authority) {
+            delete $scope.query.authority;
         }
 
         if (!$scope.query.tags) {
@@ -233,7 +230,7 @@ angular.module('poddDashboardApp')
 
             $scope.query = {
                 'month': $window.decodeURIComponent(params.month || ''),
-                'administrationArea': $window.decodeURIComponent(params.areaId || ''),
+                'authority': $window.decodeURIComponent(params.areaId || ''),
                 'type__in': $window.decodeURIComponent(params.typeIds || '').split(','),
                 'tags__in': $window.decodeURIComponent(params.tags || '').split(','),
                 'negative': true,
@@ -249,7 +246,7 @@ angular.module('poddDashboardApp')
             }
 
             $scope.query.month = '';
-            $scope.query.administrationArea = initArea.id;
+            $scope.query.authority = initArea.id;
             return $scope.search();
         }
     };
