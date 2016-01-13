@@ -307,7 +307,7 @@ angular.module('poddDashboardApp')
 
     function isBlacklisted(area) {
       var testString = area.address + area.name;
-      if (testString.match(/(องค์การ|เทศบาล|อำเภอ|จังหวัด)/)) {
+      if (testString.match(/^(องค์การ|เทศบาล|อำเภอ|จังหวัด)/)) {
         return true;
       }
     }
