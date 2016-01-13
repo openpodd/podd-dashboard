@@ -12,6 +12,8 @@ angular.module('poddDashboardApp')
         shared.summaryReportMode = false;
         shared.summaryPersonMode = false;
         shared.summaryPerformancePersonMode = false;
+        shared.summaryReportMonthMode = false;
+        shared.summaryScenarioMode = false;
         $.removeCookie('token');
         storage.clearAll();
     };
