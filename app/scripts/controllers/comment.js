@@ -151,6 +151,7 @@ angular.module('poddDashboardApp')
             if (data.reportId === $scope.$parent.report.id) {
                 data.isNew = true;
                 $scope.comments.push(data);
+                $scope.$apply();
             }
         }
     });
