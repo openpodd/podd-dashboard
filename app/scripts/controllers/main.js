@@ -160,9 +160,10 @@ angular.module('poddDashboardApp')
                 updateReportList($scope.recentReports, data);
             }
             else {
-                $scope.olderReports.splice(0, 0, data);
+                updateReportList($scope.olderReports, data);
             }
             $scope.reports = [].concat($scope.recentReports, $scope.olderReports);
+            $scope.$apply();
         }
     });
 
