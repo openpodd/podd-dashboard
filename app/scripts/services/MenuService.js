@@ -14,7 +14,7 @@ angular.module('poddDashboardApp')
 
         hasPermissionOnMenu: function (menu) {
             var user = storage.get('user');
-            return storage.get('menuPermissions').indexOf(menu) >= 0 ||
+            return (storage.get('menuPermissions') && storage.get('menuPermissions').indexOf(menu) >= 0) ||
                    (user && (
                      user.isStaff ||
                      user.isSupervisor ||
