@@ -8,12 +8,12 @@ var io = require('socket.io')(8888),
     gcm = require('android-gcm'),
     raven = require('raven'),
     client = new raven.Client(config.sentryDSN, { level: 'error' }),
-    consumer = redis.createClient();
+    consumer = redis.createClient(config.redis);
 
 var pushGCM = function pushGCM(message) {
     var data = JSON.parse(message);
-    
-    if (data.GCMAPIKey === undefined || 
+
+    if (data.GCMAPIKey === undefined ||
         data.androidRegistrationIds === undefined)
         return;
 
@@ -24,7 +24,7 @@ var pushGCM = function pushGCM(message) {
             data: {
                 id: data.id,
                 message: data.message,
-                type: data.type.toLowerCase(), 
+                type: data.type.toLowerCase(),
                 reportId: reportId
             }
         });
