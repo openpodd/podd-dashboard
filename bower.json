@@ -46,6 +46,18 @@
     "leaflet.markercluster": "~0.4.0"
   },
   "overrides": {
+    "socket.io-client": {
+      "main": [
+        "socket.io.js"
+      ]
+    },
+    "leaflet.markercluster": {
+      "main": [
+        "dist/leaflet.markercluster.js",
+        "dist/MarkerCluster.Default.css",
+        "dist/MarkerCluster.css"
+      ]
+    },
     "mapbox": {
       "main": [
         "mapbox.css",
