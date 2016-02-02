@@ -137,6 +137,31 @@ angular.module('poddDashboardApp')
     };
 })
 
+.directive('reportState', function (ReportState) {
+    return {
+        strict: 'A',
+        template: '<div>{{ state.name }}</div>',
+        scope: {
+            report: '='
+        },
+        controller: function ($scope) {
+            if (!$scope.report) {
+                return;
+            }
+
+            ReportState
+                .query({ reportType: $scope.report.reportTypeId }).$promise
+                .then(function (reportStates) {
+                    reportStates.forEach(function (state) {
+                        if (state.id === $scope.report.state) {
+                            $scope.state = state;
+                        }
+                    });
+                });
+        }
+    };
+})
+
 .directive('reportStateForm', function ($http, $modal, Reports, ReportState) {
     return {
         strict: 'A',

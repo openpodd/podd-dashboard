@@ -1,0 +1,29 @@
+<div class="l-info-section l-section l-full-width">
+  <div class="l-detail-section l-section">
+    <div class="title clearfix">
+      <h2 class="pull-left"><i class="fa fa-list-ol pull-left fa-size-22"></i>รายการรายงาน</h2>
+    </div>
+
+    <div class="content-wrapper"><div class="content">
+
+      <div class="filter-form">
+
+      </div><!-- /.filter-form -->
+
+      <div class="filter-result">
+        <div ng-repeat="report in reports" class="row filter-result-item">
+          <div class="col-md-1" am-time-ago="report.date"></div>
+          <div class="col-md-2" ng-bind="report.administrationAreaAddress"></div>
+          <div class="col-md-4" ng-bind-html="report.renderedOriginalFormData"></div>
+          <div class="col-md-2" ng-bind="report.reportTypeName"></div>
+          <div class="col-md-2" report-state report="report"></div>
+        </div>
+      </div><!-- /.filter-result -->
+
+      <div class="loadmore" ng-cloak>
+        <button class="btn btn-default center-block" type="button" ng-show="!lastPage" ng-click="loadMore()" ng-disabled="loading">{{ loading ? 'Loading...' : 'Load more...' }} (Page {{page}} / {{totalPage}})</button>
+      </div><!-- /.loadmore -->
+
+    </div></div>
+  </div>
+</div>

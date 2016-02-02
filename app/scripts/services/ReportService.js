@@ -35,6 +35,11 @@ angular.module('poddDashboardApp')
 .factory('ReportState', function ($resource) {
     return $resource(config.API_BASEPATH + '/reportStates/:id', {
         id: '@id'
+    }, {
+      'query': {
+          isArray: true,
+          cache: true
+      }
     });
 })
 

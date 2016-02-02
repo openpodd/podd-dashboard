@@ -156,6 +156,11 @@ angular
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
+      .state('home', {
+        url: '/home',
+        templateUrl: 'views/home.html',
+        controller: 'HomeCtrl'
+      })
       .state('main', {
         url: '/',
         templateUrl: 'views/main.html',
