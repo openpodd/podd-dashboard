@@ -74,11 +74,20 @@ angular.module('poddDashboardApp')
     b.forEach(function (item) {
       a.push(item);
     });
+    return a;
   }
 
   function loadReportTypes() {
     $scope.reportTypeStates = {};
-    $scope.reportTypes.all = ReportTypes.query();
+    ReportTypes.query().$promise.then(function (resp) {
+      var nonSelect = new ReportTypes({
+        id: 0,
+        name: '-',
+        code: ''
+      });
+      $scope.reportTypes.all = concat([nonSelect], resp);
+      $scope.reportTypes.current = nonSelect;
+    });
   }
 
   function loadReportTypeStates(reportTypeId) {
@@ -90,7 +99,11 @@ angular.module('poddDashboardApp')
 
   $scope.reportTypeChange = function reportTypeChange($selected) {
     var formState = $scope.reportTypes;
-    if (formState.current !== formState.previous) {
+    if (!$selected.id) {
+      queryBuilder.reset();
+      $scope.reportTypeStates = {};
+    }
+    else if (formState.current !== formState.previous) {
       formState.previous = formState.current;
       queryBuilder.reset().and('typeName', '"' + $selected.name + '"');
       loadReportTypeStates($selected.id);
