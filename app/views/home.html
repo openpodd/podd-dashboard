@@ -7,21 +7,60 @@
     <div class="content-wrapper"><div class="content">
 
       <div class="filter-form">
+        <form class="form-horizontal" ng-submit="submit($event)">
+          <h3>Filter</h3>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Report Type</label>
+            <div class="col-sm-10">
+              <ui-select
+                ng-model="reportTypes.current"
+                search-enabled="false"
+                on-select="reportTypeChange($select.selected)">
+                <ui-select-match>{{ $select.selected.name }}</ui-select-match>
+                <ui-select-choices
+                  repeat="reportType in ::reportTypes.all">
+                  <span ng-bind-html="reportType.name | highlight:$select.search"></span>
+                </ui-select-chioces>
+              </ui-select>
+            </div>
+          </div><!-- /report type form -->
+
+          <div class="form-group" ng-if="reportTypeStates.all">
+            <label class="col-sm-2 control-label">Report Type State</label>
+            <div class="col-sm-10">
+              <button class="btn" ng-class="{ 'btn-warning': state.checked }" type="button"
+                      ng-repeat="state in reportTypeStates.all"
+                      ng-click="toggleStateCheck(state)">
+                <span class="badgex" ng-if="!state.checked">
+                  <i class="fa fa-circle-o fa-size-18"></i>
+                </span>
+                <span class="badgex" ng-if="state.checked">
+                  <i class="fa fa-check-circle-o fa-size-18"></i>
+                </span>
+                {{ state.name }}
+              </button>
+            </div>
+          </div><!-- /report type state form -->
+
+          <button class="btn btn-primary" type="submit" ng-disabled="loading">
+            Submit
+          </button>
+        </form>
 
       </div><!-- /.filter-form -->
 
       <div class="filter-result">
         <div ng-repeat="report in reports" class="row filter-result-item">
           <div class="col-md-1" am-time-ago="report.date"></div>
-          <div class="col-md-2" ng-bind="report.administrationAreaAddress"></div>
-          <div class="col-md-4" ng-bind-html="report.renderedOriginalFormData"></div>
-          <div class="col-md-2" ng-bind="report.reportTypeName"></div>
+          <div class="col-md-2" ng-bind="::report.administrationAreaAddress"></div>
+          <div class="col-md-4" ng-bind-html="::report.renderedOriginalFormData"></div>
+          <div class="col-md-2" ng-bind="::report.reportTypeName"></div>
           <div class="col-md-2" report-state report="report"></div>
         </div>
       </div><!-- /.filter-result -->
 
       <div class="loadmore" ng-cloak>
-        <button class="btn btn-default center-block" type="button" ng-show="!lastPage" ng-click="loadMore()" ng-disabled="loading">{{ loading ? 'Loading...' : 'Load more...' }} (Page {{page}} / {{totalPage}})</button>
+        <button class="btn btn-default center-block" type="button" ng-show="!lastPage" ng-click="::loadMore()" ng-disabled="loading">{{ loading ? 'Loading...' : 'Load more...' }} (Page {{page}} / {{totalPage}})</button>
       </div><!-- /.loadmore -->
 
     </div></div>

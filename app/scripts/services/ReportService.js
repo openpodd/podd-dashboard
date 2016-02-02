@@ -2,15 +2,14 @@
 
 angular.module('poddDashboardApp')
 
-.factory('ReportType', function ($resource) {
-    return $resource(config.API_BASEPATH + '/reportTypes/:id');
-})
-
 .factory('ReportTypes', function ($resource) {
-    var resource = $resource(config.API_BASEPATH + '/reportTypes/', {}, {
-        get: {
-            isArray: true
-        }
+    var resource = $resource(config.API_BASEPATH + '/reportTypes/:id', {
+      id: '@id'
+    }, {
+      'query': {
+        isArray: true,
+        cache: true
+      }
     });
     return resource;
 })
