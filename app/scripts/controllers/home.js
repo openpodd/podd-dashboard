@@ -70,7 +70,7 @@ angular.module('poddDashboardApp')
     previous: null
   };
   $scope.reportTypeStates = {
-    all: []
+    all: {}
   };
   $scope.authorities = {
     all: [],
@@ -85,15 +85,8 @@ angular.module('poddDashboardApp')
   }
 
   function loadReportTypes() {
-    $scope.reportTypeStates = {};
     ReportTypes.query().$promise.then(function (resp) {
-      var nonSelect = new ReportTypes({
-        id: 0,
-        name: '-',
-        code: ''
-      });
-      $scope.reportTypes.all = concat([nonSelect], resp);
-      $scope.reportTypes.current = nonSelect;
+      $scope.reportTypes.all = resp;
     });
   }
 
@@ -101,7 +94,7 @@ angular.module('poddDashboardApp')
     var q = {
       reportType: reportTypeId
     };
-    $scope.reportTypeStates.all = ReportState.query(q);
+    $scope.reportTypeStates.all[reportTypeId] = ReportState.query(q);
   }
 
   function loadAuthorities() {
@@ -133,16 +126,22 @@ angular.module('poddDashboardApp')
     });
   }
 
-  $scope.reportTypeChange = function reportTypeChange($selected) {
-    var formState = $scope.reportTypes;
-    if (!$selected.id) {
-      queryBuilder.reset();
-      $scope.reportTypeStates = {};
+  $scope.toggleReportTypeCheck = function toggleReportTypeCheck(reportType) {
+    reportType.checked = !reportType.checked;
+    loadReportTypeStates(reportType.id);
+    // update query.
+    var checkedItems = [];
+    $scope.reportTypes.all.forEach(function (item) {
+      if (item.checked) {
+        checkedItems.push('"' + item.name + '"');
+      }
+    });
+
+    if (checkedItems.length) {
+      queryBuilder.update('typeName', '(' + checkedItems.join(' OR ') + ')');
     }
-    else if (formState.current !== formState.previous) {
-      formState.previous = formState.current;
-      queryBuilder.reset().and('typeName', '"' + $selected.name + '"');
-      loadReportTypeStates($selected.id);
+    else {
+      queryBuilder.delete('typeName');
     }
   };
 
@@ -150,9 +149,13 @@ angular.module('poddDashboardApp')
     state.checked = !state.checked;
     // update query.
     var checkedItems = [];
-    $scope.reportTypeStates.all.forEach(function (item) {
-      if (item.checked) {
-        checkedItems.push('"' + item.code + '"');
+    $scope.reportTypes.all.forEach(function (reportType) {
+      if (reportType.checked) {
+        $scope.reportTypeStates.all[reportType.id].forEach(function (state) {
+          if (state.checked) {
+            checkedItems.push('"' + state.code + '"');
+          }
+        });
       }
     });
 
