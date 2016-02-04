@@ -143,11 +143,10 @@ angular.module('poddDashboardApp')
     else {
       queryBuilder.delete('typeName');
     }
+    rebuildStateQuery();
   };
 
-  $scope.toggleStateCheck = function toggleStateCheck(state) {
-    state.checked = !state.checked;
-    // update query.
+  function rebuildStateQuery() {
     var checkedItems = [];
     $scope.reportTypes.all.forEach(function (reportType) {
       if (reportType.checked) {
@@ -165,6 +164,12 @@ angular.module('poddDashboardApp')
     else {
       queryBuilder.delete('stateCode');
     }
+  }
+
+  $scope.toggleStateCheck = function toggleStateCheck(state) {
+    state.checked = !state.checked;
+    // update query.
+    rebuildStateQuery();
   };
 
   $scope.submit = function submit(event) {
