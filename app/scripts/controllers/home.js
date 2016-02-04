@@ -5,7 +5,8 @@ angular.module('poddDashboardApp')
 /**
  * Show list of recent reports.
  */
-.controller('HomeCtrl', function ($scope, Search, ReportTypes, ReportState) {
+.controller('HomeCtrl', function ($scope, Search, ReportTypes, ReportState,
+                                  dashboard, Authority) {
   var queryBuilder = (function queryBuilder() {
     var defaultOperator = ' AND ';
     var defaultQuery = 'negative:true';
@@ -71,6 +72,10 @@ angular.module('poddDashboardApp')
   $scope.reportTypeStates = {
     all: []
   };
+  $scope.authorities = {
+    all: [],
+    current: null
+  };
 
   function concat(a, b) {
     b.forEach(function (item) {
@@ -97,6 +102,35 @@ angular.module('poddDashboardApp')
       reportType: reportTypeId
     };
     $scope.reportTypeStates.all = ReportState.query(q);
+  }
+
+  function loadAuthorities() {
+    $scope.authorities.all = dashboard.getAuthorities();
+    dashboard.getAuthorities().$promise.then(function (resp) {
+      var nonSelect = new Authority({
+        id: 0,
+        name: '-',
+        code: '',
+        _order: -10
+      });
+      // assign children, to find only leaf authority.
+      var childCount = {};
+      var parent = null;
+      $scope.authorities.all.forEach(function (item) {
+        var count = childCount[item.parentName] || 0;
+        if (item.parentName) {
+          count++;
+        }
+        childCount[item.parentName] = count;
+      });
+      // re-assign property value.
+      var filteredResp = resp.filter(function (item) {
+        return !childCount[item.name];
+      });
+
+      $scope.authorities.all = concat([nonSelect], filteredResp);
+      $scope.authorities.current = nonSelect;
+    });
   }
 
   $scope.reportTypeChange = function reportTypeChange($selected) {
@@ -153,9 +187,19 @@ angular.module('poddDashboardApp')
     return '[' + dateFrom + ' TO ' + dateTo + ']';
   }
 
+  function buildAuthorityQuery() {
+    if ($scope.authorities.current) {
+      return $scope.authorities.current.id || '';
+    }
+    else {
+      return '';
+    }
+  }
+
   function _load(queryBuilder, needReset) {
     queryBuilder.update('date', buildDateQuery());
     query.q = queryBuilder.getQuery();
+    query.authorities = buildAuthorityQuery();
     load(query, needReset);
   }
 
@@ -188,5 +232,6 @@ angular.module('poddDashboardApp')
 
   $scope.lastPage = false;
   loadReportTypes();
+  loadAuthorities();
   _load(queryBuilder, true);
 });

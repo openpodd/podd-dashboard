@@ -51,6 +51,22 @@
             </div>
           </div><!-- /date range form -->
 
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Authority</label>
+            <div class="col-sm-10">
+              <ui-select
+                ng-model="authorities.current"
+                on-select="selectAuthority($select.selected)">
+                <ui-select-match>{{ $select.selected.name }}</ui-select-match>
+                <ui-select-choices
+                  group-by="'parentName'"
+                  repeat="authority in authorities.all | filter:$select.search | orderBy:['_order', 'parentName', 'name']">
+                  <span ng-bind-html="authority.name | highlight:$select.search"></span>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+          </div><!-- /authority form -->
+
           <button class="btn btn-primary" type="submit" ng-disabled="loading">
             Submit
           </button>

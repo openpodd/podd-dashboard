@@ -42,6 +42,17 @@ angular.module('poddDashboardApp')
     });
 })
 
+.factory('Authority', function ($resource) {
+    return $resource(config.API_BASEPATH + '/authorities/:id', {
+        id: '@id'
+    }, {
+      'query': {
+          isArray: true,
+          cache: true
+      }
+    });
+})
+
 .factory('ReportModal', function ($rootScope) {
     var modal;
 
