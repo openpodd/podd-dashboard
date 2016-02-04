@@ -13,9 +13,11 @@ angular.module('poddDashboardApp')
     var conditionsMap = {};
 
     var instance = {
-      and: function add(filterName, filterValue) {
-        queries.push(filterName + ':' + filterValue);
-        conditionsMap[filterName] = queries.length - 1;
+      and: function and(filterName, filterValue) {
+        if (filterValue) {
+          queries.push(filterName + ':' + filterValue);
+          conditionsMap[filterName] = queries.length - 1;
+        }
         return instance;
       },
       update: function update(filterName, filterValue) {
@@ -130,8 +132,31 @@ angular.module('poddDashboardApp')
 
   $scope.submit = function submit(event) {
     event.preventDefault();
+    _load(queryBuilder, true);
+  };
+
+  function buildDateQuery() {
+    var dateFrom = $scope.dateFrom;
+    var dateTo = $scope.dateTo;
+
+    if (!dateFrom) {
+      dateFrom = '*';
+    }
+    if (!dateTo) {
+      dateTo = '*';
+    }
+
+    if (dateFrom === '*' && dateTo === '*') {
+      return '';
+    }
+
+    return '[' + dateFrom + ' TO ' + dateTo + ']';
+  }
+
+  function _load(queryBuilder, needReset) {
+    queryBuilder.update('date', buildDateQuery());
     query.q = queryBuilder.getQuery();
-    load(query, true);
+    load(query, needReset);
   }
 
   function load(query, needReset) {
@@ -157,10 +182,11 @@ angular.module('poddDashboardApp')
   }
 
   $scope.loadMore = function loadMore() {
-    load(query);
+    _load(queryBuilder);
+
   };
 
   $scope.lastPage = false;
   loadReportTypes();
-  load(query, true);
+  _load(queryBuilder, true);
 });
