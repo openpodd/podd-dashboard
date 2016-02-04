@@ -74,7 +74,8 @@ angular.module('poddDashboardApp')
   };
   $scope.authorities = {
     all: [],
-    current: null
+    current: null,
+    selected: []
   };
 
   function concat(a, b) {
@@ -121,8 +122,7 @@ angular.module('poddDashboardApp')
         return !childCount[item.name];
       });
 
-      $scope.authorities.all = concat([nonSelect], filteredResp);
-      $scope.authorities.current = nonSelect;
+      $scope.authorities.all = filteredResp;
     });
   }
 
@@ -196,12 +196,12 @@ angular.module('poddDashboardApp')
   }
 
   function buildAuthorityQuery() {
-    if ($scope.authorities.current) {
-      return $scope.authorities.current.id || '';
-    }
-    else {
-      return '';
-    }
+    var selectedAuthorities = [];
+    $scope.authorities.selected.forEach(function (item) {
+      selectedAuthorities.push(item.id);
+    });
+
+    return selectedAuthorities.join(',');
   }
 
   function _load(queryBuilder, needReset) {
