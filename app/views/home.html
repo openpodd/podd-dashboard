@@ -99,14 +99,28 @@
                 </div>
               </div>
             </div>
+          </div><!-- /.filter-result -->
+        </div><!-- /result group -->
+
+        <div class="filter-result" ng-show="error || isEmpty()">
+          <!-- <div class="filter-loading" ng-show="loading">
+              กำลังค้นหา &hellip;
+          </div> -->
+
+          <div class="filter-error" ng-show="error">
+              เกิดข้อผิดพลาด
           </div>
-        </div><!-- /.filter-result -->
+
+          <div class="filter-empty" ng-show="isEmpty()">
+              ไม่พบผลการค้นหาที่กำหนด
+          </div>
+        </div><!-- /.filter-result-->
       </div> <!-- /.col-sm-8 -->
     </div>
 
-      <div class="loadmore" ng-cloak>
-        <button class="btn btn-default center-block" type="button" ng-show="!lastPage" ng-click="::loadMore()" ng-disabled="loading">{{ loading ? 'Loading...' : 'Load more...' }} (Page {{page}} / {{totalPage}})</button>
-      </div><!-- /.loadmore -->
+    <div class="loadmore" ng-cloak ng-show="!error && !isEmpty()">
+      <button class="btn btn-default center-block" type="button" ng-show="!lastPage" ng-click="::loadMore()" ng-disabled="loading">{{ loading ? 'Loading...' : 'Load more...' }} (Page {{page}} / {{totalPage}})</button>
+    </div><!-- /.loadmore -->
 
     </div></div>
   </div>

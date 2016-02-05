@@ -214,6 +214,7 @@ angular.module('poddDashboardApp')
   function load(query, needReset) {
     if ($scope.loading) { return; }
     $scope.loading = true;
+    $scope.error = false;
 
     if (needReset) {
       reset();
@@ -265,6 +266,9 @@ angular.module('poddDashboardApp')
 
         concat($scope.reports, resp.results);
       })
+      .catch(function () {
+        $scope.error = true;
+      })
       .finally(function () {
         $scope.loading = false;
       });
@@ -287,6 +291,10 @@ angular.module('poddDashboardApp')
   });
 
   $scope.lastPage = false;
+  $scope.error = false;
+  $scope.isEmpty = function () {
+    return $scope.reports.length === 0 && !$scope.loading && !$scope.error;
+  };
   loadReportTypes();
   loadAuthorities();
   _load(queryBuilder, true);
