@@ -6,7 +6,7 @@ angular.module('poddDashboardApp')
  * Show list of recent reports.
  */
 .controller('HomeCtrl', function ($scope, Search, ReportTypes, ReportState,
-                                  dashboard, Authority) {
+                                  dashboard, Authority, moment) {
   var queryBuilder = (function queryBuilder() {
     var defaultOperator = ' AND ';
     var defaultQuery = 'negative:true';
@@ -225,6 +225,43 @@ angular.module('poddDashboardApp')
         $scope.page++;
         $scope.totalPage = Math.ceil(resp.count / query.page_size);
         $scope.lastPage = !resp.next;
+
+        // assign relative time to make a group.
+        resp.results.forEach(function (item) {
+          var $now = moment();
+          var $thisWeek = moment($now).startOf('week');
+          var $lastWeek = moment($thisWeek).subtract(1, 'week');
+          var $last2Week = moment($thisWeek).subtract(2, 'week');
+          var $last3Week = moment($thisWeek).subtract(3, 'week');
+          var $last4Week = moment($thisWeek).subtract(4, 'week');
+          var $date = moment(item.date);
+
+          if ($date > $thisWeek) {
+            item.timePeriod = item.date;
+          }
+          // TODO: adjust to more readable relative date.
+          else if ($thisWeek > $date && $date > $lastWeek) {
+            // item.timePeriod = $lastWeek;
+            item.timePeriod = moment(item.date).startOf('day');
+          }
+          else if ($lastWeek > $date && $date > $last2Week) {
+            // item.timePeriod = $last2Week;
+            item.timePeriod = moment(item.date).startOf('day');
+          }
+          else if ($last2Week > $date && $date > $last3Week) {
+            // item.timePeriod = $last3Week;
+            item.timePeriod = moment(item.date).startOf('day');
+          }
+          else if ($last3Week > $date && $date > $last4Week) {
+            item.timePeriod = $last4Week;
+          }
+          else if ($last4Week > $date){
+            item.timePeriod = moment(item.date).subtract(1, 'week').startOf('month');
+          }
+
+          item.timePeriod = item.timePeriod.toDate();
+          item.timestamp = item.timePeriod.getTime();
+        });
 
         concat($scope.reports, resp.results);
       })
