@@ -1,0 +1,59 @@
+/************************
+// REPORT LIST
+************************/
+
+.filter-heading{
+  // font-size: 1em;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #d4d4d4;
+  font-family: RSURegular;
+}
+
+/*--- Button Filter ---*/
+
+/*.btn-choice
+.btn-choice-selected*/
+
+.btn-filter{
+  padding: 5px;
+  margin: 0 5px 5px 0;
+  font-size: .9em;
+  line-height: 1em;
+  color: #8d8d8d;
+  background: #ebebeb;
+
+  &:hover{
+    color: #696969;
+  }
+  &:active{
+    outline: none !important;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+  }
+  &:focus{
+    outline: none;
+  }
+}
+.btn-filter-check{
+  outline: none;
+  color: #fff !important;
+  background: #7a81ff;
+
+  &:hover{
+    color: #e0e0e0 !important;
+  }
+}
+
+
+.ui-select-match-custom{
+
+  .ui-select-match-item{
+    background: #7a81ff;
+    color: #fff;
+  }
+  .ui-select-match-close{
+    opacity: .5;
+    text-shadow: none;
+  }
+
+}
