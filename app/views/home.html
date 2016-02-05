@@ -6,103 +6,103 @@
 
     <div class="content-wrapper"><div class="content">
 
-      <div class="filter-form">
-        <form class="form-horizontal" ng-submit="submit($event)">
-          <h3>Filter</h3>
-          <div class="form-group">
-            <label class="col-sm-2 control-label">Report Type</label>
-            <div class="col-sm-10">
-              <button class="btn" ng-class="{ 'btn-warning': reportType.checked }" type="button"
-                      ng-repeat="reportType in reportTypes.all"
-                      ng-click="toggleReportTypeCheck(reportType)">
-                <span class="badgex" ng-if="!reportType.checked">
-                  <i class="fa fa-circle-o fa-size-18"></i>
-                </span>
-                <span class="badgex" ng-if="reportType.checked">
-                  <i class="fa fa-check-circle-o fa-size-18"></i>
-                </span>
-                {{ reportType.name }}
-              </button>
-            </div>
-          </div><!-- /report type form -->
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="filter-form">
+          <form class="form-horizontal" ng-submit="submit($event)">
+            <h3>Filter</h3>
+            <div class="form-group">
+              <h4 class="filter-heading">ประภทรายงาน</h4>
+                <button class="btn btn-choice" ng-class="{ 'btn-choice-selected': reportType.checked }" type="button"
+                        ng-repeat="reportType in reportTypes.all"
+                        ng-click="toggleReportTypeCheck(reportType)">
+                  <span class="badgex" ng-if="!reportType.checked">
+                    <i class="fa fa-circle-o fa-size-14"></i>
+                  </span>
+                  <span class="badgex" ng-if="reportType.checked">
+                    <i class="fa fa-check-circle-o fa-size-14"></i>
+                  </span>
+                  {{ reportType.name }}
+                </button>
+            </div><!-- /report type form -->
 
-          <div class="form-group">
-            <label class="col-sm-2 control-label">Report Type State</label>
-            <div class="col-sm-10">
-              <div class="report-type-states-group" ng-repeat="reportType in reportTypes.all | filter:{checked:true}">
-                <div class="states-group-title"><string>{{ reportType.name }}</string></div>
-                <div class="states-group-options">
-                  <button class="btn" ng-class="{ 'btn-warning': state.checked }" type="button"
-                          ng-repeat="state in reportTypeStates.all[reportType.id]"
-                          ng-click="toggleStateCheck(state)">
-                    <span class="badgex" ng-if="!state.checked">
-                      <i class="fa fa-circle-o fa-size-18"></i>
-                    </span>
-                    <span class="badgex" ng-if="state.checked">
-                      <i class="fa fa-check-circle-o fa-size-18"></i>
-                    </span>
-                    {{ state.name }}
-                  </button>
-                </div><!-- /states-group-options -->
-              </div><!-- /.report-type-states-group -->
-            </div>
-          </div><!-- /report type state form -->
+            <div class="form-group">
+              <h4 class="filter-heading">สถานะรายงาน</h4>
+                <div class="report-type-states-group" ng-repeat="reportType in reportTypes.all | filter:{checked:true}">
+                  <div class="states-group-title"><string>{{ reportType.name }}</string></div>
+                  <div class="states-group-options">
+                    <button class="btn btn-choice" ng-class="{ 'btn-choice-selected': state.checked }" type="button"
+                            ng-repeat="state in reportTypeStates.all[reportType.id]"
+                            ng-click="toggleStateCheck(state)">
+                      <span class="badgex" ng-if="!state.checked">
+                        <i class="fa fa-circle-o fa-size-14"></i>
+                      </span>
+                      <span class="badgex" ng-if="state.checked">
+                        <i class="fa fa-check-circle-o fa-size-14"></i>
+                      </span>
+                      {{ state.name }}
+                    </button>
+                  </div><!-- /states-group-options -->
+                </div><!-- /.report-type-states-group -->
+            </div><!-- /report type state form -->
 
-          <div class="form-group">
-            <label class="col-sm-2 control-label">Date</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" placeholder="From" ng-model="dateFrom">
-              -
-              <input type="text" class="form-control" placeholder="To" ng-model="dateTo">
-            </div>
-          </div><!-- /date range form -->
-
-          <div class="form-group">
-            <label class="col-sm-2 control-label">Authority</label>
-            <div class="col-sm-10">
-              <ui-select multiple
-                reset-search-input="true"
-                ng-model="authorities.selected">
-                <ui-select-match>{{ $item.name }}</ui-select-match>
-                <ui-select-choices
-                  group-by="'parentName'"
-                  repeat="authority in authorities.all | filter:$select.search | orderBy:['_order', 'parentName', 'name']">
-                  <span ng-bind-html="authority.name | highlight:$select.search"></span>
-                </ui-select-choices>
-              </ui-select>
-            </div>
-          </div><!-- /authority form -->
-
-          <button class="btn btn-primary" type="submit" ng-disabled="loading">
-            Submit
-          </button>
-        </form>
-
-      </div><!-- /.filter-form -->
-
-      <div ng-repeat="(key, groupReports) in reports | groupBy:'timestamp' | toArray:true | orderBy:'-$key'">
-        <h3 am-time-ago="groupReports[0].timePeriod"></h3>
-
-        <div class="filter-result">
-          <div ng-repeat="report in groupReports" class="row filter-result-item">
-            <div class="col-md-2" ng-bind="report.date | amDateFormat:'D MMM YY'"></div>
-            <div class="col-md-10">
-              <div class="row text-left">
-                <div class="col-md-12">
-                  <label class="label label-default label-state-{{report.stateCode}}"
-                         ng-bind="report.stateName"></label>
-                  <span ng-bind="::report.reportTypeName"></span>
-                  <i class="fa fa-map-marker"></i>
-                  <span ng-bind="::report.administrationAreaAddress"></span>
-                </div>
+            <div class="form-group">
+              <h4 class="filter-heading">ช่วงเวลา</h4>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="From" ng-model="dateFrom">
+                -
+                <input type="text" class="form-control" placeholder="To" ng-model="dateTo">
               </div>
-              <div class="row text-left">
-                <div class="col-md-12" ng-bind-html="::report.renderedOriginalFormData"></div>
+            </div><!-- /date range form -->
+
+            <div class="form-group">
+              <h4 class="filter-heading">Authority</h4>
+                <ui-select multiple
+                  reset-search-input="true"
+                  ng-model="authorities.selected"
+                  class="ui-select-match-custom">
+                  <ui-select-match>{{ $item.name }}</ui-select-match>
+                  <ui-select-choices
+                    group-by="'parentName'"
+                    repeat="authority in authorities.all | filter:$select.search | orderBy:['_order', 'parentName', 'name']">
+                    <span ng-bind-html="authority.name | highlight:$select.search"></span>
+                  </ui-select-choices>
+                </ui-select>
+            </div><!-- /authority form -->
+
+            <button class="btn btn-primary" type="submit" ng-disabled="loading">
+              Submit
+            </button>
+          </form>
+        </div><!-- /.filter-form -->
+      </div> <!-- /.col-sm-4 -->
+
+      <div class="col-sm-8">
+        <div ng-repeat="(key, groupReports) in reports | groupBy:'timestamp' | toArray:true | orderBy:'-$key'">
+          <h3 am-time-ago="groupReports[0].timePeriod"></h3>
+
+          <div class="filter-result">
+            <div ng-repeat="report in groupReports" class="row filter-result-item">
+              <div class="col-md-2" ng-bind="report.date | amDateFormat:'D MMM YY'"></div>
+              <div class="col-md-10">
+                <div class="row text-left">
+                  <div class="col-md-12">
+                    <label class="label label-default label-state-{{report.stateCode}}"
+                           ng-bind="report.stateName"></label>
+                    <span ng-bind="::report.reportTypeName"></span>
+                    <i class="fa fa-map-marker"></i>
+                    <span ng-bind="::report.administrationAreaAddress"></span>
+                  </div>
+                </div>
+                <div class="row text-left">
+                  <div class="col-md-12" ng-bind-html="::report.renderedOriginalFormData"></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div><!-- /.filter-result -->
+        </div><!-- /.filter-result -->
+      </div> <!-- /.col-sm-8 -->
+    </div>
 
       <div class="loadmore" ng-cloak>
         <button class="btn btn-default center-block" type="button" ng-show="!lastPage" ng-click="::loadMore()" ng-disabled="loading">{{ loading ? 'Loading...' : 'Load more...' }} (Page {{page}} / {{totalPage}})</button>

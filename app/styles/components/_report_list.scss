@@ -14,7 +14,7 @@
 /*.btn-choice
 .btn-choice-selected*/
 
-.btn-filter{
+.btn-choice{
   padding: 5px;
   margin: 0 5px 5px 0;
   font-size: .9em;
@@ -34,26 +34,42 @@
     outline: none;
   }
 }
-.btn-filter-check{
+.btn-choice-selected{
   outline: none;
   color: #fff !important;
   background: #7a81ff;
 
   &:hover{
-    color: #e0e0e0 !important;
+    color: #fff !important;
   }
 }
 
+
+/*State Group*/
+.report-type-states-group{
+  margin-bottom: 10px;
+}
+.states-group-title{
+  margin-bottom: 5px;
+  color: #8d8d8d;
+}
 
 .ui-select-match-custom{
 
   .ui-select-match-item{
     background: #7a81ff;
     color: #fff;
+    border: none;
   }
   .ui-select-match-close{
     opacity: .5;
     text-shadow: none;
+  }
+
+  .btn:active{
+    outline: none !important;
+    box-shadow: none;
+    -webkit-box-shadow: none;
   }
 
 }
