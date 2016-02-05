@@ -52,7 +52,8 @@ angular
     'angulartics.google.analytics',
     'angularLocalStorage',
     'ngTagsInput',
-    'angular.filter'
+    'angular.filter',
+    'sbDateSelect'
   ])
 
   // override z-index of ui.bootstrap

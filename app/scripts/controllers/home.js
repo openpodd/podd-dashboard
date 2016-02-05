@@ -272,8 +272,19 @@ angular.module('poddDashboardApp')
 
   $scope.loadMore = function loadMore() {
     _load(queryBuilder);
-
   };
+
+  $scope.$watch('dateTo', function (newValue) {
+    if ($scope.dateFrom > $scope.dateTo) {
+      $scope.dateFrom = $scope.dateTo;
+    }
+  });
+
+  $scope.$watch('dateFrom', function (newValue) {
+    if ($scope.dateTo < $scope.dateFrom) {
+      $scope.dateTo = new Date();
+    }
+  });
 
   $scope.lastPage = false;
   loadReportTypes();

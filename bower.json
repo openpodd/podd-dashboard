@@ -44,7 +44,8 @@
     "Leaflet-WFST": "~1.0.0",
     "d3": "~3.5.9",
     "leaflet.markercluster": "~0.4.0",
-    "angular-filter": "^0.5.8"
+    "angular-filter": "^0.5.8",
+    "angular-sb-date-select": "^0.3.7"
   },
   "overrides": {
     "socket.io-client": {
