@@ -86,7 +86,8 @@
           <div class="col-md-10">
             <div class="row text-left">
               <div class="col-md-12">
-                <label class="label label-default" ng-bind="report.stateName"></label>
+                <label class="label label-default label-state-{{report.stateCode}}"
+                       ng-bind="report.stateName"></label>
                 <span ng-bind="::report.reportTypeName"></span>
                 <i class="fa fa-map-marker"></i>
                 <span ng-bind="::report.administrationAreaAddress"></span>
