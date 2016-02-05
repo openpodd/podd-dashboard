@@ -82,11 +82,20 @@
 
       <div class="filter-result">
         <div ng-repeat="report in reports" class="row filter-result-item">
-          <div class="col-md-1" am-time-ago="report.date"></div>
-          <div class="col-md-2" ng-bind="::report.administrationAreaAddress"></div>
-          <div class="col-md-4" ng-bind-html="::report.renderedOriginalFormData"></div>
-          <div class="col-md-2" ng-bind="::report.reportTypeName"></div>
-          <div class="col-md-2" ng-bind="report.stateName"></div>
+          <div class="col-md-2" ng-bind="report.date | amDateFormat:'D MMM YY'"></div>
+          <div class="col-md-10">
+            <div class="row text-left">
+              <div class="col-md-12">
+                <label class="label label-default" ng-bind="report.stateName"></label>
+                <span ng-bind="::report.reportTypeName"></span>
+                <i class="fa fa-map-marker"></i>
+                <span ng-bind="::report.administrationAreaAddress"></span>
+              </div>
+            </div>
+            <div class="row text-left">
+              <div class="col-md-12" ng-bind-html="::report.renderedOriginalFormData"></div>
+            </div>
+          </div>
         </div>
       </div><!-- /.filter-result -->
 
