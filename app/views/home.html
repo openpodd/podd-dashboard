@@ -46,13 +46,10 @@
                 </div><!-- /.report-type-states-group -->
             </div><!-- /report type state form -->
 
-            <div class="form-group">
+            <div class="form-group filter-form-date">
               <h4 class="filter-heading">ช่วงเวลา</h4>
-              <div class="col-sm-10">
-                <div sb-date-select ng-model="dateFrom"></div>
-                -
-                <div sb-date-select ng-model="dateTo"></div>
-              </div>
+                <small class="states-group-title">ตั้วแต่วันที่</small><div sb-date-select ng-model="dateFrom"></div>
+                <small class="states-group-title">ถึงวันที่</small><div sb-date-select ng-model="dateTo"></div>
             </div><!-- /date range form -->
 
             <div class="form-group">
@@ -78,10 +75,10 @@
       </div> <!-- /.col-sm-4 -->
 
       <div class="col-sm-8">
-        <div ng-repeat="(key, groupReports) in reports | groupBy:'timestamp' | toArray:true | orderBy:'-$key'">
-          <h3 am-time-ago="groupReports[0].timePeriod"></h3>
+        <div class="filter-result-container">
+          <div ng-repeat="(key, groupReports) in reports | groupBy:'timestamp' | toArray:true | orderBy:'-$key'" class="">
+            <h3 am-time-ago="groupReports[0].timePeriod" class="filter-heading"></h3>
 
-          <div class="filter-result">
             <div ng-repeat="report in groupReports" class="row filter-result-item">
               <div class="col-md-2" ng-bind="report.date | amDateFormat:'D MMM YY'"></div>
               <div class="col-md-10">
@@ -98,23 +95,20 @@
                   <div class="col-md-12" ng-bind-html="::report.renderedOriginalFormData"></div>
                 </div>
               </div>
+            </div><!-- /.filter-result-item -->
+          </div><!-- /result group -->
+          
+          <div class="filter-result-message" ng-show="error || isEmpty()">
+            <div class="filter-error" ng-show="error">
+                เกิดข้อผิดพลาด
             </div>
-          </div><!-- /.filter-result -->
-        </div><!-- /result group -->
 
-        <div class="filter-result" ng-show="error || isEmpty()">
-          <!-- <div class="filter-loading" ng-show="loading">
-              กำลังค้นหา &hellip;
-          </div> -->
+            <div class="filter-empty" ng-show="isEmpty()">
+                ไม่พบผลการค้นหาที่กำหนด
+            </div>
+          </div><!-- /.filter-result-message -->
+        </div><!-- /.filter-result-container -->
 
-          <div class="filter-error" ng-show="error">
-              เกิดข้อผิดพลาด
-          </div>
-
-          <div class="filter-empty" ng-show="isEmpty()">
-              ไม่พบผลการค้นหาที่กำหนด
-          </div>
-        </div><!-- /.filter-result-->
       </div> <!-- /.col-sm-8 -->
     </div>
 
