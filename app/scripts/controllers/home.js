@@ -6,7 +6,8 @@ angular.module('poddDashboardApp')
  * Show list of recent reports.
  */
 .controller('HomeCtrl', function ($scope, Search, ReportTypes, ReportState,
-                                  dashboard, Authority, moment) {
+                                  dashboard, Authority, moment, ReportModal,
+                                  shared, Reports) {
   var queryBuilder = (function queryBuilder() {
     var defaultOperator = ' AND ';
     var defaultQuery = 'negative:true';
@@ -298,4 +299,74 @@ angular.module('poddDashboardApp')
   loadReportTypes();
   loadAuthorities();
   _load(queryBuilder, true);
+
+  // report view related.
+  $scope.viewReport = function (reportId) {
+      ReportModal.show();
+      $scope.loadingReportView = true;
+      $scope.loadingReportViewError = false;
+      // Also clear report data.
+      $scope.report = null;
+
+      // TODO: remove
+      var searcher;
+      if (shared.rvError) {
+          searcher = FailRequest;
+      }
+      else {
+          searcher = Reports;
+      }
+
+      searcher.get({ reportId: reportId }).$promise.then(function (data) {
+          console.log('loaded report data', data);
+
+          var tmpFormData = [], index;
+          if (data.originalFormData && !data.originalFormData.forEach) {
+              for (index in data.originalFormData) {
+                  if (data.originalFormData.hasOwnProperty(index)) {
+                      tmpFormData.push({
+                          name: index,
+                          value: data.originalFormData[index]
+                      });
+                  }
+              }
+              data.originalFormData = tmpFormData;
+          }
+
+          // QUICKFIX: inject village into data.
+          dashboard.getAdministrationAreas().$promise.then(function (areas) {
+              areas.forEach(function (item) {
+                  if (data.administrationAreaId === item.id) {
+                      data.village = item;
+                  }
+              });
+          });
+
+          $scope.report = data;
+      })
+      .catch(function (err) {
+          if (err.status === 403) {
+              ReportModal.close();
+              $scope.gotoMainPage();
+              swal({
+                  title: '',
+                  text: 'ขออภัย คุณยังไม่ได้รับสิทธิดูรายงานนี้',
+                  confirmButtonText: 'ตกลง',
+                  confirmButtonClass: 'btn-default',
+                  type: 'error'
+              });
+          }
+          else {
+              $scope.loadingReportViewError = true;
+          }
+      })
+      .finally(function () {
+          $scope.loadingReportView = false;
+      });
+  };
+
+  $scope.closeModal = function () {
+      shared.reportWatchId = '';
+      ReportModal.close();
+  };
 });

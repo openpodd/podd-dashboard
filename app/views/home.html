@@ -79,7 +79,7 @@
           <div ng-repeat="(key, groupReports) in reports | groupBy:'timestamp' | toArray:true | orderBy:'-$key'" class="">
             <h3 am-time-ago="groupReports[0].timePeriod" class="filter-heading"></h3>
 
-            <div ng-repeat="report in groupReports" class="row filter-result-item">
+            <div ng-repeat="report in groupReports" class="row filter-result-item" ng-click="viewReport(report.id)">
               <div class="col-md-2" ng-bind="report.date | amDateFormat:'D MMM YY'"></div>
               <div class="col-md-10">
                 <div class="row text-left">
@@ -97,7 +97,7 @@
               </div>
             </div><!-- /.filter-result-item -->
           </div><!-- /result group -->
-          
+
           <div class="filter-result-message" ng-show="error || isEmpty()">
             <div class="filter-error" ng-show="error">
                 เกิดข้อผิดพลาด
@@ -119,3 +119,5 @@
     </div></div>
   </div>
 </div>
+
+<div ng-include="'/views/report-view.html'" onload="initReportModal()"></div>
