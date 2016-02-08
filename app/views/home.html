@@ -1,4 +1,4 @@
-<div class="l-info-section l-section l-full-width">
+<div class="l-info-section l-section l-full-width l-theme-gray">
   <div class="l-detail-section l-section">
     <div class="title clearfix">
       <h2 class="pull-left"><i class="fa fa-list-ol pull-left fa-size-22"></i>รายการรายงาน</h2>
@@ -12,7 +12,7 @@
           <form class="form-horizontal" ng-submit="submit($event)">
             <h3>Filter</h3>
             <div class="form-group">
-              <h4 class="filter-heading">ประภทรายงาน</h4>
+              <h4 class="filter-heading"><i class="fa fa-file-text"></i> ประเภทรายงาน</h4>
                 <button class="btn btn-choice" ng-class="{ 'btn-choice-selected': reportType.checked }" type="button"
                         ng-repeat="reportType in reportTypes.all"
                         ng-click="toggleReportTypeCheck(reportType)">
@@ -27,7 +27,7 @@
             </div><!-- /report type form -->
 
             <div class="form-group">
-              <h4 class="filter-heading">สถานะรายงาน</h4>
+              <h4 class="filter-heading"><i class="fa fa-stethoscope"></i> สถานะรายงาน</h4>
                 <div class="report-type-states-group" ng-repeat="reportType in reportTypes.all | filter:{checked:true}">
                   <div class="states-group-title"><string>{{ reportType.name }}</string></div>
                   <div class="states-group-options">
@@ -47,13 +47,13 @@
             </div><!-- /report type state form -->
 
             <div class="form-group filter-form-date">
-              <h4 class="filter-heading">ช่วงเวลา</h4>
+              <h4 class="filter-heading"><i class="fa fa-calendar"></i> ช่วงเวลา</h4>
                 <small class="states-group-title">ตั้วแต่วันที่</small><div sb-date-select ng-model="dateFrom"></div>
                 <small class="states-group-title">ถึงวันที่</small><div sb-date-select ng-model="dateTo"></div>
             </div><!-- /date range form -->
 
             <div class="form-group">
-              <h4 class="filter-heading">Authority</h4>
+              <h4 class="filter-heading"><i class="fa fa-location-arrow"></i> Authority</h4>
                 <ui-select multiple
                   reset-search-input="true"
                   ng-model="authorities.selected"
@@ -82,39 +82,37 @@
             <div ng-repeat="report in groupReports" class="row filter-result-item" ng-click="viewReport(report.id)">
               <div class="col-md-2" ng-bind="report.date | amDateFormat:'D MMM YY'"></div>
               <div class="col-md-10">
-                <div class="row text-left">
-                  <div class="col-md-12">
-                    <label class="label label-default label-state-{{report.stateCode}}"
-                           ng-bind="report.stateName"></label>
-                    <span ng-bind="::report.reportTypeName"></span>
-                    <i class="fa fa-map-marker"></i>
+                <label class="label label-default label-state-{{report.stateCode}}"
+                         ng-bind="report.stateName"></label>
+                <span ng-bind="::report.reportTypeName" class="filter-reporttype"></span>
+                <div class="filter-result-area">
+                  <i class="fa fa-map-marker"></i>
                     <span ng-bind="::report.administrationAreaAddress"></span>
-                  </div>
                 </div>
-                <div class="row text-left">
-                  <div class="col-md-12" ng-bind-html="::report.renderedOriginalFormData"></div>
-                </div>
+                <div class="filter-result-desc" ng-bind-html="::report.renderedOriginalFormData"></div>
               </div>
             </div><!-- /.filter-result-item -->
           </div><!-- /result group -->
 
           <div class="filter-result-message" ng-show="error || isEmpty()">
-            <div class="filter-error" ng-show="error">
-                เกิดข้อผิดพลาด
+            <div class="filter-error alert alert-danger" role="alert" ng-show="error">
+                <strong>เกิดข้อผิดพลาด</strong> กรุณาลองรีเฟรชอีกครั้ง
             </div>
 
-            <div class="filter-empty" ng-show="isEmpty()">
-                ไม่พบผลการค้นหาที่กำหนด
+            <div class="filter-empty alert alert-info" ng-show="isEmpty()">
+                <strong>ไม่พบผลการค้นหา</strong> ไม่มีผลลัพท์ที่คุณกำลังค้นหา ลองดูใหม่นะ 
             </div>
           </div><!-- /.filter-result-message -->
         </div><!-- /.filter-result-container -->
 
+        <div class="loadmore" ng-cloak ng-show="!error && !isEmpty()">
+          <button class="btn btn-default center-block" type="button" ng-show="!lastPage" ng-click="::loadMore()" ng-disabled="loading">{{ loading ? 'Loading...' : 'Load more...' }} (Page {{page}} / {{totalPage}})</button>
+        </div><!-- /.loadmore -->
+
       </div> <!-- /.col-sm-8 -->
     </div>
 
-    <div class="loadmore" ng-cloak ng-show="!error && !isEmpty()">
-      <button class="btn btn-default center-block" type="button" ng-show="!lastPage" ng-click="::loadMore()" ng-disabled="loading">{{ loading ? 'Loading...' : 'Load more...' }} (Page {{page}} / {{totalPage}})</button>
-    </div><!-- /.loadmore -->
+    
 
     </div></div>
   </div>
