@@ -297,6 +297,11 @@ angular.module('poddDashboardApp')
       popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="' + window.location.origin + '/styles/app.css" /></head><body onload="window.print()">' + printContents + '</html>');
       popupWin.document.close();
     };
+
+    $scope.changeToTestReport = function () {
+      // TODO:
+      alert('Will implement in the future');
+    };
 })
 
 .controller('ReportImageLightboxCtrl', function ($scope, Map) {

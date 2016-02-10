@@ -19,6 +19,10 @@
     <div class="content-wrapper"
          ng-if="!loadingReportView && !loadingReportViewError"><div class="content">
 
+      <div class="priority-report pull-right" ng-if="!$parent.report.parent">
+        <button class="btn btn-default" ng-click="changeToTestReport()">เปลี่ยนเป็นรายงานทดสอบ</button>
+      </div>
+
       <div class="priority-report pull-right" ng-if="!$parent.report.parent">เปลี่ยนสถานะรายงาน :
         <div report-state-form report="$parent.report"></div>
       </div>
