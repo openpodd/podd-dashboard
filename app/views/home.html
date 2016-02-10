@@ -90,21 +90,20 @@
 
       <div class="col-sm-8">
         <div class="filter-result-container">
-            <h3 am-time-ago="groupReports[0].timePeriod" class="filter-heading"></h3>
 
-            <div ng-repeat="report in reports" class="row filter-result-item" ng-click="viewReport(report.id)">
-              <div class="col-md-2" ng-bind="report.date | amDateFormat:'D MMM YY'"></div>
-              <div class="col-md-10">
-                <label class="label label-default label-state-{{report.stateCode}}"
-                         ng-bind="report.stateName"></label>
-                <span ng-bind="::report.reportTypeName" class="filter-reporttype"></span>
-                <div class="filter-result-area">
-                  <i class="fa fa-map-marker"></i>
-                    <span ng-bind="::report.administrationAreaAddress"></span>
-                </div>
-                <div class="filter-result-desc" ng-bind-html="::report.renderedOriginalFormData"></div>
+          <div ng-repeat="report in reports" class="row filter-result-item" ng-click="viewReport(report.id)">
+            <div class="col-md-2" ng-bind="report.date | amDateFormat:'D MMM YY'"></div>
+            <div class="col-md-10">
+              <label class="label label-default label-state-{{report.stateCode}}"
+                       ng-bind="report.stateName"></label>
+              <span ng-bind="::report.reportTypeName" class="filter-reporttype"></span>
+              <div class="filter-result-area">
+                <i class="fa fa-map-marker"></i>
+                  <span ng-bind="::report.administrationAreaAddress"></span>
               </div>
-            </div><!-- /.filter-result-item -->
+              <div class="filter-result-desc" ng-bind-html="::report.renderedOriginalFormData"></div>
+            </div>
+          </div><!-- /.filter-result-item -->
 
           <div class="filter-result-message" ng-show="error || isEmpty()">
             <div class="filter-error alert alert-danger" role="alert" ng-show="error">
