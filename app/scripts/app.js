@@ -53,7 +53,8 @@ angular
     'angularLocalStorage',
     'ngTagsInput',
     'angular.filter',
-    'sbDateSelect'
+    // 'sbDateSelect',
+    'pickadate'
   ])
 
   // override z-index of ui.bootstrap

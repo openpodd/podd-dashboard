@@ -48,8 +48,22 @@
 
             <div class="form-group filter-form-date">
               <h4 class="filter-heading"><i class="fa fa-calendar"></i> ช่วงเวลา</h4>
-                <small class="states-group-title">ตั้วแต่วันที่</small><div sb-date-select ng-model="dateFrom"></div>
-                <small class="states-group-title">ถึงวันที่</small><div sb-date-select ng-model="dateTo"></div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <small class="states-group-title">ตั้งแต่วันที่</small>
+                    <div>
+                      <input type="text" pick-a-date="dateFrom"
+                             pick-a-date-options="{ selectYears: true }" />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <small class="states-group-title">ถึงวันที่</small>
+                    <div>
+                      <input type="text" pick-a-date="dateTo"
+                             pick-a-date-options="{ selectYears: true }"  />
+                    </div>
+                  </div>
+                </div>
             </div><!-- /date range form -->
 
             <div class="form-group">
@@ -100,7 +114,7 @@
             </div>
 
             <div class="filter-empty alert alert-info" ng-show="isEmpty()">
-                <strong>ไม่พบผลการค้นหา</strong> ไม่มีผลลัพท์ที่คุณกำลังค้นหา ลองดูใหม่นะ 
+                <strong>ไม่พบผลการค้นหา</strong> ไม่มีผลลัพท์ที่คุณกำลังค้นหา ลองดูใหม่นะ
             </div>
           </div><!-- /.filter-result-message -->
         </div><!-- /.filter-result-container -->
@@ -112,7 +126,7 @@
       </div> <!-- /.col-sm-8 -->
     </div>
 
-    
+
 
     </div></div>
   </div>

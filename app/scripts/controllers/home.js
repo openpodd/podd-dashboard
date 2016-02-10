@@ -24,6 +24,10 @@ angular.module('poddDashboardApp')
       },
       update: function update(filterName, filterValue) {
         var index = conditionsMap[filterName];
+        if (!filterValue) {
+          instance.delete(filterName);
+          return;
+        }
         if (index) {
           queries[index] = filterName + ':' + filterValue;
         }
@@ -185,8 +189,14 @@ angular.module('poddDashboardApp')
     if (!dateFrom) {
       dateFrom = '*';
     }
+    else {
+      dateFrom = moment(dateFrom).format('YYYY-MM-DD');
+    }
     if (!dateTo) {
       dateTo = '*';
+    }
+    else {
+      dateTo = moment(dateTo).format('YYYY-MM-DD');
     }
 
     if (dateFrom === '*' && dateTo === '*') {
@@ -279,17 +289,17 @@ angular.module('poddDashboardApp')
     _load(queryBuilder);
   };
 
-  $scope.$watch('dateTo', function (newValue) {
-    if ($scope.dateFrom > $scope.dateTo) {
-      $scope.dateFrom = $scope.dateTo;
-    }
-  });
-
-  $scope.$watch('dateFrom', function (newValue) {
-    if ($scope.dateTo < $scope.dateFrom) {
-      $scope.dateTo = new Date();
-    }
-  });
+  // $scope.$watch('dateTo', function (newValue) {
+  //   if ($scope.dateFrom > $scope.dateTo) {
+  //     $scope.dateFrom = $scope.dateTo;
+  //   }
+  // });
+  //
+  // $scope.$watch('dateFrom', function (newValue) {
+  //   if ($scope.dateTo < $scope.dateFrom) {
+  //     $scope.dateTo = new Date();
+  //   }
+  // });
 
   $scope.lastPage = false;
   $scope.error = false;

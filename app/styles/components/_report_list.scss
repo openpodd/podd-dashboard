@@ -98,7 +98,7 @@
 }
 .filter-reporttype{
   color: #000;
-  font-weight: bold; 
+  font-weight: bold;
 }
 .filter-result-desc{
   color: #999;
@@ -112,14 +112,14 @@
   br{
     display: none;
   }
-  
+
   p{
-    
+
     margin-bottom: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    text-overflow: '...';  
+    text-overflow: '...';
   }
 }
 .loadmore{
@@ -153,4 +153,11 @@
     -webkit-box-shadow: none;
   }
 
+}
+
+.picker__holder {
+  pointer-events: none;
+}
+.picker__wrap {
+  pointer-events: auto;
 }
