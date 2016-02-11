@@ -1,0 +1,42 @@
+.sidebar-block{
+  margin-bottom: 1.5em;
+  background-color: #fff;
+
+  .sidebar-heading{
+    padding: 10px;
+    background-color: #dedede;
+  }
+  .sidebar-heading-text{
+    margin: 0;
+    font-size: 1.7em;
+    color: #000;
+    font-family: ThaiSansNeueRegular;
+  }
+  .sidebar-content{
+    padding: 10px;
+  }
+  .sidebar-title{
+    margin: 10px 0 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #d4d4d4;
+    font-size: 1.7em;
+    font-family: ThaiSansNeueRegular;
+    color: #000;
+  }
+}
+
+.history-log{
+  padding: 0 0 0 20px;
+
+  li{
+    margin-bottom: 7px;
+  }
+  .history-log-name{
+    margin-top: 4px;
+    color: #a5a5a5;
+    font-size: .85em;
+  }
+  strong{
+    color: #000;
+  }
+}

@@ -16,12 +16,66 @@
       เกิดข้อผิดพลาด ไม่สามารถดึงข้อมูลรายงานได้
     </div>
 
+    <div class="content-wrapper">
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="w">
+            <h1 class="">ไก่พื้นเมือง[สัตว์ปีก] ป่วยจำนวน 0 ตัว, ตายจำนวน 1 ตัว จากทั้งหมด 25 ตัว จำนวนเล้า/คอกข้างเคียงที่มีอาการ 0 มีอาการดังนี้ ทวารหนักเปื้อน,ขี้ขาว,ซึม/เหงา/ไม่กินอาหาร</h1>
+            <div class="report-image"></div>
+            <div class="report-detail">
+              <p>พื้นที่ : องค์การบริหารส่วนตำบลสะเมิงเหนือ อำเภอสะเมิง</p>
+              <p>วันที่รายงาน : พุธ 27 มกราคม 2016 09:55, วันที่เกิดเหตุ : พุธ 27 มกราคม 2016</p>
+              <p>ประเภทรายงาน : สัตว์ป่วย/ตาย</p>
+              <p>ผู้รายงาน : นายดวงจันทร์ สายปัญญา</p>
+              <p>ติดต่อ : 31/1 ม.3 ต.ท่าเดื่อ อ.ดอยเต่า จ.เชียงใหม่ 50260</p>
+              <p>เบอร์โทร : 089-9538755, เบอร์โทรของโครงการ : 0979188105</p>
+            </div>
+            <div class="report-infomation">เอา Tabs เดิมมาใส่เลยนะ</div>
+            <div class="comment">
+
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          
+          <div class="sidebar-block">
+            <div class="sidebar-heading">
+              <h2 class="sidebar-heading-text">สถานะรายงาน</h2>
+              <span class="label label-default label-state-report">Suspect Outbreak</span>
+            </div> <!-- sidebar-heading -->
+            <div class="sidebar-content">
+              <h3 class="sidebar-title">ประวัติ</h3>
+              <ul class="history-log">
+                <li>
+                  <strong>Changed : Outbreak</strong>
+                  <div class="history-log-name">โดย นายฉัตรชัย ทุติยานนท์ | วันที่ 19 มิถุนายน 58</div>
+                </li>
+                <li>
+                  <strong>Changed : Suspect Outbreak</strong>
+                  <div class="history-log-name">โดย นายฉัตรชัย ทุติยานนท์ | วันที่ 19 มิถุนายน 58</div>
+                </li>
+                <li>
+                  <strong>Changed : Case</strong>
+                  <div class="history-log-name">โดย นายฉัตรชัย ทุติยานนท์ | วันที่ 19 มิถุนายน 58</div>
+                </li>
+              </ul>
+              <div class="">
+                <select></select>
+                <a href="" class="">เปลี่ยนสถานะ</a>
+                <a href="" class="">ปรับสถานะเป็นรายงานทดสอบ</a>
+                <a href="" class="">รายงานนี้ไม่ใช่รายงานทดสอบ</a>
+              </div>
+            </div> <!-- sidebar-content -->
+          </div> <!-- sidebar-block -->
+
+        </div>
+      </div>
+    </div>
+
+
+
     <div class="content-wrapper"
          ng-if="!loadingReportView && !loadingReportViewError"><div class="content">
-
-      <div class="priority-report pull-right" ng-if="!$parent.report.parent">
-        <button class="btn btn-default" ng-click="changeToTestReport()">เปลี่ยนเป็นรายงานทดสอบ</button>
-      </div>
 
       <div class="priority-report pull-right" ng-if="!$parent.report.parent">เปลี่ยนสถานะรายงาน :
         <div report-state-form report="$parent.report"></div>
