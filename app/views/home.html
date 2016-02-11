@@ -13,17 +13,29 @@
             <h3>Filter</h3>
             <div class="form-group">
               <h4 class="filter-heading"><i class="fa fa-file-text"></i> ประเภทรายงาน</h4>
-                <button class="btn btn-choice" ng-class="{ 'btn-choice-selected': reportType.checked }" type="button"
-                        ng-repeat="reportType in reportTypes.all"
-                        ng-click="toggleReportTypeCheck(reportType)">
-                  <span class="badgex" ng-if="!reportType.checked">
-                    <i class="fa fa-circle-o fa-size-14"></i>
-                  </span>
-                  <span class="badgex" ng-if="reportType.checked">
-                    <i class="fa fa-check-circle-o fa-size-14"></i>
-                  </span>
-                  {{ reportType.name }}
+              <button class="btn btn-choice" ng-class="{ 'btn-choice-selected': reportType.checked }" type="button"
+                      ng-repeat="reportType in reportTypes.all | orderBy:'weight' | first:reportTypeListLimit"
+                      ng-click="toggleReportTypeCheck(reportType)">
+                <span class="badgex" ng-if="!reportType.checked">
+                  <i class="fa fa-circle-o fa-size-14"></i>
+                </span>
+                <span class="badgex" ng-if="reportType.checked">
+                  <i class="fa fa-check-circle-o fa-size-14"></i>
+                </span>
+                {{ reportType.name }}
+              </button>
+              <div class="text-center" ng-if="reportTypes.all.length > 10">
+                <button class="btn btn-default" ng-if="isReportTypeListCompact"
+                        ng-click="toggleReportTypeListCompact()" type="button">
+                  <i class="fa fa-arrow-down"></i>
+                  แสดงทั้งหมด
                 </button>
+                <button class="btn btn-default" ng-if="!isReportTypeListCompact"
+                        ng-click="toggleReportTypeListCompact()" type="button">
+                  <i class="fa fa-arrow-up"></i>
+                  แสดงน้อยลง
+                </button>
+              </div>
             </div><!-- /report type form -->
 
             <div class="form-group">

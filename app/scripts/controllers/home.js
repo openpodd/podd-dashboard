@@ -292,7 +292,19 @@ angular.module('poddDashboardApp')
     _load(queryBuilder);
   };
 
-  $scope.resultMode = 'list'; 
+  $scope.isReportTypeListCompact = true;
+  $scope.reportTypeListLimit = 10;
+  $scope.toggleReportTypeListCompact = function toggleReportTypeListCompact() {
+    $scope.isReportTypeListCompact = !$scope.isReportTypeListCompact;
+    if ($scope.isReportTypeListCompact) {
+      $scope.reportTypeListLimit = 10;
+    }
+    else {
+      $scope.reportTypeListLimit = $scope.reportTypes.all.length;
+    }
+  };
+
+  $scope.resultMode = 'list';
   $scope.lastPage = false;
   $scope.error = false;
   $scope.isEmpty = function () {
