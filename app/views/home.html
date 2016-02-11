@@ -91,7 +91,7 @@
       <div class="col-sm-8">
         <div class="filter-result-container">
 
-          <div ng-repeat="report in reports" class="row filter-result-item" ng-click="viewReport(report.id)">
+          <div ng-repeat="report in reports" class="row filter-result-item" ng-click="onClickReport(report.id)">
             <div class="col-md-2" ng-bind="report.date | amDateFormat:'D MMM YY'"></div>
             <div class="col-md-10">
               <label class="label label-default label-state-{{report.stateCode}}"

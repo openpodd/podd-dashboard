@@ -1,3 +1,4 @@
+/*globals swal*/
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -7,7 +8,16 @@ angular.module('poddDashboardApp')
  */
 .controller('HomeCtrl', function ($scope, Search, ReportTypes, ReportState,
                                   dashboard, Authority, moment, ReportModal,
-                                  shared, Reports) {
+                                  shared, Reports, $state, $stateParams, $timeout) {
+  console.log('-> In HomeCtrl');
+
+  // Load report if given at request.
+  $timeout(function () {
+    if ($stateParams.reportId) {
+      $scope.viewReport($stateParams.reportId);
+    }
+  });
+
   var queryBuilder = (function queryBuilder() {
     var defaultOperator = ' AND ';
     var defaultQuery = 'negative:true';
@@ -106,15 +116,8 @@ angular.module('poddDashboardApp')
   function loadAuthorities() {
     $scope.authorities.all = dashboard.getAuthorities();
     dashboard.getAuthorities().$promise.then(function (resp) {
-      var nonSelect = new Authority({
-        id: 0,
-        name: '-',
-        code: '',
-        _order: -10
-      });
       // assign children, to find only leaf authority.
       var childCount = {};
-      var parent = null;
       $scope.authorities.all.forEach(function (item) {
         var count = childCount[item.parentName] || 0;
         if (item.parentName) {
@@ -289,18 +292,6 @@ angular.module('poddDashboardApp')
     _load(queryBuilder);
   };
 
-  // $scope.$watch('dateTo', function (newValue) {
-  //   if ($scope.dateFrom > $scope.dateTo) {
-  //     $scope.dateFrom = $scope.dateTo;
-  //   }
-  // });
-  //
-  // $scope.$watch('dateFrom', function (newValue) {
-  //   if ($scope.dateTo < $scope.dateFrom) {
-  //     $scope.dateTo = new Date();
-  //   }
-  // });
-
   $scope.lastPage = false;
   $scope.error = false;
   $scope.isEmpty = function () {
@@ -310,73 +301,74 @@ angular.module('poddDashboardApp')
   loadAuthorities();
   _load(queryBuilder, true);
 
-  // report view related.
-  $scope.viewReport = function (reportId) {
-      ReportModal.show();
-      $scope.loadingReportView = true;
-      $scope.loadingReportViewError = false;
-      // Also clear report data.
-      $scope.report = null;
-
-      // TODO: remove
-      var searcher;
-      if (shared.rvError) {
-          searcher = FailRequest;
-      }
-      else {
-          searcher = Reports;
-      }
-
-      searcher.get({ reportId: reportId }).$promise.then(function (data) {
-          console.log('loaded report data', data);
-
-          var tmpFormData = [], index;
-          if (data.originalFormData && !data.originalFormData.forEach) {
-              for (index in data.originalFormData) {
-                  if (data.originalFormData.hasOwnProperty(index)) {
-                      tmpFormData.push({
-                          name: index,
-                          value: data.originalFormData[index]
-                      });
-                  }
-              }
-              data.originalFormData = tmpFormData;
-          }
-
-          // QUICKFIX: inject village into data.
-          dashboard.getAdministrationAreas().$promise.then(function (areas) {
-              areas.forEach(function (item) {
-                  if (data.administrationAreaId === item.id) {
-                      data.village = item;
-                  }
-              });
-          });
-
-          $scope.report = data;
-      })
-      .catch(function (err) {
-          if (err.status === 403) {
-              ReportModal.close();
-              $scope.gotoMainPage();
-              swal({
-                  title: '',
-                  text: 'ขออภัย คุณยังไม่ได้รับสิทธิดูรายงานนี้',
-                  confirmButtonText: 'ตกลง',
-                  confirmButtonClass: 'btn-default',
-                  type: 'error'
-              });
-          }
-          else {
-              $scope.loadingReportViewError = true;
-          }
-      })
-      .finally(function () {
-          $scope.loadingReportView = false;
-      });
+  $scope.onClickReport = function (reportId) {
+    $state.go('home', { reportId: reportId }, { notify: false });
+    $scope.viewReport(reportId);
   };
 
-  $scope.closeModal = function () {
-      shared.reportWatchId = '';
-      ReportModal.close();
+  $scope.closeReportView = function () {
+    shared.reportWatchId = '';
+    $state.go('home', { reportId: null }, { notify: false });
+    ReportModal.close();
+  };
+
+  $scope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+    if (toState.name !== 'home') { return; }
+
+    event.preventDefault();
+
+    if (toParams.reportId && toParams.reportId !== fromParams.reportId) {
+      $scope.onClickReport(toParams.reportId);
+    }
+    else {
+      $scope.closeReportView();
+    }
+  });
+
+  // report view related.
+  $scope.viewReport = function (reportId) {
+    ReportModal.show();
+    $scope.loadingReportView = true;
+    $scope.loadingReportViewError = false;
+    // Also clear report data.
+    $scope.report = null;
+
+    Reports.get({ reportId: reportId }).$promise.then(function (data) {
+      console.log('loaded report data', data);
+
+      var tmpFormData = [], index;
+      if (data.originalFormData && !data.originalFormData.forEach) {
+        for (index in data.originalFormData) {
+          if (data.originalFormData.hasOwnProperty(index)) {
+            tmpFormData.push({
+              name: index,
+              value: data.originalFormData[index]
+            });
+          }
+        }
+        data.originalFormData = tmpFormData;
+      }
+
+      $scope.report = data;
+    })
+    .catch(function (err) {
+      if (err.status === 403) {
+        ReportModal.close();
+        $scope.gotoMainPage();
+        swal({
+          title: '',
+          text: 'ขออภัย คุณยังไม่ได้รับสิทธิดูรายงานนี้',
+          confirmButtonText: 'ตกลง',
+          confirmButtonClass: 'btn-default',
+          type: 'error'
+        });
+      }
+      else {
+        $scope.loadingReportViewError = true;
+      }
+    })
+    .finally(function () {
+      $scope.loadingReportView = false;
+    });
   };
 });
