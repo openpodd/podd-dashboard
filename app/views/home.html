@@ -89,21 +89,55 @@
       </div> <!-- /.col-sm-4 -->
 
       <div class="col-sm-8">
+        <div class="row"><div class="col-md-12">
+          <div class="btn-group filter-result-mode-switch pull-right" role="group">
+            <button type="button" class="btn btn-default"
+                    ng-class="{ 'btn-primary': (resultMode == 'list') }"
+                    ng-click="resultMode = 'list'">List</button>
+            <button type="button" class="btn btn-default"
+                    ng-class="{ 'btn-primary': (resultMode == 'table') }"
+                    ng-click="resultMode = 'table'">Table</button>
+          </div><!-- /result mode switch -->
+        </div></div>
+
         <div class="filter-result-container">
 
-          <div ng-repeat="report in reports" class="row filter-result-item" ng-click="viewReport(report.id)">
-            <div class="col-md-2" ng-bind="report.date | amDateFormat:'D MMM YY'"></div>
-            <div class="col-md-10">
-              <label class="label label-default label-state-{{report.stateCode}}"
+          <div ng-if="resultMode == 'list'">
+            <div ng-repeat="report in reports" class="row filter-result-item" ng-click="onClickReport(report.id)">
+              <div class="col-md-2" ng-bind="report.date | amDateFormat:'D MMM YY'"></div>
+              <div class="col-md-10">
+                <label class="label label-default label-state-{{report.stateCode}}"
                        ng-bind="report.stateName"></label>
-              <span ng-bind="::report.reportTypeName" class="filter-reporttype"></span>
-              <div class="filter-result-area">
-                <i class="fa fa-map-marker"></i>
-                  <span ng-bind="::report.administrationAreaAddress"></span>
+                <span ng-bind="::report.reportTypeName" class="filter-reporttype"></span>
+                <div class="filter-result-area">
+                  <i class="fa fa-map-marker"></i>
+                    <span ng-bind="::report.administrationAreaAddress"></span>
+                </div>
+                <div class="filter-result-desc" ng-bind-html="::report.renderedOriginalFormData"></div>
               </div>
-              <div class="filter-result-desc" ng-bind-html="::report.renderedOriginalFormData"></div>
-            </div>
-          </div><!-- /.filter-result-item -->
+            </div><!-- /.filter-result-item -->
+          </div>
+          <div ng-if="resultMode == 'table'">
+            <div ng-repeat="report in reports" class="row filter-result-item" ng-click="onClickReport(report.id)">
+              <div class="col-md-2" ng-bind="report.date | amDateFormat:'D MMM YY'"></div>
+              <div class="col-md-2">
+                <label class="label label-default label-state-{{report.stateCode}}"
+                       ng-bind="report.stateName"></label>
+              </div>
+              <div class="col-md-2"
+                <span ng-bind="::report.reportTypeName" class="filter-reporttype"></span>
+              </div>
+              <div class="col-md-3">
+                <div class="filter-result-area">
+                  <i class="fa fa-map-marker"></i>
+                    <span ng-bind="::report.administrationAreaAddress"></span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="filter-result-desc" ng-bind-html="::report.renderedOriginalFormData"></div>
+              </div>
+            </div><!-- /.filter-result-item -->
+          </div>
 
           <div class="filter-result-message" ng-show="error || isEmpty()">
             <div class="filter-error alert alert-danger" role="alert" ng-show="error">

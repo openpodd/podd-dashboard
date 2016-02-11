@@ -160,7 +160,7 @@ angular
 
     $stateProvider
       .state('home', {
-        url: '/home',
+        url: '/home?reportId',
         templateUrl: 'views/home.html',
         controller: 'HomeCtrl'
       })
