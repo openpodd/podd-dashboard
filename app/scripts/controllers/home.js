@@ -292,6 +292,7 @@ angular.module('poddDashboardApp')
     _load(queryBuilder);
   };
 
+  $scope.resultMode = 'list'; 
   $scope.lastPage = false;
   $scope.error = false;
   $scope.isEmpty = function () {
