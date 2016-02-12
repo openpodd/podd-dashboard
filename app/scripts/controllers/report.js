@@ -298,9 +298,15 @@ angular.module('poddDashboardApp')
       popupWin.document.close();
     };
 
-    $scope.changeToTestReport = function () {
-      // TODO:
-      alert('Will implement in the future');
+    $scope.markAsTest = function markAsTest(report) {
+      Reports.markAsTest({ id: report.id }).$promise.then(function () {
+        report.testFlag = true;
+      });
+    };
+    $scope.markAsNotTest = function markAsNotTest(report) {
+      Reports.markAsNotTest({ id: report.id }).$promise.then(function () {
+        report.testFlag = false;
+      });
     };
 })
 
