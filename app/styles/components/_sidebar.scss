@@ -1,16 +1,18 @@
 .sidebar-block{
   margin-bottom: 1.5em;
   background-color: #fff;
+  border: 1px solid #eaeaea;
 
   .sidebar-heading{
-    padding: 10px;
+    padding: 15px 10px;
     background-color: #dedede;
   }
   .sidebar-heading-text{
-    margin: 0;
-    font-size: 1.7em;
+    display: inline-block;
+    margin: 0 10px 0 0;
+    vertical-align: middle;
+    font-size: 1.35em;
     color: #000;
-    font-family: ThaiSansNeueRegular;
   }
   .sidebar-content{
     padding: 10px;
@@ -19,14 +21,14 @@
     margin: 10px 0 10px;
     padding-bottom: 5px;
     border-bottom: 1px solid #d4d4d4;
-    font-size: 1.7em;
-    font-family: ThaiSansNeueRegular;
+    font-size: 1.35em;
     color: #000;
   }
 }
 
 .history-log{
   padding: 0 0 0 20px;
+  color: #000;
 
   li{
     margin-bottom: 7px;
@@ -38,5 +40,89 @@
   }
   strong{
     color: #000;
+  }
+}
+.sidebar-action{
+  padding-top: 15px;
+  margin-top: 20px;
+  border-top: 1px solid #ccc;
+}
+.label-state{
+  font-size: 1em;
+  font-weight: normal;
+}
+
+/*********/
+/*Button*/
+/*********/
+
+.btn-green{
+  background-color: #b58e00;
+  color: #fff;
+  border-radius: 30px;
+  padding: 5px 20px;
+  font-size: 1em;
+  border: none;
+
+  &:hover{
+    background-color: #8C710D;
+    color: #fff;
+  }
+}
+.btn-flag-test{
+  display: block;
+  padding-top: 20px;
+  color: #c42c00;
+  text-decoration: underline;
+  clear: both;
+}
+
+/*********/
+/*Report*/
+/*********/
+.report-section{
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #eaeaea;
+  color: #666;
+
+  .report-title{
+    font-size: 1.5em;
+    line-height: 1.2em;
+    color: #000;
+    margin: 0 0 15px;
+    padding-bottom: 15px;
+    border-bottom: 4px solid #DBDBDB;
+  }
+  .report-image{
+
+  }
+  .report-thumbnails{
+    margin-bottom: 20px;
+
+    li{
+      width: 120px;
+      margin-bottom: 10px;
+      padding: 0;
+      margin: 0 10px 10px 0;
+
+      &:first-child{
+        margin-left: 0;
+      }
+    }
+  }
+  .report-detail{
+    margin-bottom: 25px;
+
+    strong{
+      color: #333;
+    }
+  }
+  .report-infomation{
+
+  }
+
+  .pd-file-upload{
+  
   }
 }

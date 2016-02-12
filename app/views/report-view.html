@@ -16,57 +16,124 @@
       เกิดข้อผิดพลาด ไม่สามารถดึงข้อมูลรายงานได้
     </div>
 
-    <div class="content-wrapper">
+    <div class="content-wrapper content-wrapper-padding">
       <div class="row">
         <div class="col-sm-8">
-          <div class="w">
-            <h1 class="">ไก่พื้นเมือง[สัตว์ปีก] ป่วยจำนวน 0 ตัว, ตายจำนวน 1 ตัว จากทั้งหมด 25 ตัว จำนวนเล้า/คอกข้างเคียงที่มีอาการ 0 มีอาการดังนี้ ทวารหนักเปื้อน,ขี้ขาว,ซึม/เหงา/ไม่กินอาหาร</h1>
-            <div class="report-image"></div>
-            <div class="report-detail">
-              <p>พื้นที่ : องค์การบริหารส่วนตำบลสะเมิงเหนือ อำเภอสะเมิง</p>
-              <p>วันที่รายงาน : พุธ 27 มกราคม 2016 09:55, วันที่เกิดเหตุ : พุธ 27 มกราคม 2016</p>
-              <p>ประเภทรายงาน : สัตว์ป่วย/ตาย</p>
-              <p>ผู้รายงาน : นายดวงจันทร์ สายปัญญา</p>
-              <p>ติดต่อ : 31/1 ม.3 ต.ท่าเดื่อ อ.ดอยเต่า จ.เชียงใหม่ 50260</p>
-              <p>เบอร์โทร : 089-9538755, เบอร์โทรของโครงการ : 0979188105</p>
-            </div>
-            <div class="report-infomation">เอา Tabs เดิมมาใส่เลยนะ</div>
-            <div class="comment">
+          <div class="report-section">
+            <h1 class="report-title kanit-300">ไก่พื้นเมือง[สัตว์ปีก] ป่วยจำนวน 0 ตัว, ตายจำนวน 1 ตัว จากทั้งหมด 25 ตัว จำนวนเล้า/คอกข้างเคียงที่มีอาการ 0 มีอาการดังนี้ ทวารหนักเปื้อน,ขี้ขาว,ซึม/เหงา/ไม่กินอาหาร</h1>
 
-            </div>
-          </div>
-        </div>
+            <div class="report-detail">
+              <p><strong>พื้นที่</strong> : <span jump-to-filter name=" 'area' " value="$parent.report.village.address" wrap-with-quote="true"></span></p>
+              <p><strong>วันที่รายงาน</strong> : {{ $parent.report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}, <strong>วันที่เกิดเหตุ</strong> : {{ $parent.report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</p>
+              <p><strong>ประเภทรายงาน</strong> : {{ $parent.report.reportTypeName }}</p>
+              <p><strong>ผู้รายงาน</strong> : <span jump-to-filter name=" 'createdByName' " value="$parent.report.createdBy"></span></p>
+              <p><strong>ติดต่อ</strong> : {{ $parent.report.createdByContact }}</p>
+              <p><strong>เบอร์โทร</strong> : <a href="tel:">{{ $parent.report.createdByTelephone }}</a>, <strong>เบอร์โทรของโครงการ</strong> : <a href="tel:">{{ $parent.report.createdByProjectMobileNumber }}</a></p>
+            </div> <!-- report-detail -->
+
+            <div class="report-image">
+               <ul class="list-unstyled list-inline report-thumbnails">
+                  <li ng-repeat="image in $parent.report.images"
+                      ng-click="clickThumbnail(image)"
+                      ng-class="{ 'active active-image':isActiveImage(image) }">
+                      <img ng-src="{{ image.thumbnailUrl }}"/>
+                  </li>
+              </ul>
+            </div> <!-- report-image -->
+
+            <div class="report-infomation">
+              <tabset ng-if="$parent.report" class="pd-tabs" justified="true" >
+                <tab heading="คำอธิบายรายงาน">
+                  <!-- <div ng-if="$parent.$parent.report.renderedOriginalFormData"> -->
+                    <div ng-bind-html="$parent.$parent.report.renderedOriginalFormData"></div>
+                  <!-- </div> -->
+                </tab>
+
+                <tab heading="ข้อมูลแบบสอบถาม">
+                  {{ $parent.report }}
+                  <table class="table pd-white-table">
+                    <thead>
+                      <tr>
+                        <th>คำถาม</th><th>คำตอบ</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="field in $parent.$parent.report.originalFormData">
+                        <td ng-bind="field.name"></td>
+                        <td jump-to-filter name="field.name" value="field.value"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </tab>
+
+                <tab>
+                  <tab-heading>
+                    รายงานที่เกี่ยวข้อง
+                    <span class="badge mark-has-follow-up" ng-if="$parent.$parent.$parent.report.parent || $parent.$parent.$parent.report.$hasFollowUp" ng-bind="$parent.$parent.$parent.report.followUpReportsCount"></span>
+                  </tab-heading>
+                  <div report-follow-up report="$parent.$parent.report"></div>
+                </tab>
+              </tabset>  
+            </div> <!-- report-infomation -->
+
+            <div class="report-comments" style="margin-bottom: 10px;">
+              <div ng-include="'/views/comments.html'"></div>                
+            </div> <!-- report-comments -->
+
+          </div> <!-- report-section -->
+        </div> <!-- col-sm-8 -->
+
         <div class="col-sm-4">
           
           <div class="sidebar-block">
             <div class="sidebar-heading">
-              <h2 class="sidebar-heading-text">สถานะรายงาน</h2>
-              <span class="label label-default label-state-report">Suspect Outbreak</span>
+              <h2 class="sidebar-heading-text kanit-400">สถานะรายงาน</h2>
+              <span class="label label-default label-state label-state-report">Suspect Outbreak</span>
             </div> <!-- sidebar-heading -->
             <div class="sidebar-content">
-              <h3 class="sidebar-title">ประวัติ</h3>
+              <h3 class="sidebar-title kanit-400">ประวัติ</h3>
               <ul class="history-log">
-                <li>
-                  <strong>Changed : Outbreak</strong>
+                <li>Changed : Outbreak
                   <div class="history-log-name">โดย นายฉัตรชัย ทุติยานนท์ | วันที่ 19 มิถุนายน 58</div>
                 </li>
-                <li>
-                  <strong>Changed : Suspect Outbreak</strong>
+                <li>Changed : Suspect Outbreak
                   <div class="history-log-name">โดย นายฉัตรชัย ทุติยานนท์ | วันที่ 19 มิถุนายน 58</div>
                 </li>
-                <li>
-                  <strong>Changed : Case</strong>
+                <li>Changed : Case
                   <div class="history-log-name">โดย นายฉัตรชัย ทุติยานนท์ | วันที่ 19 มิถุนายน 58</div>
                 </li>
               </ul>
-              <div class="">
-                <select></select>
-                <a href="" class="">เปลี่ยนสถานะ</a>
-                <a href="" class="">ปรับสถานะเป็นรายงานทดสอบ</a>
-                <a href="" class="">รายงานนี้ไม่ใช่รายงานทดสอบ</a>
+              <div class="sidebar-action">
+                <div class="priority-report pull-left" ng-if="!$parent.report.parent">
+                  <div report-state-form report="$parent.report"></div>
+                </div>
+                <a href="#" class="btn btn-green pull-right">เปลี่ยนสถานะ</a>
+                <a href="#" class="btn-flag-test">ปรับสถานะเป็นรายงานทดสอบ</a>
+                <a href="#" class="btn-flag-test">รายงานนี้ไม่ใช่รายงานทดสอบ</a>
               </div>
             </div> <!-- sidebar-content -->
           </div> <!-- sidebar-block -->
+
+          <div class="sidebar-block">
+            <div class="sidebar-heading">
+              <h2 class="sidebar-heading-text kanit-400"><i class="fa fa-tags fa-size-18"></i> Tags</h2>
+            </div> <!-- sidebar-heading -->
+            <div class="sidebar-content">
+              <form role="form" ng-submit="postTags();">
+                  <div clas="form-group">
+                    <tags-input
+                      ng-model="tags"
+                      on-tag-added="updateTags()"
+                      on-tag-removed="updateTags()">
+                      <auto-complete source="loadTags($query)"></auto-complete>
+                        </tags-input>
+                    <button class="btn btn-default" type="button"
+                    ng-show="tagsChanged" ng-click="saveTags()">
+                       บันทึก</button>
+                  </div>
+                </form>
+            </div>
+          </div>
 
         </div>
       </div>
@@ -74,7 +141,7 @@
 
 
 
-    <div class="content-wrapper"
+    <div class="content-wrapper hide"
          ng-if="!loadingReportView && !loadingReportViewError"><div class="content">
 
       <div class="priority-report pull-right" ng-if="!$parent.report.parent">เปลี่ยนสถานะรายงาน :
