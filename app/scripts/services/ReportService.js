@@ -125,6 +125,14 @@ angular.module('poddDashboardApp')
             saveState: {
                 url: config.API_BASEPATH + '/reports/:reportId/state',
                 method: 'POST'
+            },
+            markAsTest: {
+                url: config.API_BASEPATH + '/reports/:reportId/mark_to_test',
+                method: 'POST'
+            },
+            markAsNotTest: {
+                url: config.API_BASEPATH + '/reports/:reportId/mark_to_untest',
+                method: 'POST'
             }
         });
 

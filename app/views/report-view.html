@@ -37,7 +37,7 @@
           </div>
         </div>
         <div class="col-sm-4">
-          
+
           <div class="sidebar-block">
             <div class="sidebar-heading">
               <h2 class="sidebar-heading-text">สถานะรายงาน</h2>
@@ -106,6 +106,16 @@
             <li ng-show="$parent.report.createdByProjectMobileNumber">เบอร์โทรของโครงการ - <a href="tel:">{{ $parent.report.createdByProjectMobileNumber }}</a></li>
           </ul>
 
+          <div class="mark-as-test-wrapper text-muted text-right">
+            <small>
+              <strong>ตั้งค่า:</strong>
+              <u>
+                <a ng-click="markAsTest($parent.report)" ng-if="!$parent.report.testFlag">ปรับเป็นรายงานทดสอบ</a>
+                <a ng-click="markAsNotTest($parent.report)" ng-if="$parent.report.testFlag">ให้รายงานนี้ไม่ใช่รายงานทดสอบ</a>
+              </u>
+            </small>
+          </div>
+
 
           <tabset ng-if="$parent.report" class="pd-tabs" justified="true" >
             <tab heading="คำอธิบายรายงาน">
@@ -115,7 +125,6 @@
             </tab>
 
             <tab heading="ข้อมูลแบบสอบถาม">
-              {{ $parent.report }}
               <table class="table pd-white-table">
                 <thead>
                   <tr>
