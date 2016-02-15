@@ -163,42 +163,49 @@ angular.module('poddDashboardApp')
 })
 
 .directive('reportStateForm', function ($http, $modal, Reports, ReportState) {
+
+    function reloadStates($scope, report) {
+        ReportState
+            .query({ reportType: report.reportTypeId }).$promise
+            .then(function (reportStates) {
+                var currentState = null;
+
+                // Assign default value. This algo is not optimized because
+                // it will not stop when find the right state.
+                if (report.stateCode) {
+                    reportStates.forEach(function (state) {
+                        if (state.code === report.stateCode) {
+                            currentState = state;
+                        }
+                    });
+                }
+
+                $scope.states = {
+                    all: reportStates,
+                    current: currentState,
+                    original: currentState
+                };
+            });
+    }
+
     return {
         strict: 'A',
         require: '^reportView',
         templateUrl: 'views/report-state-form.html',
         scope: {
-            report: '='
+            report: '=',
+            deferChange: '=',
+            submit: '='
         },
         controller: function ($scope) {
-            // Do nothing if no report provided
-            if (!$scope.report) {
-                return;
-            }
-
             var report = $scope.report;
 
-            ReportState
-                .query({ reportType: report.reportTypeId }).$promise
-                .then(function (reportStates) {
-                    var currentState = null;
-
-                    // Assign default value. This algo is not optimized because
-                    // it will not stop when find the right state.
-                    if (report.stateCode) {
-                        reportStates.forEach(function (state) {
-                            if (state.code === report.stateCode) {
-                                currentState = state;
-                            }
-                        });
-                    }
-
-                    $scope.states = {
-                        all: reportStates,
-                        current: currentState,
-                        original: currentState
-                    };
-                });
+            $scope.$watch('report', function (newValue) {
+                report = newValue;
+                if (newValue) {
+                    reloadStates($scope, newValue);
+                }
+            });
 
             $scope.revert = function () {
                 $scope.$apply(function () {
@@ -206,7 +213,16 @@ angular.module('poddDashboardApp')
                 });
             };
 
-            $scope.change = function () {
+            $scope.proxyChange = function () {
+                // Change state only explicit submit.
+                if ($scope.deferChange) {
+                    return;
+                }
+
+                $scope.change();
+            };
+
+            $scope.change = function (callback) {
                 if ($scope.states.current === $scope.states.original) {
                     return;
                 }
@@ -221,15 +237,18 @@ angular.module('poddDashboardApp')
                     cancelButtonText: 'ยกเลิก'
                 }, function (confirm) {
                     if (confirm) {
-                        $scope._change();
+                        $scope._change(callback);
                     }
                     else {
                         $scope.revert();
                     }
                 });
             };
+            if ($scope.submit) {
+              $scope.submit = $scope.change;
+            }
 
-            $scope._change = function () {
+            $scope._change = function (callback) {
                 var data = {
                     id: report.id,
                     stateId: $scope.states.current.id
@@ -238,10 +257,12 @@ angular.module('poddDashboardApp')
                     .then(function (resp) {
                         report.stateCode = resp.stateCode;
                         $scope.states.original = $scope.states.current;
+                        callback($scope.states.current);
                     })
                     .catch(function (err) {
                         $scope.showWarning(err);
                         $scope.revert();
+                        callback(err);
                     });
             };
 
