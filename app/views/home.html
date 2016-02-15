@@ -25,12 +25,12 @@
                 {{ reportType.name }}
               </button>
               <div class="text-center" ng-if="reportTypes.all.length > 10">
-                <button class="btn btn-default" ng-if="isReportTypeListCompact"
+                <button class="btn btn-default btn-xs btn-filter-collapsed" ng-if="isReportTypeListCompact"
                         ng-click="toggleReportTypeListCompact()" type="button">
                   <i class="fa fa-arrow-down"></i>
                   แสดงทั้งหมด
                 </button>
-                <button class="btn btn-default" ng-if="!isReportTypeListCompact"
+                <button class="btn btn-default btn-xs btn-filter-collapsed" ng-if="!isReportTypeListCompact"
                         ng-click="toggleReportTypeListCompact()" type="button">
                   <i class="fa fa-arrow-up"></i>
                   แสดงน้อยลง
@@ -65,14 +65,16 @@
                     <small class="states-group-title">ตั้งแต่วันที่</small>
                     <div>
                       <input type="text" pick-a-date="dateFrom"
-                             pick-a-date-options="{ selectYears: true }" />
+                             pick-a-date-options="{ selectYears: true }"
+                             class="form-pick-date" />
                     </div>
                   </div>
                   <div class="col-md-6">
                     <small class="states-group-title">ถึงวันที่</small>
                     <div>
                       <input type="text" pick-a-date="dateTo"
-                             pick-a-date-options="{ selectYears: true }"  />
+                             pick-a-date-options="{ selectYears: true }" 
+                             class="form-pick-date" />
                     </div>
                   </div>
                 </div>
@@ -102,19 +104,20 @@
 
       <div class="col-sm-9">
         <div class="row"><div class="col-md-12">
+          <h2 class="subheading pull-left">ผลลัพธ์การค้นหา</h2>
           <div class="btn-group filter-result-mode-switch pull-right" role="group">
-            <button type="button" class="btn btn-default"
+            <button type="button" class="btn btn-default btn-sm"
                     ng-class="{ 'btn-primary': (resultMode == 'list') }"
-                    ng-click="resultMode = 'list'">List</button>
-            <button type="button" class="btn btn-default"
+                    ng-click="resultMode = 'list'"><i class="fa fa-list"></i> รายการ</button>
+            <button type="button" class="btn btn-default btn-sm"
                     ng-class="{ 'btn-primary': (resultMode == 'table') }"
-                    ng-click="resultMode = 'table'">Table</button>
+                    ng-click="resultMode = 'table'"><i class="fa fa-table"></i> ตาราง</button>
           </div><!-- /result mode switch -->
         </div></div>
 
         <div class="filter-result-container">
 
-          <div ng-if="resultMode == 'list'">
+          <div ng-if="resultMode == 'list'"> <!-- List View -->
             <div ng-repeat="report in reports" class="row filter-result-item" ng-click="onClickReport(report.id)">
               <div class="col-md-2" ng-bind="report.date | amDateFormat:'D MMM YY'"></div>
               <div class="col-md-10">
@@ -129,25 +132,31 @@
               </div>
             </div><!-- /.filter-result-item -->
           </div>
-          <div ng-if="resultMode == 'table'">
-            <div ng-repeat="report in reports" class="row filter-result-item" ng-click="onClickReport(report.id)">
-              <div class="col-md-2" ng-bind="report.date | amDateFormat:'D MMM YY'"></div>
-              <div class="col-md-2">
-                <label class="label label-default label-state-{{report.stateCode}}"
-                       ng-bind="report.stateName"></label>
-              </div>
-              <div class="col-md-2"
-                <span ng-bind="::report.reportTypeName" class="filter-reporttype"></span>
-              </div>
-              <div class="col-md-3">
-                <div class="filter-result-area">
-                  <i class="fa fa-map-marker"></i>
-                    <span ng-bind="::report.administrationAreaAddress"></span>
+          <div ng-if="resultMode == 'table'"> <!-- Table View -->
+            <div ng-repeat="report in reports" class="row filter-result-item ta-view" ng-click="onClickReport(report.id)">
+                <div class="ta-view-date col-md-2 col-sm-2">
+                  <span ng-bind="report.date | amDateFormat:'D MMM YY'"></span>
                 </div>
-              </div>
-              <div class="col-md-3">
-                <div class="filter-result-desc" ng-bind-html="::report.renderedOriginalFormData"></div>
-              </div>
+
+                <div class="ta-view-state col-md-3 col-sm-3">
+                  <label class="label label-default label-state-{{report.stateCode}}"
+                       ng-bind="report.stateName"></label>
+                </div>
+
+                <div class="ta-view-report col-md-3 col-sm-2">
+                  <span ng-bind="::report.reportTypeName" class="filter-reporttype"></span>
+                </div>
+
+                <div class="ta-view-area col-md-4 col-sm-5">
+                  <div class="filter-result-area">
+                    <i class="fa fa-map-marker"></i>
+                    <span ng-bind="::report.administrationAreaAddress"></span>
+                  </div>
+                </div>
+                <div class="ta-view-detail visible-xs-block col-sm-12">
+                  <div class="filter-result-desc" ng-bind-html="::report.renderedOriginalFormData"></div>
+                </div>
+
             </div><!-- /.filter-result-item -->
           </div>
 
