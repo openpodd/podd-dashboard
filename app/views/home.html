@@ -81,7 +81,7 @@
             </div><!-- /date range form -->
 
             <div class="form-group">
-              <h4 class="filter-heading"><i class="fa fa-location-arrow"></i> Authority</h4>
+              <h4 class="filter-heading"><i class="fa fa-location-arrow"></i> หน่วยงาน</h4>
                 <ui-select multiple
                   reset-search-input="true"
                   ng-model="authorities.selected"
@@ -95,8 +95,8 @@
                 </ui-select>
             </div><!-- /authority form -->
 
-            <button class="btn btn-primary" type="submit" ng-disabled="loading">
-              Submit
+            <button class="btn btn-primary btn-full" type="submit" ng-disabled="loading">
+              <i class="fa fa-search"></i> ค้นหา
             </button>
           </form>
         </div><!-- /.filter-form -->
@@ -172,7 +172,7 @@
         </div><!-- /.filter-result-container -->
 
         <div class="loadmore" ng-cloak ng-show="!error && !isEmpty()">
-          <button class="btn btn-default center-block" type="button" ng-show="!lastPage" ng-click="::loadMore()" ng-disabled="loading">{{ loading ? 'Loading...' : 'Load more...' }} (Page {{page}} / {{totalPage}})</button>
+          <button class="btn btn-default center-block" type="button" ng-show="!lastPage" ng-click="::loadMore()" ng-disabled="loading">{{ loading ? 'กรุณารอสักครู่...' : 'เพิ่มเติม...' }} (หน้า {{page}} / {{totalPage}})</button>
         </div><!-- /.loadmore -->
 
       </div> <!-- /.col-sm-8 -->
