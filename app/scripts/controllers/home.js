@@ -252,7 +252,7 @@ angular.module('poddDashboardApp')
           var $date = moment(item.date);
 
           if ($date > $thisWeek) {
-            item.timePeriod = item.date;
+            item.timePeriod = moment(item.date);
           }
           // TODO: adjust to more readable relative date.
           else if ($thisWeek > $date && $date > $lastWeek) {
