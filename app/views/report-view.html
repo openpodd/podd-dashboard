@@ -19,8 +19,10 @@
     <div class="content-wrapper content-wrapper-padding">
       <div class="row">
         <div class="col-sm-8">
+          <h1 class="report-title" ng-bind-html="report.renderedOriginalFormData"></h1>
+
           <div class="report-section">
-            <h1 class="report-title kanit-300" ng-bind-html="report.renderedOriginalFormData"></h1>
+            
 
             <div class="report-detail">
               <p><strong>พื้นที่</strong> : {{ report.administrationAreaAddress }}</p>
@@ -81,11 +83,11 @@
 
           <div class="sidebar-block">
             <div class="sidebar-heading">
-              <h2 class="sidebar-heading-text kanit-400">สถานะรายงาน</h2>
+              <h2 class="sidebar-heading-text"><i class="fa fa-stethoscope fa-size-18"></i> สถานะรายงาน</h2>
               <span class="label label-default label-state label-state-report">{{ report.stateName }}</span>
             </div> <!-- sidebar-heading -->
             <div class="sidebar-content">
-              <h3 class="sidebar-title kanit-400">ประวัติ</h3>
+              <h3 class="sidebar-title">ประวัติ</h3>
               <ul class="history-log">
                 <li ng-repeat="log in reportStatesLogs">
                   Changed : {{ log.state.name }}
@@ -117,7 +119,7 @@
 
           <div class="sidebar-block">
             <div class="sidebar-heading">
-              <h2 class="sidebar-heading-text kanit-400"><i class="fa fa-tags fa-size-18"></i> Tags</h2>
+              <h2 class="sidebar-heading-text"><i class="fa fa-tags fa-size-18"></i> Tags</h2>
             </div> <!-- sidebar-heading -->
             <div class="sidebar-content">
               <form role="form" ng-submit="postTags();">

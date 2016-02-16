@@ -4,24 +4,31 @@
   border: 1px solid #eaeaea;
 
   .sidebar-heading{
-    padding: 15px 10px;
+    padding: 13px 20px;
     background-color: #dedede;
   }
   .sidebar-heading-text{
     display: inline-block;
     margin: 0 10px 0 0;
     vertical-align: middle;
-    font-size: 1.35em;
+    font-size: 1.7em;
+    font-family: ThaiSansNeueRegular;
     color: #000;
+    background-color: #dedede;
+
+    i{
+      margin-right: 5px;
+    }
   }
   .sidebar-content{
-    padding: 10px;
+    padding: 10px 20px;
   }
   .sidebar-title{
     margin: 10px 0 10px;
     padding-bottom: 5px;
     border-bottom: 1px solid #d4d4d4;
-    font-size: 1.35em;
+    font-size: 1.7em;
+    font-family: ThaiSansNeueRegular;
     color: #000;
   }
 }
@@ -46,6 +53,11 @@
   padding-top: 15px;
   margin-top: 20px;
   border-top: 1px solid #ccc;
+
+  /*--- Dropdown ---*/
+  .ui-select-container{
+    width: 200px;
+  }
 }
 .label-state{
   font-size: 1em;
@@ -80,20 +92,32 @@
 /*********/
 /*Report*/
 /*********/
+
+.report-title{
+  font-size: 2em;
+  font-family: ThaiSansNeueRegular;
+  line-height: 1.2em;
+  color: #000;
+  margin: 0;
+  /*padding-bottom: 15px;*/
+  border-bottom: 4px solid #DBDBDB;
+  background-color: #dedede;
+
+  p{
+    margin: 0;
+  }
+}
+
 .report-section{
   background: #fff;
   padding: 20px;
   border: 1px solid #eaeaea;
   color: #666;
 
-  .report-title{
-    font-size: 1.5em;
-    line-height: 1.2em;
-    color: #000;
-    margin: 0 0 15px;
-    padding-bottom: 15px;
-    border-bottom: 4px solid #DBDBDB;
+  .subheading{
+    color: #333;
   }
+
   .report-image{
 
   }

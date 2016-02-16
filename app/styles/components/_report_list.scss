@@ -67,6 +67,25 @@
   width: 100%;
 }
 
+/*--- Select List Report Type ---*/
+.ui-select-match-custom{
+  .ui-select-match-item{
+    background: #7a81ff;
+    color: #fff;
+    border: none;
+  }
+  .ui-select-match-close{
+    opacity: .5;
+    text-shadow: none;
+  }
+
+  .btn:active{
+    outline: none !important;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+  }
+}
+
 /*--- State Group ---*/
 .report-type-states-group{
   margin-bottom: 10px;
@@ -130,9 +149,6 @@
     text-overflow: '...';
   }
 }
-.loadmore{
-  margin-top: 20px;
-}
 .filter-result-item{
   padding: 8px 5px;
   border-bottom: 1px solid #eaeaea;
@@ -159,27 +175,6 @@
   border-radius: 4px;
   padding: .3em;
 }
-
-.ui-select-match-custom{
-
-  .ui-select-match-item{
-    background: #7a81ff;
-    color: #fff;
-    border: none;
-  }
-  .ui-select-match-close{
-    opacity: .5;
-    text-shadow: none;
-  }
-
-  .btn:active{
-    outline: none !important;
-    box-shadow: none;
-    -webkit-box-shadow: none;
-  }
-
-}
-
 .picker__holder {
   pointer-events: none;
 }
@@ -187,6 +182,9 @@
   pointer-events: auto;
 }
 
+.loadmore{
+  margin-top: 20px;
+}
 
 /************************
 // Table View
@@ -234,9 +232,5 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-
-    .filter-result-desc{
-      /*font-size: 1em;*/
-    }
   }
 }
