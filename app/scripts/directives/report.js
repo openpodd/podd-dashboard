@@ -186,7 +186,7 @@ angular.module('poddDashboardApp')
                     original: currentState
                 };
 
-                recheckStates($scope);
+                // recheckStates($scope);
             });
     }
 
@@ -281,7 +281,7 @@ angular.module('poddDashboardApp')
                     .then(function (resp) {
                         report.stateCode = resp.stateCode;
                         $scope.states.original = $scope.states.current;
-                        recheckStates($scope);
+                        // recheckStates($scope);
                         callback($scope.states.current);
                     })
                     .catch(function (err) {

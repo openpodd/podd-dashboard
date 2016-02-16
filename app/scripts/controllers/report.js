@@ -23,9 +23,23 @@ angular.module('poddDashboardApp')
     $scope.userAlreadyClickImage = false;
     $scope.reportFlag = {};
 
+    function reloadReportStatesLogs() {
+      if ($scope.report) {
+          if ($scope.report.$promise) {
+              $scope.report.$promise.then(function () {
+                  $scope.reportStatesLogs = Reports.statesLogs({ reportId: $scope.report.id });
+              });
+          }
+          else {
+              $scope.reportStatesLogs = Reports.statesLogs({ reportId: $scope.report.id });
+          }
+      }
+    }
+
     $scope.report = $scope.$parent.report;
     $scope.$watch('$parent.report', function (newValue) {
-      $scope.report = newValue;
+        $scope.report = newValue;
+        reloadReportStatesLogs();
     });
 
     $scope.$parent.$watch('report', function (newValue) {

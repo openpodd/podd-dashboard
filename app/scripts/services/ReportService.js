@@ -133,6 +133,11 @@ angular.module('poddDashboardApp')
             markAsNotTest: {
                 url: config.API_BASEPATH + '/reports/:reportId/mark_to_untest',
                 method: 'POST'
+            },
+            statesLogs: {
+                url: config.API_BASEPATH + '/reports/:reportId/states_logs',
+                method: 'GET',
+                isArray: true
             }
         });
 

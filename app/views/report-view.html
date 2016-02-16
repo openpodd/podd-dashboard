@@ -87,14 +87,12 @@
             <div class="sidebar-content">
               <h3 class="sidebar-title kanit-400">ประวัติ</h3>
               <ul class="history-log">
-                <li>Changed : Outbreak
-                  <div class="history-log-name">โดย นายฉัตรชัย ทุติยานนท์ | วันที่ 19 มิถุนายน 58</div>
-                </li>
-                <li>Changed : Suspect Outbreak
-                  <div class="history-log-name">โดย นายฉัตรชัย ทุติยานนท์ | วันที่ 19 มิถุนายน 58</div>
-                </li>
-                <li>Changed : Case
-                  <div class="history-log-name">โดย นายฉัตรชัย ทุติยานนท์ | วันที่ 19 มิถุนายน 58</div>
+                <li ng-repeat="log in reportStatesLogs">
+                  Changed : {{ log.state.name }}
+                  <div class="history-log-name">
+                    โดย {{ log.createdBy | fullname:log.username }} |
+                    วันที่ {{ log.createdAt | amDateFormat:'D MMMM YYYY เวลา HH:mm' }}
+                  </div>
                 </li>
               </ul>
               <div class="sidebar-action">
