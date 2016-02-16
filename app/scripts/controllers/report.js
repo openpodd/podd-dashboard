@@ -23,6 +23,11 @@ angular.module('poddDashboardApp')
     $scope.userAlreadyClickImage = false;
     $scope.reportFlag = {};
 
+    $scope.report = $scope.$parent.report;
+    $scope.$watch('$parent.report', function (newValue) {
+      $scope.report = newValue;
+    });
+
     $scope.$parent.$watch('report', function (newValue) {
         if (newValue) {
             $scope.userAlreadyClickImage = false;
@@ -36,7 +41,6 @@ angular.module('poddDashboardApp')
             $scope.activeImage = null;
 
             refreshFlag();
-            refreshTags();
 
             console.log('report.change');
 
@@ -148,13 +152,6 @@ angular.module('poddDashboardApp')
 
     function refreshFlag() {
         $scope.flag.current = $scope.flagOptions[ parseInt($scope.$parent.report.flag) - 1 ];
-    }
-
-    function refreshTags() {
-        $scope.tags = [];
-        for (var i = 0; i < $scope.report.tags.length; i++) {
-            $scope.tags.push({'text': $scope.report.tags[i]});
-        }
     }
 
     $scope.$watch('flag.current', function (newValue, oldValue) {
