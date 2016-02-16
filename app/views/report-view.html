@@ -101,8 +101,9 @@
               </ul>
               <div class="sidebar-action">
                 <div class="priority-report" ng-if="!report.parent">
-                  <div report-state-form report="report" defer-change="1" submit="submitState"></div>
-                  <button class="btn btn-default pull-right" ng-click="submitState(submitStateSuccess)">เปลี่ยนสถานะ</button>
+                  <div report-state-form report="report" defer-change="1" submit="submitState" on-select="onStateSelect($state)"></div>
+
+                  <button class="btn btn-default pull-right" ng-disabled="!isStateChange()" ng-click="submitState(submitStateSuccess)">เปลี่ยนสถานะ</button>
                 </div>
 
                 <div class="mark-as-test-wrapper text-muted clear-both">

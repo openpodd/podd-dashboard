@@ -304,13 +304,6 @@ angular.module('poddDashboardApp')
     }
   };
 
-  $scope.submitState = function () {};
-  $scope.submitStateSuccess = function (newState) {
-    $scope.report.stateId = newState.id;
-    $scope.report.stateCode = newState.code;
-    $scope.report.stateName = newState.name;
-  };
-
   $scope.resultMode = 'list';
   $scope.lastPage = false;
   $scope.error = false;

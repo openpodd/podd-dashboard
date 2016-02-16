@@ -165,7 +165,7 @@ angular.module('poddDashboardApp')
 .directive('reportStateForm', function ($http, $modal, Reports, ReportState) {
 
     function reloadStates($scope, report) {
-        ReportState
+        return ReportState
             .query({ reportType: report.reportTypeId }).$promise
             .then(function (reportStates) {
                 var currentState = null;
@@ -185,7 +185,26 @@ angular.module('poddDashboardApp')
                     current: currentState,
                     original: currentState
                 };
+
+                recheckStates($scope);
             });
+    }
+
+    function recheckStates($scope) {
+        var currentState = $scope.states.current;
+        var allowedStates = [];
+        currentState.toStates.forEach(function (state) {
+            allowedStates.push(state.id);
+        });
+
+        $scope.states.all.forEach(function (state) {
+            if (allowedStates.indexOf(state.id) !== -1) {
+                state.disable = false;
+            }
+            else {
+                state.disable = true;
+            }
+        });
     }
 
     return {
@@ -195,7 +214,9 @@ angular.module('poddDashboardApp')
         scope: {
             report: '=',
             deferChange: '=',
-            submit: '='
+            submit: '=',
+            onSelect: '&',
+            disableDisallowStates: '='
         },
         controller: function ($scope) {
             var report = $scope.report;
@@ -214,6 +235,9 @@ angular.module('poddDashboardApp')
             };
 
             $scope.proxyChange = function () {
+                if ($scope.onSelect) {
+                  $scope.onSelect({ $state: $scope.states.current });
+                }
                 // Change state only explicit submit.
                 if ($scope.deferChange) {
                     return;
@@ -257,6 +281,7 @@ angular.module('poddDashboardApp')
                     .then(function (resp) {
                         report.stateCode = resp.stateCode;
                         $scope.states.original = $scope.states.current;
+                        recheckStates($scope);
                         callback($scope.states.current);
                     })
                     .catch(function (err) {

@@ -4,7 +4,8 @@
   on-select="proxyChange()">
   <ui-select-match>{{ $select.selected.name }}</ui-select-match>
   <ui-select-choices
-    repeat="state in states.all">
+    repeat="state in states.all"
+    ui-disable-choice="disableDisallowStates && state.disable">
     <span ng-bind-html="state.name | highlight:$select.search"></span>
   </ui-select-chioces>
 </ui-select>

@@ -305,6 +305,21 @@ angular.module('poddDashboardApp')
         report.testFlag = false;
       });
     };
+
+    $scope.submitState = function () {};
+    $scope.submitStateSuccess = function (newState) {
+      $scope.report.stateId = newState.id;
+      $scope.report.stateCode = newState.code;
+      $scope.report.stateName = newState.name;
+    };
+    $scope.onStateSelect = function (state) {
+      $scope.futureState = state;
+    };
+    $scope.isStateChange = function () {
+      return $scope.report &&
+             $scope.futureState &&
+             $scope.futureState.id !== $scope.report.stateId;
+    };
 })
 
 .controller('ReportImageLightboxCtrl', function ($scope, Map) {
