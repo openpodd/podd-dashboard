@@ -216,6 +216,10 @@ $badge-bad: #FF6D69;
     .nav-tabs.nav-justified > .active > a{
         border: 1px solid #eee;
     }
+
+    .nav-tabs.nav-justified > li:first-child a{
+        margin-right: 10px;
+    }
 }
 
 .nav-tabs{

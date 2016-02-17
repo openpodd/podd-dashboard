@@ -33,7 +33,8 @@
     padding-bottom: 5px;
     border-bottom: 1px solid #d4d4d4;
     font-size: 1em;
-    color: #000;
+    color: #333;
+    font-weight: bold;
   }
 }
 
@@ -45,14 +46,16 @@
 
 .history-log{
   padding: 0 0 0 20px;
-  color: #000;
+  color: #666;
 
   li{
     margin-bottom: 7px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #ccc;
   }
   .history-log-name{
     margin-top: 4px;
-    color: #a5a5a5;
+    /*color: #a5a5a5;*/
     font-size: .85em;
   }
   strong{
@@ -168,8 +171,31 @@
   .priority-report-state{
     min-width: auto;
     width: 100%;
+
+    .btn-block{
+      padding-right: 25px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;  
+      margin-bottom: 10px;
+    }
   }
   .btn-default{
     width: 100%;
+    
   }
+  .btn-changed{
+    background-color: #509622;
+    color: #fff;
+    border: none;
+
+
+    &:hover{
+      background-color: #438616;
+    }
+  }
+  .ui-select-match-text{
+
+  }
+
 }
