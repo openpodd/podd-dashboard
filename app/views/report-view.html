@@ -86,8 +86,8 @@
             </div> <!-- sidebar-heading -->
             <div class="sidebar-content">
               <h3 class="sidebar-title">ประวัติ</h3>
-              <ul class="history-log">
-                <li ng-repeat="log in reportStatesLogs">
+              <ul class="history-log" ng-if="reportStatesLogs.length > 0">
+                <li ng-repeat="log in reportStatesLogs | orderBy:'-createdAt' ">
                   Changed : {{ log.state.name }}
                   <div class="history-log-name">
                     โดย {{ log.createdBy | fullname:log.username }} |
@@ -95,6 +95,9 @@
                   </div>
                 </li>
               </ul>
+              <div ng-if="reportStatesLogs.length == 0">
+                ยังไม่มีประวัติการเปลี่ยนสถานะ
+              </div>
               <div class="sidebar-action">
                 <div class="priority-report" ng-if="!report.parent">
                 <div class="row">

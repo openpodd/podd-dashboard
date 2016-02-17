@@ -16,6 +16,9 @@ angular.module('poddDashboardApp')
     if ($stateParams.reportId) {
       $scope.viewReport($stateParams.reportId);
     }
+    else {
+      ReportModal.close();
+    }
   });
 
   var queryBuilder = (function queryBuilder() {
