@@ -308,14 +308,37 @@ angular.module('poddDashboardApp')
       popupWin.document.close();
     };
 
+    function showConfirm(text, confirm, cancel) {
+      swal({
+        title: '',
+        type: 'warning',
+        text: text,
+        confirmButtonText: 'ตกลง',
+        confirmButtonClass: 'btn-danger',
+        showCancelButton: true,
+        cancelButtonText: 'ยกเลิก'
+      },
+      function (isConfirm) {
+        if (isConfirm) {
+          confirm && confirm();
+        }
+        else {
+          cancel && cancel();
+        }
+      });
+    }
     $scope.markAsTest = function markAsTest(report) {
-      Reports.markAsTest({ id: report.id }).$promise.then(function () {
-        report.testFlag = true;
+      showConfirm('คุณต้องการปรับเป็นรายงานทดสอบหรือไม่', function () {
+        Reports.markAsTest({ id: report.id }).$promise.then(function () {
+          report.testFlag = true;
+        });
       });
     };
     $scope.markAsNotTest = function markAsNotTest(report) {
-      Reports.markAsNotTest({ id: report.id }).$promise.then(function () {
-        report.testFlag = false;
+      showConfirm('คุณต้องการปรับให้รายงานนี้ไม่ใช่รายงานทดสอบหรือไม่', function () {
+        Reports.markAsNotTest({ id: report.id }).$promise.then(function () {
+          report.testFlag = false;
+        });
       });
     };
 
