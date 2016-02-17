@@ -11,14 +11,13 @@ angular.module('poddDashboardApp')
                                   shared, Reports, $state, $stateParams, $timeout) {
   console.log('-> In HomeCtrl');
 
-  if (!shared.reportWatchId) {
-    ReportModal.close();
-  }
-
   // Load report if given at request.
   $timeout(function () {
     if ($stateParams.reportId) {
       $scope.viewReport($stateParams.reportId);
+    }
+    else {
+      ReportModal.close();
     }
   });
 
