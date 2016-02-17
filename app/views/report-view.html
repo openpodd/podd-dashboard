@@ -19,10 +19,8 @@
     <div class="content-wrapper content-wrapper-padding">
       <div class="row">
         <div class="col-sm-8">
-          <h1 class="report-title" ng-bind-html="report.renderedOriginalFormData"></h1>
-
           <div class="report-section">
-            
+            <h1 class="report-title" ng-bind-html="report.renderedOriginalFormData"></h1>
 
             <div class="report-detail">
               <p><strong>พื้นที่</strong> : {{ report.administrationAreaAddress }}</p>
@@ -82,7 +80,7 @@
         <div class="col-sm-4">
 
           <div class="sidebar-block">
-            <div class="sidebar-heading">
+            <div class="sidebar-heading sidebar-heading-bg-purple">
               <h2 class="sidebar-heading-text"><i class="fa fa-stethoscope fa-size-18"></i> สถานะรายงาน</h2>
               <span class="label label-default label-state label-state-report">{{ report.stateName }}</span>
             </div> <!-- sidebar-heading -->
@@ -99,9 +97,14 @@
               </ul>
               <div class="sidebar-action">
                 <div class="priority-report" ng-if="!report.parent">
-                  <div report-state-form report="report" defer-change="1" submit="submitState" on-select="onStateSelect($state)"></div>
-
-                  <button class="btn btn-default pull-right" ng-disabled="!isStateChange()" ng-click="submitState(submitStateSuccess)">เปลี่ยนสถานะ</button>
+                <div class="row">
+                  <div class="col-lg-7 col-md-6">
+                    <div report-state-form report="report" defer-change="1" submit="submitState" on-select="onStateSelect($state)" class="priority-report-state"></div>
+                  </div>
+                  <div class="col-lg-5 col-md-6">
+                    <button class="btn btn-default" ng-disabled="!isStateChange()" ng-click="submitState(submitStateSuccess)">เปลี่ยนสถานะ</button>
+                  </div>
+                  </div>
                 </div>
 
                 <div class="mark-as-test-wrapper text-muted clear-both">
@@ -118,7 +121,7 @@
           </div> <!-- sidebar-block -->
 
           <div class="sidebar-block">
-            <div class="sidebar-heading">
+            <div class="sidebar-heading sidebar-heading-bg-purplegray">
               <h2 class="sidebar-heading-text"><i class="fa fa-tags fa-size-18"></i> Tags</h2>
             </div> <!-- sidebar-heading -->
             <div class="sidebar-content">

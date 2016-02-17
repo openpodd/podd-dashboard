@@ -10,7 +10,6 @@
       <div class="col-sm-3">
         <div class="filter-form">
           <form class="form-horizontal" ng-submit="submit($event)">
-            <h3>Filter</h3>
             <div class="form-group">
               <h4 class="filter-heading"><i class="fa fa-file-text"></i> ประเภทรายงาน</h4>
               <button class="btn btn-choice" ng-class="{ 'btn-choice-selected': reportType.checked }" type="button"
@@ -133,6 +132,12 @@
             </div><!-- /.filter-result-item -->
           </div>
           <div ng-if="resultMode == 'table'"> <!-- Table View -->
+            <div class="filter-result-item ta-view ta-view-header row">
+              <div class="col-md-2 col-sm-2">วันที่</div>
+              <div class="col-md-3 col-sm-3">สถานะ</div>
+              <div class="col-md-2 col-sm-2">ประเภทรายงาน</div>
+              <div class="col-md-5 col-sm-5">พื้นที่</div>
+            </div>
             <div ng-repeat="report in reports" class="row filter-result-item ta-view" ng-click="onClickReport(report.id)">
                 <div class="ta-view-date col-md-2 col-sm-2">
                   <span ng-bind="report.date | amDateFormat:'D MMM YY'"></span>

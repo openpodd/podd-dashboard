@@ -6,15 +6,20 @@
   .sidebar-heading{
     padding: 13px 20px;
     background-color: #dedede;
+
+    &.sidebar-heading-bg-purple{
+      background-color: #2e3352;
+    }
+    &.sidebar-heading-bg-purplegray{
+      background-color: #666b95;
+    }
   }
   .sidebar-heading-text{
     display: inline-block;
     margin: 0 10px 0 0;
     vertical-align: middle;
-    font-size: 1.7em;
-    font-family: ThaiSansNeueRegular;
-    color: #000;
-    background-color: #dedede;
+    font-size: 1.2em;
+    color: #fff;
 
     i{
       margin-right: 5px;
@@ -27,11 +32,16 @@
     margin: 10px 0 10px;
     padding-bottom: 5px;
     border-bottom: 1px solid #d4d4d4;
-    font-size: 1.7em;
-    font-family: ThaiSansNeueRegular;
+    font-size: 1em;
     color: #000;
   }
 }
+
+/*--- State Color ---*/
+.label-state-report{
+  /*background-color: #75b953;*/
+}
+
 
 .history-log{
   padding: 0 0 0 20px;
@@ -53,11 +63,6 @@
   padding-top: 15px;
   margin-top: 20px;
   border-top: 1px solid #ccc;
-
-  /*--- Dropdown ---*/
-  .ui-select-container{
-    width: 200px;
-  }
 }
 .label-state{
   font-size: 1em;
@@ -94,14 +99,12 @@
 /*********/
 
 .report-title{
-  font-size: 2em;
-  font-family: ThaiSansNeueRegular;
-  line-height: 1.2em;
+  font-size: 1.5em;
+  line-height: 1.5em;
   color: #000;
-  margin: 0;
-  /*padding-bottom: 15px;*/
-  border-bottom: 4px solid #DBDBDB;
-  background-color: #dedede;
+  margin: 0 0 25px;
+  padding-bottom: 15px;
+  border-bottom: 4px solid #8a5ebe;
 
   p{
     margin: 0;
@@ -143,10 +146,30 @@
     }
   }
   .report-infomation{
+    .empty-text{
+      padding: 10px;
+    }
+    .pd-white-table{
+      border: none;
+    }
 
   }
 
   .pd-file-upload{
   
+  }
+}
+
+.mark-as-test-wrapper{
+  overflow: hidden;
+}
+
+.priority-report{
+  .priority-report-state{
+    min-width: auto;
+    width: 100%;
+  }
+  .btn-default{
+    width: 100%;
   }
 }

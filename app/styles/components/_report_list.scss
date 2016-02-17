@@ -22,10 +22,14 @@
 
 /*--- Title Group ---*/
 .filter-heading{
-  // font-size: 1em;
   padding-bottom: 10px;
   border-bottom: 1px solid #d4d4d4;
   font-family: RSURegular;
+  margin-top: 3px;
+
+  i{
+    margin-right: 5px;
+  }
 }
 
 /*--- Button Filter ---*/
@@ -125,7 +129,7 @@
 }
 .filter-reporttype{
   color: #000;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 .filter-result-desc{
   color: #999;
@@ -166,6 +170,9 @@
     font-size: 13px;
     font-weight: normal;
   }
+}
+.filter-error{
+  margin-top: 20px;
 }
 
 /*--- Date Picker ---*/
@@ -233,4 +240,9 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+}
+
+.ta-view-header{
+  font-weight: bold;
+  color: #000;
 }
