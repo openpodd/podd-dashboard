@@ -22,7 +22,7 @@
           <h1 class="report-title" ng-bind-html="report.renderedOriginalFormData"></h1>
 
           <div class="report-section">
-            
+
 
             <div class="report-detail">
               <p><strong>พื้นที่</strong> : {{ report.administrationAreaAddress }}</p>
@@ -89,7 +89,7 @@
             <div class="sidebar-content">
               <h3 class="sidebar-title">ประวัติ</h3>
               <ul class="history-log">
-                <li ng-repeat="log in reportStatesLogs">
+                <li ng-repeat="log in reportStatesLogs | orderBy:'-createdAt' ">
                   Changed : {{ log.state.name }}
                   <div class="history-log-name">
                     โดย {{ log.createdBy | fullname:log.username }} |

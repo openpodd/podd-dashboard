@@ -17,8 +17,7 @@ angular.module('poddDashboardApp')
 })
 
 .controller('ReportViewCtrl', function ($scope, streaming, Flags, Lightbox,
-                                        $modal, Search, Reports, $state, Tag,
-                                        $timeout, PlanReport) {
+                                        $modal, Search, Reports, $state, Tag) {
 
     $scope.userAlreadyClickImage = false;
     $scope.reportFlag = {};
@@ -334,6 +333,18 @@ angular.module('poddDashboardApp')
              $scope.futureState &&
              $scope.futureState.id !== $scope.report.stateId;
     };
+    // listen to new state.
+    streaming.on('report:state:new', function (data) {
+        console.log('got new state', data);
+        data = angular.fromJson(data);
+
+        if ($scope.report) {
+            if (data.reportId === $scope.report.id) {
+                $scope.reportStatesLogs.push(data);
+                $scope.$apply();
+            }
+        }
+    });
 })
 
 .controller('ReportImageLightboxCtrl', function ($scope, Map) {
