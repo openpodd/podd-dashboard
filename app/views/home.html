@@ -145,7 +145,8 @@
             </div>
             <div ng-repeat="report in reports" class="row filter-result-item ta-view" ng-click="onClickReport(report.id)">
                 <div class="ta-view-date col-md-2 col-sm-2">
-                  <span ng-bind="report.date | amDateFormat:'D MMM YY'"></span>
+                  <span ng-if="report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM'"></span>
+                  <span ng-if="!report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM YY'"></span>
                 </div>
 
                 <div class="ta-view-state col-md-3 col-sm-3">

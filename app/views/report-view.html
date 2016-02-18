@@ -31,8 +31,15 @@
               <p><strong>วันที่รายงาน</strong> : {{ report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</p> <p><strong>วันที่เกิดเหตุ</strong> : {{ report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</p>
               <p><strong>ประเภทรายงาน</strong> : {{ report.reportTypeName }}</p>
               <p><strong>ผู้รายงาน</strong> : {{ report.createdBy }}</p>
-              <p><strong>ติดต่อ</strong> : {{ report.createdByContact }}</p>
-              <p><strong>เบอร์โทรส่วนตัว</strong> : <a href="tel:">{{ report.createdByTelephone }}</a></p> <p><strong>เบอร์โทรของโครงการ</strong> : <a href="tel:">{{ report.createdByProjectMobileNumber }}</a></p>
+              <p><strong>ติดต่อ</strong> : {{ report.createdByContact | default:'ไม่มี' }}</p>
+              <p><strong>เบอร์โทรส่วนตัว</strong> :
+                <a ng-if="report.createdByTelephone" href="tel:">{{ report.createdByTelephone }}</a>
+                <span ng-if="!report.createdByTelephone">ไม่มี</span>
+              </p>
+              <p><strong>เบอร์โทรของโครงการ</strong> :
+                <a ng-if="report.createdByProjectMobileNumber" href="tel:">{{ report.createdByProjectMobileNumber }}</a>
+                <span ng-if="!report.createdByProjectMobileNumber">ไม่มี</span>
+              </p>
             </div> <!-- report-detail -->
 
             <div class="report-image">
@@ -58,7 +65,7 @@
                     <tbody>
                       <tr ng-repeat="field in report.originalFormData">
                         <td ng-bind="field.name"></td>
-                        <td jump-to-filter name="field.name" value="field.value"></td>
+                        <td ng-bind="field.value"></td>
                       </tr>
                     </tbody>
                   </table>
@@ -91,7 +98,7 @@
 
             <div class="sidebar-content" ng-if="currentPlan">
               ล่าสุดรายงานนี้อยู่ในแผนรับมือ
-              <a ng-click="viewPlanReport(currentPlan.id)">{{ currentPlan.log.plan.name }}</a>
+              <a class="plan-report-link" ng-click="viewPlanReport(currentPlan.id)">{{ currentPlan.log.plan.name }}</a> เมื่อ {{ currentPlan.createdAt | amDateFormat:'D MMMM YYYY เวลา HH:mm' }}
             </div>
 
             <div class="sidebar-content">

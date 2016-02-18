@@ -231,6 +231,7 @@ angular.module('poddDashboardApp')
     load(query, needReset);
   }
 
+  $scope.firstDayOfYear = moment().startOf('year').toDate();
   function load(query, needReset) {
     if ($scope.loading) { return; }
     $scope.loading = true;
@@ -282,6 +283,7 @@ angular.module('poddDashboardApp')
 
           item.timePeriod = item.timePeriod.toDate();
           item.timestamp = item.timePeriod.getTime();
+          item.isThisYear = $date.toDate() >= $scope.firstDayOfYear;
         });
 
         concat($scope.reports, resp.results);
@@ -310,7 +312,7 @@ angular.module('poddDashboardApp')
     }
   };
 
-  $scope.resultMode = 'list';
+  $scope.resultMode = 'table';
   $scope.lastPage = false;
   $scope.error = false;
   $scope.isEmpty = function () {

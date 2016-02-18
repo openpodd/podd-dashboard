@@ -431,6 +431,12 @@ angular.module('poddDashboardApp')
     };
 })
 
+.filter('default', function () {
+    return function (text, defaultValue) {
+        return text || defaultValue;
+    };
+})
+
 .filter('renderMention', function () {
     return function (text) {
         return text.replace(/\@\[([\w\-\.]+)\]/g, '<span class="label label-info">@$1</span>');
