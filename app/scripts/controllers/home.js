@@ -310,7 +310,7 @@ angular.module('poddDashboardApp')
     }
   };
 
-  $scope.resultMode = 'list';
+  $scope.resultMode = 'table';
   $scope.lastPage = false;
   $scope.error = false;
   $scope.isEmpty = function () {
