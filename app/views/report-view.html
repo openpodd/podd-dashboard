@@ -2,6 +2,10 @@
      ng-class="{ 'l-full-width': !shared.showReportList }"
      ng-controller="ReportViewCtrl" ng-show="willShowReportView" ng-cloak>
 
+  <div class="test-watermark" ng-show="report.testFlag">
+    <div class="test-watermark-text">รายงานทดสอบ</div>
+  </div>
+
   <div class="l-detail-section l-section">
     <div class="title clearfix">
         <h2 class="pull-left"><i class="fa fa-file-text-o pull-left fa-size-22"></i>รายละเอียด</h2>
