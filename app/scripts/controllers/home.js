@@ -8,8 +8,11 @@ angular.module('poddDashboardApp')
  */
 .controller('HomeCtrl', function ($scope, Search, ReportTypes, ReportState,
                                   dashboard, Authority, moment, ReportModal,
-                                  shared, Reports, $state, $stateParams, $timeout) {
+                                  shared, Reports, $state, $stateParams, $timeout,
+                                  Menu) {
   console.log('-> In HomeCtrl');
+
+  Menu.setActiveMenu('home');
 
   // Load report if given at request.
   $timeout(function () {

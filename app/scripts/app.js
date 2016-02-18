@@ -156,7 +156,7 @@ angular
     $compileProvider.debugInfoEnabled(false);
     $httpProvider.interceptors.push('addTrailingSlashInterceptor');
 
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/home');
 
     $stateProvider
       .state('home', {
@@ -165,7 +165,7 @@ angular
         controller: 'HomeCtrl'
       })
       .state('main', {
-        url: '/',
+        url: '/map',
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })

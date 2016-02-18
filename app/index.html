@@ -194,7 +194,13 @@
             <ul class="pd-nav-list">
                 <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('home') }"
                     ng-click="setActiveMenu('home')">
-                  <a ng-href="#/" ng-click="shared.filterMode = false; shared.summaryReportMode = false; shared.summaryReportMonthMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;" class="pd-nav-icon">
+                  <a ng-href="#/" class="pd-nav-icon">
+                  <i class="fa fa-home fa-size-22"></i>
+                  <span class="pd-nav-text">หน้าหลัก</span></a>
+                </li>
+                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('map') }"
+                    ng-click="setActiveMenu('map')">
+                  <a ng-href="#/map" ng-click="shared.filterMode = false; shared.summaryReportMode = false; shared.summaryReportMonthMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;" class="pd-nav-icon">
                   <i class="fa fa-map-marker fa-size-22"></i>
                   <span class="pd-nav-text">เฝ้าระวัง</span></a>
                 </li>
