@@ -166,17 +166,17 @@ angular.module('poddDashboardApp')
       if (reportType.checked) {
         $scope.reportTypeStates.all[reportType.id].forEach(function (state) {
           if (state.checked) {
-            checkedItems.push('"' + state.code + '"');
+            checkedItems.push('"' + state.id + '"');
           }
         });
       }
     });
 
     if (checkedItems.length) {
-      queryBuilder.update('stateCode', '(' + checkedItems.join(' OR ') + ')');
+      queryBuilder.update('state', '(' + checkedItems.join(' OR ') + ')');
     }
     else {
-      queryBuilder.delete('stateCode');
+      queryBuilder.delete('state');
     }
   }
 
