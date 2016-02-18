@@ -189,6 +189,11 @@ angular
         templateUrl: 'views/plans.html',
         controller: 'PlansModeCtrl'
       })
+      .state('calendar', {
+        url: '/calendar',
+        templateUrl: 'views/calendar.html',
+        controller: 'CalendarModeCtrl'
+      })
       .state('contacts', {
         url: '/contacts?q&alphabet',
         templateUrl: 'views/contacts.html',

@@ -215,6 +215,12 @@
                     <span class="pd-nav-text">Plan List</span>
                   </a>
                 </li>
+                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('calendar') }">
+                  <a ng-href="#/calendar" class="pd-nav-icon">
+                    <i class="fa fa-calendar fa-size-18"></i>
+                    <span class="pd-nav-text">Calendar</span>
+                  </a>
+                </li>
                 <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('contacts') }">
                   <a ng-href="#/contacts" class="pd-nav-icon">
                     <i class="fa fa-phone fa-size-18"></i>
@@ -416,6 +422,7 @@
         <script src="scripts/controllers/summary-report-month.js"></script>
         <script src="scripts/controllers/visualize.js"></script>
         <script src="scripts/controllers/plans.js"></script>
+        <script src="scripts/controllers/calendar.js"></script>
         <script src="scripts/controllers/contacts.js"></script>
         <!-- endbuild -->
 
