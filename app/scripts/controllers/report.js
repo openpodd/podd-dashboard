@@ -17,7 +17,8 @@ angular.module('poddDashboardApp')
 })
 
 .controller('ReportViewCtrl', function ($scope, streaming, Flags, Lightbox,
-                                        $modal, Search, Reports, $state, Tag) {
+                                        $modal, Search, Reports, $state, Tag,
+                                        PlanReport) {
 
     $scope.userAlreadyClickImage = false;
     $scope.reportFlag = {};
@@ -38,26 +39,17 @@ angular.module('poddDashboardApp')
     $scope.report = $scope.$parent.report;
     $scope.$watch('$parent.report', function (newValue) {
         $scope.report = newValue;
-        reloadReportStatesLogs();
-    });
+        if (newValue) {
+          reloadReportStatesLogs();
+          loadPlanReport();
+        }
 
-    $scope.$parent.$watch('report', function (newValue) {
         if (newValue) {
             $scope.userAlreadyClickImage = false;
-
-            // if ( $scope.$parent.report.images.length ) {
-            //     $scope.activeImage = $scope.$parent.report.images[0];
-            // }
-            // else {
-            //     $scope.activeImage = null;
-            // }
             $scope.activeImage = null;
 
             refreshFlag();
-
             console.log('report.change');
-
-            $scope.$broadcast('rebuildScrollbar:reportView');
         }
     });
 
@@ -368,6 +360,33 @@ angular.module('poddDashboardApp')
             }
         }
     });
+
+    /* Plan */
+    function loadPlanReport() {
+      $scope.report.$promise.then(function () {
+        Reports.plans({ reportId: $scope.report.id }).$promise.then(function (resp) {
+          $scope.currentPlan = resp[0];
+        });
+      });
+    }
+
+    $scope.viewPlanReport = function (planReportId) {
+      PlanReport.get({ id: planReportId }).$promise.then(function (resp) {
+        $scope._viewResponseMap(resp);
+      });
+    };
+
+    $scope._viewResponseMap = function (planReport) {
+      var scope = $scope.$new();
+      scope.planReport = planReport;
+
+      var modalInstance = $modal.open({
+        templateUrl: 'views/plan-report.html',
+        scope: scope,
+        size: 'lg',
+        controller: 'PlanReportModalCtrl'
+      });
+    };
 })
 
 .controller('ReportImageLightboxCtrl', function ($scope, Map) {

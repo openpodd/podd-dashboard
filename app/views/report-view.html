@@ -84,6 +84,12 @@
               <h2 class="sidebar-heading-text"><i class="fa fa-stethoscope fa-size-18"></i> สถานะรายงาน</h2>
               <span class="label label-default label-state label-state-report">{{ report.stateName }}</span>
             </div> <!-- sidebar-heading -->
+
+            <div class="sidebar-content" ng-if="currentPlan">
+              ล่าสุดรายงานนี้อยู่ในแผนรับมือ
+              <a ng-click="viewPlanReport(currentPlan.id)">{{ currentPlan.log.plan.name }}</a>
+            </div>
+
             <div class="sidebar-content">
               <h3 class="sidebar-title">ประวัติ</h3>
               <ul class="history-log" ng-if="reportStatesLogs.length > 0">

@@ -138,6 +138,11 @@ angular.module('poddDashboardApp')
                 url: config.API_BASEPATH + '/reports/:reportId/states_logs',
                 method: 'GET',
                 isArray: true
+            },
+            plans: {
+                url: config.API_BASEPATH + '/reports/:reportId/plans',
+                method: 'GET',
+                isArray: true
             }
         });
 
