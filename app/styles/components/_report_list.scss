@@ -167,12 +167,27 @@
     padding-bottom: 5px;
   }
   .label-default{
-    font-size: 13px;
+    /*font-size: 13px;*/
     font-weight: normal;
   }
 }
 .filter-error{
   margin-top: 20px;
+}
+
+/*--- Show All ---*/
+.show-all{
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+  border-top: 1px dotted #ccc;
+  padding-top: 5px;
+  border-bottom: 1px dotted #ccc;
+
+  &:hover{
+    background-color: #eaeaea;
+    cursor: pointer;
+  }
 }
 
 /*--- Date Picker ---*/
@@ -243,6 +258,13 @@
 }
 
 .ta-view-header{
-  font-weight: bold;
   color: #000;
+  font-weight: bold;
+  background-color: #dadada;
+  border-bottom: 1px solid #aaa;
+
+  &:hover{
+    background-color: #dadada;
+    cursor: default;
+  }
 }

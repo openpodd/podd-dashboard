@@ -24,16 +24,27 @@
                 {{ reportType.name }}
               </button>
               <div class="text-center" ng-if="reportTypes.all.length > 10">
-                <button class="btn btn-default btn-xs btn-filter-collapsed" ng-if="isReportTypeListCompact"
+                <span ng-if="isReportTypeListCompact"
+                        ng-click="toggleReportTypeListCompact()"
+                        class="show-all">
+                        <i class="fa fa-angle-double-down"></i>
+                  แสดงทั้งหมด</span>
+                <!-- <button class="btn btn-default btn-xs btn-filter-collapsed" ng-if="isReportTypeListCompact"
                         ng-click="toggleReportTypeListCompact()" type="button">
                   <i class="fa fa-arrow-down"></i>
                   แสดงทั้งหมด
-                </button>
-                <button class="btn btn-default btn-xs btn-filter-collapsed" ng-if="!isReportTypeListCompact"
-                        ng-click="toggleReportTypeListCompact()" type="button">
-                  <i class="fa fa-arrow-up"></i>
+                </button> -->
+                <span ng-if="!isReportTypeListCompact"
+                        ng-click="toggleReportTypeListCompact()"
+                        class="show-all">
+                        <i class="fa fa-angle-double-up"></i>
                   แสดงน้อยลง
-                </button>
+                </span>
+                <!-- <button class="btn btn-default btn-xs btn-filter-collapsed" ng-if="!isReportTypeListCompact"
+                        ng-click="toggleReportTypeListCompact()" type="button">
+                  <i class="fa fa-angle-double-up"></i>
+                  แสดงน้อยลง
+                </button> -->
               </div>
             </div><!-- /report type form -->
 
@@ -140,7 +151,7 @@
             <div class="filter-result-item ta-view ta-view-header row">
               <div class="col-md-2 col-sm-2">วันที่</div>
               <div class="col-md-3 col-sm-3">สถานะ</div>
-              <div class="col-md-2 col-sm-2">ประเภทรายงาน</div>
+              <div class="col-md-2 col-sm-2">ประเภท</div>
               <div class="col-md-5 col-sm-5">พื้นที่</div>
             </div>
             <div ng-repeat="report in reports" class="row filter-result-item ta-view" ng-click="onClickReport(report.id)">
