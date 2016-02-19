@@ -144,7 +144,7 @@
           <div ng-if="resultMode == 'list'"> <!-- List View -->
             <div ng-repeat="report in reports" class="row filter-result-item" ng-click="onClickReport(report.id)">
               <div class="col-md-2" ng-bind="report.date | amDateFormat:'D MMM YY'"></div>
-              <div class="col-md-10">
+              <div class="col-md-8">
                 <label class="label label-default label-state-{{report.stateCode}}"
                        ng-bind="report.stateName"></label>
                 <span ng-bind="::report.reportTypeName" class="filter-reporttype"></span>
@@ -153,6 +153,10 @@
                     <span ng-bind="::report.administrationAreaAddress"></span>
                 </div>
                 <div class="filter-result-desc" ng-bind-html="::report.renderedOriginalFormData"></div>
+              </div>
+
+              <div class="col-md-2">
+                <img ng-src="{{ report.firstImageThumbnail }}" />
               </div>
             </div><!-- /.filter-result-item -->
           </div>

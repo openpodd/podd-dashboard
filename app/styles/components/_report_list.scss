@@ -162,6 +162,10 @@
     cursor: pointer;
   }
 
+  img {
+    max-width: 100%;
+  }
+
   @include respond-to(tablet-portrait){
     border-bottom: 1px solid #ddd;
     padding-bottom: 5px;
