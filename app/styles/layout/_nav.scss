@@ -30,7 +30,7 @@
 
     .pd-container{
         @include respond-to(desktop){
-            display: block !important;
+            display: block;
         }
     }
 
@@ -49,10 +49,10 @@
                 padding: 0;
                 line-height: auto;
                 background: transparent;
-                opacity: 1;   
+                opacity: 1;
             }
         }
-    } 
+    }
     .pd-section-left{
         @include respond-to(phone){
             position: static;
@@ -63,7 +63,7 @@
         @include respond-to(phone){
             position: static;
             width: auto;
-        }   
+        }
     }
     .pd-nav-icon{ //without adding margin-right
         .pd-nav-text{
@@ -77,7 +77,7 @@
 .hide-phone{
     @include respond-to(phone){
         display: none !important;
-    } 
+    }
 }
 
 $section-nav-bg: #333;
@@ -88,7 +88,7 @@ $nav-item-bg-active: #0074d9;
 $nav-font-family: ThaiSansNeueRegular;
 
 .pd-section-left{
-    position: absolute;
+    position: fixed;
     width: 50px;
     height: 100%;
     top: 0;
@@ -119,14 +119,14 @@ $nav-font-family: ThaiSansNeueRegular;
     position: relative;
     color: $nav-item-color;
     text-align: center;
-    
+
     &:hover{
         .pd-nav-text{
             left: 42px;
             opacity: 1;
         }
     }
-    
+
     /* Hide Text */
     .pd-nav-text{
         @include box-shadow(0px 0px 5px #505050);
@@ -141,18 +141,18 @@ $nav-font-family: ThaiSansNeueRegular;
         background: #eee;
         border-radius: 0 5px 5px 0;
         opacity: 0;
-        
+
         transition: opacity 0.6s ease;
         -webkit-transition: opacity 0.6s ease;
         -ms-transition: opacity 0.6s ease;
         -moz-transition: opacity 0.6s ease;
     }
-    
+
     &.active{
         background-color: $nav-item-bg-active;
-        
+
         i{ color: $nav-item-color; }
-        
+
         /* Make text active style */
         .pd-nav-text{
             color: $nav-item-color;
@@ -171,7 +171,7 @@ $nav-font-family: ThaiSansNeueRegular;
     display: block;
     font: 22px / 20px $nav-font-family;
     line-height: 20px;
-    
+
     /* Clear defuaft hover style */
     &:hover{
         background-color: transparent;
@@ -185,10 +185,10 @@ $nav-font-family: ThaiSansNeueRegular;
     padding: 12px 12px 8px 12px;
     display: block;
     position: relative;
-    
+
     color: $nav-item-color;
         font: 20px / 20px $nav-font-family;
-    
+
     &:hover{
         cursor: pointer;
         color: $nav-item-color-hover;
@@ -257,9 +257,9 @@ $notifi-item-read: #ececec;
 
         .fa-comment{
             margin-right: 5px;
-        }  
+        }
     }
-    
+
     a{
         display: block;
         padding: 7px 12px;
@@ -281,7 +281,7 @@ $notifi-item-read: #ececec;
 }
 .notifications-empty{
     color: #666;
-    
+
     li{
         border: none;
         border-radius: 0 5px 5px 0;

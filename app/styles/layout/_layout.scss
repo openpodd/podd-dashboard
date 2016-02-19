@@ -51,6 +51,11 @@ $detail-title-color: #8D58C2;
 $detail-section-bg: rgb(245, 245, 245);
 $comment-section-bg: #333;
 
+.ng-cloak {
+    display: inherit !important;
+    background-color: #eee;
+}
+
 .l-section{
     position: absolute;
     top: 0;
@@ -93,48 +98,81 @@ $comment-section-bg: #333;
 .l-report-section{
     @include box-shadow(1px 0px 5px rgba(0, 0, 0, 0.1));
     left: 50px;
-    width: 47%;
+    right: 47%;
     background-color: $report-section-bg;
     z-index: 9996;
+    transform: none;
+    // transition: transform .4s linear .3s, opacity .7s linear;
+    transition: transform .7s, opacity .7s;
 
-    &.ng-hide-remove {
-        -moz-animation: fadeInLeft .5s .2s alternate forwards;
-        -webkit-animation: fadeInLeft .5s .2s alternate forwards;
+    &.ng-hide-animate {
+        pointer-events: none;
+    }
+
+    &.ng-hide {
+        pointer-events: none;
+        display: block !important;
+        transform: translateX(-30%);
         opacity: 0;
     }
-
-    &.ng-hide-add{
-        -moz-animation: fadeOutLeft .5s .2s alternate forwards;
-        -webkit-animation: fadeOutLeft .5s .2s alternate forwards;
+    &.ng-hide:not(.ng-hide-animate) {
+        visibility: hidden;
     }
 
-    @include respond-to(tablet-portrait){
-        width: calc(100% - 50px);
+    &.report-list-peek {
+        transition: transform .4s;
+        transform: translateX(-90%);
+        transform: translateX(calc(-100% + 50px));
+
+        .content-wrapper {
+            pointer-events: none;
+        }
     }
-    @include respond-to(phone){
-        width: 100%;
+    &.report-list-peek-remove.ng-hide-animate {
+        transform: translateX(-100%);
+    }
+
+    @include respond-to(tablet-portrait) {
+        right: calc(100% - 50px);
+    }
+    @include respond-to(phone) {
+        right: 0;
         left: 0;
+
+        &.report-list-peek {
+            transform: none;
+        }
     }
 }
-.l-info-section{ /* Wrapping detail & comment section */
+.home {
+    .l-info-section {
+        &.ng-hide-animate {
+            pointer-events: none;
+        }
+    }
+}
+.l-info-section { /* Wrapping detail & comment section */
     top: 0;
     right: 0;
-    width: 53%;
+    left: 50px;
     z-index: 9990;
+    transform: none;
+    opacity: 1;
 
-    &.ng-hide-remove {
-        -webkit-animation: fadeInLeft .5s .2s alternate forwards;
-        -moz-animation: fadeInLeft .5s .2s alternate forwards;
+    &.ng-hide {
+        pointer-events: none;
+        display: block !important;
+        transform: translateX(-50px);
         opacity: 0;
     }
-
-    &.ng-hide-add{
-        -webkit-animation: fadeOutLeft .5s .2s alternate forwards;
-        -moz-animation: fadeOutLeft .5s .2s alternate forwards;
+    &.ng-hide:not(.ng-hide-animate) {
+        visibility: hidden;
     }
 
     &.l-full-width {
-        width: 100%;
+        transition: transform .3s linear .2s, opacity .4s linear;
+        left: 0;
+        right: 0;
 
         .content {
             // max-width: 600px;
@@ -143,9 +181,16 @@ $comment-section-bg: #333;
         }
     }
 
-    @include respond-to(tablet-portrait){ // Full Width
-        width: 100%;
+    @include respond-to(tablet-portrait) { // Full Width
+        right: 0;
+        left: 0;
         z-index: 9996;
+    }
+
+    @include respond-to(phone) {
+        right: 0;
+        left: 0;
+        transform: none;
     }
 }
 .l-detail-section{

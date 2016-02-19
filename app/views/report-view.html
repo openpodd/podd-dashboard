@@ -1,4 +1,4 @@
-<div class="l-info-section l-section" report-view
+<div class="l-info-section l-section animated" report-view
      ng-class="{ 'l-full-width': !shared.showReportList }"
      ng-controller="ReportViewCtrl" ng-show="willShowReportView" ng-cloak>
 
@@ -22,7 +22,7 @@
 
     <div class="content-wrapper content-wrapper-padding">
       <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-8" ng-show="report">
           <div class="report-section">
             <h1 class="report-title" ng-bind-html="report.renderedOriginalFormData"></h1>
 
@@ -88,7 +88,7 @@
           </div> <!-- report-section -->
         </div> <!-- col-sm-8 -->
 
-        <div class="col-sm-4">
+        <div class="col-sm-4" ng-show="report">
 
           <div class="sidebar-block">
             <div class="sidebar-heading sidebar-heading-bg-purple">
