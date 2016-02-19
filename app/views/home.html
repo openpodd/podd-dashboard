@@ -105,6 +105,15 @@
                 </ui-select>
             </div><!-- /authority form -->
 
+            <div class="form-group">
+              <h4 class="filter-heading">ตั้งค่าการค้นหา</h4>
+
+              <label>
+                <input type="checkbox" ng-model="settings.includeTestFlag">
+                รวมรายงานทดสอบ
+              </label>
+            </div><!-- /test flag form -->
+
             <button class="btn btn-primary btn-full" type="submit" ng-disabled="loading">
               <i class="fa fa-search"></i> ค้นหา
             </button>

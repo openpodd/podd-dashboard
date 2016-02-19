@@ -44,11 +44,32 @@ angular.module('poddDashboardApp')
           instance.delete(filterName);
           return;
         }
-        if (index) {
+        if (!angular.isUndefined(index)) {
           queries[index] = filterName + ':' + filterValue;
         }
         else {
           instance.and(filterName, filterValue);
+        }
+        return instance;
+      },
+      addGroup: function addGroup(groupName, groupValue) {
+        if (groupName) {
+          queries.push('(' + groupValue + ')');
+          conditionsMap[groupName] = queries.length - 1;
+        }
+        return instance;
+      },
+      updateGroup: function updateGroup(groupName, groupValue) {
+        var index = conditionsMap[groupName];
+        if (!groupValue) {
+          instance.delete(groupValue);
+          return;
+        }
+        if (!angular.isUndefined(index)) {
+          queries[index] = '(' + groupValue + ')';
+        }
+        else {
+          instance.addGroup(groupName, groupValue);
         }
         return instance;
       },
@@ -59,7 +80,12 @@ angular.module('poddDashboardApp')
       reset: function reset() {
         queries = [];
         queries.push(defaultQuery);
+        conditionsMap.negative = 0;
         return instance;
+      },
+      get: function get(filterName) {
+        var index = conditionsMap[filterName];
+        return queries[index];
       },
       getQuery: function getQuery() {
         return queries.filter(function (item) {
@@ -68,7 +94,7 @@ angular.module('poddDashboardApp')
       }
     };
 
-    queries.push(defaultQuery);
+    instance.reset();
     return instance;
   })();
 
@@ -98,6 +124,7 @@ angular.module('poddDashboardApp')
     current: null,
     selected: []
   };
+  $scope.settings = {};
 
   function concat(a, b) {
     b.forEach(function (item) {
@@ -224,10 +251,26 @@ angular.module('poddDashboardApp')
     return selectedAuthorities.join(',');
   }
 
+  function updateFilterSettings(queryBuilder) {
+    // test flag
+    if ($scope.settings.includeTestFlag) {
+      queryBuilder.updateGroup('testFlag', 'negative:true OR testFlag:true');
+      queryBuilder.delete('negative');
+    }
+    else {
+      queryBuilder.update('negative', true);
+    }
+  }
+
   function _load(queryBuilder, needReset) {
     queryBuilder.update('date', buildDateQuery());
+
+    // other settings.
+    updateFilterSettings(queryBuilder);
+
     query.q = queryBuilder.getQuery();
     query.authorities = buildAuthorityQuery();
+
     load(query, needReset);
   }
 
