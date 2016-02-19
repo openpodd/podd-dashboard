@@ -1,6 +1,10 @@
-<div class="l-info-section l-section" report-view
+<div class="l-info-section l-section animated" report-view
      ng-class="{ 'l-full-width': !shared.showReportList }"
      ng-controller="ReportViewCtrl" ng-show="willShowReportView" ng-cloak>
+
+  <div class="test-watermark" ng-show="report.testFlag">
+    <div class="test-watermark-text">รายงานทดสอบ</div>
+  </div>
 
   <div class="l-detail-section l-section">
     <div class="title clearfix">
@@ -16,182 +20,226 @@
       เกิดข้อผิดพลาด ไม่สามารถดึงข้อมูลรายงานได้
     </div>
 
-    <div class="content-wrapper"
-         ng-if="!loadingReportView && !loadingReportViewError"><div class="content">
+    <div class="content-wrapper content-wrapper-padding">
+      <div class="row">
+        <div class="col-sm-8" ng-show="report">
+          <div class="report-section">
+            <span class="">{{ $parent.report.reportTypeName }}</span>
+            <h1 class="report-title" ng-bind-html="report.renderedOriginalFormData"></h1>
 
-      <div class="priority-report pull-right" ng-if="!$parent.report.parent">เปลี่ยนสถานะรายงาน :
-        <div report-state-form report="$parent.report"></div>
-      </div>
+            <div class="report-detail">
+              <p><strong>พื้นที่</strong> : {{ report.administrationAreaAddress }}</p>
+              <p><strong>วันที่รายงาน</strong> : {{ report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</p> <p><strong>วันที่เกิดเหตุ</strong> : {{ report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</p>
+              <p><strong>ประเภทรายงาน</strong> : {{ report.reportTypeName }}</p>
+              <p><strong>ผู้รายงาน</strong> : {{ report.createdBy }}</p>
+              <p><strong>ติดต่อ</strong> : {{ report.createdByContact | default:'ไม่มี' }}</p>
+              <p><strong>เบอร์โทรส่วนตัว</strong> :
+                <a ng-if="report.createdByTelephone" href="tel:">{{ report.createdByTelephone }}</a>
+                <span ng-if="!report.createdByTelephone">ไม่มี</span>
+              </p>
+              <p><strong>เบอร์โทรของโครงการ</strong> :
+                <a ng-if="report.createdByProjectMobileNumber" href="tel:">{{ report.createdByProjectMobileNumber }}</a>
+                <span ng-if="!report.createdByProjectMobileNumber">ไม่มี</span>
+              </p>
+            </div> <!-- report-detail -->
 
-      <div class="report-details">
-        <div class="report-image clearfix" ng-if="$parent.report.images.length">
-          <h3 class="subheading pull-left"><i class="fa fa-picture-o fa-size-18"></i> รูปประกอบ</h3>
+            <div class="report-image">
+               <ul class="list-unstyled list-inline report-thumbnails">
+                  <li ng-repeat="image in report.images"
+                      ng-click="clickThumbnail(image)"
+                      ng-class="{ 'active active-image':isActiveImage(image) }">
+                      <img ng-src="{{ image.thumbnailUrl }}"/>
+                  </li>
+              </ul>
+            </div> <!-- report-image -->
 
-          <ul class="list-unstyled list-inline report-thumbnails">
-              <li ng-repeat="image in $parent.report.images"
-                  ng-click="clickThumbnail(image)"
-                  ng-class="{ 'active active-image':isActiveImage(image) }">
-                  <img ng-src="{{ image.thumbnailUrl }}"/>
-              </li>
-          </ul>
-        </div> <!-- end of .report-images -->
+            <div class="report-infomation">
+              <tabset ng-if="report" class="pd-tabs" justified="true" >
+                <tab heading="ข้อมูลแบบสอบถาม">
+                  {{ $parent.report }}
+                  <table class="table pd-white-table">
+                    <thead>
+                      <tr>
+                        <th>คำถาม</th><th>คำตอบ</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="field in report.originalFormData">
+                        <td ng-bind="field.name"></td>
+                        <td ng-bind="field.value"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </tab>
 
-        <h2 class="subheading"><i class="fa fa-newspaper-o fa-size-18"></i> ข้อมูลรายงาน</h2>
-          <ul class="pd-report-info">
-            <li>วันที่รายงาน - {{ $parent.report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</li>
-            <li>วันที่เกิดเหตุ - {{ $parent.report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</li>
-            <li>ประเภทรายงาน - {{ $parent.report.reportTypeName }}</li>
-            <li>พื้นที่เกิดเหตุ - <span jump-to-filter name=" 'area' " value="$parent.report.village.address" wrap-with-quote="true"></span></li>
-            <li>โดย - <span jump-to-filter name=" 'createdByName' " value="$parent.report.createdBy"></span></li>
-            <li ng-show="$parent.report.createdByContact">ติดต่อ - {{ $parent.report.createdByContact }}</li>
-            <li ng-show="$parent.report.createdByTelephone">เบอร์โทร - <a href="tel:">{{ $parent.report.createdByTelephone }}</a></li>
-            <li ng-show="$parent.report.createdByProjectMobileNumber">เบอร์โทรของโครงการ - <a href="tel:">{{ $parent.report.createdByProjectMobileNumber }}</a></li>
-          </ul>
+                <tab>
+                  <tab-heading>
+                    รายงานที่เกี่ยวข้อง
+                    <span class="badge mark-has-follow-up" ng-if="report.parent || report.$hasFollowUp" ng-bind="report.followUpReportsCount"></span>
+                  </tab-heading>
+                  <div report-follow-up report="report"></div>
+                </tab>
+              </tabset>
+            </div> <!-- report-infomation -->
 
+            <div class="report-comments" style="margin-bottom: 10px;">
+              <div ng-include="'/views/comments.html'"></div>
+            </div> <!-- report-comments -->
 
-          <tabset ng-if="$parent.report" class="pd-tabs" justified="true" >
-            <tab heading="คำอธิบายรายงาน">
-              <!-- <div ng-if="$parent.$parent.report.renderedOriginalFormData"> -->
-                <div ng-bind-html="$parent.$parent.report.renderedOriginalFormData"></div>
-              <!-- </div> -->
-            </tab>
+          </div> <!-- report-section -->
+        </div> <!-- col-sm-8 -->
 
-            <tab heading="ข้อมูลแบบสอบถาม">
-              {{ $parent.report }}
-              <table class="table pd-white-table">
-                <thead>
-                  <tr>
-                    <th>คำถาม</th><th>คำตอบ</th>
-                  </tr>
-                </thead>
+        <div class="col-sm-4" ng-show="report">
 
-                <tbody>
-                  <tr ng-repeat="field in $parent.$parent.report.originalFormData">
-                    <td ng-bind="field.name"></td>
-                    <td jump-to-filter name="field.name" value="field.value"></td>
-                  </tr>
-                </tbody>
-              </table>
-            </tab>
+          <div class="sidebar-block">
+            <div class="sidebar-heading sidebar-heading-bg-purple">
+              <h2 class="sidebar-heading-text"><i class="fa fa-stethoscope fa-size-18"></i> สถานะรายงาน</h2>
+            </div> <!-- sidebar-heading -->
 
-            <tab>
-              <tab-heading>
-                รายงานที่เกี่ยวข้อง
-                <span class="badge mark-has-follow-up" ng-if="$parent.$parent.$parent.report.parent || $parent.$parent.$parent.report.$hasFollowUp" ng-bind="$parent.$parent.$parent.report.followUpReportsCount"></span>
-              </tab-heading>
-              <div report-follow-up report="$parent.$parent.report"></div>
-            </tab>
-          </tabset>
+            <div class="sidebar-content" ng-if="currentPlan">
+              ล่าสุดรายงานนี้อยู่ในแผนรับมือ
+              <a class="plan-report-link" ng-click="viewPlanReport(currentPlan.id)">{{ currentPlan.log.plan.name }}</a> เมื่อ {{ currentPlan.createdAt | amDateFormat:'D MMMM YYYY เวลา HH:mm' }}
+            </div>
+
+            <div class="sidebar-content">
+              <div class="sidebar-status">
+                <span class="label label-default label-state label-state-report">สถานะ : {{ report.stateName }}</span>
+              </div>
+              <h3 class="sidebar-title">ประวัติ</h3>
+              <ul class="history-log" ng-if="reportStatesLogs.length > 0">
+                <li ng-repeat="log in reportStatesLogs | orderBy:'-createdAt' ">
+                  Changed : {{ log.state.name }}
+                  <div class="history-log-name">
+                    โดย {{ log.createdBy | fullname:log.username }} |
+                    วันที่ {{ log.createdAt | amDateFormat:'D MMMM YYYY เวลา HH:mm' }}
+                  </div>
+                </li>
+              </ul>
+              <div ng-if="reportStatesLogs.length == 0">
+                ยังไม่มีประวัติการเปลี่ยนสถานะ
+              </div>
+              <div class="sidebar-action">
+                <div class="priority-report" ng-if="!report.parent">
+                <div class="row">
+                  <div class="col-lg-7 col-md-6">
+                    <div report-state-form report="report" defer-change="1" submit="submitState" on-select="onStateSelect($state)" class="priority-report-state"></div>
+                  </div>
+                  <div class="col-lg-5 col-md-6">
+                    <button class="btn btn-default btn-changed" ng-disabled="!isStateChange()" ng-click="submitState(submitStateSuccess)">เปลี่ยนสถานะ</button>
+                  </div>
+                  </div>
+                </div>
+
+                <div class="mark-as-test-wrapper text-muted clear-both">
+                  <small>
+                    <strong>ตั้งค่า:</strong>
+                    <u>
+                      <a ng-click="markAsTest($parent.report)" ng-if="!$parent.report.testFlag">ปรับเป็นรายงานทดสอบ</a>
+                      <a ng-click="markAsNotTest($parent.report)" ng-if="$parent.report.testFlag">ให้รายงานนี้ไม่ใช่รายงานทดสอบ</a>
+                    </u>
+                  </small>
+                </div>
+              </div>
+            </div> <!-- sidebar-content -->
+          </div> <!-- sidebar-block -->
+
+          <div class="sidebar-block">
+            <div class="sidebar-heading sidebar-heading-bg-purplegray">
+              <h2 class="sidebar-heading-text"><i class="fa fa-tags fa-size-18"></i> Tags</h2>
+            </div> <!-- sidebar-heading -->
+            <div class="sidebar-content">
+              <form role="form" ng-submit="postTags();">
+                  <div clas="form-group">
+                    <tags-input
+                      ng-model="tags"
+                      on-tag-added="updateTags()"
+                      on-tag-removed="updateTags()">
+                      <auto-complete source="loadTags($query)"></auto-complete>
+                        </tags-input>
+                    <button class="btn btn-default" type="button"
+                    ng-show="tagsChanged" ng-click="saveTags()">
+                       บันทึก</button>
+                  </div>
+                </form>
+            </div>
+          </div>
 
           <ul class="pd-report-info">
             <li><a ng-show="$parent.report.boundary" ng-href="#/scenario?bottom={{ $parent.report.boundary.bottom }}&left={{ $parent.report.boundary.left }}&top={{ $parent.report.boundary.top }}&right={{ $parent.report.boundary.right }}">ดูเหตุการณ์ที่เกิดขึ้นบริเวณนี้</a></li>
           </ul>
 
-<!--          </div></div> end .report-fields -->
+          <div style="margin-bottom: 20px;">
+            <button type="submit" class="btn btn-default"
+                    ng-click="printDiv()"><i class="fa fa-print fa-size-18"></i> พิมพ์</button>
+          </div>
 
-        </div><!-- end .report-details -->
+        </div>
+      </div>
+    </div>
 
-        <div class="report-print hide">
+    <div class="report-print hide">
 
-          <h3>รายงาน #{{ report.id }}</h3>
+      <h3>รายงาน #{{ report.id }}</h3>
 
-          <div class="report-image clearfix" ng-if="$parent.report.images.length">
-            <h4><i class="fa fa-picture-o fa-size-18"></i> รูปประกอบ</h4>
+      <div class="report-image clearfix" ng-if="$parent.report.images.length">
+        <h4><i class="fa fa-picture-o fa-size-18"></i> รูปประกอบ</h4>
 
-            <div>
-                <div style="padding-right: 5px; padding-bottom: 5px; display: inline-block;" ng-repeat="image in $parent.report.images">
-                    <img style="width: 300px; " src="{{ image.thumbnailUrl }}"/>
-                </div>
+        <div>
+            <div style="padding-right: 5px; padding-bottom: 5px; display: inline-block;" ng-repeat="image in $parent.report.images">
+                <img style="width: 300px; " src="{{ image.thumbnailUrl }}"/>
             </div>
-          </div>
-
-          <h4><i class="fa fa-newspaper-o fa-size-18"></i> ข้อมูลรายงาน</h4>
-            <table class="table pd-white-table report-info"
-                  style="border: 0; margin-bottom: 20px; font-size: 14px;">
-              <tbody>
-                <tr>
-                  <td width="200">สถานะรายงาน</td>
-                  <td>{{ flag.current.color }}</td>
-                </tr>
-                <tr>
-                  <td width="200">วันที่รายงาน</td>
-                  <td>{{ $parent.report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</td>
-                </tr>
-                <tr>
-                  <td width="200">วันที่เกิดเหตุ</td>
-                  <td>{{ $parent.report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</td>
-                </tr>
-                <tr>
-                  <td width="200">ประเภทรายงาน</td>
-                  <td>{{ $parent.report.reportTypeName }}</td>
-                </tr>
-                <tr>
-                  <td width="200">รายละเอียด</td>
-                  <td>
-                    <div ng-bind-html="$parent.report.renderedOriginalFormData"></div>
-                  </td>
-                </tr>
-                <tr>
-                  <td width="200">พื้นที่เกิดเหต</td>
-                  <td>{{ $parent.report.village.address }}</td>
-                </tr>
-                <tr>
-                  <td width="200">โดย</td>
-                  <td>{{ $parent.report.createdBy }}</td>
-                </tr>
-                <tr ng-show="$parent.report.createdByContact">
-                  <td width="200">ติดต่อ</td>
-                  <td>{{ $parent.report.createdByContact }}</td>
-                </tr>
-                <tr ng-show="$parent.report.createdByTelephone">
-                  <td width="200">เบอร์โทร</td>
-                  <td>{{ $parent.report.createdByTelephone }}</td>
-                </tr>
-                <tr ng-show="$parent.report.createdByProjectMobileNumber">
-                  <td width="200">เบอร์โทรของโครงการ</td>
-                  <td>{{ $parent.report.createdByProjectMobileNumber }}</td>
-                </tr>
-              </tbody>
-            </table>
         </div>
-
-
-        <div class="report-comments" style="margin-bottom: 10px;">
-          <h3 class="tag-title subheading"><i class="fa fa-tags fa-size-18"></i> Tags</h3>
-          <div class="tag-form clearfix">
-
-            <form role="form" ng-submit="postTags();">
-
-              <div clas="form-group">
-
-                <tags-input
-                  ng-model="tags"
-                  on-tag-added="updateTags()"
-                  on-tag-removed="updateTags()"
-                >
-                  <auto-complete source="loadTags($query)"></auto-complete>
-                </tags-input>
-
-                <button class="btn btn-default" type="button"
-                ng-show="tagsChanged" ng-click="saveTags()">
-                   บันทึก</button>
-
-              </div>
-            </form>
-          </div>
-        </div>
-
-      <div style="margin-bottom: 20px;">
-        <button type="submit" class="btn btn-default"
-                ng-click="printDiv()"><i class="fa fa-print fa-size-18"></i> พิมพ์</button>
       </div>
 
-        <div class="report-comments">
-            <div ng-include="'/views/comments.html'"></div>
-        </div>
-
+      <h4><i class="fa fa-newspaper-o fa-size-18"></i> ข้อมูลรายงาน</h4>
+        <table class="table pd-white-table report-info"
+              style="border: 0; margin-bottom: 20px; font-size: 14px;">
+          <tbody>
+            <tr>
+              <td width="200">สถานะรายงาน</td>
+              <td>{{ flag.current.color }}</td>
+            </tr>
+            <tr>
+              <td width="200">วันที่รายงาน</td>
+              <td>{{ $parent.report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</td>
+            </tr>
+            <tr>
+              <td width="200">วันที่เกิดเหตุ</td>
+              <td>{{ $parent.report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</td>
+            </tr>
+            <tr>
+              <td width="200">ประเภทรายงาน</td>
+              <td>{{ $parent.report.reportTypeName }}</td>
+            </tr>
+            <tr>
+              <td width="200">รายละเอียด</td>
+              <td>
+                <div ng-bind-html="$parent.report.renderedOriginalFormData"></div>
+              </td>
+            </tr>
+            <tr>
+              <td width="200">พื้นที่เกิดเหต</td>
+              <td>{{ $parent.report.village.address }}</td>
+            </tr>
+            <tr>
+              <td width="200">โดย</td>
+              <td>{{ $parent.report.createdBy }}</td>
+            </tr>
+            <tr ng-show="$parent.report.createdByContact">
+              <td width="200">ติดต่อ</td>
+              <td>{{ $parent.report.createdByContact }}</td>
+            </tr>
+            <tr ng-show="$parent.report.createdByTelephone">
+              <td width="200">เบอร์โทร</td>
+              <td>{{ $parent.report.createdByTelephone }}</td>
+            </tr>
+            <tr ng-show="$parent.report.createdByProjectMobileNumber">
+              <td width="200">เบอร์โทรของโครงการ</td>
+              <td>{{ $parent.report.createdByProjectMobileNumber }}</td>
+            </tr>
+          </tbody>
+        </table>
     </div>
-  </div></div> <!-- end .content-wrapper .content -->
 
 </div>
 

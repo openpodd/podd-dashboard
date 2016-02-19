@@ -137,43 +137,96 @@ angular.module('poddDashboardApp')
     };
 })
 
+.directive('reportState', function (ReportState) {
+    return {
+        strict: 'A',
+        template: '<div>{{ state.name }}</div>',
+        scope: {
+            report: '='
+        },
+        controller: function ($scope) {
+            if (!$scope.report) {
+                return;
+            }
+
+            ReportState
+                .query({ reportType: $scope.report.reportTypeId }).$promise
+                .then(function (reportStates) {
+                    reportStates.forEach(function (state) {
+                        if (state.id === $scope.report.state) {
+                            $scope.state = state;
+                        }
+                    });
+                });
+        }
+    };
+})
+
 .directive('reportStateForm', function ($http, $modal, Reports, ReportState) {
+
+    function reloadStates($scope, report) {
+        return ReportState
+            .query({ reportType: report.reportTypeId }).$promise
+            .then(function (reportStates) {
+                var currentState = null;
+
+                // Assign default value. This algo is not optimized because
+                // it will not stop when find the right state.
+                if (report.stateCode) {
+                    reportStates.forEach(function (state) {
+                        if (state.code === report.stateCode) {
+                            currentState = state;
+                        }
+                    });
+                }
+
+                $scope.states = {
+                    all: reportStates,
+                    current: currentState,
+                    original: currentState
+                };
+
+                // recheckStates($scope);
+            });
+    }
+
+    function recheckStates($scope) {
+        var currentState = $scope.states.current;
+        var allowedStates = [];
+        currentState.toStates.forEach(function (state) {
+            allowedStates.push(state.id);
+        });
+
+        $scope.states.all.forEach(function (state) {
+            if (allowedStates.indexOf(state.id) !== -1) {
+                state.disable = false;
+            }
+            else {
+                state.disable = true;
+            }
+        });
+    }
+
     return {
         strict: 'A',
         require: '^reportView',
         templateUrl: 'views/report-state-form.html',
         scope: {
-            report: '='
+            report: '=',
+            deferChange: '=',
+            submit: '=',
+            onSelect: '&',
+            disableDisallowStates: '='
         },
         controller: function ($scope) {
-            // Do nothing if no report provided
-            if (!$scope.report) {
-                return;
-            }
-
             var report = $scope.report;
 
-            ReportState
-                .query({ reportType: report.reportTypeId }).$promise
-                .then(function (reportStates) {
-                    var currentState = null;
-
-                    // Assign default value. This algo is not optimized because
-                    // it will not stop when find the right state.
-                    if (report.stateCode) {
-                        reportStates.forEach(function (state) {
-                            if (state.code === report.stateCode) {
-                                currentState = state;
-                            }
-                        });
-                    }
-
-                    $scope.states = {
-                        all: reportStates,
-                        current: currentState,
-                        original: currentState
-                    };
-                });
+            $scope.$watch('report', function (newValue) {
+                report = newValue;
+                if (newValue) {
+                    reloadStates($scope, newValue);
+                }
+            });
 
             $scope.revert = function () {
                 $scope.$apply(function () {
@@ -181,7 +234,19 @@ angular.module('poddDashboardApp')
                 });
             };
 
-            $scope.change = function () {
+            $scope.proxyChange = function () {
+                if ($scope.onSelect) {
+                  $scope.onSelect({ $state: $scope.states.current });
+                }
+                // Change state only explicit submit.
+                if ($scope.deferChange) {
+                    return;
+                }
+
+                $scope.change();
+            };
+
+            $scope.change = function (callback) {
                 if ($scope.states.current === $scope.states.original) {
                     return;
                 }
@@ -196,15 +261,18 @@ angular.module('poddDashboardApp')
                     cancelButtonText: 'ยกเลิก'
                 }, function (confirm) {
                     if (confirm) {
-                        $scope._change();
+                        $scope._change(callback);
                     }
                     else {
                         $scope.revert();
                     }
                 });
             };
+            if ($scope.submit) {
+              $scope.submit = $scope.change;
+            }
 
-            $scope._change = function () {
+            $scope._change = function (callback) {
                 var data = {
                     id: report.id,
                     stateId: $scope.states.current.id
@@ -213,10 +281,13 @@ angular.module('poddDashboardApp')
                     .then(function (resp) {
                         report.stateCode = resp.stateCode;
                         $scope.states.original = $scope.states.current;
+                        // recheckStates($scope);
+                        callback($scope.states.current);
                     })
                     .catch(function (err) {
                         $scope.showWarning(err);
                         $scope.revert();
+                        callback(err);
                     });
             };
 

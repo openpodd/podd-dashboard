@@ -51,7 +51,10 @@ angular
     'angulartics',
     'angulartics.google.analytics',
     'angularLocalStorage',
-    'ngTagsInput'
+    'ngTagsInput',
+    'angular.filter',
+    // 'sbDateSelect',
+    'pickadate'
   ])
 
   // override z-index of ui.bootstrap
@@ -71,8 +74,9 @@ angular
     $rootScope.shared = shared;
   })
 
-  .config(function(cfpLoadingBarProvider) {
+  .config(function(cfpLoadingBarProvider, $animateProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
+    $animateProvider.classNameFilter( /\banimated\b/ );
   })
 
   .factory('addTrailingSlashInterceptor', function ($q) {
@@ -153,11 +157,16 @@ angular
     $compileProvider.debugInfoEnabled(false);
     $httpProvider.interceptors.push('addTrailingSlashInterceptor');
 
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/home');
 
     $stateProvider
+      .state('home', {
+        url: '/home?reportId',
+        templateUrl: 'views/home.html',
+        controller: 'HomeCtrl'
+      })
       .state('main', {
-        url: '/',
+        url: '/map',
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
@@ -180,6 +189,11 @@ angular
         url: '/plans',
         templateUrl: 'views/plans.html',
         controller: 'PlansModeCtrl'
+      })
+      .state('calendar', {
+        url: '/calendar',
+        templateUrl: 'views/calendar.html',
+        controller: 'CalendarModeCtrl'
       })
       .state('contacts', {
         url: '/contacts?q&alphabet',

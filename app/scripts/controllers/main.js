@@ -37,7 +37,7 @@ angular.module('poddDashboardApp')
         }
     });
 
-    Menu.setActiveMenu('home');
+    Menu.setActiveMenu('map');
 
     L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
 
@@ -445,6 +445,7 @@ angular.module('poddDashboardApp')
             else {
                 $state.go('main.report', { reportId: report.id });
             }
+            shared.showReportView = true;
         }
         report.isNew = false;
         delete shared.newReportQueue[report.id];
@@ -516,10 +517,12 @@ angular.module('poddDashboardApp')
 
     $scope.closeModal = function () {
         shared.reportWatchId = '';
+        shared.showReportView = false;
         ReportModal.close();
     };
 
     $scope.gotoMainPage = function () {
+        shared.showReportView = false;
         if ($state.is('main.filter')) {
             Menu.setActiveMenu('filter');
             $state.go('main.filter', { reportId: undefined });
@@ -600,6 +603,10 @@ angular.module('poddDashboardApp')
                 $state.go('main.report', { reportId: newValue });
             }
 
+            shared.showReportView = true;
+        }
+        else {
+            shared.showReportView = false;
         }
     });
 

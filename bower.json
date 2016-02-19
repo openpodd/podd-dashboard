@@ -43,9 +43,25 @@
     "angular-circular-navigation": "~0.2.1",
     "Leaflet-WFST": "~1.0.0",
     "d3": "~3.5.9",
-    "leaflet.markercluster": "~0.4.0"
+    "leaflet.markercluster": "~0.4.0",
+    "angular-filter": "^0.5.8",
+    "angular-sb-date-select": "^0.3.7",
+    "pickadate": "^3.5.6",
+    "ng-pickadate": "^0.3.0"
   },
   "overrides": {
+    "socket.io-client": {
+      "main": [
+        "socket.io.js"
+      ]
+    },
+    "leaflet.markercluster": {
+      "main": [
+        "dist/leaflet.markercluster.js",
+        "dist/MarkerCluster.Default.css",
+        "dist/MarkerCluster.css"
+      ]
+    },
     "mapbox": {
       "main": [
         "mapbox.css",

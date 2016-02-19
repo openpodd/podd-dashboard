@@ -2,15 +2,14 @@
 
 angular.module('poddDashboardApp')
 
-.factory('ReportType', function ($resource) {
-    return $resource(config.API_BASEPATH + '/reportTypes/:id');
-})
-
 .factory('ReportTypes', function ($resource) {
-    var resource = $resource(config.API_BASEPATH + '/reportTypes/', {}, {
-        get: {
-            isArray: true
-        }
+    var resource = $resource(config.API_BASEPATH + '/reportTypes/:id', {
+      id: '@id'
+    }, {
+      'query': {
+        isArray: true,
+        cache: true
+      }
     });
     return resource;
 })
@@ -35,6 +34,22 @@ angular.module('poddDashboardApp')
 .factory('ReportState', function ($resource) {
     return $resource(config.API_BASEPATH + '/reportStates/:id', {
         id: '@id'
+    }, {
+      'query': {
+          isArray: true,
+          cache: true
+      }
+    });
+})
+
+.factory('Authority', function ($resource) {
+    return $resource(config.API_BASEPATH + '/authorities/:id', {
+        id: '@id'
+    }, {
+      'query': {
+          isArray: true,
+          cache: true
+      }
     });
 })
 
@@ -110,6 +125,24 @@ angular.module('poddDashboardApp')
             saveState: {
                 url: config.API_BASEPATH + '/reports/:reportId/state',
                 method: 'POST'
+            },
+            markAsTest: {
+                url: config.API_BASEPATH + '/reports/:reportId/mark_to_test',
+                method: 'POST'
+            },
+            markAsNotTest: {
+                url: config.API_BASEPATH + '/reports/:reportId/mark_to_untest',
+                method: 'POST'
+            },
+            statesLogs: {
+                url: config.API_BASEPATH + '/reports/:reportId/states_logs',
+                method: 'GET',
+                isArray: true
+            },
+            plans: {
+                url: config.API_BASEPATH + '/reports/:reportId/plans',
+                method: 'GET',
+                isArray: true
             }
         });
 

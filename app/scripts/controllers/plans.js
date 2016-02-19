@@ -1,4 +1,4 @@
-/*globals swal*/
+/*globals L,swal*/
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -70,6 +70,8 @@ angular.module('poddDashboardApp')
 })
 
 .controller('PlanReportModalCtrl', function ($scope, $modalInstance, PlanReport) {
+    L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';
+
     $scope.close = function () {
         $modalInstance.dismiss();
     };

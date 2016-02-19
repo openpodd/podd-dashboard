@@ -24,14 +24,17 @@
     <link rel="stylesheet" href="bower_components/perfect-scrollbar/src/perfect-scrollbar.css" />
     <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css" />
     <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.css" />
+    <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="bower_components/pickadate/lib/themes/default.css" />
+    <link rel="stylesheet" href="bower_components/pickadate/lib/themes/default.date.css" />
+    <link rel="stylesheet" href="bower_components/pickadate/lib/themes/default.time.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css">
     <link rel="stylesheet" href="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css">
     <link rel="stylesheet" href="bower_components/week-picker/week-picker-view.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.bootstrap3.css">
-    <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css">
-    <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.css">
     <!-- build:css(.tmp) styles/main.css -->
     <link id="main-style" rel="stylesheet" href="styles/app.css" media="print">
     <!-- endbuild -->
@@ -185,13 +188,19 @@
       <i class="fa fa-bars fa-size-18"></i>
       <span>ผ่อดีดี</span>
     </div>
-    <!--   <div ng-init="isShowNav = true"></div>-->
+        <div ng-init="isShowNav = true"></div>
         <div class="pd-container" ng-show="isShowNav">
            <img src="images/logo-onehealth.svg" alt="" class="logo hide-phone"/>
             <ul class="pd-nav-list">
                 <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('home') }"
                     ng-click="setActiveMenu('home')">
-                  <a ng-href="#/" ng-click="shared.filterMode = false; shared.summaryReportMode = false; shared.summaryReportMonthMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;" class="pd-nav-icon">
+                  <a ng-href="#/" class="pd-nav-icon">
+                  <i class="fa fa-home fa-size-22"></i>
+                  <span class="pd-nav-text">หน้าหลัก</span></a>
+                </li>
+                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('map') }"
+                    ng-click="setActiveMenu('map')">
+                  <a ng-href="#/map" ng-click="shared.filterMode = false; shared.summaryReportMode = false; shared.summaryReportMonthMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;" class="pd-nav-icon">
                   <i class="fa fa-map-marker fa-size-22"></i>
                   <span class="pd-nav-text">เฝ้าระวัง</span></a>
                 </li>
@@ -210,6 +219,12 @@
                   <a ng-href="#/plans" class="pd-nav-icon">
                     <i class="fa fa-list-ol fa-size-18"></i>
                     <span class="pd-nav-text">Plan List</span>
+                  </a>
+                </li>
+                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('calendar') }">
+                  <a ng-href="#/calendar" class="pd-nav-icon">
+                    <i class="fa fa-calendar fa-size-18"></i>
+                    <span class="pd-nav-text">Calendar</span>
                   </a>
                 </li>
                 <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('contacts') }">
@@ -328,8 +343,10 @@
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/leaflet/dist/leaflet.js"></script>
     <script src="bower_components/mapbox.js/mapbox.js"></script>
     <script src="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
+    <script src="bower_components/socket.io-client/socket.io.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/jquery-cookie/jquery.cookie.js"></script>
     <script src="bower_components/moment/moment.js"></script>
@@ -361,11 +378,16 @@
     <script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
     <script src="bower_components/angular-ui-grid/ui-grid.js"></script>
     <script src="bower_components/Leaflet-WFST/dist/Leaflet-WFST.src.js"></script>
+    <script src="bower_components/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+    <script src="bower_components/angular-filter/dist/angular-filter.min.js"></script>
+    <script src="bower_components/angular-sb-date-select/src/sb-date-select.js"></script>
+    <script src="bower_components/pickadate/lib/picker.js"></script>
+    <script src="bower_components/pickadate/lib/picker.date.js"></script>
+    <script src="bower_components/pickadate/lib/picker.time.js"></script>
+    <script src="bower_components/ng-pickadate/ng-pickadate.js"></script>
     <!-- endbower -->
     <script src="bower_components/moment/locale/th.js"></script>
-    <script src="bower_components/socket.io-client/socket.io.js"></script>
     <script src="bower_components/week-picker/week-picker.js"></script>
-    <script src="bower_components/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
     <!-- endbuild -->
 
         <script src="scripts/config.js"></script>
@@ -388,6 +410,7 @@
         <script src="scripts/services/VisualizeService.js"></script>
         <script src="scripts/services/PlanService.js"></script>
         <script src="scripts/services/NotificationService.js"></script>
+        <script src="scripts/controllers/home.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/main-report.js"></script>
         <script src="scripts/controllers/menu.js"></script>
@@ -405,6 +428,7 @@
         <script src="scripts/controllers/summary-report-month.js"></script>
         <script src="scripts/controllers/visualize.js"></script>
         <script src="scripts/controllers/plans.js"></script>
+        <script src="scripts/controllers/calendar.js"></script>
         <script src="scripts/controllers/contacts.js"></script>
         <!-- endbuild -->
 

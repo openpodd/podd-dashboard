@@ -132,6 +132,7 @@ consumer.subscribe(
     'report:comment:new',
     'report:image:new',
     'report:flag:new',
+    'report:state:new',
     'mention:new',
     'news:new',
     'user:avatar:new'

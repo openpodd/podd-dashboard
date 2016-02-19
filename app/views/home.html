@@ -1,0 +1,222 @@
+<div class="l-info-section l-section l-full-width l-theme-gray home">
+  <div class="l-detail-section l-section">
+    <div class="title clearfix">
+      <h2 class="pull-left"><i class="fa fa-list-ol pull-left fa-size-22"></i>รายการรายงาน</h2>
+    </div>
+
+    <div class="content-wrapper"><div class="content">
+
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="filter-form">
+          <form class="form-horizontal" ng-submit="submit($event)">
+            <div class="form-group">
+              <h4 class="filter-heading"><i class="fa fa-file-text"></i> ประเภทรายงาน</h4>
+              <button class="btn btn-choice" ng-class="{ 'btn-choice-selected': reportType.checked }" type="button"
+                      ng-repeat="reportType in reportTypes.all | orderBy:'weight' | first:reportTypeListLimit"
+                      ng-click="toggleReportTypeCheck(reportType)">
+                <span class="badgex" ng-if="!reportType.checked">
+                  <i class="fa fa-circle-o fa-size-14"></i>
+                </span>
+                <span class="badgex" ng-if="reportType.checked">
+                  <i class="fa fa-check-circle-o fa-size-14"></i>
+                </span>
+                {{ reportType.name }}
+              </button>
+              <div class="text-center" ng-if="reportTypes.all.length > 10">
+                <span ng-if="isReportTypeListCompact"
+                        ng-click="toggleReportTypeListCompact()"
+                        class="show-all">
+                        <i class="fa fa-angle-double-down"></i>
+                  แสดงทั้งหมด</span>
+                <!-- <button class="btn btn-default btn-xs btn-filter-collapsed" ng-if="isReportTypeListCompact"
+                        ng-click="toggleReportTypeListCompact()" type="button">
+                  <i class="fa fa-arrow-down"></i>
+                  แสดงทั้งหมด
+                </button> -->
+                <span ng-if="!isReportTypeListCompact"
+                        ng-click="toggleReportTypeListCompact()"
+                        class="show-all">
+                        <i class="fa fa-angle-double-up"></i>
+                  แสดงน้อยลง
+                </span>
+                <!-- <button class="btn btn-default btn-xs btn-filter-collapsed" ng-if="!isReportTypeListCompact"
+                        ng-click="toggleReportTypeListCompact()" type="button">
+                  <i class="fa fa-angle-double-up"></i>
+                  แสดงน้อยลง
+                </button> -->
+              </div>
+            </div><!-- /report type form -->
+
+            <div class="form-group">
+              <h4 class="filter-heading"><i class="fa fa-stethoscope"></i> สถานะรายงาน</h4>
+                <div class="report-type-states-group" ng-repeat="reportType in reportTypes.all | filter:{checked:true}">
+                  <div class="states-group-title"><string>{{ reportType.name }}</string></div>
+                  <div class="states-group-options">
+                    <button class="btn btn-choice" ng-class="{ 'btn-choice-selected': state.checked }" type="button"
+                            ng-repeat="state in reportTypeStates.all[reportType.id]"
+                            ng-click="toggleStateCheck(state)">
+                      <span class="badgex" ng-if="!state.checked">
+                        <i class="fa fa-circle-o fa-size-14"></i>
+                      </span>
+                      <span class="badgex" ng-if="state.checked">
+                        <i class="fa fa-check-circle-o fa-size-14"></i>
+                      </span>
+                      {{ state.name }}
+                    </button>
+                  </div><!-- /states-group-options -->
+                </div><!-- /.report-type-states-group -->
+            </div><!-- /report type state form -->
+
+            <div class="form-group filter-form-date">
+              <h4 class="filter-heading"><i class="fa fa-calendar"></i> ช่วงเวลา</h4>
+                <div class="row">
+                  <div class="col-md-6">
+                    <small class="states-group-title">ตั้งแต่วันที่</small>
+                    <div>
+                      <input type="text" pick-a-date="dateFrom"
+                             pick-a-date-options="{ selectYears: true }"
+                             class="form-pick-date" />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <small class="states-group-title">ถึงวันที่</small>
+                    <div>
+                      <input type="text" pick-a-date="dateTo"
+                             pick-a-date-options="{ selectYears: true }"
+                             class="form-pick-date" />
+                    </div>
+                  </div>
+                </div>
+            </div><!-- /date range form -->
+
+            <div class="form-group">
+              <h4 class="filter-heading"><i class="fa fa-location-arrow"></i> หน่วยงาน</h4>
+                <ui-select multiple
+                  reset-search-input="true"
+                  ng-model="authorities.selected"
+                  class="ui-select-match-custom">
+                  <ui-select-match>{{ $item.name }}</ui-select-match>
+                  <ui-select-choices
+                    group-by="'parentName'"
+                    repeat="authority in authorities.all | filter:$select.search | orderBy:['_order', 'parentName', 'name']">
+                    <span ng-bind-html="authority.name | highlight:$select.search"></span>
+                  </ui-select-choices>
+                </ui-select>
+            </div><!-- /authority form -->
+
+            <div class="form-group">
+              <h4 class="filter-heading">ตั้งค่าการค้นหา</h4>
+
+              <label>
+                <input type="checkbox" ng-model="settings.includeTestFlag">
+                รวมรายงานทดสอบ
+              </label>
+            </div><!-- /test flag form -->
+
+            <button class="btn btn-primary btn-full" type="submit" ng-disabled="loading">
+              <i class="fa fa-search"></i> ค้นหา
+            </button>
+          </form>
+        </div><!-- /.filter-form -->
+      </div> <!-- /.col-sm-4 -->
+
+      <div class="col-sm-9">
+        <div class="row"><div class="col-md-12">
+          <h2 class="subheading pull-left">ผลลัพธ์การค้นหา</h2>
+
+          <a ng-href="#/calendar" class="btn btn-default btn-sm pull-right" style="margin-left: 20px;">
+            <i class="fa fa-calendar"></i> ดูปฏิทินงาน
+          </a>
+
+          <div class="btn-group filter-result-mode-switch pull-right" role="group">
+            <button type="button" class="btn btn-default btn-sm"
+                    ng-class="{ 'btn-primary': (resultMode == 'list') }"
+                    ng-click="resultMode = 'list'"><i class="fa fa-list"></i> รายการ</button>
+            <button type="button" class="btn btn-default btn-sm"
+                    ng-class="{ 'btn-primary': (resultMode == 'table') }"
+                    ng-click="resultMode = 'table'"><i class="fa fa-table"></i> ตาราง</button>
+          </div><!-- /result mode switch -->
+        </div></div>
+
+        <div class="filter-result-container">
+
+          <div ng-if="resultMode == 'list'"> <!-- List View -->
+            <div ng-repeat="report in reports" class="row filter-result-item" ng-click="onClickReport(report.id)">
+              <div class="col-md-2" ng-bind="report.date | amDateFormat:'D MMM YY'"></div>
+              <div class="col-md-8">
+                <label class="label label-default label-state-{{report.stateCode}}"
+                       ng-bind="report.stateName"></label>
+                <span ng-bind="::report.reportTypeName" class="filter-reporttype"></span>
+                <div class="filter-result-area">
+                  <i class="fa fa-map-marker"></i>
+                    <span ng-bind="::report.administrationAreaAddress"></span>
+                </div>
+                <div class="filter-result-desc" ng-bind-html="::report.renderedOriginalFormData"></div>
+              </div>
+
+              <div class="col-md-2">
+                <img ng-src="{{ report.firstImageThumbnail }}" />
+              </div>
+            </div><!-- /.filter-result-item -->
+          </div>
+          <div ng-if="resultMode == 'table'"> <!-- Table View -->
+            <div class="filter-result-item ta-view ta-view-header row">
+              <div class="col-md-2 col-sm-2">วันที่</div>
+              <div class="col-md-3 col-sm-3">สถานะ</div>
+              <div class="col-md-2 col-sm-2">ประเภท</div>
+              <div class="col-md-5 col-sm-5">พื้นที่</div>
+            </div>
+            <div ng-repeat="report in reports" class="row filter-result-item ta-view" ng-click="onClickReport(report.id)">
+                <div class="ta-view-date col-md-2 col-sm-2">
+                  <span ng-if="report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM'"></span>
+                  <span ng-if="!report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM YY'"></span>
+                </div>
+
+                <div class="ta-view-state col-md-3 col-sm-3">
+                  <label class="label label-default label-state-{{report.stateCode}}"
+                       ng-bind="report.stateName"></label>
+                </div>
+
+                <div class="ta-view-report col-md-2 col-sm-2">
+                  <span ng-bind="::report.reportTypeName" class="filter-reporttype"></span>
+                </div>
+
+                <div class="ta-view-area col-md-5 col-sm-5">
+                  <div class="filter-result-area">
+                    <i class="fa fa-map-marker"></i>
+                    <span ng-bind="::report.administrationAreaAddress"></span>
+                  </div>
+                </div>
+                <div class="ta-view-detail visible-xs-block col-sm-12">
+                  <div class="filter-result-desc" ng-bind-html="::report.renderedOriginalFormData"></div>
+                </div>
+
+            </div><!-- /.filter-result-item -->
+          </div>
+
+          <div class="filter-result-message" ng-show="error || isEmpty()">
+            <div class="filter-error alert alert-danger" role="alert" ng-show="error">
+                <strong>เกิดข้อผิดพลาด</strong> กรุณาลองรีเฟรชอีกครั้ง
+            </div>
+
+            <div class="filter-empty alert alert-info" ng-show="isEmpty()">
+                <strong>ไม่พบผลการค้นหา</strong> ไม่มีผลลัพท์ที่คุณกำลังค้นหา ลองดูใหม่นะ
+            </div>
+          </div><!-- /.filter-result-message -->
+        </div><!-- /.filter-result-container -->
+
+        <div class="loadmore" ng-cloak ng-show="!error && !isEmpty()">
+          <button class="btn btn-default center-block" type="button" ng-show="!lastPage" ng-click="::loadMore()" ng-disabled="loading">{{ loading ? 'กรุณารอสักครู่...' : 'เพิ่มเติม...' }} (หน้า {{page}} / {{totalPage}})</button>
+        </div><!-- /.loadmore -->
+
+      </div> <!-- /.col-sm-8 -->
+    </div>
+
+
+
+    </div></div>
+  </div>
+</div>
+
+<div ng-include="'/views/report-view.html'" onload="initReportModal()"></div>

@@ -18,29 +18,36 @@ angular.module('poddDashboardApp')
 
 .controller('ReportViewCtrl', function ($scope, streaming, Flags, Lightbox,
                                         $modal, Search, Reports, $state, Tag,
-                                        $timeout, PlanReport) {
+                                        PlanReport) {
 
     $scope.userAlreadyClickImage = false;
     $scope.reportFlag = {};
 
-    $scope.$parent.$watch('report', function (newValue) {
+    function reloadReportStatesLogs() {
+      if ($scope.report) {
+          if ($scope.report.$promise) {
+              $scope.report.$promise.then(function () {
+                  $scope.reportStatesLogs = Reports.statesLogs({ reportId: $scope.report.id });
+              });
+          }
+          else {
+              $scope.reportStatesLogs = Reports.statesLogs({ reportId: $scope.report.id });
+          }
+      }
+    }
+
+    $scope.report = $scope.$parent.report;
+    $scope.$watch('$parent.report', function (newValue) {
+        $scope.report = newValue;
+        if (newValue) {
+          reloadReportStatesLogs();
+          loadPlanReport();
+        }
+
         if (newValue) {
             $scope.userAlreadyClickImage = false;
-
-            // if ( $scope.$parent.report.images.length ) {
-            //     $scope.activeImage = $scope.$parent.report.images[0];
-            // }
-            // else {
-            //     $scope.activeImage = null;
-            // }
             $scope.activeImage = null;
-
-            refreshFlag();
-            refreshTags();
-
             console.log('report.change');
-
-            $scope.$broadcast('rebuildScrollbar:reportView');
         }
     });
 
@@ -91,16 +98,6 @@ angular.module('poddDashboardApp')
         }
     });
 
-    // Report flag.
-
-    // Make flag as object here to prevent child scope to create new variable
-    // due to ng-if, ng-repeat, ng-switch.
-    // @see: http://stackoverflow.com/a/19410602/163216
-    $scope.flag = {
-        old: undefined,
-        current: null
-    };
-
     $scope.tags = [];
     $scope.loadTags = function(query) {
         return Tag.get({ 'q': query }).$promise.then(function (data) {
@@ -137,117 +134,6 @@ angular.module('poddDashboardApp')
         });
     };
 
-    // TODO: get these configurations from server
-    $scope.flagOptions = [
-        { color: 'Ignore',   priority: 1 },
-        { color: 'OK',       priority: 2 },
-        { color: 'Contact',  priority: 3 },
-        { color: 'Follow',   priority: 4 },
-        { color: 'Case',     priority: 5 }
-    ];
-
-    function refreshFlag() {
-        $scope.flag.current = $scope.flagOptions[ parseInt($scope.$parent.report.flag) - 1 ];
-    }
-
-    function refreshTags() {
-        $scope.tags = [];
-        for (var i = 0; i < $scope.report.tags.length; i++) {
-            $scope.tags.push({'text': $scope.report.tags[i]});
-        }
-    }
-
-    $scope.$watch('flag.current', function (newValue, oldValue) {
-        $scope.flag.old = oldValue;
-        $state.go($state.current, { confirmCase: null }, { notify: false });
-    });
-
-    $scope.updateFlag = function(flag, noConfirm) {
-        var data = {
-            reportId: $scope.$parent.report.id,
-            priority: flag.priority,
-        };
-
-        var flagToConfirm = [ 'Ignore', 'Case' ];
-
-        var modalInstance;
-
-        // Wait for confirm before update flag.
-        if ( !noConfirm && flagToConfirm.indexOf(flag.color) !== -1 ) {
-            swal({
-                title: '',
-                type: 'warning',
-                text: 'โปรดยืนยัน หากคุณต้องการเปลี่ยนค่าระดับความสำคัญใหม่',
-                confirmButtonText: 'ตกลง',
-                confirmButtonClass: 'btn-danger',
-                showCancelButton: true,
-                cancelButtonText: 'ยกเลิก'
-            },
-            function (isConfirm) {
-                if (isConfirm) {
-                    $scope.sendFlag(data);
-                }
-                else {
-                    // reset if not confirm.
-                    $scope.flag.current = $scope.flag.old;
-                }
-            });
-        }
-        else {
-            if (flag.color === 'Follow') {
-                modalInstance = $modal.open({
-                    templateUrl: 'reports-to-follow.html',
-                    controller: ['$scope', function (scope) {
-                        var q = 'administrationArea:' + $scope.$parent.report.administrationAreaId +
-                                ' AND date:last 70 days' +
-                                ' AND flag:case';
-
-                        scope.casesToFollow = Search.query({ q: q, withFormData: true });
-
-                        scope.selected = {};
-
-                        scope.ok = function () {
-                            modalInstance.close(scope.selected.item);
-                        };
-
-                        scope.cancel = function () {
-                            modalInstance.dismiss('cancel');
-                        };
-                    }],
-                    size: 'lg'
-                });
-
-                modalInstance.result.then(function (selectedItem) {
-                    return Reports.follow({ reportId: $scope.$parent.report.id }, {
-                        parent: selectedItem.id
-                    }).$promise
-
-                    .then(function () {
-                        $scope.$broadcast('report:updateFollowUp', $scope.$parent.report.id);
-                    })
-                    .catch(function (err) {
-                        $scope.flag.current = $scope.flag.old;
-
-                        $scope.showWarning(err);
-                    });
-                }, function () {
-                    $scope.flag.current = $scope.flag.old;
-                });
-            }
-            else {
-                $scope.sendFlag(data);
-            }
-        }
-
-    };
-
-    $scope.sendFlag = function(data){
-        Flags.post(data).$promise.catch(function (err) {
-            $scope.flag.current = $scope.flag.old;
-            $scope.showWarning(err);
-        });
-    };
-
     $scope.showWarning = function (err) {
         if (err.status === 403) {
             swal({
@@ -268,34 +154,100 @@ angular.module('poddDashboardApp')
         }
     };
 
-    $scope.willShowConfirmationBox = function () {
-        return (!$scope.flag.current ||
-                ($scope.flag.current &&
-                 $scope.flag.current.color !== 'OK' &&
-                 $scope.flag.current.color !== 'Case')) &&
-                $state.params.confirmCase;
-    };
-
-    // Mark as case
-    $scope.confirmCase = function () {
-        $scope.flag.current = $scope.flagOptions[4];
-        $scope.updateFlag($scope.flag.current, true);
-        $state.go($state.current, { confirmCase: null }, { notify: false });
-    };
-
-    // Mark as ok
-    $scope.noResponse = function () {
-        $scope.flag.current = $scope.flagOptions[1];
-        $scope.updateFlag($scope.flag.current, true);
-        $state.go($state.current, { confirmCase: null }, { notify: false });
-    };
-
     $scope.printDiv = function() {
       var printContents = $('.report-print').html();
       var popupWin = window.open('', '_blank');
       popupWin.document.open();
       popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="' + window.location.origin + '/styles/app.css" /></head><body onload="window.print()">' + printContents + '</html>');
       popupWin.document.close();
+    };
+
+    function showConfirm(text, confirm, cancel) {
+      swal({
+        title: '',
+        type: 'warning',
+        text: text,
+        confirmButtonText: 'ตกลง',
+        confirmButtonClass: 'btn-danger',
+        showCancelButton: true,
+        cancelButtonText: 'ยกเลิก'
+      },
+      function (isConfirm) {
+        if (isConfirm) {
+          confirm && confirm();
+        }
+        else {
+          cancel && cancel();
+        }
+      });
+    }
+    $scope.markAsTest = function markAsTest(report) {
+      showConfirm('คุณต้องการปรับเป็นรายงานทดสอบหรือไม่', function () {
+        Reports.markAsTest({ id: report.id }).$promise.then(function () {
+          report.testFlag = true;
+        });
+      });
+    };
+    $scope.markAsNotTest = function markAsNotTest(report) {
+      showConfirm('คุณต้องการปรับให้รายงานนี้ไม่ใช่รายงานทดสอบหรือไม่', function () {
+        Reports.markAsNotTest({ id: report.id }).$promise.then(function () {
+          report.testFlag = false;
+        });
+      });
+    };
+
+    $scope.submitState = function () {};
+    $scope.submitStateSuccess = function (newState) {
+      $scope.report.stateId = newState.id;
+      $scope.report.stateCode = newState.code;
+      $scope.report.stateName = newState.name;
+    };
+    $scope.onStateSelect = function (state) {
+      $scope.futureState = state;
+    };
+    $scope.isStateChange = function () {
+      return $scope.report &&
+             $scope.futureState &&
+             $scope.futureState.id !== $scope.report.stateId;
+    };
+    // listen to new state.
+    streaming.on('report:state:new', function (data) {
+        console.log('got new state', data);
+        data = angular.fromJson(data);
+
+        if ($scope.report) {
+            if (data.reportId === $scope.report.id) {
+                $scope.reportStatesLogs.push(data);
+                $scope.$apply();
+            }
+        }
+    });
+
+    /* Plan */
+    function loadPlanReport() {
+      $scope.report.$promise.then(function () {
+        Reports.plans({ reportId: $scope.report.id }).$promise.then(function (resp) {
+          $scope.currentPlan = resp[0];
+        });
+      });
+    }
+
+    $scope.viewPlanReport = function (planReportId) {
+      PlanReport.get({ id: planReportId }).$promise.then(function (resp) {
+        $scope._viewResponseMap(resp);
+      });
+    };
+
+    $scope._viewResponseMap = function (planReport) {
+      var scope = $scope.$new();
+      scope.planReport = planReport;
+
+      var modalInstance = $modal.open({
+        templateUrl: 'views/plan-report.html',
+        scope: scope,
+        size: 'lg',
+        controller: 'PlanReportModalCtrl'
+      });
     };
 })
 

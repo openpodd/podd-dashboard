@@ -53,7 +53,7 @@ angular.module('poddDashboardApp')
     });
 
     // Fetch available adminisitration areas
-    ReportTypes.get().$promise.then(function (data) {
+    ReportTypes.query().$promise.then(function (data) {
         var results = [];
         data.forEach(function (item) {
             item.selected = true;
@@ -167,12 +167,12 @@ angular.module('poddDashboardApp')
 
                 if (!header) {
                     dataOptions.push(
-                        { 
+                        {
                             name: '',
-                            field: 'checkbox', 
+                            field: 'checkbox',
                             pinnedLeft: true,
                             cellTemplate: '<input type="checkbox" ng-model="row.entity.checkbox" ng-click="$event.stopPropagation();getExternalScopes().showMe(row.entity.id)"/>',
-                            width: 30, 
+                            width: 30,
                         });
 
                     angular.forEach(item, function(value, key) {

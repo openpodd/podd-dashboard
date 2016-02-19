@@ -275,9 +275,8 @@ angular.module('poddDashboardApp')
             },
             {
                 name: 'พื้นที่',
-                field: 'administrationAreaId',
+                field: 'administrationAreaAddress',
                 width: '24%',
-                cellFilter: 'administrationAreaAddress'
             },
             {
                 name: 'ประเภท',
