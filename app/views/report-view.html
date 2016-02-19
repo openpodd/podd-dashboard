@@ -24,6 +24,7 @@
       <div class="row">
         <div class="col-sm-8" ng-show="report">
           <div class="report-section">
+            <span class="">{{ $parent.report.reportTypeName }}</span>
             <h1 class="report-title" ng-bind-html="report.renderedOriginalFormData"></h1>
 
             <div class="report-detail">
