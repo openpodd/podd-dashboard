@@ -74,8 +74,9 @@ angular
     $rootScope.shared = shared;
   })
 
-  .config(function(cfpLoadingBarProvider) {
+  .config(function(cfpLoadingBarProvider, $animateProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
+    $animateProvider.classNameFilter( /\banimated\b/ );
   })
 
   .factory('addTrailingSlashInterceptor', function ($q) {
