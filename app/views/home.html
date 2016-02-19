@@ -24,16 +24,27 @@
                 {{ reportType.name }}
               </button>
               <div class="text-center" ng-if="reportTypes.all.length > 10">
-                <button class="btn btn-default btn-xs btn-filter-collapsed" ng-if="isReportTypeListCompact"
+                <span ng-if="isReportTypeListCompact"
+                        ng-click="toggleReportTypeListCompact()"
+                        class="show-all">
+                        <i class="fa fa-angle-double-down"></i>
+                  แสดงทั้งหมด</span>
+                <!-- <button class="btn btn-default btn-xs btn-filter-collapsed" ng-if="isReportTypeListCompact"
                         ng-click="toggleReportTypeListCompact()" type="button">
                   <i class="fa fa-arrow-down"></i>
                   แสดงทั้งหมด
-                </button>
-                <button class="btn btn-default btn-xs btn-filter-collapsed" ng-if="!isReportTypeListCompact"
-                        ng-click="toggleReportTypeListCompact()" type="button">
-                  <i class="fa fa-arrow-up"></i>
+                </button> -->
+                <span ng-if="!isReportTypeListCompact"
+                        ng-click="toggleReportTypeListCompact()"
+                        class="show-all">
+                        <i class="fa fa-angle-double-up"></i>
                   แสดงน้อยลง
-                </button>
+                </span>
+                <!-- <button class="btn btn-default btn-xs btn-filter-collapsed" ng-if="!isReportTypeListCompact"
+                        ng-click="toggleReportTypeListCompact()" type="button">
+                  <i class="fa fa-angle-double-up"></i>
+                  แสดงน้อยลง
+                </button> -->
               </div>
             </div><!-- /report type form -->
 

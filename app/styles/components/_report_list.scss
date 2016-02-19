@@ -175,6 +175,21 @@
   margin-top: 20px;
 }
 
+/*--- Show All ---*/
+.show-all{
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+  border-top: 1px dotted #ccc;
+  padding-top: 5px;
+  border-bottom: 1px dotted #ccc;
+
+  &:hover{
+    background-color: #eaeaea;
+    cursor: pointer;
+  }
+}
+
 /*--- Date Picker ---*/
 .form-pick-date{
   width: 100%;
