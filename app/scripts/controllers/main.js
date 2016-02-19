@@ -37,7 +37,7 @@ angular.module('poddDashboardApp')
         }
     });
 
-    Menu.setActiveMenu('home');
+    Menu.setActiveMenu('map');
 
     L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
 
