@@ -93,7 +93,6 @@
           <div class="sidebar-block">
             <div class="sidebar-heading sidebar-heading-bg-purple">
               <h2 class="sidebar-heading-text"><i class="fa fa-stethoscope fa-size-18"></i> สถานะรายงาน</h2>
-              <span class="label label-default label-state label-state-report">{{ report.stateName }}</span>
             </div> <!-- sidebar-heading -->
 
             <div class="sidebar-content" ng-if="currentPlan">
@@ -102,6 +101,9 @@
             </div>
 
             <div class="sidebar-content">
+              <div class="sidebar-status">
+                <span class="label label-default label-state label-state-report">สถานะ : {{ report.stateName }}</span>
+              </div>
               <h3 class="sidebar-title">ประวัติ</h3>
               <ul class="history-log" ng-if="reportStatesLogs.length > 0">
                 <li ng-repeat="log in reportStatesLogs | orderBy:'-createdAt' ">
