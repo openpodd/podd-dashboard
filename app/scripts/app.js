@@ -4,15 +4,27 @@ function htmlToPlainText(text) {
   var allowedTags = ['p', 'br'],
       tmp = String(text);
 
+  // For security issues. Remove all [open_tag], [close_tag] first.
+  tmp = tmp.replace(/\[open_tag\:([^\s]*?)\:(.*?)\]/gm, '');
+  tmp = tmp.replace(/\[close_tag:([^\s]*?)\]/gm, '');
+
   allowedTags.forEach(function (tag) {
     tmp = String(tmp).replace(new RegExp('<' + tag + '([^>]*)>', 'gm'), '[open_tag:' + tag + ':$1]');
     tmp = String(tmp).replace(new RegExp('<\/' + tag + '>', 'gm'), '[close_tag:' + tag + ']');
   });
 
-  // Fixed nested <p>
-  // @see: https://stackoverflow.com/questions/12015804/nesting-p-wont-work-while-nesting-div-will
-  tmp = String(tmp).replace(new RegExp(/\[open_tag\:p\:(.*?)\](.|\s|\S*?)\[open_tag\:p\:/, 'gm'), '[open_tag:div:$1]$2[open_tag:p:');
-  tmp = String(tmp).replace(new RegExp(/\[close_tag\:(p|div)\](((?!\[open_tag).|(?!\[open_tag)\s|(?!\[open_tag)\S)*?)\[close_tag\:p\]/, 'gm'), '[close_tag:p]$2[close_tag:div]');
+  /**
+   * Fixed nested <p>
+   * @see: https://stackoverflow.com/questions/12015804/nesting-p-wont-work-while-nesting-div-will
+   * We can use below implement, but this can't handle the nested-nested <p>.
+   * ```javascript
+   * tmp = String(tmp).replace(new RegExp(/\[open_tag\:p\:(.*?)\](.|\s|\S*?)\[open_tag\:p\:/, 'gm'), '[open_tag:div:$1]$2[open_tag:p:');
+   * tmp = String(tmp).replace(new RegExp(/\[close_tag\:(p|div)\](((?!\[open_tag).|(?!\[open_tag)\s|(?!\[open_tag)\S)*?)\[close_tag\:p\]/, 'gm'), '[close_tag:p]$2[close_tag:div]');
+   * ```
+   */
+  // So let use the simpler solution, change all <p> to <div>.
+  tmp = tmp.replace(/\[open_tag:p:/g, '[open_tag:div:');
+  tmp = tmp.replace(/\[close_tag:p\]/g, '[close_tag:p\]');
 
   tmp = tmp.replace(/<[^>]+>/gm, '');
   tmp = tmp.replace(/\[open_tag\:([^\s]*?)\:(.*?)\]/gm, '<$1$2>');
