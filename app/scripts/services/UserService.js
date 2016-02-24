@@ -77,6 +77,22 @@ angular.module('poddDashboardApp')
             });
         },
 
+        logout: function () {
+            shared.loggedIn = false;
+            shared.menuPermissions = [];
+            shared.summaryReportMode = false;
+            shared.summaryPersonMode = false;
+            shared.summaryPerformancePersonMode = false;
+            shared.summaryReportMonthMode = false;
+            shared.summaryScenarioMode = false;
+            $.removeCookie('token');
+            storage.clearAll();
+        },
+
+        checkCookie: function () {
+            return !!$.cookie('token');
+        },
+
         requireLogin: function ($scope) {
             var self = this;
 
@@ -94,6 +110,17 @@ angular.module('poddDashboardApp')
             }
 
             check();
+            // Loop check
+            var promise = $interval(function () {
+                if (!self.checkCookie()) {
+                    self.logout();
+                    $location.url('/login');
+                }
+            }, 1000);
+
+            $scope.$on('$destroy', function () {
+                $interval.cancel(promise);
+            });
         }
     };
 })
