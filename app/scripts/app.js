@@ -12,7 +12,7 @@ function htmlToPlainText(text) {
   // Fixed nested <p>
   // @see: https://stackoverflow.com/questions/12015804/nesting-p-wont-work-while-nesting-div-will
   tmp = String(tmp).replace(new RegExp(/\[open_tag\:p\:(.*?)\](.|\s|\S*?)\[open_tag\:p\:/, 'gm'), '[open_tag:div:$1]$2[open_tag:p:');
-  tmp = String(tmp).replace(new RegExp(/\[close_tag\:p\]((?!\[open_tag).|(?!\[open_tag)\s|(?!\[open_tag)\S)*?\[close_tag\:p\]/, 'gm'), '[close_tag:p]$1[close_tag:div]');
+  tmp = String(tmp).replace(new RegExp(/\[close_tag\:(p|div)\](((?!\[open_tag).|(?!\[open_tag)\s|(?!\[open_tag)\S)*?)\[close_tag\:p\]/, 'gm'), '[close_tag:p]$2[close_tag:div]');
 
   tmp = tmp.replace(/<[^>]+>/gm, '');
   tmp = tmp.replace(/\[open_tag\:([^\s]*?)\:(.*?)\]/gm, '<$1$2>');
