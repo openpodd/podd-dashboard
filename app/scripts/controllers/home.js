@@ -356,6 +356,7 @@ angular.module('poddDashboardApp')
     }
   };
 
+  $scope.activeReportId = null;
   $scope.resultMode = 'table';
   $scope.lastPage = false;
   $scope.error = false;
@@ -367,6 +368,7 @@ angular.module('poddDashboardApp')
   _load(queryBuilder, true);
 
   $scope.onClickReport = function (reportId) {
+    $scope.activeReportId = reportId;
     $state.go('home', { reportId: reportId }, { notify: false });
     $scope.viewReport(reportId);
   };

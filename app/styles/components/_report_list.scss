@@ -153,11 +153,15 @@
     text-overflow: '...';
   }
 }
-.filter-result-item{
+.filter-result-item {
   padding: 8px 5px;
   border-bottom: 1px solid #eaeaea;
 
-  &:hover{
+  &.active {
+    background-color: #dcffcc;
+  }
+
+  &:hover {
     background-color: #ffc;
     cursor: pointer;
   }

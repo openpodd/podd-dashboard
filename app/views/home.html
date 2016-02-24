@@ -142,7 +142,9 @@
         <div class="filter-result-container">
 
           <div ng-if="resultMode == 'list'"> <!-- List View -->
-            <div ng-repeat="report in reports" class="row filter-result-item" ng-click="onClickReport(report.id)">
+            <div ng-repeat="report in reports" class="row filter-result-item"
+                 ng-class="{ 'active': report.id == activeReportId }"
+                 ng-click="onClickReport(report.id)">
               <div class="col-md-2">
                 <span ng-bind="report.date | amDateFormat:'D MMM YY'"></span>
                 <small>- {{report.date | amDateFormat:'HH:mm'}}</small>
@@ -170,7 +172,9 @@
               <div class="col-md-2 col-sm-2">ประเภท</div>
               <div class="col-md-5 col-sm-5">พื้นที่</div>
             </div>
-            <div ng-repeat="report in reports" class="row filter-result-item ta-view" ng-click="onClickReport(report.id)">
+            <div ng-repeat="report in reports" class="row filter-result-item ta-view"
+                 ng-class="{ 'active': report.id == activeReportId }"
+                 ng-click="onClickReport(report.id)">
                 <div class="ta-view-date col-md-2 col-sm-2">
                   <span ng-if="report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM'"></span>
                   <span ng-if="!report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM YY'"></span>
