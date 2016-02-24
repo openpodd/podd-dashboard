@@ -142,8 +142,13 @@
         <div class="filter-result-container">
 
           <div ng-if="resultMode == 'list'"> <!-- List View -->
-            <div ng-repeat="report in reports" class="row filter-result-item" ng-click="onClickReport(report.id)">
-              <div class="col-md-2" ng-bind="report.date | amDateFormat:'D MMM YY'"></div>
+            <div ng-repeat="report in reports" class="row filter-result-item"
+                 ng-class="{ 'active': report.id == activeReportId }"
+                 ng-click="onClickReport(report.id)">
+              <div class="col-md-2">
+                <span ng-bind="report.date | amDateFormat:'D MMM YY'"></span>
+                <small>- {{report.date | amDateFormat:'HH:mm'}}</small>
+              </div>
               <div class="col-md-8">
                 <label class="label label-default label-state-{{report.stateCode}}"
                        ng-bind="report.stateName"></label>
@@ -167,10 +172,13 @@
               <div class="col-md-2 col-sm-2">ประเภท</div>
               <div class="col-md-5 col-sm-5">พื้นที่</div>
             </div>
-            <div ng-repeat="report in reports" class="row filter-result-item ta-view" ng-click="onClickReport(report.id)">
+            <div ng-repeat="report in reports" class="row filter-result-item ta-view"
+                 ng-class="{ 'active': report.id == activeReportId }"
+                 ng-click="onClickReport(report.id)">
                 <div class="ta-view-date col-md-2 col-sm-2">
                   <span ng-if="report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM'"></span>
                   <span ng-if="!report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM YY'"></span>
+                  <small>- {{report.date | amDateFormat:'HH:mm'}}</small>
                 </div>
 
                 <div class="ta-view-state col-md-3 col-sm-3">
@@ -197,11 +205,11 @@
 
           <div class="filter-result-message" ng-show="error || isEmpty()">
             <div class="filter-error alert alert-danger" role="alert" ng-show="error">
-                <strong>เกิดข้อผิดพลาด</strong> กรุณาลองรีเฟรชอีกครั้ง
+                <strong>เกิดข้อผิดพลาด</strong> กรุณารอสักครู่แล้วลองใหม่อีกครั้ง
             </div>
 
             <div class="filter-empty alert alert-info" ng-show="isEmpty()">
-                <strong>ไม่พบผลการค้นหา</strong> ไม่มีผลลัพท์ที่คุณกำลังค้นหา ลองดูใหม่นะ
+                <strong>ไม่พบผลการค้นหา</strong> กรุณาปรับการค้นหาใหม่ หรือ ลองกดค้นหาอีกครั้ง
             </div>
           </div><!-- /.filter-result-message -->
         </div><!-- /.filter-result-container -->

@@ -153,11 +153,17 @@
     text-overflow: '...';
   }
 }
-.filter-result-item{
+.filter-result-item {
   padding: 8px 5px;
   border-bottom: 1px solid #eaeaea;
 
-  &:hover{
+  &.active {
+    background-color: #dcffcc;
+    border-top: 1px dashed #999;
+    border-bottom: 1px dashed #999;
+  }
+
+  &:hover {
     background-color: #ffc;
     cursor: pointer;
   }

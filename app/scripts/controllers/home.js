@@ -9,10 +9,11 @@ angular.module('poddDashboardApp')
 .controller('HomeCtrl', function ($scope, Search, ReportTypes, ReportState,
                                   dashboard, Authority, moment, ReportModal,
                                   shared, Reports, $state, $stateParams, $timeout,
-                                  Menu) {
+                                  Menu, Auth) {
   console.log('-> In HomeCtrl');
 
   Menu.setActiveMenu('home');
+  Auth.requireLogin($scope);
 
   // Load report if given at request.
   $timeout(function () {
@@ -355,6 +356,7 @@ angular.module('poddDashboardApp')
     }
   };
 
+  $scope.activeReportId = null;
   $scope.resultMode = 'table';
   $scope.lastPage = false;
   $scope.error = false;
@@ -366,6 +368,7 @@ angular.module('poddDashboardApp')
   _load(queryBuilder, true);
 
   $scope.onClickReport = function (reportId) {
+    $scope.activeReportId = reportId;
     $state.go('home', { reportId: reportId }, { notify: false });
     $scope.viewReport(reportId);
   };

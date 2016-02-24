@@ -2,20 +2,17 @@
 
 angular.module('poddDashboardApp')
 
-.controller('MenuCtrl', function ($scope, $http, shared, $location, Menu, storage) {
+.controller('MenuCtrl', function ($scope, $http, shared, $location, Menu, storage, Auth) {
     $scope.shared = shared;
+
+    $scope.$watch('shared.loggedIn', function (newValue) {
+        $scope.isShowNav = newValue;
+    });
 
     $scope.logout = function () {
         $scope.shared.loggedIn = false;
-        shared.loggedIn = false;
-        shared.menuPermissions = [];
-        shared.summaryReportMode = false;
-        shared.summaryPersonMode = false;
-        shared.summaryPerformancePersonMode = false;
-        shared.summaryReportMonthMode = false;
-        shared.summaryScenarioMode = false;
-        $.removeCookie('token');
-        storage.clearAll();
+        Auth.logout();
+        $location.url('/login');
     };
 
     $scope.setActiveMenu = function (name) {
