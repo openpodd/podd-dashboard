@@ -29,22 +29,12 @@
                         class="show-all">
                         <i class="fa fa-angle-double-down"></i>
                   แสดงทั้งหมด</span>
-                <!-- <button class="btn btn-default btn-xs btn-filter-collapsed" ng-if="isReportTypeListCompact"
-                        ng-click="toggleReportTypeListCompact()" type="button">
-                  <i class="fa fa-arrow-down"></i>
-                  แสดงทั้งหมด
-                </button> -->
                 <span ng-if="!isReportTypeListCompact"
                         ng-click="toggleReportTypeListCompact()"
                         class="show-all">
                         <i class="fa fa-angle-double-up"></i>
                   แสดงน้อยลง
                 </span>
-                <!-- <button class="btn btn-default btn-xs btn-filter-collapsed" ng-if="!isReportTypeListCompact"
-                        ng-click="toggleReportTypeListCompact()" type="button">
-                  <i class="fa fa-angle-double-up"></i>
-                  แสดงน้อยลง
-                </button> -->
               </div>
             </div><!-- /report type form -->
 
@@ -161,7 +151,7 @@
               </div>
 
               <div class="col-md-2">
-                <img ng-src="{{ report.firstImageThumbnail }}" />
+                <img ng-src="{{ report.firstImageThumbnail }}" class="filter-thumb" />
               </div>
             </div><!-- /.filter-result-item -->
           </div>
