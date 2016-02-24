@@ -159,6 +159,8 @@
 
   &.active {
     background-color: #dcffcc;
+    border-top: 1px dashed #999;
+    border-bottom: 1px dashed #999;
   }
 
   &:hover {
