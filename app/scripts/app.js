@@ -9,9 +9,14 @@ function htmlToPlainText(text) {
     tmp = String(tmp).replace(new RegExp('<\/' + tag + '>', 'gm'), '[close_tag:' + tag + ']');
   });
 
+  // Fixed nested <p>
+  // @see: https://stackoverflow.com/questions/12015804/nesting-p-wont-work-while-nesting-div-will
+  tmp = String(tmp).replace(new RegExp(/\[open_tag\:p\:(.*?)\](.|\s|\S*?)\[open_tag\:p\:/, 'gm'), '[open_tag:div:$1]$2[open_tag:p:');
+  tmp = String(tmp).replace(new RegExp(/\[close_tag\:p\]((?!\[open_tag).|(?!\[open_tag)\s|(?!\[open_tag)\S)*?\[close_tag\:p\]/, 'gm'), '[close_tag:p]$1[close_tag:div]');
+
   tmp = tmp.replace(/<[^>]+>/gm, '');
-  tmp = tmp.replace(/\[open_tag\:([^\s])*?\:(.*?)\]/gm, '<$1$2>');
-  tmp = tmp.replace(/\[close_tag:([^\s])*?\]/gm, '<$1>');
+  tmp = tmp.replace(/\[open_tag\:([^\s]*?)\:(.*?)\]/gm, '<$1$2>');
+  tmp = tmp.replace(/\[close_tag:([^\s]*?)\]/gm, '</$1>');
 
   return tmp;
 }
