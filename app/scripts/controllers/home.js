@@ -9,10 +9,11 @@ angular.module('poddDashboardApp')
 .controller('HomeCtrl', function ($scope, Search, ReportTypes, ReportState,
                                   dashboard, Authority, moment, ReportModal,
                                   shared, Reports, $state, $stateParams, $timeout,
-                                  Menu) {
+                                  Menu, Auth) {
   console.log('-> In HomeCtrl');
 
   Menu.setActiveMenu('home');
+  Auth.requireLogin($scope);
 
   // Load report if given at request.
   $timeout(function () {

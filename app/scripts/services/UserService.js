@@ -93,13 +93,7 @@ angular.module('poddDashboardApp')
                 });
             }
 
-            // Loop check
             check();
-            // var promise = $interval(check, 5000);
-
-            // $scope.$on('$destroy', function () {
-            //     $interval.cancel(promise);
-            // });
         }
     };
 })

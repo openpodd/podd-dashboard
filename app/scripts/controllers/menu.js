@@ -16,6 +16,7 @@ angular.module('poddDashboardApp')
         shared.summaryScenarioMode = false;
         $.removeCookie('token');
         storage.clearAll();
+        $location.url('/login');
     };
 
     $scope.setActiveMenu = function (name) {
