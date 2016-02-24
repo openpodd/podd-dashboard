@@ -11,7 +11,7 @@ angular.module('poddDashboardApp')
 
     $scope.$watch('shared.loggedIn', function(newValue) {
         if (newValue) {
-            $state.go('main.filter', { q: 'date:today negative:true' });
+            $state.go('home');
         }
     });
 
