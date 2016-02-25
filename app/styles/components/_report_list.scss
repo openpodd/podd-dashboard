@@ -4,6 +4,8 @@
 
 /*--- Container class form ---*/
 .filter-form{
+  margin-bottom: 20px;
+
   .form-group{
     margin-left: 0;
     margin-right: 0;
@@ -107,6 +109,7 @@
 
 /*--- Filter Result ---*/
 .filter-result-container{
+  clear: both;
   padding: 0 15px;
   box-sizing: border-box;
   border: 1px solid #d2d2d2;
@@ -180,12 +183,20 @@
     padding-bottom: 5px;
   }
   .label-default{
-    /*font-size: 13px;*/
+    display: inline-block;
     font-weight: normal;
+    vertical-align: middle;
   }
 }
 .filter-error{
   margin-top: 20px;
+}
+.filter-result-date{
+  @include respond-to(tablet-portrait){
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    background-color: #efefef;
+  }
 }
 
 /*--- Show All ---*/
@@ -200,6 +211,16 @@
   &:hover{
     background-color: #eaeaea;
     cursor: pointer;
+  }
+}
+
+/*--- Action Button ---*/
+.filter-action{
+  margin-bottom: 15px;
+
+  @include respond-to(phone){
+    float: none !important;
+    clear: both;
   }
 }
 
