@@ -7,7 +7,7 @@
     <div class="content-wrapper"><div class="content">
 
     <div class="row">
-      <div class="col-sm-3">
+      <div class="col-md-3">
         <div class="filter-form">
           <form class="form-horizontal" ng-submit="submit($event)">
             <div class="form-group">
@@ -111,23 +111,25 @@
         </div><!-- /.filter-form -->
       </div> <!-- /.col-sm-4 -->
 
-      <div class="col-sm-9">
-        <div class="row"><div class="col-md-12">
+      <div class="col-md-9">
+        <!-- <div class="row"><div class="col-md-12"> -->
           <h2 class="subheading pull-left">ผลลัพธ์การค้นหา</h2>
 
-          <a ng-href="#/calendar" class="btn btn-default btn-sm pull-right" style="margin-left: 20px;">
-            <i class="fa fa-calendar"></i> ดูปฏิทินงาน
-          </a>
+          <div class="filter-action pull-right">
+            <div class="btn-group filter-result-mode-switch" role="group">
+              <button type="button" class="btn btn-default btn-sm"
+                      ng-class="{ 'btn-primary': (resultMode == 'list') }"
+                      ng-click="resultMode = 'list'"><i class="fa fa-list"></i> รายการ</button>
+              <button type="button" class="btn btn-default btn-sm"
+                      ng-class="{ 'btn-primary': (resultMode == 'table') }"
+                      ng-click="resultMode = 'table'"><i class="fa fa-table"></i> ตาราง</button>
+            </div><!-- /result mode switch -->
 
-          <div class="btn-group filter-result-mode-switch pull-right" role="group">
-            <button type="button" class="btn btn-default btn-sm"
-                    ng-class="{ 'btn-primary': (resultMode == 'list') }"
-                    ng-click="resultMode = 'list'"><i class="fa fa-list"></i> รายการ</button>
-            <button type="button" class="btn btn-default btn-sm"
-                    ng-class="{ 'btn-primary': (resultMode == 'table') }"
-                    ng-click="resultMode = 'table'"><i class="fa fa-table"></i> ตาราง</button>
-          </div><!-- /result mode switch -->
-        </div></div>
+            <a ng-href="#/calendar" class="btn btn-default btn-sm">
+              <i class="fa fa-calendar"></i> ดูปฏิทินงาน
+            </a>
+          </div>
+        <!-- </div></div> -->
 
         <div class="filter-result-container">
 
@@ -135,11 +137,11 @@
             <div ng-repeat="report in reports" class="row filter-result-item"
                  ng-class="{ 'active': report.id == activeReportId }"
                  ng-click="onClickReport(report.id)">
-              <div class="col-md-2">
+              <div class="col-xs-3 col-sm-2">
                 <span ng-bind="report.date | amDateFormat:'D MMM YY'"></span>
-                <small>- {{report.date | amDateFormat:'HH:mm'}}</small>
+                <p><small>เวลา {{report.date | amDateFormat:'HH:mm'}} น.</small></p>
               </div>
-              <div class="col-md-8">
+              <div class="col-xs-6 col-sm-8">
                 <label class="label label-default label-state-{{report.stateCode}}"
                        ng-bind="report.stateName"></label>
                 <span ng-bind="::report.reportTypeName" class="filter-reporttype"></span>
@@ -150,8 +152,8 @@
                 <div class="filter-result-desc" ng-bind-html="::report.renderedOriginalFormData"></div>
               </div>
 
-              <div class="col-md-2">
-                <img ng-src="{{ report.firstImageThumbnail }}" class="filter-thumb" />
+              <div class="col-xs-3 col-sm-2">
+                <img ng-src="{{ report.firstImageThumbnail }}" class="filter-thumb pull-right" />
               </div>
             </div><!-- /.filter-result-item -->
           </div>
@@ -168,7 +170,7 @@
                 <div class="ta-view-date col-md-2 col-sm-2">
                   <span ng-if="report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM'"></span>
                   <span ng-if="!report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM YY'"></span>
-                  <small>- {{report.date | amDateFormat:'HH:mm'}}</small>
+                  <small>, {{report.date | amDateFormat:'HH:mm'}} น.</small>
                 </div>
 
                 <div class="ta-view-state col-md-3 col-sm-3">
