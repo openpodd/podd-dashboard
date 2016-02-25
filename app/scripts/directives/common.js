@@ -373,6 +373,44 @@ angular.module('poddDashboardApp')
     };
 })
 
+.directive('affix', function ($rootScope, $timeout, $window) {
+
+    function _updateWidth($element) {
+        // dynamically set width.
+        var $parent = $element.parent();
+        $element.width($parent.width());
+    }
+
+    return {
+        strict: 'A',
+        link: function ($scope, $element, $attrs) {
+            function applyAffix() {
+                $timeout(function () {
+                    $element.affix({
+                        top: $attrs.offsetTop,
+                        bottom: $attrs.offsetBottom,
+                        target: $attrs.target
+                    });
+
+                    _updateWidth($element);
+                });
+            }
+
+            $rootScope.$on('$stateChangeSuccess', function () {
+                $element.removeData('bs.affix').removeClass('affix affix-top affix-bottom');
+                applyAffix();
+            });
+
+            // Update width on window dimension changed.
+            $(window).resize(function () {
+                _updateWidth($element);
+            });
+
+            applyAffix();
+        }
+    };
+})
+
 .directive('blink', function ($timeout) {
     return {
         strict: 'A',
@@ -396,16 +434,24 @@ angular.module('poddDashboardApp')
 .directive('setMaxHeight', function ($window) {
     function setMaxHeight($element, value) {
         var isPercent = false,
+            isOffsetBottom = false,
             windowHeight = $($window).height(),
             elemTop = $element.offset().top;
 
         if (angular.isString(value) && value.indexOf('%')) {
             isPercent = true;
         }
-        value = parseFloat(value);
+        // support offset bottom.
+        if (angular.isString(value) && value[0] == '-') {
+            isOffsetBottom = true;
+        }
+        value = Math.abs(parseFloat(value));
 
-        if (isPercent) {
+        if (isPercent && !isOffsetBottom) {
             $element.css('max-height', '' + ( windowHeight * (value/100.0) ) + 'px' );
+        }
+        else if (isOffsetBottom) {
+            $element.css('max-height', '' + ( windowHeight - elemTop - value ) + 'px');
         }
         else {
             $element.css('max-height', '' + ( windowHeight - value - elemTop ) + 'px');

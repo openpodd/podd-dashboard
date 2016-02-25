@@ -8,106 +8,13 @@
 
     <div class="row">
       <div class="col-md-3">
-        <div class="filter-form">
-          <form class="form-horizontal" ng-submit="submit($event)">
-            <div class="form-group">
-              <h4 class="filter-heading"><i class="fa fa-file-text"></i> ประเภทรายงาน</h4>
-              <button class="btn btn-choice" ng-class="{ 'btn-choice-selected': reportType.checked }" type="button"
-                      ng-repeat="reportType in reportTypes.all | orderBy:'weight' | first:reportTypeListLimit"
-                      ng-click="toggleReportTypeCheck(reportType)">
-                <span class="badgex" ng-if="!reportType.checked">
-                  <i class="fa fa-circle-o fa-size-14"></i>
-                </span>
-                <span class="badgex" ng-if="reportType.checked">
-                  <i class="fa fa-check-circle-o fa-size-14"></i>
-                </span>
-                {{ reportType.name }}
-              </button>
-              <div class="text-center" ng-if="reportTypes.all.length > 10">
-                <span ng-if="isReportTypeListCompact"
-                        ng-click="toggleReportTypeListCompact()"
-                        class="show-all">
-                        <i class="fa fa-angle-double-down"></i>
-                  แสดงทั้งหมด</span>
-                <span ng-if="!isReportTypeListCompact"
-                        ng-click="toggleReportTypeListCompact()"
-                        class="show-all">
-                        <i class="fa fa-angle-double-up"></i>
-                  แสดงน้อยลง
-                </span>
-              </div>
-            </div><!-- /report type form -->
-
-            <div class="form-group">
-              <h4 class="filter-heading"><i class="fa fa-stethoscope"></i> สถานะรายงาน</h4>
-                <div class="report-type-states-group" ng-repeat="reportType in reportTypes.all | filter:{checked:true}">
-                  <div class="states-group-title"><string>{{ reportType.name }}</string></div>
-                  <div class="states-group-options">
-                    <button class="btn btn-choice" ng-class="{ 'btn-choice-selected': state.checked }" type="button"
-                            ng-repeat="state in reportTypeStates.all[reportType.id]"
-                            ng-click="toggleStateCheck(state)">
-                      <span class="badgex" ng-if="!state.checked">
-                        <i class="fa fa-circle-o fa-size-14"></i>
-                      </span>
-                      <span class="badgex" ng-if="state.checked">
-                        <i class="fa fa-check-circle-o fa-size-14"></i>
-                      </span>
-                      {{ state.name }}
-                    </button>
-                  </div><!-- /states-group-options -->
-                </div><!-- /.report-type-states-group -->
-            </div><!-- /report type state form -->
-
-            <div class="form-group filter-form-date">
-              <h4 class="filter-heading"><i class="fa fa-calendar"></i> ช่วงเวลา</h4>
-                <div class="row">
-                  <div class="col-md-6">
-                    <small class="states-group-title">ตั้งแต่วันที่</small>
-                    <div>
-                      <input type="text" pick-a-date="dateFrom"
-                             pick-a-date-options="{ selectYears: true }"
-                             class="form-pick-date" />
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <small class="states-group-title">ถึงวันที่</small>
-                    <div>
-                      <input type="text" pick-a-date="dateTo"
-                             pick-a-date-options="{ selectYears: true }"
-                             class="form-pick-date" />
-                    </div>
-                  </div>
-                </div>
-            </div><!-- /date range form -->
-
-            <div class="form-group">
-              <h4 class="filter-heading"><i class="fa fa-location-arrow"></i> หน่วยงาน</h4>
-                <ui-select multiple
-                  reset-search-input="true"
-                  ng-model="authorities.selected"
-                  class="ui-select-match-custom">
-                  <ui-select-match>{{ $item.name }}</ui-select-match>
-                  <ui-select-choices
-                    group-by="'parentName'"
-                    repeat="authority in authorities.all | filter:$select.search | orderBy:['_order', 'parentName', 'name']">
-                    <span ng-bind-html="authority.name | highlight:$select.search"></span>
-                  </ui-select-choices>
-                </ui-select>
-            </div><!-- /authority form -->
-
-            <div class="form-group">
-              <h4 class="filter-heading">ตั้งค่าการค้นหา</h4>
-
-              <label>
-                <input type="checkbox" ng-model="settings.includeTestFlag">
-                รวมรายงานทดสอบ
-              </label>
-            </div><!-- /test flag form -->
-
-            <button class="btn btn-primary btn-full" type="submit" ng-disabled="loading">
-              <i class="fa fa-search"></i> ค้นหา
-            </button>
-          </form>
+        <div class="filter-form hidden-xs hidden-sm" affix set-max-height="'-24px'"
+             data-target=".l-detail-section > .content-wrapper"
+             data-spy="affix" data-offset-top="60">
+          <div ng-include="'/inline/template/filter.html'"></div>
+        </div><!-- /.filter-form -->
+        <div class="filter-form hidden-md hidden-lg">
+          <div ng-include="'/inline/template/filter.html'"></div>
         </div><!-- /.filter-form -->
       </div> <!-- /.col-sm-4 -->
 
@@ -218,4 +125,94 @@
   </div>
 </div>
 
+<script type="text/ng-template" id="/inline/template/filter.html">
+<form class="form-horizontal" ng-submit="submit($event)">
+  <div class="form-group">
+    <h4 class="filter-heading"><i class="fa fa-file-text"></i> ประเภทรายงาน</h4>
+    <button class="btn btn-choice" ng-class="{ 'btn-choice-selected': reportType.checked }" type="button" ng-repeat="reportType in reportTypes.all | orderBy:'weight' | first:reportTypeListLimit" ng-click="toggleReportTypeCheck(reportType)">
+      <span class="badgex" ng-if="!reportType.checked">
+     <i class="fa fa-circle-o fa-size-14"></i>
+   </span>
+      <span class="badgex" ng-if="reportType.checked">
+     <i class="fa fa-check-circle-o fa-size-14"></i>
+   </span> {{ reportType.name }}
+    </button>
+    <div class="text-center" ng-if="reportTypes.all.length > 10">
+      <span ng-if="isReportTypeListCompact" ng-click="toggleReportTypeListCompact()" class="show-all">
+           <i class="fa fa-angle-double-down"></i>
+     แสดงทั้งหมด</span>
+      <span ng-if="!isReportTypeListCompact" ng-click="toggleReportTypeListCompact()" class="show-all">
+           <i class="fa fa-angle-double-up"></i>
+     แสดงน้อยลง
+   </span>
+    </div>
+  </div>
+  <!-- /report type form -->
+
+  <div class="form-group">
+    <h4 class="filter-heading"><i class="fa fa-stethoscope"></i> สถานะรายงาน</h4>
+    <div class="report-type-states-group" ng-repeat="reportType in reportTypes.all | filter:{checked:true}">
+      <div class="states-group-title">
+        <string>{{ reportType.name }}</string>
+      </div>
+      <div class="states-group-options">
+        <button class="btn btn-choice" ng-class="{ 'btn-choice-selected': state.checked }" type="button" ng-repeat="state in reportTypeStates.all[reportType.id]" ng-click="toggleStateCheck(state)">
+          <span class="badgex" ng-if="!state.checked">
+           <i class="fa fa-circle-o fa-size-14"></i>
+         </span>
+          <span class="badgex" ng-if="state.checked">
+           <i class="fa fa-check-circle-o fa-size-14"></i>
+         </span> {{ state.name }}
+        </button>
+      </div>
+      <!-- /states-group-options -->
+    </div>
+    <!-- /.report-type-states-group -->
+  </div>
+  <!-- /report type state form -->
+
+  <div class="form-group filter-form-date">
+    <h4 class="filter-heading"><i class="fa fa-calendar"></i> ช่วงเวลา</h4>
+    <div class="row">
+      <div class="col-md-6">
+        <small class="states-group-title">ตั้งแต่วันที่</small>
+        <div>
+          <input type="text" pick-a-date="dateFrom" pick-a-date-options="{ selectYears: true }" class="form-pick-date" />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <small class="states-group-title">ถึงวันที่</small>
+        <div>
+          <input type="text" pick-a-date="dateTo" pick-a-date-options="{ selectYears: true }" class="form-pick-date" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /date range form -->
+
+  <div class="form-group">
+    <h4 class="filter-heading"><i class="fa fa-location-arrow"></i> หน่วยงาน</h4>
+    <ui-select multiple reset-search-input="true" ng-model="authorities.selected" class="ui-select-match-custom">
+      <ui-select-match>{{ $item.name }}</ui-select-match>
+      <ui-select-choices group-by="'parentName'" repeat="authority in authorities.all | filter:$select.search | orderBy:['_order', 'parentName', 'name']">
+        <span ng-bind-html="authority.name | highlight:$select.search"></span>
+      </ui-select-choices>
+    </ui-select>
+  </div>
+  <!-- /authority form -->
+
+  <div class="form-group">
+    <h4 class="filter-heading">ตั้งค่าการค้นหา</h4>
+
+    <label>
+      <input type="checkbox" ng-model="settings.includeTestFlag"> รวมรายงานทดสอบ
+    </label>
+  </div>
+  <!-- /test flag form -->
+
+  <button class="btn btn-primary btn-full" type="submit" ng-disabled="loading">
+    <i class="fa fa-search"></i> ค้นหา
+  </button>
+</form>
+</script>
 <div ng-include="'/views/report-view.html'" onload="initReportModal()"></div>

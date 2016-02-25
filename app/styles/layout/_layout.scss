@@ -145,6 +145,12 @@ $comment-section-bg: #333;
     }
 }
 .home {
+    .filter-form {
+        overflow: auto;
+        .form-group {
+          overflow: hidden;
+        }
+    }
     .filter-result-message {
         margin-top: 1em;
     }
