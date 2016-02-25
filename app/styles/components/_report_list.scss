@@ -183,12 +183,20 @@
     padding-bottom: 5px;
   }
   .label-default{
-    /*font-size: 13px;*/
+    display: inline-block;
     font-weight: normal;
+    vertical-align: middle;
   }
 }
 .filter-error{
   margin-top: 20px;
+}
+.filter-result-date{
+  @include respond-to(tablet-portrait){
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    background-color: #efefef;
+  }
 }
 
 /*--- Show All ---*/
@@ -206,6 +214,7 @@
   }
 }
 
+/*--- Action Button ---*/
 .filter-action{
   margin-bottom: 15px;
 

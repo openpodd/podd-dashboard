@@ -6,6 +6,13 @@ html, body{
 .clear{
     clear: both;
 }
+.new-line{
+    display: block;
+
+    @include respond-to(tablet-portrait){
+        display: inline;
+    }
+}
 .padding-mini{
     padding: 10px;
 }
