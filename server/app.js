@@ -8,7 +8,7 @@ var io = require('socket.io')(8888),
     gcm = require('android-gcm'),
     raven = require('raven'),
     client = new raven.Client(config.sentryDSN, { level: 'error' }),
-    consumer = redis.createClient(config.redis);
+    consumer = redis.createClient(config.redis.port, config.redis.host, config.redis);
 
 var pushGCM = function pushGCM(message) {
     var data = JSON.parse(message);
