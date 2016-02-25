@@ -715,7 +715,8 @@ $badge-bad: #FF6D69;
 }
 
 .comment-rendered-form-data {
-    display: inline-block;
+    display: block;
+    clear: both;
     font-style: italic;
     border: 1px solid #ccc;
     padding: 4px;
