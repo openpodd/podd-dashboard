@@ -125,6 +125,10 @@ angular.module('poddDashboardApp')
     current: null,
     selected: []
   };
+  $scope.dateRange = {
+    from: null,
+    to: null
+  };
   $scope.settings = {};
 
   function concat(a, b) {
@@ -220,8 +224,8 @@ angular.module('poddDashboardApp')
   };
 
   function buildDateQuery() {
-    var dateFrom = $scope.dateFrom;
-    var dateTo = $scope.dateTo;
+    var dateFrom = $scope.dateRange.from;
+    var dateTo = $scope.dateRange.to;
 
     if (!dateFrom) {
       dateFrom = '*';
