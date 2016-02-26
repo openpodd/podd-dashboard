@@ -146,9 +146,10 @@ $comment-section-bg: #333;
 }
 .home {
     .filter-form {
-        overflow: auto;
+        // overflow: auto;
         .form-group {
-          overflow: hidden;
+          // overflow-x: hidden;
+          // overflow-y: visible;
         }
     }
     .filter-result-message {
