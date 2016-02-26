@@ -24,7 +24,7 @@ function htmlToPlainText(text) {
    */
   // So let use the simpler solution, change all <p> to <div>.
   tmp = tmp.replace(/\[open_tag:p:/g, '[open_tag:div:');
-  tmp = tmp.replace(/\[close_tag:p\]/g, '[close_tag:p\]');
+  tmp = tmp.replace(/\[close_tag:p\]/g, '[close_tag:div]');
 
   tmp = tmp.replace(/<[^>]+>/gm, '');
   tmp = tmp.replace(/\[open_tag\:([^\s]*?)\:(.*?)\]/gm, '<$1$2>');
