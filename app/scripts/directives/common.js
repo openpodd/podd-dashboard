@@ -483,6 +483,16 @@ angular.module('poddDashboardApp')
     };
 })
 
+.filter('slug', function () {
+    return function (text) {
+        var _text = text;
+        _text = _text.replace(/\s/g, '-');
+        _text = _text.toLowerCase();
+
+        return _text;
+    };
+})
+
 .filter('renderMention', function () {
     return function (text) {
         return text.replace(/\@\[([\w\-\.]+)\]/g, '<span class="label label-info">@$1</span>');
