@@ -165,7 +165,17 @@
           </div>
 
           <ul class="pd-report-info">
-            <li><a ng-show="$parent.report.boundary" ng-href="#/scenario?bottom={{ $parent.report.boundary.bottom }}&left={{ $parent.report.boundary.left }}&top={{ $parent.report.boundary.top }}&right={{ $parent.report.boundary.right }}">ดูเหตุการณ์ที่เกิดขึ้นบริเวณนี้</a></li>
+            <li>
+              <a ng-show="report.boundary" ng-href="#/scenario?bottom={{ report.boundary.bottom }}&left={{ report.boundary.left }}&top={{ report.boundary.top }}&right={{ report.boundary.right }}">ดูเหตุการณ์ที่เกิดขึ้นบริเวณนี้</a>
+            </li>
+            <li>
+              <a class="hoverable" ng-click="publish(report)" ng-if="!report.isCurated">
+                เพิ่มรายงานนี้ไปแสดงในแอป ดูดีดี
+              </a>
+              <a class="hoverable" ng-click="unpublish(report)" ng-if="report.isCurated">
+                ไม่แสดงรายงานนี้ในแอป ดูดีดี
+              </a>
+            </li>
           </ul>
 
           <div style="margin-bottom: 20px;">

@@ -143,6 +143,16 @@ angular.module('poddDashboardApp')
                 url: config.API_BASEPATH + '/reports/:reportId/plans',
                 method: 'GET',
                 isArray: true
+            },
+            publish: {
+                url: config.API_BASEPATH + '/reports/:reportId/publish',
+                method: 'POST',
+                isArray: false
+            },
+            unpublish: {
+                url: config.API_BASEPATH + '/reports/:reportId/unpublish',
+                method: 'POST',
+                isArray: false
             }
         });
 

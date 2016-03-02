@@ -249,6 +249,22 @@ angular.module('poddDashboardApp')
         controller: 'PlanReportModalCtrl'
       });
     };
+
+    $scope.publish = function (report) {
+      showConfirm('คุณต้องการให้รายงานนี้แสดงในแอป ดูดีดี หรือไม่', function () {
+        Reports.publish({ id: report.id }).$promise.then(function (resp) {
+          report.isCurated = true;
+        });
+      });
+    };
+
+    $scope.unpublish = function (report) {
+      showConfirm('คุณต้องการไม่ให้รายงานนี้แสดงในแอป ดูดีดี หรือไม่', function () {
+        Reports.unpublish({ id: report.id }).$promise.then(function (resp) {
+          report.isCurated = false;
+        });
+      });
+    };
 })
 
 .controller('ReportImageLightboxCtrl', function ($scope, Map) {
