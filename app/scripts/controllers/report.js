@@ -18,7 +18,7 @@ angular.module('poddDashboardApp')
 
 .controller('ReportViewCtrl', function ($scope, streaming, Flags, Lightbox,
                                         $modal, Search, Reports, $state, Tag,
-                                        PlanReport) {
+                                        PlanReport, storage) {
 
     $scope.userAlreadyClickImage = false;
     $scope.reportFlag = {};
@@ -249,6 +249,9 @@ angular.module('poddDashboardApp')
         controller: 'PlanReportModalCtrl'
       });
     };
+
+    var user = storage.get('user');
+    $scope.isStaff = user.isStaff || user.isSupervisor;
 
     $scope.publish = function (report) {
       showConfirm('คุณต้องการให้รายงานนี้แสดงในแอป ดูดีดี หรือไม่', function () {
