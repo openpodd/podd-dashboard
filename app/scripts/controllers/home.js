@@ -414,6 +414,10 @@ angular.module('poddDashboardApp')
     }
   });
 
+  $scope.gotoMainPage = function () {
+    $state.go('home');
+  };
+
   // report view related.
   $scope.viewReport = function (reportId) {
     ReportModal.show();
