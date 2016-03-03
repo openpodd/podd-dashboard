@@ -66,6 +66,7 @@
 
   &:hover{
     color: #fff !important;
+    background: #7a81ff;
   }
 }
 .btn-filter-collapsed{
@@ -117,6 +118,8 @@
 .label-state-* {
   color: #fff;
 }
+
+/*--- State Group Color ---*/
 .label-state-3, .label-state-case {
   background-color: #9c27b0;
 }
@@ -205,6 +208,14 @@
     overflow: hidden;
     text-overflow: ellipsis;
     text-overflow: '...';
+  }
+
+  @include respond-to(tablet-portrait){
+    display: inline-block;
+    line-height: 1em;
+    height: auto;
+    color: #333;
+    font-size: inherit;
   }
 }
 .filter-result-item {
@@ -313,7 +324,7 @@
   }
   .ta-view-state{
     @include respond-to(tablet-portrait){
-      float: left;
+      // float: left;
     }
   }
   .ta-view-report{
@@ -321,7 +332,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     @include respond-to(tablet-portrait){
-      float: left;
+      // float: left;
     }
   }
   .ta-view-area{
@@ -330,15 +341,10 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       margin: 0;
-    }
-    @include respond-to(tablet-portrait){
-      clear: both;
-    }
-    .filter-result-area{
+
       @include respond-to(tablet-portrait){
-        overflow: hidden;
-        margin-top: 5px;
-        margin-bottom: 5px;
+        display: inline-block;
+        line-height: 1em;
       }
     }
   }
@@ -347,6 +353,35 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+}
+
+/************************
+// Table View on Mobile
+************************/
+.ta-view{
+
+  @include respond-to(tablet-portrait){
+    .ta-view-row:before{
+      content: attr(data-th) ": ";
+      font-weight: bold;
+      width: 6.5em;
+      display: inline-block;
+    }
+  }
+
+  @include respond-to(phone){
+    .ta-view-row:before{
+      width: 4.5em;
+    }
+  }
+  
+}
+
+.rwd-table td:before {
+    content: attr(data-th) ": ";
+    font-weight: bold;
+    width: 6.5em;
+    display: inline-block;
 }
 
 .hoverable {
