@@ -238,8 +238,24 @@
         <span ng-bind-html="authority.name | highlight:$select.search"></span>
       </ui-select-choices>
     </ui-select>
+    <p class="help-block">คุณสามารถเลือกได้หลายหน่วยงาน</p>
   </div>
   <!-- /authority form -->
+
+  <div class="form-group">
+    <h4 class="filter-heading"><i class="fa fa-location-arrow"></i> พื้นที่</h4>
+    <ui-select multiple reset-search-input="true" ng-model="areas.selected" class="ui-select-match-custom">
+      <ui-select-match placeholder="พิมพ์เพื่อหาพื้นที่">{{ $item.name }}</ui-select-match>
+      <ui-select-choices
+        repeat="area in areas.all | filter:$select.search | orderBy:['weight', 'name']"
+        refresh="areas.loadAreas($select.search)">
+        <span ng-bind-html="area.name | highlight:$select.search"></span>
+        <small ng-bind="area.shortAddress"></small>
+      </ui-select-choices>
+    </ui-select>
+    <p class="help-block">คุณสามารถเลือกได้หลายพื้นที่</p>
+  </div>
+  <!-- /areas form -->
 
   <div class="form-group">
     <h4 class="filter-heading">ตั้งค่าการค้นหา</h4>

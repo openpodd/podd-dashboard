@@ -16,9 +16,6 @@ angular.module('poddDashboardApp')
 
 .factory('AdministrationArea', function ($resource) {
     var resource = $resource(config.API_BASEPATH + '/administrationArea/', {}, {
-        get: {
-            isArray: true
-        },
         contacts: {
             url: config.API_BASEPATH + '/administrationArea/contacts/',
             method: 'GET'

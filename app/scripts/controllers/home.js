@@ -9,7 +9,7 @@ angular.module('poddDashboardApp')
 .controller('HomeCtrl', function ($scope, Search, ReportTypes, ReportState,
                                   dashboard, Authority, moment, ReportModal,
                                   shared, Reports, $state, $stateParams, $timeout,
-                                  Menu, Auth) {
+                                  Menu, Auth, AdministrationArea) {
   console.log('-> In HomeCtrl');
 
   Menu.setActiveMenu('home');
@@ -125,6 +125,11 @@ angular.module('poddDashboardApp')
     current: null,
     selected: []
   };
+  $scope.areas = {
+    all: [],
+    current: null,
+    selected: []
+  };
   $scope.dateRange = {
     from: null,
     to: null
@@ -153,24 +158,21 @@ angular.module('poddDashboardApp')
 
   function loadAuthorities() {
     $scope.authorities.all = dashboard.getAuthorities();
-    dashboard.getAuthorities().$promise.then(function (resp) {
-      // assign children, to find only leaf authority.
-      var childCount = {};
-      $scope.authorities.all.forEach(function (item) {
-        var count = childCount[item.parentName] || 0;
-        if (item.parentName) {
-          count++;
-        }
-        childCount[item.parentName] = count;
-      });
-      // re-assign property value.
-      var filteredResp = resp.filter(function (item) {
-        return !childCount[item.name];
-      });
+  }
 
-      $scope.authorities.all = filteredResp;
+  function loadAreas(keywords) {
+    var query = {
+      keywords: keywords,
+      page_size: 20
+    };
+    AdministrationArea.contacts(query).$promise.then(function (resp) {
+      $scope.areas.all = resp.results;
+      $scope.areas.all.forEach(function (item) {
+        item.shortAddress = item.address.replace(item.name, '');
+      });
     });
   }
+  $scope.areas.loadAreas = loadAreas;
 
   $scope.toggleReportTypeCheck = function toggleReportTypeCheck(reportType) {
     reportType.checked = !reportType.checked;
@@ -256,6 +258,20 @@ angular.module('poddDashboardApp')
     return selectedAuthorities.join(',');
   }
 
+  function buildAreaQuery() {
+    var selectedAreas = [];
+    $scope.areas.selected.forEach(function (item) {
+      selectedAreas.push(item.id);
+    });
+
+    if (selectedAreas.length) {
+      return selectedAreas.join(',');
+    }
+    else {
+      return '';
+    }
+  }
+
   function updateFilterSettings(queryBuilder) {
     // test flag
     if ($scope.settings.includeTestFlag) {
@@ -269,12 +285,14 @@ angular.module('poddDashboardApp')
 
   function _load(queryBuilder, needReset) {
     queryBuilder.update('date', buildDateQuery());
+    // queryBuilder.update('administrationArea', buildAreaQuery());
 
     // other settings.
     updateFilterSettings(queryBuilder);
 
     query.q = queryBuilder.getQuery();
     query.authorities = buildAuthorityQuery();
+    query.administrationAreas = buildAreaQuery();
 
     load(query, needReset);
   }
