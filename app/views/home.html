@@ -92,7 +92,7 @@
                  ng-class="{ 'active': report.id == activeReportId }"
                  ng-click="onClickReport(report.id)">
 
-                <div class="ta-view-col col-md-1 col-sm-1">
+                <div class="col-md-1 col-sm-1">
                   <div class="row">
                     <div class="col-md-6 col-sm-6">
                       <span class="text-flag-follow-up" ng-if="report.parent" tooltip-placement="top" tooltip="รายงาน Follow-up">
@@ -257,7 +257,7 @@
   <div class="form-group">
     <h4 class="filter-heading"><i class="fa fa-cog"></i> ตั้งค่าการค้นหา</h4>
 
-    <label>
+    <label class="weight-normal">
       <input type="checkbox" ng-model="settings.includeTestFlag"> รวมรายงานทดสอบ
     </label>
   </div>

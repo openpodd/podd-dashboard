@@ -98,6 +98,24 @@
   }
 }
 
+/*--- Date Picker ---*/
+.form-pick-date{
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: .3em;
+}
+.picker__holder {
+  pointer-events: none;
+}
+.picker__wrap {
+  pointer-events: auto;
+}
+
+.loadmore{
+  margin-top: 20px;
+}
+
 /*--- Show All ---*/
 .show-all{
   font-size: 12px;
@@ -253,28 +271,14 @@
 .filter-action{
   margin-bottom: 15px;
 
+  .filter-result-mode-switch{
+    margin-right: 10px;
+  }
+
   @include respond-to(phone){
     float: none !important;
     clear: both;
   }
-}
-
-/*--- Date Picker ---*/
-.form-pick-date{
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: .3em;
-}
-.picker__holder {
-  pointer-events: none;
-}
-.picker__wrap {
-  pointer-events: auto;
-}
-
-.loadmore{
-  margin-top: 20px;
 }
 
 /************************
@@ -284,7 +288,7 @@
   @include respond-to(tablet-portrait){
     .ta-view-col:before{
       content: attr(data-th) ": ";
-      font-weight: bold;
+      font-weight: bold !important;
       width: 6.5em;
       display: inline-block;
     }

@@ -145,7 +145,7 @@
 
           <div class="sidebar-block">
             <div class="sidebar-heading sidebar-heading-bg-purplegray">
-              <h2 class="sidebar-heading-text"><i class="fa fa-tags fa-size-18"></i> Tags</h2>
+              <h2 class="sidebar-heading-text"><i class="fa fa-tags fa-size-18"></i> ป้ายคำ</h2>
             </div> <!-- sidebar-heading -->
             <div class="sidebar-content">
               <form role="form" ng-submit="postTags();">
@@ -164,19 +164,26 @@
             </div>
           </div>
 
-          <ul class="pd-report-info">
-            <li>
-              <a ng-show="report.boundary" ng-href="#/scenario?bottom={{ report.boundary.bottom }}&left={{ report.boundary.left }}&top={{ report.boundary.top }}&right={{ report.boundary.right }}">ดูเหตุการณ์ที่เกิดขึ้นบริเวณนี้</a>
-            </li>
-            <li ng-if="isStaff">
-              <a class="hoverable" ng-click="publish(report)" ng-if="!report.isCurated">
-                เพิ่มรายงานนี้ไปแสดงในแอป ดูดีดี
-              </a>
-              <a class="hoverable" ng-click="unpublish(report)" ng-if="report.isCurated">
-                ไม่แสดงรายงานนี้ในแอป ดูดีดี
-              </a>
-            </li>
-          </ul>
+          <div class="sidebar-block">
+            <div class="sidebar-heading sidebar-heading-bg-purplegray">
+              <h2 class="sidebar-heading-text"><i class="fa fa-ellipsis-v fa-size-18"></i> อื่นๆ</h2>
+            </div> <!-- sidebar-heading -->
+            <div class="sidebar-content">
+              <ul class="list">
+                <li>
+                  <a ng-show="report.boundary" ng-href="#/scenario?bottom={{ report.boundary.bottom }}&left={{ report.boundary.left }}&top={{ report.boundary.top }}&right={{ report.boundary.right }}">ดูเหตุการณ์ที่เกิดขึ้นบริเวณนี้</a>
+                </li>
+                <li ng-if="isStaff">
+                  <a class="hoverable" ng-click="publish(report)" ng-if="!report.isCurated">
+                    เพิ่มรายงานนี้ไปแสดงในแอป ดูดีดี
+                  </a>
+                  <a class="hoverable" ng-click="unpublish(report)" ng-if="report.isCurated">
+                    ไม่แสดงรายงานนี้ในแอป ดูดีดี
+                  </a>
+                </li>
+              </ul>
+            </div> <!-- sidebar-content -->
+          </div> <!-- sidebar-block -->
 
           <div style="margin-bottom: 20px;">
             <button type="submit" class="btn btn-default"

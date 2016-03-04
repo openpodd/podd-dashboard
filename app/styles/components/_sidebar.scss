@@ -47,6 +47,17 @@
   /*background-color: #75b953;*/
 }
 
+.list{
+  padding: 0 0 0 15px;
+
+  li{
+    margin-bottom: 5px;
+
+    &:last-child{
+      margin-bottom: 0;
+    }
+  }
+}
 
 .history-log{
   padding: 0 0 0 20px;
@@ -67,9 +78,8 @@
   }
 }
 .sidebar-action{
-  padding-top: 15px;
+  padding-top: 5px;
   margin-top: 10px;
-  border-top: 1px solid #ccc;
 }
 .label-state{
   font-size: 1em;
