@@ -67,7 +67,7 @@
             </div><!-- /.filter-result-item -->
           </div>
           <div ng-if="resultMode == 'table'"> <!-- Table View -->
-            <div class="filter-result-item ta-view ta-view-header row">
+            <div class="filter-result-item ta-view ta-view-header row hidden-xs">
               <div class="col-md-1 col-sm-1">
                 <div class="row">
                   <div class="col-md-6 col-sm-6">
@@ -84,7 +84,7 @@
               </div>
               <div class="col-md-2 col-sm-2">วันที่</div>
               <div class="col-md-2 col-sm-2">สถานะ</div>
-              <div class="col-md-1 col-md-1 hidden-xs">ข้อมูล</div>
+              <div class="col-md-1 col-sm-1 hidden-xs">ข้อมูล</div>
               <div class="col-md-2 col-sm-2">ประเภท</div>
               <div class="col-md-4 col-sm-4">พื้นที่</div>
             </div>
@@ -107,34 +107,33 @@
                   </div>
                 </div>
 
-                <div class="ta-view-date col-md-2 col-sm-2">
+                <div class="ta-view-row ta-view-date col-md-2 col-sm-2" data-th="วันที่">
                   <span ng-if="report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM'"></span>
                   <span ng-if="!report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM YY'"></span>
                   <small>, {{report.date | amDateFormat:'HH:mm'}} น.</small>
                 </div>
 
-                <div class="ta-view-state col-md-2 col-sm-2 ">
+                <div class="ta-view-row ta-view-state col-md-2 col-sm-2" data-th="สถานะ">
                   <span class="label label-default label-state-{{report.stateName | slug}}"
                          ng-bind="report.stateName" ng-if="report.stateName"></span>
                 </div>
 
-                <div class="ta-view-info col-md-1 col-md-1 hidden-xs">
+                <div class="ta-view-info col-md-1 col-sm-1 hidden-xs">
                   <span class="hoverable -help" tooltip-html-unsafe="{{ report.renderedOriginalFormData | htmlToPlainText }}">
                     <i class="fa fa-info-circle"></i>
                   </span>
                 </div>
 
-                <div class="ta-view-report col-md-2 col-sm-2">
+                <div class="ta-view-row ta-view-report col-md-2 col-sm-2" data-th="ประเภท">
                   <span ng-bind="::report.reportTypeName" class="filter-reporttype"></span>
                 </div>
 
-                <div class="ta-view-area col-md-4 col-sm-4">
+                <div class="ta-view-row ta-view-area col-md-4 col-sm-4" data-th="พื้นที่">
                   <div class="filter-result-area">
-                    <i class="fa fa-map-marker"></i>
                     <span ng-bind="::report.administrationAreaAddress"></span>
                   </div>
                 </div>
-                <div class="ta-view-detail visible-xs-block col-sm-12">
+                <div class="ta-view-row ta-view-detail visible-xs-block col-sm-12" data-th="อาการ">
                   <div class="filter-result-desc" ng-bind-html="::report.renderedOriginalFormData"></div>
                 </div>
 
@@ -231,21 +230,21 @@
   <!-- /date range form -->
 
   <div class="form-group">
-    <h4 class="filter-heading"><i class="fa fa-location-arrow"></i> หน่วยงาน</h4>
+    <h4 class="filter-heading"><i class="fa fa-building"></i> หน่วยงาน</h4>
     <ui-select multiple reset-search-input="true" ng-model="authorities.selected" class="ui-select-match-custom">
-      <ui-select-match>{{ $item.name }}</ui-select-match>
+      <ui-select-match placeholder="Ex. เทศบาลนครเชียงใหม่">{{ $item.name }}</ui-select-match>
       <ui-select-choices group-by="'parentName'" repeat="authority in authorities.all | filter:$select.search | orderBy:['_order', 'parentName', 'name']">
         <span ng-bind-html="authority.name | highlight:$select.search"></span>
       </ui-select-choices>
     </ui-select>
-    <p class="help-block">คุณสามารถเลือกได้หลายหน่วยงาน</p>
+    <small class="help-block">คุณสามารถเลือกได้หลายหน่วยงาน</small>
   </div>
   <!-- /authority form -->
 
   <div class="form-group">
-    <h4 class="filter-heading"><i class="fa fa-location-arrow"></i> พื้นที่</h4>
+    <h4 class="filter-heading"><i class="fa fa-map-marker"></i> พื้นที่</h4>
     <ui-select multiple reset-search-input="true" ng-model="areas.selected" class="ui-select-match-custom">
-      <ui-select-match placeholder="พิมพ์เพื่อหาพื้นที่">{{ $item.name }}</ui-select-match>
+      <ui-select-match placeholder="Ex. อำเภอริม">{{ $item.name }}</ui-select-match>
       <ui-select-choices
         repeat="area in areas.all | filter:$select.search | orderBy:['weight', 'name']"
         refresh="areas.loadAreas($select.search)">
@@ -253,12 +252,12 @@
         <small ng-bind="area.shortAddress"></small>
       </ui-select-choices>
     </ui-select>
-    <p class="help-block">คุณสามารถเลือกได้หลายพื้นที่</p>
+    <small>คุณสามารถเลือกได้หลายพื้นที่</small>
   </div>
   <!-- /areas form -->
 
   <div class="form-group">
-    <h4 class="filter-heading">ตั้งค่าการค้นหา</h4>
+    <h4 class="filter-heading"><i class="fa fa-cog"></i> ตั้งค่าการค้นหา</h4>
 
     <label>
       <input type="checkbox" ng-model="settings.includeTestFlag"> รวมรายงานทดสอบ
