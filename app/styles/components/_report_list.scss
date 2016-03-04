@@ -135,7 +135,7 @@
 .report-type-states-group{
   margin-bottom: 10px;
 }
-.states-group-title{
+.states-group-title, .small{
   margin-bottom: 5px;
   color: #8d8d8d;
 }
@@ -229,20 +229,26 @@
 }
 
 /*--- State Group Color ---*/
+.label-state-report{
+  background-color: #8F3D98;
+}
 .label-state-3, .label-state-case {
-  background-color: #9c27b0;
+  background-color: #F9A31A;
 }
 .label-state-outbreak, .label-state-5 {
-  background-color: #f44336;
+  background-color: #CF3132;
 }
-.label-state-false-report, .label-state-insignificant-report {
+.label-state-false-report{
   background-color: #9e9e9e;
 }
+.label-state-insignificant-report{
+  background-color: #6565AE;
+}
 .label-state-suspect-outbreak {
-  background-color: #ff80ab;
+  background-color: #663265;
 }
 .label-state-no-outbreak-identified {
-  background-color: #4caf50;
+  background-color: #369AD4;
 }
 
 .text-flag-follow-up {
