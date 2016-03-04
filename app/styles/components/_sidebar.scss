@@ -5,7 +5,8 @@
 
   .sidebar-heading{
     padding: 13px 20px;
-    background-color: #dedede;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #eee;
 
     &.sidebar-heading-bg-purple{
       background-color: #2e3352;
@@ -19,7 +20,7 @@
     margin: 0 10px 0 0;
     vertical-align: middle;
     font-size: 1.2em;
-    color: #fff;
+    color: #000;
 
     i{
       margin-right: 5px;
@@ -60,7 +61,7 @@
 }
 
 .history-log{
-  padding: 0 0 0 20px;
+  padding: 0 0 0 15px;
   color: #666;
 
   li{

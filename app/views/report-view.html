@@ -25,6 +25,7 @@
         <div class="col-sm-8" ng-show="report">
           <div class="report-section">
             <span class="">{{ $parent.report.reportTypeName }}</span>
+            <span class="label label-default label-state label-state-report">สถานะ : {{ report.stateName }}</span>
             <h1 class="report-title" ng-bind-html="report.renderedOriginalFormData"></h1>
 
             <div class="report-detail">
@@ -130,8 +131,8 @@
         <div class="col-sm-4" ng-show="report">
 
           <div class="sidebar-block">
-            <div class="sidebar-heading sidebar-heading-bg-purple">
-              <h2 class="sidebar-heading-text"><i class="fa fa-stethoscope fa-size-18"></i> สถานะรายงาน</h2>
+            <div class="sidebar-heading">
+              <h2 class="sidebar-heading-text"><i class="fa fa-stethoscope fa-size-18"></i> ประวัติสถานะ</h2>
             </div> <!-- sidebar-heading -->
 
             <div class="sidebar-content" ng-if="currentPlan">
@@ -140,10 +141,6 @@
             </div>
 
             <div class="sidebar-content">
-              <div class="sidebar-status">
-                <span class="label label-default label-state label-state-report">สถานะ : {{ report.stateName }}</span>
-              </div>
-              <h3 class="sidebar-title">ประวัติ</h3>
               <ul class="history-log" ng-if="reportStatesLogs.length > 0">
                 <li ng-repeat="log in reportStatesLogs | orderBy:'-createdAt' ">
                   Changed : {{ log.state.name }}
@@ -182,7 +179,7 @@
           </div> <!-- sidebar-block -->
 
           <div class="sidebar-block">
-            <div class="sidebar-heading sidebar-heading-bg-purplegray">
+            <div class="sidebar-heading">
               <h2 class="sidebar-heading-text"><i class="fa fa-tags fa-size-18"></i> ป้ายคำ</h2>
             </div> <!-- sidebar-heading -->
             <div class="sidebar-content">
@@ -203,7 +200,7 @@
           </div>
 
           <div class="sidebar-block">
-            <div class="sidebar-heading sidebar-heading-bg-purplegray">
+            <div class="sidebar-heading">
               <h2 class="sidebar-heading-text"><i class="fa fa-ellipsis-v fa-size-18"></i> อื่นๆ</h2>
             </div> <!-- sidebar-heading -->
             <div class="sidebar-content">
