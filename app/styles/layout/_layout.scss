@@ -267,6 +267,13 @@ $comment-section-bg: #333;
 
 .content-wrapper-padding{
     padding: 30px 50px 0;
+
+    @include respond-to(tablet-landscape-desktop){
+        padding: 20px 30px 0;
+    }
+    @include respond-to(tablet-portrait){
+        padding: 10px 10px 0;
+    }
 }
 
 // Close Button

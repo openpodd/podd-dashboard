@@ -12,6 +12,11 @@
   }
 }
 
+
+/************************
+// Sidebar Filter home.html
+************************/
+
 /*--- Date Form ---*/
 .filter-form-date{
   .sb-date-select-select{
@@ -32,9 +37,6 @@
   i{
     margin-right: 5px;
   }
-}
-.filter-result-item .filter-thumb{
-  width: 70px;
 }
 
 /*--- Button Filter ---*/
@@ -96,6 +98,21 @@
   }
 }
 
+/*--- Show All ---*/
+.show-all{
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+  border-top: 1px dotted #ccc;
+  padding-top: 5px;
+  border-bottom: 1px dotted #ccc;
+
+  &:hover{
+    background-color: #eaeaea;
+    cursor: pointer;
+  }
+}
+
 /*--- State Group ---*/
 .report-type-states-group{
   margin-bottom: 10px;
@@ -117,6 +134,80 @@
 }
 .label-state-* {
   color: #fff;
+}
+
+/************************
+// Result Filter
+************************/
+
+/*--- Filter Result ---*/
+.filter-result-container{
+  clear: both;
+  padding: 0 15px;
+  box-sizing: border-box;
+  border: 1px solid #d2d2d2;
+  border-radius: 2px;
+  background-color: white;
+
+  .filter-heading{
+    border-color: #EAEAEA;
+    margin: 10px 0 10px;
+    padding: 0 0 5px;
+    font-size: 1.5em;
+    color: #000;
+  }
+}
+
+/*--- Filter item on col ---*/
+.filter-result-area{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: #000;
+}
+.filter-reporttype{
+  color: #000;
+}
+.filter-result-desc{
+  color: #999;
+  font-size: .9em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-overflow: '...';
+  height: 18px;
+  width: 100%;
+
+  br{
+    display: none;
+  }
+  p{
+    margin-bottom: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-overflow: '...';
+  }
+
+  @include respond-to(tablet-portrait){
+    display: inline-block;
+    line-height: 1em;
+    height: auto;
+    color: #333;
+    font-size: inherit;
+  }
+}
+.filter-result-date{
+  @include respond-to(tablet-portrait){
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    background-color: #efefef;
+  }
+}
+.filter-thumb{
+  width: 70px;
+}
+.filter-error{
+  margin-top: 20px;
 }
 
 /*--- State Group Color ---*/
@@ -158,132 +249,6 @@
   color: #4caf50;
 }
 
-/*--- Filter Result ---*/
-.filter-result-container{
-  clear: both;
-  padding: 0 15px;
-  box-sizing: border-box;
-  border: 1px solid #d2d2d2;
-  border-radius: 2px;
-  /*box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);*/
-  background-color: white;
-  // overflow: hidden;
-
-  .filter-heading{
-    border-color: #EAEAEA;
-    margin: 10px 0 10px;
-    padding: 0 0 5px;
-    font-size: 1.5em;
-    color: #000;
-  }
-}
-
-/*--- Filter item ---*/
-.filter-result-area{
-  margin-top: 5px;
-  margin-bottom: 5px;
-  color: #000;
-}
-.filter-reporttype{
-  color: #000;
-  /*font-weight: bold;*/
-}
-.filter-result-desc{
-  color: #999;
-  font-size: .9em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-overflow: '...';
-  height: 18px;
-  width: 100%;
-
-  br{
-    display: none;
-  }
-
-  p{
-
-    margin-bottom: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-overflow: '...';
-  }
-
-  @include respond-to(tablet-portrait){
-    display: inline-block;
-    line-height: 1em;
-    height: auto;
-    color: #333;
-    font-size: inherit;
-  }
-}
-.filter-result-item {
-  padding: 8px 5px;
-  border-bottom: 1px solid #eaeaea;
-
-  .ta-view-info {
-    .tooltip {
-      max-width: 280px;
-      .tooltip-inner {
-        max-width: 280px;
-        width: 280px;
-      }
-    }
-  }
-
-  &.active {
-    background-color: #dcffcc;
-    border-top: 1px dashed #999;
-    border-bottom: 1px dashed #999;
-  }
-
-  &:hover {
-    background-color: #ffc;
-    cursor: pointer;
-  }
-
-  img {
-    max-width: 100%;
-  }
-
-  @include respond-to(tablet-portrait){
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 5px;
-  }
-  .label-default{
-    display: inline-block;
-    font-weight: normal;
-    vertical-align: middle;
-  }
-}
-.filter-error{
-  margin-top: 20px;
-}
-.filter-result-date{
-  @include respond-to(tablet-portrait){
-    margin-bottom: 5px;
-    padding: 5px 10px;
-    background-color: #efefef;
-  }
-}
-
-/*--- Show All ---*/
-.show-all{
-  font-size: 12px;
-  margin-top: 5px;
-  display: block;
-  border-top: 1px dotted #ccc;
-  padding-top: 5px;
-  border-bottom: 1px dotted #ccc;
-
-  &:hover{
-    background-color: #eaeaea;
-    cursor: pointer;
-  }
-}
-
 /*--- Action Button ---*/
 .filter-action{
   margin-bottom: 15px;
@@ -315,26 +280,49 @@
 /************************
 // Table View
 ************************/
-.ta-view{
-  // overflow: hidden;
+.ta-view{  
+  @include respond-to(tablet-portrait){
+    .ta-view-col:before{
+      content: attr(data-th) ": ";
+      font-weight: bold;
+      width: 6.5em;
+      display: inline-block;
+    }
+  }
 
+  @include respond-to(phone){
+    .ta-view-col:before{
+      width: 4.5em;
+    }
+  }
+
+  .ta-view-row{
+    padding: 8px 5px;
+    border-bottom: 1px solid #eaeaea;
+
+    &.active{
+      background-color: #dcffcc;
+      border-top: 1px dashed #999;
+      border-bottom: 1px dashed #999;
+    }
+    &:hover {
+      background-color: #ffc;
+      cursor: pointer;
+    }
+  }
   .ta-view-date{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    color: #000;
   }
   .ta-view-state{
-    @include respond-to(tablet-portrait){
-      // float: left;
-    }
   }
+
   .ta-view-report{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    @include respond-to(tablet-portrait){
-      // float: left;
-    }
   }
   .ta-view-area{
     .filter-result-area{
@@ -354,47 +342,25 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-}
-
-/************************
-// Table View on Mobile
-************************/
-.ta-view{
-
-  @include respond-to(tablet-portrait){
-    .ta-view-row:before{
-      content: attr(data-th) ": ";
-      font-weight: bold;
-      width: 6.5em;
-      display: inline-block;
+  .ta-view-info {
+    .tooltip {
+      max-width: 280px;
+      .tooltip-inner {
+        max-width: 280px;
+        width: 280px;
+      }
     }
   }
 
-  @include respond-to(phone){
-    .ta-view-row:before{
-      width: 4.5em;
-    }
-  }
-  
-}
-
-.rwd-table td:before {
-    content: attr(data-th) ": ";
-    font-weight: bold;
-    width: 6.5em;
-    display: inline-block;
-}
-
-.hoverable {
-  cursor: pointer;
-
-  &.-help {
-    cursor: help;
+  .label{
+    font-weight: normal;
   }
 }
 
+/*--- Header ---*/
 .ta-view-header{
   color: #000;
+  padding: 8px 5px;
   font-weight: bold;
   background-color: #dadada;
   border-bottom: 1px solid #aaa;
@@ -404,3 +370,13 @@
     cursor: default;
   }
 }
+
+/*--- Make Flag & Test Report ---*/
+.hoverable {
+  cursor: pointer;
+
+  &.-help {
+    cursor: help;
+  }
+}
+
