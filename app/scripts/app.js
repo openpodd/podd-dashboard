@@ -174,13 +174,12 @@ angular
     $compileProvider.debugInfoEnabled(false);
     $httpProvider.interceptors.push('addTrailingSlashInterceptor');
 
-    $urlRouterProvider.otherwise('/home');
-
     $stateProvider
       .state('home', {
         url: '/home?reportId',
         templateUrl: 'views/home.html',
-        controller: 'HomeCtrl'
+        controller: 'HomeCtrl',
+        reloadOnSearch: false
       })
       .state('main', {
         url: '/map',
@@ -257,4 +256,6 @@ angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       });
+
+    $urlRouterProvider.otherwise('/home');
   });

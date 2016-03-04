@@ -528,7 +528,7 @@ angular.module('poddDashboardApp')
             $state.go('main.filter', { reportId: undefined });
         }
         else {
-            Menu.setActiveMenu('home');
+            Menu.setActiveMenu('main');
             $state.go('main');
         }
     };

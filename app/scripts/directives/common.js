@@ -518,9 +518,24 @@ angular.module('poddDashboardApp')
     };
 })
 
-.filter('renderReportTag', function () {
+.filter('renderReportTag', function ($state) {
     return function (text) {
-        return text.replace(/\#(\d+)/g, '<a class="label label-report" href="#/reports/$1">#$1</a>');
+        var href = '#/reports/$1';
+
+        var regexp = /\#(\d+)/;
+        var reportId = null;
+        if (!regexp.test(text)) {
+          return text;
+        }
+        else {
+          reportId = regexp.exec(text)[1];
+        }
+
+        if ($state.is('home')) {
+            href = $state.href('home', { reportId: reportId });
+        }
+
+        return text.replace(/\#(\d+)/g, '<a class="label label-report" href="' + href + '">#$1</a>');
     };
 })
 

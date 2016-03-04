@@ -9,7 +9,7 @@ angular.module('poddDashboardApp')
 .controller('HomeCtrl', function ($scope, Search, ReportTypes, ReportState,
                                   dashboard, Authority, moment, ReportModal,
                                   shared, Reports, $state, $stateParams, $timeout,
-                                  Menu, Auth, AdministrationArea) {
+                                  Menu, Auth, AdministrationArea, $location) {
   console.log('-> In HomeCtrl');
 
   Menu.setActiveMenu('home');
@@ -17,8 +17,14 @@ angular.module('poddDashboardApp')
 
   // Load report if given at request.
   $timeout(function () {
-    if ($stateParams.reportId) {
-      $scope.viewReport($stateParams.reportId);
+    var reportId = $stateParams.reportId;
+    if (reportId) {
+      if (!angular.isString(reportId)) {
+        $location.search('reportId', null);
+      }
+      else {
+        $scope.viewReport($stateParams.reportId);
+      }
     }
     else {
       ReportModal.close();
@@ -390,33 +396,38 @@ angular.module('poddDashboardApp')
   _load(queryBuilder, true);
 
   $scope.onClickReport = function (reportId) {
-    $scope.activeReportId = reportId;
-    $state.go('home', { reportId: reportId }, { notify: false });
-    $scope.viewReport(reportId);
+    $location.search('reportId', reportId);
   };
 
   $scope.closeReportView = function () {
-    shared.reportWatchId = '';
-    $state.go('home', { reportId: null }, { notify: false });
-    ReportModal.close();
+    $location.search('reportId', null);
   };
 
-  $scope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-    if (toState.name !== 'home') { return; }
-
-    event.preventDefault();
-
-    if (toParams.reportId && toParams.reportId !== fromParams.reportId) {
-      $scope.onClickReport(toParams.reportId);
+  $scope.$on('$locationChangeSuccess', function (event) {
+    var reportId = $location.search().reportId;
+    // check if the same state.
+    if ($location.path() !== $state.$current.url.sourcePath) {
+      return;
     }
-    else {
-      $scope.closeReportView();
+    // do nothing if no params
+    if (reportId === true || reportId === false ) {
+      // also clear params reportId if is empty.
+      $location.search('reportId', null);
+      return;
+    }
+
+    reportId = parseInt(reportId);
+    if (reportId && angular.isNumber(reportId) && reportId !== $scope.activeReportId) {
+      $scope.activeReportId = reportId;
+      shared.reportWatchId = reportId;
+      $scope.viewReport(reportId);
+    }
+    if (!reportId) {
+      $scope.activeReportId = null;
+      shared.reportWatchId = null;
+      ReportModal.close();
     }
   });
-
-  $scope.gotoMainPage = function () {
-    $state.go('home');
-  };
 
   // report view related.
   $scope.viewReport = function (reportId) {
@@ -446,8 +457,7 @@ angular.module('poddDashboardApp')
     })
     .catch(function (err) {
       if (err.status === 403) {
-        ReportModal.close();
-        $scope.gotoMainPage();
+        $scope.closeReportView();
         swal({
           title: '',
           text: 'ขออภัย คุณยังไม่ได้รับสิทธิดูรายงานนี้',
@@ -464,4 +474,11 @@ angular.module('poddDashboardApp')
       $scope.loadingReportView = false;
     });
   };
+
+  // Watch for report id changed.
+  $scope.$watch('shared.reportWatchId', function (newValue) {
+    if (newValue && newValue !== $scope.activeReportId) {
+      $location.search('reportId', newValue);
+    }
+  });
 });
