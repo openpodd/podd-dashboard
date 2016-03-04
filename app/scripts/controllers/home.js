@@ -419,6 +419,7 @@ angular.module('poddDashboardApp')
     reportId = parseInt(reportId);
     if (reportId && angular.isNumber(reportId) && reportId !== $scope.activeReportId) {
       $scope.activeReportId = reportId;
+      shared.reportWatchId = reportId;
       $scope.viewReport(reportId);
     }
     if (!reportId) {
@@ -476,7 +477,7 @@ angular.module('poddDashboardApp')
 
   // Watch for report id changed.
   $scope.$watch('shared.reportWatchId', function (newValue) {
-    if (newValue) {
+    if (newValue && newValue !== $scope.activeReportId) {
       $location.search('reportId', newValue);
     }
   });
