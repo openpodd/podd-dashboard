@@ -28,8 +28,46 @@
             <h1 class="report-title" ng-bind-html="report.renderedOriginalFormData"></h1>
 
             <div class="report-detail">
-              <p><strong>พื้นที่</strong> : {{ report.administrationAreaAddress }}</p>
-              <p><strong>วันที่รายงาน</strong> : {{ report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</p> <p><strong>วันที่เกิดเหตุ</strong> : {{ report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</p>
+              <table class="table table-bordered table-striped" summary="Monthly savings for the Flintstones family">
+                <tr>
+                  <td><strong>พื้นที่</strong></td>
+                  <td>{{ report.administrationAreaAddress }}</td>
+                </tr>
+                <tr>
+                  <td><strong>วันที่รายงาน</strong> </td>
+                  <td>{{ report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</td>
+                </tr>
+                <tr>
+                  <td><strong>วันที่เกิดเหตุ</strong></td>
+                  <td>{{ report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</td>
+                </tr>
+                <tr>
+                  <td><strong>ประเภทรายงาน</strong></td>
+                  <td>{{ report.reportTypeName }}</td>
+                </tr>
+                <tr>
+                  <td><strong>ผู้รายงาน</strong></td>
+                  <td>{{ report.createdBy }}</td>
+                </tr>
+                <tr>
+                  <td><strong>ติดต่อ</strong></td>
+                  <td>{{ report.createdByContact | default:'ไม่มี' }}</td>
+                </tr>
+                <tr>
+                  <td><strong>เบอร์โทรส่วนตัว</strong></td>
+                  <td><a ng-if="report.createdByTelephone" href="tel:">{{ report.createdByTelephone }}</a>
+                  <span ng-if="!report.createdByTelephone">ไม่มี</span></td>
+                </tr>
+                <tr>
+                  <td><strong>เบอร์โทรของโครงการ</strong></td>
+                  <td><a ng-if="report.createdByProjectMobileNumber" href="tel:">{{ report.createdByProjectMobileNumber }}</a>
+                  <span ng-if="!report.createdByProjectMobileNumber">ไม่มี</span></td>
+                </tr>
+              </table>
+
+              <!-- <p><strong>พื้นที่</strong> : {{ report.administrationAreaAddress }}</p>
+              <p><strong>วันที่รายงาน</strong> : {{ report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</p>
+              <p><strong>วันที่เกิดเหตุ</strong> : {{ report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</p>
               <p><strong>ประเภทรายงาน</strong> : {{ report.reportTypeName }}</p>
               <p><strong>ผู้รายงาน</strong> : {{ report.createdBy }}</p>
               <p><strong>ติดต่อ</strong> : {{ report.createdByContact | default:'ไม่มี' }}</p>
@@ -40,7 +78,7 @@
               <p><strong>เบอร์โทรของโครงการ</strong> :
                 <a ng-if="report.createdByProjectMobileNumber" href="tel:">{{ report.createdByProjectMobileNumber }}</a>
                 <span ng-if="!report.createdByProjectMobileNumber">ไม่มี</span>
-              </p>
+              </p> -->
             </div> <!-- report-detail -->
 
             <div class="report-image">
