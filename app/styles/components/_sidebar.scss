@@ -1,3 +1,6 @@
+/************************
+// Sidebar Block
+************************/
 .sidebar-block{
   margin-bottom: 1.5em;
   background-color: #fff;
@@ -8,6 +11,7 @@
     background-color: #f9f9f9;
     border-bottom: 1px solid #eee;
 
+    /*--- Theme Color ---*/
     &.sidebar-heading-bg-purple{
       background-color: #2e3352;
     }
@@ -26,6 +30,8 @@
       margin-right: 5px;
     }
   }
+
+  /*--- Conntent Section ---*/
   .sidebar-content{
     padding: 10px 20px;
   }
@@ -37,17 +43,9 @@
     color: #333;
     font-weight: bold;
   }
-  .label-state{
-    display: block;
-    padding: 10px 0;
-  }
 }
 
-/*--- State Color ---*/
-.label-state-report{
-  /*background-color: #75b953;*/
-}
-
+/*--- Unorder List ---*/
 .list{
   padding: 0 0 0 15px;
 
@@ -71,7 +69,6 @@
   }
   .history-log-name{
     margin-top: 4px;
-    /*color: #a5a5a5;*/
     font-size: .85em;
   }
   strong{
@@ -120,7 +117,7 @@
   font-size: 1.1em;
   line-height: 1.5em;
   color: #000;
-  margin: 0 0 25px;
+  margin: 10px 0 25px;
   padding-bottom: 15px;
   border-bottom: 2px solid #8a5ebe;
 
@@ -161,7 +158,7 @@
     margin-bottom: 25px;
 
     strong{
-      color: #333;
+      color: #666;
     }
   }
   .report-infomation{
@@ -181,6 +178,10 @@
 
 .mark-as-test-wrapper{
   overflow: hidden;
+
+  @include respond-to(desktop){
+    margin-top: 10px;
+  }
 }
 
 .priority-report{
