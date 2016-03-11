@@ -24,12 +24,52 @@
       <div class="row">
         <div class="col-sm-8" ng-show="report">
           <div class="report-section">
-            <span class="">{{ $parent.report.reportTypeName }}</span>
+            <span class="label label-default label-state label-state-report">สถานะ : {{ report.stateName }}</span>
+            <span>ประเภท : {{ $parent.report.reportTypeName }}</span>
+            
             <h1 class="report-title" ng-bind-html="report.renderedOriginalFormData"></h1>
 
             <div class="report-detail">
-              <p><strong>พื้นที่</strong> : {{ report.administrationAreaAddress }}</p>
-              <p><strong>วันที่รายงาน</strong> : {{ report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</p> <p><strong>วันที่เกิดเหตุ</strong> : {{ report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</p>
+              <table class="table table-bordered table-striped" summary="Monthly savings for the Flintstones family">
+                <tr>
+                  <td><strong>พื้นที่</strong></td>
+                  <td>{{ report.administrationAreaAddress }}</td>
+                </tr>
+                <tr>
+                  <td><strong>วันที่รายงาน</strong> </td>
+                  <td>{{ report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</td>
+                </tr>
+                <tr>
+                  <td><strong>วันที่เกิดเหตุ</strong></td>
+                  <td>{{ report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</td>
+                </tr>
+                <tr>
+                  <td><strong>ประเภทรายงาน</strong></td>
+                  <td>{{ report.reportTypeName }}</td>
+                </tr>
+                <tr>
+                  <td><strong>ผู้รายงาน</strong></td>
+                  <td>{{ report.createdBy }}</td>
+                </tr>
+                <tr>
+                  <td><strong>ติดต่อ</strong></td>
+                  <td>{{ report.createdByContact | default:'ไม่มี' }}</td>
+                </tr>
+                <tr>
+                  <td><strong>เบอร์โทรส่วนตัว</strong></td>
+                  <td><a ng-if="report.createdByTelephone" href="tel:">{{ report.createdByTelephone }}</a>
+                  <span ng-if="!report.createdByTelephone">ไม่มี</span></td>
+                </tr>
+                <tr>
+                  <td><strong>เบอร์โทรของโครงการ</strong></td>
+                  <td><a ng-if="report.createdByProjectMobileNumber" href="tel:">{{ report.createdByProjectMobileNumber }}</a>
+                  <span ng-if="!report.createdByProjectMobileNumber">ไม่มี</span></td>
+                </tr>
+              </table>
+
+              <!-- <p><strong>พื้นที่</strong> : {{ report.administrationAreaAddress }}</p>
+              <p><strong>วันที่รายงาน</strong> : {{ report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</p>
+              <p><strong>วันที่เกิดเหตุ</strong> : {{ report.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</p>
               <p><strong>ประเภทรายงาน</strong> : {{ report.reportTypeName }}</p>
               <p><strong>ผู้รายงาน</strong> : {{ report.createdBy }}</p>
               <p><strong>ติดต่อ</strong> : {{ report.createdByContact | default:'ไม่มี' }}</p>
@@ -40,7 +80,7 @@
               <p><strong>เบอร์โทรของโครงการ</strong> :
                 <a ng-if="report.createdByProjectMobileNumber" href="tel:">{{ report.createdByProjectMobileNumber }}</a>
                 <span ng-if="!report.createdByProjectMobileNumber">ไม่มี</span>
-              </p>
+              </p> -->
             </div> <!-- report-detail -->
 
             <div class="report-image">
@@ -92,8 +132,8 @@
         <div class="col-sm-4" ng-show="report">
 
           <div class="sidebar-block">
-            <div class="sidebar-heading sidebar-heading-bg-purple">
-              <h2 class="sidebar-heading-text"><i class="fa fa-stethoscope fa-size-18"></i> สถานะรายงาน</h2>
+            <div class="sidebar-heading">
+              <h2 class="sidebar-heading-text"><i class="fa fa-stethoscope fa-size-18"></i> ประวัติสถานะ</h2>
             </div> <!-- sidebar-heading -->
 
             <div class="sidebar-content" ng-if="currentPlan">
@@ -102,10 +142,6 @@
             </div>
 
             <div class="sidebar-content">
-              <div class="sidebar-status">
-                <span class="label label-default label-state label-state-report">สถานะ : {{ report.stateName }}</span>
-              </div>
-              <h3 class="sidebar-title">ประวัติ</h3>
               <ul class="history-log" ng-if="reportStatesLogs.length > 0">
                 <li ng-repeat="log in reportStatesLogs | orderBy:'-createdAt' ">
                   Changed : {{ log.state.name }}
@@ -144,8 +180,8 @@
           </div> <!-- sidebar-block -->
 
           <div class="sidebar-block">
-            <div class="sidebar-heading sidebar-heading-bg-purplegray">
-              <h2 class="sidebar-heading-text"><i class="fa fa-tags fa-size-18"></i> Tags</h2>
+            <div class="sidebar-heading">
+              <h2 class="sidebar-heading-text"><i class="fa fa-tags fa-size-18"></i> ป้ายคำ</h2>
             </div> <!-- sidebar-heading -->
             <div class="sidebar-content">
               <form role="form" ng-submit="postTags();">
@@ -164,19 +200,26 @@
             </div>
           </div>
 
-          <ul class="pd-report-info">
-            <li>
-              <a ng-show="report.boundary" ng-href="#/scenario?bottom={{ report.boundary.bottom }}&left={{ report.boundary.left }}&top={{ report.boundary.top }}&right={{ report.boundary.right }}">ดูเหตุการณ์ที่เกิดขึ้นบริเวณนี้</a>
-            </li>
-            <li ng-if="isStaff">
-              <a class="hoverable" ng-click="publish(report)" ng-if="!report.isCurated">
-                เพิ่มรายงานนี้ไปแสดงในแอป ดูดีดี
-              </a>
-              <a class="hoverable" ng-click="unpublish(report)" ng-if="report.isCurated">
-                ไม่แสดงรายงานนี้ในแอป ดูดีดี
-              </a>
-            </li>
-          </ul>
+          <div class="sidebar-block">
+            <div class="sidebar-heading">
+              <h2 class="sidebar-heading-text"><i class="fa fa-ellipsis-v fa-size-18"></i> อื่นๆ</h2>
+            </div> <!-- sidebar-heading -->
+            <div class="sidebar-content">
+              <ul class="list">
+                <li>
+                  <a ng-show="report.boundary" ng-href="#/scenario?bottom={{ report.boundary.bottom }}&left={{ report.boundary.left }}&top={{ report.boundary.top }}&right={{ report.boundary.right }}">ดูเหตุการณ์ที่เกิดขึ้นบริเวณนี้</a>
+                </li>
+                <li ng-if="isStaff">
+                  <a class="hoverable" ng-click="publish(report)" ng-if="!report.isCurated">
+                    เพิ่มรายงานนี้ไปแสดงในแอป ดูดีดี
+                  </a>
+                  <a class="hoverable" ng-click="unpublish(report)" ng-if="report.isCurated">
+                    ไม่แสดงรายงานนี้ในแอป ดูดีดี
+                  </a>
+                </li>
+              </ul>
+            </div> <!-- sidebar-content -->
+          </div> <!-- sidebar-block -->
 
           <div style="margin-bottom: 20px;">
             <button type="submit" class="btn btn-default"
