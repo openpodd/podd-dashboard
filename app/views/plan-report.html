@@ -47,7 +47,7 @@
         <hr/>
       <!-- /search -->
 
-      <div class="padding-mini" ng-repeat="level in planReport.log.plan.levels | filter:_queryText">
+      <div class="padding-mini" ng-repeat="level in planReport.log.plan.levels">
         <h3 class="subheading">เขตพื้นที่ (zone): {{ level.name }}</h3>
         <div>
           <!-- <strong>ตัวอย่างข้อความ</strong> -->
@@ -60,7 +60,7 @@
           <div class="col-md-7">
             <div class="panel panel-default panel-phonebook">
               <div class="panel-heading" ng-class="{'red-zone': level.name === 'Red', 'yellow-zone': level.name === 'Yellow', 'green-zone': level.name === 'Green'}">
-                <h4 class="subheading">หมู่บ้าน : {{ area.name }} <small>{{ area.address }}</small></h4>
+                <h4 class="subheading">{{ area.name }} <small>{{ area.address }}</small></h4>
               </div>
               <div class="panel-body">
                 <strong>แจ้งเตือนไปแล้ว</strong>
