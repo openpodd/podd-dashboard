@@ -228,7 +228,7 @@ angular.module('poddDashboardApp')
   start.setDate(start.getDate() - 30);
   var startBrush = start ;
   var endBrush = new Date();
-  
+
   var margin = {top: 10, right: 50, bottom: 20, left: 20},
       defaultExtent = [startBrush, endBrush],
       width = 800 - margin.left - margin.right,
@@ -588,7 +588,7 @@ $scope.replay = function () {
           });
 
           marker.item = item;
-          marker.bindPopup(item.formDataExplanation);
+          marker.bindPopup(item.formDataExplanation || '');
 
           marker.on('mouseover', function () {
             var self = this;
