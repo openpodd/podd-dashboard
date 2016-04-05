@@ -223,9 +223,14 @@ angular.module('poddDashboardApp')
   var formatMonthDate = d3.time.format('%b %Y');
   var formatDayDate = d3.time.format('%Y-%m-%d');
   var now = parseDayDate(formatDayDate(new Date()));
-
+  
+  var start = new Date();
+  start.setDate(start.getDate() - 30);
+  var startBrush = start ;
+  var endBrush = new Date();
+  
   var margin = {top: 10, right: 50, bottom: 20, left: 20},
-      defaultExtent = [parseDate('11/2015'), new Date()],
+      defaultExtent = [startBrush, endBrush],
       width = 800 - margin.left - margin.right,
       height = 50 - margin.top - margin.bottom;
 
