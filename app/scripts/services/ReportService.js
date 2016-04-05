@@ -3,7 +3,7 @@
 angular.module('poddDashboardApp')
 
 .factory('ReportTypes', function ($resource) {
-    var resource = $resource(config.API_BASEPATH + '/reportTypes/:id', {
+    var resource = $resource(config.API_BASEPATH + '/reportTypes/:id/?subscribes=True', {
       id: '@id'
     }, {
       'query': {
