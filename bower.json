@@ -47,7 +47,8 @@
     "angular-filter": "^0.5.8",
     "angular-sb-date-select": "^0.3.7",
     "pickadate": "^3.5.6",
-    "ng-pickadate": "^0.3.0"
+    "ng-pickadate": "^0.3.0",
+    "heatmap.js-amd": "*"
   },
   "overrides": {
     "socket.io-client": {

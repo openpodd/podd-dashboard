@@ -39,11 +39,30 @@ angular.module('poddDashboardApp')
 
   L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
 
+  var cfg = {
+    // radius should be small ONLY if scaleRadius is true (or small radius is intended)
+    // if scaleRadius is false it will be the constant radius used in pixels
+    "radius": .1,
+    "maxOpacity": .8, 
+    // scales the radius based on map zoom
+    "scaleRadius": true, 
+    // if set to false the heatmap uses the global maximum for colorization
+    // if activated: uses the data maximum within the current map boundaries 
+    //   (there will always be a red spot with useLocalExtremas true)
+    "useLocalExtrema": true,
+    // which field name in your data represents the latitude - default "lat"
+    latField: 'lat',
+    // which field name in your data represents the longitude - default "lng"
+    lngField: 'lng',
+    // which field name in your data represents the data value - default "value"
+    valueField: 'count'
+  };
+  var heatmapLayer = new HeatmapOverlay(cfg);
 
   var options = {
     center: [ 18.781516724349704, 98.98681640625 ],
     zoomLevel: 8,
-    zoomControl: false
+    zoomControl: false,
   };
   var leafletMap = config.MAPBOX_MAP_ID ?
                       L.mapbox.map('map', config.MAPBOX_MAP_ID, options) :
@@ -132,6 +151,8 @@ angular.module('poddDashboardApp')
     }));
   };
 
+
+
   $scope.layers = {
     report: {
       name: 'Reports',
@@ -159,7 +180,12 @@ angular.module('poddDashboardApp')
         layer: getGISLayer('poultry_farm', 'chicken'),
         show: false
       }
-    }
+    },
+    heatmap: {
+      name: 'Heat Map',
+      layer: heatmapLayer,
+      show: false
+    },
   };
 
   var bounds = $scope.layers.report.layer.getBounds();
@@ -547,6 +573,27 @@ $scope.replay = function () {
     44: icons.environment // น้ำป่า
   };
 
+  function getStateValue(state) {
+    var val = 0;
+    switch(state) {
+      case 'report':
+          val = 2;
+          break;
+      case 'case':
+          val = 3;
+          break;
+      case 'suspect-outbreak':
+          val = 4;
+          break;
+      case 'outbreak':
+          val = 5;
+          break;
+      default:
+          val = 1;
+    }
+    return val;
+  };
+
   $scope.toggleReportsLayer = function (forceValue) {
       var nextValue = angular.isUndefined(forceValue) ?
           !layers.form.report :
@@ -576,6 +623,7 @@ $scope.replay = function () {
         var drawnItems = new L.FeatureGroup();
         $scope.layers.report.layer.addLayer(drawnItems);
 
+        var data = [];
         resp.results.forEach(function (item) {
           var location = [
             item.reportLocation.coordinates[1],
@@ -624,6 +672,12 @@ $scope.replay = function () {
 
           });
 
+          data.push({
+            lat: item.reportLocation.coordinates[1], 
+            lng: item.reportLocation.coordinates[0], 
+            count: getStateValue(item.stateCode),
+          });
+
 
         // console.log(items.indexOf(item.id) != -1);
 
@@ -639,8 +693,6 @@ $scope.replay = function () {
           }
         });
 
-
-
         if (!$scope.playing) {
             $scope.loadingReportMarkers = false;
         }
@@ -650,6 +702,10 @@ $scope.replay = function () {
         }
 
         lastLayer = drawnItems;
+        heatmapLayer.setData({
+          max: 8,
+          data: data
+        });
 
       } else {
 
@@ -706,7 +762,6 @@ $scope.replay = function () {
               northEast = L.latLng(query.left, query.bottom),
               bounds = L.latLngBounds(southWest, northEast);
 
-          console.log('fitBounds', leafletMap, bounds);
           leafletMap.fitBounds(bounds);
           return $scope.search();
       }
@@ -723,5 +778,6 @@ $scope.replay = function () {
           }
       }
   });
+
 
 });

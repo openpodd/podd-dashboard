@@ -90,6 +90,15 @@
         </label>
       </div>
 
+      <div class="scene-gis-choice hide">
+        <label>
+          <img src="images/markers/pin-animal.png" />
+          <input type="checkbox" ng-model="layers.heatmap.show"
+          ng-change="toggleLayer(layers.heatmap, layers.heatmap.show)">
+          Heat Map
+        </label>
+      </div>
+
       <div class="scene-gis-control">
         <h4>GIS Data</h4>
         <div class="scene-gis-choice">
@@ -124,7 +133,7 @@
           </label>
         </div>
       </div>
-
+      
       <div>
 
       </div>
