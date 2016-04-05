@@ -694,10 +694,10 @@ $scope.replay = function () {
 
           // console.log(params);
 
-          query.top = $window.decodeURIComponent(params.top || 99.810791015625);
-          query.bottom = $window.decodeURIComponent(params.bottom || 198.1298828125);
-          query.left = $window.decodeURIComponent(params.left || 17.764381077782076);
-          query.right = $window.decodeURIComponent(params.right || 19.647760955697354);
+          query.top = $window.decodeURIComponent(params.top) || 99.810791015625;
+          query.bottom = $window.decodeURIComponent(params.bottom) || 198.1298828125;
+          query.left = $window.decodeURIComponent(params.left) || 17.764381077782076;
+          query.right = $window.decodeURIComponent(params.right) || 19.647760955697354;
 
           if (typeof params.q === 'undefined')
             delete query.q;
@@ -706,6 +706,7 @@ $scope.replay = function () {
               northEast = L.latLng(query.left, query.bottom),
               bounds = L.latLngBounds(southWest, northEast);
 
+          console.log('fitBounds', leafletMap, bounds);
           leafletMap.fitBounds(bounds);
           return $scope.search();
       }
