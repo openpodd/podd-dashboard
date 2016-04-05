@@ -555,6 +555,7 @@ $scope.replay = function () {
     20: icons.human, // human event
     21: icons.animal, // animal event
     22: icons.animal, // สัตว์กัด
+    24: icons.human, // อาหารพิษ
     29: icons.human, // อาหารพิษ
     30: icons.human, // เขียง
     31: icons.human, // สงสัยปนเปื้อน
@@ -624,19 +625,26 @@ $scope.replay = function () {
         $scope.layers.report.layer.addLayer(drawnItems);
 
         var data = [];
+
         resp.results.forEach(function (item) {
+
           var location = [
             item.reportLocation.coordinates[1],
             item.reportLocation.coordinates[0]
           ];
 
+          var markerIcon = reportTypeIcons[item.reportTypeId];
+          if (typeof markerIcon === 'undefined') {
+            markerIcon = icons.human;
+          }
+
           var marker = L.marker(location, {
-            icon: reportTypeIcons[item.reportTypeId],
+            icon: markerIcon,
             riseOnHover: true
           });
-
+          
           marker.item = item;
-          marker.bindPopup(item.formDataExplanation || '');
+          marker.bindPopup(item.formDataExplanation);
 
           marker.on('mouseover', function () {
             var self = this;
@@ -685,7 +693,6 @@ $scope.replay = function () {
         //   return;
         // }
 
-
           marker.addTo(drawnItems);
 
           if (!$scope.playing) {
@@ -702,6 +709,7 @@ $scope.replay = function () {
         }
 
         lastLayer = drawnItems;
+
         heatmapLayer.setData({
           max: 8,
           data: data
