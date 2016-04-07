@@ -73,6 +73,12 @@
       "main": [
         "css/font-awesome.css"
       ]
+    },
+    "heatmap.js-amd": {
+      "main": [
+        "build/heatmap.js",
+        "plugins/leaflet-heatmap.js"
+      ]
     }
   },
   "resolutions": {
