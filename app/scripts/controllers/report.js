@@ -48,6 +48,8 @@ angular.module('poddDashboardApp')
             $scope.userAlreadyClickImage = false;
             $scope.activeImage = null;
             console.log('report.change');
+
+            $scope.tags = $scope.report.tags;
         }
     });
 
