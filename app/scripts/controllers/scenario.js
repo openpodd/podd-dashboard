@@ -228,6 +228,17 @@ angular.module('poddDashboardApp')
   // TODO: this can cause:
   // `TypeError: Cannot read property 'childNodes' of undefined`
   // leafletMap.addControl(new LayersControl());
+  var removeGisLayer = function() {
+        leafletMap.removeLayer($scope.layers.gis.pig.layer);
+        leafletMap.removeLayer($scope.layers.gis.cow.layer);
+        leafletMap.removeLayer($scope.layers.gis.dog.layer);
+        leafletMap.removeLayer($scope.layers.gis.chicken.layer);
+
+        $scope.layers.gis.pig.show = false;
+        $scope.layers.gis.cow.show = false;
+        $scope.layers.gis.dog.show = false;
+        $scope.layers.gis.chicken.show = false;
+  };
 
   $scope.toggleLayer = function (layerDef, forceValue) {
     var nextValue = angular.isUndefined(forceValue) ?
@@ -235,9 +246,20 @@ angular.module('poddDashboardApp')
                       forceValue;
 
     if (nextValue) {
-      layerDef.layer.addTo(leafletMap);
+      if (layerDef === $scope.layers.heatmap) {
+        $scope.layers.report.layer.removeLayer(lastLayer);
+        layerDef.layer.addTo(leafletMap);
+        removeGisLayer();
+      } 
+      
+      if (!$scope.layers.heatmap.show) 
+        layerDef.layer.addTo(leafletMap);
     }
     else {
+      if (layerDef === $scope.layers.heatmap) {
+        $scope.layers.report.layer.addLayer(lastLayer);
+      }
+
       leafletMap.removeLayer(layerDef.layer);
     }
   };
@@ -622,7 +644,8 @@ $scope.replay = function () {
       if (!refreshGraph) {
 
         var drawnItems = new L.FeatureGroup();
-        $scope.layers.report.layer.addLayer(drawnItems);
+        if (!$scope.layers.heatmap.show)
+          $scope.layers.report.layer.addLayer(drawnItems);
 
         var data = [];
 
