@@ -24,6 +24,7 @@
       <div class="row">
         <div class="col-sm-8" ng-show="report">
           <div class="report-section">
+            <span class="label label-default label-state label-follow-up" ng-show="report.parent">รายงานติดตาม</span>
             <span class="label label-default label-state label-state-report">สถานะ : {{ report.stateName }}</span>
             <span>ประเภท : {{ $parent.report.reportTypeName }}</span>
             
