@@ -668,12 +668,18 @@ $badge-bad: #FF6D69;
 
 .comment-rendered-form-data {
     display: block;
+    padding: 10px 15px;
+    margin-top: 10px;
+    margin-bottom: 15px;
     clear: both;
     font-style: italic;
-    border: 1px solid #ccc;
-    padding: 4px;
+    border: 1px solid #e8e8e8;
+    background: #f3f3f3;
 }
 
+.report-followup-empty{
+  padding: 15px;
+}
 
 .response-map {
   width: 100%;
