@@ -11,8 +11,17 @@
 }
 
 .report-followup-parent {
-  .report-followup-title {
+  padding: 20px;
+
+  .report-followup-title { // Link <a>
     color: #f44336;
+  }
+  .report-followup-list{
+    padding-left: 20px;
+    margin-bottom: 0;
+  }
+  .report-followup-date{
+
   }
 }
 
@@ -250,9 +259,6 @@ $badge-bad: #FF6D69;
         }
     }
 }
-.report-followup-parent{
-    padding: 10px;
-}
 
 /************************
 // ERROR
@@ -261,60 +267,6 @@ $badge-bad: #FF6D69;
 #reports-error{
     margin: 20px;
 }
-
-/************************
-// REPORT MODAL (it will delete soon)
-************************/
-
-//.modal-open .modal {
-//    display: block;
-//}
-//
-//.report-modal{
-//
-//    .modal-content{
-//        background-color: #3c3c3c;
-//        color: #909090;
-//    }
-//    .modal-inner{
-//        padding: 15px;
-//    }
-//
-//    h1, h2, h3, dt{
-//        color: #fff;
-//    }
-//
-//    .modal-title{
-//        font-size: 24px;
-//        margin: 0;
-//        padding: 15px;
-//        background-color: #303030;
-//        border-radius: 5px 5px 0 0;
-//    }
-//    .modal-subtitle{
-//        font-size: 1.9em;
-//        margin: 0 0 15px;
-//        font-family: ThaiSansNeueRegular;
-//
-//        .fa-map-marker{
-//            color: #FFF200;
-//            margin: 5px 15px 0 5px;
-//        }
-//    }
-//
-//    .fa-times{
-//        font-size: 1.6em;
-//        position: absolute;
-//        top: 20px;
-//        right: 15px;
-//
-//        &:hover{
-//            cursor: pointer;
-//            color: #ccc;
-//        }
-//    }
-//}
-
 
 /************************
 // REPORT GALLERY
@@ -453,9 +405,6 @@ $badge-bad: #FF6D69;
         left: 30px;
     }
 }
-
-.pd-file-upload-area{}
-
 .pd-file-upload-icon{
     padding: 15px 10px;
     border-right: 1px solid #ccc;

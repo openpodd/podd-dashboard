@@ -1,21 +1,21 @@
 <div ng-if="reportFollowUpParent" class="report-followup-parent">
-  <h4>Case ที่ follow</h4>
-  <p ng-click="onClickReportFollowUp(reportFollowUpParent)" class="report-followup-title">
+  <p>Case ที่ follow</p>
+  <small>[เมื่อ <span ng-bind="reportFollowUpParent.date | amDateFormat:'วันddddที่ D MMMM YYYY เวลา HH:mm'"></span>] - </small>
+  <span ng-click="onClickReportFollowUp(reportFollowUpParent)" class="report-followup-title">
     รายงานหมายเลข #{{ reportFollowUpParent.id }}
-  </p>
-  <p><small>รายงานเมื่อ <span ng-bind="reportFollowUpParent.date | amDateFormat:'วันddddที่ D MMMM YYYY เวลา HH:mm'"></span></small></p>
+  </span>
 </div>
 
-<div ng-if="!reportFollowUpParent && items.length > 0">
-  <h4>รายงานที่ follow รายงานนี้ (Follow-up reports)</h4>
+<div ng-if="!reportFollowUpParent && items.length > 0" class="report-followup-parent">
+  <p>รายงานที่ follow รายงานนี้ (Follow-up reports)</p>
   <ul class="list-group report-followup-list" ng-show="items">
-    <li class="list-group-item" ng-repeat="item in items">
-      <div class="report-followup-title" ng-click="onClickReportFollowUp(item)">
-        <p>รายงานหมายเลข #{{ item.id }}</p>
-      </div>
-      <p><small>รายงานเมื่อ <span ng-bind="item.date | amDateFormat:'วันddddที่ D MMMM YYYY เวลา HH:mm'"></span></small></p>
+    <li class="" ng-repeat="item in items">
+      [<small class="report-followup-date" ng-bind="item.date | amDateFormat:'วันddddที่ D MMMM YYYY เวลา HH:mm'">รายงานเมื่อ</small>] -
+      <a class="report-followup-title" ng-click="onClickReportFollowUp(item)">
+        รายงานหมายเลข #{{ item.id }}
+      </a>
     </li>
   </ul>
 </div>
 
-<div class="empty-text" ng-hide="items.length > 0">ยังไม่มีรายงานที่เกี่ยวข้อง</div>
+<div class="empty-text" ng-hide="items.length > 0">ไม่มีรายงานที่เกี่ยวข้อง</div>

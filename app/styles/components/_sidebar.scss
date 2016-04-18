@@ -172,7 +172,7 @@
   }
 
   .pd-file-upload{
-  
+
   }
 }
 
@@ -180,7 +180,7 @@
   overflow: hidden;
 
   @include respond-to(desktop){
-    margin-top: 10px;
+    margin-top: 15px;
   }
 }
 
@@ -193,13 +193,13 @@
       padding-right: 25px;
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: nowrap;  
+      white-space: nowrap;
       margin-bottom: 10px;
     }
   }
   .btn-default{
     width: 100%;
-    
+
   }
   .btn-changed{
     background-color: #509622;
