@@ -18,7 +18,7 @@ angular.module('poddDashboardApp')
 
 .controller('ReportViewCtrl', function ($scope, streaming, Flags, Lightbox,
                                         $modal, Search, Reports, $state, Tag,
-                                        PlanReport, storage) {
+                                        PlanReport, storage, shared) {
 
     $scope.userAlreadyClickImage = false;
     $scope.reportFlag = {};
@@ -269,6 +269,10 @@ angular.module('poddDashboardApp')
           report.isCurated = false;
         });
       });
+    };
+
+    $scope.showReport = function (reportId) {
+      shared.reportWatchId = reportId;
     };
 })
 

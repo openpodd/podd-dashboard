@@ -25,9 +25,11 @@
         <div class="col-sm-8" ng-show="report">
           <div class="report-section">
             <span class="label label-default label-state label-follow-up" ng-show="report.parent">รายงานติดตาม</span>
-            <span class="label label-default label-state label-state-report">สถานะ : {{ report.stateName }}</span>
+
+            <span class="label label-default label-state label-state-report" ng-hide="report.parent">สถานะ : {{ report.stateName }}</span>
+
             <span>ประเภท : {{ $parent.report.reportTypeName }}</span>
-            
+
             <h1 class="report-title" ng-bind-html="report.renderedOriginalFormData"></h1>
 
             <div class="report-detail">
@@ -132,7 +134,13 @@
 
         <div class="col-sm-4" ng-show="report">
 
-          <div class="sidebar-block">
+          <div class="sidebar-block" ng-show="report.parent">
+            <div class="sidebar-content">
+              <a class="btn btn-primary" ng-click="showReport(report.parent)">กดเพื่อดู Case ที่ follow</a>
+            </div>
+          </div>
+
+          <div class="sidebar-block" ng-hide="report.parent">
             <div class="sidebar-heading">
               <h2 class="sidebar-heading-text"><i class="fa fa-stethoscope fa-size-18"></i> ประวัติสถานะ</h2>
             </div> <!-- sidebar-heading -->
