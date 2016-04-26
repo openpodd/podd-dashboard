@@ -49,3 +49,20 @@
     color: #fff;
   }
 }
+
+
+.check-item {
+    display: inline-block;
+    padding: 5px;
+    margin: 0 5px 5px 0;
+    font-size: .9em;
+    line-height: 1em;
+    color: #616161;
+    background: #e2e2e2;
+    border-radius: 5px;
+
+    label {
+        margin: 0;
+        font-weight: normal;
+    }
+}

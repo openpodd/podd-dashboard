@@ -539,7 +539,7 @@ $badge-bad: #FF6D69;
 .loading-block{
     padding: 20px 30px;
     background: #fff;
-    margin: 20px 50px;
+    margin: 20px 0px;
     border: 1px solid #eee;
 }
 .search-block{
@@ -822,4 +822,16 @@ $badge-bad: #FF6D69;
 
   }
 
+}
+
+// Summary report month
+.filter-select {
+    display: block;
+    width: 70%;
+    margin: 0 0 5px;
+}
+.filter-dropdown .selectize-input {
+    margin: 0;
+    border: 1px solid #ccc;
+    width: 100%;
 }

@@ -1,4 +1,4 @@
-<div class="l-info-section l-section l-full-width" ng-controller="SummaryReportMonthCtrl" ng-show="shared.summaryReportMonthMode" ng-cloak>
+<div class="l-info-section l-section l-full-width l-theme-gray" ng-controller="SummaryReportMonthCtrl" ng-show="shared.summaryReportMonthMode" ng-cloak>
   <div class="l-detail-section l-section">
     <div class="title clearfix">
         <h2 class="pull-left"><i class="fa fa-bar-chart fa-size-22"></i>สรุปรายงานรายเดือน</h2>
@@ -10,60 +10,63 @@
             <div class="row">
                 <div class="col-md-3">
                     <form role="form" ng-submit="search()" class="">
-                        <h4 class="filter-heading"><i class="fa fa-file-text"></i> ประเภทรายงาน</h4>
-                        <div class="summary-filter-table" ng-show="types.all.length" >
-                            <input type="checkbox" ng-model="types.selectedAll" ng-click="checkAll()" style="margin-left: 15px;"/> เลือกทั้งหมด
-                        </div>
-                        <div class="btn btn-choice">
-                            <span class="badgex"><i class="fa fa-circle-o fa-size-14"></i></span>
-                            สัตว์ป่วย/ตาย
-                        </div>
-                        <div class="btn btn-choice">
-                            <span class="badgex"><i class="fa fa-circle-o fa-size-14"></i></span>
-                            สัตวกัด
-                        </div>
-                        <div class="btn btn-choice">
-                            <span class="badgex"><i class="fa fa-circle-o fa-size-14"></i></span>
-                            ภัยธรรมชาติ
-                        </div>
-                        <div class="summary-filter-table" ng-repeat="type in types.all">
-                            <input type="checkbox" ng-model="type.selected"/> {{ type.name }}
+                        <div class="form-group">
+                            <h4 class="filter-heading"><i class="fa fa-file-text"></i> ประเภทรายงาน</h4>
+                            <div class="check-item" ng-show="types.all.length" >
+                                <label><input type="checkbox" ng-model="types.selectedAll" ng-click="checkAll()" /> เลือกทั้งหมด</label>
+                            </div>
+                            <div class="check-item" ng-repeat="type in types.all">
+                                <label><input type="checkbox" ng-model="type.selected"/> {{ type.name }}</label>
+                            </div>
                         </div>
 
-                        <h4 class="filter-heading"><i class="fa fa-calendar"></i> ช่วงเวลา</h4>
-                        <select
-                            style="margin: 10px;"
-                            ng-model="months.selectedMonth"
-                            ng-options="month for month in months.months"></select>
-                        <select
-                            ng-model="months.selectedYear"
-                            ng-options="year for year in months.years"></select>
-
-                        <h4 class="filter-heading"><i class="fa fa-map-marker"></i> พื้นที่</h4>
-                        <ui-select
-                            class=""
-                            ng-model="areas.selectedArea"
-                            theme="selectize"
-                            title="Choose an area"
-                            ng-disabled="areas.randomize">
-                            <ui-select-match placeholder="Select areas">{{ areas.selectedArea.name }}</ui-select-match>
-                            <ui-select-choices
-                              group-by="'parentName'"
-                              repeat="area in areas.all | filter:$select.search | orderBy:['parentName', 'name']">
-                              <span ng-bind-html="area.name | highlight:$select.search"></span>
-                            </ui-select-choices>
-                        </ui-select>
-
-                        <h4 class="filter-heading"><i class="fa fa-tags"></i> ป้ายคำ</h4>
-                        <tags-input style="margin:10px;width: 100%;" ng-model="tags">
-                            <auto-complete source="loadTags($query)"></auto-complete>
-                        </tags-input>
-
-                        <h5 style="visibility: hidden;">**คลิ๊กเพื่อค้นหา**</h5>
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary btn-full pd-btn-search" type="submit" style="margin-left:10px;width: 100%"><i class="fa fa-search fa-size-18"></i></button>
+                        <div class="form-group">
+                            <h4 class="filter-heading"><i class="fa fa-calendar"></i> ช่วงเวลา</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <small class="states-group-title">ตั้งแต่วันที่</small>
+                                    <select class="filter-select"
+                                        ng-model="months.selectedMonth"
+                                        ng-options="month for month in months.months"></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <small class="states-group-title">ตั้งแต่วันที่</small>
+                                    <select class="filter-select"
+                                        ng-model="months.selectedYear"
+                                        ng-options="year for year in months.years"></select>
+                                </div>
+                            </div>
                         </div>
 
+                        <div class="form-group">
+                            <h4 class="filter-heading"><i class="fa fa-map-marker"></i> พื้นที่</h4>
+                            <ui-select
+                                class="filter-dropdown"
+                                ng-model="areas.selectedArea"
+                                theme="selectize"
+                                title="Choose an area"
+                                ng-disabled="areas.randomize">
+                                <ui-select-match placeholder="Select areas">{{ areas.selectedArea.name }}</ui-select-match>
+                                <ui-select-choices
+                                  group-by="'parentName'"
+                                  repeat="area in areas.all | filter:$select.search | orderBy:['parentName', 'name']">
+                                  <span ng-bind-html="area.name | highlight:$select.search"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+
+                        <div class="form-group">
+                            <h4 class="filter-heading"><i class="fa fa-tags"></i> ป้ายคำ</h4>
+                            <tags-input class="filter-tags" ng-model="tags">
+                                <auto-complete source="loadTags($query)"></auto-complete>
+                            </tags-input>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group-btn">
+                                <button class="btn btn-primary btn-full" type="submit" ><i class="fa fa-search fa-size-18"></i> ค้นหา</button>
+                            </div>
+                        </div>
                     </form>
                 </div> <!-- col-md-3 -->
                 <div class="col-md-9">
