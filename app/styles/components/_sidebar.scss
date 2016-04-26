@@ -1,6 +1,32 @@
-/************************
-// Sidebar Block
-************************/
+/* -------------------------------- *\
+    Table of Sidebar
+
+    Component: sidebar-block
+    Elements: sidebar-heading
+    Elements: sidebar-heading-text
+    Elements: sidebar-content
+    Elements: sidebar-title
+    variants: sidebar-heading-bg-purple
+    variants: sidebar-heading-bg-purplegray
+
+    Component: history-log
+    Elements: history-log-name
+    variants: -
+
+    Component: btn-green
+    Elements: -
+    variants: -
+
+    Component: btn-green
+    Elements: -
+    variants: -
+
+\* -------------------------------- */
+
+
+/* --------------------------------- */
+// Sidebar-block
+/* --------------------------------- */
 .sidebar-block{
   margin-bottom: 1.5em;
   background-color: #fff;
@@ -45,31 +71,22 @@
   }
 }
 
-/*--- Unorder List ---*/
-.list{
-  padding: 0 0 0 15px;
 
-  li{
-    margin-bottom: 5px;
-
-    &:last-child{
-      margin-bottom: 0;
-    }
-  }
-}
-
+/* --------------------------------- */
+// History-log
+/* --------------------------------- */
 .history-log{
   padding: 0 0 0 15px;
   color: #666;
 
+  .history-log-name{
+    margin-top: 4px;
+    font-size: .85em;
+  }
   li{
     margin-bottom: 7px;
     padding-bottom: 5px;
     border-bottom: 1px dotted #ccc;
-  }
-  .history-log-name{
-    margin-top: 4px;
-    font-size: .85em;
   }
   strong{
     color: #000;

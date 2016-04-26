@@ -1,6 +1,41 @@
-/************************
-// Button
-************************/
+/* -------------------------------- *\
+    Table of Button
+
+    Component: pd-btn-search
+    Elements: -
+    variants: -
+
+    Component: btn-green
+    Elements: -
+    variants: -
+
+\* -------------------------------- */
+
+
+// Search Button on Search Page
+.pd-btn-search{
+    margin-left: 0;
+    width: 100px;
+    height: 37px;
+    border: 0;
+    border-radius: 0 2px 2px 0;
+    background-color: #4d90fe;
+    background-image: -webkit-linear-gradient(top,#4d90fe,#4787ed);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    color: #fff;
+    vertical-align: top;
+    text-align: center;
+    -webkit-transition: margin-left 200ms ease-out 0;
+    transition: margin-left 200ms ease-out 0;
+
+    &:hover{
+        background-color: #357ae8;
+        background-image: -webkit-linear-gradient(top,#4d90fe,#357ae8);
+    }
+}
+
+
+// Use for Submit Button
 .btn-green{
   background-color: #b58e00;
   color: #fff;
@@ -13,11 +48,4 @@
     background-color: #8C710D;
     color: #fff;
   }
-}
-.btn-flag-test{
-  display: block;
-  padding-top: 20px;
-  color: #c42c00;
-  text-decoration: underline;
-  clear: both;
 }
