@@ -1,122 +1,109 @@
-<div class="summary-view l-info-section l-section l-full-width" ng-controller="SummaryReportMonthCtrl" ng-show="shared.summaryReportMonthMode" ng-cloak>
+<div class="l-info-section l-section l-full-width" ng-controller="SummaryReportMonthCtrl" ng-show="shared.summaryReportMonthMode" ng-cloak>
   <div class="l-detail-section l-section">
     <div class="title clearfix">
-        <h2 class="pull-left"><i class="fa fa-stethoscope pull-left fa-size-22"></i>สรุปรายงานรายเดือน</h2>
+        <h2 class="pull-left"><i class="fa fa-bar-chart fa-size-22"></i>สรุปรายงานรายเดือน</h2>
         <i class="fa fa-times pull-right fa-size-18" ng-click="closeSummaryReportMonth();gotoMainPage();"></i>
     </div>
 
-    <div class="content-wrapper content">
-        <div class="summary-wrapper">
-
-            <form role="form" ng-submit="search()" class="search-block">
-                <!-- <div class="input-group"> -->
-                    <div class="row summary-search" style="width:100%">
-
-                        <div class="col-md-12" style="margin: 15px;">
-                            <h5>
-                                ประเภทรายงาน
-                                <div class="summary-filter-table" ng-show="types.all.length" >
-                                    <input type="checkbox" ng-model="types.selectedAll" ng-click="checkAll()" style="margin-left: 15px;"/> เลือกทั้งหมด
-                                </div>
-                            </h5>
-                            <div class="summary-filter-table" ng-repeat="type in types.all">
-                                <input type="checkbox" ng-model="type.selected"/> {{ type.name }}
-                            </div>
+    <div class="content-wrapper">
+        <div class="content">
+            <div class="row">
+                <div class="col-md-3">
+                    <form role="form" ng-submit="search()" class="">
+                        <h4 class="filter-heading"><i class="fa fa-file-text"></i> ประเภทรายงาน</h4>
+                        <div class="summary-filter-table" ng-show="types.all.length" >
+                            <input type="checkbox" ng-model="types.selectedAll" ng-click="checkAll()" style="margin-left: 15px;"/> เลือกทั้งหมด
+                        </div>
+                        <div class="btn btn-choice">
+                            <span class="badgex"><i class="fa fa-circle-o fa-size-14"></i></span>
+                            สัตว์ป่วย/ตาย
+                        </div>
+                        <div class="btn btn-choice">
+                            <span class="badgex"><i class="fa fa-circle-o fa-size-14"></i></span>
+                            สัตวกัด
+                        </div>
+                        <div class="btn btn-choice">
+                            <span class="badgex"><i class="fa fa-circle-o fa-size-14"></i></span>
+                            ภัยธรรมชาติ
+                        </div>
+                        <div class="summary-filter-table" ng-repeat="type in types.all">
+                            <input type="checkbox" ng-model="type.selected"/> {{ type.name }}
                         </div>
 
-                        <div class="col-md-12">
-                            <div class="col-md-2">
-                                <h5>เดือน</h5>
-                                <select
-                                    style="margin: 10px;"
-                                    ng-model="months.selectedMonth"
-                                    ng-options="month for month in months.months"></select>
-                                <select
-                                    ng-model="months.selectedYear"
-                                    ng-options="year for year in months.years"></select>
-                            </div>
+                        <h4 class="filter-heading"><i class="fa fa-calendar"></i> ช่วงเวลา</h4>
+                        <select
+                            style="margin: 10px;"
+                            ng-model="months.selectedMonth"
+                            ng-options="month for month in months.months"></select>
+                        <select
+                            ng-model="months.selectedYear"
+                            ng-options="year for year in months.years"></select>
 
-                            <div class="col-md-4">
-                                <h5>พื้นที่</h5>
-                                <ui-select
-                                    class=""
-                                    ng-model="areas.selectedArea"
-                                    theme="selectize"
-                                    title="Choose an area"
-                                    ng-disabled="areas.randomize">
-                                    <ui-select-match placeholder="Select areas">{{ areas.selectedArea.name }}</ui-select-match>
-                                    <ui-select-choices
-                                      group-by="'parentName'"
-                                      repeat="area in areas.all | filter:$select.search | orderBy:['parentName', 'name']">
-                                      <span ng-bind-html="area.name | highlight:$select.search"></span>
-                                    </ui-select-choices>
-                                </ui-select>
-                            </div>
+                        <h4 class="filter-heading"><i class="fa fa-map-marker"></i> พื้นที่</h4>
+                        <ui-select
+                            class=""
+                            ng-model="areas.selectedArea"
+                            theme="selectize"
+                            title="Choose an area"
+                            ng-disabled="areas.randomize">
+                            <ui-select-match placeholder="Select areas">{{ areas.selectedArea.name }}</ui-select-match>
+                            <ui-select-choices
+                              group-by="'parentName'"
+                              repeat="area in areas.all | filter:$select.search | orderBy:['parentName', 'name']">
+                              <span ng-bind-html="area.name | highlight:$select.search"></span>
+                            </ui-select-choices>
+                        </ui-select>
 
-                            <div class="col-md-3">
-                                <h5>Tag</h5>
+                        <h4 class="filter-heading"><i class="fa fa-tags"></i> ป้ายคำ</h4>
+                        <tags-input style="margin:10px;width: 100%;" ng-model="tags">
+                            <auto-complete source="loadTags($query)"></auto-complete>
+                        </tags-input>
 
-                            <tags-input
-                                style="margin:10px;width: 100%;"
-                                ng-model="tags"
-                            >
-                                <auto-complete source="loadTags($query)"></auto-complete>
-                            </tags-input>
+                        <h5 style="visibility: hidden;">**คลิ๊กเพื่อค้นหา**</h5>
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary btn-full pd-btn-search" type="submit" style="margin-left:10px;width: 100%"><i class="fa fa-search fa-size-18"></i></button>
+                        </div>
 
-                            </div>
+                    </form>
+                </div> <!-- col-md-3 -->
+                <div class="col-md-9">
+                    <div ng-show="loading" loader-spinner></div>
+                    <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
+                    <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
 
-                            <div class="col-md-3">
-                                <h5 style="visibility: hidden;">**คลิ๊กเพื่อค้นหา**</h5>
-                                <div class="input-group-btn">
-                                    <button class="btn btn-default pd-btn-search" type="submit" style="margin-left:10px;width: 100%"><i class="fa fa-search fa-size-18"></i></button>
+                    <div ng-show="results.length && !loading">
+                        <h3 class="subheading pull-left clear inline-table" style="width: 100%">ตารางสรุปรายงานเดือน {{ months.selectedMonth }}/{{ months.selectedYear }} ของ{{ areas.selectedArea.name }} {{ areas.selectedArea.parentName }}</h3>
+                        <div ng-show="tagReportIds.length" class="pull-left clear inline-table alert alert-warning" style="margin:10px;width: 100%" >
+                            <form role="form" ng-submit="doTag()">
+                                <div class="col-md-12">
+                                    <h4>คุณต้องการเพิ่มแท็กในรายงานหรือไม่ ?</h4>
+                                    <h5>รายการรายงานที่ต้องการแท็ก {{  tagReportIds }}</h5>
+                                    <tags-input
+                                        style="margin:10px;width: 100%;"
+                                        ng-model="tagInput"
+                                    >
+                                        <auto-complete source="loadTags($query)"></auto-complete>
+                                    </tags-input>
                                 </div>
-                            </div>
+
+                                <div class="col-md-3">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default pd-btn-search" type="submit" style="margin-left:10px;width: 100%"><i class="fa fa-tags"></i> แท็กรายงาน</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div id="gridReportMonth" external-scopes="reports" class="summary-grid-report grid-summary clear inline-table" ui-grid="gridOptionsReport" ui-grid-exporter></div>
+
+                        <div class="export-buttons">
+                          <button class="btn btn-primary btn-sm" type="button" ng-click="csvExport();">ดาวน์โหลดข้อมูลไฟล์ CSV</button>
+                          <button class="btn btn-primary btn-sm" type="button" ng-click="xlsxExport();">ดาวน์โหลดข้อมูลไฟล์ Excel</button>
                         </div>
                     </div>
-            </form>
-            <hr/>
-            <div ng-show="loading" loader-spinner></div>
-            <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
-            <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
-
-            <div ng-show="results.length && !loading">
-
-                <h3 class="subheading pull-left clear inline-table" style="width: 100%">ตารางสรุปรายงานเดือน {{ months.selectedMonth }}/{{ months.selectedYear }} ของ{{ areas.selectedArea.name }} {{ areas.selectedArea.parentName }}</h3>
-
-                <div ng-show="tagReportIds.length" class="pull-left clear inline-table alert alert-warning" style="margin:10px;width: 100%" >
-
-                    <form role="form" ng-submit="doTag()">
-
-                        <div class="col-md-12">
-                            <h4>คุณต้องการเพิ่มแท็กในรายงานหรือไม่ ?</h4>
-                            <h5>รายการรายงานที่ต้องการแท็ก {{  tagReportIds }}</h5>
-                            <tags-input
-                                style="margin:10px;width: 100%;"
-                                ng-model="tagInput"
-                            >
-                                <auto-complete source="loadTags($query)"></auto-complete>
-                            </tags-input>
-
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="input-group-btn">
-                                <button class="btn btn-default pd-btn-search" type="submit" style="margin-left:10px;width: 100%"><i class="fa fa-tags"></i> แท็กรายงาน</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <div id="gridReportMonth" external-scopes="reports" class="summary-grid-report grid-summary clear inline-table" ui-grid="gridOptionsReport" ui-grid-exporter></div>
-
-                <div class="export-buttons">
-                  <button class="btn btn-primary btn-sm" type="button" ng-click="csvExport();">ดาวน์โหลดข้อมูลไฟล์ CSV</button>
-                  <button class="btn btn-primary btn-sm" type="button" ng-click="xlsxExport();">ดาวน์โหลดข้อมูลไฟล์ Excel</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
+                </div> <!-- col-md-9 -->
+            </div> <!-- row -->
+        </div> <!-- content -->
+    </div> <!-- content wrapper -->
   </div>
-</div>
+</div> <!-- summary-view -->
