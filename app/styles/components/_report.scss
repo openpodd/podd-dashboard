@@ -719,3 +719,107 @@ $badge-bad: #FF6D69;
     transform: rotate(-25deg) translateY(-50%);
   }
 }
+
+
+/*********/
+/*Report*/
+/*********/
+
+.report-title{
+  font-size: 1.1em;
+  line-height: 1.5em;
+  color: #000;
+  margin: 10px 0 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #8a5ebe;
+
+  p{
+    margin: 0;
+  }
+}
+
+.report-section{
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #eaeaea;
+  color: #666;
+  margin-bottom: 20px;
+
+  .subheading{
+    color: #333;
+  }
+
+  .report-image{
+
+  }
+  .report-thumbnails{
+    margin-bottom: 20px;
+
+    li{
+      width: 120px;
+      margin-bottom: 10px;
+      padding: 0;
+      margin: 0 10px 10px 0;
+
+      &:first-child{
+        margin-left: 0;
+      }
+    }
+  }
+  .report-detail{
+    margin-bottom: 25px;
+
+    strong{
+      color: #666;
+    }
+  }
+  .report-infomation{
+    .empty-text{
+      padding: 10px;
+    }
+    .pd-white-table{
+      border: none;
+    }
+  }
+}
+
+.mark-as-test-wrapper{
+  overflow: hidden;
+
+  @include respond-to(desktop){
+    margin-top: 15px;
+  }
+}
+
+.priority-report{
+  .priority-report-state{
+    min-width: auto;
+    width: 100%;
+
+    .btn-block{
+      padding-right: 25px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-bottom: 10px;
+    }
+  }
+  .btn-default{
+    width: 100%;
+
+  }
+  .btn-changed{
+    background-color: #509622;
+    color: #fff;
+    border: none;
+
+
+    &:hover{
+      background-color: #438616;
+    }
+  }
+  .ui-select-match-text{
+
+  }
+
+}

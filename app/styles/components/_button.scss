@@ -1,0 +1,23 @@
+/************************
+// Button
+************************/
+.btn-green{
+  background-color: #b58e00;
+  color: #fff;
+  border-radius: 30px;
+  padding: 5px 20px;
+  font-size: 1em;
+  border: none;
+
+  &:hover{
+    background-color: #8C710D;
+    color: #fff;
+  }
+}
+.btn-flag-test{
+  display: block;
+  padding-top: 20px;
+  color: #c42c00;
+  text-decoration: underline;
+  clear: both;
+}
