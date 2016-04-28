@@ -1,66 +1,65 @@
-<div class="summary-view l-info-section l-section l-full-width" ng-controller="SummaryPerformancePersonCtrl" ng-show="shared.summaryPerformancePersonMode" ng-cloak>
+<div class="l-info-section l-section l-full-width l-theme-gray" ng-controller="SummaryPerformancePersonCtrl" ng-show="shared.summaryPerformancePersonMode" ng-cloak>
   <div class="l-detail-section l-section">
     <div class="title clearfix">
-        <h2 class="pull-left"><i class="fa fa-stethoscope pull-left fa-size-22"></i>สรุปประสิทธิภาพการรายงานแต่ละอาสา</h2>
+        <h2 class="pull-left"><i class="fa fa-bar-chart fa-size-22"></i>สรุปประสิทธิภาพการรายงานแต่ละอาสา</h2>
         <i class="fa fa-times pull-right fa-size-18" ng-click="closeSummaryPerformancePerson();gotoMainPage();"></i>
     </div>
 
-    <div class="content-wrapper content">
-        <div class="summary-wrapper">
-
-            <form role="form" ng-submit="search()" class="search-block">
-                <!-- <div class="input-group"> -->
-                    <div class="row summary-search">
-                        <div class="col-md-6">
-                            <h5>พื้นที่</h5>
-                            <ui-select
-                                class=""
-                                ng-model="areas.selectedArea"
-                                theme="selectize"
-                                title="Choose an area"
-                                ng-disabled="areas.randomize">
-                                <ui-select-match placeholder="Select areas">{{ areas.selectedArea.name }}</ui-select-match>
-                                <ui-select-choices
-                                  group-by="'parentName'"
-                                  repeat="area in areas.all | filter:$select.search | orderBy:['parentName', 'name']">
-                                  <span ng-bind-html="area.name | highlight:$select.search"></span>
-                                </ui-select-choices>
-                            </ui-select>
-                        </div>
-                        <div class="col-md-6">
-                            <h5>เดือน</h5>
-                            <select
-                                ng-model="months.selectedMonth"
-                                ng-options="month for month in months.months"></select>
-                            <select
-                                ng-model="months.selectedYear"
-                                ng-options="year for year in months.years"></select>
+    <div class="content-wrapper">
+        <div class="content">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <h4 class="filter-heading"><i class="fa fa-calendar"></i> ช่วงเวลา</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <small class="states-group-title">เดือน</small>
+                                <select class="filter-select"
+                                    ng-model="months.selectedMonth"
+                                    ng-options="month for month in months.months"></select>
+                            </div>
+                            <div class="col-md-6">
+                                <small class="states-group-title">ปี</small>
+                                <select class="filter-select"
+                                    ng-model="months.selectedYear"
+                                    ng-options="year for year in months.years"></select>
+                            </div>
                         </div>
                     </div>
-<!--                     <div class="input-group-btn">
-                        <button class="btn btn-default pd-btn-search" type="submit"><i class="fa fa-search fa-size-18"></i></button>
-                    </div> -->
-                <!-- </div> -->
-            </form>
-            <hr/>
-            <div ng-show="loading" loader-spinner></div>
-            <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
-            <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
+                    <div class="form-group">
+                        <h4 class="filter-heading"><i class="fa fa-map-marker"></i> พื้นที่</h4>
+                        <ui-select
+                            class="filter-dropdown"
+                            ng-model="areas.selectedArea"
+                            theme="selectize"
+                            title="Choose an area"
+                            ng-disabled="areas.randomize">
+                            <ui-select-match placeholder="Select areas">{{ areas.selectedArea.name }}</ui-select-match>
+                            <ui-select-choices
+                              group-by="'parentName'"
+                              repeat="area in areas.all | filter:$select.search | orderBy:['parentName', 'name']">
+                              <span ng-bind-html="area.name | highlight:$select.search"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
 
-            <div ng-show="results.length && !loading">
+                <div class="col-md-9">
+                    <div ng-show="loading" loader-spinner></div>
+                    <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
+                    <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
 
-                <h3 class="subheading pull-left clear inline-table">ตารางสรุปประสิทธิภาพการรายงานของเดือน {{ months.selectedMonth }}/{{ months.selectedYear }} ของ{{ areas.selectedArea.name }} {{ areas.selectedArea.parentName }}</h3>
-
-                <div id="gridPerformancePerson" class="summary-grid-person grid-summary clear inline-table" ui-grid="gridOptionsPerson" ui-grid-exporter></div>
-
-                <div class="export-buttons">
-                  <button class="btn btn-primary btn-sm" type="button" ng-click="csvExport();">ดาวน์โหลดข้อมูลไฟล์ CSV</button>
-                  <button class="btn btn-primary btn-sm" type="button" ng-click="xlsxExport();">ดาวน์โหลดข้อมูลไฟล์ Excel</button>
+                    <div ng-show="results.length && !loading">
+                        <!-- <h3 class="subheading pull-left clear inline-table">ตารางสรุปประสิทธิภาพการรายงานของเดือน {{ months.selectedMonth }}/{{ months.selectedYear }} ของ{{ areas.selectedArea.name }} {{ areas.selectedArea.parentName }}</h3> -->
+                        <div id="gridPerformancePerson" class="summary-grid-person grid-summary clear inline-table" ui-grid="gridOptionsPerson" ui-grid-exporter></div>
+                        <div class="export-buttons pull-right">
+                          <button class="btn btn-primary btn-sm" type="button" ng-click="csvExport();"><i class="fa fa-file-code-o fa-size-16 ico-front" aria-hidden="true"></i> ข้อมูลไฟล์ CSV</button>
+                          <button class="btn btn-primary btn-sm" type="button" ng-click="xlsxExport();"><i class="fa fa-file-excel-o fa-size-16 ico-front" aria-hidden="true"></i> ข้อมูลไฟล์ Excel</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
-
   </div>
 </div>
