@@ -50,7 +50,7 @@
                     <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
 
                     <div ng-show="results.length && !loading">
-                        <!-- <h3 class="subheading pull-left clear inline-table">ตารางสรุปประสิทธิภาพการรายงานของเดือน {{ months.selectedMonth }}/{{ months.selectedYear }} ของ{{ areas.selectedArea.name }} {{ areas.selectedArea.parentName }}</h3> -->
+                        <h3 class="subheading pull-left clear inline-table">ผลลัพธ์การค้นหา {{ months.selectedMonth }}/{{ months.selectedYear }} ของ{{ areas.selectedArea.name }} {{ areas.selectedArea.parentName }}</h3>
                         <div id="gridPerformancePerson" class="summary-grid-person grid-summary clear inline-table" ui-grid="gridOptionsPerson" ui-grid-exporter></div>
                         <div class="export-buttons pull-right">
                           <button class="btn btn-primary btn-sm" type="button" ng-click="csvExport();"><i class="fa fa-file-code-o fa-size-16 ico-front" aria-hidden="true"></i> ข้อมูลไฟล์ CSV</button>
