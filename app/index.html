@@ -184,18 +184,28 @@
 <div class="pd-section-nav" ng-controller="MenuCtrl">
     <div class="pd-section-left" ng-show="shared.loggedIn" ng-cloak>
     <div class="pd-small-nav" ng-click="isShowNav =! isShowNav">
-      <!-- <img src="images/logo-onehealth.svg" alt="" class="logo"/> -->
       <i class="fa fa-bars fa-size-18"></i>
       <span>ผ่อดีดี</span>
     </div>
         <div ng-init="isShowNav = true"></div>
         <div class="pd-container" ng-show="isShowNav">
-           <img src="images/logo-onehealth.svg" alt="" class="logo hide-phone"/>
+           <!-- <img src="images/logo-onehealth.svg" alt="" class="logo hide-phone"/> -->
             <ul class="pd-nav-list">
+                <li class="pd-nav-item">
+                  <a ng-href="#/" class="pd-nav-icon -logo">
+                  <img src="images/logo-onehealth.svg" alt=""/></a>
+                  <div class="pd-nav-submenu -micro">
+                      <ul class="">
+                          <li><a ng-href="#/calendar">กลุ่มผ่อดีดี</a></li>
+                          <li><a ng-href="#/scenario">กลุ่ม MBDS</a></li>
+                          <li><a ng-href="#/plans">กลุ่มช้าง</a></li>
+                      </ul>
+                  </div>
+                </li>
                 <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('home') }"
                     ng-click="setActiveMenu('home')">
                   <a ng-href="#/" class="pd-nav-icon">
-                  <i class="fa fa-home fa-size-22"></i>
+                  <i class="fa fa-file-text-o fa-size-20"></i>
                   <span class="pd-nav-text">รายงาน</span></a>
                 </li>
                 <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('map') }"
@@ -217,7 +227,7 @@
                   <i class="fa fa-list-alt fa-size-18"></i>
                   <span class="pd-nav-text">อื่นๆ</span></a>
 
-                  <div class="pd-nav-submenu">
+                  <div class="pd-nav-submenu -mini">
                       <ul class="">
                           <li><a ng-href="#/calendar">ปฏิทินการทำงาน</a></li>
                           <li><a ng-href="#/scenario">แผนภาพ</a></li>
@@ -297,8 +307,7 @@
                   </div>
                 </li>
                 <!-- end support menu -->
-
-                <li ng-show="shared.loggedIn" class="pd-nav-item" ng-cloak
+                <li ng-show="shared.loggedIn" class="pd-nav-item -divide" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('profile') }">
 
                   <a ng-href="#/profile" class="pd-nav-icon">

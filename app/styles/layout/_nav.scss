@@ -74,6 +74,10 @@
                 margin-left: 5px;
             }
         }
+        &.-logo {
+            padding: 10px;
+            margin: 5px 0 5px 0;
+        }
     }
 }
 
@@ -127,6 +131,17 @@ $nav-font-family: ThaiSansNeueRegular;
         .pd-nav-text{
             left: 50px;
             opacity: 1;
+        }
+    }
+    // Not a good idea
+    &:hover{
+        cursor: pointer;
+        color: $nav-item-color-hover;
+        background-color: $nav-item-bg-hover;
+        text-decoration: none;
+
+        .pd-nav-icon {
+            color: $nav-item-color-hover;
         }
     }
 
@@ -192,12 +207,12 @@ $nav-font-family: ThaiSansNeueRegular;
     color: $nav-item-color;
         font: 20px / 20px $nav-font-family;
 
-    &:hover{
-        cursor: pointer;
-        color: $nav-item-color-hover;
-        background-color: $nav-item-bg-hover;
-        text-decoration: none;
-    }
+    // &:hover{
+    //     cursor: pointer;
+    //     color: $nav-item-color-hover;
+    //     background-color: $nav-item-bg-hover;
+    //     text-decoration: none;
+    // }
 
     i{
         @include respond-to(phone){
@@ -315,6 +330,12 @@ $notifi-item-read: #ececec;
                 color: #fff;
             }
         }
+    }
+    &.-mini {
+        width: 150px;
+    }
+    &.-micro {
+        width: 120px;
     }
 }
 
