@@ -7,11 +7,12 @@ angular.module('poddDashboardApp')
 
     $scope.$watch('shared.loggedIn', function (newValue) {
         $scope.isShowNav = newValue;
+        $scope.domainMap = Domain.list();
     });
 
 
 
-    $scope.domainMap = Domain.list();
+    //$scope.domainMap = Domain.list();
 
     $scope.logout = function () {
         $scope.shared.loggedIn = false;
@@ -32,7 +33,6 @@ angular.module('poddDashboardApp')
     };
 
     $scope.switchDomain = function (domainId) {
-        console.log('switchDomain', domainId)
         return Domain.switchDomain({domain: domainId}).$promise
             .then(function (resp) {
                 $window.location.reload();

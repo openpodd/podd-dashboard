@@ -195,7 +195,7 @@
                 <li class="pd-nav-item">
                   <a ng-href="#/" class="pd-nav-icon -logo">
                   <img src="images/logo-onehealth.svg" alt=""/></a>
-                  <div class="pd-nav-submenu -micro">
+                  <div class="pd-nav-submenu -micro" ng-show="domainMap.domains.length > 1">
                       <ul class="">
                           <li ng-repeat="domain in domainMap.domains" ng-class="{active: domainMap.domain.id == domain.id}">
                             <a ng-click=switchDomain(domain.id)>
