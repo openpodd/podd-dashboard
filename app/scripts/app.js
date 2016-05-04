@@ -109,6 +109,7 @@ angular
       /\/mentions\/seen/,
       /\/reportComments/,
       /\/users\/search/,
+      /\/users\/domains/,
       /\/summary\/areas\/count-reports/,
       /\/summary\/areas\/show-detail/,
       /\/summary\/authorities\/show-detail/,
