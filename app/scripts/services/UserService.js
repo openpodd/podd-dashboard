@@ -137,6 +137,17 @@ angular.module('poddDashboardApp')
     };
 })
 
+
+.factory('Users', function ($resource) {
+    var resource = $resource(config.API_BASEPATH + '/users/', {}, {
+        list: {
+            method: 'GET',
+            isArray: true
+        },
+    });
+    return resource;
+})
+
 .config(function ($httpProvider) {
     $httpProvider.interceptors.push('authInterceptor');
 });

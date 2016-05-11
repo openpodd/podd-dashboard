@@ -123,7 +123,8 @@ angular
       /\/planReports/,
       /\/administrationArea\/contacts/,
       /\/administrationArea\/contacts\/update/,
-      /\/notifications\/test/
+      /\/notifications\/test/,
+      /\/users/
     ];
 
     function matchAPIUrls(url) {
@@ -245,6 +246,11 @@ angular
         url: '^/profile',
         templateUrl: 'views/profile.html',
         controller: 'ProfileModeCtrl'
+      })
+      .state('main.users', {
+        url: '^/user-list',
+        templateUrl: 'views/user-list.html',
+        controller: 'UsersModeCtrl'
       })
       .state('login', {
         url: '/login',

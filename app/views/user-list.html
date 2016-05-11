@@ -1,0 +1,77 @@
+<div class="summary-view l-info-section l-section l-full-width"
+     ng-controller="UsersCtrl"
+     ng-cloak>
+  <div class="l-detail-section l-section">
+
+    <div class="title clearfix">
+        <h2 class="pull-left">
+          <i class="fa fa-user pull-left fa-size-22"></i>
+          รายชื่อผู้ใช้
+        </h2>
+    </div>
+
+    <div class="content-wrapper content">
+      <div class="summary-wrapper profile-wrapper">
+        <div class="row">
+          <div class="col-lg-12">
+            <h2 class="subheading pull-left">ตารางรายชื่อผู้ใช้</h2>
+            
+            <div class="filter-result-container">
+              <div class="ta-view-header row hidden-xs">
+                <div class="col-md-1 col-sm-2">
+                  <input type="checkbox"/>
+                </div>
+                <div class="col-md-3 col-sm-2">ชื่อ</div>
+                <div class="col-md-3 col-sm-2">นามสกุล</div>
+                <div class="col-md-3 col-sm-2">ชื่อบัญชีผู้ใช้</div>
+                <div class="col-md-1 col-sm-2"></div>
+              </div>
+              <div ng-repeat="user in users" class="ta-view-row row"
+                   ng-class="{ 'active': user.id == activeUserId }">
+
+                  <div class="ta-view-col ta-view-date col-md-1 col-sm-2" data-th="ลบ">
+                    <input type="checkbox"/>
+                  </div>
+
+                  <div class="ta-view-col ta-view-info col-md-3 col-sm-2 hidden-xs">
+                    <span ng-bind="::user.firstName" ></span>
+                  </div>
+
+                  <div class="ta-view-col ta-view-info col-md-3 col-sm-2 hidden-xs">
+                    <span ng-bind="::user.lastName" ></span>
+                  </div>
+
+                  <div class="ta-view-col ta-view-info col-md-3 col-sm-2 hidden-xs">
+                    <span ng-bind="::user.username" ></span>
+                  </div>
+
+                  <div class="ta-view-col ta-view-area col-md-1 col-sm-2" data-th="พื้นที่">
+                    <a href="#" class="btn btn-default">แก้ไข</a>
+                  </div>
+              </div>
+            </div>
+
+
+            <div class="filter-result-message" ng-show="error">
+              <div class="filter-error alert alert-danger" role="alert" ng-show="error">
+                  <strong>เกิดข้อผิดพลาด</strong>
+              </div>
+
+            </div>
+
+            <div class="filter-empty alert alert-info" ng-show="!loading && users.length == 0">
+                <strong>ไม่พบผลการค้นหา</strong>
+            </div>
+
+            <div class="loadmore" ng-cloak ng-show="!error && !isEmpty()">
+              <button class="btn btn-default center-block" type="button" ng-show="!lastPage" ng-click="::loadMore()" ng-disabled="loading">{{ loading ? 'กรุณารอสักครู่...' : 'เพิ่มเติม...' }} </button>
+          </div><!-- /.loadmore -->
+
+
+          </div> <!-- /.col-sm-8 -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

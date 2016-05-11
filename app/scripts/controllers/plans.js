@@ -4,11 +4,11 @@
 angular.module('poddDashboardApp')
 
 .controller('PlansModeCtrl', function (Menu) {
-  Menu.setActiveMenu('plans');
+  Menu.setActiveMenu('scenario');
 })
 
 .controller('PlansCtrl', function ($scope, Menu, PlanReport) {
-  Menu.setActiveMenu('plans');
+  Menu.setActiveMenu('scenario');
 
   $scope.loading = false;
   $scope.page = 1;

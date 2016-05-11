@@ -224,10 +224,10 @@
                 </li>
 
                 <li class="pd-nav-item -divide" ng-cloak
-                    ng-class="{ 'active active-menu':isActiveMenu('profile') }"
+                    ng-class="{ 'active active-menu':isActiveMenu('scenario') }"
                     ng-if="hasPermissionOnMenu('view_dashboard_plan')">
 
-                  <a ng-href="#/profile" class="pd-nav-icon">
+                  <a ng-href="#/scenario" class="pd-nav-icon">
                   <i class="fa fa-list-alt fa-size-18"></i>
                   <span class="pd-nav-text">อื่นๆ</span></a>
 
@@ -314,9 +314,17 @@
                     ng-class="{ 'active active-menu':isActiveMenu('users') }"
                     ng-if="hasPermissionOnMenu('view_dashboard_users')">
 
-                  <a ng-href="#/profile" class="pd-nav-icon">
+                  <a ng-href="#/user-list" class="pd-nav-icon">
                   <i class="fa fa-users fa-size-18"></i>
                   <span class="pd-nav-text">จัดการผู้ใช้</span></a>
+
+                  <div class="pd-nav-submenu -mini">
+                      <ul class="">
+                          <!-- <li><a ng-href="#/calendar">ปฏิทินการทำงาน</a></li> -->
+                          <li><a ng-href="#/user-list">รายชื่อผู้ใช้</a></li>
+                      </ul>
+                  </div>
+
                 </li>
 
                 <li ng-show="shared.loggedIn" class="pd-nav-item -divide" ng-cloak
@@ -462,6 +470,7 @@
         <script src="scripts/controllers/plans.js"></script>
         <script src="scripts/controllers/calendar.js"></script>
         <script src="scripts/controllers/contacts.js"></script>
+        <script src="scripts/controllers/user-list.js"></script>
         <!-- endbuild -->
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
