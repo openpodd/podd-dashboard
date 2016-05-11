@@ -19,6 +19,18 @@ angular.module('poddDashboardApp')
     $scope.pageSize = 20;
     $scope.lastPage = false; 
 
+    $scope.userSelected = null;
+
+    function randomPassword() {
+        var number = Math.floor(Math.random() * 999999);
+        var str = '' + number;
+        while (str.length < 6) {
+            str = '0' + str;
+        }
+
+        return str;
+    }
+
     function refreshUsers() {
 
         var query = {
@@ -50,4 +62,15 @@ angular.module('poddDashboardApp')
         refreshUsers();
 
     };
+
+    $scope.selectedUser = function (user) {
+        if (user == null) {
+            $scope.userSelected = {
+                displayPassword: randomPassword()
+            };
+
+        } else {
+            $scope.userSelected = user; 
+        }
+    }
 });
