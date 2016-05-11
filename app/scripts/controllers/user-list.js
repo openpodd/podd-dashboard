@@ -1,3 +1,4 @@
+/* global swal */
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -10,7 +11,7 @@ angular.module('poddDashboardApp')
     shared.reportWatchId = null;
 })
 
-.controller('UsersCtrl', function ($scope, Menu, Users) {
+.controller('UsersCtrl', function ($scope, Menu, User, UserDetail, Authority, AuthorityView) {
     Menu.setActiveMenu('users');
     
     $scope.users = [];
@@ -21,6 +22,16 @@ angular.module('poddDashboardApp')
 
     $scope.userSelected = {};
     $scope.userBeforeChange = {};
+    $scope.authorities = {};
+    $scope.authority = {};
+
+    AuthorityView.list().$promise.then(function (data) {
+        data.forEach(function (item) {
+            $scope.authority = item;
+            return;
+        });
+        $scope.authorities = data;
+    });
 
     function randomPassword() {
         var number = Math.floor(Math.random() * 999999);
@@ -40,7 +51,7 @@ angular.module('poddDashboardApp')
         };
 
         $scope.loading = true;
-        Users.list(query).$promise.then(function (data) {
+        User.list(query).$promise.then(function (data) {
             console.log('loaded users data', data);
             data.forEach(function (item) {
                 $scope.users.push(item);
@@ -68,17 +79,50 @@ angular.module('poddDashboardApp')
     $scope.selectedUser = function (user) {
         if (user === null) {
             $scope.userSelected = {
-                displayPassword: randomPassword()
+                displayPassword: randomPassword(),
+                authority: $scope.authority
             };
 
         } else {
-            $scope.userSelected = user; 
+            $scope.userSelected = user;
+            $scope.userSelected.authority = $scope.authority;
         }
         $scope.userBeforeChange = angular.copy(user);
     };
 
     $scope.submitUser = function () {
-        angular.copy($scope.userBeforeChange, $scope.userSelected);
+        if (!$scope.userSelected.firstName && !$scope.userSelected.email) {
+            swal('เกิดข้อผิดพลาด', 'คุณกรอกข้อมูลไม่ครบถ้วน', 'error');
+            return;
+        }
+
+        if ($scope.userSelected.id) {
+            UserDetail.update($scope.userSelected).$promise.then(function (data) {
+                swal('สำเร็จ', 'แก้ไขรายละเอียดของผู้ใช้สำเร็จ', 'success');
+                $scope.userSelected = data;
+            }).catch(function () {
+                swal('เกิดข้อผิดพลาด', 'ไม่สามารถแก้ไขรายละเอียดของผู้ใช้ได้', 'error');
+                angular.copy($scope.userBeforeChange, $scope.userSelected);
+            });
+        } else {
+            User.create($scope.userSelected).$promise.then(function (data) {
+                $scope.userSelected = data;
+
+                var params = {
+                    id: $scope.authority.id,
+                    userId: data.id
+                };
+
+                Authority.users(params).$promise.then(function (_data) {
+                    swal('สำเร็จ', 'เพิ่มผู้ใช้งานสำเร็จ', 'success');
+                    $scope.users.push(data);
+                });
+
+            }).catch(function () {
+                swal('เกิดข้อผิดพลาด', 'ไม่สามารถเพิ่มผู้ใช้ได้', 'error');
+                angular.copy($scope.userBeforeChange, $scope.userSelected);
+            });
+        }
     };
 
     $scope.resetUser = function () {

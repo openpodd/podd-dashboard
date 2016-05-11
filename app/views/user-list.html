@@ -15,11 +15,11 @@
         <div class="row">
           <div class="col-lg-12">
             <h2 class="subheading pull-left">ตารางรายชื่อผู้ใช้</h2>
-            
+
             <div class="row">
               <div class="col-lg-12">
                 <div class="pull-left">
-                  <button type="button" class="btn btn-default">ลบรายการ</button>
+                  <!-- <button type="button" class="btn btn-default">ลบรายการ</button> -->
                 </div>
                 <div class="pull-right">
                   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#userModal" ng-click="selectedUser(null)" >สร้างผู้ใช้</button>
@@ -121,16 +121,25 @@
               </div>
               <div class="col-md-3 col-sm-2"><label for="id_username">บัญชีผู้ใช้งาน</label></div>
               <div class="col-md-9 col-sm-2">
-                <input id="id_username" type="text" name="username" ng-model="userSelected.email" readonly/>
+                <input id="id_username" type="text" name="username" ng-model="userSelected.username || userSelected.email" readonly/>
               </div>
               <div class="col-md-3 col-sm-2"><label for="id_password">รหัสแรกเข้า</label></div>
               <div class="col-md-9 col-sm-2">
                 <input id="id_password" type="text" name="password" ng-model="userSelected.displayPassword" readonly/>
               </div>
+              <div class="col-md-3 col-sm-2"><label for="id_authotiry">สังกัด</label></div>
+              <div class="col-md-9 col-sm-2">
+                  <select name="authotiry" 
+                          id="id_authotiry"
+                          ng-options="option.name for option in authorities track by option.id" 
+                          ng-model="authority">
+                  </select>
+              </div>
+
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="resetUser()">Submit</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="submitUser()">Submit</button>
           <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="resetUser()">Close</button>
         </div>
       </div>

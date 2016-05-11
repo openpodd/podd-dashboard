@@ -24,8 +24,31 @@ angular.module('poddDashboardApp')
         updatePassword: {
             url: config.API_BASEPATH + '/users/profile/password/',
             method: 'POST'
+        },
+        list: {
+            url: config.API_BASEPATH + '/users/',
+            method: 'GET',
+            isArray: true
+        },
+        create: {
+            url: config.API_BASEPATH + '/users/',
+            method: 'POST',
         }
     });
+})
+
+.factory('UserDetail', function ($resource) {
+    var resource = $resource(config.API_BASEPATH + '/users/:id', {
+      id: '@id'
+    }, {
+        get: {
+            method: 'GET'
+        },
+        update: {
+            method: 'PUT'
+        }
+    });
+    return resource;
 })
 
 .factory('Auth', function (User, shared, $interval, $location, $q, storage) {
@@ -135,17 +158,6 @@ angular.module('poddDashboardApp')
             return config || $q.when(config);
         }
     };
-})
-
-
-.factory('Users', function ($resource) {
-    var resource = $resource(config.API_BASEPATH + '/users/', {}, {
-        list: {
-            method: 'GET',
-            isArray: true
-        },
-    });
-    return resource;
 })
 
 .config(function ($httpProvider) {

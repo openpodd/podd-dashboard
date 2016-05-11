@@ -43,10 +43,22 @@ angular.module('poddDashboardApp')
     return $resource(config.API_BASEPATH + '/authorities/:id', {
         id: '@id'
     }, {
-      'query': {
-          isArray: true,
-          cache: true
-      }
+        'query': {
+            isArray: true,
+            cache: true
+        },
+        'users': {
+            url: config.API_BASEPATH + '/authorities/:id/users',
+            method: 'POST',
+        }
+    });
+})
+
+.factory('AuthorityView', function ($resource) {
+    return $resource(config.API_BASEPATH + '/authorities/?self=true', {}, {
+        'list': {
+            isArray: true,
+        }
     });
 })
 
