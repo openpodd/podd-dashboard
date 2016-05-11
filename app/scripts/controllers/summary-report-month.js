@@ -54,8 +54,9 @@ angular.module('poddDashboardApp')
         console.log( chooseTypes);
 
         data.forEach(function (item) {
-            if (chooseTypes.indexOf(item.id + "") != -1)
+            if (chooseTypes.indexOf(item.id + '') !== -1) {
                 item.checked = true;
+            }
             results.push(item);
         });
         $scope.types.all = results;
@@ -118,8 +119,8 @@ angular.module('poddDashboardApp')
 
     $scope.search = function () {
 
-        var dateFrom = moment($scope.dateRange.from).format("DD/MM/YYYY");
-        var dateTo = moment($scope.dateRange.to).format("DD/MM/YYYY");
+        var dateFrom = moment($scope.dateRange.from).format('DD/MM/YYYY');
+        var dateTo = moment($scope.dateRange.to).format('DD/MM/YYYY');
 
         var areaId = '';
         if ($scope.areas.selectedArea) {
@@ -144,9 +145,7 @@ angular.module('poddDashboardApp')
             areaId: areaId, 
             typeIds: typeIds, 
             tags: tags 
-        }
-        console.log(params)
-
+        };
         $state.go('main.summaryreportmonth', params);
 
     };
@@ -404,6 +403,6 @@ angular.module('poddDashboardApp')
     });
 
     $scope.renderDate = function(date) {
-        return moment(date).format('DD/MM/YYYY')
-    }
+        return moment(date).format('DD/MM/YYYY');
+    };
 });

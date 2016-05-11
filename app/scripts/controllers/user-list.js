@@ -13,7 +13,7 @@ angular.module('poddDashboardApp')
 .controller('UsersCtrl', function ($scope, Menu, Users) {
     Menu.setActiveMenu('users');
     
-    $scope.users = []
+    $scope.users = [];
     $scope.loading = true;
     $scope.page = 0;
     $scope.pageSize = 20;
@@ -46,7 +46,7 @@ angular.module('poddDashboardApp')
                 $scope.users.push(item);
             });
             $scope.loading = false;
-            if (data.length == 0) {
+            if (data.length === 0) {
                 $scope.lastPage = true; 
             }
         });
@@ -56,8 +56,9 @@ angular.module('poddDashboardApp')
 
 
     $scope.loadMore = function loadMore() {
-        if ($scope.lastPage)
+        if ($scope.lastPage){
             return;
+        }
 
         $scope.page += 1;
         refreshUsers();
@@ -65,7 +66,7 @@ angular.module('poddDashboardApp')
     };
 
     $scope.selectedUser = function (user) {
-        if (user == null) {
+        if (user === null) {
             $scope.userSelected = {
                 displayPassword: randomPassword()
             };
@@ -74,14 +75,14 @@ angular.module('poddDashboardApp')
             $scope.userSelected = user; 
         }
         $scope.userBeforeChange = angular.copy(user);
-    }
+    };
 
     $scope.submitUser = function () {
         angular.copy($scope.userBeforeChange, $scope.userSelected);
-    }
+    };
 
     $scope.resetUser = function () {
         angular.copy($scope.userBeforeChange, $scope.userSelected);
-    }
+    };
 
 });

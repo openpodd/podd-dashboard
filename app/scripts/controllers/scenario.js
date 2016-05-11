@@ -42,14 +42,14 @@ angular.module('poddDashboardApp')
   var cfg = {
     // radius should be small ONLY if scaleRadius is true (or small radius is intended)
     // if scaleRadius is false it will be the constant radius used in pixels
-    "radius": .1,
-    "maxOpacity": .8, 
+    'radius': 0.1,
+    'maxOpacity': 0.8, 
     // scales the radius based on map zoom
-    "scaleRadius": true, 
+    'scaleRadius': true, 
     // if set to false the heatmap uses the global maximum for colorization
     // if activated: uses the data maximum within the current map boundaries 
     //   (there will always be a red spot with useLocalExtremas true)
-    "useLocalExtrema": true,
+    'useLocalExtrema': true,
     // which field name in your data represents the latitude - default "lat"
     latField: 'lat',
     // which field name in your data represents the longitude - default "lng"
@@ -252,8 +252,9 @@ angular.module('poddDashboardApp')
         removeGisLayer();
       } 
       
-      if (!$scope.layers.heatmap.show) 
+      if (!$scope.layers.heatmap.show) {
         layerDef.layer.addTo(leafletMap);
+      }
     }
     else {
       if (layerDef === $scope.layers.heatmap) {
@@ -615,7 +616,7 @@ $scope.replay = function () {
           val = 1;
     }
     return val;
-  };
+  }
 
   $scope.toggleReportsLayer = function (forceValue) {
       var nextValue = angular.isUndefined(forceValue) ?
@@ -644,8 +645,9 @@ $scope.replay = function () {
       if (!refreshGraph) {
 
         var drawnItems = new L.FeatureGroup();
-        if (!$scope.layers.heatmap.show)
+        if (!$scope.layers.heatmap.show) {
           $scope.layers.report.layer.addLayer(drawnItems);
+        }
 
         var data = [];
 
@@ -786,8 +788,9 @@ $scope.replay = function () {
           query.left = $window.decodeURIComponent(params.left) || 17.764381077782076;
           query.right = $window.decodeURIComponent(params.right) || 19.647760955697354;
 
-          if (typeof params.q === 'undefined')
+          if (typeof params.q === 'undefined') {
             delete query.q;
+          }
           
           var southWest = L.latLng(query.right, query.top),
               northEast = L.latLng(query.left, query.bottom),
