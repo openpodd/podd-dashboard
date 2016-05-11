@@ -87,7 +87,6 @@
     </div>
   </div>
 
-
   <div id="userModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
 
@@ -98,6 +97,7 @@
           <h4 class="modal-title">ผู้ใช้งาน</h4>
         </div>
         <div class="modal-body">
+
           <div class="row">
               <div class="col-md-3 col-sm-2"><label for="id_email">อีเมล</label></div>
               <div class="col-md-9 col-sm-2">
@@ -121,7 +121,7 @@
               </div>
               <div class="col-md-3 col-sm-2"><label for="id_username">บัญชีผู้ใช้งาน</label></div>
               <div class="col-md-9 col-sm-2">
-                <input id="id_username" type="text" name="username" ng-model="userSelected.username" readonly/>
+                <input id="id_username" type="text" name="username" ng-model="userSelected.email" readonly/>
               </div>
               <div class="col-md-3 col-sm-2"><label for="id_password">รหัสแรกเข้า</label></div>
               <div class="col-md-9 col-sm-2">
@@ -130,7 +130,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="resetUser()">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="resetUser()">Close</button>
         </div>
       </div>
 

@@ -19,7 +19,8 @@ angular.module('poddDashboardApp')
     $scope.pageSize = 20;
     $scope.lastPage = false; 
 
-    $scope.userSelected = null;
+    $scope.userSelected = {};
+    $scope.userBeforeChange = {};
 
     function randomPassword() {
         var number = Math.floor(Math.random() * 999999);
@@ -72,5 +73,15 @@ angular.module('poddDashboardApp')
         } else {
             $scope.userSelected = user; 
         }
+        $scope.userBeforeChange = angular.copy(user);
     }
+
+    $scope.submitUser = function () {
+        angular.copy($scope.userBeforeChange, $scope.userSelected);
+    }
+
+    $scope.resetUser = function () {
+        angular.copy($scope.userBeforeChange, $scope.userSelected);
+    }
+
 });
