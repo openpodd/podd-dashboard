@@ -222,7 +222,7 @@ angular
         controller: 'SummaryReportModeCtrl'
       })
       .state('main.summaryreportmonth', {
-        url: '^/summary/report-month?month&areaId&typeIds&tags',
+        url: '^/summary/report-month?dateStart&dateEnd&areaId&typeIds&tags',
         template: '',
         controller: 'SummaryReportMonthModeCtrl'
       })

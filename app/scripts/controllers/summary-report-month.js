@@ -22,11 +22,6 @@ angular.module('poddDashboardApp')
         selectedYear: moment().year()
     };
 
-    if ($stateParams.month && $stateParams.month.match(/[01]?[0-9]\/20\d\d/)) {
-        $scope.month = $stateParams.month;
-        $scope.months.selectedMonth = $scope.months.months[$stateParams.month.split('/')[0] - 1];
-    }
-
     var initArea = {
             id: '',
             parentName: '',
@@ -55,8 +50,12 @@ angular.module('poddDashboardApp')
     // Fetch available adminisitration areas
     ReportTypes.query().$promise.then(function (data) {
         var results = [];
+        var chooseTypes = $window.decodeURIComponent($stateParams.typeIds || '').split(',');
+        console.log( chooseTypes);
+
         data.forEach(function (item) {
-            item.selected = true;
+            if (chooseTypes.indexOf(item.id + "") != -1)
+                item.checked = true;
             results.push(item);
         });
         $scope.types.all = results;
@@ -77,6 +76,22 @@ angular.module('poddDashboardApp')
         }
     };
 
+    $scope.isReportTypeListCompact = true;
+    $scope.reportTypeListLimit = 10;
+    $scope.toggleReportTypeListCompact = function toggleReportTypeListCompact() {
+        $scope.isReportTypeListCompact = !$scope.isReportTypeListCompact;
+        if ($scope.isReportTypeListCompact) {
+            $scope.reportTypeListLimit = 10;
+        }
+        else {
+            $scope.reportTypeListLimit = $scope.types.all.length;
+        }
+    };
+
+    $scope.toggleReportTypeCheck = function toggleReportTypeCheck(reportType) {
+        reportType.checked = !reportType.checked;
+    };
+
     $scope.$on('summaryReportMonth:clearQuery', function (willClear) {
         if (willClear) {
             $scope.queryReport = $stateParams.q || '';
@@ -95,8 +110,16 @@ angular.module('poddDashboardApp')
         shared.summaryQuery = newValue;
     });
 
+
+    $scope.dateRange = {
+        from: moment().subtract(7,'days'),
+        to: moment()
+    };
+
     $scope.search = function () {
-        $scope.month = $scope.months.selectedMonth + '/' + $scope.months.selectedYear;
+
+        var dateFrom = moment($scope.dateRange.from).format("DD/MM/YYYY");
+        var dateTo = moment($scope.dateRange.to).format("DD/MM/YYYY");
 
         var areaId = '';
         if ($scope.areas.selectedArea) {
@@ -105,7 +128,7 @@ angular.module('poddDashboardApp')
 
         var typeIds = [];
         angular.forEach($scope.types.all, function(type){
-            if (type.selected) {
+            if (type.checked) {
                 typeIds.push(type.id);
             }
         });
@@ -115,7 +138,17 @@ angular.module('poddDashboardApp')
             tags.push(tag.text);
         });
 
-        $state.go('main.summaryreportmonth', { month: $scope.month, areaId: areaId, typeIds: typeIds, tags: tags });
+        var params =  { 
+            dateStart: dateFrom, 
+            dateEnd: dateTo, 
+            areaId: areaId, 
+            typeIds: typeIds, 
+            tags: tags 
+        }
+        console.log(params)
+
+        $state.go('main.summaryreportmonth', params);
+
     };
 
     $scope._search = function () {
@@ -199,7 +232,6 @@ angular.module('poddDashboardApp')
                 $scope.willShowResult = false;
             }
 
-            $scope.month = $scope.query;
             $scope.gridOptionsReport.enableSorting = true;
             $scope.gridOptionsReport.columnDefs = dataOptions;
             $scope.gridOptionsReport.data = results;
@@ -229,7 +261,8 @@ angular.module('poddDashboardApp')
         if ($state.current.name === 'main.summaryreportmonth') {
 
             $scope.query = {
-                'month': $window.decodeURIComponent(params.month || ''),
+                'dateStart': $window.decodeURIComponent(params.dateStart || ''),
+                'dateEnd': $window.decodeURIComponent(params.dateEnd || ''),
                 'authority': $window.decodeURIComponent(params.areaId || ''),
                 'type__in': $window.decodeURIComponent(params.typeIds || '').split(','),
                 'tags__in': $window.decodeURIComponent(params.tags || '').split(','),
@@ -238,14 +271,10 @@ angular.module('poddDashboardApp')
                 '_missing_': 'parent',
             };
 
-            if ($scope.query.month) {
-                $scope.months.selectedMonth = parseInt($scope.query.month.split('/')[0]);
-                $scope.months.selectedYear = parseInt($scope.query.month.split('/')[1]);
-
+            if ($scope.query.dateStart && $scope.query.dateEnd) {
                 return $scope._search();
             }
 
-            $scope.query.month = '';
             $scope.query.authority = initArea.id;
             return $scope.search();
         }
@@ -363,13 +392,9 @@ angular.module('poddDashboardApp')
 
     $scope.doQueryOnParams($stateParams);
     $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
-        console.log('stateChangeSuccess', $state.current.name, params.month);
+        console.log('stateChangeSuccess', $state.current.name, params.dateStart, params.dateEnd);
         if ($state.current.name === 'main.summaryreportmonth') {
-            if (params.month && params.month.match(/[01]?[0-9]\/20\d\d/)) {
-                $scope.month = params.month;
-                $scope.months.selectedMonth = $scope.months.months[params.month.split('/')[0] - 1];
-            }
-            if (oldParams.month !== params.month || oldParams.areaId !== params.areaId || oldParams.typeIds !== params.typeIds) {
+            if (oldParams !== params) {
                 $scope.doQueryOnParams(params);
             }
             else {
@@ -377,4 +402,8 @@ angular.module('poddDashboardApp')
             }
         }
     });
+
+    $scope.renderDate = function(date) {
+        return moment(date).format('DD/MM/YYYY')
+    }
 });
