@@ -95,7 +95,7 @@
   </div>
 
   <div id="userModal" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-md">
 
       <!-- Modal content-->
       <div class="modal-content">
@@ -104,46 +104,46 @@
           <h4 class="modal-title">ผู้ใช้งาน</h4>
         </div>
         <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="id_email">อีเมล</label>
+                <input id="id_email" type="email" class="form-control" name="email" ng-model="userSelected.email" />
+              </div>
+              <div class="form-group">
+                <label for="id_first_name">ชื่อ</label>
+                <input id="id_first_name" type="text" class="form-control" name="firstName" ng-model="userSelected.firstName"/>
+              </div>
+              <div class="form-group">
+                <label for="id_last_name">นามสกุล</label>
+                <input id="id_last_name" class="form-control" type="text" name="lastName" ng-model="userSelected.lastName"/>
+              </div>
+              <div class="form-group">
+                <label for="id_telephone">เบอร์โทร</label>
+                <input id="id_telephone" class="form-control" type="text" name="telephone" ng-model="userSelected.telephone"/>
+              </div>
+              <div class="form-group">
+                <label for="id_serial_number">เลขบัตรประชาชน</label>
+                <input id="id_serial_number" class="form-control" type="text" name="serialNumber" ng-model="userSelected.serialNumber"/>
+              </div>
+              <div class="form-group">
+                <label for="id_username">บัญชีผู้ใช้งาน</label>
+                <input id="id_username" class="form-control" type="text" name="username" ng-model="userSelected.username || userSelected.email" readonly/>
+              </div>
+              <div class="form-group">
+                <label for="id_password">รหัสแรกเข้า</label>
+                <input id="id_password" class="form-control" type="text" name="password" ng-model="userSelected.displayPassword" readonly/>
+              </div>
+              <div class="form-group">
+                <label for="id_authotiry">สังกัด</label>
+                <select name="authotiry"
+                        id="id_authotiry"
+                        ng-options="option.name for option in authorities track by option.id"
+                        ng-model="authority"
+                        class="form-control">
+                </select>
+              </div>
+            </form>
 
-          <div class="row">
-              <div class="col-md-3 col-sm-2"><label for="id_email">อีเมล</label></div>
-              <div class="col-md-9 col-sm-2">
-                <input id="id_email" type="text" name="email" ng-model="userSelected.email" />
-              </div>
-              <div class="col-md-3 col-sm-2"><label for="id_first_name">ชื่อ</label></div>
-              <div class="col-md-9 col-sm-2">
-                <input id="id_first_name" type="text" name="firstName" ng-model="userSelected.firstName"/>
-              </div>
-              <div class="col-md-3 col-sm-2"><label for="id_last_name">นามสกุล</label></div>
-              <div class="col-md-9 col-sm-2">
-                <input id="id_last_name" type="text" name="lastName" ng-model="userSelected.lastName"/>
-              </div>
-              <div class="col-md-3 col-sm-2"><label for="id_telephone">เบอร์โทร</label></div>
-              <div class="col-md-9 col-sm-2">
-                <input id="id_telephone" type="text" name="telephone" ng-model="userSelected.telephone"/>
-              </div>
-              <div class="col-md-3 col-sm-2"><label for="id_serial_number">เลขบัตรประชาชน</label></div>
-              <div class="col-md-9 col-sm-2">
-                <input id="id_serial_number" type="text" name="serialNumber" ng-model="userSelected.serialNumber"/>
-              </div>
-              <div class="col-md-3 col-sm-2"><label for="id_username">บัญชีผู้ใช้งาน</label></div>
-              <div class="col-md-9 col-sm-2">
-                <input id="id_username" type="text" name="username" ng-model="userSelected.username || userSelected.email" readonly/>
-              </div>
-              <div class="col-md-3 col-sm-2"><label for="id_password">รหัสแรกเข้า</label></div>
-              <div class="col-md-9 col-sm-2">
-                <input id="id_password" type="text" name="password" ng-model="userSelected.displayPassword" readonly/>
-              </div>
-              <div class="col-md-3 col-sm-2"><label for="id_authotiry">สังกัด</label></div>
-              <div class="col-md-9 col-sm-2">
-                  <select name="authotiry"
-                          id="id_authotiry"
-                          ng-options="option.name for option in authorities track by option.id"
-                          ng-model="authority">
-                  </select>
-              </div>
-
-          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="submitUser()">Submit</button>
