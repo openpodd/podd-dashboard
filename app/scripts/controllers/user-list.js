@@ -30,6 +30,7 @@ angular.module('poddDashboardApp')
             $scope.authority = item;
             return;
         });
+
         $scope.authorities = data;
     });
 
@@ -85,13 +86,14 @@ angular.module('poddDashboardApp')
 
         } else {
             $scope.userSelected = user;
-            $scope.userSelected.authority = $scope.authority;
+            $scope.userSelected.authority = $scope.user.authority;
         }
         $scope.userBeforeChange = angular.copy(user);
     };
 
     $scope.submitUser = function () {
-        if (!$scope.userSelected.firstName && !$scope.userSelected.email) {
+        if (!$scope.userSelected.firstName && !$scope.userSelected.email &&
+            $scope.userSelected.authority) {
             swal('เกิดข้อผิดพลาด', 'คุณกรอกข้อมูลไม่ครบถ้วน', 'error');
             return;
         }
@@ -99,22 +101,23 @@ angular.module('poddDashboardApp')
         if ($scope.userSelected.id) {
             UserDetail.update($scope.userSelected).$promise.then(function (data) {
                 swal('สำเร็จ', 'แก้ไขรายละเอียดของผู้ใช้สำเร็จ', 'success');
+
                 $scope.userSelected = data;
+                angular.copy($scope.userSelected, $scope.user);
             }).catch(function () {
                 swal('เกิดข้อผิดพลาด', 'ไม่สามารถแก้ไขรายละเอียดของผู้ใช้ได้', 'error');
                 angular.copy($scope.userBeforeChange, $scope.userSelected);
             });
         } else {
             User.create($scope.userSelected).$promise.then(function (data) {
-                $scope.userSelected = data;
-
                 var params = {
-                    id: $scope.authority.id,
+                    id: $scope.userSelected.authority.id,
                     userId: data.id
                 };
 
                 Authority.users(params).$promise.then(function (_data) {
                     swal('สำเร็จ', 'เพิ่มผู้ใช้งานสำเร็จ', 'success');
+                    data.authority = $scope.userSelected.authority;
                     $scope.users.push(data);
                 });
 
