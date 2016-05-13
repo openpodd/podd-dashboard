@@ -1,5 +1,5 @@
 <div class="summary-view l-info-section l-section l-full-width"
-     ng-controller="UsersCtrl"
+     ng-controller="InvitationCodeCtrl"
      ng-cloak>
   <div class="l-detail-section l-section">
 
@@ -9,7 +9,33 @@
           พื้นที่
         </h2>
     </div>
+    <div class="content-wrapper content">
+      <div class="summary-wrapper profile-wrapper">
+          <div class="row">
+            <div ng-repeat="authority in authorities" class="col-md-6">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <h2 class="subheading">{{ authority.name }}</h2>
+                  <hr/>
+                  รหัสเชิญ : {{ authority.inviteCode }} 
+                  (จะหมดอายุใน <span am-time-ago="authority.inviteExpiredAt"></span>)
+                  <button ng-click="renewCode(authority)"
+                          type="button" 
+                          class="btn btn-default pull-right">
+                          renew</button>
+                </div>
+              </div>
+            </div>
 
+            <div class="col-md-9">
+              <div ng-show="loading" loader-spinner></div>
+              <div class="loading-block" ng-show="!loading && error">เกิดข้อผิดพลาด</div>
+              <div class="loading-block" ng-show="!loading && authorities.length == 0">ไม่พบผลการค้นหาที่กำหนด</div>
+            </div>
+
+          </div >
+      </div>
+    </div>
   </div>
 
 </div>

@@ -50,6 +50,10 @@ angular.module('poddDashboardApp')
         'users': {
             url: config.API_BASEPATH + '/authorities/:id/users',
             method: 'POST',
+        },
+        'renew_invitation_code': {
+            url: config.API_BASEPATH + '/authorities/:id/renew_invitation_code',
+            method: 'POST'
         }
     });
 })

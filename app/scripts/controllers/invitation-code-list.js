@@ -14,5 +14,25 @@ angular.module('poddDashboardApp')
 .controller('InvitationCodeCtrl', function ($scope, Menu, User, UserDetail, Authority, AuthorityView) {
     Menu.setActiveMenu('users');
     
+    $scope.authorities = [];
+    $scope.loading = true;
+    $scope.error = false;
+
+    AuthorityView.list().$promise.then(function (data) {
+        $scope.authorities = data;
+        $scope.loading = false;
+    }).catch(function () {
+        $scope.error = false;
+    });
+
+    $scope.renewCode = function(authority) {
+        var params = {id: authority.id}
+        Authority.renew_invitation_code(params).$promise.then(function (data) {
+            angular.copy(data, authority);
+            swal('สำเร็จ', 'แก้ไขรหัสพื้นทีสำเร็จ', 'success');
+        }).catch(function () {
+            swal('เกิดข้อผิดพลาด', 'ไม่สามารถแก้ไขรหัสพื้นที่ได้', 'error');
+        });
+    }
 
 });
