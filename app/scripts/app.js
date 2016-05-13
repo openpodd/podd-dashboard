@@ -252,6 +252,11 @@ angular
         templateUrl: 'views/user-list.html',
         controller: 'UsersModeCtrl'
       })
+      .state('main.invitationcode', {
+        url: '^/invitation-code-list',
+        templateUrl: 'views/invitation-code-list.html',
+        controller: 'InvitationCodeModeCtrl'
+      })
       .state('login', {
         url: '/login',
         templateUrl: 'views/login.html',
