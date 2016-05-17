@@ -13,13 +13,27 @@
 .layers-control-top{
   position: absolute;
   top: 10px;
-  left: 70px;
-  padding: 15px 30px 15px 20px;
-  background-color: rgba(256, 256, 256, 0.6);
+  right: 50px;
+  padding: 15px;
+  background-color: rgba(256, 256, 256, 0.4);
   z-index: 999;
   margin-right: 10px;
   border-bottom: solid 1px #DDD;
   border-left: solid 1px #DDD;
+
+  h4 {
+      margin: 0 0 15px;
+      font-size: 14px;
+  }
+  label {
+      font-size: 12px;
+      font-weight: normal;
+      margin-bottom: 0;
+
+      input {
+          margin-right: 10px;
+      }
+  }
 }
 
 .filter-control {
