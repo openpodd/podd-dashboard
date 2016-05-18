@@ -51,7 +51,7 @@ angular.module('poddDashboardApp')
             url: config.API_BASEPATH + '/authorities/:id/users',
             method: 'POST',
         },
-        'renew_invitation_code': {
+        'renewInvitationCode': {
             url: config.API_BASEPATH + '/authorities/:id/renew_invitation_code',
             method: 'POST'
         }

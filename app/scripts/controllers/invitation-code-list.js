@@ -28,27 +28,28 @@ angular.module('poddDashboardApp')
     $scope.renewCode = function(authority) {
 
         swal({   
-            title: "แน่ใจไหม?",   
-            text: "คุณต้องการเปลี่ยนแปลงรหัสพื้นที!",   
-            type: "warning",   
-            showCancelButton: true,   
-            confirmButtonColor: "#DD6B55",   
-            confirmButtonText: "ใช่",   
-            cancelButtonText: "ยกเลิก",   
-            closeOnConfirm: false,   
-            closeOnCancel: false 
+            title: 'แน่ใจไหม?',   
+            text: 'คุณต้องการเปลี่ยนแปลงรหัสพื้นที!',   
+            type: 'warning',    
+            confirmButtonColor: '#DD6B55',   
+            confirmButtonText: 'ใช่',   
+            cancelButtonText: 'ยกเลิก',   
+            showCancelButton: true,  
+            closeOnConfirm: true,   
+            closeOnCancel: true 
         }, function(isConfirm){   
             if (isConfirm) {     
-                var params = {id: authority.id}
-                Authority.renew_invitation_code(params).$promise.then(function (data) {
+                var params = {id: authority.id};
+                Authority.renewInvitationCode(params).$promise.then(function (data) {
                     angular.copy(data, authority);
-                    swal('สำเร็จ', 'แก้ไขรหัสพื้นทีสำเร็จ', 'success');
+                    var text = 'แก้ไขรหัสพื้นทีสำเร็จ\nรหัสใหม่คือ ' + data.inviteCode +
+                        '\n หมดอายุเมื่อ ' + data.inviteExpiredAt;
+                    swal('สำเร็จ', text, 'success');
                 }).catch(function () {
                     swal('เกิดข้อผิดพลาด', 'ไม่สามารถแก้ไขรหัสพื้นที่ได้', 'error');
                 });   
-            } 
+            }
         });
-        
-    }
+    };
 
 });
