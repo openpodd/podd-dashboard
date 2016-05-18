@@ -86,7 +86,7 @@ angular.module('poddDashboardApp')
 
         } else {
             $scope.userSelected = user;
-            $scope.userSelected.authority = $scope.user.authority;
+            // $scope.userSelected.authority = $scope.user.authority;
         }
         $scope.userBeforeChange = angular.copy(user);
     };
@@ -106,7 +106,7 @@ angular.module('poddDashboardApp')
                 angular.copy($scope.userSelected, $scope.user);
             }).catch(function () {
                 swal('เกิดข้อผิดพลาด', 'ไม่สามารถแก้ไขรายละเอียดของผู้ใช้ได้', 'error');
-                angular.copy($scope.userBeforeChange, $scope.userSelected);
+                $scope.resetUser();
             });
         } else {
             User.create($scope.userSelected).$promise.then(function (data) {
@@ -123,7 +123,7 @@ angular.module('poddDashboardApp')
 
             }).catch(function () {
                 swal('เกิดข้อผิดพลาด', 'ไม่สามารถเพิ่มผู้ใช้ได้', 'error');
-                angular.copy($scope.userBeforeChange, $scope.userSelected);
+                $scope.resetUser();
             });
         }
     };

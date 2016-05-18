@@ -50,19 +50,19 @@
                       </div>
 
                       <div class="ta-view-col col-md-2 col-sm-2" data-th="ชื่อ">
-                        <span ng-bind="::user.firstName" ></span>
+                        <span> {{ user.firstName }}</span>
                       </div>
 
                       <div class="ta-view-col col-md-2 col-sm-2" data-th="นามสกุล">
-                        <span ng-bind="::user.lastName" ></span>
+                        <span> {{ user.lastName }}</span>
                       </div>
 
                       <div class="ta-view-col col-md-3 col-sm-2" data-th="ชื่อบัญชีผู้ใช้">
-                        <span ng-bind="::user.username" ></span>
+                        <span> {{ user.username }}</span>
                       </div>
 
                       <div class="col-md-3 col-sm-3" data-th="พื้นที่">
-                        <span ng-bind="::user.authority.name" ></span>
+                        <span> {{ user.authority.name }}</span>
                       </div>
 
                       <div class="ta-view-col ta-view-area col-md-1 col-sm-2" data-th="คำสั่ง">
@@ -136,9 +136,11 @@
               </div>
               <div class="form-group">
                 <label for="id_authotiry">สังกัด</label>
+                <p ng-show="userSelected.id">{{ userSelected.authority.name }}</p>
                 <select name="authotiry"
                         id="id_authotiry"
                         ng-options="option.name for option in authorities track by option.id"
+                        ng-show="!userSelected.id"
                         ng-model="userSelected.authority"
                         class="form-control">
                 </select>
