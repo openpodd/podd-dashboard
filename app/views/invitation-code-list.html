@@ -5,8 +5,8 @@
 
     <div class="title clearfix">
         <h2 class="pull-left">
-          <i class="fa fa-user pull-left fa-size-22"></i>
-          พื้นที่
+          <i class="fa fa-users pull-left fa-size-22"></i>
+          รหัสพื้นที่
         </h2>
     </div>
     <div class="content-wrapper content">
@@ -34,35 +34,35 @@
               <div class="filter-result-container">
                   <div class="ta-view">
                     <div class="ta-view-header row hidden-xs">
-                      <div class="col-md-1 col-sm-1">
+                      <div class="col-md-1 col-sm-1 col-checkbox">
                         <input type="checkbox"/>
                       </div>
-                      <div class="col-md-3 col-sm-2">พื้นที่</div>
-                      <div class="col-md-3 col-sm-2">รหัส</div>
-                      <div class="col-md-3 col-sm-2">หมดอายุ</div>
-                      <div class="col-md-2 col-sm-2"></div>
+                      <div class="col-md-5 col-sm-5">พื้นที่</div>
+                      <div class="col-md-2 col-sm-2">รหัส</div>
+                      <div class="col-md-2 col-sm-2">หมดอายุ</div>
+                      <div class="col-md-2 col-sm-2 text-right">คำสั่ง</div>
                     </div>
                     <div ng-repeat="authority in authorities" class="ta-view-row row">
 
-                        <div class="ta-view-col col-md-1 col-sm-1" data-th="เลือก">
+                        <div class="ta-view-col col-md-1 col-sm-1 col-checkbox" data-th="เลือก">
                           <input type="checkbox"/>
                         </div>
 
-                        <div class="ta-view-col col-md-3 col-sm-2" data-th="ชื่อ">
+                        <div class="ta-view-col col-md-5 col-sm-5" data-th="ชื่อ">
                           <span ng-bind="::authority.name" ></span>
                         </div>
 
-                        <div class="ta-view-col col-md-3 col-sm-2" data-th="รหัส">
+                        <div class="ta-view-col col-md-2 col-sm-2" data-th="รหัส">
                           <span>{{ authority.inviteCode }} </span>
                         </div>
 
-                        <div class="ta-view-col col-md-3 col-sm-2" data-th="หมดอายุ">
+                        <div class="ta-view-col col-md-2 col-sm-2" data-th="หมดอายุ">
                           <span>{{ authority.inviteExpiredAt }} </span>
                         </div>
 
-                        <div class="ta-view-col ta-view-area col-md-2 col-sm-2" data-th="คำสั่ง">
+                        <div class="ta-view-col ta-view-area col-md-2 col-sm-2 text-right" data-th="คำสั่ง">
                           <a ng-click="renewCode(authority)" class="">
-                            เปลี่ยนแปลง</a>
+                            ขอรหัสใหม่</a>
                         </div>
                     </div>
                   </div>

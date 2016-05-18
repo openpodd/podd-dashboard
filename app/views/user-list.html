@@ -5,7 +5,7 @@
 
     <div class="title clearfix">
         <h2 class="pull-left">
-          <i class="fa fa-user pull-left fa-size-22"></i>
+          <i class="fa fa-users pull-left fa-size-22"></i>
           ผู้ใช้
         </h2>
     </div>
@@ -34,18 +34,18 @@
             <div class="filter-result-container">
                 <div class="ta-view">
                   <div class="ta-view-header row hidden-xs">
-                    <div class="col-md-1 col-sm-1">
+                    <div class="col-md-1 col-sm-1 col-checkbox">
                       <input type="checkbox"/>
                     </div>
                     <div class="col-md-2 col-sm-2">ชื่อ</div>
                     <div class="col-md-2 col-sm-2">นามสกุล</div>
                     <div class="col-md-3 col-sm-2">ชื่อบัญชีผู้ใช้</div>
-                    <div class="col-md-4 col-sm-3">พื้นที่</div>
-                    <div class="col-md-1 col-sm-2"></div>
+                    <div class="col-md-3 col-sm-3">พื้นที่</div>
+                    <div class="col-md-1 col-sm-2 text-right">คำสั่ง</div>
                   </div>
                   <div ng-repeat="user in users" class="ta-view-row row">
 
-                      <div class="ta-view-col col-md-1 col-sm-2" data-th="เลือก">
+                      <div class="ta-view-col col-md-1 col-sm-2 col-checkbox" data-th="เลือก">
                         <input type="checkbox"/>
                       </div>
 
@@ -61,11 +61,11 @@
                         <span> {{ user.username }}</span>
                       </div>
 
-                      <div class="col-md-3 col-sm-3" data-th="พื้นที่">
+                      <div class="ta-view-col col-md-3 col-sm-3" data-th="พื้นที่">
                         <span> {{ user.authority.name }}</span>
                       </div>
 
-                      <div class="ta-view-col ta-view-area col-md-1 col-sm-2" data-th="คำสั่ง">
+                      <div class="ta-view-col ta-view-area col-md-1 col-sm-2 text-right" data-th="คำสั่ง">
                         <a class="" ng-click="selectedUser(user)" data-toggle="modal" data-target="#userModal">แก้ไข</a>
                       </div>
                   </div>

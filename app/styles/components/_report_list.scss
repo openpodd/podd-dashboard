@@ -305,15 +305,20 @@
       font-weight: bold !important;
       width: 6.5em;
       display: inline-block;
-    //   overflow: hidden;
-    //   text-overflow: ellipsis;
-    //   white-space: nowrap;
+    }
+    .col-checkbox {
+        width: auto;
+        text-align: left;
     }
   }
 
   @include respond-to(phone){
-    .ta-view-col:before{
+    .ta-view-col:before {
       width: 4.5em;
+    }
+    .col-checkbox {
+        width: auto;
+        text-align: left;
     }
   }
 
