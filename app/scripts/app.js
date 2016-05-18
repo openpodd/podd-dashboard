@@ -217,35 +217,20 @@ angular
         templateUrl: 'views/contacts.html',
         controller: 'ContactsModeCtrl'
       })
-      .state('main.summaryreport', {
-        url: '^/summary/report?dates&type',
-        template: '',
-        controller: 'SummaryReportModeCtrl'
-      })
       .state('main.summaryreportmonth', {
         url: '^/summary/report-month?dateStart&dateEnd&areaId&typeIds&tags',
-        template: '',
+        templateUrl: 'views/summary-report-month.html',
         controller: 'SummaryReportMonthModeCtrl'
-      })
-      .state('main.summaryperson', {
-        url: '^/summary/person?dates&percent&type',
-        template: '',
-        controller: 'SummaryPersonModeCtrl'
       })
       .state('main.summaryperformanceperson', {
         url: '^/summary/performance-person?month&areaId',
-        template: '',
+        templateUrl: 'views/summary-performance-person.html',
         controller: 'SummaryPerformancePersonModeCtrl'
       })
       .state('main.summaryvisualization', {
-        url: '^/summary/visualization?month&areaId',
-        template: '',
-        controller: 'SummaryReportMonthModeCtrl'
-      })
-      .state('visualize', {
-        url: '/visualize',
-        templateUrl: 'views/visualize.html',
-        controller: 'VisualizationCtrl'
+        url: '^/summary/visualize',
+        templateUrl: 'views/summary-visualization.html',
+        controller: 'SummaryVisualizationModeCtrl'
       })
       .state('main.profile', {
         url: '^/profile',

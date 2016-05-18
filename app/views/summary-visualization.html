@@ -1,4 +1,4 @@
-<div class="summary-view l-info-section l-section l-full-width" ng-controller="SummaryReportCtrl" ng-show="shared.summaryReportMode" ng-cloak>
+<div class="summary-view l-info-section l-section l-full-width" ng-controller="SummaryReportCtrl" ng-cloak>
   <div class="l-detail-section l-section">
     <div class="title clearfix">
         <h2 class="pull-left"><i class="fa fa-stethoscope pull-left fa-size-22"></i>สรุปรายงาน</h2>
@@ -8,6 +8,23 @@
     <div class="content-wrapper content">
         <div class="summary-wrapper">
 
+            <div>
+                <div class="btn-group pull-right">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                             Messages per hour <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a class="m" value="2014-02-19" href="#">2014-02-19</a></li>
+                        <li><a class="m" value="2014-02-20" href="#">2014-02-20</a></li>
+                        <li><a class="m" value="2014-02-21" href="#">2014-02-21</a></li>
+                        <li><a class="m" value="2014-02-22" href="#">2014-02-22</a></li>
+                        <li><a class="m" value="2014-02-23" href="#">2014-02-23</a></li>
+                    </ul>
+                </div>
+
+                <div id="mbars">
+                </div>
+            </div>
 
             <div ng-show="loading" loader-spinner></div>
             <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
