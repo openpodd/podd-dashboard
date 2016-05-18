@@ -263,10 +263,10 @@
                           <!-- <li><a ng-href="#/summary/report" ng-click="shared.filterMode = false; shared.summaryReportMode = true; shared.summaryReportMonthMode = false;
                           shared.summaryPersonMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;" class="" ng-if="hasPermissionOnMenu('view_dashboard_summary_report')">สรุปรายงาน</a></li>
                           <li><a ng-href="#/visualize">สรุปข้อมูล</a></li> -->
-                          <li><a ng-href="#/summary/report-month" ng-click="shared.filterMode = false; shared.summaryReportMode = false; shared.summaryReportMonthMode = true;
-                          shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;">สรุปรายงานรายเดือน</a></li>
+                          <li><a ng-href="#/summary/report-month">สรุปรายงานรายเดือน</a></li>
                           <!-- <li><a href="#/summary/person" ng-click="shared.filterMode = false; shared.summaryReportMode = false; shared.summaryReportMonthMode = false; shared.summaryPersonMode = true; shared.summaryPerformancePersonMode = false;" ng-if="hasPermissionOnMenu('view_dashboard_summary_inactive_users')">สรุปจำนวนอาสาที่รายงานต่ำกว่าเกณฑ์</a></li> -->
-                          <li><a href="#/summary/performance-person" ng-click="shared.filterMode = false; shared.summaryReportMode = false; shared.summaryReportMonthMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = true;" >สรุปประสิทธิภาพการรายงานของอาสา</a></li>
+                          <li><a href="#/summary/performance-person" >สรุปประสิทธิภาพการรายงานของอาสา</a></li>
+                          <li class="hide"><a href="#/summary/visualization" >สรุปรายงาน</a></li>
                       </ul>
                   </div>
                 </li>
@@ -472,6 +472,7 @@
         <script src="scripts/controllers/contacts.js"></script>
         <script src="scripts/controllers/user-list.js"></script>
         <script src="scripts/controllers/invitation-code-list.js"></script>
+        <script src="scripts/controllers/summary-visualization.js"></script>
         <!-- endbuild -->
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->

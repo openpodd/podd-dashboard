@@ -237,6 +237,11 @@ angular
         template: '',
         controller: 'SummaryPerformancePersonModeCtrl'
       })
+      .state('main.summaryvisualization', {
+        url: '^/summary/visualization?month&areaId',
+        template: '',
+        controller: 'SummaryReportMonthModeCtrl'
+      })
       .state('visualize', {
         url: '/visualize',
         templateUrl: 'views/visualize.html',

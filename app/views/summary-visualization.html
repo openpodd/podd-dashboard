@@ -1,0 +1,20 @@
+<div class="summary-view l-info-section l-section l-full-width" ng-controller="SummaryReportCtrl" ng-show="shared.summaryReportMode" ng-cloak>
+  <div class="l-detail-section l-section">
+    <div class="title clearfix">
+        <h2 class="pull-left"><i class="fa fa-stethoscope pull-left fa-size-22"></i>สรุปรายงาน</h2>
+        <i class="fa fa-times pull-right fa-size-18" ng-click="closeSummaryReport();gotoMainPage();"></i>
+    </div>
+
+    <div class="content-wrapper content">
+        <div class="summary-wrapper">
+
+
+            <div ng-show="loading" loader-spinner></div>
+            <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
+            <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
