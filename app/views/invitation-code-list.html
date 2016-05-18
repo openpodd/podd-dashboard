@@ -67,12 +67,19 @@
                     </div>
                   </div>
               </div>
+              <div class="filter-result-message" ng-show="error">
+              <div class="filter-error alert alert-danger" role="alert" ng-show="error">
+                  <strong>เกิดข้อผิดพลาด</strong>
+              </div>
+
             </div>
 
-            <div class="col-md-9">
-              <div ng-show="loading" loader-spinner></div>
-              <div class="loading-block" ng-show="!loading && error">เกิดข้อผิดพลาด</div>
-              <div class="loading-block" ng-show="!loading && authorities.length == 0">ไม่พบผลการค้นหาที่กำหนด</div>
+            <div class="filter-empty alert alert-info" ng-show="!loading && users.authorities == 0">
+                <strong>ไม่พบผลการค้นหา</strong>
+            </div>
+
+            <div class="loadmore" ng-cloak ng-show="loading">
+              <button class="btn btn-default center-block" type="button" ng-disabled="true">{{ loading ? 'กรุณารอสักครู่...' : 'เพิ่มเติม...' }} </button>
             </div>
 
           </div >
