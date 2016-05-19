@@ -1,8 +1,8 @@
-<div class="l-info-section l-section l-full-width l-theme-gray" ng-controller="SummaryReportMonthCtrl" ng-show="shared.summaryReportMonthMode" ng-cloak>
+<div class="l-info-section l-section l-full-width l-theme-gray" ng-controller="SummaryReportMonthCtrl" ng-cloak>
   <div class="l-detail-section l-section">
     <div class="title clearfix">
         <h2 class="pull-left"><i class="fa fa-bar-chart fa-size-22"></i>สรุปรายงานรายเดือน</h2>
-        <i class="fa fa-times pull-right fa-size-18" ng-click="closeSummaryReportMonth();gotoMainPage();"></i>
+       <!--  <i class="fa fa-times pull-right fa-size-18" ng-click="closeSummaryReportMonth();gotoMainPage();"></i> -->
     </div>
 
     <div class="content-wrapper">
@@ -10,31 +10,43 @@
             <div class="row">
                 <div class="col-md-3">
                     <form role="form" ng-submit="search()" class="">
+                        
                         <div class="form-group">
                             <h4 class="filter-heading"><i class="fa fa-file-text"></i> ประเภทรายงาน</h4>
-                            <div class="check-item" ng-show="types.all.length" >
-                                <label><input type="checkbox" ng-model="types.selectedAll" ng-click="checkAll()" /> เลือกทั้งหมด</label>
-                            </div>
-                            <div class="check-item" ng-repeat="type in types.all">
-                                <label><input type="checkbox" ng-model="type.selected"/> {{ type.name }}</label>
+                            <button class="btn btn-choice" ng-class="{ 'btn-choice-selected': reportType.checked }" type="button" ng-repeat="reportType in types.all | orderBy:'weight' | first:reportTypeListLimit" ng-click="toggleReportTypeCheck(reportType)">
+                              <span class="badgex" ng-if="!reportType.checked">
+                             <i class="fa fa-circle-o fa-size-14"></i>
+                           </span>
+                              <span class="badgex" ng-if="reportType.checked">
+                             <i class="fa fa-check-circle-o fa-size-14"></i>
+                           </span> {{ reportType.name }}
+                            </button>
+                            <div class="text-center" ng-if="types.all.length > 10">
+                              <span ng-if="isReportTypeListCompact" ng-click="toggleReportTypeListCompact()" class="show-all">
+                                   <i class="fa fa-angle-double-down"></i>
+                             แสดงทั้งหมด</span>
+                              <span ng-if="!isReportTypeListCompact" ng-click="toggleReportTypeListCompact()" class="show-all">
+                                   <i class="fa fa-angle-double-up"></i>
+                             แสดงน้อยลง
+                                </span>
                             </div>
                         </div>
-
-                        <div class="form-group">
+                        
+                        <div class="form-group filter-form-date">
                             <h4 class="filter-heading"><i class="fa fa-calendar"></i> ช่วงเวลา</h4>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <small class="states-group-title">ตั้งแต่วันที่</small>
-                                    <select class="filter-select"
-                                        ng-model="months.selectedMonth"
-                                        ng-options="month for month in months.months"></select>
+                              <div class="col-md-6">
+                                <small class="states-group-title">ตั้งแต่วันที่</small>
+                                <div>
+                                  <input type="text" pick-a-date="dateRange.from" pick-a-date-options="{ selectYears: true }" class="form-pick-date" />
                                 </div>
-                                <div class="col-md-6">
-                                    <small class="states-group-title">ตั้งแต่วันที่</small>
-                                    <select class="filter-select"
-                                        ng-model="months.selectedYear"
-                                        ng-options="year for year in months.years"></select>
+                              </div>
+                              <div class="col-md-6">
+                                <small class="states-group-title">ถึงวันที่</small>
+                                <div>
+                                  <input type="text" pick-a-date="dateRange.to" pick-a-date-options="{ selectYears: true }" class="form-pick-date" />
                                 </div>
+                              </div>
                             </div>
                         </div>
 
@@ -75,7 +87,7 @@
                     <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
 
                     <div ng-show="results.length && !loading">
-                        <h3 class="subheading pull-left clear inline-table" style="width: 100%">ตารางสรุปรายงานเดือน {{ months.selectedMonth }}/{{ months.selectedYear }} ของ{{ areas.selectedArea.name }} {{ areas.selectedArea.parentName }}</h3>
+                        <h3 class="subheading pull-left clear inline-table" style="width: 100%">ตารางสรุปรายงานวันที่ {{ renderDate(dateRange.from) }} - {{ renderDate(dateRange.to) }} ของ{{ areas.selectedArea.name }} {{ areas.selectedArea.parentName }}</h3>
                         <div ng-show="tagReportIds.length" class="pull-left clear inline-table alert alert-warning" style="margin:10px;width: 100%" >
                             <form role="form" ng-submit="doTag()">
                                 <div class="col-md-12">

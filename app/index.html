@@ -222,66 +222,37 @@
                   <span class="pd-nav-text">ค้นหา</span></a>
                 </li>
 
-                <li ng-show="shared.loggedIn" class="pd-nav-item -divide" ng-cloak
-                    ng-class="{ 'active active-menu':isActiveMenu('profile') }">
+                <li class="pd-nav-item -divide" ng-cloak
+                    ng-class="{ 'active active-menu':isActiveMenu('scenario') }"
+                    ng-if="hasPermissionOnMenu('view_dashboard_plan')">
 
-                  <a ng-href="#/profile" class="pd-nav-icon">
+                  <a ng-href="#/scenario" class="pd-nav-icon">
                   <i class="fa fa-list-alt fa-size-18"></i>
                   <span class="pd-nav-text">อื่นๆ</span></a>
 
                   <div class="pd-nav-submenu -mini">
                       <ul class="">
-                          <li><a ng-href="#/calendar">ปฏิทินการทำงาน</a></li>
                           <li><a ng-href="#/scenario">แผนภาพ</a></li>
                           <li><a ng-href="#/plans">แผนรับมือ</a></li>
                           <li><a ng-href="#/contacts">รายชื่อติดต่อ</a></li>
                       </ul>
                   </div>
                 </li>
-
-                <!-- <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('calendar') }">
-                  <a ng-href="#/calendar" class="pd-nav-icon">
-                    <i class="fa fa-calendar-check-o fa-size-18"></i>
-                    <span class="pd-nav-text">ปฏิทิน</span>
-                  </a>
-                </li> -->
-                <!-- <li class="pd-nav-item -divide" ng-class="{ 'active active-menu':isActiveMenu('scenario') }">
-                  <a ng-href="#/scenario" ng-click="shared.scenario" class="pd-nav-icon">
-                    <i class="fa fa-area-chart fa-size-18"></i>
-                    <span class="pd-nav-text">แผนภาพ</span>
-                  </a>
-                </li> -->
                 <li class="pd-nav-item -divide" ng-class="{ 'active active-menu':isActiveMenu('summary') }"
                     ng-click="setActiveMenu('summary')"
-                    ng-if="hasPermissionOnMenu('view_dashboard_summary_report') ||
-                    hasPermissionOnMenu('view_dashboard_summary_inactive_users')">
-                    <span class="pd-nav-icon"><i class="fa fa-bar-chart fa-size-18"></i><span class="pd-nav-text">สรุปรายงาน</span></span>
+                    ng-if="hasPermissionOnMenu('view_dashboard_summary_report')">
+                    <a ng-href="#/summary/report-month" class="pd-nav-icon">
+                    <i class="fa fa-bar-chart fa-size-18"></i>
+                    <span class="pd-nav-text">สรุปรายงาน</span></a>
 
-                  <div class="pd-nav-submenu">
-                      <ul class="">
-                          <li><a ng-href="#/summary/report" ng-click="shared.filterMode = false; shared.summaryReportMode = true; shared.summaryReportMonthMode = false;
-                          shared.summaryPersonMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;" class="" ng-if="hasPermissionOnMenu('view_dashboard_summary_report')">สรุปรายงาน</a></li>
-                          <li><a ng-href="#/visualize">สรุปข้อมูล</a></li>
-                          <li><a ng-href="#/summary/report-month" ng-click="shared.filterMode = false; shared.summaryReportMode = false; shared.summaryReportMonthMode = true;
-                          shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;" class="" ng-if="hasPermissionOnMenu('view_dashboard_summary_report')">สรุปรายงานรายเดือน</a></li>
-                          <li><a href="#/summary/person" ng-click="shared.filterMode = false; shared.summaryReportMode = false; shared.summaryReportMonthMode = false; shared.summaryPersonMode = true; shared.summaryPerformancePersonMode = false;" ng-if="hasPermissionOnMenu('view_dashboard_summary_inactive_users')">สรุปจำนวนอาสาที่รายงานต่ำกว่าเกณฑ์</a></li>
-                          <li><a href="#/summary/performance-person" ng-click="shared.filterMode = false; shared.summaryReportMode = false; shared.summaryReportMonthMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = true;" >สรุปประสิทธิภาพการรายงานของอาสา</a></li>
-                      </ul>
-                  </div>
+                    <div class="pd-nav-submenu">
+                        <ul class="">
+                            <li><a ng-href="#/summary/report-month">สรุปรายงานรายเดือน</a></li>
+                            <li><a href="#/summary/performance-person" >สรุปประสิทธิภาพการรายงานของอาสา</a></li>
+                            <li class="hide"><a href="#/summary/visualize" >สรุปรายงาน</a></li>
+                        </ul>
+                    </div>
                 </li>
-                <!-- <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('plans') }">
-                  <a ng-href="#/plans" class="pd-nav-icon">
-                    <i class="fa fa-list-alt fa-size-18"></i>
-                    <span class="pd-nav-text">แผนรับมือ</span>
-                  </a>
-                </li> -->
-
-                <!-- <li class="pd-nav-item -divide" ng-class="{ 'active active-menu':isActiveMenu('contacts') }">
-                  <a ng-href="#/contacts" class="pd-nav-icon">
-                    <i class="fa fa-at fa-size-18"></i>
-                    <span class="pd-nav-text">รายชื่อติดต่อ</span>
-                  </a>
-                </li> -->
                 <li ng-hide="shared.loggedIn" class="pd-nav-item -divide" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('login') }">
                   <a ng-href="#/login" ng-click="isShowNav=!isShowNav" class="pd-nav-icon">
@@ -295,20 +266,21 @@
                     </span>
                     <div ng-include src="'views/notification-list.html'"></div>
                 </li>
-                <!-- Support menu -->
-                <li class="pd-nav-item -divide"
-                    ng-click="setActiveMenu('summary')"
-                    ng-if="hasPermissionOnMenu('view_dashboard_support')">
-                    <span class="pd-nav-icon"><i class="fa fa-bullhorn fa-size-18"></i><span class="pd-nav-text">ระบบซัพพอร์ต</span></span>
-                  <div class="pd-nav-submenu">
+                <li class="pd-nav-item -divide" ng-cloak
+                    ng-class="{ 'active active-menu':isActiveMenu('users') }"
+                    ng-if="hasPermissionOnMenu('view_dashboard_users')">
+
+                  <a ng-href="#/user-list" class="pd-nav-icon">
+                  <i class="fa fa-users fa-size-18"></i>
+                  <span class="pd-nav-text">จัดการผู้ใช้</span></a>
+
+                  <div class="pd-nav-submenu -mini">
                       <ul class="">
-                          <li><a target="_blank" href="http://goo.gl/KISUCG">แจ้งปัญหาการใช้งาน</a></li>
-                          <li><a target="_blank" href="https://trello.com/b/RVkPj7Bc/podd-support">ติดตามปัญหา</a></li>
-                          <li><a target="_blank" href="https://api.cmonehealth.org/supervisors/users/volunteer/">ข้อมูลอาสา</a></li>
+                          <li><a ng-href="#/user-list">ผู้ใช้</a></li>
+                          <li><a ng-href="#/invitation-code-list">รหัสพื้นที่</a></li>
                       </ul>
                   </div>
                 </li>
-                <!-- end support menu -->
                 <li ng-show="shared.loggedIn" class="pd-nav-item -divide" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('profile') }">
 
@@ -452,6 +424,9 @@
         <script src="scripts/controllers/plans.js"></script>
         <script src="scripts/controllers/calendar.js"></script>
         <script src="scripts/controllers/contacts.js"></script>
+        <script src="scripts/controllers/user-list.js"></script>
+        <script src="scripts/controllers/invitation-code-list.js"></script>
+        <script src="scripts/controllers/summary-visualization.js"></script>
         <!-- endbuild -->
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->

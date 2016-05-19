@@ -113,8 +113,9 @@ angular.module('poddDashboardApp')
 
         shared.summaryReports = {};
 
-        if ($scope.query.authorityId === '')
-            delete $scope.query.authorityId
+        if ($scope.query.authorityId === '') {
+            delete $scope.query.authorityId;
+        }
 
         SummaryPerformancePerson.query($scope.query).$promise.then(function (data) {
             console.log('Query result:', data);

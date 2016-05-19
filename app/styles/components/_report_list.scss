@@ -306,11 +306,19 @@
       width: 6.5em;
       display: inline-block;
     }
+    .col-checkbox {
+        width: auto;
+        text-align: left;
+    }
   }
 
   @include respond-to(phone){
-    .ta-view-col:before{
+    .ta-view-col:before {
       width: 4.5em;
+    }
+    .col-checkbox {
+        width: auto;
+        text-align: left;
     }
   }
 
@@ -329,19 +337,19 @@
     }
   }
   .ta-view-date{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    // white-space: nowrap;
     color: #000;
   }
   .ta-view-state{
   }
 
-  .ta-view-report{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+  // .ta-view-report{
+  //   overflow: hidden;
+  //   text-overflow: ellipsis;
+  //   white-space: nowrap;
+  // }
   .ta-view-area{
     .filter-result-area{
       overflow: hidden;
@@ -355,11 +363,11 @@
       }
     }
   }
-  .ta-view-detail{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+  // .ta-view-detail{
+  //   overflow: hidden;
+  //   text-overflow: ellipsis;
+  //   white-space: nowrap;
+  // }
   .ta-view-info {
     .tooltip {
       max-width: 280px;
@@ -372,6 +380,12 @@
 
   .label{
     font-weight: normal;
+  }
+
+  .ta-view-col {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
   }
 }
 

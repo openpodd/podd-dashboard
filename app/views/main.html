@@ -1,52 +1,26 @@
 <div ng-hide="isLoggedIn" class="map-mask"></div>
 
 <div id="map" class="l-map"
-     ng-hide="shared.summaryReportMode || shared.summaryPersonMode"
      ng-class="{ 'half-map': shared.showReportList }"></div>
 
 
 <div class="layers-control-top" ng-hide="shared.filterMode === true">
-    <div>
-      <h4>Display</h4>
-      <label>
-        <input type="radio" ng-model="layer" value="area">
-        Administration Area
-      </label> <br/>
-      <label>
-        <input type="radio" ng-model="layer" value="report">
-        Report ( DoDD )
-      </label>
-    </div>
+    <h4>เลือกรายงานกลุ่ม</h4>
+    <label>
+    <input type="radio" ng-model="layer" value="area">
+    รายงานผ่อดีดี
+    </label> <br/>
+    <label>
+    <input type="radio" ng-model="layer" value="report">
+    รายงานดูดีดี
+    </label>
 </div>
 
-<div ng-include="'/views/report-list.html'" class="section-report" ng-hide="shared.summaryReportMode || shared.summaryPersonMode || shared.summaryPerformancePersonMode"></div>
+<div ng-include="'/views/report-list.html'" class="section-report" ng-hide="shared.summaryReportMode"></div>
 
 <div ng-include="'/views/filter.html'" class="section-filter" ng-show="shared.filterMode"></div>
 
 <div ng-include="'/views/report-view.html'" onload="initReportModal()"></div>
 
-
-<div ng-include="'/views/summary-report.html'" ng-show="shared.summaryReportMode"></div>
-
-<div ng-include="'/views/summary-report-month.html'" ng-show="shared.summaryReportMonthMode"></div>
-
-<div ng-include="'/views/summary-person.html'" ng-show="shared.summaryPersonMode"></div>
-
-<div ng-include="'/views/summary-performance-person.html'" ng-show="shared.summaryPerformancePersonMode"></div>
-
-<!-- placeholder ui-view: intend to do nothing -->
 <div ui-view></div>
 
-
-<!-- <div class="fakeErrorBar" style="position:fixed;bottom:10px;width:100%;left:0;text-align:center;z-index:999999">
-  <span class="label label-default">Toggle error</span>
-
-  <div class="fakeErrorBar">
-    <button type="button" class="btn btn-danger" ng-click="shared.rlError = !shared.rlError">
-      <i class="fa" ng-class="{ 'fa-square-o': !shared.rlError, 'fa-check-square-o': shared.rlError }"></i> Report List</button>
-    <button type="button" class="btn btn-danger" ng-click="shared.rvError = !shared.rvError">
-      <i class="fa" ng-class="{ 'fa-square-o': !shared.rvError, 'fa-check-square-o': shared.rvError }"></i> Report View</button>
-    <button type="button" class="btn btn-danger"ng-click="shared.rcError = !shared.rcError">
-      <i class="fa" ng-class="{ 'fa-square-o': !shared.rcError, 'fa-check-square-o': shared.rcError }"></i> Report Comments</button>
-  </div>
-</div> -->

@@ -124,7 +124,8 @@ angular
       /\/planReports/,
       /\/administrationArea\/contacts/,
       /\/administrationArea\/contacts\/update/,
-      /\/notifications\/test/
+      /\/notifications\/test/,
+      /\/users/
     ];
 
     function matchAPIUrls(url) {
@@ -217,35 +218,35 @@ angular
         templateUrl: 'views/contacts.html',
         controller: 'ContactsModeCtrl'
       })
-      .state('main.summaryreport', {
-        url: '^/summary/report?dates&type',
-        template: '',
-        controller: 'SummaryReportModeCtrl'
-      })
       .state('main.summaryreportmonth', {
-        url: '^/summary/report-month?month&areaId&typeIds&tags',
-        template: '',
+        url: '^/summary/report-month?dateStart&dateEnd&areaId&typeIds&tags',
+        templateUrl: 'views/summary-report-month.html',
         controller: 'SummaryReportMonthModeCtrl'
-      })
-      .state('main.summaryperson', {
-        url: '^/summary/person?dates&percent&type',
-        template: '',
-        controller: 'SummaryPersonModeCtrl'
       })
       .state('main.summaryperformanceperson', {
         url: '^/summary/performance-person?month&areaId',
-        template: '',
+        templateUrl: 'views/summary-performance-person.html',
         controller: 'SummaryPerformancePersonModeCtrl'
       })
-      .state('visualize', {
-        url: '/visualize',
-        templateUrl: 'views/visualize.html',
-        controller: 'VisualizationCtrl'
+      .state('main.summaryvisualization', {
+        url: '^/summary/visualize',
+        templateUrl: 'views/summary-visualization.html',
+        controller: 'SummaryVisualizationModeCtrl'
       })
       .state('main.profile', {
         url: '^/profile',
         templateUrl: 'views/profile.html',
         controller: 'ProfileModeCtrl'
+      })
+      .state('main.users', {
+        url: '^/user-list',
+        templateUrl: 'views/user-list.html',
+        controller: 'UsersModeCtrl'
+      })
+      .state('main.invitationcode', {
+        url: '^/invitation-code-list',
+        templateUrl: 'views/invitation-code-list.html',
+        controller: 'InvitationCodeModeCtrl'
       })
       .state('login', {
         url: '/login',
