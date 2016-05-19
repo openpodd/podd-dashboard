@@ -50,6 +50,15 @@ angular.module('poddDashboardApp')
 
     dashboard.getAuthorities().$promise.then(function (data) {
         $scope.areas.all = data;
+
+        var areaId = parseInt($stateParams.areaId);
+        if (areaId) {
+            $scope.areas.all.forEach(function (item) {
+                if (item.id === areaId) {
+                    $scope.areas.selectedArea = item;
+                }
+            });
+        }
     });
 
     $scope.query = '';

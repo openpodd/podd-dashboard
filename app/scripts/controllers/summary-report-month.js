@@ -45,6 +45,15 @@ angular.module('poddDashboardApp')
     dashboard.getAuthorities().$promise.then(function (data) {
         $scope.areas.all = data;
         $scope.areas.all.push(initArea);
+
+        var areaId = parseInt($stateParams.areaId);
+        if (areaId) {
+            $scope.areas.all.forEach(function (item) {
+               if (item.id === areaId) {
+                   $scope.areas.selectedArea = item;
+               }
+            });
+        }
     });
 
     // Fetch available adminisitration areas
@@ -116,6 +125,12 @@ angular.module('poddDashboardApp')
         from: moment().subtract(7,'days'),
         to: moment()
     };
+    if ($stateParams.dateStart) {
+        $scope.dateRange.from = moment($stateParams.dateStart);
+    }
+    if ($stateParams.dateEnd) {
+        $scope.dateRange.to = moment($stateParams.dateEnd);
+    }
 
     $scope.search = function () {
 
@@ -139,12 +154,12 @@ angular.module('poddDashboardApp')
             tags.push(tag.text);
         });
 
-        var params =  { 
-            dateStart: dateFrom, 
-            dateEnd: dateTo, 
-            areaId: areaId, 
-            typeIds: typeIds, 
-            tags: tags 
+        var params =  {
+            dateStart: dateFrom,
+            dateEnd: dateTo,
+            areaId: areaId,
+            typeIds: typeIds,
+            tags: tags
         };
         $state.go('main.summaryreportmonth', params);
 
