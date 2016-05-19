@@ -126,10 +126,10 @@ angular.module('poddDashboardApp')
         to: moment()
     };
     if ($stateParams.dateStart) {
-        $scope.dateRange.from = moment($stateParams.dateStart);
+        $scope.dateRange.from = moment($stateParams.dateStart, 'DD/MM/YYYY');
     }
     if ($stateParams.dateEnd) {
-        $scope.dateRange.to = moment($stateParams.dateEnd);
+        $scope.dateRange.to = moment($stateParams.dateEnd, 'DD/MM/YYYY');
     }
 
     $scope.search = function () {
