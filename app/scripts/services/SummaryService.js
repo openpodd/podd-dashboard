@@ -53,4 +53,14 @@ angular.module('poddDashboardApp')
     });
 
     return resource;
-});
+})
+
+.factory('SummaryDashboardVisualization', function ($resource) {
+    var resource = $resource(config.API_BASEPATH + '/summary/dashboard-visualization/', {}, {
+        get: {
+            isArray: false
+        }
+    });
+
+    return resource;
+});;

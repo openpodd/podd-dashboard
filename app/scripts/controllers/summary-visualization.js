@@ -11,7 +11,8 @@ angular.module('poddDashboardApp')
     shared.reportWatchId = null;
 })
 
-.controller('SummaryVisualizationCtrl', function ($scope, Menu, User, SummaryReportVisualization) {
+.controller('SummaryVisualizationCtrl', function ($scope, Menu, User, SummaryReportVisualization,
+    SummaryDashboardVisualization) {
     Menu.setActiveMenu('summary');
     
     $scope.months = {
@@ -22,6 +23,15 @@ angular.module('poddDashboardApp')
     };
 
     $scope.selected = 'month';
+    $scope.dashboard = {
+      users: 4014,
+      positiveReports: 1000,
+      negativeReports: 100
+    };
+
+    SummaryDashboardVisualization.get().$promise.then(function (data) {
+      $scope.dashboard = data;
+    });
 
     function getRandomColor() {
         var letters = '0123456789ABCDEF'.split('');
@@ -106,7 +116,12 @@ angular.module('poddDashboardApp')
 
         var colorHash = {};
 
-        SummaryReportVisualization.query({ type: $scope.selected }).$promise.then(function (json) {
+        var params = {
+          'reportTypes': [1],
+          'period': $scope.selected
+        };
+
+        SummaryReportVisualization.query(params).$promise.then(function (json) {
           dataset = json;
 
           var data = [];
@@ -134,7 +149,7 @@ angular.module('poddDashboardApp')
               .range([h-padding.bottom-padding.top,0]);
 
           var xAxisRange = d3.time.weeks;
-          if ($scope.selected === 'months') {
+          if ($scope.selected === 'month') {
             xAxisRange = d3.time.months;
           }
 

@@ -33,7 +33,17 @@
 
     <div class="content-wrapper content">
         <div class="summary-wrapper">
-
+            <div class="row">
+                <div class="col-md-4">
+                    User: {{ dashboard.users }}
+                </div>
+                <div class="col-md-4">
+                    Positive Reports: {{ dashboard.positiveReports }}
+                </div>
+                <div class="col-md-4">
+                    Negative Reports: {{ dashboard.negativeReports }}
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-8">
                     <div id="mbars">
