@@ -1,4 +1,4 @@
-/* global swal, d3 */
+/* global d3, moment */
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -11,7 +11,7 @@ angular.module('poddDashboardApp')
     shared.reportWatchId = null;
 })
 
-.controller('SummaryVisualizationCtrl', function ($scope, Menu, User, UserDetail, Authority, AuthorityView) {
+.controller('SummaryVisualizationCtrl', function ($scope, Menu, User, SummaryReportVisualization) {
     Menu.setActiveMenu('summary');
     
     $scope.months = {
@@ -21,7 +21,7 @@ angular.module('poddDashboardApp')
         selectedYear: moment().year()
     };
 
-    $scope.selected = 'months';
+    $scope.selected = 'month';
 
     function getRandomColor() {
         var letters = '0123456789ABCDEF'.split('');
@@ -34,7 +34,7 @@ angular.module('poddDashboardApp')
 
     var colors = d3.scale.category10();
 
-    var w = 600;                        
+    var w = 1000;                        
     var h = 500;                        
     var padding = {top: 40, right: 40, bottom: 40, left:40};
     var dataset;
@@ -80,9 +80,7 @@ angular.module('poddDashboardApp')
         .append('g')
         .attr('class','rgroups')
         .attr('transform','translate('+ padding.left + ',' + (h - padding.bottom) +')')
-        .style('fill', function(d, i) {
-            return '#ccc';
-        });
+        .style('fill', '#ccc');
 
     var rects = groups.selectAll('rect')
         .data(function(d) { 
@@ -108,13 +106,13 @@ angular.module('poddDashboardApp')
 
         var colorHash = {};
 
-        d3.json('/api/mper' + $scope.selected + '.json',function(json){
+        SummaryReportVisualization.query({ type: $scope.selected }).$promise.then(function (json) {
           dataset = json;
 
           var data = [];
           var count = 0;
           dataset.forEach(function(d) {
-            colorHash[count] = [d.type, colors(count)];
+            colorHash[count] = [d.name, colors(count)];
             data.push(d.data);
             count += 1;
           });
@@ -135,10 +133,15 @@ angular.module('poddDashboardApp')
               ])
               .range([h-padding.bottom-padding.top,0]);
 
+          var xAxisRange = d3.time.weeks;
+          if ($scope.selected === 'months') {
+            xAxisRange = d3.time.months;
+          }
+
           var xAxis = d3.svg.axis()
                          .scale(xScale)
                          .orient('bottom')
-                         .ticks(d3.time.days,1);
+                         .ticks(xAxisRange, 1);
 
           var yAxis = d3.svg.axis()
                          .scale(yScale)
@@ -163,9 +166,7 @@ angular.module('poddDashboardApp')
               .style('fill-opacity',1e-6);
 
           rects.transition()
-              .duration(function(d,i){
-                   return 500 * i;
-               })
+              .duration(1000)
               .ease('linear')
               .attr('x', function(d) {
                   return xScale(new Date(d.time));
@@ -238,6 +239,11 @@ angular.module('poddDashboardApp')
 
           svg.select('.title')
             .text('Number of reports per ' + $scope.selected +'.');
+
+          svg.selectAll('.x.axis text')  // select all the text elements for the xaxis
+            .attr('transform', function(d) {
+              return 'translate(' + this.getBBox().height*-2 + ',' + this.getBBox().height + ')rotate(-45)';
+        });
       });
       
     }
