@@ -404,3 +404,22 @@ html, body{
 .no-resize{
     resize: none;
 }
+.radius-100 {
+    border-radius: 100%;
+}
+.profile-img {
+    margin: 20px 0 10px;
+}
+.profile-name {
+    text-align: center;
+    font-size: 18px;
+    margin: 20px 0 0;
+}
+.profile-form legend {
+    font-size: 14px;
+    padding-bottom: 10px;
+    color: #777;
+}
+.profile-form label {
+    font-weight: normal;
+}
