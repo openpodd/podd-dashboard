@@ -271,6 +271,8 @@ angular.module('poddDashboardApp')
             };
 
             if ($scope.query.dateStart && $scope.query.dateEnd) {
+                $scope.dateRange.from = moment($scope.query.dateStart, "DD/MM/YYYY");
+                $scope.dateRange.to = moment($scope.query.dateEnd, "DD/MM/YYYY");
                 return $scope._search();
             }
 
@@ -393,12 +395,7 @@ angular.module('poddDashboardApp')
     $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
         console.log('stateChangeSuccess', $state.current.name, params.dateStart, params.dateEnd);
         if ($state.current.name === 'main.summaryreportmonth') {
-            if (oldParams !== params) {
-                $scope.doQueryOnParams(params);
-            }
-            else {
-                $scope.search();
-            }
+            $scope.doQueryOnParams(params);
         }
     });
 

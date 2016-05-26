@@ -115,6 +115,8 @@ angular
       /\/summary\/users\/inactive/,
       /\/summary\/users\/performance/,
       /\/summary\/reports/,
+      /\/summary\/reports-visualization/,
+      /\/summary\/dashboard-visualization/,
       /\/ping/,
       /\/tags\/list/,
       /\/users\/profile/,
