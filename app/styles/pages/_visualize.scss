@@ -465,13 +465,16 @@
 }
 
 .summary-widget {
-  border: 1px solid #cccccc;
-  padding: 12px;
+    padding: 15px;
+    border: none;
+    background-color: #f9f9f9;
+    // box-shadow: 1px 1px 1px 1px rgba(0,0,0,1);
+
 
   .-title {
     text-align: center;
-    font-size: 18pt;
-    color: #292727;
+    font-size: 18px;
+    color: #9d9d9d;
   }
 
   ._left {
@@ -480,10 +483,13 @@
 
   ._number-large {
     font-size: 3em;
+    color: #555;
   }
 
   .summary-widget-icon {
-    font-size: 5.8em;
+    font-size: 1em;
+    margin-right: 10px;
+    margin-left: 5px;
   }
 
   .btn-top-right {
@@ -507,16 +513,18 @@
 }
 
 .summary-graph-reports-legend {
-  padding: 8px;
+  padding: 8px 0;
   background-color: #eee;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
   height: 340px;
   overflow-y: auto;
+  border: 1px solid #eee;
+  background-color: #fff;
 
   .legend-item {
-    font-size: 1.4em;
+    font-size: 1.1em;
     cursor: pointer;
     padding: 4px;
     padding-left: 16px;
@@ -526,4 +534,14 @@
       background-color: #ccc;
     }
   }
+}
+
+
+.rgroups rect {
+    width: 20px !important;
+}
+
+.chart.-title {
+    font-size: 22px;
+    color: #555;
 }

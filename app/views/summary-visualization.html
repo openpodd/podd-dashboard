@@ -38,11 +38,8 @@
               <div class="col-md-4">
                 <div class="summary-widget">
                   <div class="row">
-                    <div class="col-md-3">
-                      <i class="fa fa-user summary-widget-icon _color_purple"></i>
-                    </div>
-                    <div class="col-md-9">
-                      <div class="-title _left">อาสา</div>
+                    <div class="col-md-12">
+                      <div class="-title _left"> อาสา</div>
                       <span class="_number-large">{{ dashboard.users }}</span> คน
                     </div>
                   </div>
@@ -51,11 +48,8 @@
               <div class="col-md-4">
                 <div class="summary-widget">
                   <div class="row">
-                    <div class="col-md-3">
-                      <i class="fa fa-check-circle-o summary-widget-icon _color_green"></i>
-                    </div>
-                    <div class="col-md-9">
-                      <div class="-title _left">ไม่พบเหตุผิดปกติ</div>
+                    <div class="col-md-12">
+                      <div class="-title _left"> ไม่พบเหตุผิดปกติ</div>
                       <span class="_number-large">{{ dashboard.positiveReports }}</span> รายงาน
                     </div>
                   </div>
@@ -64,11 +58,8 @@
               <div class="col-md-4">
                 <div class="summary-widget">
                   <div class="row">
-                    <div class="col-md-3">
-                      <i class="fa fa-exclamation-triangle summary-widget-icon _color_red"></i>
-                    </div>
-                    <div class="col-md-9">
-                      <div class="-title _left">พบเหตุผิดปกติ</div>
+                    <div class="col-md-12">
+                      <div class="-title _left"> พบเหตุผิดปกติ</div>
                       <span class="_number-large">{{ dashboard.negativeReports }}</span> รายงาน
                     </div>
                   </div>
@@ -80,7 +71,7 @@
           <div class="summary-widget-group">
             <div class="summary-widget">
               <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-9">
                   <!--
                   <div class="btn-group btn-top-right">
                     <!-- select -- >
@@ -99,11 +90,12 @@
                   </div>
                   -->
 
-                  <h4 class="-title">สถิติรายงานรายเดือน</h4>
+                  <h4 class="chart -title">สถิติรายงานรายเดือน</h4>
                   <div id="mbars" class="summary-graph-reports"></div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
+                    <h4 class="-title">เลือกประเภทรายงาน</h4>
                   <div class="summary-graph-reports-legend">
                     <ul class="list-unstyled">
                       <li ng-repeat="data in initialDataset" ng-click="selectDataset(data)" class="legend-item">
