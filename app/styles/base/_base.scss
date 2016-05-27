@@ -407,8 +407,14 @@ html, body{
 .radius-100 {
     border-radius: 100%;
 }
+.profile-block {
+    background-color: #f9f9f9;
+}
 .profile-img {
     margin: 20px 0 10px;
+}
+.profile-img img {
+    border: 1px solid #eee;
 }
 .profile-name {
     text-align: center;
@@ -421,5 +427,5 @@ html, body{
     color: #777;
 }
 .profile-form label {
-    font-weight: normal;
+    // font-weight: normal;
 }
