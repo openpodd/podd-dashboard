@@ -9,7 +9,7 @@ angular.module('poddDashboardApp')
 
 })
 
-.controller('ContactsCtrl', function ($scope, Menu, AdministrationArea, 
+.controller('ContactsCtrl', function ($scope, Menu, AdministrationArea,
       $state, $stateParams, $window, Notification) {
   Menu.setActiveMenu('scenario');
 
@@ -70,7 +70,7 @@ angular.module('poddDashboardApp')
 
     AdministrationArea.contacts($scope._query).$promise.then(function (resp) {
       $scope.administrationAreas = resp.results;
-      
+
       $scope.willShowResult = false;
       $scope.loading = false;
 
@@ -90,16 +90,19 @@ angular.module('poddDashboardApp')
       $scope.error = true;
 
     });
-  
+
   };
 
   $scope.alphabets = ('กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ').split('');
+  $scope.toParentAddress = function(area) {
+    return area.address.replace(area.name, '')  
+  };
 
   $scope.loadMore = function () {
     page ++;
 
     $scope._query.page = page;
-    
+
     $scope.disabledLoadmoreBtn = true;
 
     AdministrationArea.contacts($scope._query).$promise.then(function (resp) {
@@ -108,7 +111,7 @@ angular.module('poddDashboardApp')
         $scope.administrationAreas.push(value);
 
       });
-      
+
       if (resp.next === null) {
         $scope.canLoadMore = false;
       }
@@ -140,7 +143,7 @@ angular.module('poddDashboardApp')
       'contacts': $scope.newSelectedContact
     }];
 
-    if ($scope.newSelectedContact !== null && 
+    if ($scope.newSelectedContact !== null &&
         $scope.newSelectedContact.replace(' ', '') !== '') {
 
         $scope.disabledUpdateBtn = true;
@@ -158,16 +161,16 @@ angular.module('poddDashboardApp')
     } else {
       swal('', 'คุณยังไม่ได้ระบุข้อมูลการติดต่อ', 'warning');
     }
-    
+
   };
 
-  $scope.testMessage = '[ทดลองส่งข้อความจาก PODD]  พบโรคห่าไก่ระบาดในหมู่บ้านของท่าน แนะนำให้' + 
-          ' กระจายข่าวผ่านเสียงตามสายทันที' + 
-          ' ร่วมหารือกับ อปท.และปศอ. เพื่อควบคุมโรค'  ;         
+  $scope.testMessage = '[ทดลองส่งข้อความจาก PODD]  พบโรคห่าไก่ระบาดในหมู่บ้านของท่าน แนะนำให้' +
+          ' กระจายข่าวผ่านเสียงตามสายทันที' +
+          ' ร่วมหารือกับ อปท.และปศอ. เพื่อควบคุมโรค'  ;
 
   $scope.testSendSMS = function() {
 
-      if ($scope.selected.contacts !== null && 
+      if ($scope.selected.contacts !== null &&
           $scope.selected.contacts.replace(' ', '') !== '') {
 
         var params = {
@@ -184,7 +187,7 @@ angular.module('poddDashboardApp')
         });
 
       }
-      
+
       $('#contactModal').modal('toggle');
   };
 
@@ -194,7 +197,7 @@ angular.module('poddDashboardApp')
 
           var name = $window.decodeURIComponent(params.q || '').replace(' ', '');
           $scope._query.alphabet = $window.decodeURIComponent(params.alphabet || '');
-              
+
           if (name === '') {
             delete $scope._query.q;
           } else {
