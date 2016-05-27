@@ -33,58 +33,95 @@
 
     <div class="content-wrapper content">
         <div class="summary-wrapper">
+          <div class="summary-widget-group">
             <div class="row">
-                <div class="col-md-4">
-                    User: {{ dashboard.users }}
+              <div class="col-md-4">
+                <div class="summary-widget">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <i class="fa fa-user summary-widget-icon _color_purple"></i>
+                    </div>
+                    <div class="col-md-9">
+                      <div class="-title _left">อาสา</div>
+                      <span class="_number-large">{{ dashboard.users }}</span> คน
+                    </div>
+                  </div>
                 </div>
-                <div class="col-md-4">
-                    Positive Reports: {{ dashboard.positiveReports }}
+              </div>
+              <div class="col-md-4">
+                <div class="summary-widget">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <i class="fa fa-check-circle-o summary-widget-icon _color_green"></i>
+                    </div>
+                    <div class="col-md-9">
+                      <div class="-title _left">ไม่พบเหตุผิดปกติ</div>
+                      <span class="_number-large">{{ dashboard.positiveReports }}</span> รายงาน
+                    </div>
+                  </div>
                 </div>
-                <div class="col-md-4">
-                    Negative Reports: {{ dashboard.negativeReports }}
+              </div>
+              <div class="col-md-4">
+                <div class="summary-widget">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <i class="fa fa-exclamation-triangle summary-widget-icon _color_red"></i>
+                    </div>
+                    <div class="col-md-9">
+                      <div class="-title _left">พบเหตุผิดปกติ</div>
+                      <span class="_number-large">{{ dashboard.negativeReports }}</span> รายงาน
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
-            <div class="row">
+          </div>
+
+          <div class="summary-widget-group">
+            <div class="summary-widget">
+              <div class="row">
                 <div class="col-md-8">
-                    <div id="mbars">
-                    </div>
+                  <!--
+                  <div class="btn-group btn-top-right">
+                    <!-- select -- >
+                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                      <span ng-show="selected == 'month'">รายเดือน</span>
+                      <span ng-show="selected == 'week'">รายสัปดาห์</span>
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a ng-click="selected = 'month'" >รายเดือน</a></li>
+                      <li>
+                        <a ng-click="selected = 'week'" >
+                          รายสัปดาห์</a>
+                      </li>
+                    </ul>
+                  </div>
+                  -->
+
+                  <h4 class="-title">สถิติรายงานรายเดือน</h4>
+                  <div id="mbars" class="summary-graph-reports"></div>
                 </div>
 
                 <div class="col-md-4">
-                    <div class="btn-group pull-right">
-                        <!-- select -->
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                            <span ng-show="selected == 'month'">รายเดือน</span> 
-                            <span ng-show="selected == 'week'">รายสัปดาห์</span> 
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a ng-click="selected = 'month'" >รายเดือน</a></li>
-                            <li>
-                                <a ng-click="selected = 'week'" >
-                                รายสัปดาห์</a>
-                            </li>
-                        </ul>
-
-                        <!-- <div class="pull-right">
-                            <div class="pull-left">
-                                <span>Report per days: </span>
-                                <select
-                                    ng-model="months.selectedMonth"
-                                    ng-options="month for month in months.months"></select>
-                                <select
-                                    ng-model="months.selectedYear"
-                                    ng-options="year for year in months.years"></select>
-                            
-                            </div>
-                        </div> -->
-                    </div>
+                  <div class="summary-graph-reports-legend">
+                    <ul class="list-unstyled">
+                      <li ng-repeat="data in initialDataset" ng-click="selectDataset(data)" class="legend-item">
+                          <i class="fa fa-circle-o" ng-hide="data.selected" style="color: {{ data.colorCode }}"></i>
+                          <i class="fa fa-check-circle" style="color: {{ data.colorCode }}" ng-show="data.selected"></i>
+                        {{ data.name }}
+                      </li>
+                    </ul>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
 
-            <div ng-show="loading" loader-spinner></div>
-            <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
-            <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
+
+          <div ng-show="loading" loader-spinner></div>
+          <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
+          <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
 
       </div>
     </div>
