@@ -56,14 +56,14 @@
   td.label-code {
     width: 100px;
   }
-  
+
   .well h3 {
     margin-top: 0px;
   }
-  
+
   .list-item-meta {
     // font-size: 1.2em;
-    
+
     .row {
       // margin-bottom: 8px;
     }
@@ -72,7 +72,7 @@
       margin-top: 15px;
     }
   }
-  
+
   .list-item-meta-label {
     // text-align: right;
     // font-weight: bolder;
@@ -81,7 +81,7 @@
   .list-item-meta-value{
     // font-size: .9em;
   }
-  
+
   .list-item-meta-view-button {
     text-align: center;
     .view-button {
@@ -98,7 +98,7 @@
   color: #fff !important;
 
   small{
-    color: #fff !important;    
+    color: #fff !important;
   }
 }
 .yellow-zone{
@@ -106,7 +106,7 @@
   color: #fff !important;
 
   small{
-    color: #fff !important;    
+    color: #fff !important;
   }
 }
 .green-zone{
@@ -114,7 +114,7 @@
   color: #fff !important;
 
   small{
-    color: #fff !important;    
+    color: #fff !important;
   }
 }
 .zone-item-row{
@@ -137,4 +137,10 @@
 }
 .plan-list-item-right{
   padding: 15px;
+}
+
+.area-highlight {
+  color: #ff4d4d;
+  text-decoration: underline;
+  font-style: italic;
 }
