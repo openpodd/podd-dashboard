@@ -36,33 +36,36 @@
           <div class="summary-widget-group">
             <div class="row">
               <div class="col-md-4">
-                <div class="summary-widget">
+                <div class="summary-widget -user">
                   <div class="row">
                     <div class="col-md-12">
                       <div class="-title _left"> อาสา</div>
                       <span class="_number-large">{{ dashboard.users }}</span> คน
                     </div>
                   </div>
+                  <span class="glyphicon glyphicon-user summary-widget-icon" aria-hidden="true"></span>
                 </div>
               </div>
               <div class="col-md-4">
-                <div class="summary-widget">
+                <div class="summary-widget -ok">
                   <div class="row">
                     <div class="col-md-12">
                       <div class="-title _left"> ไม่พบเหตุผิดปกติ</div>
                       <span class="_number-large">{{ dashboard.positiveReports }}</span> รายงาน
                     </div>
                   </div>
+                  <span class="glyphicon glyphicon-ok-circle summary-widget-icon" aria-hidden="true"></span>
                 </div>
               </div>
               <div class="col-md-4">
-                <div class="summary-widget">
+                <div class="summary-widget -abnormal">
                   <div class="row">
                     <div class="col-md-12">
                       <div class="-title _left"> พบเหตุผิดปกติ</div>
                       <span class="_number-large">{{ dashboard.negativeReports }}</span> รายงาน
                     </div>
                   </div>
+                  <span class="glyphicon glyphicon-remove-circle summary-widget-icon" aria-hidden="true"></span>
                 </div>
               </div>
             </div>
@@ -95,7 +98,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    <h4 class="-title">เลือกประเภทรายงาน</h4>
+                    <h4 class="choose -title">เลือกประเภทรายงาน</h4>
                   <div class="summary-graph-reports-legend">
                     <ul class="list-unstyled">
                       <li ng-repeat="data in initialDataset" ng-click="selectDataset(data)" class="legend-item">

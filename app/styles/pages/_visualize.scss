@@ -465,16 +465,31 @@
 }
 
 .summary-widget {
+    position: relative;
     padding: 15px;
     border: none;
     background-color: #f9f9f9;
+    color: #fff;
     // box-shadow: 1px 1px 1px 1px rgba(0,0,0,1);
 
+    &.-ok {
+        background-color: #15AC3B;
+    }
+    &.-abnormal {
+        background-color: #e7505a;
+    }
+    &.-user {
+        background-color: #32c5d2;
+    }
+
+    .legend-item {
+        color: #555;
+    }
 
   .-title {
     text-align: center;
-    font-size: 18px;
-    color: #9d9d9d;
+    font-size: 16px;
+    color: #fff;
   }
 
   ._left {
@@ -483,13 +498,16 @@
 
   ._number-large {
     font-size: 3em;
-    color: #555;
+    color: #fff;
   }
 
   .summary-widget-icon {
-    font-size: 1em;
-    margin-right: 10px;
-    margin-left: 5px;
+    position: absolute;
+    top: 25px;
+    right: -10px;
+    font-size: 8em;
+    opacity: .6;
+    color: #fff;
   }
 
   .btn-top-right {
@@ -542,6 +560,12 @@
 }
 
 .chart.-title {
-    font-size: 22px;
+    font-size: 18px;
+    color: #555;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #dfdfdf;
+}
+.choose.-title {
+    font-size: 16px;
     color: #555;
 }
