@@ -16,17 +16,17 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  
+
                 </div>
               </div>
           </div>
         </div>
-      
+
       <div class="plans-list">
         <div class="row plan-list-item" ng-if="!loading && planReports.length === 0">
           <div class="well text-center">ยังไม่มีแผนรับมือ</div>
         </div>
-        
+
         <div class="row plan-list-item" ng-repeat="planReport in planReports" ng-if="planReports.length > 0">
           <div class="col-md-12">
             <h2 class="subheading">แผนรับมือ</h2>
@@ -41,10 +41,10 @@
                     <table class="table">
                     <thead>
                       <tr>
-                        <th colspan="2">พื้นที่ในความรับผิดชอบของท่าน</th>
+                        <th colspan="2">พื้นที่ที่ได้รับผลกระทบ</th>
                       </tr>
                     </thead>
-                    <tbody ng-if="planReport.myLevelAreasCount">
+                    <tbody>
                       <tr ng-repeat="level in planReport.log.plan.levels">
                         <td class="label-code">
                           <span ng-if="level.code == 'red'" ng-bind="level.name" class="label label-danger"></span>
@@ -52,23 +52,34 @@
                           <span ng-if="level.code == 'green'" ng-bind="level.name" class="label label-success"></span>
                         </td>
                         <td>
-                          <span ng-repeat="area in planReport.log.my_level_areas[level.code]">
-                            {{ area.address || area.name }}
+                          <span ng-repeat="area in getLevelAreas(planReport, level.code)">
+                            <span ng-class="{ 'area-highlight': area.isMine }">{{ area.address || area.name }}</span>
                             <span ng-if="!$last">, </span>
+                            <span ng-if="$last && willShowExpandButton(planReport, level.code) && !isExpand(planReport, level.code)">, &hellip;</span>
                           </span>
+
+                          <span ng-if="willShowExpandButton(planReport, level.code) && !isExpand(planReport, level.code)" ng-click="setExpand(planReport, level.code, true)" class="show-all">
+                            <i class="fa fa-angle-double-down"></i>
+                            แสดงทั้งหมด
+                          </span>
+                          <span ng-if="willShowExpandButton(planReport, level.code) && isExpand(planReport, level.code)" ng-click="setExpand(planReport, level.code, false)" class="show-all">
+                            <i class="fa fa-angle-double-up"></i>
+                            แสดงน้อยลง
+                          </span>
+
                         </td>
                       </tr>
                     </tbody>
-                    <tbody ng-if="!planReport.myLevelAreasCount">
-                      <tr>
-                        <td colspan="2">ไม่มี</td>
-                      </tr>
-                    </tbody>
+                    <!--<tbody ng-if="!planReport.myLevelAreasCount">-->
+                      <!--<tr>-->
+                        <!--<td colspan="2">ไม่มี</td>-->
+                      <!--</tr>-->
+                    <!--</tbody>-->
                   </table><!-- /end table -->
                   </div>
-                  
-    
-                  
+
+
+
                 </div><!-- /end first col -->
                 <div class="col-md-4 list-item-meta">
                   <div class="plan-list-item-right">
@@ -102,7 +113,7 @@
           </div>
         </div>
       </div><!-- /plan-list -->
-      
+
       <div class="loadmore" ng-cloak>
         <button class="btn btn-default center-block" type="button" ng-show="!endPageList" ng-click="loadMore()" ng-disabled="loading">{{ loading ? 'Loading...' : 'Load more...' }}</button>
       </div>
