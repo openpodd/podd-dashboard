@@ -22,8 +22,8 @@ angular.module('poddDashboardApp')
     shared.subscribe = true;
 })
 
-.controller('SummaryVisualizationCtrl', function ($scope, shared, Menu, User, SummaryReportVisualization,
-    SummaryDashboardVisualization) {
+.controller('SummaryVisualizationCtrl', function ($scope, shared, Menu, User,
+                                                  SummaryReportVisualization, SummaryDashboardVisualization) {
     Menu.setActiveMenu('summary');
 
     $scope.months = {
@@ -42,7 +42,7 @@ angular.module('poddDashboardApp')
 
     var params = {
         subscribe: shared.subscribe
-    }
+    };
 
     SummaryDashboardVisualization.get(params).$promise.then(function (data) {
         $scope.dashboard = data;
@@ -216,7 +216,7 @@ angular.module('poddDashboardApp')
             groups.enter().append('g')
                 .attr('class','rgroups')
                 .attr('transform','translate('+ padding.left + ',' + (h - padding.bottom) +')')
-                .style("fill",function(d, i){
+                .style('fill',function(d, i){
                     return colorHash[$scope.initialDataset[i].id];
                 });
 

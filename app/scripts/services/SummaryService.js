@@ -63,4 +63,4 @@ angular.module('poddDashboardApp')
     });
 
     return resource;
-});;
+});
