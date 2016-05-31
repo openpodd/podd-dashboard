@@ -23,12 +23,14 @@ angular.module('poddDashboardApp')
     $scope.userSelected = {};
     $scope.userBeforeChange = {};
     $scope.authorities = {};
-    $scope.authority = {};
+    $scope.authority = null;
 
     AuthorityView.list().$promise.then(function (data) {
         data.forEach(function (item) {
+            if($scope.authority !== null) {
+                return;
+            }
             $scope.authority = item;
-            return;
         });
         $scope.authorities = data;
     }).catch(function () {
@@ -67,7 +69,7 @@ angular.module('poddDashboardApp')
         }).catch(function () {
             $scope.loading = false;
             $scope.error = true;
-        });;
+        });
     }
 
     refreshUsers();

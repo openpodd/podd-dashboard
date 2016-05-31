@@ -19,7 +19,7 @@ angular.module('poddDashboardApp')
     $scope.loading = true;
     $scope.error = false;
     $scope.authority = null;
-    $scope.notificationTemplates = []
+    $scope.notificationTemplates = [];
 
 
     function getNotificationTemplate(authority) {
@@ -35,9 +35,11 @@ angular.module('poddDashboardApp')
 
     AuthorityView.list().$promise.then(function (data) {
         data.forEach(function (item) {
-            $scope.authority = item;
+            if($scope.authority !== null) {
+                return;
+            }
             getNotificationTemplate(item);
-            return;
+            $scope.authority = item;
         });
         $scope.authorities = data;
     }).catch(function () {
@@ -70,7 +72,7 @@ angular.module('poddDashboardApp')
                 var params = contact;
                 params.to = $scope.newSelectedContact;
                 console.log(params);
-                
+
                 NotificationAuthorities.update(params).$promise.then(function (data) {
                     angular.copy(data, contact);
                     swal('สำเร็จ', 'แก้ไขสำเร็จ', 'success');
