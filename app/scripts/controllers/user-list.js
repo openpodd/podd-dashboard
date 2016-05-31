@@ -30,9 +30,7 @@ angular.module('poddDashboardApp')
             $scope.authority = item;
             return;
         });
-
         $scope.authorities = data;
-        $scope.loading = false;
     }).catch(function () {
         $scope.loading = false;
         $scope.error = true;
@@ -60,12 +58,16 @@ angular.module('poddDashboardApp')
             console.log('loaded users data', data);
             data.forEach(function (item) {
                 $scope.users.push(item);
+                $scope.loading = false;
             });
-            $scope.loading = false;
             if (data.length === 0) {
                 $scope.lastPage = true;
             }
-        });
+            $scope.loading = false;
+        }).catch(function () {
+            $scope.loading = false;
+            $scope.error = true;
+        });;
     }
 
     refreshUsers();
