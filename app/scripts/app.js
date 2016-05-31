@@ -126,6 +126,7 @@ angular
       /\/administrationArea\/contacts/,
       /\/administrationArea\/contacts\/update/,
       /\/notifications\/test/,
+      /\/notificationAuthorities/,
       /\/users/
     ];
 
@@ -253,6 +254,11 @@ angular
         url: '^/invitation-code-list',
         templateUrl: 'views/invitation-code-list.html',
         controller: 'InvitationCodeModeCtrl'
+      })
+      .state('main.notificationconfig', {
+        url: '^/notification-config-list',
+        templateUrl: 'views/notification-config-list.html',
+        controller: 'NotificationModeCtrl'
       })
       .state('login', {
         url: '/login',

@@ -54,6 +54,11 @@ angular.module('poddDashboardApp')
         'renewInvitationCode': {
             url: config.API_BASEPATH + '/authorities/:id/renew_invitation_code',
             method: 'POST'
+        },
+        'notificationTemplates': {
+            url: config.API_BASEPATH + '/authorities/:id/notificationTemplates/enabled/?full=True',
+            method: 'GET',
+            isArray: true
         }
     });
 })
@@ -65,7 +70,7 @@ angular.module('poddDashboardApp')
         }
     });
 })
-
+    
 .factory('ReportModal', function ($rootScope) {
     var modal;
 
