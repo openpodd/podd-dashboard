@@ -13,12 +13,12 @@ angular.module('poddDashboardApp')
 
 .controller('UsersCtrl', function ($scope, Menu, User, UserDetail, Authority, AuthorityView) {
     Menu.setActiveMenu('users');
-    
+
     $scope.users = [];
     $scope.loading = true;
     $scope.page = 0;
     $scope.pageSize = 20;
-    $scope.lastPage = false; 
+    $scope.lastPage = false;
 
     $scope.userSelected = {};
     $scope.userBeforeChange = {};
@@ -32,6 +32,10 @@ angular.module('poddDashboardApp')
         });
 
         $scope.authorities = data;
+        $scope.loading = false;
+    }).catch(function () {
+        $scope.loading = false;
+        $scope.error = true;
     });
 
     function randomPassword() {
@@ -59,7 +63,7 @@ angular.module('poddDashboardApp')
             });
             $scope.loading = false;
             if (data.length === 0) {
-                $scope.lastPage = true; 
+                $scope.lastPage = true;
             }
         });
     }
