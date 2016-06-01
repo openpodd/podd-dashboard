@@ -140,7 +140,11 @@
 }
 
 .area-highlight {
-  color: #ff4d4d;
+  display: inline-block;
   text-decoration: underline;
   font-style: italic;
+  font-weight: bold;
+}
+.text-normal {
+    font-weight: normal;
 }
