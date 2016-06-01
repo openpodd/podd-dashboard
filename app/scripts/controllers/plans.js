@@ -128,7 +128,10 @@ angular.module('poddDashboardApp')
     $modalInstance.dismiss();
   };
 
-  $scope.queryText = '';
+  $scope.searchData = {
+      queryText: '',
+      _queryText: ''
+  };
 
   $scope.flipped = false;
 
@@ -140,7 +143,7 @@ angular.module('poddDashboardApp')
   });
 
   $scope.search = function () {
-    $scope._queryText = $scope.queryText;
+    $scope.searchData._queryText = $scope.searchData.queryText;
   };
 
   $scope.resend = function (planReport, area) {
