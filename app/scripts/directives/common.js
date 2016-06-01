@@ -551,6 +551,12 @@ angular.module('poddDashboardApp')
     };
 })
 
+.filter('renderContact', function () {
+    return function (text) {
+        return text.replace(/\@\[([\w\-\.\@\:]+)\]/g, '<span class="label label-info">ใช้การแจ้งเตือนร่วมกับ #$1</span>');
+    };
+})
+
 .directive('loaderSpinner', function () {
     return {
         strict: 'A',
