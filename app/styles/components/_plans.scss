@@ -149,3 +149,16 @@
 .text-normal {
     font-weight: normal;
 }
+
+#map {
+    left: 0;
+
+    .response-map {
+        height: 100%;
+    }
+}
+.report-response-map {
+    .subheading {
+        margin-bottom: 0;
+    }
+}
