@@ -139,12 +139,12 @@ angular.module('poddDashboardApp')
             tags.push(tag.text);
         });
 
-        var params =  { 
-            dateStart: dateFrom, 
-            dateEnd: dateTo, 
-            areaId: areaId, 
-            typeIds: typeIds, 
-            tags: tags 
+        var params =  {
+            dateStart: dateFrom,
+            dateEnd: dateTo,
+            areaId: areaId,
+            typeIds: typeIds,
+            tags: tags
         };
         $state.go('main.summaryreportmonth', params);
 
@@ -271,8 +271,8 @@ angular.module('poddDashboardApp')
             };
 
             if ($scope.query.dateStart && $scope.query.dateEnd) {
-                $scope.dateRange.from = moment($scope.query.dateStart, "DD/MM/YYYY");
-                $scope.dateRange.to = moment($scope.query.dateEnd, "DD/MM/YYYY");
+                $scope.dateRange.from = moment($scope.query.dateStart, 'DD/MM/YYYY');
+                $scope.dateRange.to = moment($scope.query.dateEnd, 'DD/MM/YYYY');
                 return $scope._search();
             }
 

@@ -3,16 +3,27 @@
 
 angular.module('poddDashboardApp')
 
+
 .controller('SummaryVisualizationModeCtrl', function ($scope, shared, Menu) {
     Menu.setActiveMenu('summary');
 
     // clear
     $scope.$parent.closeReportList();
     shared.reportWatchId = null;
+    shared.subscribe = false;
 })
 
-.controller('SummaryVisualizationCtrl', function ($scope, Menu, User, SummaryReportVisualization,
-    SummaryDashboardVisualization) {
+.controller('SummaryVisualizationSubscribeModeCtrl', function ($scope, shared, Menu) {
+    Menu.setActiveMenu('summary');
+
+    // clear
+    $scope.$parent.closeReportList();
+    shared.reportWatchId = null;
+    shared.subscribe = true;
+})
+
+.controller('SummaryVisualizationCtrl', function ($scope, shared, Menu, User,
+                                                  SummaryReportVisualization, SummaryDashboardVisualization) {
     Menu.setActiveMenu('summary');
 
     $scope.months = {
@@ -29,7 +40,11 @@ angular.module('poddDashboardApp')
         negativeReports: 0
     };
 
-    SummaryDashboardVisualization.get().$promise.then(function (data) {
+    var params = {
+        subscribe: shared.subscribe
+    };
+
+    SummaryDashboardVisualization.get(params).$promise.then(function (data) {
         $scope.dashboard = data;
     });
 
@@ -129,7 +144,8 @@ angular.module('poddDashboardApp')
     function newChart () {
         var params = {
             reportTypes: getSelectedReportTypesId(),
-            period: $scope.selected
+            period: $scope.selected,
+            subscribe: shared.subscribe
         };
 
         SummaryReportVisualization.query(params).$promise.then(function (json) {
@@ -200,7 +216,7 @@ angular.module('poddDashboardApp')
             groups.enter().append('g')
                 .attr('class','rgroups')
                 .attr('transform','translate('+ padding.left + ',' + (h - padding.bottom) +')')
-                .style("fill",function(d, i){
+                .style('fill',function(d, i){
                     return colorHash[$scope.initialDataset[i].id];
                 });
 

@@ -95,7 +95,7 @@ angular.module('poddDashboardApp')
 
   $scope.alphabets = ('กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ').split('');
   $scope.toParentAddress = function(area) {
-    return area.address.replace(area.name, '')  
+    return area.address.replace(area.name, '');
   };
 
   $scope.loadMore = function () {
