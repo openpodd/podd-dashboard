@@ -116,6 +116,8 @@ angular
       /\/summary\/users\/inactive/,
       /\/summary\/users\/performance/,
       /\/summary\/reports/,
+      /\/summary\/reports-visualization/,
+      /\/summary\/dashboard-visualization/,
       /\/ping/,
       /\/tags\/list/,
       /\/users\/profile/,
@@ -125,6 +127,7 @@ angular
       /\/administrationArea\/contacts/,
       /\/administrationArea\/contacts\/update/,
       /\/notifications\/test/,
+      /\/notificationAuthorities/,
       /\/users/
     ];
 
@@ -233,6 +236,11 @@ angular
         templateUrl: 'views/summary-visualization.html',
         controller: 'SummaryVisualizationModeCtrl'
       })
+      .state('main.summaryvisualizationsubscribe', {
+        url: '^/summary/visualize-subscribe',
+        templateUrl: 'views/summary-visualization.html',
+        controller: 'SummaryVisualizationSubscribeModeCtrl'
+      })
       .state('main.profile', {
         url: '^/profile',
         templateUrl: 'views/profile.html',
@@ -247,6 +255,11 @@ angular
         url: '^/invitation-code-list',
         templateUrl: 'views/invitation-code-list.html',
         controller: 'InvitationCodeModeCtrl'
+      })
+      .state('main.notificationconfig', {
+        url: '^/notification-config-list',
+        templateUrl: 'views/notification-config-list.html',
+        controller: 'NotificationModeCtrl'
       })
       .state('login', {
         url: '/login',

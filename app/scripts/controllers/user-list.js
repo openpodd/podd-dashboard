@@ -13,25 +13,29 @@ angular.module('poddDashboardApp')
 
 .controller('UsersCtrl', function ($scope, Menu, User, UserDetail, Authority, AuthorityView) {
     Menu.setActiveMenu('users');
-    
+
     $scope.users = [];
     $scope.loading = true;
     $scope.page = 0;
     $scope.pageSize = 20;
-    $scope.lastPage = false; 
+    $scope.lastPage = false;
 
     $scope.userSelected = {};
     $scope.userBeforeChange = {};
     $scope.authorities = {};
-    $scope.authority = {};
+    $scope.authority = null;
 
     AuthorityView.list().$promise.then(function (data) {
         data.forEach(function (item) {
+            if($scope.authority !== null) {
+                return;
+            }
             $scope.authority = item;
-            return;
         });
-
         $scope.authorities = data;
+    }).catch(function () {
+        $scope.loading = false;
+        $scope.error = true;
     });
 
     function randomPassword() {
@@ -56,11 +60,15 @@ angular.module('poddDashboardApp')
             console.log('loaded users data', data);
             data.forEach(function (item) {
                 $scope.users.push(item);
+                $scope.loading = false;
             });
-            $scope.loading = false;
             if (data.length === 0) {
-                $scope.lastPage = true; 
+                $scope.lastPage = true;
             }
+            $scope.loading = false;
+        }).catch(function () {
+            $scope.loading = false;
+            $scope.error = true;
         });
     }
 
@@ -116,9 +124,23 @@ angular.module('poddDashboardApp')
                 };
 
                 Authority.users(params).$promise.then(function (_data) {
-                    swal('สำเร็จ', 'เพิ่มผู้ใช้งานสำเร็จ', 'success');
+                    if (!$scope.is_admin) {
+                        swal('สำเร็จ', 'เพิ่มผู้ใช้งานสำเร็จ', 'success');
+                    }
                     data.authority = $scope.userSelected.authority;
                     $scope.users.push(data);
+
+                    if ($scope.is_admin) {
+                        Authority.admins(params).$promise.then(function (__data) {
+                            swal('สำเร็จ', 'เพิ่มผู้ใช้งานสำเร็จ', 'success');
+                        }).catch(function () {
+                            swal('เกิดข้อผิดพลาด', 'เพิ่มผู้ใช้งานแล้ว แต่ไม่สามารถตั้งค่าผู้ใช้เป็นผู้ดูแลของสังกัดได้', 'error');
+                            $scope.resetUser();
+                        });
+                    }
+                }).catch(function () {
+                    swal('เกิดข้อผิดพลาด', 'ไม่สามารถเพิ่มผู้ใช้ได้', 'error');
+                    $scope.resetUser();
                 });
 
             }).catch(function () {

@@ -42,4 +42,25 @@ angular.module('poddDashboardApp')
     });
 
     return resource;
+})
+
+
+.factory('SummaryReportVisualization', function ($resource) {
+    var resource = $resource(config.API_BASEPATH + '/summary/reports-visualization/', {}, {
+        get: {
+            isArray: true
+        }
+    });
+
+    return resource;
+})
+
+.factory('SummaryDashboardVisualization', function ($resource) {
+    var resource = $resource(config.API_BASEPATH + '/summary/dashboard-visualization/', {}, {
+        get: {
+            isArray: false
+        }
+    });
+
+    return resource;
 });

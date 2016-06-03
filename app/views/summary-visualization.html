@@ -1,4 +1,30 @@
-<div class="summary-view l-info-section l-section l-full-width" ng-controller="SummaryReportCtrl" ng-cloak>
+<style>
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+}
+
+.dot {
+  stroke: #000;
+}
+
+
+.legend {
+    padding: 5px;
+    font: 10px sans-serif;
+    background: yellow;
+    box-shadow: 2px 2px 1px #888;
+}
+</style>
+
+<div class="summary-view l-info-section l-section l-full-width" ng-controller="SummaryVisualizationCtrl" ng-cloak>
   <div class="l-detail-section l-section">
     <div class="title clearfix">
         <h2 class="pull-left"><i class="fa fa-stethoscope pull-left fa-size-22"></i>สรุปรายงาน</h2>
@@ -7,28 +33,90 @@
 
     <div class="content-wrapper content">
         <div class="summary-wrapper">
+          <div class="summary-widget-group">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="summary-widget -user">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="-title _left"> อาสา</div>
+                      <span class="_number-large">{{ dashboard.users }}</span> คน
+                    </div>
+                  </div>
+                  <span class="glyphicon glyphicon-user summary-widget-icon" aria-hidden="true"></span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="summary-widget -ok">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="-title _left"> ไม่พบเหตุผิดปกติ</div>
+                      <span class="_number-large">{{ dashboard.positiveReports }}</span> รายงาน
+                    </div>
+                  </div>
+                  <span class="glyphicon glyphicon-ok-circle summary-widget-icon" aria-hidden="true"></span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="summary-widget -abnormal">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="-title _left"> พบเหตุผิดปกติ</div>
+                      <span class="_number-large">{{ dashboard.negativeReports }}</span> รายงาน
+                    </div>
+                  </div>
+                  <span class="glyphicon glyphicon-remove-circle summary-widget-icon" aria-hidden="true"></span>
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <div>
-                <div class="btn-group pull-right">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                             Messages per hour <span class="caret"></span>
+          <div class="summary-widget-group">
+            <div class="summary-widget">
+              <div class="row">
+                <div class="col-md-9">
+                  <!--
+                  <div class="btn-group btn-top-right">
+                    <!-- select -- >
+                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                      <span ng-show="selected == 'month'">รายเดือน</span>
+                      <span ng-show="selected == 'week'">รายสัปดาห์</span>
+                      <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a class="m" value="2014-02-19" href="#">2014-02-19</a></li>
-                        <li><a class="m" value="2014-02-20" href="#">2014-02-20</a></li>
-                        <li><a class="m" value="2014-02-21" href="#">2014-02-21</a></li>
-                        <li><a class="m" value="2014-02-22" href="#">2014-02-22</a></li>
-                        <li><a class="m" value="2014-02-23" href="#">2014-02-23</a></li>
+                      <li><a ng-click="selected = 'month'" >รายเดือน</a></li>
+                      <li>
+                        <a ng-click="selected = 'week'" >
+                          รายสัปดาห์</a>
+                      </li>
                     </ul>
+                  </div>
+                  -->
+
+                  <h4 class="chart -title">สถิติรายงานรายเดือน</h4>
+                  <div id="mbars" class="summary-graph-reports"></div>
                 </div>
 
-                <div id="mbars">
+                <div class="col-md-3">
+                    <h4 class="choose -title">เลือกประเภทรายงาน</h4>
+                  <div class="summary-graph-reports-legend">
+                    <ul class="list-unstyled">
+                      <li ng-repeat="data in initialDataset" ng-click="selectDataset(data)" class="legend-item">
+                          <i class="fa fa-circle-o" ng-hide="data.selected" style="color: {{ data.colorCode }}"></i>
+                          <i class="fa fa-check-circle" style="color: {{ data.colorCode }}" ng-show="data.selected"></i>
+                        {{ data.name }}
+                      </li>
+                    </ul>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
 
-            <div ng-show="loading" loader-spinner></div>
-            <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
-            <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
+
+          <div ng-show="loading" loader-spinner></div>
+          <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
+          <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
 
       </div>
     </div>

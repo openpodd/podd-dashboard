@@ -13,4 +13,16 @@ angular.module('poddDashboardApp')
     return resource;
 })
 
-;
+.factory('NotificationAuthorities', function ($resource) {
+    return $resource(config.API_BASEPATH + '/notificationAuthorities/:id', {
+        id: '@id'
+    }, {
+        'query': {
+            isArray: false,
+        },
+        'update': {
+            url: config.API_BASEPATH + '/notificationAuthorities/:id',
+            method: 'PUT',
+        }
+    });
+});

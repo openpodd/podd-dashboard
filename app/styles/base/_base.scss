@@ -404,3 +404,41 @@ html, body{
 .no-resize{
     resize: none;
 }
+.radius-100 {
+    border-radius: 100%;
+}
+.profile-block {
+    background-color: #f9f9f9;
+}
+.profile-img {
+    margin: 20px 0 10px;
+}
+.profile-img img {
+    border: 1px solid #eee;
+}
+.profile-name {
+    text-align: center;
+    font-size: 18px;
+    margin: 20px 0 0;
+}
+.profile-form legend {
+    font-size: 14px;
+    padding-bottom: 10px;
+    color: #777;
+}
+.profile-form label {
+    // font-weight: normal;
+}
+
+
+.contact-list {
+    // margin: 30px 50px 20px;
+}
+.panel-phonebook-contact {
+    padding: 0 0 0 20px;
+    margin: 0;
+}
+.summary-wrapper {
+    overflow-x: scroll;
+    width: 100%;
+}

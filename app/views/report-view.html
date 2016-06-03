@@ -152,15 +152,19 @@
             </div> <!-- sidebar-content -->
           </div>
 
+          <div class="sidebar-block" ng-if="currentPlan">
+            <div class="sidebar-heading">
+              <h2 class="sidebar-heading-text"><i class="fa fa-bookmark fa-size-18"></i> แผนรับมือโรคระบาด</h2>
+            </div> <!-- sidebar-heading -->
+            <div class="sidebar-content">
+              <a class="plan-report-link" ng-click="viewPlanReport(currentPlan.id)">{{ currentPlan.log.plan.name }}</a> <p><small>เมื่อ {{ currentPlan.createdAt | amDateFormat:'D MMMM YYYY เวลา HH:mm' }}</small></p>
+            </div>
+          </div>
+
           <div class="sidebar-block" ng-hide="report.parent">
             <div class="sidebar-heading">
               <h2 class="sidebar-heading-text"><i class="fa fa-stethoscope fa-size-18"></i> ประวัติสถานะ</h2>
             </div> <!-- sidebar-heading -->
-
-            <div class="sidebar-content" ng-if="currentPlan">
-              ล่าสุดรายงานนี้อยู่ในแผนรับมือ
-              <a class="plan-report-link" ng-click="viewPlanReport(currentPlan.id)">{{ currentPlan.log.plan.name }}</a> เมื่อ {{ currentPlan.createdAt | amDateFormat:'D MMMM YYYY เวลา HH:mm' }}
-            </div>
 
             <div class="sidebar-content">
               <ul class="history-log" ng-if="reportStatesLogs.length > 0">
