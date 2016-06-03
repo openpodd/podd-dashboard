@@ -34,9 +34,9 @@
             <div class="filter-result-container">
                 <div class="ta-view">
                   <div class="ta-view-header row hidden-xs">
-                    <div class="col-md-1 col-sm-1 col-checkbox">
-                      <input type="checkbox"/>
-                    </div>
+                    <!--<div class="col-md-1 col-sm-1 col-checkbox">-->
+                      <!--<input type="checkbox"/>-->
+                    <!--</div>-->
                     <div class="col-md-2 col-sm-2">ชื่อ</div>
                     <div class="col-md-2 col-sm-2">นามสกุล</div>
                     <div class="col-md-3 col-sm-2">ชื่อบัญชีผู้ใช้</div>
@@ -45,9 +45,9 @@
                   </div>
                   <div ng-repeat="user in users" class="ta-view-row row">
 
-                      <div class="ta-view-col col-md-1 col-sm-2 col-checkbox" data-th="เลือก">
-                        <input type="checkbox"/>
-                      </div>
+                      <!--<div class="ta-view-col col-md-1 col-sm-2 col-checkbox" data-th="เลือก">-->
+                        <!--<input type="checkbox"/>-->
+                      <!--</div>-->
 
                       <div class="ta-view-col col-md-2 col-sm-2" data-th="ชื่อ">
                         <span> {{ user.firstName }}</span>
@@ -144,6 +144,12 @@
                         ng-model="userSelected.authority"
                         class="form-control">
                 </select>
+              </div>
+
+              <div ng-show="!userSelected.id">
+                <label>
+                  <input id="id_is_admin" type="checkbox" ng-model="is_admin"> ตั้งค่าเป็นผู้ดูแล
+                </label>
               </div>
             </form>
 

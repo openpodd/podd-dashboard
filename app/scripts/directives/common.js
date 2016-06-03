@@ -547,13 +547,13 @@ angular.module('poddDashboardApp')
 
 .filter('renderTemplate', function () {
     return function (text) {
-        return text.replace(/\@\[template:([\w\-\.\@]+)\]/g, '<span class="label label-info">ใช้การแจ้งเตือนร่วมกับ #$1</span>');
+        return text.replace(/\@\[template:([\w\-\.\@]+)\]/g, '<span class="label label-info">ใช้การแจ้งเตือนร่วมกับรหัส #$1</span>');
     };
 })
 
 .filter('renderContact', function () {
     return function (text) {
-        return text.replace(/\@\[([\w\-\.\@\:]+)\]/g, '<span class="label label-info">ใช้การแจ้งเตือนร่วมกับ #$1</span>');
+        return text.replace(/\@\[([\w\-\.\@\:]+)\]/g, '<span class="label label-info">ใช้การแจ้งเตือนร่วมกับรหัส #$1</span>');
     };
 })
 

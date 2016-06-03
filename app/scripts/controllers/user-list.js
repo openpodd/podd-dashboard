@@ -124,9 +124,23 @@ angular.module('poddDashboardApp')
                 };
 
                 Authority.users(params).$promise.then(function (_data) {
-                    swal('สำเร็จ', 'เพิ่มผู้ใช้งานสำเร็จ', 'success');
+                    if (!$scope.is_admin) {
+                        swal('สำเร็จ', 'เพิ่มผู้ใช้งานสำเร็จ', 'success');
+                    }
                     data.authority = $scope.userSelected.authority;
                     $scope.users.push(data);
+
+                    if ($scope.is_admin) {
+                        Authority.admins(params).$promise.then(function (__data) {
+                            swal('สำเร็จ', 'เพิ่มผู้ใช้งานสำเร็จ', 'success');
+                        }).catch(function () {
+                            swal('เกิดข้อผิดพลาด', 'เพิ่มผู้ใช้งานแล้ว แต่ไม่สามารถตั้งค่าผู้ใช้เป็นผู้ดูแลของสังกัดได้', 'error');
+                            $scope.resetUser();
+                        });
+                    }
+                }).catch(function () {
+                    swal('เกิดข้อผิดพลาด', 'ไม่สามารถเพิ่มผู้ใช้ได้', 'error');
+                    $scope.resetUser();
                 });
 
             }).catch(function () {

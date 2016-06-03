@@ -51,6 +51,10 @@ angular.module('poddDashboardApp')
             url: config.API_BASEPATH + '/authorities/:id/users',
             method: 'POST',
         },
+        'admins': {
+            url: config.API_BASEPATH + '/authorities/:id/admins',
+            method: 'POST',
+        },
         'renewInvitationCode': {
             url: config.API_BASEPATH + '/authorities/:id/renew_invitation_code',
             method: 'POST'
@@ -70,7 +74,7 @@ angular.module('poddDashboardApp')
         }
     });
 })
-    
+
 .factory('ReportModal', function ($rootScope) {
     var modal;
 
