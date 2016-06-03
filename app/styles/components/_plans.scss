@@ -147,5 +147,45 @@
   font-weight: bold;
 }
 .text-normal {
-    font-weight: normal;
+  font-weight: normal;
+}
+
+#map {
+  left: 0;
+}
+
+.report-response-map {
+  .subheading {
+    margin-bottom: 0;
+  }
+
+  .modal-body {
+    display: flex;
+  }
+
+  .plans-tab {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .nav-tabs {
+    //flex: 1;
+  }
+
+  .tab-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .tab-pane {
+    height: 100%;
+
+    .response-map {
+      height: 100%;
+    }
+
+    overflow: auto;
+  }
 }

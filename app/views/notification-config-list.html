@@ -34,9 +34,9 @@
             <div class="filter-result-container">
               <div class="ta-view">
                 <div class="ta-view-header row hidden-xs">
-                  <div class="col-md-1 col-sm-1 col-checkbox">
-                    <input type="checkbox"/>
-                  </div>
+                  <!--<div class="col-md-1 col-sm-1 col-checkbox">-->
+                    <!--<input type="checkbox"/>-->
+                  <!--</div>-->
                   <div class="col-md-1 col-sm-2">รหัส</div>
                   <div class="col-md-4 col-sm-2">รายการ</div>
                   <div class="col-md-4 col-sm-2">แจ้งเตือนไปยัง</div>
@@ -44,9 +44,9 @@
                 </div>
                 <div ng-repeat="template in notificationTemplates" class="ta-view-row row">
 
-                  <div class="ta-view-col col-md-1 col-sm-1 col-checkbox" data-th="เลือก">
-                    <input type="checkbox"/>
-                  </div>
+                  <!--<div class="ta-view-col col-md-1 col-sm-1 col-checkbox" data-th="เลือก">-->
+                    <!--<input type="checkbox"/>-->
+                  <!--</div>-->
 
                   <div class="ta-view-col col-md-1 col-sm-2" data-th="รหัส">
                     <span>#{{ template.id }} </span>
@@ -105,7 +105,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="disabledUpdateBtn">ปิด</button>
-            <button type="button" class="btn btn-primary" ng-click="saveContact()" ng-disabled="disabledUpdateBtn" ng-show="!isSave">{{ disabledUpdateBtn ? 'กำลังอัพเดท...' : 'อัพเดท' }}</button>
+            <button type="button" class="btn btn-primary" ng-click="saveContact()" ng-disabled="disabledUpdateBtn" ng-show="!isSave">{{ disabledUpdateBtn ? 'กำลังบันทึก...' : 'บันทึก' }}</button>
           </div>
         </div>
       </div>

@@ -4,23 +4,85 @@
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
 
-      <button type="button" ng-click="flipped=true" class="btn pull-right">
+      <!-- <button type="button" ng-click="flipped=true" class="btn pull-right">
         <span class="fa fa-list"></span>
-      </button>
+      </button> -->
 
       <h3 class="modal-title subheading">แผนที่ตอบสนอง</h3>
     </div>
 
     <div class="modal-body">
-      <div class="row">
-        <div class="col-md-12">
-          <div response-map class="response-map" plan-report="planReport" when-hover="whenHover($obj)"></div>
-        </div>
-      </div>
+
+        <tabset class="plans-tab">
+          <tab heading="แผนที่">
+            <div response-map class="response-map" plan-report="planReport" when-hover="whenHover($obj)"></div>
+          </tab>
+          <tab heading="การแจ้งเตือน">
+            <form role="form" ng-submit="search()" class="search-block search-block-mini">
+              <div class="input-group">
+
+                <input ng-model="searchData.queryText" type="text" class="form-control"
+                       placeholder="ตัวอย่าง. เทศบาลตำบลยางเนิ้ง">
+
+                    <span class="input-group-btn">
+                        <button class="btn btn-default pd-btn-search" type="submit"><i class="fa fa-search fa-size-18"></i></button>
+                    </span>
+
+              </div>
+            </form>
+            <hr/>
+
+            <!-- /search -->
+
+            <div class="padding-mini" ng-repeat="level in planReport.log.plan.levels">
+              <h3 class="subheading">เขตพื้นที่ (zone): {{ level.name }}</h3>
+              <div>
+                <!-- <strong>ตัวอย่างข้อความ</strong> -->
+                <blockquote ng-repeat="template in planReport.log.level_templates[level.code]">
+                  {{ template.template.default.body }}
+                </blockquote>
+              </div>
+
+              <div class="row zone-item-row" ng-repeat="area in planReport.log.level_areas[level.code] | filter:searchData._queryText">
+                <div class="col-md-7">
+                  <div class="panel panel-default panel-phonebook">
+                    <div class="panel-heading" ng-class="{'red-zone': level.name === 'Red', 'yellow-zone': level.name === 'Yellow', 'green-zone': level.name === 'Green'}">
+                      <h4 class="subheading">{{ area.name }} <small>{{ area.address }}</small></h4>
+                    </div>
+                    <div class="panel-body">
+                      <strong>แจ้งเตือนไปแล้ว</strong>
+                      <ul class="panel-phonebook-contact" ng-show="area.contacts">
+                        <li ng-repeat="contact in area.contacts.split(',') track by $index" ng-show="contact">{{ contact }}</li>
+                      </ul>
+                      <div class="" ng-show="!area.contacts">ไม่มีข้อมูล</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <form ng-submit="resend(planReport, area)">
+                    <div class="form-group">
+                      <label>เบอร์โทรศัพท์</label>
+                      <textarea class="form-control" rows="3" ng-model="area.newContacts" placeholder="Ex. นายกสมใจ อินทนนท์ 081-9414023"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label class="gray-color">
+                        <input type="checkbox" ng-model="area.saveContacts" />
+                        บันทึก
+                      </label>
+                      <button class="btn pull-right" ng-disabled="area.working">ส่งซ้ำ</button>
+                    </div>
+
+                  </form>
+                </div>
+              </div>
+
+            </div>
+          </tab>
+        </tabset>
     </div>
   </div>
 
-  <div class="back">
+  <!-- <div class="back">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
 
@@ -32,67 +94,8 @@
     </div>
 
     <div class="modal-body">
-        <form role="form" ng-submit="search()" class="search-block search-block-mini">
-          <div class="input-group">
-
-            <input ng-model="queryText" type="text" class="form-control"
-             placeholder="ตัวอย่าง. เทศบาลตำบลยางเนิ้ง">
-
-            <span class="input-group-btn">
-                <button class="btn btn-default pd-btn-search" type="submit"><i class="fa fa-search fa-size-18"></i></button>
-            </span>
-
-          </div>
-        </form>
-        <hr/>
-      <!-- /search -->
-
-      <div class="padding-mini" ng-repeat="level in planReport.log.plan.levels">
-        <h3 class="subheading">เขตพื้นที่ (zone): {{ level.name }}</h3>
-        <div>
-          <!-- <strong>ตัวอย่างข้อความ</strong> -->
-          <blockquote ng-repeat="template in planReport.log.level_templates[level.code]">
-            {{ template.template.default.body }}
-          </blockquote>
-        </div>        
-
-        <div class="row zone-item-row" ng-repeat="area in planReport.log.level_areas[level.code] | filter:_queryText">
-          <div class="col-md-7">
-            <div class="panel panel-default panel-phonebook">
-              <div class="panel-heading" ng-class="{'red-zone': level.name === 'Red', 'yellow-zone': level.name === 'Yellow', 'green-zone': level.name === 'Green'}">
-                <h4 class="subheading">{{ area.name }} <small>{{ area.address }}</small></h4>
-              </div>
-              <div class="panel-body">
-                <strong>แจ้งเตือนไปแล้ว</strong>
-                <ul class="panel-phonebook-contact" ng-show="area.contacts">
-                  <li ng-repeat="contact in area.contacts.split(',') track by $index" ng-show="contact">{{ contact }}</li>
-                </ul>
-                <div class="" ng-show="!area.contacts">ไม่มีข้อมูล</div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-5">
-            <form ng-submit="resend(planReport, area)">
-              <div class="form-group">
-                <label>เบอร์โทรศัพท์</label>
-                <textarea class="form-control" rows="3" ng-model="area.newContacts" placeholder="Ex. นายกสมใจ อินทนนท์ 081-9414023"></textarea>
-              </div>
-              <div class="form-group">
-                <label class="gray-color">
-                  <input type="checkbox" ng-model="area.saveContacts" />
-                  บันทึก
-                </label>
-                <button class="btn pull-right" ng-disabled="area.working">ส่งซ้ำ</button>
-              </div>
-              
-            </form>
-          </div>
-        </div>
-
-      </div>  
-
-
     </div>
-  </div>
+  </div> -->
+
 </div>
 </div>

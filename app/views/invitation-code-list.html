@@ -34,9 +34,9 @@
               <div class="filter-result-container">
                   <div class="ta-view">
                     <div class="ta-view-header row hidden-xs">
-                      <div class="col-md-1 col-sm-1 col-checkbox">
-                        <input type="checkbox"/>
-                      </div>
+                      <!--<div class="col-md-1 col-sm-1 col-checkbox">-->
+                        <!--<input type="checkbox"/>-->
+                      <!--</div>-->
                       <div class="col-md-5 col-sm-5">พื้นที่</div>
                       <div class="col-md-2 col-sm-2">รหัส</div>
                       <div class="col-md-2 col-sm-2">หมดอายุ</div>
@@ -44,9 +44,9 @@
                     </div>
                     <div ng-repeat="authority in authorities" class="ta-view-row row">
 
-                        <div class="ta-view-col col-md-1 col-sm-1 col-checkbox" data-th="เลือก">
-                          <input type="checkbox"/>
-                        </div>
+                        <!--<div class="ta-view-col col-md-1 col-sm-1 col-checkbox" data-th="เลือก">-->
+                          <!--<input type="checkbox"/>-->
+                        <!--</div>-->
 
                         <div class="ta-view-col col-md-5 col-sm-5" data-th="ชื่อ">
                           <span ng-bind="::authority.name" ></span>
@@ -82,7 +82,7 @@
               <button class="btn btn-default center-block" type="button" ng-disabled="true">{{ loading ? 'กรุณารอสักครู่...' : 'เพิ่มเติม...' }} </button>
             </div>
 
-          </div >
+          </div>
       </div>
     </div>
   </div>
