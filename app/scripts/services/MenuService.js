@@ -17,8 +17,7 @@ angular.module('poddDashboardApp')
             return (storage.get('menuPermissions') && storage.get('menuPermissions').indexOf(menu) >= 0) ||
                    (user && (
                      user.isStaff ||
-                     user.isSupervisor ||
-                     user.authorityAdmins.length > 0)
+                     user.isSupervisor)
                    );
         }
     };
