@@ -122,14 +122,14 @@ angular.module('poddDashboardApp')
 
 
     $scope.dateRange = {
-        from: moment().subtract(7,'days'),
-        to: moment()
+        from: moment().subtract(7, 'days').toDate(),
+        to: moment().toDate()
     };
     if ($stateParams.dateStart) {
-        $scope.dateRange.from = moment($stateParams.dateStart, 'DD/MM/YYYY');
+        $scope.dateRange.from = moment($stateParams.dateStart, 'DD/MM/YYYY').toDate();
     }
     if ($stateParams.dateEnd) {
-        $scope.dateRange.to = moment($stateParams.dateEnd, 'DD/MM/YYYY');
+        $scope.dateRange.to = moment($stateParams.dateEnd, 'DD/MM/YYYY').toDate();
     }
 
     $scope.search = function () {
@@ -286,8 +286,8 @@ angular.module('poddDashboardApp')
             };
 
             if ($scope.query.dateStart && $scope.query.dateEnd) {
-                $scope.dateRange.from = moment($scope.query.dateStart, 'DD/MM/YYYY');
-                $scope.dateRange.to = moment($scope.query.dateEnd, 'DD/MM/YYYY');
+                $scope.dateRange.from = moment($scope.query.dateStart, 'DD/MM/YYYY').toDate();
+                $scope.dateRange.to = moment($scope.query.dateEnd, 'DD/MM/YYYY').toDate();
                 return $scope._search();
             }
 
