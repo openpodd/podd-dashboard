@@ -8,7 +8,7 @@ angular.module('poddDashboardApp')
   Menu.setActiveMenu('scenario');
 })
 
-.controller('ScenarioCtrl', function ($scope, Menu, Reports, $compile, $interval, 
+.controller('ScenarioCtrl', function ($scope, Menu, Reports, $compile, $interval,
     $stateParams, $anchorScroll, $location, $state, $timeout, shared, $window) {
   Menu.setActiveMenu('scenario');
 
@@ -43,11 +43,11 @@ angular.module('poddDashboardApp')
     // radius should be small ONLY if scaleRadius is true (or small radius is intended)
     // if scaleRadius is false it will be the constant radius used in pixels
     'radius': 0.1,
-    'maxOpacity': 0.8, 
+    'maxOpacity': 0.8,
     // scales the radius based on map zoom
-    'scaleRadius': true, 
+    'scaleRadius': true,
     // if set to false the heatmap uses the global maximum for colorization
-    // if activated: uses the data maximum within the current map boundaries 
+    // if activated: uses the data maximum within the current map boundaries
     //   (there will always be a red spot with useLocalExtremas true)
     'useLocalExtrema': true,
     // which field name in your data represents the latitude - default "lat"
@@ -219,7 +219,7 @@ angular.module('poddDashboardApp')
       query.left = bounds.getSouth();
       query.bottom = bounds.getEast();
 
-      setTimeout(function() {
+      $timeout(function () {
         refreshReportsLayerDataWithSummary();
       }, 100);
     }, 0);
@@ -250,8 +250,8 @@ angular.module('poddDashboardApp')
         $scope.layers.report.layer.removeLayer(lastLayer);
         layerDef.layer.addTo(leafletMap);
         removeGisLayer();
-      } 
-      
+      }
+
       if (!$scope.layers.heatmap.show) {
         layerDef.layer.addTo(leafletMap);
       }
@@ -272,7 +272,7 @@ angular.module('poddDashboardApp')
   var formatMonthDate = d3.time.format('%b %Y');
   var formatDayDate = d3.time.format('%Y-%m-%d');
   var now = parseDayDate(formatDayDate(new Date()));
-  
+
   var start = new Date();
   start.setDate(start.getDate() - 30);
   var startBrush = start ;
@@ -363,6 +363,7 @@ angular.module('poddDashboardApp')
           query.date__gte = formatDayDate(brush.extent()[0]);
           /*jshint: +W064 */
 
+          // Force to include the summary for better performance.
           refreshReportsLayerData(false);
         }
 
@@ -625,19 +626,29 @@ $scope.replay = function () {
   };
 
   var lastLayer = null;
-
+  var refreshing = false;
+  var refreshingQuery = "";
   function refreshReportsLayerData(refreshGraph) {
-
     if (refreshGraph) {
-      query.date__gte = formatDayDate(parseDate('01/2015'));
-      query.date__lte = formatDayDate(new Date());
-      query.withSummary = true;
-    } else {
-      delete query.withSummary;
+        query.date__gte = formatDayDate(parseDate('01/2015'));
+        query.date__lte = formatDayDate(new Date());
+        query.withSummary = true;
+    }
+    else {
+        delete query.withSummary;
     }
 
+    // check to prevent duplicate network request.
+    if (refreshing && refreshingQuery == JSON.stringify(query)) {
+      return;
+    }
+    refreshing = true;
+    refreshingQuery = JSON.stringify(query);
+
+    $scope.reportMarkers = [];
     $scope.loadingReportMarkers = true;
     Reports.list(query).$promise.then(function (resp) {
+      refreshing = false;
       $scope.loading = false;
       $scope.willShowResult = false;
 
@@ -667,7 +678,7 @@ $scope.replay = function () {
             icon: markerIcon,
             riseOnHover: true
           });
-          
+
           marker.item = item;
           marker.bindPopup(item.formDataExplanation);
 
@@ -706,8 +717,8 @@ $scope.replay = function () {
           });
 
           data.push({
-            lat: item.reportLocation.coordinates[1], 
-            lng: item.reportLocation.coordinates[0], 
+            lat: item.reportLocation.coordinates[1],
+            lng: item.reportLocation.coordinates[0],
             count: getStateValue(item.stateCode),
           });
 
@@ -768,6 +779,7 @@ $scope.replay = function () {
 
     }).catch(function (err) {
       console.log(err);
+      refreshing = false;
       $scope.loading = false;
       $scope.willShowResult = false;
     });
@@ -791,7 +803,7 @@ $scope.replay = function () {
           if (typeof params.q === 'undefined') {
             delete query.q;
           }
-          
+
           var southWest = L.latLng(query.right, query.top),
               northEast = L.latLng(query.left, query.bottom),
               bounds = L.latLngBounds(southWest, northEast);
