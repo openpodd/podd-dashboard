@@ -266,6 +266,11 @@ angular
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl'
       })
+      .state('dashboard', {
+        url: '/dashboard-1',
+        templateUrl: 'views/fufu.html',
+        controller: 'DashboardCtrl'
+      })
       .state('about', {
         url: '/about',
         templateUrl: 'views/about.html',
