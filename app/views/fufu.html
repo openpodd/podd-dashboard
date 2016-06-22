@@ -10,10 +10,18 @@
       <div class="col-md-4">
         <div class="sidebar-block">
           <div class="sidebar-heading">
-            <h2 class="sidebar-heading-text"><i class="fa fa-tags fa-size-18"></i> ยินดีต้อนรับ</h2>
+            <h2 class="sidebar-heading-text">ยินดีต้อนรับ</h2>
           </div>
           <div class="sidebar-content">
-
+              <p>เริ่มต้นการใช้งานคุณต้องการจะทำอะไร ?</p>
+              <ul class="sidebar-list">
+                  <li><a href="#"><i class="fa fa-star green" aria-hidden="true"></i> อยากดูรายงานทั้งหมด</a></li>
+                  <li><a href="#"><i class="fa fa-star green" aria-hidden="true"></i> สรุปรายงานประจำเดือน</a></li>
+                  <li><a href="#"><i class="fa fa-star green" aria-hidden="true"></i> คุณอยากรู้ว่าใครเป็นอาสาในพื้นที่บ้าง</a></li>
+                  <li><a href="#"><i class="fa fa-star green" aria-hidden="true"></i> จำนวนรายงานอาสาแต่ละคน</a></li>
+                  <li><a href="#"><i class="fa fa-star green" aria-hidden="true"></i> แก้ไขรายชื่อผู้ติดต่อในหมู่บ้าน</a></li>
+                  <li><a href="#"><i class="fa fa-star green" aria-hidden="true"></i> ดูรหัสพื้นที่ที่ใช้ในการสมัคร</a></li>
+              </ul>
           </div>
         </div>
       </div> <!-- /.col-sm-4 -->
@@ -35,20 +43,139 @@
             <div class="sidebar-block">
               <div class="sidebar-heading">
                 <h2 class="sidebar-heading-text"><i class="fa fa-user-md fa-size-18"></i> รายงานผิดปกติ</h2>
+                <a class="view-all" href="#">ดูทั้งหมด</a>
               </div>
               <div class="sidebar-content">
+                  <div class="ta-view"> <!-- Table View -->
+                    <div class="ta-view-header row hidden-xs">
+                      <div class="col-md-3 col-sm-3">วันที่</div>
+                      <div class="col-md-2 col-sm-2">สถานะ</div>
+                      <div class="col-md-2 col-sm-2">ประเภท</div>
+                      <div class="col-md-5 col-sm-5">พื้นที่</div>
+                    </div>
+                    <!-- ngRepeat: report in reports -->
+                    <div class="ta-view-row row" >
+                        <div class="ta-view-col ta-view-date col-md-3 col-sm-3" data-th="วันที่">
+                          17 มิ.ย. 2016, 08.33 น.
+                        </div>
 
+                        <div class="ta-view-col ta-view-state col-md-2 col-sm-2" data-th="สถานะ">
+                          <span class="label label-default label-state-suspect-outbreak" >Suspect Outbreak</span>
+                        </div>
+
+                        <div class="ta-view-col ta-view-report col-md-2 col-sm-2" data-th="ประเภท">
+                          <span class="filter-reporttype">สัตว์ป่วย/ตาย</span>
+                        </div>
+
+                        <div class="ta-view-col ta-view-area col-md-5 col-sm-5" data-th="พื้นที่">
+                          <div class="filter-result-area">
+                            เทศบาลตำบลแม่นะ อำเภอเชียงดาว
+                          </div>
+                        </div>
+                    </div>
+                    <div class="ta-view-row row" >
+                        <div class="ta-view-col ta-view-date col-md-3 col-sm-3" data-th="วันที่">
+                          17 มิ.ย. 2016, 08.33 น.
+                        </div>
+
+                        <div class="ta-view-col ta-view-state col-md-2 col-sm-2" data-th="สถานะ">
+                          <span class="label label-default label-state-suspect-outbreak" >Suspect Outbreak</span>
+                        </div>
+
+                        <div class="ta-view-col ta-view-report col-md-2 col-sm-2" data-th="ประเภท">
+                          <span class="filter-reporttype">สัตว์ป่วย/ตาย</span>
+                        </div>
+
+                        <div class="ta-view-col ta-view-area col-md-5 col-sm-5" data-th="พื้นที่">
+                          <div class="filter-result-area">
+                            เทศบาลตำบลแม่นะ อำเภอเชียงดาว
+                          </div>
+                        </div>
+                    </div>
+                    <div class="ta-view-row row" >
+                        <div class="ta-view-col ta-view-date col-md-3 col-sm-3" data-th="วันที่">
+                          17 มิ.ย. 2016, 08.33 น.
+                        </div>
+
+                        <div class="ta-view-col ta-view-state col-md-2 col-sm-2" data-th="สถานะ">
+                          <span class="label label-default label-state-suspect-outbreak" >Suspect Outbreak</span>
+                        </div>
+
+                        <div class="ta-view-col ta-view-report col-md-2 col-sm-2" data-th="ประเภท">
+                          <span class="filter-reporttype">สัตว์ป่วย/ตาย</span>
+                        </div>
+
+                        <div class="ta-view-col ta-view-area col-md-5 col-sm-5" data-th="พื้นที่">
+                          <div class="filter-result-area">
+                            เทศบาลตำบลแม่นะ อำเภอเชียงดาว
+                          </div>
+                        </div>
+                    </div>
+                    <div class="ta-view-row row" >
+                        <div class="ta-view-col ta-view-date col-md-3 col-sm-3" data-th="วันที่">
+                          17 มิ.ย. 2016, 08.33 น.
+                        </div>
+
+                        <div class="ta-view-col ta-view-state col-md-2 col-sm-2" data-th="สถานะ">
+                          <span class="label label-default label-state-suspect-outbreak" >Suspect Outbreak</span>
+                        </div>
+
+                        <div class="ta-view-col ta-view-report col-md-2 col-sm-2" data-th="ประเภท">
+                          <span class="filter-reporttype">สัตว์ป่วย/ตาย</span>
+                        </div>
+
+                        <div class="ta-view-col ta-view-area col-md-5 col-sm-5" data-th="พื้นที่">
+                          <div class="filter-result-area">
+                            เทศบาลตำบลแม่นะ อำเภอเชียงดาว
+                          </div>
+                        </div>
+                    </div>
+                    <div class="ta-view-row row" >
+                        <div class="ta-view-col ta-view-date col-md-3 col-sm-3" data-th="วันที่">
+                          17 มิ.ย. 2016, 08.33 น.
+                        </div>
+
+                        <div class="ta-view-col ta-view-state col-md-2 col-sm-2" data-th="สถานะ">
+                          <span class="label label-default label-state-suspect-outbreak" >Suspect Outbreak</span>
+                        </div>
+
+                        <div class="ta-view-col ta-view-report col-md-2 col-sm-2" data-th="ประเภท">
+                          <span class="filter-reporttype">สัตว์ป่วย/ตาย</span>
+                        </div>
+
+                        <div class="ta-view-col ta-view-area col-md-5 col-sm-5" data-th="พื้นที่">
+                          <div class="filter-result-area">
+                            เทศบาลตำบลแม่นะ อำเภอเชียงดาว
+                          </div>
+                        </div>
+                    </div>
+                  </div>
               </div>
             </div>
         </div> <!-- /.col-sm-4 -->
 
         <div class="col-md-4">
+            <a class="btn btn-lg btn-primary btn-block btn-default btn-summary" href="#"><i class="fa fa-file-text-o" aria-hidden="true"></i> สรุปรายงานรายเดือน</a>
             <div class="sidebar-block">
                 <div class="sidebar-heading">
                   <h2 class="sidebar-heading-text"><i class="fa fa-check fa-size-18"></i> รายงานไม่พบเหตุผิดปกติ</h2>
+                  <a class="view-all" href="#">ดูทั้งหมด</a>
                 </div>
                 <div class="sidebar-content">
-
+                    <ul class="sidebar-list">
+                        <li>
+                            <p>ฉัตรชัย ทุติยานนท์</p>
+                            <p class="small">17 มิ.ย. 2016, 08.33 น.</p>
+                        </li>
+                        <li>
+                            <p>ฉัตรชัย ทุติยานนท์</p>
+                            <p class="small">17 มิ.ย. 2016, 08.33 น.</p>
+                        </li>
+                        <li>
+                            <p>ฉัตรชัย ทุติยานนท์</p>
+                            <p class="small">17 มิ.ย. 2016, 08.33 น.</p>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div> <!-- /.col-sm-4 -->
@@ -59,9 +186,26 @@
             <div class="sidebar-block">
               <div class="sidebar-heading">
                 <h2 class="sidebar-heading-text"><i class="fa fa-group fa-size-18"></i> อาสาทั้งหมด 34 คน</h2>
+                <a class="view-all" href="#">ดูทั้งหมด</a>
               </div>
               <div class="sidebar-content">
-
+                  <ul class="sidebar-list -avatar">
+                      <li>
+                          <img src="images/avatar.png" alt="avatar" class="pull-left avatar avatar-w4">
+                          <p>ฉัตรชัย ทุติยานนท์</p>
+                          <p class="small">17 มิ.ย. 2016, 08.33 น.</p>
+                      </li>
+                      <li>
+                          <img src="images/avatar.png" alt="avatar" class="pull-left avatar avatar-w4">
+                          <p>ฉัตรชัย ทุติยานนท์</p>
+                          <p class="small">17 มิ.ย. 2016, 08.33 น.</p>
+                      </li>
+                      <li>
+                          <img src="images/avatar.png" alt="avatar" class="pull-left avatar avatar-w4">
+                          <p>ฉัตรชัย ทุติยานนท์</p>
+                          <p class="small">17 มิ.ย. 2016, 08.33 น.</p>
+                      </li>
+                  </ul>
               </div>
             </div>
         </div> <!-- /.col-sm-4 -->
@@ -70,9 +214,26 @@
             <div class="sidebar-block">
                 <div class="sidebar-heading">
                   <h2 class="sidebar-heading-text"><i class="fa fa-trophy fa-size-18"></i> ประสิทธิภาพอาสา</h2>
+                  <a class="view-all" href="#">ดูทั้งหมด</a>
                 </div>
                 <div class="sidebar-content">
-
+                    <ul class="sidebar-list -avatar">
+                        <li>
+                            <div class="grade">A</div>
+                            <p>ฉัตรชัย ทุติยานนท์</p>
+                            <p class="small">รายงาน 24 ครั้ง</p>
+                        </li>
+                        <li>
+                            <div class="grade">A</div>
+                            <p>ฉัตรชัย ทุติยานนท์</p>
+                            <p class="small">รายงาน 24 ครั้ง</p>
+                        </li>
+                        <li>
+                            <div class="grade">A</div>
+                            <p>ฉัตรชัย ทุติยานนท์</p>
+                            <p class="small">รายงาน 24 ครั้ง</p>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div> <!-- /.col-sm-4 -->
@@ -83,7 +244,21 @@
                   <h2 class="sidebar-heading-text"><i class="fa fa-phone fa-size-18"></i> รายชื่อติดต่อ</h2>
                 </div>
                 <div class="sidebar-content">
+                    <h3 class="heading-list pull-left">หมู่บ้าน</h3>
+                    <a class="view-all" href="#">ดูทั้งหมด</a>
+                    <hr class="clear-both"/>
+                    <ul class="sidebar-list -mini -marginb">
+                        <li><p class="small">บ้านช่างเคี่ยน <a class="pull-right" href="#">แก้ไข</a></p></li>
+                        <li><p class="small">บ้านเจ็ดยอด <a class="pull-right" href="#">แก้ไข</a></p></li>
+                    </ul>
 
+                    <h3 class="heading-list pull-left">ผู้มีส่วนเกี่ยวข้องกรณีต่างๆ</h3>
+                    <a class="view-all" href="#">ดูทั้งหมด</a>
+                    <hr class="clear-both"/>
+                    <ul class="sidebar-list -mini">
+                        <li><p class="small">Case : สัตว์ป่วย/ตาย <a class="pull-right" href="#">แก้ไข</a></p></li>
+                        <li><p class="small">Outbreak : สัตว์ป่วย/ตาย <a class="pull-right" href="#">แก้ไข</a></p></li>
+                    </ul>
                 </div>
             </div>
         </div> <!-- /.col-sm-4 -->

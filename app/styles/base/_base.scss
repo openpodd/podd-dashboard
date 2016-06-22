@@ -442,3 +442,27 @@ html, body{
     overflow-x: scroll;
     width: 100%;
 }
+
+.view-all {
+    float: right;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 10px;
+    color: #fff;
+    background-color: #9e9e9e;
+
+    &.-mini {
+        padding: 3px 5px;
+        font-size: 9px;
+        border-radius: 3px;
+    }
+}
+
+.clear-both {
+    clear: both;
+    margin: 5px 0;
+}
+
+.green {
+    color: #E0C137;
+}
