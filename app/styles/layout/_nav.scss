@@ -111,6 +111,7 @@ $nav-font-family: ThaiSansNeueRegular;
 .pd-nav-list{
     padding: 0;
     list-style: none;
+    background-color: #333;
 }
 
 .logo{
@@ -334,9 +335,17 @@ $notifi-item-read: #ececec;
     }
     &.-mini {
         width: 150px;
+
+        @include respond-to(phone){
+            width: 100%;
+        }
     }
     &.-micro {
         width: 120px;
+
+        @include respond-to(phone){
+            width: 100%;
+        }
     }
 }
 
