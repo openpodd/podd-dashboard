@@ -21,6 +21,9 @@ angular.module('poddDashboardApp')
       negativeReports: 0
   };
 
+  $scope.onlyGraph = true;
+  $scope.selected = 'month';
+
   var params = {
       subscribe: shared.subscribe
   };
