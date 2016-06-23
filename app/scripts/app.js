@@ -267,8 +267,8 @@ angular
         controller: 'LoginCtrl'
       })
       .state('dashboard', {
-        url: '/dashboard-1',
-        templateUrl: 'views/fufu.html',
+        url: '/dashboard',
+        templateUrl: 'views/report-dashboard.html',
         controller: 'DashboardCtrl'
       })
       .state('about', {
