@@ -4,6 +4,7 @@
 
 .pd-container{
     position: relative;
+    z-index: 9999;
 }
 
 .pd-section-left{
@@ -300,4 +301,10 @@ blockquote:before {
 }
 blockquote p {
   display: inline;
+}
+
+.l-section {
+    @include respond-to(phone){
+        top: 20px;
+    }
 }
