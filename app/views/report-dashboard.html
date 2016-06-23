@@ -150,7 +150,9 @@
                     <hr class="clear-both"/>
                     <ul class="sidebar-list -mini -marginb">
                         <li ng-repeat="area in administrationAreas">
-                          <p class="small">{{ area.name }} <a class="pull-right" href="#">แก้ไข</a></p>
+                          <p class="small">{{ area.name }}
+                            <a class="pull-right" data-toggle="modal" data-target="#contactModal" ng-click="selectedArea(area)">แก้ไข</a>
+                          </p>
                         </li>
                     </ul>
 
@@ -169,6 +171,9 @@
 
 
     </div></div>
+
+    <div ng-include="'/views/contacts-update.html'"></div>
+
   </div>
 </div>
 
