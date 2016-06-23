@@ -22,12 +22,13 @@ angular.module('poddDashboardApp')
   };
 
   $scope.onlyGraph = true;
-  $scope.selected = 'month';
+  $scope.selected = 'day';
 
   var params = {
       subscribe: shared.subscribe
   };
 
+  $scope.lastWeek = true;
   SummaryDashboardVisualization.get(params).$promise.then(function (data) {
       $scope.dashboard = data;
   });

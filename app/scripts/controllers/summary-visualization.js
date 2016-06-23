@@ -115,6 +115,10 @@ angular.module('poddDashboardApp')
           subscribe: shared.subscribe
       };
 
+      if ($scope.lastWeek) {
+        params.lastWeek = true;
+      }
+
       SummaryReportVisualization.query(params).$promise.then(function (json) {
           dataset = json;
           if (!$scope.$parent.$parent.initialDataset || $scope.$parent.$parent.initialDataset.length === 0) {
@@ -167,6 +171,8 @@ angular.module('poddDashboardApp')
           var xAxisRange = d3.time.weeks;
           if ($scope.selected === 'month') {
               xAxisRange = d3.time.months;
+          } else if ($scope.selected === 'day') {
+              xAxisRange = d3.time.days;
           }
 
           var xAxis = d3.svg.axis()
