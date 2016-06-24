@@ -236,11 +236,6 @@ angular
         templateUrl: 'views/summary-visualization.html',
         controller: 'SummaryVisualizationModeCtrl'
       })
-      .state('main.summaryvisualizationsubscribe', {
-        url: '^/summary/visualize-subscribe',
-        templateUrl: 'views/summary-visualization.html',
-        controller: 'SummaryVisualizationSubscribeModeCtrl'
-      })
       .state('main.profile', {
         url: '^/profile',
         templateUrl: 'views/profile.html',

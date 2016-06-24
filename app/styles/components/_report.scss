@@ -848,11 +848,13 @@ $badge-bad: #FF6D69;
 }
 
 // Chart on dasdboard
-.summary-graph-reports {
-    height: 280px;
+.dashboard-visualization {
+    .summary-graph-reports {
+        height: 280px;
 
-    .x.axis .tick text{
-        transform: rotate(0) !important;
-        transform: translate(15px,10px) !important;
+        .x.axis .tick text{
+            transform: rotate(0) !important;
+            transform: translate(15px,10px) !important;
+        }
     }
 }

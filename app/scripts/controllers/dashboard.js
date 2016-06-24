@@ -6,15 +6,20 @@ angular.module('poddDashboardApp')
 /**
  * Show list of recent reports.
  */
+
 .controller('DashboardCtrl', function ($scope, Search, shared,
-                                  AdministrationArea,
+                                  AdministrationArea, ReportModal,
                                   SummaryReportVisualization, SummaryDashboardVisualization,
-                                  SummaryPerformancePerson,
+                                  SummaryPerformancePerson, Reports,
                                   Authority, AuthorityView, NotificationAuthorities,
-                                  User, Menu, $location) {
+                                  User, Menu, $location, $state ) {
   console.log('-> In DashboardCtrl');
 
   Menu.setActiveMenu('dashboard');
+  shared.subscribe = Menu.hasPermissionOnMenu('view_dashboard_subscibe');
+
+  $scope.canUpdateContact = Menu.hasPermissionOnMenu('view_dashboard_plan');
+  $scope.canUpdateNotification = Menu.hasPermissionOnMenu('view_dashboard_users');
 
   $scope.dashboard = {
       users: 0,
@@ -24,6 +29,94 @@ angular.module('poddDashboardApp')
 
   $scope.onlyGraph = true;
   $scope.selected = 'day';
+
+  $scope.activeReportId = null;
+  $scope.onClickReport = function (reportId) {
+    $location.search('reportId', reportId);
+  };
+
+  $scope.closeReportView = function () {
+    $location.search('reportId', null);
+  };
+
+  $scope.$on('$locationChangeSuccess', function (event) {
+    var reportId = $location.search().reportId;
+    // check if the same state.
+    if ($location.path() !== $state.$current.url.sourcePath) {
+      return;
+    }
+    // do nothing if no params
+    if (reportId === true || reportId === false ) {
+      // also clear params reportId if is empty.
+      $location.search('reportId', null);
+      return;
+    }
+
+    reportId = parseInt(reportId);
+    if (reportId && angular.isNumber(reportId) && reportId !== $scope.activeReportId) {
+      $scope.activeReportId = reportId;
+      shared.reportWatchId = reportId;
+      $scope.viewReport(reportId);
+    }
+    if (!reportId) {
+      $scope.activeReportId = null;
+      shared.reportWatchId = null;
+      ReportModal.close();
+    }
+  });
+
+  // report view related.
+  $scope.viewReport = function (reportId) {
+    ReportModal.show();
+    $scope.loadingReportView = true;
+    $scope.loadingReportViewError = false;
+    // Also clear report data.
+    $scope.report = null;
+
+    Reports.get({ reportId: reportId }).$promise.then(function (data) {
+      console.log('loaded report data', data);
+
+      var tmpFormData = [], index;
+      if (data.originalFormData && !data.originalFormData.forEach) {
+        for (index in data.originalFormData) {
+          if (data.originalFormData.hasOwnProperty(index)) {
+            tmpFormData.push({
+              name: index,
+              value: data.originalFormData[index]
+            });
+          }
+        }
+        data.originalFormData = tmpFormData;
+      }
+
+      $scope.report = data;
+    })
+    .catch(function (err) {
+      if (err.status === 403) {
+        $scope.closeReportView();
+        swal({
+          title: '',
+          text: 'ขออภัย คุณยังไม่ได้รับสิทธิดูรายงานนี้',
+          confirmButtonText: 'ตกลง',
+          confirmButtonClass: 'btn-default',
+          type: 'error'
+        });
+      }
+      else {
+        $scope.loadingReportViewError = true;
+      }
+    })
+    .finally(function () {
+      $scope.loadingReportView = false;
+    });
+  };
+
+  // Watch for report id changed.
+  $scope.$watch('shared.reportWatchId', function (newValue) {
+    if (newValue && newValue !== $scope.activeReportId) {
+      $location.search('reportId', newValue);
+    }
+  });
 
   var params = {
       subscribe: shared.subscribe
@@ -74,6 +167,7 @@ angular.module('poddDashboardApp')
           'page': 1,
           'page_size': 3,
           'isVolunteer': true,
+          'subscribe': shared.subscribe,
           'order': '-id'
       };
 
@@ -95,6 +189,7 @@ angular.module('poddDashboardApp')
 
       var performanceUserQuery = {
           'month': (moment().month() + 1) + '/' + moment().year(),
+          'subscribe': shared.subscribe
       };
 
       $scope.performanceUsers = [];
@@ -110,7 +205,8 @@ angular.module('poddDashboardApp')
         keywords: ['ตำบล', 'บ้าน'],
         page_size: 2,
         page: 1,
-        name__startsWith: 'บ้าน'
+        name__startsWith: 'บ้าน',
+        subscribe: shared.subscribe
       };
 
       $scope.administrationAreas = [];

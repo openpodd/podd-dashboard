@@ -34,7 +34,7 @@
               <h2 class="sidebar-heading-text"><i class="fa fa-bar-chart fa-size-18"></i> ความเคลื่อนไหวอาทิตย์นี้</h2>
             </div>
             <div class="sidebar-content">
-              <div ng-include="'/views/summary-visualization-graph.html'"></div>
+              <div class="dashboard-visualization" ng-include="'/views/summary-visualization-graph.html'"></div>
             </div>
         </div>
       </div> <!-- /.col-sm-8 -->
@@ -57,7 +57,10 @@
                       <div class="col-md-5 col-sm-5">พื้นที่</div>
                     </div>
                     <!-- ngRepeat: report in reports -->
-                    <div class="ta-view-row row" ng-repeat="report in negativeReports">
+                    <div class="ta-view-row row"
+                         ng-click="onClickReport(report.id)"
+                         ng-class="{ 'active': report.id == activeReportId }"
+                         ng-repeat="report in negativeReports">
                         <div class="ta-view-col ta-view-date col-md-3 col-sm-3" data-th="วันที่">
                           <span ng-bind="report.date | amDateFormat:'D MMM YY เวลา HH:mm น.'"></span>
                         </div>
@@ -148,25 +151,28 @@
                 </div>
                 <div class="sidebar-content">
                     <h3 class="heading-list pull-left">หมู่บ้าน</h3>
-                    <a class="view-all" href="#/contacts">ดูทั้งหมด</a>
+                    <a class="view-all" ng-if="canUpdateContact" href="#/contacts">ดูทั้งหมด</a>
                     <hr class="clear-both"/>
                     <ul class="sidebar-list -mini -marginb">
                         <li ng-show="loadingContacts"><div loader-spinner></div></li>
                         <li ng-repeat="area in administrationAreas">
-                          <p class="small">{{ area.name }}
-                          </p>
+                          <p class="small">{{ area.name }}</p>
+                          <a ng-if="canUpdateContact" class="pull-right" data-toggle="modal" data-target="#contactModal" ng-click="selectedArea(area)">แก้ไข</a>
                           <a class="pull-right" data-toggle="modal" data-target="#contactModal" ng-click="selectedArea(area)">แก้ไข</a>
                         </li>
+                        <li ng-show="administrationAreas.length === 0"><p class="small">ไม่พบรายการ</p></li>
                     </ul>
 
                     <h3 class="heading-list pull-left">ผู้มีส่วนเกี่ยวข้องกรณีต่างๆ</h3>
-                    <a class="view-all" href="#/notification-config-list">ดูทั้งหมด</a>
+                    <a class="view-all" ng-if="canUpdateNotification" href="#/notification-config-list">ดูทั้งหมด</a>
                     <hr class="clear-both"/>
                     <ul class="sidebar-list -mini">
                         <li ng-show="loadingNotification"><div loader-spinner></div></li>
                         <li ng-repeat="template in notificationTemplates|limitTo: 2">
-                          <p class="small">{{ template.description }}
-                          </p>
+                          <p class="small">{{ template.description }}</p>
+                          <a ng-if="canUpdateNotification" class="pull-right" role="button" data-toggle="modal" data-target="#notificationContactModal" ng-click="selectedTemplate(template)">
+                              แก้ไข
+                          </a>
                           <a class="pull-right" role="button" data-toggle="modal" data-target="#notificationContactModal" ng-click="selectedTemplate(template)">
                             แก้ไข
                            </a>
@@ -187,6 +193,8 @@
 
   </div>
 </div>
+
+<div ng-include="'/views/report-view.html'" onload="initReportModal()"></div>
 
 
   <!-- /report type form -->
