@@ -158,7 +158,6 @@
                         <li ng-repeat="area in administrationAreas">
                           <p class="small">{{ area.name }}</p>
                           <a ng-if="canUpdateContact" class="pull-right" data-toggle="modal" data-target="#contactModal" ng-click="selectedArea(area)">แก้ไข</a>
-                          <a class="pull-right" data-toggle="modal" data-target="#contactModal" ng-click="selectedArea(area)">แก้ไข</a>
                         </li>
                         <li ng-show="administrationAreas.length === 0"><p class="small">ไม่พบรายการ</p></li>
                     </ul>
@@ -173,9 +172,6 @@
                           <a ng-if="canUpdateNotification" class="pull-right" role="button" data-toggle="modal" data-target="#notificationContactModal" ng-click="selectedTemplate(template)">
                               แก้ไข
                           </a>
-                          <a class="pull-right" role="button" data-toggle="modal" data-target="#notificationContactModal" ng-click="selectedTemplate(template)">
-                            แก้ไข
-                           </a>
                         </li>
 
                     </ul>
