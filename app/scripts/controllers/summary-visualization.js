@@ -10,7 +10,7 @@ angular.module('poddDashboardApp')
     // clear
     $scope.$parent.closeReportList();
     shared.reportWatchId = null;
-    shared.subscribe = false;
+    shared.subscribe = Menu.hasPermissionOnMenu('view_dashboard_subscibe');
 })
 
 .controller('SummaryVisulizeGraphCtrl', function ($scope, shared, SummaryReportVisualization) {
@@ -264,15 +264,6 @@ angular.module('poddDashboardApp')
 
   }
 
-})
-
-.controller('SummaryVisualizationSubscribeModeCtrl', function ($scope, shared, Menu) {
-    Menu.setActiveMenu('summary');
-
-    // clear
-    $scope.$parent.closeReportList();
-    shared.reportWatchId = null;
-    shared.subscribe = true;
 })
 
 .controller('SummaryVisualizationCtrl', function ($scope, shared, Menu, User,
