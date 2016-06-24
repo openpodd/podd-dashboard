@@ -146,26 +146,26 @@
                 </div>
                 <div class="sidebar-content">
                     <h3 class="heading-list pull-left">หมู่บ้าน</h3>
-                    <a class="view-all" href="#/contacts">ดูทั้งหมด</a>
+                    <a class="view-all" ng-if="canUpdateContact" href="#/contacts">ดูทั้งหมด</a>
                     <hr class="clear-both"/>
                     <ul class="sidebar-list -mini -marginb">
                         <li ng-show="loadingContacts"><div loader-spinner></div></li>
                         <li ng-repeat="area in administrationAreas">
                           <p class="small">{{ area.name }}
-                            <a class="pull-right" data-toggle="modal" data-target="#contactModal" ng-click="selectedArea(area)">แก้ไข</a>
+                            <a ng-if="canUpdateContact" class="pull-right" data-toggle="modal" data-target="#contactModal" ng-click="selectedArea(area)">แก้ไข</a>
                           </p>
                         </li>
                         <li ng-show="administrationAreas.length === 0"><p class="small">ไม่พบรายการ</p></li>
                     </ul>
 
                     <h3 class="heading-list pull-left">ผู้มีส่วนเกี่ยวข้องกรณีต่างๆ</h3>
-                    <a class="view-all" href="#/notification-config-list">ดูทั้งหมด</a>
+                    <a class="view-all" ng-if="canUpdateNotification" href="#/notification-config-list">ดูทั้งหมด</a>
                     <hr class="clear-both"/>
                     <ul class="sidebar-list -mini">
                         <li ng-show="loadingNotification"><div loader-spinner></div></li>
                         <li ng-repeat="template in notificationTemplates|limitTo: 2">
                           <p class="small">{{ template.description }}
-                            <a class="pull-right" role="button" data-toggle="modal" data-target="#notificationContactModal" ng-click="selectedTemplate(template)">
+                            <a ng-if="canUpdateNotification" class="pull-right" role="button" data-toggle="modal" data-target="#notificationContactModal" ng-click="selectedTemplate(template)">
                               แก้ไข
                              </a>
                           </p>

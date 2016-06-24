@@ -18,6 +18,9 @@ angular.module('poddDashboardApp')
   Menu.setActiveMenu('dashboard');
   shared.subscribe = Menu.hasPermissionOnMenu('view_dashboard_subscibe');
 
+  $scope.canUpdateContact = Menu.hasPermissionOnMenu('view_dashboard_plan');
+  $scope.canUpdateNotification = Menu.hasPermissionOnMenu('view_dashboard_users');
+
   $scope.dashboard = {
       users: 0,
       positiveReports: 0,
