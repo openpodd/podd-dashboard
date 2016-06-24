@@ -10,6 +10,7 @@ angular.module('poddDashboardApp')
                                   AdministrationArea,
                                   SummaryReportVisualization, SummaryDashboardVisualization,
                                   SummaryPerformancePerson,
+                                  Authority, AuthorityView, NotificationAuthorities,
                                   User, Menu, $location) {
   console.log('-> In DashboardCtrl');
 
@@ -113,7 +114,38 @@ angular.module('poddDashboardApp')
       };
 
       $scope.administrationAreas = [];
+      $scope.loadingContacts = true;
       AdministrationArea.contacts(administrationAreasQuery).$promise.then(function (resp) {
         $scope.administrationAreas = resp.results;
+        $scope.loadingContacts = false;
       });
+
+
+      $scope.loadingNotification = true;
+      $scope.authority = null;
+      $scope.notificationTemplates = [];
+
+      function getNotificationTemplate(authority) {
+          var params = {id: authority.id};
+          Authority.notificationTemplates(params).$promise.then(function (data) {
+              $scope.notificationTemplates = data;
+              $scope.loadingNotification = false;
+          }).catch(function () {
+              $scope.loadingNotification = false;
+          });
+      }
+
+      AuthorityView.list().$promise.then(function (data) {
+          data.forEach(function (item) {
+              if($scope.authority !== null) {
+                  return;
+              }
+              $scope.authority = item;
+              getNotificationTemplate(item);
+          });
+      }).catch(function () {
+          $scope.loading = false;
+          $scope.error = true;
+      });
+
 });

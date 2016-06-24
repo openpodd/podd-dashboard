@@ -149,6 +149,7 @@
                     <a class="view-all" href="#/contacts">ดูทั้งหมด</a>
                     <hr class="clear-both"/>
                     <ul class="sidebar-list -mini -marginb">
+                        <li ng-show="loadingContacts"><div loader-spinner></div></li>
                         <li ng-repeat="area in administrationAreas">
                           <p class="small">{{ area.name }}
                             <a class="pull-right" data-toggle="modal" data-target="#contactModal" ng-click="selectedArea(area)">แก้ไข</a>
@@ -160,8 +161,10 @@
                     <a class="view-all" href="#/notification-config-list">ดูทั้งหมด</a>
                     <hr class="clear-both"/>
                     <ul class="sidebar-list -mini">
-                        <li><p class="small">Case : สัตว์ป่วย/ตาย <a class="pull-right" href="#">แก้ไข</a></p></li>
-                        <li><p class="small">Outbreak : สัตว์ป่วย/ตาย <a class="pull-right" href="#">แก้ไข</a></p></li>
+                        <li ng-show="loadingNotification"><div loader-spinner></div></li>
+                        <li ng-repeat="notification in notificationTemplates|limitTo: 2">
+                          <p class="small">{{ notification.description }} <a class="pull-right" href="#">แก้ไข</a></p></li>
+                        <li>
                     </ul>
                 </div>
             </div>
