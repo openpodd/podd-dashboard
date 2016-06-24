@@ -22,9 +22,10 @@ angular.module('poddDashboardApp')
         selectedYear: moment().year()
     };
 
-    if ($stateParams.month && $stateParams.month.match(/[01]?[0-9]\/20\d\d/)) {
-        $scope.month = $stateParams.month;
-        $scope.months.selectedMonth = $scope.months.months[$stateParams.month.split('/')[0] - 1];
+    if ($stateParams.month) {
+        var splitWord = ($stateParams.month.indexOf('/') !== -1)? '/': '%2F'
+        $scope.months.selectedMonth = parseInt($stateParams.month.split(splitWord)[0]);
+        $scope.months.selectedYear = parseInt($stateParams.month.split(splitWord)[1]);
     }
 
     var initArea = {
@@ -54,9 +55,9 @@ angular.module('poddDashboardApp')
         var areaId = parseInt($stateParams.areaId);
         if (areaId) {
             $scope.areas.all.forEach(function (item) {
-                if (item.id === areaId) {
-                    $scope.areas.selectedArea = item;
-                }
+               if (item.id === areaId) {
+                   $scope.areas.selectedArea = item;
+               }
             });
         }
     });
@@ -127,8 +128,6 @@ angular.module('poddDashboardApp')
         }
 
         SummaryPerformancePerson.query($scope.query).$promise.then(function (data) {
-            console.log('Query result:', data);
-
             var results = [];
 
             data.forEach(function (item) {
