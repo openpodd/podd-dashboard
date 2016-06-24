@@ -118,6 +118,7 @@ angular
       /\/summary\/reports/,
       /\/summary\/reports-visualization/,
       /\/summary\/dashboard-visualization/,
+      /\/summary\/list-user/,
       /\/ping/,
       /\/tags\/list/,
       /\/users\/profile/,
