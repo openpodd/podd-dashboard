@@ -846,3 +846,13 @@ $badge-bad: #FF6D69;
 .ico-front {
     margin-right: 5px;
 }
+
+// Chart on dasdboard
+.summary-graph-reports {
+    height: 310px;
+
+    .x.axis .tick text{
+        transform: rotate(0) !important;
+        transform: translate(15px,10px) !important;
+    }
+}
