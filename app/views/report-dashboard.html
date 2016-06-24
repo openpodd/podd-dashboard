@@ -32,7 +32,7 @@
               <h2 class="sidebar-heading-text"><i class="fa fa-bar-chart fa-size-18"></i> ความเคลื่อนไหวอาทิตย์นี้</h2>
             </div>
             <div class="sidebar-content">
-
+              <div ng-include="'/views/summary-visualization-graph.html'"></div>
             </div>
         </div>
       </div> <!-- /.col-sm-8 -->
@@ -46,6 +46,7 @@
                 <a class="view-all" href="#/home">ดูทั้งหมด</a>
               </div>
               <div class="sidebar-content">
+                  <div ng-show="loadingNegativeReports" loader-spinner></div>
                   <div class="ta-view"> <!-- Table View -->
                     <div class="ta-view-header row hidden-xs">
                       <div class="col-md-3 col-sm-3">วันที่</div>
@@ -84,11 +85,12 @@
             <div class="sidebar-block">
                 <div class="sidebar-heading">
                   <h2 class="sidebar-heading-text"><i class="fa fa-check fa-size-18"></i> รายงานไม่พบเหตุผิดปกติ</h2>
-                  <a class="view-all" href="#/filter?q=type:0%20AND%20date:this%20week%20">ดูทั้งหมด</a>
+                  <a class="view-all" href="#/filter?q=type:0">ดูทั้งหมด</a>
                 </div>
                 <div class="sidebar-content">
-                    <ul class="sidebar-list" ng-repeat="report in positiveReports">
-                        <li>
+                    <ul class="sidebar-list">
+                        <li ng-show="loadingPositiveReports"><div loader-spinner></div></li>
+                        <li ng-repeat="report in positiveReports">
                             <p ng-bind="::report.createdByName"></p>
                             <p class="small" ng-bind="report.date | amDateFormat:'D MMM YY เวลา HH:mm น.'"></p>
                         </li>
@@ -107,6 +109,7 @@
               </div>
               <div class="sidebar-content">
                   <ul class="sidebar-list -avatar">
+                      <li ng-show="loadingUsers"><div loader-spinner></div></li>
                       <li ng-repeat="user in users">
                           <img src="{{ getAvatarUrl(user.avatarUrl) }}" alt="avatar" class="pull-left avatar avatar-w4">
                           <span ng-bind="::user.name" class="filter-reporttype"></span>
@@ -125,6 +128,7 @@
                 </div>
                 <div class="sidebar-content">
                     <ul class="sidebar-list -avatar">
+                        <li ng-show="loadingPerformanceUsers"><div loader-spinner></div></li>
                         <li ng-repeat="user in performanceUsers | orderBy:'-numberOfActiveDays' | limitTo : 3">
                             <div class="grade">A</div>
                             <span ng-bind="::user.fullName" class="filter-reporttype"></span>
@@ -145,8 +149,11 @@
                     <a class="view-all" href="#/contacts">ดูทั้งหมด</a>
                     <hr class="clear-both"/>
                     <ul class="sidebar-list -mini -marginb">
-                        <li><p class="small">บ้านช่างเคี่ยน <a class="pull-right" href="#">แก้ไข</a></p></li>
-                        <li><p class="small">บ้านเจ็ดยอด <a class="pull-right" href="#">แก้ไข</a></p></li>
+                        <li ng-repeat="area in administrationAreas">
+                          <p class="small">{{ area.name }}
+                            <a class="pull-right" data-toggle="modal" data-target="#contactModal" ng-click="selectedArea(area)">แก้ไข</a>
+                          </p>
+                        </li>
                     </ul>
 
                     <h3 class="heading-list pull-left">ผู้มีส่วนเกี่ยวข้องกรณีต่างๆ</h3>
@@ -164,6 +171,9 @@
 
 
     </div></div>
+
+    <div ng-include="'/views/contacts-update.html'"></div>
+
   </div>
 </div>
 

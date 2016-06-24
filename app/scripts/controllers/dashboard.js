@@ -7,6 +7,7 @@ angular.module('poddDashboardApp')
  * Show list of recent reports.
  */
 .controller('DashboardCtrl', function ($scope, Search, shared,
+                                  AdministrationArea,
                                   SummaryReportVisualization, SummaryDashboardVisualization,
                                   SummaryPerformancePerson,
                                   User, Menu, $location) {
@@ -20,10 +21,14 @@ angular.module('poddDashboardApp')
       negativeReports: 0
   };
 
+  $scope.onlyGraph = true;
+  $scope.selected = 'day';
+
   var params = {
       subscribe: shared.subscribe
   };
 
+  $scope.lastWeek = true;
   SummaryDashboardVisualization.get(params).$promise.then(function (data) {
       $scope.dashboard = data;
   });
@@ -37,33 +42,31 @@ angular.module('poddDashboardApp')
   };
 
   $scope.negativeReports = [];
+  $scope.loadingnegativeReports = true;
   Search.query(negativeQuery).$promise
     .then(function (resp) {
       $scope.negativeReports = resp.results;
+      $scope.loadingnegativeReports = false;
     })
     .catch(function () {
-      $scope.error = true;
-    })
-    .finally(function () {
-      $scope.loading = false;
+      $scope.loadingnegativeReports = false;
     });
 
     var positiveQuery = {
-      'q': 'type:0',
+      'q': 'type:0 AND date:[ * TO ' + moment().format('YYYY-MM-DD') +']',
       'page_size': 3,
       'tz': (new Date()).getTimezoneOffset() / -60
     };
 
     $scope.positiveReports = [];
+    $scope.loadingpositiveReports = true;
     Search.query(positiveQuery).$promise
       .then(function (resp) {
         $scope.positiveReports = resp.results;
+        $scope.loadingpositiveReports = false;
       })
       .catch(function () {
-        $scope.error = true;
-      })
-      .finally(function () {
-        $scope.loading = false;
+        $scope.loadingpositiveReports = false;
       });
 
       var userQuery = {
@@ -74,10 +77,12 @@ angular.module('poddDashboardApp')
       };
 
       $scope.users = [];
+      $scope.loadingUsers = true;
       User.list(userQuery).$promise.then(function (data) {
           $scope.users = data
+          $scope.loadingUsers = false;
       }).catch(function () {
-
+          $scope.loadingUsers = false;
       });
 
       $scope.getAvatarUrl = function (avatarUrl) {
@@ -92,10 +97,23 @@ angular.module('poddDashboardApp')
       };
 
       $scope.performanceUsers = [];
+      $scope.loadingPerformanceUsers = true;
       SummaryPerformancePerson.query(performanceUserQuery).$promise.then(function (data) {
           $scope.performanceUsers = data;
+          $scope.loadingPerformanceUsers = false;
       }).catch(function () {
-
+          $scope.loadingPerformanceUsers = false;
       });
 
+      var administrationAreasQuery = {
+        keywords: ['ตำบล', 'บ้าน'],
+        page_size: 2,
+        page: 1,
+        name__startsWith: 'บ้าน'
+      };
+
+      $scope.administrationAreas = [];
+      AdministrationArea.contacts(administrationAreasQuery).$promise.then(function (resp) {
+        $scope.administrationAreas = resp.results;
+      });
 });
