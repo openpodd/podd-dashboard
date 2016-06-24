@@ -547,6 +547,7 @@ angular.module('poddDashboardApp')
 
 .filter('renderTemplate', function () {
     return function (text) {
+        if (typeof(text) === 'undefined') return '';
         return text.replace(/\@\[template:([\w\-\.\@]+)\]/g, '<span class="label label-info">ใช้การแจ้งเตือนร่วมกับรหัส #$1</span>');
     };
 })

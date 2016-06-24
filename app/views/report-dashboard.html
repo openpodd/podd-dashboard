@@ -162,9 +162,14 @@
                     <hr class="clear-both"/>
                     <ul class="sidebar-list -mini">
                         <li ng-show="loadingNotification"><div loader-spinner></div></li>
-                        <li ng-repeat="notification in notificationTemplates|limitTo: 2">
-                          <p class="small">{{ notification.description }} <a class="pull-right" href="#">แก้ไข</a></p></li>
-                        <li>
+                        <li ng-repeat="template in notificationTemplates|limitTo: 2">
+                          <p class="small">{{ template.description }}
+                            <a class="pull-right" role="button" data-toggle="modal" data-target="#notificationContactModal" ng-click="selectedTemplate(template)">
+                              แก้ไข
+                             </a>
+                          </p>
+                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -176,6 +181,7 @@
     </div></div>
 
     <div ng-include="'/views/contacts-update.html'"></div>
+    <div ng-include="'/views/notification-config-update.html'"></div>
 
   </div>
 </div>

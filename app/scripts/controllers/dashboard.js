@@ -148,4 +148,8 @@ angular.module('poddDashboardApp')
           $scope.error = true;
       });
 
+      $scope.selectedTemplate = function(template) {
+          $scope.selectedTemplateContact = template;
+          $scope.newSelectedContact = template.contact.to;
+      };
 });

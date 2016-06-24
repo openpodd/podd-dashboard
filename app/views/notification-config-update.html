@@ -1,0 +1,24 @@
+<div ng-controller="NotificationModalCtrl" >
+  <div class="modal fade" id="notificationContactModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">{{ selectedTemplateContact.description }}</h4>
+        </div>
+        <div class="modal-body">
+          <h4>ข้อมูลติดต่อ</h4>
+
+          <pre><small><b>ตัวอย่าง:</b> นายกสมใจ อินทนนท์ 081-9414023, รองนายกสมชาย บุญมาก 089-9210033</small></pre>
+
+          <textarea class="no-resize" style="width: 100%; height: 150px;" ng-model="$parent.$parent.newSelectedContact" ng-disabled="isSave">
+          </textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="disabledUpdateBtn">ปิด</button>
+          <button type="button" class="btn btn-primary" ng-click="saveContact()" ng-disabled="disabledUpdateBtn" ng-show="!isSave">{{ disabledUpdateBtn ? 'กำลังบันทึก...' : 'บันทึก' }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
