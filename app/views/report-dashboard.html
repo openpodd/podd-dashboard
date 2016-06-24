@@ -55,7 +55,10 @@
                       <div class="col-md-5 col-sm-5">พื้นที่</div>
                     </div>
                     <!-- ngRepeat: report in reports -->
-                    <div class="ta-view-row row" ng-repeat="report in negativeReports">
+                    <div class="ta-view-row row"
+                         ng-click="onClickReport(report.id)"
+                         ng-class="{ 'active': report.id == activeReportId }"
+                         ng-repeat="report in negativeReports">
                         <div class="ta-view-col ta-view-date col-md-3 col-sm-3" data-th="วันที่">
                           <span ng-bind="report.date | amDateFormat:'D MMM YY เวลา HH:mm น.'"></span>
                         </div>
@@ -186,6 +189,8 @@
 
   </div>
 </div>
+
+<div ng-include="'/views/report-view.html'" onload="initReportModal()"></div>
 
 
   <!-- /report type form -->

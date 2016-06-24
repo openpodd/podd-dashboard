@@ -127,7 +127,6 @@ angular.module('poddDashboardApp')
                   colorHash[item.id] = colors(index);
                   item.colorCode = colors(index);
               });
-              console.log(colorHash);
           }
 
           var data = [];
