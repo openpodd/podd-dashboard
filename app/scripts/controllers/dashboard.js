@@ -6,6 +6,7 @@ angular.module('poddDashboardApp')
 /**
  * Show list of recent reports.
  */
+
 .controller('DashboardCtrl', function ($scope, Search, shared,
                                   AdministrationArea,
                                   SummaryReportVisualization, SummaryDashboardVisualization,
@@ -15,6 +16,7 @@ angular.module('poddDashboardApp')
   console.log('-> In DashboardCtrl');
 
   Menu.setActiveMenu('dashboard');
+  shared.subscribe = Menu.hasPermissionOnMenu('view_dashboard_subscibe');
 
   $scope.dashboard = {
       users: 0,
@@ -74,6 +76,7 @@ angular.module('poddDashboardApp')
           'page': 1,
           'page_size': 3,
           'isVolunteer': true,
+          'subscribe': shared.subscribe,
           'order': '-id'
       };
 
@@ -95,6 +98,7 @@ angular.module('poddDashboardApp')
 
       var performanceUserQuery = {
           'month': (moment().month() + 1) + '/' + moment().year(),
+          'subscribe': shared.subscribe
       };
 
       $scope.performanceUsers = [];
@@ -110,7 +114,8 @@ angular.module('poddDashboardApp')
         keywords: ['ตำบล', 'บ้าน'],
         page_size: 2,
         page: 1,
-        name__startsWith: 'บ้าน'
+        name__startsWith: 'บ้าน',
+        subscribe: shared.subscribe
       };
 
       $scope.administrationAreas = [];
