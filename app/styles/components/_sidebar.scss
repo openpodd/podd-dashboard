@@ -70,6 +70,7 @@
     clear: both;
 
     li {
+        overflow: hidden;
         padding: 10px 0 10px;
 
         &:not(:first-child) {
@@ -81,6 +82,13 @@
 
             &:last-child {
                 margin: 0;
+            }
+            &.small {
+                width: 80%;
+                float: left;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
         }
     }

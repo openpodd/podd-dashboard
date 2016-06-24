@@ -22,7 +22,6 @@
                   <li><a href="#/summary/visualize"><i class="fa fa-star green" aria-hidden="true"></i> จำนวนรายงานอาสาแต่ละคน</a></li>
                   <li><a href="#/contacts"><i class="fa fa-star green" aria-hidden="true"></i> แก้ไขรายชื่อผู้ติดต่อในหมู่บ้าน</a></li>
                   <li><a href="#/invitation-code-list"><i class="fa fa-star green" aria-hidden="true"></i> ดูรหัสพื้นที่ที่ใช้ในการสมัคร</a></li>
-                  <li><a href="#/plans"><i class="fa fa-star green" aria-hidden="true"></i> แบบรับมือเมื่อเกิดโรคระบาด</a></li>
                   <li><a href="#/profile"><i class="fa fa-star green" aria-hidden="true"></i> เปลี่ยนรหัสผ่านใหม่</a></li>
               </ul>
           </div>
@@ -155,8 +154,8 @@
                         <li ng-show="loadingContacts"><div loader-spinner></div></li>
                         <li ng-repeat="area in administrationAreas">
                           <p class="small">{{ area.name }}
-                            <a class="pull-right" data-toggle="modal" data-target="#contactModal" ng-click="selectedArea(area)">แก้ไข</a>
                           </p>
+                          <a class="pull-right" data-toggle="modal" data-target="#contactModal" ng-click="selectedArea(area)">แก้ไข</a>
                         </li>
                     </ul>
 
@@ -167,10 +166,10 @@
                         <li ng-show="loadingNotification"><div loader-spinner></div></li>
                         <li ng-repeat="template in notificationTemplates|limitTo: 2">
                           <p class="small">{{ template.description }}
-                            <a class="pull-right" role="button" data-toggle="modal" data-target="#notificationContactModal" ng-click="selectedTemplate(template)">
-                              แก้ไข
-                             </a>
                           </p>
+                          <a class="pull-right" role="button" data-toggle="modal" data-target="#notificationContactModal" ng-click="selectedTemplate(template)">
+                            แก้ไข
+                           </a>
                         </li>
 
                     </ul>
