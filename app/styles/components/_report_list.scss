@@ -310,6 +310,10 @@
         width: auto;
         text-align: left;
     }
+    // .inline-col,
+    // .inline-col p {
+    //     display: inline-block;
+    // }
   }
 
   @include respond-to(phone){
@@ -334,6 +338,13 @@
     &:hover {
       background-color: #ffc;
       cursor: pointer;
+    }
+
+    &.-no-hover{
+        &:hover {
+            background-color: transparent;;
+            cursor: default;;
+        }
     }
   }
   .ta-view-date{

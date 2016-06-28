@@ -14,52 +14,37 @@
         <div class="row">
           <div class="col-md-12">
 
+            <button class="btn btn-sm btn-default pull-right" ng-click="control.refresh()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Refresh</button>
             <h2 class="subheading">ตารางแสดงนิยามการเปลี่ยนสถานะของรายงาน</h2>
-
-            <button class="btn btn-default" ng-click="control.refresh()">Refresh</button>
 
             <div class="filter-result-container">
               <div class="ta-view">
                 <div class="ta-view-header row hidden-xs">
-                  <div class="col-md-3 text-left">รหัส</div>
-                  <div class="col-md-2 text-left">ประเภทรายงาน</div>
-                  <div class="col-md-3 text-center">เส้นทาง</div>
-                  <div class="col-md-4 text-left">คำอธิบาย</div>
+                  <div class="col-sm-3 text-left">หัวข้อ</div>
+                  <div class="col-sm-4 text-left">คำอธิบาย</div>
+                  <div class="col-sm-5 text-left">Definition Code</div>
                 </div>
-                <div ng-repeat="item in items" class="ta-view-row row">
+                <div ng-repeat="item in items" class="ta-view-row -no-hover row">
 
-                  <div class="ta-view-col col-md-3" data-th="รหัส">
-                    <span class="label label-code">{{ item.code }} </span>
-                  </div>
-
-                  <div class="ta-view-col col-md-2" data-th="ประเภทรายงาน">
-                    {{ item.reportType.name }} <span class="label label-default">id: {{ item.reportType.id }}</span>
-                  </div>
-
-                  <div class="ta-view-col col-md-3" data-th="เส้นทาง">
-                    <div class="row">
-                      <div class="col-md-5 text-right">
-                        {{ item.fromState.name }}
+                  <div class="ta-view-col col-sm-3" data-th="หัวข้อ">
+                      <div class="margin-b">
+                          <p class="margin-b">ประเภทรายงาน : {{ item.reportType.name }}</p>
+                          <p class="margin-b">รหัส : <span class="label label-default">{{ item.code }}</span></p>
+                          <p class="margin-b">ID: {{ item.reportType.id }}</p>
                       </div>
-                      <div class="col-md-2 text-center">
-                        <span class="fa fa-long-arrow-right"></span>
+                  </div>
+                  <div class="ta-view-col col-sm-4" data-th="คำอธิบาย">
+                      <div class="margin-b">
+                          <p class="margin-b">กรณี : {{ item.fromState.name }} <span class="fa fa-long-arrow-right"></span> {{ item.toState.name }}</p>
+                          เงื่อนไข :
+                          <span ng-bind="::item.description" ></span>
                       </div>
-                      <div class="col-md-5 text-left">
-                        {{ item.toState.name }}
-                      </div>
-                    </div>
                   </div>
 
-                  <div class="ta-view-col col-md-4" data-th="คำอธิบาย">
-                    <span ng-bind="::item.description" ></span>
-
-                    <hr>
-
-                    <p>
-                      <strong>Definition code:</strong>
-                      <div class="well" ng-bind="::item.epl"></div>
-                    </p>
+                  <div class="ta-view-col col-sm-5" data-th="Code">
+                    <div class="well well-sm" ng-bind="::item.epl"></div>
                   </div>
+
                 </div>
               </div>
             </div>
