@@ -1,0 +1,87 @@
+<div class="summary-view l-info-section l-section l-full-width case-definitions-list"
+     ng-controller="CaseDefinitionsCtrl"
+     ng-cloak>
+  <div class="l-detail-section l-section">
+
+    <div class="title clearfix">
+      <h2 class="pull-left">
+        <i class="fa fa-puzzle-piece pull-left fa-size-22"></i>
+        การเปลี่ยนสถานะของรายงาน
+      </h2>
+    </div>
+    <div class="content-wrapper content">
+      <div class="summary-wrapper profile-wrapper">
+        <div class="row">
+          <div class="col-md-12">
+
+            <h2 class="subheading">ตารางแสดงนิยามการเปลี่ยนสถานะของรายงาน</h2>
+
+            <button class="btn btn-default" ng-click="control.refresh()">Refresh</button>
+
+            <div class="filter-result-container">
+              <div class="ta-view">
+                <div class="ta-view-header row hidden-xs">
+                  <div class="col-md-3 text-left">รหัส</div>
+                  <div class="col-md-2 text-left">ประเภทรายงาน</div>
+                  <div class="col-md-3 text-center">เส้นทาง</div>
+                  <div class="col-md-4 text-left">คำอธิบาย</div>
+                </div>
+                <div ng-repeat="item in items" class="ta-view-row row">
+
+                  <div class="ta-view-col col-md-3" data-th="รหัส">
+                    <span class="label label-code">{{ item.code }} </span>
+                  </div>
+
+                  <div class="ta-view-col col-md-2" data-th="ประเภทรายงาน">
+                    {{ item.reportType.name }} <span class="label label-default">id: {{ item.reportType.id }}</span>
+                  </div>
+
+                  <div class="ta-view-col col-md-3" data-th="เส้นทาง">
+                    <div class="row">
+                      <div class="col-md-5 text-right">
+                        {{ item.fromState.name }}
+                      </div>
+                      <div class="col-md-2 text-center">
+                        <span class="fa fa-long-arrow-right"></span>
+                      </div>
+                      <div class="col-md-5 text-left">
+                        {{ item.toState.name }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="ta-view-col col-md-4" data-th="คำอธิบาย">
+                    <span ng-bind="::item.description" ></span>
+
+                    <hr>
+
+                    <p>
+                      <strong>Definition code:</strong>
+                      <div class="well" ng-bind="::item.epl"></div>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="filter-result-message" ng-show="error">
+              <div class="filter-error alert alert-danger" role="alert" ng-show="error">
+                <strong>เกิดข้อผิดพลาด</strong>
+              </div>
+            </div>
+
+            <div class="filter-empty alert alert-info" ng-show="!loading && users.authorities == 0">
+              <strong>ไม่พบผลการค้นหา</strong>
+            </div>
+
+            <div class="loadmore" ng-cloak ng-show="loading">
+              <button class="btn btn-default center-block" type="button" ng-disabled="true">{{ loading ? 'กรุณารอสักครู่...' : 'เพิ่มเติม...' }} </button>
+            </div>
+
+          </div >
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

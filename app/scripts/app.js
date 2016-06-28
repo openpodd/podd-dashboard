@@ -123,6 +123,7 @@ angular
       /\/users\/profile/,
       /\/authorities/,
       /\/reportTags/,
+      /\/caseDefinitions/,
       /\/planReports/,
       /\/administrationArea\/contacts/,
       /\/administrationArea\/contacts\/update/,
@@ -260,6 +261,11 @@ angular
         url: '^/notification-config-list',
         templateUrl: 'views/notification-config-list.html',
         controller: 'NotificationModeCtrl'
+      })
+      .state('main.casedefinitinos', {
+        url: '^/case-definitions-list',
+        templateUrl: 'views/case-definitions-list.html',
+        controller: 'CaseDefinitionsModeCtrl'
       })
       .state('login', {
         url: '/login',
