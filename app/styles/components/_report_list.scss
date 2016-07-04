@@ -319,6 +319,7 @@
   @include respond-to(phone){
     .ta-view-col:before {
       width: 4.5em;
+      vertical-align: top;
     }
     .col-checkbox {
         width: auto;

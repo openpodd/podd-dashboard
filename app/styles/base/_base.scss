@@ -434,7 +434,21 @@ html, body{
 .contact-list {
     // margin: 30px 50px 20px;
 }
+@include respond-to(tablet-portrait){
+    .btn-edit {
+        float: none !important;
+        background-color: transparent;
+        color: #337ab7;
+        border: none;
+        text-decoration: underline;
+    }
+}
+
+.panel-phonebook-empty {
+    display: inline-block;
+}
 .panel-phonebook-contact {
+    display: inline-block;
     padding: 0 0 0 20px;
     margin: 0;
 }
