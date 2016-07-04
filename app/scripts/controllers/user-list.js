@@ -115,11 +115,12 @@ angular.module('poddDashboardApp')
 
             $scope.gridOptionsPerson.data = $scope.exportUsers;
 
+            var filename = 'รายชื่ออาสาสมัครในโครงการผ่อดีดี-' + moment().format('DD-MM-YYYY');
             $timeout(function () {
                 if (to === 'csv') {
-                    uiGridUtils.exportCsv($scope.gridApi.grid, 'list-user.csv');
+                    uiGridUtils.exportCsv($scope.gridApi.grid, filename + '.csv');
                   } else {
-                    uiGridUtils.exportXlsx($scope.gridApi.grid, 'list-user.xlsx');
+                    uiGridUtils.exportXlsx($scope.gridApi.grid, filename + '.xlsx');
                   }
             }, 100);
             
