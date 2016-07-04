@@ -11,9 +11,9 @@ angular.module('poddDashboardApp')
     shared.reportWatchId = null;
 })
 
-.controller('UsersCtrl', function ($scope, Menu, User,
+.controller('UsersCtrl', function ($scope, Menu, User, $timeout,
                                    UserDetail, Authority, AuthorityView,
-                                  uiGridUtils) {
+                                   uiGridUtils) {
     Menu.setActiveMenu('users');
 
     $scope.users = [];
@@ -81,7 +81,7 @@ angular.module('poddDashboardApp')
         data: [],
         columnDefs: [],
         exporterLinkLabel: 'ดาวน์โหลดข้อมูลไฟล์ CSV',
-        exporterLinkTemplate: '<span><a class="btn btn-primary btn-sm" download="สรุปการรายงานของอาสา.csv" href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\">LINK_LABEL</a></span>',
+        exporterLinkTemplate: '<span><a class="btn btn-primary btn-sm" download="รายชื่ออาสาสมัครในโครงการผ่อดีดี.csv" href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\">LINK_LABEL</a></span>',
         onRegisterApi: function(gridApi){
             $scope.gridApi = gridApi;
         }
@@ -98,7 +98,7 @@ angular.module('poddDashboardApp')
                   'ที่อยู่': item.contact,
                   'เบอร์ติดต่อ': item.telephone,
                   'วันที่เข้าร่วม': moment(item.dateJoined).format('D MMM YYYY'),
-                  'พื้นที่': item.authority.name,
+                  'พื้นที่': item.authority? item.authority.name: '',
                 });
             });
 
@@ -115,13 +115,14 @@ angular.module('poddDashboardApp')
 
             $scope.gridOptionsPerson.data = $scope.exportUsers;
 
-            setTimeout(function(){
-              if (to === 'csv') {
-                uiGridUtils.exportCsv($scope.gridApi.grid, 'list-user.csv');
-              } else {
-                uiGridUtils.exportXlsx($scope.gridApi.grid, 'list-user.xlsx');
-              }
+            $timeout(function () {
+                if (to === 'csv') {
+                    uiGridUtils.exportCsv($scope.gridApi.grid, 'list-user.csv');
+                  } else {
+                    uiGridUtils.exportXlsx($scope.gridApi.grid, 'list-user.xlsx');
+                  }
             }, 100);
+            
         }).catch(function () {});
     }
 
@@ -205,19 +206,11 @@ angular.module('poddDashboardApp')
     };
 
     $scope.csvExport = function () {
-        if ($scope.exportUsers.length === 0) {
-          exportUsers('csv');
-        } else {
-          uiGridUtils.exportCsv($scope.gridApi.grid, 'list-user.csv');
-        }
+        exportUsers('csv');
     };
 
     $scope.xlsxExport = function () {
-      if ($scope.exportUsers.length === 0) {
         exportUsers('xlsx');
-      } else {
-        uiGridUtils.exportXlsx($scope.gridApi.grid, 'list-user.xlsx');
-      }
     }
 
 });
