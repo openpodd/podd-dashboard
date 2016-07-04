@@ -12,7 +12,7 @@ angular.module('poddDashboardApp')
 
     $scope.$watch('shared.loggedIn', function(newValue) {
         if (newValue) {
-            $state.go('home');
+            $state.go('dashboard');
         }
     });
 
@@ -50,7 +50,7 @@ angular.module('poddDashboardApp')
             if (err) {
                 $scope.invalidLogin = true;
             } else {
-                $state.go('home');
+                $state.go('dashboard');
             }
         });
     };

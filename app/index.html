@@ -206,6 +206,12 @@
                       </ul>
                   </div>
                 </li>
+                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('dashboard') }"
+                    ng-click="setActiveMenu('dashboard')">
+                  <a ng-href="#/dashboard" class="pd-nav-icon">
+                  <i class="fa fa-tachometer fa-size-20"></i>
+                  <span class="pd-nav-text">แผงควบคุมระบบ</span></a>
+                </li>
                 <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('home') }"
                     ng-click="setActiveMenu('home')">
                   <a ng-href="#/" class="pd-nav-icon">
@@ -243,14 +249,13 @@
                 <li class="pd-nav-item -divide" ng-class="{ 'active active-menu':isActiveMenu('summary') }"
                     ng-click="setActiveMenu('summary')"
                     ng-if="hasPermissionOnMenu('view_dashboard_summary_report')">
-                    <a ng-href="#/summary/report-month" class="pd-nav-icon">
+                    <a ng-href="#/summary/visualize" class="pd-nav-icon">
                     <i class="fa fa-bar-chart fa-size-18"></i>
                     <span class="pd-nav-text">สรุปรายงาน</span></a>
 
                     <div class="pd-nav-submenu">
                         <ul class="">
-                            <li><a href="#/summary/visualize-subscribe" ng-if="hasPermissionOnMenu('view_dashboard_summary_subscribe_report')">สรุปรายงานอาสา</a></li>
-                            <li><a href="#/summary/visualize" ng-if="hasPermissionOnMenu('view_dashboard_summary_admin_report')">สรุปรายงานในพื้นที่</a></li>
+                            <li><a href="#/summary/visualize">สรุปรายงานในพื้นที่</a></li>
                             <li><a ng-href="#/summary/report-month">สรุปรายงานรายเดือน</a></li>
                             <li><a href="#/summary/performance-person" >สรุปประสิทธิภาพการรายงานของอาสา</a></li>
                         </ul>
@@ -342,6 +347,7 @@
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/leaflet/dist/leaflet.js"></script>
     <script src="bower_components/mapbox.js/mapbox.js"></script>
     <script src="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
     <script src="bower_components/socket.io-client/socket.io.js"></script>
@@ -439,6 +445,7 @@
         <script src="scripts/controllers/invitation-code-list.js"></script>
         <script src="scripts/controllers/summary-visualization.js"></script>
         <script src="scripts/controllers/notification-config-list.js"></script>
+        <script src="scripts/controllers/dashboard.js"></script>
         <!-- endbuild -->
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->

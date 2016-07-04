@@ -118,6 +118,7 @@ angular
       /\/summary\/reports/,
       /\/summary\/reports-visualization/,
       /\/summary\/dashboard-visualization/,
+      /\/summary\/list-user/,
       /\/ping/,
       /\/tags\/list/,
       /\/users\/profile/,
@@ -237,11 +238,6 @@ angular
         templateUrl: 'views/summary-visualization.html',
         controller: 'SummaryVisualizationModeCtrl'
       })
-      .state('main.summaryvisualizationsubscribe', {
-        url: '^/summary/visualize-subscribe',
-        templateUrl: 'views/summary-visualization.html',
-        controller: 'SummaryVisualizationSubscribeModeCtrl'
-      })
       .state('main.profile', {
         url: '^/profile',
         templateUrl: 'views/profile.html',
@@ -271,6 +267,11 @@ angular
         url: '/login',
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl'
+      })
+      .state('dashboard', {
+        url: '/dashboard',
+        templateUrl: 'views/report-dashboard.html',
+        controller: 'DashboardCtrl'
       })
       .state('about', {
         url: '/about',

@@ -1,0 +1,290 @@
+<div class="l-info-section l-section l-full-width l-theme-gray home">
+  <div class="l-detail-section l-section">
+    <div class="title clearfix">
+      <h2 class="pull-left"><i class="fa fa-tachometer pull-left fa-size-22"></i>แผงควบคุมระบบ</h2>
+    </div>
+
+    <div class="content-wrapper"><div class="content">
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="sidebar-block">
+          <div class="sidebar-heading">
+            <h2 class="sidebar-heading-text">ยินดีต้อนรับ</h2>
+          </div>
+          <div class="sidebar-content">
+              <p>เริ่มต้นการใช้งานคุณต้องการจะทำอะไร ?</p>
+              <ul class="sidebar-list">
+                  <li><a href="#/home"><i class="fa fa-star green" aria-hidden="true"></i> อยากดูรายงานทั้งหมด</a></li>
+                  <li><a href="#/map"><i class="fa fa-star green" aria-hidden="true"></i> แสดงรายงานแบบแผนที่</a></li>
+                  <li><a href="#/summary/report-month"><i class="fa fa-star green" aria-hidden="true"></i> สรุปรายงานประจำเดือน</a></li>
+                  <li><a href="#/user-list"><i class="fa fa-star green" aria-hidden="true"></i> คุณอยากรู้ว่าใครเป็นอาสาในพื้นที่บ้าง</a></li>
+                  <li><a href="#/summary/visualize"><i class="fa fa-star green" aria-hidden="true"></i> จำนวนรายงานอาสาแต่ละคน</a></li>
+                  <li><a href="#/contacts"><i class="fa fa-star green" aria-hidden="true"></i> แก้ไขรายชื่อผู้ติดต่อในหมู่บ้าน</a></li>
+                  <li><a href="#/invitation-code-list"><i class="fa fa-star green" aria-hidden="true"></i> ดูรหัสพื้นที่ที่ใช้ในการสมัคร</a></li>
+                  <li><a href="#/profile"><i class="fa fa-star green" aria-hidden="true"></i> เปลี่ยนรหัสผ่านใหม่</a></li>
+              </ul>
+          </div>
+        </div>
+      </div> <!-- /.col-sm-4 -->
+
+      <div class="col-md-8">
+        <div class="sidebar-block">
+            <div class="sidebar-heading">
+              <h2 class="sidebar-heading-text"><i class="fa fa-bar-chart fa-size-18"></i> ความเคลื่อนไหวอาทิตย์นี้</h2>
+            </div>
+            <div class="sidebar-content">
+              <div class="dashboard-visualization" ng-include="'/views/summary-visualization-graph.html'"></div>
+            </div>
+        </div>
+      </div> <!-- /.col-sm-8 -->
+    </div> <!-- /.row -->
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="sidebar-block">
+              <div class="sidebar-heading">
+                <h2 class="sidebar-heading-text"><i class="fa fa-user-md fa-size-18"></i> รายงานผิดปกติ</h2>
+                <a class="view-all" href="#/home">ดูทั้งหมด</a>
+              </div>
+              <div class="sidebar-content">
+                  <div ng-show="loadingNegativeReports" loader-spinner></div>
+                  <div class="ta-view"> <!-- Table View -->
+                    <div class="ta-view-header row hidden-xs">
+                      <div class="col-md-3 col-sm-3">วันที่</div>
+                      <div class="col-md-2 col-sm-2">สถานะ</div>
+                      <div class="col-md-2 col-sm-2">ประเภท</div>
+                      <div class="col-md-5 col-sm-5">พื้นที่</div>
+                    </div>
+                    <!-- ngRepeat: report in reports -->
+                    <div class="ta-view-row row"
+                         ng-click="onClickReport(report.id)"
+                         ng-class="{ 'active': report.id == activeReportId }"
+                         ng-repeat="report in negativeReports">
+                        <div class="ta-view-col ta-view-date col-md-3 col-sm-3" data-th="วันที่">
+                          <span ng-bind="report.date | amDateFormat:'D MMM YY เวลา HH:mm น.'"></span>
+                        </div>
+
+                        <div class="ta-view-col ta-view-state col-md-2 col-sm-2" data-th="สถานะ">
+                          <span class="label label-default label-state-{{report.stateCode}}"
+                                 ng-bind="report.stateName" ng-if="report.stateName"></span>
+                        </div>
+
+                        <div class="ta-view-col ta-view-report col-md-2 col-sm-2" data-th="ประเภท">
+                          <span ng-bind="::report.reportTypeName" class="filter-reporttype"></span>
+                        </div>
+
+                        <div class="ta-view-col ta-view-area col-md-5 col-sm-5" data-th="พื้นที่">
+                          <div class="filter-result-area">
+                            <span ng-bind="::report.administrationAreaAddress"></span>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+        </div> <!-- /.col-sm-4 -->
+
+        <div class="col-md-4">
+            <a class="btn btn-lg btn-primary btn-block btn-default btn-summary" href="#/summary/visualize"><i class="fa fa-file-text-o" aria-hidden="true"></i> สรุปรายงานรายเดือน</a>
+            <div class="sidebar-block">
+                <div class="sidebar-heading">
+                  <h2 class="sidebar-heading-text"><i class="fa fa-check fa-size-18"></i> รายงานไม่พบเหตุผิดปกติ</h2>
+                  <a class="view-all" href="#/filter?q=type:0">ดูทั้งหมด</a>
+                </div>
+                <div class="sidebar-content">
+                    <ul class="sidebar-list">
+                        <li ng-show="loadingPositiveReports"><div loader-spinner></div></li>
+                        <li ng-repeat="report in positiveReports">
+                            <p ng-bind="::report.createdByName"></p>
+                            <p class="small" ng-bind="report.date | amDateFormat:'D MMM YY เวลา HH:mm น.'"></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- /.col-sm-4 -->
+    </div> <!-- /.row -->
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="sidebar-block">
+              <div class="sidebar-heading">
+                <h2 class="sidebar-heading-text"><i class="fa fa-group fa-size-18"></i> อาสาทั้งหมด {{ dashboard.users }} คน</h2>
+                <a class="view-all" href="#/user-list">ดูทั้งหมด</a>
+              </div>
+              <div class="sidebar-content">
+                  <ul class="sidebar-list -avatar">
+                      <li ng-show="loadingUsers"><div loader-spinner></div></li>
+                      <li ng-repeat="user in users">
+                          <img src="{{ getAvatarUrl(user.avatarUrl) }}" alt="avatar" class="pull-left avatar avatar-w4">
+                          <span ng-bind="::user.name" class="filter-reporttype"></span>
+                          <p class="small" ng-bind="user.dateJoined | amDateFormat:'D MMM YY เวลา HH:mm น.'"></p>
+                      </li>
+                  </ul>
+              </div>
+            </div>
+        </div> <!-- /.col-sm-4 -->
+
+        <div class="col-md-4">
+            <div class="sidebar-block">
+                <div class="sidebar-heading">
+                  <h2 class="sidebar-heading-text"><i class="fa fa-trophy fa-size-18"></i> ประสิทธิภาพอาสา</h2>
+                  <a class="view-all" href="#/summary/performance-person">ดูทั้งหมด</a>
+                </div>
+                <div class="sidebar-content">
+                    <ul class="sidebar-list -avatar">
+                        <li ng-show="loadingPerformanceUsers"><div loader-spinner></div></li>
+                        <li ng-repeat="user in performanceUsers | orderBy:'-numberOfActiveDays' | limitTo : 3">
+                            <div class="grade">A</div>
+                            <span ng-bind="::user.fullName" class="filter-reporttype"></span>
+                            <p class="small">รายงาน {{ user.numberOfActiveDays }} ครั้ง</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- /.col-sm-4 -->
+
+        <div class="col-md-4">
+            <div class="sidebar-block">
+                <div class="sidebar-heading">
+                  <h2 class="sidebar-heading-text"><i class="fa fa-phone fa-size-18"></i> รายชื่อติดต่อ</h2>
+                </div>
+                <div class="sidebar-content">
+                    <h3 class="heading-list pull-left">หมู่บ้าน</h3>
+                    <a class="view-all" ng-if="canUpdateContact" href="#/contacts">ดูทั้งหมด</a>
+                    <hr class="clear-both"/>
+                    <ul class="sidebar-list -mini -marginb">
+                        <li ng-show="loadingContacts"><div loader-spinner></div></li>
+                        <li ng-repeat="area in administrationAreas">
+                          <p class="small -mini">{{ area.name }}</p>
+                          <a ng-if="canUpdateContact" class="pull-right" data-toggle="modal" data-target="#contactModal" ng-click="selectedArea(area)">แก้ไข</a>
+                        </li>
+                        <li ng-show="administrationAreas.length === 0"><p class="small ">ไม่พบรายการ</p></li>
+                    </ul>
+
+                    <h3 class="heading-list pull-left">ผู้มีส่วนเกี่ยวข้องกรณีต่างๆ</h3>
+                    <a class="view-all" ng-if="canUpdateNotification" href="#/notification-config-list">ดูทั้งหมด</a>
+                    <hr class="clear-both"/>
+                    <ul class="sidebar-list -mini">
+                        <li ng-show="loadingNotification"><div loader-spinner></div></li>
+                        <li ng-repeat="template in notificationTemplates|limitTo: 2">
+                          <p class="small -mini">{{ template.description }}</p>
+                          <a ng-if="canUpdateNotification" class="pull-right" role="button" data-toggle="modal" data-target="#notificationContactModal" ng-click="selectedTemplate(template)">
+                              แก้ไข
+                          </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- /.col-sm-4 -->
+    </div> <!-- /.row -->
+
+
+
+    </div></div>
+
+    <div ng-include="'/views/contacts-update.html'"></div>
+    <div ng-include="'/views/notification-config-update.html'"></div>
+
+  </div>
+</div>
+
+<div ng-include="'/views/report-view.html'" onload="initReportModal()"></div>
+
+
+  <!-- /report type form -->
+
+
+  <!-- /report type state form -->
+
+  <!-- /date range form -->
+  <!-- /authority form -->
+
+  <!-- /areas form -->
+
+  <!-- /test flag form -->
+
+
+
+<div ng-if="resultMode == 'table'" class="ta-view"> <!-- Table View -->
+  <div class="ta-view-header row hidden-xs">
+    <div class="col-md-1 col-sm-1">
+      <div class="row">
+        <div class="col-md-6 col-sm-6" data-toggle="tooltip" data-placement="top" title="รายงานติดตาม">
+          <span class="hoverable -help" tooltip-placement="top" tooltip="รายงาน Follow-up">
+            <i class="fa fa-flag"></i>
+          </span>
+        </div>
+        <div class="col-md-6 col-sm-6" data-toggle="tooltip" data-placement="top" title="รายงานทดสอบ">
+          <span class="hoverable -help" tooltip-placement="top" tooltip="รายงานทดสอบ">
+            <i class="fa fa-flask"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 col-sm-2">วันที่</div>
+    <div class="col-md-2 col-sm-2">สถานะ</div>
+    <div class="col-md-1 col-sm-1 hidden-xs">ข้อมูล</div>
+    <div class="col-md-2 col-sm-2">ประเภท</div>
+    <div class="col-md-4 col-sm-4">พื้นที่</div>
+  </div>
+  <div ng-repeat="report in reports" class="ta-view-row row"
+       ng-class="{ 'active': report.id == activeReportId }"
+       ng-click="onClickReport(report.id)">
+
+      <div class="col-md-1 col-sm-1">
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+            <span class="text-flag-follow-up" ng-if="report.parent" tooltip-placement="top" tooltip="รายงาน Follow-up">
+              <i class="fa fa-flag"></i>
+            </span>
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <span class="text-flag-test-report" ng-if="report.testFlag" tooltip-placement="top" tooltip="รายงานทดสอบ">
+              <i class="fa fa-flask"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ta-view-col ta-view-date col-md-2 col-sm-2" data-th="วันที่">
+        <span ng-if="report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM'"></span>
+        <span ng-if="!report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM YY'"></span>
+        <small>, {{report.date | amDateFormat:'HH:mm'}} น.</small>
+      </div>
+
+      <div class="ta-view-col ta-view-state col-md-2 col-sm-2" data-th="สถานะ">
+        <span class="label label-default label-state-{{report.stateName | slug}}"
+               ng-bind="report.stateName" ng-if="report.stateName"></span>
+      </div>
+      <div class="ta-view-col ta-view-info col-md-1 col-sm-1 hidden-xs">
+        <span class="hoverable -help" tooltip-html-unsafe="{{ report.renderedOriginalFormData | htmlToPlainText }}">
+          <i class="fa fa-info-circle"></i>
+        </span>
+      </div>
+      <div class="ta-view-col ta-view-report col-md-2 col-sm-2" data-th="ประเภท">
+        <span ng-bind="::report.reportTypeName" class="filter-reporttype"></span>
+      </div>
+
+      <div class="ta-view-col ta-view-area col-md-4 col-sm-4" data-th="พื้นที่">
+        <div class="filter-result-area">
+          <span ng-bind="::report.administrationAreaAddress"></span>
+        </div>
+      </div>
+      <div class="ta-view-col ta-view-detail visible-xs-block col-sm-12" data-th="อาการ">
+        <div class="filter-result-desc" ng-bind-html="::report.renderedOriginalFormData"></div>
+      </div>
+
+  </div><!-- /.filter-result-item -->
+</div>
+
+<div class="filter-result-message" ng-show="error || isEmpty()">
+  <div class="filter-error alert alert-danger" role="alert" ng-show="error">
+      <strong>เกิดข้อผิดพลาด</strong> กรุณารอสักครู่แล้วลองใหม่อีกครั้ง
+  </div>
+
+  <div class="filter-empty alert alert-info" ng-show="isEmpty()">
+      <strong>ไม่พบผลการค้นหา</strong> กรุณาปรับการค้นหาใหม่ หรือ ลองกดค้นหาอีกครั้ง
+  </div>
+</div><!-- /.filter-result-message -->

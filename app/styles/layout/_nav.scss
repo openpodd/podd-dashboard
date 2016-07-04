@@ -78,6 +78,10 @@
             padding: 10px;
             margin: 5px 0 5px 0;
             width: 100%;
+
+            @include respond-to(phone){
+                display: none;
+            }
         }
     }
 }
@@ -111,6 +115,7 @@ $nav-font-family: ThaiSansNeueRegular;
 .pd-nav-list{
     padding: 0;
     list-style: none;
+    background-color: #333;
 }
 
 .logo{
@@ -334,9 +339,17 @@ $notifi-item-read: #ececec;
     }
     &.-mini {
         width: 150px;
+
+        @include respond-to(phone){
+            width: 100%;
+        }
     }
     &.-micro {
         width: 120px;
+
+        @include respond-to(phone){
+            width: 100%;
+        }
     }
 }
 

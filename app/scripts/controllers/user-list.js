@@ -11,7 +11,9 @@ angular.module('poddDashboardApp')
     shared.reportWatchId = null;
 })
 
-.controller('UsersCtrl', function ($scope, Menu, User, UserDetail, Authority, AuthorityView) {
+.controller('UsersCtrl', function ($scope, Menu, User,
+                                   UserDetail, Authority, AuthorityView,
+                                  uiGridUtils) {
     Menu.setActiveMenu('users');
 
     $scope.users = [];
@@ -74,6 +76,54 @@ angular.module('poddDashboardApp')
 
     refreshUsers();
 
+    $scope.gridOptionsPerson = {
+        enableSorting: false,
+        data: [],
+        columnDefs: [],
+        exporterLinkLabel: 'ดาวน์โหลดข้อมูลไฟล์ CSV',
+        exporterLinkTemplate: '<span><a class="btn btn-primary btn-sm" download="สรุปการรายงานของอาสา.csv" href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\">LINK_LABEL</a></span>',
+        onRegisterApi: function(gridApi){
+            $scope.gridApi = gridApi;
+        }
+    };
+
+    $scope.exportUsers = [];
+    function exportUsers(to) {
+        User.list().$promise.then(function (data) {
+            data.forEach(function (item) {
+                $scope.exportUsers.push({
+                  'ชื่อบัญชีผู้ใช้': item.username,
+                  'ชื่อ': item.firstName,
+                  'สกุล': item.lastName,
+                  'ที่อยู่': item.contact,
+                  'เบอร์ติดต่อ': item.telephone,
+                  'วันที่เข้าร่วม': moment(item.dateJoined).format('D MMM YYYY'),
+                  'พื้นที่': item.authority.name,
+                });
+            });
+
+            $scope.gridOptionsPerson.enableSorting = true;
+            $scope.gridOptionsPerson.columnDefs = [
+                { field: 'ชื่อบัญชีผู้ใช้', displayName: 'ชื่อบัญชีผู้ใช้', headerCellClass: 'cell-center' },
+                { field: 'ชื่อ', displayName: 'ชื่อ', headerCellClass: 'cell-center' },
+                { field: 'สกุล', displayName: 'สกุล', headerCellClass: 'cell-center' },
+                { field: 'ที่อยู่', displayName: 'ที่อยู่', headerCellClass: 'cell-center' },
+                { field: 'เบอร์ติดต่อ', displayName: 'เบอร์ติดต่อ', headerCellClass: 'cell-center' },
+                { field: 'วันที่เข้าร่วม', displayName: 'วันที่เข้าร่วม', headerCellClass: 'cell-center' },
+                { field: 'พื้นที่', displayName: 'พื้นที่', headerCellClass: 'cell-center' },
+            ];
+
+            $scope.gridOptionsPerson.data = $scope.exportUsers;
+
+            setTimeout(function(){
+              if (to === 'csv') {
+                uiGridUtils.exportCsv($scope.gridApi.grid, 'list-user.csv');
+              } else {
+                uiGridUtils.exportXlsx($scope.gridApi.grid, 'list-user.xlsx');
+              }
+            }, 100);
+        }).catch(function () {});
+    }
 
     $scope.loadMore = function loadMore() {
         if ($scope.lastPage){
@@ -153,5 +203,21 @@ angular.module('poddDashboardApp')
     $scope.resetUser = function () {
         angular.copy($scope.userBeforeChange, $scope.userSelected);
     };
+
+    $scope.csvExport = function () {
+        if ($scope.exportUsers.length === 0) {
+          exportUsers('csv');
+        } else {
+          uiGridUtils.exportCsv($scope.gridApi.grid, 'list-user.csv');
+        }
+    };
+
+    $scope.xlsxExport = function () {
+      if ($scope.exportUsers.length === 0) {
+        exportUsers('xlsx');
+      } else {
+        uiGridUtils.exportXlsx($scope.gridApi.grid, 'list-user.xlsx');
+      }
+    }
 
 });

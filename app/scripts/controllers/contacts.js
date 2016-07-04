@@ -9,6 +9,76 @@ angular.module('poddDashboardApp')
 
 })
 
+.controller('ContactModalCtrl', function ($scope, Menu, AdministrationArea,
+      $state, $stateParams, $window, Notification) {
+
+      $scope.oldSelectedContact = '';
+      $scope.newSelectedContact = '';
+
+      $scope.$parent.$parent.selectedArea = function(area) {
+        $scope.selected = area;
+        $scope.isSave = false;
+        $scope.oldSelectedContact = area.contacts;
+        $scope.newSelectedContact = area.contacts;
+      };
+
+      $scope.disabledUpdateBtn = false;
+      $scope.saveContact = function() {
+        var params = [{
+          'id':  $scope.selected.id,
+          'contacts': $scope.newSelectedContact
+        }];
+
+        if ($scope.newSelectedContact !== null &&
+            $scope.newSelectedContact.replace(' ', '') !== '') {
+
+            $scope.disabledUpdateBtn = true;
+            AdministrationArea.updateContacts(params).$promise.then(function (resp) {
+              $scope.selected.contacts = $scope.newSelectedContact;
+              $scope.disabledUpdateBtn = false;
+              $scope.isSave = true;
+
+            }).catch(function () {
+              $scope.selected.contacts = $scope.oldSelectedContact;
+              $scope.disabledUpdateBtn = false;
+              $scope.isSave = false;
+          });
+
+        } else {
+          swal('', 'คุณยังไม่ได้ระบุข้อมูลการติดต่อ', 'warning');
+        }
+
+      };
+
+      $scope.testMessage = '[ทดลองส่งข้อความจาก PODD]  พบโรคห่าไก่ระบาดในหมู่บ้านของท่าน แนะนำให้' +
+              ' กระจายข่าวผ่านเสียงตามสายทันที' +
+              ' ร่วมหารือกับ อปท.และปศอ. เพื่อควบคุมโรค'  ;
+
+      $scope.testSendSMS = function() {
+
+          if ($scope.selected.contacts !== null &&
+              $scope.selected.contacts.replace(' ', '') !== '') {
+
+            var params = {
+              users: $scope.selected.contacts,
+              message: $scope.testMessage
+            };
+
+            Notification.test(params).$promise.then(function (resp) {
+              swal('สำเร็จ', 'ระบบ PODD ได้ส่งข้อความแล้ว', 'success');
+
+            }).catch(function () {
+              swal('เกิดข้อผิดพลาด', 'ระบบ PODD ไม่สามารถส่งข้อความได้', 'error');
+
+            });
+
+          }
+
+          $('#contactModal').modal('toggle');
+      };
+
+})
+
 .controller('ContactsCtrl', function ($scope, Menu, AdministrationArea,
       $state, $stateParams, $window, Notification) {
   Menu.setActiveMenu('scenario');
@@ -32,7 +102,6 @@ angular.module('poddDashboardApp')
   };
 
   $scope.canLoadMore = true;
-
 
   $scope.toggleHelp = function () {
       $scope.help = !$scope.help;
@@ -126,70 +195,6 @@ angular.module('poddDashboardApp')
   };
 
   $scope.selected = '';
-  $scope.oldSelectedContact = '';
-  $scope.newSelectedContact = '';
-
-  $scope.selectedArea = function(area) {
-    $scope.selected = area;
-    $scope.isSave = false;
-    $scope.oldSelectedContact = area.contacts;
-    $scope.newSelectedContact = area.contacts;
-  };
-
-  $scope.disabledUpdateBtn = false;
-  $scope.saveContact = function() {
-    var params = [{
-      'id':  $scope.selected.id,
-      'contacts': $scope.newSelectedContact
-    }];
-
-    if ($scope.newSelectedContact !== null &&
-        $scope.newSelectedContact.replace(' ', '') !== '') {
-
-        $scope.disabledUpdateBtn = true;
-        AdministrationArea.updateContacts(params).$promise.then(function (resp) {
-          $scope.selected.contacts = $scope.newSelectedContact;
-          $scope.disabledUpdateBtn = false;
-          $scope.isSave = true;
-
-        }).catch(function () {
-          $scope.selected.contacts = $scope.oldSelectedContact;
-          $scope.disabledUpdateBtn = false;
-          $scope.isSave = false;
-      });
-
-    } else {
-      swal('', 'คุณยังไม่ได้ระบุข้อมูลการติดต่อ', 'warning');
-    }
-
-  };
-
-  $scope.testMessage = '[ทดลองส่งข้อความจาก PODD]  พบโรคห่าไก่ระบาดในหมู่บ้านของท่าน แนะนำให้' +
-          ' กระจายข่าวผ่านเสียงตามสายทันที' +
-          ' ร่วมหารือกับ อปท.และปศอ. เพื่อควบคุมโรค'  ;
-
-  $scope.testSendSMS = function() {
-
-      if ($scope.selected.contacts !== null &&
-          $scope.selected.contacts.replace(' ', '') !== '') {
-
-        var params = {
-          users: $scope.selected.contacts,
-          message: $scope.testMessage
-        };
-
-        Notification.test(params).$promise.then(function (resp) {
-          swal('สำเร็จ', 'ระบบ PODD ได้ส่งข้อความแล้ว', 'success');
-
-        }).catch(function () {
-          swal('เกิดข้อผิดพลาด', 'ระบบ PODD ไม่สามารถส่งข้อความได้', 'error');
-
-        });
-
-      }
-
-      $('#contactModal').modal('toggle');
-  };
 
   $scope.doQueryOnParams = function (params) {
 

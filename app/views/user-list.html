@@ -18,7 +18,9 @@
 
             <div class="filter-action clearfix">
                 <button type="button" class="btn btn-default hide">ลบรายการ</button>
-                <button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#userModal" ng-click="selectedUser(null)" ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> สร้างผู้ใช้</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#userModal" ng-click="selectedUser(null)" ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> สร้างผู้ใช้</button>
+                <button type="button" class="btn btn-primary" ng-click="csvExport()" ><i class="fa fa-file-code-o fa-size-16 ico-front" aria-hidden="true"></i> ข้อมูลไฟล์ CSV</button>
+                <button type="button" class="btn btn-primary" ng-click="xlsxExport()" ><i class="fa fa-file-excel-o fa-size-16 ico-front" aria-hidden="true"></i> ข้อมูลไฟล์ Excel</button>
             </div>
             <div class="row">
               <div class="col-lg-12">
@@ -39,8 +41,9 @@
                     <!--</div>-->
                     <div class="col-md-2 col-sm-2">ชื่อ</div>
                     <div class="col-md-2 col-sm-2">นามสกุล</div>
-                    <div class="col-md-3 col-sm-2">ชื่อบัญชีผู้ใช้</div>
-                    <div class="col-md-3 col-sm-3">พื้นที่</div>
+                    <div class="col-md-2 col-sm-2">ชื่อบัญชีผู้ใช้</div>
+                    <div class="col-md-3 col-sm-2">พื้นที่</div>
+                    <div class="col-md-2 col-sm-2">วันที่เข้าร่วม</div>
                     <div class="col-md-1 col-sm-2 text-right">คำสั่ง</div>
                   </div>
                   <div ng-repeat="user in users" class="ta-view-row row">
@@ -57,12 +60,16 @@
                         <span> {{ user.lastName }}</span>
                       </div>
 
-                      <div class="ta-view-col col-md-3 col-sm-2" data-th="ชื่อบัญชีผู้ใช้">
+                      <div class="ta-view-col col-md-2 col-sm-2" data-th="ชื่อบัญชีผู้ใช้">
                         <span> {{ user.username }}</span>
                       </div>
 
-                      <div class="ta-view-col col-md-3 col-sm-3" data-th="พื้นที่">
+                      <div class="ta-view-col col-md-3 col-sm-2" data-th="พื้นที่">
                         <span> {{ user.authority.name }}</span>
+                      </div>
+
+                      <div class="ta-view-col col-md-2 col-sm-2" data-th="วันที่เข้าร่วม">
+                        <span> {{ user.dateJoined| amDateFormat:'D MMM YY เวลา HH:mm น.' }}</span>
                       </div>
 
                       <div class="ta-view-col ta-view-area col-md-1 col-sm-2 text-right" data-th="คำสั่ง">
@@ -94,6 +101,9 @@
 
     </div>
   </div>
+
+
+  <div id="gridPerson" class="summary-grid-person grid-summary clear inline-table hide" ui-grid="gridOptionsPerson" ui-grid-exporter></div>
 
   <div id="userModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-md">

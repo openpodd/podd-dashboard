@@ -11,6 +11,44 @@ angular.module('poddDashboardApp')
     shared.reportWatchId = null;
 })
 
+.controller('NotificationModalCtrl', function ($scope, Menu, User, UserDetail,
+                                          Authority, AuthorityView, NotificationAuthorities) {
+
+    $scope.saveContact = function() {
+        var contact = $scope.selectedTemplateContact.contact;
+        $scope.disabledUpdateBtn = true;
+
+        swal({
+            title: 'แน่ใจไหม?',
+            text: 'คุณต้องการเปลี่ยนแปลงการแจ้งเตือน!',
+            type: 'warning',
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'ใช่',
+            cancelButtonText: 'ยกเลิก',
+            showCancelButton: true,
+            closeOnConfirm: false,
+            closeOnCancel: true
+        }, function(isConfirm){
+            if (isConfirm) {
+                var params = contact;
+                params.to = $scope.newSelectedContact;
+
+                NotificationAuthorities.update(params).$promise.then(function (data) {
+                    angular.copy(data, contact);
+                    swal('สำเร็จ', 'แก้ไขสำเร็จ', 'success');
+                }).catch(function () {
+                    swal('เกิดข้อผิดพลาด', 'ไม่สามารถแก้ไขการแจ้งเตือน่ได้', 'error');
+                });
+                $scope.disabledUpdateBtn = false;
+                $('#notificationContactModal').modal('toggle');
+            } else {
+                $scope.disabledUpdateBtn = false;
+            }
+        });
+    };
+
+})
+
 .controller('NotificationCtrl', function ($scope, Menu, User, UserDetail,
                                           Authority, AuthorityView, NotificationAuthorities) {
     Menu.setActiveMenu('users');
@@ -48,43 +86,8 @@ angular.module('poddDashboardApp')
     });
 
     $scope.selectedTemplate = function(template) {
-        $scope.selected = template;
+        $scope.selectedTemplateContact = template;
         $scope.newSelectedContact = template.contact.to;
-    };
-
-
-    $scope.saveContact = function() {
-        var contact = $scope.selected.contact;
-        $scope.disabledUpdateBtn = true;
-
-        swal({
-            title: 'แน่ใจไหม?',
-            text: 'คุณต้องการเปลี่ยนแปลงการแจ้งเตือน!',
-            type: 'warning',
-            confirmButtonColor: '#DD6B55',
-            confirmButtonText: 'ใช่',
-            cancelButtonText: 'ยกเลิก',
-            showCancelButton: true,
-            closeOnConfirm: false,
-            closeOnCancel: true
-        }, function(isConfirm){
-            if (isConfirm) {
-                var params = contact;
-                params.to = $scope.newSelectedContact;
-                console.log(params);
-
-                NotificationAuthorities.update(params).$promise.then(function (data) {
-                    angular.copy(data, contact);
-                    swal('สำเร็จ', 'แก้ไขสำเร็จ', 'success');
-                }).catch(function () {
-                    swal('เกิดข้อผิดพลาด', 'ไม่สามารถแก้ไขการแจ้งเตือน่ได้', 'error');
-                });
-                $scope.disabledUpdateBtn = false;
-                $('#contactModal').modal('toggle');
-            } else {
-                $scope.disabledUpdateBtn = false;
-            }
-        });
     };
 
 });
