@@ -230,6 +230,12 @@ $badge-bad: #FF6D69;
     .nav-tabs.nav-justified > li:first-child a{
         margin-right: 10px;
     }
+
+    @include respond-to(tablet-portrait){
+        .nav-tabs.nav-justified > li:first-child a {
+            margin-right: 0;
+        }
+    }
 }
 
 .nav-tabs{
