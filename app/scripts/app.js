@@ -277,6 +277,11 @@ angular
         url: '/about',
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
+      })
+      .state('authority-dashboard', {
+        url: '/authority-dashboard',
+        templateUrl: 'views/authority-dashboard.html',
+        controller: 'AuthorityDashboardModeCtrl'
       });
 
     $urlRouterProvider.otherwise('/home');

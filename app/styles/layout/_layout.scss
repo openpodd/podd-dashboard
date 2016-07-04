@@ -308,3 +308,11 @@ blockquote p {
         top: 21px;
     }
 }
+
+.l-detail-section-no-padding {
+    border-left: 0px solid transparent;
+}
+
+.l-full-screen {
+    z-index: 9999;
+}
