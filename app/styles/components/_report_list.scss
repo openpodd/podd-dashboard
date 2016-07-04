@@ -217,8 +217,6 @@
 .filter-result-date{
   @include respond-to(tablet-portrait){
     margin-bottom: 5px;
-    padding: 5px 10px;
-    background-color: #efefef;
   }
 }
 .filter-thumb{
