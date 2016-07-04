@@ -191,12 +191,18 @@ angular.module('poddDashboardApp')
   var bounds = $scope.layers.report.layer.getBounds();
   var zoom = $scope.layers.report.layer.getBounds();
 
-  leafletMap.on('moveend', function() {
-    changeBound();
+  $scope.showRefresh = false;
+
+  leafletMap.on('movestart', function() {
+    $scope.pause();
+    $scope.showRefresh = true;
+
+    if(!$scope.$$phase) {
+      $scope.$apply();
+    }
   });
 
-  function changeBound() {
-    $scope.pause();
+  $scope.changeBound = function() {
 
     if ($state.current.name !== 'scenario') {
       return;
@@ -223,7 +229,7 @@ angular.module('poddDashboardApp')
         refreshReportsLayerDataWithSummary();
       }, 100);
     }, 0);
-  }
+  };
 
   // TODO: this can cause:
   // `TypeError: Cannot read property 'childNodes' of undefined`
@@ -627,8 +633,10 @@ $scope.replay = function () {
 
   var lastLayer = null;
   var refreshing = false;
-  var refreshingQuery = "";
+  var refreshingQuery = '';
   function refreshReportsLayerData(refreshGraph) {
+    $scope.showRefresh = false;
+
     if (refreshGraph) {
         query.date__gte = formatDayDate(parseDate('01/2015'));
         query.date__lte = formatDayDate(new Date());
@@ -639,7 +647,7 @@ $scope.replay = function () {
     }
 
     // check to prevent duplicate network request.
-    if (refreshing && refreshingQuery == JSON.stringify(query)) {
+    if (refreshing && refreshingQuery === JSON.stringify(query)) {
       return;
     }
     refreshing = true;

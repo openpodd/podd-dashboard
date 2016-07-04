@@ -286,3 +286,16 @@ menu {
     display: none;
   }
 }
+
+
+.center-layers-control {
+  left: 40%;
+  top: 40%;
+  position: fixed;
+  background-color: rgba(128, 128, 128, 0.2);
+  z-index: 999;
+}
+
+.fa-size-60 {
+  font-size: 60px;
+}
