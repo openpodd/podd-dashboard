@@ -12,7 +12,7 @@
 
 .layers-control-top{
   position: absolute;
-  top: 10px;
+  top: 15px;
   right: 50px;
   padding: 15px;
   background-color: rgba(256, 256, 256, 0.4);
@@ -33,6 +33,9 @@
       input {
           margin-right: 10px;
       }
+  }
+  @include respond-to(phone){
+      top: 60px;
   }
 }
 

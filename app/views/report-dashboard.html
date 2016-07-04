@@ -89,14 +89,14 @@
             <a class="btn btn-lg btn-primary btn-block btn-default btn-summary" href="#/summary/visualize"><i class="fa fa-file-text-o" aria-hidden="true"></i> สรุปรายงานรายเดือน</a>
             <div class="sidebar-block">
                 <div class="sidebar-heading">
-                  <h2 class="sidebar-heading-text"><i class="fa fa-check fa-size-18"></i> รายงานไม่พบเหตุผิดปกติ</h2>
+                  <h2 class="sidebar-heading-text"><i class="fa fa-check fa-size-18"></i> รายงานปกติ</h2>
                   <a class="view-all" href="#/filter?q=type:0">ดูทั้งหมด</a>
                 </div>
                 <div class="sidebar-content">
                     <ul class="sidebar-list">
                         <li ng-show="loadingPositiveReports"><div loader-spinner></div></li>
                         <li ng-repeat="report in positiveReports">
-                            <p ng-bind="::report.createdByName"></p>
+                            <p class="f-black" ng-bind="::report.createdByName"></p>
                             <p class="small" ng-bind="report.date | amDateFormat:'D MMM YY เวลา HH:mm น.'"></p>
                         </li>
                     </ul>
@@ -150,7 +150,7 @@
                   <h2 class="sidebar-heading-text"><i class="fa fa-phone fa-size-18"></i> รายชื่อติดต่อ</h2>
                 </div>
                 <div class="sidebar-content">
-                    <h3 class="heading-list pull-left">หมู่บ้าน</h3>
+                    <h3 class="heading-list pull-left f-black">หมู่บ้าน</h3>
                     <a class="view-all" ng-if="canUpdateContact" href="#/contacts">ดูทั้งหมด</a>
                     <hr class="clear-both"/>
                     <ul class="sidebar-list -mini -marginb">
@@ -162,7 +162,7 @@
                         <li ng-show="administrationAreas.length === 0"><p class="small ">ไม่พบรายการ</p></li>
                     </ul>
 
-                    <h3 class="heading-list pull-left">ผู้มีส่วนเกี่ยวข้องกรณีต่างๆ</h3>
+                    <h3 class="heading-list pull-left f-black">ผู้มีส่วนเกี่ยวข้องกรณีต่างๆ</h3>
                     <a class="view-all" ng-if="canUpdateNotification" href="#/notification-config-list">ดูทั้งหมด</a>
                     <hr class="clear-both"/>
                     <ul class="sidebar-list -mini">
