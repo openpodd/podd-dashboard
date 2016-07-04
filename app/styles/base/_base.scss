@@ -474,6 +474,12 @@ html, body{
         font-size: 9px;
         border-radius: 3px;
     }
+
+    &:hover {
+        background-color: #a7a7a7;
+        color: #333;
+        text-decoration: none;
+    }
 }
 
 .clear-both {
@@ -483,4 +489,7 @@ html, body{
 
 .green {
     color: #E0C137;
+}
+.f-black {
+    color: #000;
 }
