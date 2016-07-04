@@ -442,6 +442,14 @@ html, body{
         border: none;
         text-decoration: underline;
     }
+    .f-black {
+        color: #000;
+    }
+}
+@include respond-to(phone){
+    .f-black {
+        color: #000;
+    }
 }
 
 .panel-phonebook-empty {
@@ -489,7 +497,4 @@ html, body{
 
 .green {
     color: #E0C137;
-}
-.f-black {
-    color: #000;
 }
