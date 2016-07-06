@@ -217,8 +217,6 @@
 .filter-result-date{
   @include respond-to(tablet-portrait){
     margin-bottom: 5px;
-    padding: 5px 10px;
-    background-color: #efefef;
   }
 }
 .filter-thumb{
@@ -352,7 +350,7 @@
     // overflow: hidden;
     // text-overflow: ellipsis;
     // white-space: nowrap;
-    color: #000;
+    // color: #000;
   }
   .ta-view-state{
   }

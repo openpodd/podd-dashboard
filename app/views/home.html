@@ -108,9 +108,9 @@
                 </div>
 
                 <div class="ta-view-col ta-view-date col-md-2 col-sm-2" data-th="วันที่">
-                  <span ng-if="report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM'"></span>
-                  <span ng-if="!report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM YY'"></span>
-                  <small>, {{report.date | amDateFormat:'HH:mm'}} น.</small>
+                  <span class="f-black" ng-if="report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM'"></span>
+                  <span class="f-black" ng-if="!report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM YY'"></span>
+                  <small class="f-black">, {{report.date | amDateFormat:'HH:mm'}} น.</small>
                 </div>
 
                 <div class="ta-view-col ta-view-state col-md-2 col-sm-2" data-th="สถานะ">

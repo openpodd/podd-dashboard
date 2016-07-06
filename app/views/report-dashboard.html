@@ -62,7 +62,7 @@
                          ng-class="{ 'active': report.id == activeReportId }"
                          ng-repeat="report in negativeReports">
                         <div class="ta-view-col ta-view-date col-md-3 col-sm-3" data-th="วันที่">
-                          <span ng-bind="report.date | amDateFormat:'D MMM YY เวลา HH:mm น.'"></span>
+                          <span class="f-black" ng-bind="report.date | amDateFormat:'D MMM YY เวลา HH:mm น.'"></span>
                         </div>
 
                         <div class="ta-view-col ta-view-state col-md-2 col-sm-2" data-th="สถานะ">
@@ -205,79 +205,6 @@
 
   <!-- /test flag form -->
 
-
-
-<div ng-if="resultMode == 'table'" class="ta-view"> <!-- Table View -->
-  <div class="ta-view-header row hidden-xs">
-    <div class="col-md-1 col-sm-1">
-      <div class="row">
-        <div class="col-md-6 col-sm-6" data-toggle="tooltip" data-placement="top" title="รายงานติดตาม">
-          <span class="hoverable -help" tooltip-placement="top" tooltip="รายงาน Follow-up">
-            <i class="fa fa-flag"></i>
-          </span>
-        </div>
-        <div class="col-md-6 col-sm-6" data-toggle="tooltip" data-placement="top" title="รายงานทดสอบ">
-          <span class="hoverable -help" tooltip-placement="top" tooltip="รายงานทดสอบ">
-            <i class="fa fa-flask"></i>
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-2 col-sm-2">วันที่</div>
-    <div class="col-md-2 col-sm-2">สถานะ</div>
-    <div class="col-md-1 col-sm-1 hidden-xs">ข้อมูล</div>
-    <div class="col-md-2 col-sm-2">ประเภท</div>
-    <div class="col-md-4 col-sm-4">พื้นที่</div>
-  </div>
-  <div ng-repeat="report in reports" class="ta-view-row row"
-       ng-class="{ 'active': report.id == activeReportId }"
-       ng-click="onClickReport(report.id)">
-
-      <div class="col-md-1 col-sm-1">
-        <div class="row">
-          <div class="col-md-6 col-sm-6">
-            <span class="text-flag-follow-up" ng-if="report.parent" tooltip-placement="top" tooltip="รายงาน Follow-up">
-              <i class="fa fa-flag"></i>
-            </span>
-          </div>
-          <div class="col-md-6 col-sm-6">
-            <span class="text-flag-test-report" ng-if="report.testFlag" tooltip-placement="top" tooltip="รายงานทดสอบ">
-              <i class="fa fa-flask"></i>
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div class="ta-view-col ta-view-date col-md-2 col-sm-2" data-th="วันที่">
-        <span ng-if="report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM'"></span>
-        <span ng-if="!report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM YY'"></span>
-        <small>, {{report.date | amDateFormat:'HH:mm'}} น.</small>
-      </div>
-
-      <div class="ta-view-col ta-view-state col-md-2 col-sm-2" data-th="สถานะ">
-        <span class="label label-default label-state-{{report.stateName | slug}}"
-               ng-bind="report.stateName" ng-if="report.stateName"></span>
-      </div>
-      <div class="ta-view-col ta-view-info col-md-1 col-sm-1 hidden-xs">
-        <span class="hoverable -help" tooltip-html-unsafe="{{ report.renderedOriginalFormData | htmlToPlainText }}">
-          <i class="fa fa-info-circle"></i>
-        </span>
-      </div>
-      <div class="ta-view-col ta-view-report col-md-2 col-sm-2" data-th="ประเภท">
-        <span ng-bind="::report.reportTypeName" class="filter-reporttype"></span>
-      </div>
-
-      <div class="ta-view-col ta-view-area col-md-4 col-sm-4" data-th="พื้นที่">
-        <div class="filter-result-area">
-          <span ng-bind="::report.administrationAreaAddress"></span>
-        </div>
-      </div>
-      <div class="ta-view-col ta-view-detail visible-xs-block col-sm-12" data-th="อาการ">
-        <div class="filter-result-desc" ng-bind-html="::report.renderedOriginalFormData"></div>
-      </div>
-
-  </div><!-- /.filter-result-item -->
-</div>
 
 <div class="filter-result-message" ng-show="error || isEmpty()">
   <div class="filter-error alert alert-danger" role="alert" ng-show="error">
