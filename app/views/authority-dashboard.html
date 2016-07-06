@@ -20,7 +20,8 @@
           <div class="panel-body">
             <h5>พื้นที่เกิดเหตุ</h5>
             <ul>
-              <li ng-repeat="report in authority.outbreaks.results">{{ report.administrationAreaAddress }}</li>
+              <li ng-repeat="report in authority.outbreaks.administrationAreas">{{ report.address }}</li>
+              <li ng-if="authority.outbreaks.count === 0">ไม่พบรายงาน</li>
             </ul>
           </div>
         </div>
@@ -35,7 +36,8 @@
           <div class="panel-body">
             <h5>พื้นที่เกิดเหตุ</h5>
             <ul>
-              <li ng-repeat="report in authority.suspectOutbreaks.results">{{ report.administrationAreaAddress }}</li>
+              <li ng-repeat="report in authority.suspectOutbreaks.administrationAreas">{{ report.address }}</li>
+              <li ng-if="authority.suspectOutbreaks.count === 0">ไม่พบรายงาน</li>
             </ul>
           </div>
         </div>
@@ -50,7 +52,8 @@
           <div class="panel-body">
             <h5>พื้นที่เกิดเหตุ</h5>
             <ul>
-              <li ng-repeat="report in authority.cases.results">{{ report.administrationAreaAddress }}</li>
+              <li ng-repeat="report in authority.cases.administrationAreas">{{ report.address }}</li>
+              <li ng-if="authority.cases.count === 0">ไม่พบรายงาน</li>
             </ul>
           </div>
         </div>
