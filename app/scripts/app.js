@@ -119,6 +119,7 @@ angular
       /\/summary\/reports-visualization/,
       /\/summary\/dashboard-visualization/,
       /\/summary\/list-user/,
+      /\/summary\/authority-dashboard/,
       /\/ping/,
       /\/tags\/list/,
       /\/users\/profile/,
@@ -279,7 +280,7 @@ angular
         controller: 'AboutCtrl'
       })
       .state('authority-dashboard', {
-        url: '/authority-dashboard',
+        url: '/authority-dashboard?dateStart&dateEnd&authorityId',
         templateUrl: 'views/authority-dashboard.html',
         controller: 'AuthorityDashboardModeCtrl'
       });

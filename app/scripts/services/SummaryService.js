@@ -63,4 +63,14 @@ angular.module('poddDashboardApp')
     });
 
     return resource;
+})
+
+.factory('SummaryAuthorityDashboard', function ($resource) {
+    var resource = $resource(config.API_BASEPATH + '/summary/authority-dashboard/', {}, {
+        get: {
+            isArray: false
+        }
+    });
+
+    return resource;
 });
