@@ -803,10 +803,10 @@ $scope.replay = function () {
 
           // console.log(params);
 
-          query.top = $window.decodeURIComponent(params.top) || 99.810791015625;
-          query.bottom = $window.decodeURIComponent(params.bottom) || 198.1298828125;
-          query.left = $window.decodeURIComponent(params.left) || 17.764381077782076;
-          query.right = $window.decodeURIComponent(params.right) || 19.647760955697354;
+          query.top = params.top? $window.decodeURIComponent(params.top): 98.10791015625;
+          query.bottom = params.bottom? $window.decodeURIComponent(params.bottom): 99.8052978515625;
+          query.left = params.left? $window.decodeURIComponent(params.left): 18.17847354756518;
+          query.right = params.right?  $window.decodeURIComponent(params.right): 19.291701823721098;
 
           if (typeof params.q === 'undefined') {
             delete query.q;
