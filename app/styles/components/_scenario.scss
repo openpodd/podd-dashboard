@@ -1,13 +1,19 @@
 .layers-control {
   position: absolute;
-  top: 10px;
-  right: 20%;
+  top: 60px;
+  left: 0;
   padding: 15px 30px 15px 20px;
   background-color: rgba(128, 128, 128, 0.2);
   z-index: 999;
   margin-right: 10px;
   border-bottom: solid 1px #DDD;
   border-left: solid 1px #DDD;
+
+  padding: 10px;
+  right: 0;
+  margin: auto;
+  width: 720px;
+  // margin-right: 35%;
 }
 
 .layers-control-top{
@@ -42,10 +48,12 @@
 .filter-control {
   position: absolute;
   top: 10px;
-  left: 94px;
+  // left: 94px;
+  left: 0;
   z-index: 999;
   width: 526px;
-  margin-right: 42%;
+  // margin-right: 40%;
+
 
   .filter-help {
     width: 526px;
@@ -118,6 +126,8 @@
 }
 
 .scene-gis-choice {
+    display : inline-block;
+
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -128,6 +138,12 @@
   img {
     width: 32px;
   }
+
+  label {
+      margin: 0;
+  }
+
+
 }
 
 .scene-marker {
@@ -304,5 +320,13 @@ menu {
 }
 
 .pd-btn-refresh {
-  opacity: 0.8
+  opacity: 0.8;
+  padding: 10px;
+
+  i {
+      margin: 0 0 10px;
+  }
+  p {
+      margin: 0;
+  }
 }

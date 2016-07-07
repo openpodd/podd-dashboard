@@ -82,22 +82,23 @@
 
   <div class="center-layers-control" ng-show="showRefresh">
     <button class="btn btn-default pd-btn-refresh" type="button" ng-click="changeBound()">
-      <i class="fa fa-refresh fa-size-60"></i>
+      <i class="fa fa-refresh fa-size-32"></i>
+      <p>  กรุณากดปุ่มเพื่อรีเฟรชข้อมูลใหม่</p>
     </button>
   </div>
   <div class="layers-control">
     <section class="group-1">
-      <div class="scene-gis-choice">
+      <!-- <div class="scene-gis-choice">
         <label>
           <img src="images/markers/pin-animal.png" />
           <input type="checkbox" ng-model="layers.report.show"
           disabled="disabled" ng-change="toggleLayer(layers.report, layers.report.show)">
           Report
         </label>
-      </div>
+      </div> -->
 
       <div class="gis-data scene-gis-control">
-        <h4>GIS Data</h4>
+        <span><strong>ข้อมูลตำแหน่งฟาร์ม</strong></span>
         <div class="scene-gis-choice">
           <label>
             <img src="images/markers/ic3-pig.png" />
@@ -130,14 +131,14 @@
           </label>
         </div>
       </div>
-      
+
       <div class="scene-gis-control hide">
         <h4>Summary</h4>
 
         <div class="scene-gis-choice">
           <label>
             <input type="checkbox" ng-model="layers.heatmap.show"
-            ng-change="toggleLayer(layers.heatmap, layers.heatmap.show)"> 
+            ng-change="toggleLayer(layers.heatmap, layers.heatmap.show)">
             Heat Map
           </label>
         </div>
