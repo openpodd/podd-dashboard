@@ -10,7 +10,7 @@ angular.module('poddDashboardApp')
 })
 
 .controller('SummaryReportMonthCtrl', function ($scope, SummaryReportMonth, dashboard, User,
-    streaming, FailRequest, shared, $location, $state, $stateParams, $window,
+    streaming, FailRequest, shared, $location, $state, $stateParams, $window, Menu,
     cfpLoadingBar, dateRangePickerConfig, uiGridUtils, ReportTypes, Tag, ReportTags) {
 
     console.log('init summary report month ctrl');
@@ -42,7 +42,12 @@ angular.module('poddDashboardApp')
     $scope.tags = [];
     $scope.areas.selectedArea = initArea;
 
-    dashboard.getAuthorities().$promise.then(function (data) {
+    shared.subscribe = Menu.hasPermissionOnMenu('view_dashboard_subscibe');
+    var params = {
+      subscribe: shared.subscribe
+    };
+
+    dashboard.getAuthorities(params).$promise.then(function (data) {
         $scope.areas.all = data;
         $scope.areas.all.push(initArea);
 

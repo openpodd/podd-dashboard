@@ -10,7 +10,7 @@ angular.module('poddDashboardApp')
 })
 
 .controller('SummaryPerformancePersonCtrl', function ($scope, SummaryPerformancePerson, dashboard, User,
-    streaming, FailRequest, shared, $location, $state, $stateParams, $window,
+    streaming, FailRequest, shared, $location, $state, $stateParams, $window, Menu,
     cfpLoadingBar, dateRangePickerConfig, uiGridUtils) {
 
     console.log('init summary performance person ctrl');
@@ -49,7 +49,12 @@ angular.module('poddDashboardApp')
     //     $scope.areas.all.push(initArea);
     // });
 
-    dashboard.getAuthorities().$promise.then(function (data) {
+    shared.subscribe = Menu.hasPermissionOnMenu('view_dashboard_subscibe');
+    var params = {
+      subscribe: shared.subscribe
+    };
+
+    dashboard.getAuthorities(params).$promise.then(function (data) {
         $scope.areas.all = data;
 
         var areaId = parseInt($stateParams.areaId);
@@ -127,6 +132,8 @@ angular.module('poddDashboardApp')
             delete $scope.query.authorityId;
         }
 
+        $scope.query.subscribe = shared.subscribe;
+        
         SummaryPerformancePerson.query($scope.query).$promise.then(function (data) {
             var results = [];
 
