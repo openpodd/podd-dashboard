@@ -308,6 +308,16 @@ blockquote p {
         top: 21px;
     }
 }
+.reports-list {
+    @include respond-to(phone){
+        top: 41px;
+    }
+}
+.l-detail-section {
+    @include respond-to(phone){
+        top: 20px;
+    }
+}
 
 .l-detail-section-no-padding {
     border-left: 0px solid transparent;
