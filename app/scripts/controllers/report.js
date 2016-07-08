@@ -280,27 +280,30 @@ angular.module('poddDashboardApp')
       shared.reportWatchId = reportId;
     };
            
-    L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
-    var options = {
-      center: [ 18.781516724349704, 98.98681640625 ],
-      zoomLevel: 13,
-      // zoomControl: false,
-      // dragging: false,
-      touchZoom: false,
-      scrollWheelZoom: false,
-      doubleClickZoom: false
-    };
-
-    var leafletMap = config.MAPBOX_MAP_ID ?
-                      L.mapbox.map('report-marker-map', config.MAPBOX_MAP_ID, options) :
-                      L.map('report-marker-map', options);
-
-    var controller = L.control.scale({'metric': true, 'imperial': false, 'maxWidth': 200}); 
-    controller.addTo(leafletMap);
-
-    var drawnItems = new L.FeatureGroup(); 
+    var leafletMap;
+    var drawnItems = new L.FeatureGroup();
 
     function addMarker(item) {
+
+      L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
+      var options = {
+        center: [ 18.781516724349704, 98.98681640625 ],
+        zoomLevel: 13,
+        // zoomControl: false,
+        // dragging: false,
+        touchZoom: false,
+        scrollWheelZoom: false,
+        doubleClickZoom: false
+     };
+
+      if (!leafletMap) {
+        leafletMap = config.MAPBOX_MAP_ID ?
+                      L.mapbox.map('report-marker-map', config.MAPBOX_MAP_ID, options) :
+                      L.map('report-marker-map', options);
+        var controller = L.control.scale({'metric': true, 'imperial': false, 'maxWidth': 200}); 
+        controller.addTo(leafletMap);
+      }
+
       drawnItems.clearLayers();
 
       var location = [
@@ -315,7 +318,7 @@ angular.module('poddDashboardApp')
       }).addTo(drawnItems);
 
       drawnItems.addTo(leafletMap);
-      leafletMap.setView(new L.LatLng(item.reportLocation.coordinates[1], item.reportLocation.coordinates[0]));
+      leafletMap.setView(new L.LatLng(item.reportLocation.coordinates[1], item.reportLocation.coordinates[0]), 13);
 
     }
 
