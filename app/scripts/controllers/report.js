@@ -18,7 +18,7 @@ angular.module('poddDashboardApp')
 
 .controller('ReportViewCtrl', function ($scope, streaming, Flags, Lightbox,
                                         $modal, Search, Reports, $state, Tag,
-                                        PlanReport, storage, shared) {
+                                        PlanReport, storage, shared, $timeout) {
 
     $scope.userAlreadyClickImage = false;
     $scope.reportFlag = {};
@@ -42,6 +42,11 @@ angular.module('poddDashboardApp')
         if (newValue) {
           reloadReportStatesLogs();
           loadPlanReport();
+
+  $timeout(function () {
+    addMarker($scope.report);
+  }, 0);
+
         }
 
         if (newValue) {
@@ -274,6 +279,46 @@ angular.module('poddDashboardApp')
     $scope.showReport = function (reportId) {
       shared.reportWatchId = reportId;
     };
+           
+    L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
+    var options = {
+      center: [ 18.781516724349704, 98.98681640625 ],
+      zoomLevel: 13,
+      // zoomControl: false,
+      // dragging: false,
+      touchZoom: false,
+      scrollWheelZoom: false,
+      doubleClickZoom: false
+    };
+
+    var leafletMap = config.MAPBOX_MAP_ID ?
+                      L.mapbox.map('report-marker-map', config.MAPBOX_MAP_ID, options) :
+                      L.map('report-marker-map', options);
+
+    var controller = L.control.scale({'metric': true, 'imperial': false, 'maxWidth': 200}); 
+    controller.addTo(leafletMap);
+
+    var drawnItems = new L.FeatureGroup(); 
+
+    function addMarker(item) {
+      drawnItems.clearLayers();
+
+      var location = [
+        item.reportLocation.coordinates[1],
+        item.reportLocation.coordinates[0]
+      ];
+
+      L.marker(location, {icon: L.AwesomeMarkers.icon({
+          icon: '',
+          markerColor: 'red'
+        })
+      }).addTo(drawnItems);
+
+      drawnItems.addTo(leafletMap);
+      leafletMap.setView(new L.LatLng(item.reportLocation.coordinates[1], item.reportLocation.coordinates[0]));
+
+    }
+
 })
 
 .controller('ReportImageLightboxCtrl', function ($scope, Map) {

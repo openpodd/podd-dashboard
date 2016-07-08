@@ -71,7 +71,7 @@ angular
     'ngTagsInput',
     'angular.filter',
     // 'sbDateSelect',
-    'pickadate'
+    'pickadate',
   ])
 
   // override z-index of ui.bootstrap
