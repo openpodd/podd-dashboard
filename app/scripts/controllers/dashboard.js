@@ -12,8 +12,11 @@ angular.module('poddDashboardApp')
                                   SummaryReportVisualization, SummaryDashboardVisualization,
                                   SummaryPerformancePerson, Reports,
                                   Authority, AuthorityView, NotificationAuthorities,
-                                  User, Menu, $location, $state ) {
+                                  User, Menu, $location, $state, $stateParams) {
   console.log('-> In DashboardCtrl');
+
+  shared.reportWatchId = null;
+  shared.dashboardMode = true;
 
   Menu.setActiveMenu('dashboard');
   shared.subscribe = Menu.hasPermissionOnMenu('view_dashboard_subscibe');
@@ -38,32 +41,6 @@ angular.module('poddDashboardApp')
   $scope.closeReportView = function () {
     $location.search('reportId', null);
   };
-
-  $scope.$on('$locationChangeSuccess', function (event) {
-    var reportId = $location.search().reportId;
-    // check if the same state.
-    if ($location.path() !== $state.$current.url.sourcePath) {
-      return;
-    }
-    // do nothing if no params
-    if (reportId === true || reportId === false ) {
-      // also clear params reportId if is empty.
-      $location.search('reportId', null);
-      return;
-    }
-
-    reportId = parseInt(reportId);
-    if (reportId && angular.isNumber(reportId) && reportId !== $scope.activeReportId) {
-      $scope.activeReportId = reportId;
-      shared.reportWatchId = reportId;
-      $scope.viewReport(reportId);
-    }
-    if (!reportId) {
-      $scope.activeReportId = null;
-      shared.reportWatchId = null;
-      ReportModal.close();
-    }
-  });
 
   // report view related.
   $scope.viewReport = function (reportId) {
@@ -118,6 +95,40 @@ angular.module('poddDashboardApp')
     }
   });
 
+
+  function locationChange() {
+    var reportId = $location.search().reportId;
+    
+    // check if the same state.
+    if ($location.path() !== $state.$current.url.sourcePath) {
+      return;
+    }
+    // do nothing if no params
+    if (reportId === true || reportId === false ) {
+      // also clear params reportId if is empty.
+      $location.search('reportId', null);
+      return;
+    }
+
+    reportId = parseInt(reportId);
+    if (reportId && angular.isNumber(reportId) && reportId !== $scope.activeReportId) {
+      $scope.activeReportId = reportId;
+      shared.reportWatchId = reportId;
+      $scope.viewReport(reportId);
+    }
+    if (!reportId) {
+      $scope.activeReportId = null;
+      shared.reportWatchId = null;
+      ReportModal.close();
+    }
+  }
+
+  $scope.$on('$locationChangeSuccess', function (event) {
+    locationChange();
+  });
+
+  locationChange();
+  
   var params = {
       subscribe: shared.subscribe
   };
@@ -248,4 +259,5 @@ angular.module('poddDashboardApp')
           $scope.selectedTemplateContact = template;
           $scope.newSelectedContact = template.contact.to;
       };
+
 });
