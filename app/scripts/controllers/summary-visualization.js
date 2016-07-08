@@ -28,6 +28,8 @@ angular.module('poddDashboardApp')
       left: 60
   };
 
+  var widthRect = 20;
+
   var dataset;
   var svg = d3.select('#mbars')
       .append('svg')
@@ -63,7 +65,7 @@ angular.module('poddDashboardApp')
       })
       .enter()
       .append('rect')
-      .attr('width', 2)
+      .attr('width', widthRect)
       .style('fill-opacity',1e-6);
 
   //Set up stack method
@@ -117,6 +119,7 @@ angular.module('poddDashboardApp')
 
       if ($scope.lastWeek) {
         params.lastWeek = true;
+        widthRect = 50;
       }
 
       SummaryReportVisualization.query(params).$promise.then(function (json) {
@@ -200,7 +203,7 @@ angular.module('poddDashboardApp')
           rects.enter()
               .append('rect')
               .attr('x', w)
-              .attr('width', 1)
+              .attr('width', widthRect)
               .style('fill-opacity', 1e-6);
 
           rects.transition()
@@ -215,7 +218,7 @@ angular.module('poddDashboardApp')
               .attr('height', function(d) {
                   return -yScale(d.y) + (h - padding.top - padding.bottom);
               })
-              .attr('width', 15)
+              .attr('width', widthRect)
               .style('fill-opacity', 1);
 
           rects.exit()
