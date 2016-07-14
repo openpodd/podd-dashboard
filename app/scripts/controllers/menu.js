@@ -6,10 +6,15 @@ angular.module('poddDashboardApp')
     $scope.shared = shared;
 
     $scope.$watch('shared.loggedIn', function (newValue) {
-        $scope.isShowNav = newValue;
+        // TO DO: flexible
+        if ($window.location.href.indexOf('authority-dashboard') !== -1) {
+            $scope.isShowNav = false;
+        } else {
+            $scope.isShowNav = newValue;
+        }
+
         $scope.domainMap = Domain.list();
     });
-
 
 
     //$scope.domainMap = Domain.list();
