@@ -2,19 +2,14 @@
 
 angular.module('poddDashboardApp')
 
-.controller('MenuCtrl', function ($scope, $http, shared, $window, $location, Menu, storage, Auth, Domain) {
+.controller('MenuCtrl', function ($scope, $http, shared, $window, $location, $state, Menu, storage, Auth, Domain) {
     $scope.shared = shared;
 
     $scope.$watch('shared.loggedIn', function (newValue) {
-        // TO DO: flexible
-        if ($window.location.href.indexOf('authority-dashboard') !== -1) {
-            $scope.isShowNav = false;
-        } else {
-            $scope.isShowNav = newValue;
-        }
-
+        $scope.isShowNav = newValue;
         $scope.domainMap = Domain.list();
     });
+
 
 
     //$scope.domainMap = Domain.list();
@@ -46,5 +41,12 @@ angular.module('poddDashboardApp')
 
             });
     };
+
+    $scope.$on('$stateChangeSuccess', function (scope, current, params, old, oldParams) {
+        // TO DO: flexible
+        if ($state.current.name === 'authority-dashboard') {
+            $scope.isShowNav = false;
+        }
+    });
 
 });
