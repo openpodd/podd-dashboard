@@ -242,7 +242,7 @@ angular.module('poddDashboardApp')
           });
       }
 
-      AuthorityView.list().$promise.then(function (data) {
+      AuthorityView.list({'page_size': 1}).$promise.then(function (data) {
           data.forEach(function (item) {
               if($scope.authority !== null) {
                   return;
