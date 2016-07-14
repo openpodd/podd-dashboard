@@ -1,25 +1,28 @@
-<div class="l-info-section l-section l-full-width l-theme-gray l-full-screen home" 
+<div class="l-info-section l-section l-full-width l-theme-gray l-full-screen authority-dashboard"
      ng-controller="AuthorityDashboardCtrl">
   <div class="l-detail-section l-detail-section-no-padding l-section">
     <div class="title clearfix">
-      <h2 class="pull-left"><i class="fa fa-tachometer pull-left fa-size-22"></i>โครงการผ่อดีดี</h2>
+        <img class="podd-logo pull-left" src="images/logo-onehealth.svg">
+        <h2 class="pull-left">โครงการผ่อดีดี</h2>
     </div>
 
     <div class="content-wrapper">
       <div class="content">
-        <h2 class="subheading">สรุปรายงาน{{ authority.authority.name }}</h2>
-        <p>ระหว่างวันที่ {{ startDateText }} - {{ endDateText }}</p>
+          <div class="subheading-block">
+              <h2 class="subheading">สรุปรายงาน{{ authority.authority.name }}</h2>
+              <p>ระหว่างวันที่ {{ startDateText }} - {{ endDateText }}</p>
+          </div>
 
         <!-- outbreak -->
         <div class="panel panel-default">
-          <div class="panel-heading">
+          <div class="panel-heading -red">
             <h3 class="panel-title">
               โรคระบาด {{ authority.outbreaks.count }} รายงาน
             </h3>
           </div>
           <div class="panel-body">
-            <h5>พื้นที่เกิดเหตุ</h5>
-            <ul>
+            <p>พื้นที่เกิดเหตุ</p>
+            <ul class="list-aumphur">
               <li ng-repeat="report in authority.outbreaks.administrationAreas">{{ report.address }}</li>
               <li ng-if="authority.outbreaks.count === 0">ไม่พบรายงาน</li>
             </ul>
@@ -28,14 +31,14 @@
 
         <!-- suspect-outbreak -->
         <div class="panel panel-default">
-          <div class="panel-heading">
+          <div class="panel-heading -purple">
             <h3 class="panel-title">
               สงสัยเป็นโรคระบาด {{ authority.suspectOutbreaks.count }} รายงาน
             </h3>
           </div>
           <div class="panel-body">
-            <h5>พื้นที่เกิดเหตุ</h5>
-            <ul>
+            <p>พื้นที่เกิดเหตุ</p>
+            <ul class="list-aumphur">
               <li ng-repeat="report in authority.suspectOutbreaks.administrationAreas">{{ report.address }}</li>
               <li ng-if="authority.suspectOutbreaks.count === 0">ไม่พบรายงาน</li>
             </ul>
@@ -44,14 +47,14 @@
 
         <!-- case -->
         <div class="panel panel-default">
-          <div class="panel-heading">
+          <div class="panel-heading -blue">
             <h3 class="panel-title">
               รายงานผิดปกติ {{ authority.cases.count }} รายงาน
             </h3>
           </div>
           <div class="panel-body">
-            <h5>พื้นที่เกิดเหตุ</h5>
-            <ul>
+            <p>พื้นที่เกิดเหตุ</p>
+            <ul class="list-aumphur">
               <li ng-repeat="report in authority.cases.administrationAreas">{{ report.address }}</li>
               <li ng-if="authority.cases.count === 0">ไม่พบรายงาน</li>
             </ul>

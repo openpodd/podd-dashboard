@@ -330,3 +330,52 @@ menu {
       margin: 0;
   }
 }
+
+
+// Aumper
+.authority-dashboard {
+    font-size: 16px;
+
+    .panel-heading {
+        &.-red {
+            color: #fff;
+            background-color: #CF3132;
+        }
+        &.-purple {
+            color: #fff;
+            background-color: #663265;
+        }
+        &.-blue {
+            color: #fff;
+            background-color: #8F3D98;
+        }
+    }
+    .panel-title {
+        font-size: 20px;
+        line-height: 42px;
+    }
+}
+.podd-logo {
+    width: 40px;
+    height: auto;
+    padding: 0;
+    margin: 0 20px 0 0;
+}
+.podd-text {
+    line-height: 42px;
+}
+.list-aumphur {
+    list-style-position: outside;
+    list-style-type: decimal;
+    padding: 0 0 0 20px
+}
+.subheading-block {
+    margin: 0 0 30px;
+
+    .subheading {
+        margin: 0 0 10px;
+    }
+    p {
+        margin: 0;
+    }
+}
