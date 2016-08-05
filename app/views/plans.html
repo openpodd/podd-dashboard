@@ -14,11 +14,6 @@
                 <div class="col-md-4"><span class="label label-warning">Yellow</span> โซนสีเหลือง คือระยะจากจุดเกิดเหตุ 3 กม.</div>
                 <div class="col-md-4"><span class="label label-success">Green</span> โซนสีเขียว คือระยะจากจุดเกิดเหตุ 10 กม.</div>
               </div>
-              <div class="row">
-                <div class="col-md-12">
-
-                </div>
-              </div>
           </div>
         </div>
 
@@ -32,7 +27,7 @@
           <div class="col-md-12">
             <div class="plan-item">
               <div class="row">
-                <div class="col-md-8 list-item-main-section">
+                <div class="col-md-9 list-item-main-section">
                   <div class="plan-list-item-left">
                     <div class="list-item-header">
                       <h2 class="subheading">{{ planReport.log.plan.name }} ของรายงาน {{ planReport.reportTypeName }} หมายเลข #{{ planReport.report }}</h2>
@@ -52,6 +47,21 @@
                           <span ng-if="level.code == 'green'" ng-bind="level.name" class="label label-success"></span>
                         </td>
                         <td>
+                            <!-- <table class="table table-bordered table-striped table-condensed">
+                                <tr>
+                                    <td>บ้านดอนปิน เทศบาลตำบลป่าแดด อำเภอเมืองเชียงใหม่</td>
+                                    <td>เทศบาลตำบลหนองควาย อำเภอหางดง</td>
+                                </tr>
+                                <tr>
+                                    <td>บ้านใหม่สามัคคี เทศบาลตำบลสุเทพ อำเภอเมือง่</td>
+                                    <td>บ้านโป่งน้อย เทศบาลตำบลสุเทพ อำเภอเมือง</td>
+                                </tr>
+                                <tr>
+                                    <td>บ้านดอนปิน เทศบาลตำบลป่าแดด อำเภอเมืองเชียงใหม่</td>
+                                    <td>เทศบาลตำบลหนองควาย อำเภอหางดง</td>
+                                </tr>
+                            </table> -->
+
                           <span ng-repeat="area in getLevelAreas(planReport, level.code)">
                             <span ng-class="{ 'area-highlight': area.isMine }">{{ area.address || area.name }}</span>
                             <span ng-if="!$last">, </span>
@@ -81,7 +91,7 @@
 
 
                 </div><!-- /end first col -->
-                <div class="col-md-4 list-item-meta">
+                <div class="col-md-3 list-item-meta">
                   <div class="plan-list-item-right">
                   <h2 class="subheading">รายละเอียดรายงาน</h2>
                   <!-- <div class="row"> -->
