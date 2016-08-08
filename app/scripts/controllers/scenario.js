@@ -5,12 +5,12 @@ angular.module('poddDashboardApp')
 
 .controller('ScenarioModeCtrl', function (shared, Menu) {
   shared.summaryScenarioMode = true;
-  Menu.setActiveMenu('scenario');
+  Menu.setActiveMenu('map');
 })
 
 .controller('ScenarioCtrl', function ($scope, Menu, Reports, $compile, $interval,
     $stateParams, $anchorScroll, $location, $state, $timeout, shared, $window) {
-  Menu.setActiveMenu('scenario');
+  Menu.setActiveMenu('map');
 
   $scope.query = $stateParams.q || '';
   $scope.toggleHelp = function () {

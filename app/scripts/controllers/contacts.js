@@ -5,7 +5,7 @@
 angular.module('poddDashboardApp')
 
 .controller('ContactsModeCtrl', function (Menu) {
-  Menu.setActiveMenu('scenario');
+  Menu.setActiveMenu('users');
 
 })
 
@@ -81,7 +81,7 @@ angular.module('poddDashboardApp')
 
 .controller('ContactsCtrl', function ($scope, Menu, AdministrationArea,
       $state, $stateParams, $window, Notification) {
-  Menu.setActiveMenu('scenario');
+  Menu.setActiveMenu('users');
 
   $scope.query = $stateParams.q || '';
   $scope.administrationAreas = [];
