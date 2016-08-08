@@ -117,7 +117,7 @@
                       <li ng-show="loadingUsers"><div loader-spinner></div></li>
                       <li ng-repeat="user in users">
                           <img ng-if="avatarUrl" src="{{ getAvatarUrl(user.avatarUrl) }}" alt="avatar" class="pull-left avatar avatar-w4">
-                          <img ng-if="!avatarUrl" class="pull-left no-avatar avatar-w4">
+                          <img src="images/avatar.png" alt="avatar" class="pull-left avatar avatar-w4" ng-if="!avatarUrl" />
 
                           <span ng-bind="::user.name" class="filter-reporttype"></span>
                           <p class="small" ng-bind="user.dateJoined | amDateFormat:'D MMM YY เวลา HH:mm น.'"></p>
