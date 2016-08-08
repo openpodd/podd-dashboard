@@ -191,12 +191,12 @@ angular.module('poddDashboardApp')
           $scope.loadingUsers = false;
       });
 
-      $scope.getAvatarUrl = function (avatarUrl) {
-        if (avatarUrl == null) {
-          return 'images/avatar.png';
-        }
-        return avatarUrl;
-      }
+      // $scope.getAvatarUrl = function (avatarUrl) {
+      //   if (avatarUrl == null) {
+      //     return '/images/avatar.png';
+      //   }
+      //   return avatarUrl;
+      // }
 
       var performanceUserQuery = {
           'month': (moment().month() + 1) + '/' + moment().year(),
