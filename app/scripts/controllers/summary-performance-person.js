@@ -157,9 +157,10 @@ angular.module('poddDashboardApp')
             $scope.gridOptionsPerson.columnDefs = [
                 // { field: 'administrationAreaParentName', headerCellClass: 'cell-center' },
                 // { field: 'administrationArea', headerCellClass: 'cell-center' },
-                { field: 'fullName', headerCellClass: 'cell-center' },
-                { field: 'numberOfActiveDays', cellClass: 'cell-center', headerCellClass: 'cell-center' },
-                { field: 'grade', cellClass: 'cell-center', headerCellClass: 'cell-center' },
+                { displayName: 'ชื่ออาสา', field: 'fullName', headerCellClass: 'cell-center' },
+                { displayName: 'จำนวนวันรายงาน',field: 'numberOfActiveDays', cellClass: 'cell-center', headerCellClass: 'cell-center' },
+                // { field: 'grade', cellClass: 'cell-center', headerCellClass: 'cell-center' },
+            
             ];
             $scope.gridOptionsPerson.data = results;
 

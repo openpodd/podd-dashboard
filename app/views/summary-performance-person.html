@@ -51,11 +51,26 @@
 
                     <div ng-show="results.length && !loading">
                         <h3 class="subheading pull-left clear inline-table">ผลลัพธ์การค้นหา {{ months.selectedMonth }}/{{ months.selectedYear }} ของ{{ areas.selectedArea.name }} {{ areas.selectedArea.parentName }}</h3>
+                        
+                        <br/>
+                        <h4 class="subheading pull-left clear">สรุปประจำเดือน </h4>
+
                         <div id="gridPerformancePerson" class="summary-grid-person grid-summary clear inline-table" ui-grid="gridOptionsPerson" ui-grid-exporter></div>
                         <div class="export-buttons">
                           <button class="btn btn-primary btn-sm" type="button" ng-click="csvExport();"><i class="fa fa-file-code-o fa-size-16 ico-front" aria-hidden="true"></i> ข้อมูลไฟล์ CSV</button>
                           <button class="btn btn-primary btn-sm" type="button" ng-click="xlsxExport();"><i class="fa fa-file-excel-o fa-size-16 ico-front" aria-hidden="true"></i> ข้อมูลไฟล์ Excel</button>
                         </div>
+
+                        <!-- <hr/>
+
+                        <h4>สรุปประจำวัน</h4>
+
+                        <div id="gridPerformancePerson" class="summary-grid-person grid-summary clear inline-table" ui-grid="gridOptionsPerson" ui-grid-exporter></div>
+                        <div class="export-buttons">
+                          <button class="btn btn-primary btn-sm" type="button" ng-click="csvExport();"><i class="fa fa-file-code-o fa-size-16 ico-front" aria-hidden="true"></i> ข้อมูลไฟล์ CSV</button>
+                          <button class="btn btn-primary btn-sm" type="button" ng-click="xlsxExport();"><i class="fa fa-file-excel-o fa-size-16 ico-front" aria-hidden="true"></i> ข้อมูลไฟล์ Excel</button>
+                        </div>
+ -->
                     </div>
                 </div>
             </div>
