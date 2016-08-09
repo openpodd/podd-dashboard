@@ -93,6 +93,7 @@ angular.module('poddDashboardApp')
             data.forEach(function (item) {
                 $scope.exportUsers.push({
                   'ชื่อบัญชีผู้ใช้': item.username,
+                  'รหัสผ่าน': item.displayPassword,
                   'ชื่อ': item.firstName,
                   'สกุล': item.lastName,
                   'ที่อยู่': item.contact,
@@ -105,6 +106,7 @@ angular.module('poddDashboardApp')
             $scope.gridOptionsPerson.enableSorting = true;
             $scope.gridOptionsPerson.columnDefs = [
                 { field: 'ชื่อบัญชีผู้ใช้', displayName: 'ชื่อบัญชีผู้ใช้', headerCellClass: 'cell-center' },
+                { field: 'รหัสผ่าน', displayName: 'รหัสผ่าน', headerCellClass: 'cell-center' },
                 { field: 'ชื่อ', displayName: 'ชื่อ', headerCellClass: 'cell-center' },
                 { field: 'สกุล', displayName: 'สกุล', headerCellClass: 'cell-center' },
                 { field: 'ที่อยู่', displayName: 'ที่อยู่', headerCellClass: 'cell-center' },
@@ -161,7 +163,7 @@ angular.module('poddDashboardApp')
         if ($scope.userSelected.id) {
             UserDetail.update($scope.userSelected).$promise.then(function (data) {
                 swal('สำเร็จ', 'แก้ไขรายละเอียดของผู้ใช้สำเร็จ', 'success');
-
+                $('#userModal').modal('hide');
                 $scope.userSelected = data;
                 angular.copy($scope.userSelected, $scope.user);
             }).catch(function () {
@@ -178,6 +180,7 @@ angular.module('poddDashboardApp')
                 Authority.users(params).$promise.then(function (_data) {
                     if (!$scope.is_admin) {
                         swal('สำเร็จ', 'เพิ่มผู้ใช้งานสำเร็จ', 'success');
+                        $('#userModal').modal('hide');
                     }
                     data.authority = $scope.userSelected.authority;
                     $scope.users.push(data);
@@ -185,19 +188,20 @@ angular.module('poddDashboardApp')
                     if ($scope.is_admin) {
                         Authority.admins(params).$promise.then(function (__data) {
                             swal('สำเร็จ', 'เพิ่มผู้ใช้งานสำเร็จ', 'success');
+                            $('#userModal').modal('hide');
                         }).catch(function () {
                             swal('เกิดข้อผิดพลาด', 'เพิ่มผู้ใช้งานแล้ว แต่ไม่สามารถตั้งค่าผู้ใช้เป็นผู้ดูแลของสังกัดได้', 'error');
-                            $scope.resetUser();
+                            // $scope.resetUser();
                         });
                     }
                 }).catch(function () {
                     swal('เกิดข้อผิดพลาด', 'ไม่สามารถเพิ่มผู้ใช้ได้', 'error');
-                    $scope.resetUser();
+                    // $scope.resetUser();
                 });
 
             }).catch(function () {
                 swal('เกิดข้อผิดพลาด', 'ไม่สามารถเพิ่มผู้ใช้ได้', 'error');
-                $scope.resetUser();
+                // $scope.resetUser();
             });
         }
     };

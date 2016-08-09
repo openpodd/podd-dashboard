@@ -22,11 +22,10 @@
     <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css" />
     <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
     <link rel="stylesheet" href="bower_components/c3/c3.css" />
-    <link rel="stylesheet" href="bower_components/angular-chart/css/angular-chart.css" />
+    <link rel="stylesheet" href="bower_components/angular-circular-navigation/angular-circular-navigation.css" />
     <link rel="stylesheet" href="bower_components/perfect-scrollbar/src/perfect-scrollbar.css" />
     <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css" />
     <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.css" />
-    <link rel="stylesheet" href="bower_components/angular-circular-navigation/angular-circular-navigation.css" />
     <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css" />
     <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="bower_components/pickadate/lib/themes/default.css" />
@@ -224,28 +223,18 @@
                   <a ng-href="#/map" ng-click="shared.filterMode = false; shared.summaryReportMode = false; shared.summaryReportMonthMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;" class="pd-nav-icon">
                   <i class="fa fa-map-marker fa-size-22"></i>
                   <span class="pd-nav-text">แผนที่</span></a>
+
+                  <div class="pd-nav-submenu -mini">
+                      <ul class="">
+                          <li><a ng-href="#/map">แผนที่รายงาน</a></li>
+                          <li><a ng-href="#/scenario">แผนภาพข้อมูล</a></li>
+                      </ul>
+                  </div>
                 </li>
                 <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('filter') }">
                   <a ng-href="#/filter" ng-click="shared.filterMode = true; shared.summaryReportMode = false; shared.summaryReportMonthMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;" class="pd-nav-icon">
                   <i class="fa fa-search fa-size-18"></i>
                   <span class="pd-nav-text">ค้นหา</span></a>
-                </li>
-
-                <li class="pd-nav-item -divide" ng-cloak
-                    ng-class="{ 'active active-menu':isActiveMenu('scenario') }"
-                    ng-if="hasPermissionOnMenu('view_dashboard_plan')">
-
-                  <a ng-href="#/scenario" class="pd-nav-icon">
-                  <i class="fa fa-list-alt fa-size-18"></i>
-                  <span class="pd-nav-text">อื่นๆ</span></a>
-
-                  <div class="pd-nav-submenu -mini">
-                      <ul class="">
-                          <li><a ng-href="#/scenario">แผนภาพ</a></li>
-                          <li><a ng-href="#/plans">แผนรับมือ</a></li>
-                          <li><a ng-href="#/contacts">รายชื่อติดต่อ</a></li>
-                      </ul>
-                  </div>
                 </li>
                 <li class="pd-nav-item -divide" ng-class="{ 'active active-menu':isActiveMenu('summary') }"
                     ng-click="setActiveMenu('summary')"
@@ -262,18 +251,25 @@
                         </ul>
                     </div>
                 </li>
+                <li class="pd-nav-item -divide" ng-cloak
+                    ng-class="{ 'active active-menu':isActiveMenu('scenario') }"
+                    ng-if="hasPermissionOnMenu('view_dashboard_plan')">
+
+                  <a ng-href="#/scenario" class="pd-nav-icon">
+                  <i class="fa fa-book fa-size-18"></i>
+                  <span class="pd-nav-text">แผนรับมือ</span></a>
+
+                  <div class="pd-nav-submenu -mini">
+                      <ul class="">
+                          <li><a ng-href="#/plans">แผนรับมือ</a></li>
+                      </ul>
+                  </div>
+                </li>
                 <li ng-hide="shared.loggedIn" class="pd-nav-item -divide" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('login') }">
                   <a ng-href="#/login" ng-click="isShowNav=!isShowNav" class="pd-nav-icon">
                   <i class="fa fa-sign-in"></i>
                   <span class="pd-nav-text">เข้าสู่ระบบ</span></a>
-                </li>
-                <li ng-show="shared.loggedIn" class="pd-nav-item -divide hide-phone">
-                    <span class="icon-bell pd-nav-icon">
-                        <i class="fa fa-bell fa-size-18"></i>
-                        <span class="alert-dotted" ng-show="shared.unread > 0">{{ shared.unread }}</span>
-                    </span>
-                    <div ng-include src="'views/notification-list.html'"></div>
                 </li>
                 <li class="pd-nav-item -divide" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('users') }"
@@ -285,19 +281,27 @@
 
                   <div class="pd-nav-submenu -mini">
                       <ul class="">
-                          <li><a ng-href="#/user-list">ผู้ใช้</a></li>
+                          <li><a ng-href="#/user-list">ข้อมูลอาสา</a></li>
                           <li><a ng-href="#/invitation-code-list">รหัสพื้นที่</a></li>
-                          <li><a ng-href="#/notification-config-list">การแจ้งเตือน</a></li>
-                          <li><a ng-href="#/case-definitions-list">การแจ้งเตือน</a></li>
+                          <li><a ng-href="#/contacts">รายชื่อติดต่อ</a></li>
+                          <li><a ng-href="#/notification-config-list">ผู้มีส่วนเกี่ยวข้อง</a></li>
+                          <li><a ng-href="#/case-definitions-list">รูปแบบแจ้งเตือน</a></li>
                       </ul>
                   </div>
+                </li>
+                <li ng-show="shared.loggedIn" class="pd-nav-item -divide hide-phone">
+                    <span class="icon-bell pd-nav-icon">
+                        <i class="fa fa-bell fa-size-18"></i>
+                        <span class="alert-dotted" ng-show="shared.unread > 0">{{ shared.unread }}</span>
+                    </span>
+                    <div ng-include src="'views/notification-list.html'"></div>
                 </li>
                 <li ng-show="shared.loggedIn" class="pd-nav-item -divide" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('profile') }">
 
                   <a ng-href="#/profile" class="pd-nav-icon">
-                  <i class="fa fa-user fa-size-18"></i>
-                  <span class="pd-nav-text">ข้อมูลผู้ใช้</span></a>
+                  <i class="fa fa-cog fa-size-18"></i>
+                  <span class="pd-nav-text">บัญชีผู้ใช้</span></a>
                 </li>
 
                 <li ng-show="shared.loggedIn" class="pd-nav-item" ng-cloak
@@ -348,6 +352,7 @@
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/leaflet/dist/leaflet.js"></script>
     <script src="bower_components/mapbox.js/mapbox.js"></script>
     <script src="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
     <script src="bower_components/socket.io-client/socket.io.js"></script>
@@ -369,6 +374,7 @@
     <script src="bower_components/angular-ui-select/dist/select.js"></script>
     <script src="bower_components/d3/d3.js"></script>
     <script src="bower_components/c3/c3.js"></script>
+    <script src="bower_components/angular-circular-navigation/angular-circular-navigation.js"></script>
     <script src="bower_components/angular-chart/angular-chart.js"></script>
     <script src="bower_components/countUp.js/countUp.js"></script>
     <script src="bower_components/js-xlsx/dist/xlsx.js"></script>
@@ -381,7 +387,6 @@
     <script src="bower_components/angular-perfect-scrollbar/src/angular-perfect-scrollbar.js"></script>
     <script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
     <script src="bower_components/angular-ui-grid/ui-grid.js"></script>
-    <script src="bower_components/angular-circular-navigation/angular-circular-navigation.js"></script>
     <script src="bower_components/Leaflet-WFST/dist/Leaflet-WFST.src.js"></script>
     <script src="bower_components/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
     <script src="bower_components/angular-filter/dist/angular-filter.min.js"></script>
