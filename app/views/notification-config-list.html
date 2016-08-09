@@ -38,8 +38,9 @@
                     <!--<input type="checkbox"/>-->
                   <!--</div>-->
                   <div class="col-md-1 col-sm-2">รหัส</div>
+                  <div class="col-md-2 col-sm-4">ประเภทรายการ</div>
                   <div class="col-md-4 col-sm-4">รายการ</div>
-                  <div class="col-md-5 col-sm-4">แจ้งเตือนไปยัง</div>
+                  <div class="col-md-3 col-sm-4">แจ้งเตือนไปยัง</div>
                   <div class="col-md-2 col-sm-2">คำสั่ง</div>
                 </div>
                 <div ng-repeat="template in notificationTemplates" class="ta-view-row row">
@@ -51,12 +52,16 @@
                   <div class="ta-view-col col-md-1 col-sm-1" data-th="รหัส">
                     <span>#{{ template.id }} </span>
                   </div>
+                
+                <div class="ta-view-col col-md-2 col-sm-5" data-th="รายการ">
+                    <span ng-bind="::template.typeName" ></span>
+                  </div>
 
                   <div class="ta-view-col col-md-4 col-sm-5" data-th="รายการ">
                     <span ng-bind="::template.description" ></span>
                   </div>
 
-                  <div class="ta-view-col col-md-5 col-sm-4" data-th="แจ้งเตือนไปยัง">
+                  <div class="ta-view-col col-md-3 col-sm-4" data-th="แจ้งเตือนไปยัง">
                     <span class="" ng-bind-html="template.contact.to | renderTemplate | renderContact"></span>
                   </div>
 
