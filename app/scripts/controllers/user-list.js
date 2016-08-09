@@ -93,6 +93,7 @@ angular.module('poddDashboardApp')
             data.forEach(function (item) {
                 $scope.exportUsers.push({
                   'ชื่อบัญชีผู้ใช้': item.username,
+                  'รหัสผ่าน': item.displayPassword,
                   'ชื่อ': item.firstName,
                   'สกุล': item.lastName,
                   'ที่อยู่': item.contact,
@@ -105,6 +106,7 @@ angular.module('poddDashboardApp')
             $scope.gridOptionsPerson.enableSorting = true;
             $scope.gridOptionsPerson.columnDefs = [
                 { field: 'ชื่อบัญชีผู้ใช้', displayName: 'ชื่อบัญชีผู้ใช้', headerCellClass: 'cell-center' },
+                { field: 'รหัสผ่าน', displayName: 'รหัสผ่าน', headerCellClass: 'cell-center' },
                 { field: 'ชื่อ', displayName: 'ชื่อ', headerCellClass: 'cell-center' },
                 { field: 'สกุล', displayName: 'สกุล', headerCellClass: 'cell-center' },
                 { field: 'ที่อยู่', displayName: 'ที่อยู่', headerCellClass: 'cell-center' },
