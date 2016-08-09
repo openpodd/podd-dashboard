@@ -57,9 +57,27 @@ angular.module('poddDashboardApp')
       L.marker(location, {icon: markerIcon}).addTo(drawnItems);
     }
 
+    $scope.showList = false;
+    $scope.willShowList = false;
+    $scope.stateName = '';
+    $scope.areaName = '';
+
+    $scope.showList = function (stateName, areaName, reports) {
+      $scope.stateName = stateName;
+      $scope.areaName = areaName;
+      $scope.reports = reports;
+      $scope.willshowList = true;
+    }
+
+    $scope.close = function() {
+      $scope.stateName = '';
+      $scope.areaName = '';
+      $scope.reports = [];
+      $scope.willshowList = false;
+    }
+
     SummaryAuthorityDashboard.get(params).$promise.then(function (data) {
       $scope.authority = data;
-
 
       // case
       $scope.authority.cases.administrationAreas.forEach(function(marker) {
