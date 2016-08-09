@@ -1,0 +1,49 @@
+<div class="l-info-section l-section animated" report-view
+     ng-class="{ 'l-full-width': showList }" ng-show="willshowList" ng-cloak>
+
+  <div class="l-detail-section l-section no-border-left ">
+    <div class="title clearfix">
+        <h2 class="pull-left"><i class="fa fa-file-text-o pull-left fa-size-22"></i>ข้อมูล {{ stateName }} ของพื้นที่ {{ areaName }}</h2>
+        <i class="fa fa-times fa-size-18 pull-right" ng-click="close()"></i>
+    </div>
+
+    <div class="content-wrapper content-wrapper-padding">
+      <div class="filter-result-container">
+          <div class="ta-view -wide">
+            <div class="ta-view-header row hidden-xs">
+              <!--<div class="col-md-1 col-sm-1 col-checkbox">-->
+                <!--<input type="checkbox"/>-->
+              <!--</div>-->
+
+              <div class="col-md-2 col-sm-2">วันที่</div>
+              <div class="col-md-2 col-sm-2">ประเภท</div>
+              <div class="col-md-7 col-sm-2">เหตุการณ์</div>
+              <div class="col-md-1 col-sm-2">Link</div>
+
+
+            </div>
+            <div ng-repeat="report in reports" class="ta-view-row row">
+
+                <div class="ta-view-col col-md-2 col-sm-2" data-th="ชื่อ">
+                  <span class="f-black" ng-bind="report.date | amDateFormat:'D MMM YY เวลา HH:mm น.'"></span>
+                </div>
+
+                <div class="ta-view-col col-md-2 col-sm-2" data-th="ชื่อ">
+                  <span>{{ report.reportTypeName }}</span>
+                </div>
+
+                <div class="ta-view-col col-md-7 col-sm-2" data-th="ชื่อ">
+                  <div class="filter-result-desc" ng-bind-html="::report.renderedOriginalFormData"></div>
+                </div>
+
+                <div class="ta-view-col col-md-1 col-sm-2" data-th="ชื่อ">
+                  <span><a href="https://www.cmonehealth.org/dashboard/#/reports/{{ report.id }}">ดูต่อ</a></span>
+                </div>
+
+            </div>
+          </div>
+      </div>
+
+    </div>
+  </div>
+</div>
