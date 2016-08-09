@@ -161,7 +161,7 @@ angular.module('poddDashboardApp')
         if ($scope.userSelected.id) {
             UserDetail.update($scope.userSelected).$promise.then(function (data) {
                 swal('สำเร็จ', 'แก้ไขรายละเอียดของผู้ใช้สำเร็จ', 'success');
-
+                $('#userModal').modal('hide');
                 $scope.userSelected = data;
                 angular.copy($scope.userSelected, $scope.user);
             }).catch(function () {
@@ -178,6 +178,7 @@ angular.module('poddDashboardApp')
                 Authority.users(params).$promise.then(function (_data) {
                     if (!$scope.is_admin) {
                         swal('สำเร็จ', 'เพิ่มผู้ใช้งานสำเร็จ', 'success');
+                        $('#userModal').modal('hide');
                     }
                     data.authority = $scope.userSelected.authority;
                     $scope.users.push(data);
@@ -185,19 +186,20 @@ angular.module('poddDashboardApp')
                     if ($scope.is_admin) {
                         Authority.admins(params).$promise.then(function (__data) {
                             swal('สำเร็จ', 'เพิ่มผู้ใช้งานสำเร็จ', 'success');
+                            $('#userModal').modal('hide');
                         }).catch(function () {
                             swal('เกิดข้อผิดพลาด', 'เพิ่มผู้ใช้งานแล้ว แต่ไม่สามารถตั้งค่าผู้ใช้เป็นผู้ดูแลของสังกัดได้', 'error');
-                            $scope.resetUser();
+                            // $scope.resetUser();
                         });
                     }
                 }).catch(function () {
                     swal('เกิดข้อผิดพลาด', 'ไม่สามารถเพิ่มผู้ใช้ได้', 'error');
-                    $scope.resetUser();
+                    // $scope.resetUser();
                 });
 
             }).catch(function () {
                 swal('เกิดข้อผิดพลาด', 'ไม่สามารถเพิ่มผู้ใช้ได้', 'error');
-                $scope.resetUser();
+                // $scope.resetUser();
             });
         }
     };
