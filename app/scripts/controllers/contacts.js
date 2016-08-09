@@ -80,7 +80,7 @@ angular.module('poddDashboardApp')
 })
 
 .controller('ContactsCtrl', function ($scope, Menu, AdministrationArea,
-      $state, $stateParams, $window, Notification) {
+      $state, $stateParams, $window, Notification, $timeout, uiGridUtils) {
   Menu.setActiveMenu('users');
 
   $scope.query = $stateParams.q || '';
@@ -222,6 +222,54 @@ angular.module('poddDashboardApp')
       }
   });
 
+  $scope.gridOptionsContact = {
+      enableSorting: false,
+      data: [],
+      columnDefs: [],
+      exporterLinkLabel: 'ดาวน์โหลดข้อมูลไฟล์ CSV',
+      exporterLinkTemplate: '<span><a class="btn btn-primary btn-sm" download="รายชื่ออาสาสมัครในโครงการผ่อดีดี.csv" href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\">LINK_LABEL</a></span>',
+      onRegisterApi: function(gridApi){
+          $scope.gridApi = gridApi;
+      }
+  };
+
+  function exportContacts(to) {
+    AdministrationArea.contacts().$promise.then(function (data) {
+      var results = [];
+      data.results.forEach(function (item) {
+          results.push({
+            'ชื่อ': item.name,
+            'ที่อยู่': item.address,
+            'ผู้ติดต่อ': item.contacts? item.contacts: '-',
+          });
+      });
+
+      $scope.gridOptionsContact.enableSorting = true;
+      $scope.gridOptionsContact.columnDefs = [
+          { field: 'ชื่อ', displayName: 'ชื่อ', headerCellClass: 'cell-center' },
+          { field: 'ที่อยู่', displayName: 'ที่อยู่', headerCellClass: 'cell-center' },
+          { field: 'ผู้ติดต่อ', displayName: 'ผู้ติดต่อ', headerCellClass: 'cell-center' },
+      ];
+
+      $scope.gridOptionsContact.data = results;
+      var filename = 'รายชื่อติดต่อ-' + moment().format('DD-MM-YYYY');
+      $timeout(function () {
+          if (to === 'csv') {
+              uiGridUtils.exportCsv($scope.gridApi.grid, filename + '.csv');
+            } else {
+              uiGridUtils.exportXlsx($scope.gridApi.grid, filename + '.xlsx');
+            }
+      }, 100);
+    }).catch(function () {});
+  }
+
+  $scope.csvExport = function () {
+      exportContacts('csv');
+  };
+
+  $scope.xlsxExport = function () {
+      exportContacts('xlsx');
+  }
 })
 
 ;

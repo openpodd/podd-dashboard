@@ -7,6 +7,7 @@
     <div class="content-wrapper content">
       <div class="">
 
+
         <form role="form" ng-submit="search()" class="search-block -wide">
             <div class="input-group">
 
@@ -63,7 +64,17 @@
       <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
       <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
 
+      <div ng-show="!loading && !willShowResult">
+        <div id="gridContact" class="summary-grid-person grid-summary clear inline-table hide" ui-grid="gridOptionsContact" ui-grid-exporter></div>
+
+        <div class="filter-action clearfix">
+          <button type="button" class="btn btn-primary" ng-click="csvExport()" ><i class="fa fa-file-code-o fa-size-16 ico-front" aria-hidden="true"></i> ข้อมูลไฟล์ CSV</button>
+          <button type="button" class="btn btn-primary" ng-click="xlsxExport()" ><i class="fa fa-file-excel-o fa-size-16 ico-front" aria-hidden="true"></i> ข้อมูลไฟล์ Excel</button>
+        </div>
+
+      </div>
       <div class="filter-result-container" ng-show="!loading && !willShowResult">
+
           <div class="ta-view">
               <div class="ta-view-header row hidden-xs">
                 <div class="col-md-2 col-sm-3">หมู่บ้าน</div>
