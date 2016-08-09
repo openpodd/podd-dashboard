@@ -24,7 +24,7 @@
             <p>พื้นที่เกิดเหตุ</p>
             <ul class="list-aumphur">
               <li ng-repeat="report in authority.outbreaks.administrationAreas">
-                <a ng-click="showList('outbreaks', report.address, report.reports)">{{ report.address }} [{{report.reports.length}}]</a></li>
+                <a ng-click="showList('โรคระบาด', report.address, report.reports)">{{ report.address }} [{{report.reports.length}}]</a></li>
               <li ng-if="authority.outbreaks.count === 0">ไม่พบรายงาน</li>
             </ul>
           </div>
@@ -41,7 +41,7 @@
             <p>พื้นที่เกิดเหตุ</p>
             <ul class="list-aumphur">
               <li ng-repeat="report in authority.suspectOutbreaks.administrationAreas">
-                <a ng-click="showList('suspectOutbreaks', report.address, report.reports)">{{ report.address }} [{{report.reports.length}}]</a></li>
+                <a ng-click="showList('สงสัยเป็นโรคระบาด', report.address, report.reports)">{{ report.address }} [{{report.reports.length}}]</a></li>
               <li ng-if="authority.suspectOutbreaks.count === 0">ไม่พบรายงาน</li>
             </ul>
           </div>
@@ -57,7 +57,7 @@
           <div class="panel-body">
             <p>พื้นที่เกิดเหตุ</p>
             <ul class="list-aumphur">
-              <li ng-repeat="report in authority.cases.administrationAreas"><a ng-click="showList('case', report.address, report.reports)">{{ report.address }} [{{report.reports.length}}]</a></li>
+              <li ng-repeat="report in authority.cases.administrationAreas"><a ng-click="showList('รายงานผิดปกติ', report.address, report.reports)">{{ report.address }} [{{report.reports.length}}]</a></li>
               <li ng-if="authority.cases.count === 0">ไม่พบรายงาน</li>
             </ul>
           </div>
