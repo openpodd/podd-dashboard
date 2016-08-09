@@ -12,7 +12,6 @@
         <div class="row">
           <div class="col-lg-12">
             <h2 class="subheading">ตารางข้อมูลอาสา</h2>
-
             <div class="filter-action clearfix">
                 <button type="button" class="btn btn-default hide">ลบรายการ</button>
                 <button type="button" class="btn btn-primary" ng-click="csvExport()" ><i class="fa fa-file-code-o fa-size-16 ico-front" aria-hidden="true"></i> ข้อมูลไฟล์ CSV</button>
@@ -99,7 +98,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">ผู้ใช้งาน</h4>
+          <h4 class="modal-title">ข้อมูลอาสา</h4>
         </div>
         <div class="modal-body">
             <form>
@@ -112,15 +111,15 @@
                 <input id="id_password" class="form-control" type="text" name="password" ng-model="userSelected.displayPassword" readonly/>
               </div>
               <div class="form-group">
-                <label for="id_first_name">ชื่อ</label>
+                <label for="id_first_name">ชื่อ*</label>
                 <input id="id_first_name" type="text" class="form-control" name="firstName" ng-model="userSelected.firstName"/>
               </div>
               <div class="form-group">
-                <label for="id_last_name">นามสกุล</label>
+                <label for="id_last_name">นามสกุล*</label>
                 <input id="id_last_name" class="form-control" type="text" name="lastName" ng-model="userSelected.lastName"/>
               </div>
               <div class="form-group">
-                <label for="id_serial_number">เลขบัตรประชาชน</label>
+                <label for="id_serial_number">เลขบัตรประชาชน*</label>
                 <input id="id_serial_number" class="form-control" type="text" name="serialNumber" ng-model="userSelected.serialNumber"/>
               </div>
               <div class="form-group">
@@ -149,11 +148,11 @@
                 </label>
               </div>
             </form>
-
         </div>
+
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" ng-click="submitUser()">Submit</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="resetUser()">Close</button>
+          <button type="button" class="btn btn-primary" ng-click="submitUser()">ยืนยัน</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="resetUser()">ยกเลิก</button>
         </div>
       </div>
 

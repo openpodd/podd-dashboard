@@ -154,7 +154,7 @@ angular.module('poddDashboardApp')
     };
 
     $scope.submitUser = function () {
-        if (!$scope.userSelected.firstName && !$scope.userSelected.email &&
+        if (!$scope.userSelected.firstName && !$scope.userSelected.serialNumber &&
             $scope.userSelected.authority) {
             swal('เกิดข้อผิดพลาด', 'คุณกรอกข้อมูลไม่ครบถ้วน', 'error');
             return;

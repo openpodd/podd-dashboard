@@ -236,7 +236,7 @@
                   <i class="fa fa-search fa-size-18"></i>
                   <span class="pd-nav-text">ค้นหา</span></a>
                 </li>
-                <li class="pd-nav-item -divide" ng-class="{ 'active active-menu':isActiveMenu('summary') }"
+                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('summary') }"
                     ng-click="setActiveMenu('summary')"
                     ng-if="hasPermissionOnMenu('view_dashboard_summary_report')">
                     <a ng-href="#/summary/visualize" class="pd-nav-icon">
@@ -251,19 +251,12 @@
                         </ul>
                     </div>
                 </li>
-                <li class="pd-nav-item -divide" ng-cloak
+                <li class="pd-nav-item" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('scenario') }"
                     ng-if="hasPermissionOnMenu('view_dashboard_plan')">
-
-                  <a ng-href="#/scenario" class="pd-nav-icon">
+                  <a ng-href="#/plans" class="pd-nav-icon">
                   <i class="fa fa-book fa-size-18"></i>
                   <span class="pd-nav-text">แผนรับมือ</span></a>
-
-                  <div class="pd-nav-submenu -mini">
-                      <ul class="">
-                          <li><a ng-href="#/plans">แผนรับมือ</a></li>
-                      </ul>
-                  </div>
                 </li>
                 <li ng-hide="shared.loggedIn" class="pd-nav-item -divide" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('login') }">
@@ -271,7 +264,7 @@
                   <i class="fa fa-sign-in"></i>
                   <span class="pd-nav-text">เข้าสู่ระบบ</span></a>
                 </li>
-                <li class="pd-nav-item -divide" ng-cloak
+                <li class="pd-nav-item" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('users') }"
                     ng-if="hasPermissionOnMenu('view_dashboard_users')">
 
@@ -289,14 +282,14 @@
                       </ul>
                   </div>
                 </li>
-                <li ng-show="shared.loggedIn" class="pd-nav-item -divide hide-phone">
+                <li ng-show="shared.loggedIn" class="pd-nav-item hide-phone">
                     <span class="icon-bell pd-nav-icon">
                         <i class="fa fa-bell fa-size-18"></i>
                         <span class="alert-dotted" ng-show="shared.unread > 0">{{ shared.unread }}</span>
                     </span>
                     <div ng-include src="'views/notification-list.html'"></div>
                 </li>
-                <li ng-show="shared.loggedIn" class="pd-nav-item -divide" ng-cloak
+                <li ng-show="shared.loggedIn" class="pd-nav-item" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('profile') }">
 
                   <a ng-href="#/profile" class="pd-nav-icon">
