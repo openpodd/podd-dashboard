@@ -111,13 +111,6 @@ $nav-font-family: ThaiSansNeueRegular;
     @include box-shadow(1px 0px 5px rgba(0, 0, 0, 0.1));
 }
 
-// UL
-.pd-nav-list{
-    padding: 0;
-    list-style: none;
-    background-color: #333;
-}
-
 .logo{
     display: block;
     width: 30px;
@@ -125,6 +118,13 @@ $nav-font-family: ThaiSansNeueRegular;
     margin: 14px auto 14px;
     background: url("../images/logo-small.png");
     @include image-2x('../images/logo-small@2x.png', 30px, 23px);
+}
+
+// UL
+.pd-nav-list{
+    padding: 0;
+    list-style: none;
+    background-color: #333;
 }
 
 // LI
@@ -211,14 +211,7 @@ $nav-font-family: ThaiSansNeueRegular;
     position: relative;
 
     color: $nav-item-color;
-        font: 20px / 20px $nav-font-family;
-
-    // &:hover{
-    //     cursor: pointer;
-    //     color: $nav-item-color-hover;
-    //     background-color: $nav-item-bg-hover;
-    //     text-decoration: none;
-    // }
+    font: 20px / 20px $nav-font-family;
 
     i{
         @include respond-to(phone){
@@ -262,6 +255,11 @@ $notifi-item-read: #ececec;
     text-align: left;
     border-radius: 0 5px 5px 0;
     overflow: hidden;
+
+    transition: opacity 0.6s ease;
+    -webkit-transition: opacity 0.6s ease;
+    -ms-transition: opacity 0.6s ease;
+    -moz-transition: opacity 0.6s ease;
 
     ul{
         list-style: none;
@@ -313,6 +311,7 @@ $notifi-item-read: #ececec;
         background-color: $notifi-item-bg;
     }
 }
+
 .pd-nav-submenu{
     @extend .notification-block;
     a{
@@ -320,6 +319,7 @@ $notifi-item-read: #ececec;
             text-decoration: none;
             background-color: $nav-item-bg-hover;
             color: $nav-item-color-hover;
+            text-decoration: underline;
         }
     }
     li{
@@ -335,6 +335,10 @@ $notifi-item-read: #ececec;
             @include respond-to(phone){
                 color: #fff;
             }
+        }
+
+        &:hover{
+            background-color: $nav-item-bg-hover;
         }
     }
     &.-mini {

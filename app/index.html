@@ -254,16 +254,9 @@
                 <li class="pd-nav-item -divide" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('scenario') }"
                     ng-if="hasPermissionOnMenu('view_dashboard_plan')">
-
-                  <a ng-href="#/scenario" class="pd-nav-icon">
+                  <a ng-href="#/plans" class="pd-nav-icon">
                   <i class="fa fa-book fa-size-18"></i>
                   <span class="pd-nav-text">แผนรับมือ</span></a>
-
-                  <div class="pd-nav-submenu -mini">
-                      <ul class="">
-                          <li><a ng-href="#/plans">แผนรับมือ</a></li>
-                      </ul>
-                  </div>
                 </li>
                 <li ng-hide="shared.loggedIn" class="pd-nav-item -divide" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('login') }">
