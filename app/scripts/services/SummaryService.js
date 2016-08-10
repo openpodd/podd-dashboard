@@ -24,7 +24,7 @@ angular.module('poddDashboardApp')
 
 
 .factory('SummaryPerformancePerson', function ($resource) {
-    var resource = $resource(config.API_BASEPATH + '/summary/users/performance/', {}, {
+    var resource = $resource(config.API_BASEPATH + '/summary/users/daily-performance/', {}, {
         get: {
             isArray: true
         }

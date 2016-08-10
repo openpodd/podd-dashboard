@@ -158,8 +158,8 @@ angular.module('poddDashboardApp')
                 // { field: 'administrationAreaParentName', headerCellClass: 'cell-center' },
                 // { field: 'administrationArea', headerCellClass: 'cell-center' },
                 { displayName: 'ชื่ออาสา', field: 'fullName', headerCellClass: 'cell-center' },
-                { displayName: 'จำนวนวันรายงาน',field: 'numberOfActiveDays', cellClass: 'cell-center', headerCellClass: 'cell-center' },
-                // { field: 'grade', cellClass: 'cell-center', headerCellClass: 'cell-center' },
+                { displayName: 'จำนวนวันรายงาน', field: 'numberOfActiveDays', cellClass: 'cell-center', headerCellClass: 'cell-center' },
+                { displayName: 'ระดับ', field: 'grade', cellClass: 'cell-center', headerCellClass: 'cell-center' },
             
             ];
             $scope.gridOptionsPerson.data = results;
@@ -191,6 +191,7 @@ angular.module('poddDashboardApp')
             $scope.query = {
                 month: $window.decodeURIComponent(params.month || ''),
                 authorityId: $window.decodeURIComponent(params.areaId || ''),
+                tz: (new Date()).getTimezoneOffset() / -60
             };
 
             if ($scope.query.month) {
