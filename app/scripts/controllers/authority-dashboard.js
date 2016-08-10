@@ -40,7 +40,6 @@ angular.module('poddDashboardApp')
     var options = {
       center: [ 18.781516724349704, 98.98681640625 ],
       zoomLevel: 8,
-      dragging: false
     };
     
     L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
