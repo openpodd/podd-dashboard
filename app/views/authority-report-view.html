@@ -3,11 +3,12 @@
 
   <div class="l-detail-section l-section no-border-left ">
     <div class="title clearfix">
-        <h2 class="pull-left"><i class="fa fa-file-text-o pull-left fa-size-22"></i>ข้อมูล{{ stateName }}ของพื้นที่{{ areaName }}</h2>
+        <h2 class="pull-left"><i class="fa fa-file-text-o pull-left fa-size-22"></i>รายละเอียด</h2>
         <i class="fa fa-times fa-size-18 pull-right" ng-click="close()"></i>
     </div>
 
     <div class="content-wrapper content-wrapper-padding">
+        <h2 class="subheading">{{ stateName }}ของพื้นที่{{ areaName }}</h2>
       <div class="filter-result-container">
           <div class="ta-view -wide">
             <div class="ta-view-header row hidden-xs">
@@ -15,28 +16,28 @@
                 <!--<input type="checkbox"/>-->
               <!--</div>-->
 
-              <div class="col-md-2 col-sm-2">วันที่</div>
+              <div class="col-md-3 col-sm-3">วันที่</div>
               <div class="col-md-2 col-sm-2">ประเภท</div>
-              <div class="col-md-7 col-sm-2">เหตุการณ์</div>
-              <div class="col-md-1 col-sm-2">Link</div>
+              <div class="col-md-6 col-sm-4">เหตุการณ์</div>
+              <div class="col-md-1 col-sm-3">Link</div>
 
 
             </div>
             <div ng-repeat="report in reports" class="ta-view-row row">
 
-                <div class="ta-view-col col-md-2 col-sm-2" data-th="ชื่อ">
+                <div class="ta-view-col col-md-3 col-sm-3" data-th="วันที่">
                   <span class="f-black" ng-bind="report.date | amDateFormat:'D MMM YY เวลา HH:mm น.'"></span>
                 </div>
 
-                <div class="ta-view-col col-md-2 col-sm-2" data-th="ชื่อ">
+                <div class="ta-view-col col-md-2 col-sm-2" data-th="ประเภท">
                   <span>{{ report.reportTypeName }}</span>
                 </div>
 
-                <div class="ta-view-col col-md-7 col-sm-2" data-th="ชื่อ">
+                <div class="ta-view-col col-md-6 col-sm-4" data-th="เหตุการณ์">
                   <div class="filter-result-desc" ng-bind-html="::report.renderedOriginalFormData"></div>
                 </div>
 
-                <div class="ta-view-col col-md-1 col-sm-2" data-th="ชื่อ">
+                <div class="ta-view-col col-md-1 col-sm-3" data-th="ลิ้งก์">
                   <span><a href="https://www.cmonehealth.org/dashboard/#/reports/{{ report.id }}">ดูต่อ</a></span>
                 </div>
 
