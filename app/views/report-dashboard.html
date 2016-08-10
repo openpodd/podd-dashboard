@@ -137,7 +137,7 @@
                     <ul class="sidebar-list -avatar">
                         <li ng-show="loadingPerformanceUsers"><div loader-spinner></div></li>
                         <li ng-repeat="user in performanceUsers | orderBy:'-numberOfActiveDays' | limitTo : 3">
-                            <div class="grade">A</div>
+                            <div class="grade">{{ user.grade }}</div>
                             <span ng-bind="::user.fullName" class="filter-reporttype"></span>
                             <p class="small">รายงาน {{ user.numberOfActiveDays }} ครั้ง</p>
                         </li>

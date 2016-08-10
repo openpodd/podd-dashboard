@@ -81,6 +81,18 @@ angular.module('poddDashboardApp')
         }
     };
 
+    $scope.gridOptionsDailyPerson = {
+        enableSorting: false,
+        enableHorizontalScrollbar: true,
+        data: [],
+        columnDefs: [],
+        exporterLinkLabel: 'ดาวน์โหลดข้อมูลไฟล์ CSV',
+        exporterLinkTemplate: '<span><a class="btn btn-primary btn-sm" download="สรุปการรายงานของอาสา.csv" href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\">LINK_LABEL</a></span>',
+        onRegisterApi: function(gridApi){
+            $scope.gridDailyApi = gridApi;
+        }
+    };
+
     $scope.$on('summaryPerformancePerson:clearQuery', function (willClear) {
         if (willClear) {
             $scope.queryPerson = $stateParams.q || '';
@@ -136,9 +148,37 @@ angular.module('poddDashboardApp')
         
         SummaryPerformancePerson.query($scope.query).$promise.then(function (data) {
             var results = [];
+            var daily = [];
 
+            var showOptions = [];
+            var header = false;
+            
             data.forEach(function (item) {
+                var reporters = {}
+                reporters['name'] = item.fullName;
+
+                if (!header) 
+                    showOptions.push({ displayName: 'ชื่อ', field: 'name', pinnedLeft: true,
+                    headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">ชื่อ</div>',
+                    width:320 });
+
+                item.activeDates.forEach(function (_item) {
+
+                    if(!header){
+                        showOptions.push({ field: _item.date, pinnedRight: true,
+                            headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">'+ _item.date.split('-')[0] +'</div>',
+                            cellClass: 'cell-center',
+                            width: 40 });
+                    }
+
+                    reporters[_item.date] = _item.total;
+                });
+
+
+                daily.push(reporters);
                 results.push(item);
+
+                header = true;
             });
 
             $scope.results = results;
@@ -158,11 +198,13 @@ angular.module('poddDashboardApp')
                 // { field: 'administrationAreaParentName', headerCellClass: 'cell-center' },
                 // { field: 'administrationArea', headerCellClass: 'cell-center' },
                 { displayName: 'ชื่ออาสา', field: 'fullName', headerCellClass: 'cell-center' },
-                { displayName: 'จำนวนวันรายงาน',field: 'numberOfActiveDays', cellClass: 'cell-center', headerCellClass: 'cell-center' },
-                // { field: 'grade', cellClass: 'cell-center', headerCellClass: 'cell-center' },
+                { displayName: 'จำนวนวันรายงาน', field: 'numberOfActiveDays', cellClass: 'cell-center', headerCellClass: 'cell-center' },
+                { displayName: 'ระดับ', field: 'grade', cellClass: 'cell-center', headerCellClass: 'cell-center' },
             
             ];
             $scope.gridOptionsPerson.data = results;
+            $scope.gridOptionsDailyPerson.data = daily;
+            $scope.gridOptionsDailyPerson.columnDefs = showOptions;
 
             setTimeout(function(){
                 var w = angular.element($window);
@@ -191,6 +233,7 @@ angular.module('poddDashboardApp')
             $scope.query = {
                 month: $window.decodeURIComponent(params.month || ''),
                 authorityId: $window.decodeURIComponent(params.areaId || ''),
+                tz: (new Date()).getTimezoneOffset() / -60
             };
 
             if ($scope.query.month) {
@@ -215,6 +258,15 @@ angular.module('poddDashboardApp')
     $scope.xlsxExport = function () {
         uiGridUtils.exportXlsx($scope.gridApi.grid, 'summary-performance-person.xlsx');
     };
+
+    $scope.csvExportDaily = function () {
+        uiGridUtils.exportCsv($scope.gridDailyApi.grid, 'summary-daily-performance-person.csv');
+    };
+
+    $scope.xlsxExportDaily = function () {
+        uiGridUtils.exportXlsx($scope.gridDailyApi.grid, 'summary-daily-performance-person.xlsx');
+    };
+
 
     $scope.$watch('areas.selectedArea', function (newValue, oldValue) {
         if (shared.summaryPerformancePersonMode && newValue && newValue !== oldValue) {

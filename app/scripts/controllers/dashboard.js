@@ -200,7 +200,8 @@ angular.module('poddDashboardApp')
 
       var performanceUserQuery = {
           'month': (moment().month() + 1) + '/' + moment().year(),
-          'subscribe': shared.subscribe
+          'subscribe': shared.subscribe,
+          'tz': (new Date()).getTimezoneOffset() / -60
       };
 
       $scope.performanceUsers = [];

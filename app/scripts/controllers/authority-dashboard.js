@@ -39,7 +39,7 @@ angular.module('poddDashboardApp')
 
     var options = {
       center: [ 18.781516724349704, 98.98681640625 ],
-      zoomLevel: 8
+      zoomLevel: 8,
     };
     
     L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
@@ -83,7 +83,7 @@ angular.module('poddDashboardApp')
       $scope.authority.cases.administrationAreas.forEach(function(marker) {
         var greenMarker = L.AwesomeMarkers.icon({
           icon: '',
-          markerColor: 'green'
+          markerColor: 'red'
         });
         addMarker(marker, greenMarker);
       });
@@ -92,7 +92,7 @@ angular.module('poddDashboardApp')
       $scope.authority.suspectOutbreaks.administrationAreas.forEach(function(marker) {
         var yellowMarker = L.AwesomeMarkers.icon({
           icon: '',
-          markerColor: 'orange'
+          markerColor: 'red'
         });
         
         addMarker(marker, yellowMarker);
