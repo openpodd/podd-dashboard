@@ -874,9 +874,14 @@ $badge-bad: #FF6D69;
 
 
 
-// #gridPerformancePerson{
-//    height: 200px;
-// }
+#gridPerformancePerson {
+    height: 200px;
+}
+
+#gridPerformanceDailyPerson {
+    width: 800px;
+    height: 200px;
+}
 
 .no-border-left {
     border-left: 0 !important;
