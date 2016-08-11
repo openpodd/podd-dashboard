@@ -65,12 +65,12 @@
         <button class="btn btn-default center-block" type="button" ng-show="!endPageList" ng-click="loadMore()" ng-disabled="loading">{{ loading ? 'Loading...' : 'Load more...' }}</button>
       </div>
 
-      <div id="areaModal" class="modal fade" role="dialog">
+      <div id="areaModal" class="modal fade area-modal" role="dialog">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">พื้นที่ที่ได้รับผลกระทบ</h4>
+              <h4 class="modal-title subheading">พื้นที่ที่ได้รับผลกระทบ</h4>
             </div>
             <div class="modal-body">
               <p>หมายเหตุ : พื้นที่ที่ได้รับผลกระทบ, <span class="area-highlight text-right">พื้นที่ที่รับผิดชอบ</span></p>
@@ -82,15 +82,14 @@
                   <p ng-if="level.code == 'green'" ><span ng-bind="level.name" class="label label-success"></span>โซนสีเขียว คือระยะจากจุดเกิดเหตุ 10 กม.</p>
                 </div>
                 <div>
-                  <div class="filter-result-container">
-                    <div class="ta-view -wide">
-                      <div class="ta-view-row row">
-                          <div ng-repeat="area in getLevelAreas(currentPlanReport, level.code)" class="ta-view-col col-md-6 col-sm-3" data-th="ชื่อ">
-                            <span ng-class="{ 'area-highlight': area.isMine }"> {{ area.address || area.name }}</span>
-                          </div>
-                      </div>
-                    </div>
-                  </div>
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <td><div ng-repeat="area in getLevelAreas(currentPlanReport, level.code)">
+                          <span ng-class="{ 'area-highlight': area.isMine }"> {{ area.address || area.name }}</span>
+                        </div></td>
+                        <td></td>
+                    </tr>
+                </table>
                 </div>
               </div>
             </div>
