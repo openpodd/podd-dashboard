@@ -115,7 +115,7 @@ angular.module('poddDashboardApp')
                     exportData,
                     grid.options.exporterCsvColumnSeparator
                 );
-            console.log(grid.options.columnDefs);
+            // console.log(grid.options.columnDefs);
             utils.downloadFile(filename, csvContent, 'text/csv;charset=utf-8');
         },
         exportXlsx: function (grid, filename) {
@@ -180,7 +180,7 @@ angular.module('poddDashboardApp')
             return field;
         }).join(separator) + '\n';
 
-        console.log(csv);
+        // console.log(csv);
 
         csv += exportData.map(function (row) {
             return row.map( formatCell(columnDefs) ).join(separator);
