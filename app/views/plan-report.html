@@ -8,16 +8,16 @@
         <span class="fa fa-list"></span>
       </button> -->
 
-      <h3 class="modal-title subheading">แผนที่ตอบสนอง</h3>
+      <h3 class="modal-title subheading">{{ title || 'แผนที่ตอบสนอง'}}</h3>
     </div>
 
     <div class="modal-body">
 
         <tabset class="plans-tab">
-          <tab heading="แผนที่">
+          <tab heading="แผนที่" ng-if="isShowMap">
             <div response-map class="response-map" plan-report="planReport" when-hover="whenHover($obj)"></div>
           </tab>
-          <tab heading="การแจ้งเตือน">
+          <tab heading="การแจ้งเตือน" >
             <form role="form" ng-submit="search()" class="search-block search-block-mini">
               <div class="input-group">
 

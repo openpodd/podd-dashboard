@@ -126,14 +126,16 @@ angular.module('poddDashboardApp')
     };
 
     $scope.viewPlanReport = function (planReportId) {
-      PlanReport.get({ id: planReportId }).$promise.then(function (resp) {
-        $scope._viewResponseMap(resp);
-      });
+      // Do Nothing:
+      // PlanReport.get({ id: planReportId }).$promise.then(function (resp) {
+      //   $scope._viewResponseMap(resp);
+      // });
     };
 
     $scope._viewResponseMap = function (planReport) {
       var scope = $scope.$new();
       scope.planReport = planReport;
+      scope.isShowMap = true;
 
       var modalInstance = $modal.open({
         templateUrl: 'views/plan-report.html',

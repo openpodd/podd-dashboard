@@ -6,17 +6,6 @@
 
     <div class="content-wrapper"><div class="content">
       <div class="plans-list-legend">
-        <div class="panel panel-default">
-          <div class="panel-heading">คำอธิบาย</div>
-          <div class="panel-body">
-            <div class="row">
-                <div class="col-md-4"><span class="label label-danger">Red</span> โซนสีแดง คือหมู่บ้านที่เกิดเหตุ</div>
-                <div class="col-md-4"><span class="label label-warning">Yellow</span> โซนสีเหลือง คือระยะจากจุดเกิดเหตุ 3 กม.</div>
-                <div class="col-md-4"><span class="label label-success">Green</span> โซนสีเขียว คือระยะจากจุดเกิดเหตุ 10 กม.</div>
-              </div>
-          </div>
-        </div>
-
       <div class="plans-list">
         <div class="row plan-list-item" ng-if="!loading && planReports.length === 0">
           <div class="well text-center">ยังไม่มีแผนรับมือ</div>
@@ -27,97 +16,51 @@
           <div class="col-md-12">
             <div class="plan-item">
               <div class="row">
-                <div class="col-md-9 list-item-main-section">
+                <div class="col-md-5 list-item-main-section">
+                  <div response-map class="response-map response-map-300" plan-report="planReport" when-hover="whenHover($obj)"></div>
+                </div>
+                <div class="col-md-4 list-item-meta">
                   <div class="plan-list-item-left">
+                    
                     <div class="list-item-header">
                       <h2 class="subheading">{{ planReport.log.plan.name }} ของรายงาน {{ planReport.reportTypeName }} หมายเลข #{{ planReport.report }}</h2>
                     </div>
 
-                    <table class="table">
-                    <thead>
-                      <tr>
-                        <th class="text-normal" colspan="2">หมายเหตุ : พื้นที่ที่ได้รับผลกระทบ, <span class="area-highlight text-right">พื้นที่ที่รับผิดชอบ</sapn></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr ng-repeat="level in planReport.log.plan.levels">
-                        <td class="label-code">
-                          <span ng-if="level.code == 'red'" ng-bind="level.name" class="label label-danger"></span>
-                          <span ng-if="level.code == 'yellow'" ng-bind="level.name" class="label label-warning"></span>
-                          <span ng-if="level.code == 'green'" ng-bind="level.name" class="label label-success"></span>
-                        </td>
-                        <td>
-                            <!-- <table class="table table-bordered table-striped table-condensed">
-                                <tr>
-                                    <td>บ้านดอนปิน เทศบาลตำบลป่าแดด อำเภอเมืองเชียงใหม่</td>
-                                    <td>เทศบาลตำบลหนองควาย อำเภอหางดง</td>
-                                </tr>
-                                <tr>
-                                    <td>บ้านใหม่สามัคคี เทศบาลตำบลสุเทพ อำเภอเมือง่</td>
-                                    <td>บ้านโป่งน้อย เทศบาลตำบลสุเทพ อำเภอเมือง</td>
-                                </tr>
-                                <tr>
-                                    <td>บ้านดอนปิน เทศบาลตำบลป่าแดด อำเภอเมืองเชียงใหม่</td>
-                                    <td>เทศบาลตำบลหนองควาย อำเภอหางดง</td>
-                                </tr>
-                            </table> -->
+                    <h2 class="subheading">รายละเอียดรายงาน</h2>
+                    
+                    <p><strong>พื้นที่เกิดเหตุ : {{ planReport.incidentArea }}</strong></p>
 
-                          <span ng-repeat="area in getLevelAreas(planReport, level.code)">
-                            <span ng-class="{ 'area-highlight': area.isMine }">{{ area.address || area.name }}</span>
-                            <span ng-if="!$last">, </span>
-                            <span ng-if="$last && willShowExpandButton(planReport, level.code) && !isExpand(planReport, level.code)">, &hellip;</span>
-                          </span>
-
-                          <span ng-if="willShowExpandButton(planReport, level.code) && !isExpand(planReport, level.code)" ng-click="setExpand(planReport, level.code, true)" class="show-all">
-                            <i class="fa fa-angle-double-down"></i>
-                            แสดงทั้งหมด
-                          </span>
-                          <span ng-if="willShowExpandButton(planReport, level.code) && isExpand(planReport, level.code)" ng-click="setExpand(planReport, level.code, false)" class="show-all">
-                            <i class="fa fa-angle-double-up"></i>
-                            แสดงน้อยลง
-                          </span>
-
-                        </td>
-                      </tr>
-                    </tbody>
-                    <!--<tbody ng-if="!planReport.myLevelAreasCount">-->
-                      <!--<tr>-->
-                        <!--<td colspan="2">ไม่มี</td>-->
-                      <!--</tr>-->
-                    <!--</tbody>-->
-                  </table><!-- /end table -->
-                  </div>
-
-
-
-                </div><!-- /end first col -->
-                <div class="col-md-3 list-item-meta">
-                  <div class="plan-list-item-right">
-                  <h2 class="subheading">รายละเอียดรายงาน</h2>
+                    <p><strong>สถานะ : {{ planReport.reportStateName }}</strong></p>
+                    
+                    <p class="hidden"><strong>จำนวนพื้นที่ที่ได้รับผลกระทบ : {{ planReport.affectedAreasCount }}</strong></p>
+                    
+                    <p><strong>เกิดเหตุเมื่อ : <span class="" am-time-ago="planReport.createdAt" tooltip="{{ planReport.createdAt | amCalendar }}"></span></strong></p>
                   <!-- <div class="row"> -->
-                    <!-- <div class=""> -->
-                      <p><strong>เมื่อ : <span class="" am-time-ago="planReport.createdAt" tooltip="{{ planReport.createdAt | amCalendar }}"></span></strong></p>
-                    <!-- </div> -->
-                    <!-- <div class="list-item-meta-label col-md-5"></div>
-                    <div class="list-item-meta-value col-md-7"></div> -->
-                  <!-- </div>
-                  <div class="row"> -->
-                    <p><strong>สถานะปัจจุบัน : {{ planReport.reportStateName }}</strong></p>
-                    <!-- <div class="list-item-meta-label col-md-5"></div>
-                    <div class="list-item-meta-value col-md-7"></div> -->
-                  <!-- </div>
-                  <div class="row"> -->
-                    <p><strong>จำนวนพื้นที่ที่ได้รับผลกระทบ : {{ planReport.affectedAreasCount }}</strong></p>
-                    <!-- <div class="list-item-meta-label col-md-5"></div>
-                    <div class="list-item-meta-value col-md-7"></div> -->
-                  <!-- </div>
-                  <div class="row"> -->
-                    <div class="list-item-meta-view-button col-md-12">
+                    <div class="list-item-meta-view-button">
                       <a ng-href="#/reports/{{ planReport.report }}" target="_blank" class="view-button btn btn-primary">ดูรายงาน</a>
                     </div>
+
                   <!-- </div> -->
                   </div>
                 </div>
+                <div class="col-md-3 list-item-main-section">
+                  <div class="">
+                      <div class="row">
+                        <div class="col-md-12 list-item-main-section">
+                          <br/>
+                          <p><strong>พื้นที่ของคุณได้รับผลกระทบ : <br/><span class="" am-time-ago="planReport.createdAt" tooltip="{{ planReport.createdAt | amCalendar }}"></span></strong></p>
+
+                          <hr/>
+                      
+                          <div class="list-item-meta-view-button">
+                            <a ng-click="viewResponseMap(planReport)" class="view-button btn btn-primary">แจ้งเตือนผู้มีส่วนเกี่ยวข้อง</a>
+                            <a data-toggle="modal" data-target="#areaModal" ng-click="viewAreas(planReport)" class="view-button btn btn-primary">พื้นที่ที่ได้รับผลกระทบ</a>
+                          </div>
+                        </div>
+                      </div>
+
+                  </div>
+                </div><!-- /end first col -->
               </div><!-- /end row -->
             </div>
           </div>
@@ -127,6 +70,42 @@
       <div class="loadmore" ng-cloak>
         <button class="btn btn-default center-block" type="button" ng-show="!endPageList" ng-click="loadMore()" ng-disabled="loading">{{ loading ? 'Loading...' : 'Load more...' }}</button>
       </div>
+
+      <div id="areaModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">พื้นที่ที่ได้รับผลกระทบ</h4>
+            </div>
+            <div class="modal-body">
+              <p>หมายเหตุ : พื้นที่ที่ได้รับผลกระทบ, <span class="area-highlight text-right">พื้นที่ที่รับผิดชอบ</span></p>
+              <div ng-repeat="level in currentPlanReport.log.plan.levels">
+                <br/>
+                <div class="label-code">
+                  <p ng-if="level.code == 'red'"><span ng-bind="level.name" class="label label-danger"></span> โซนสีแดง คือหมู่บ้านที่เกิดเหตุ</p>
+                  <p ng-if="level.code == 'yellow'" ><span ng-bind="level.name" class="label label-warning"></span> โซนสีเหลือง คือระยะจากจุดเกิดเหตุ 3 กม.</p>
+                  <p ng-if="level.code == 'green'" ><span ng-bind="level.name" class="label label-success"></span>โซนสีเขียว คือระยะจากจุดเกิดเหตุ 10 กม.</p>
+                </div>
+                <div>
+                  <div class="filter-result-container">
+                    <div class="ta-view -wide">
+                      <div class="ta-view-row row">
+                          <div ng-repeat="area in getLevelAreas(currentPlanReport, level.code)" class="ta-view-col col-md-6 col-sm-3" data-th="ชื่อ">
+                            <span ng-class="{ 'area-highlight': area.isMine }"> {{ area.address || area.name }}</span>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+            </div>
+        </div>
+      </div></div>
+
     </div></div>
   </div>
 </div>

@@ -83,9 +83,10 @@
   }
 
   .list-item-meta-view-button {
-    text-align: center;
+    // text-align: center;
+    margin-bottom: 30px;
     .view-button {
-      width: 60%;
+      width: 70%;
       margin-top: 30px;
       // font-size: 1.4em;
     }
@@ -131,8 +132,9 @@
 }
 
 .plan-list-item-left{
-  min-height: 250px;
+  min-height: 270px;
   padding: 15px;
+  border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
   background-color: #f5f5f5;
 }
@@ -188,4 +190,8 @@
 
     overflow: auto;
   }
+}
+
+#areaModal {
+  z-index: 99999;
 }
