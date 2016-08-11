@@ -15,6 +15,11 @@ angular.module('poddDashboardApp')
   $scope.endPageList = false;
   $scope.planReports = [];
 
+  $scope.currentPlanReport = null;
+  $scope.viewAreas = function (planReport) {
+    $scope.currentPlanReport = planReport;
+    console.log($scope.currentPlanReport);
+  };
 
   $scope.isMyAreas = function (planReport, code, area) {
     var areas = planReport.log.my_level_areas[code];
@@ -182,6 +187,7 @@ angular.module('poddDashboardApp')
         area.working = false;
       });
   };
+
 })
 
 ;
