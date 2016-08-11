@@ -108,13 +108,8 @@ angular.module('poddDashboardApp')
   };
   $scope.getLevelAreas = function (planReport, code) {
     var areas = planReport.log.level_areas[code];
-
-    if ($scope.isExpand(planReport, code) && $scope.willShowExpandButton(planReport, code)) {
-      return areas;
-    }
-    else {
-      return areas.slice(0, expandThreshold);
-    }
+    return areas;
+   
   };
 
   $scope.loadMore = function () {
