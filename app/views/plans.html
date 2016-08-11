@@ -13,54 +13,48 @@
 
         <h2 class="subheading">แผนรับมือ</h2>
         <div class="row plan-list-item" ng-repeat="planReport in planReports" ng-if="planReports.length > 0">
+            <div class="col-md-12">
+                <h2 class="subheading">{{ planReport.log.plan.name }} ของรายงาน {{ planReport.reportTypeName }} หมายเลข #{{ planReport.report }}</h2>
+            </div>
           <div class="col-md-12">
             <div class="plan-item">
               <div class="row">
                 <div class="col-md-5 list-item-main-section">
                   <div response-map class="response-map response-map-300" plan-report="planReport" when-hover="whenHover($obj)"></div>
                 </div>
-                <div class="col-md-4 list-item-meta">
-                  <div class="plan-list-item-left">
-                    
-                    <div class="list-item-header">
-                      <h2 class="subheading">{{ planReport.log.plan.name }} ของรายงาน {{ planReport.reportTypeName }} หมายเลข #{{ planReport.report }}</h2>
-                    </div>
-
-                    <h2 class="subheading">รายละเอียดรายงาน</h2>
-                    
-                    <p><strong>พื้นที่เกิดเหตุ : {{ planReport.incidentArea }}</strong></p>
-
-                    <p><strong>สถานะ : {{ planReport.reportStateName }}</strong></p>
-                    
-                    <p class="hidden"><strong>จำนวนพื้นที่ที่ได้รับผลกระทบ : {{ planReport.affectedAreasCount }}</strong></p>
-                    
-                    <p><strong>เกิดเหตุเมื่อ : <span class="" am-time-ago="planReport.createdAt" tooltip="{{ planReport.createdAt | amCalendar }}"></span></strong></p>
-                  <!-- <div class="row"> -->
-                    <div class="list-item-meta-view-button">
-                      <a ng-href="#/reports/{{ planReport.report }}" target="_blank" class="view-button btn btn-primary">ดูรายงาน</a>
-                    </div>
-
-                  <!-- </div> -->
-                  </div>
-                </div>
-                <div class="col-md-3 list-item-main-section">
-                  <div class="">
-                      <div class="row">
-                        <div class="col-md-12 list-item-main-section">
-                          <br/>
-                          <p><strong>พื้นที่ของคุณได้รับผลกระทบ : <br/><span class="" am-time-ago="planReport.createdAt" tooltip="{{ planReport.createdAt | amCalendar }}"></span></strong></p>
-
+                <div class="col-md-7 list-item-meta">
+                    <div class="col-md-6">
+                          <h2 class="subheading"><i class="fa fa-stethoscope fa-size-18"></i> พื้นที่เกิดโรคระบาด</h2>
                           <hr/>
-                      
-                          <div class="list-item-meta-view-button">
-                            <a ng-click="viewResponseMap(planReport)" class="view-button btn btn-primary">แจ้งเตือนผู้มีส่วนเกี่ยวข้อง</a>
-                            <a data-toggle="modal" data-target="#areaModal" ng-click="viewAreas(planReport)" class="view-button btn btn-primary">พื้นที่ที่ได้รับผลกระทบ</a>
-                          </div>
-                        </div>
-                      </div>
+                            <table class="table table-striped table-bordered table-condensed">
+                                <tr>
+                                    <td>พื้นที่ : {{ planReport.incidentArea }}</td>
+                                </tr>
+                                <tr>
+                                    <td>สถานะ : {{ planReport.reportStateName }}</td>
+                                </tr>
+                                <tr>
+                                    <td>เกิดเหตุเมื่อ : <span class="" am-time-ago="planReport.createdAt" tooltip="{{ planReport.createdAt | amCalendar }}"></span></td>
+                                </tr>
+                            </table>
 
-                  </div>
-                </div><!-- /end first col -->
+                          <p class="hidden">จำนวนพื้นที่ที่ได้รับผลกระทบ : {{ planReport.affectedAreasCount }}</p>
+                          <div class="list-item-meta-view-button">
+                            <a ng-href="#/reports/{{ planReport.report }}" target="_blank" class="view-button btn btn-primary">ดูรายงาน</a>
+                          </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="subheading"><i class="fa fa-map-marker fa-size-18"></i> พื้นที่ของคุณ</h2>
+                        <hr/>
+                        <p>พื้นที่ของคุณได้รับผลกระทบ : <span class="" am-time-ago="planReport.createdAt" tooltip="{{ planReport.createdAt | amCalendar }}"></span></p>
+                        <div class="list-item-meta-view-button">
+                          <a ng-click="viewResponseMap(planReport)" class="view-button btn btn-primary">แจ้งเตือนผู้มีส่วนเกี่ยวข้อง</a>
+                          <a data-toggle="modal" data-target="#areaModal" ng-click="viewAreas(planReport)" class="view-button btn btn-primary">พื้นที่ที่ได้รับผลกระทบ</a>
+                        </div>
+                    </div>
+
+                </div>
               </div><!-- /end row -->
             </div>
           </div>
