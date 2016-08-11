@@ -40,7 +40,7 @@
 
                           <p class="hidden">จำนวนพื้นที่ที่ได้รับผลกระทบ : {{ planReport.affectedAreasCount }}</p>
                           <div class="list-item-meta-view-button">
-                            <a ng-href="#/reports/{{ planReport.report }}" target="_blank" class="view-button btn btn-primary">ดูรายงาน</a>
+                            <a ng-href="#/reports/{{ planReport.report }}" target="_blank" class="view-button btn btn-primary btn-sm">ดูรายงาน</a>
                           </div>
 
                     </div>
@@ -49,8 +49,8 @@
                         <hr/>
                         <p>พื้นที่ของคุณได้รับผลกระทบ : <span class="" am-time-ago="planReport.createdAt" tooltip="{{ planReport.createdAt | amCalendar }}"></span></p>
                         <div class="list-item-meta-view-button">
-                          <a ng-click="viewResponseMap(planReport)" class="view-button btn btn-primary">แจ้งเตือนผู้มีส่วนเกี่ยวข้อง</a>
-                          <a data-toggle="modal" data-target="#areaModal" ng-click="viewAreas(planReport)" class="view-button btn btn-primary">พื้นที่ที่ได้รับผลกระทบ</a>
+                          <a ng-click="viewResponseMap(planReport)" class="view-button btn btn-primary btn-sm">แจ้งเตือนผู้มีส่วนเกี่ยวข้อง</a>
+                          <a data-toggle="modal" data-target="#areaModal" ng-click="viewAreas(planReport)" class="view-button btn btn-primary btn-sm">พื้นที่ที่ได้รับผลกระทบ</a>
                         </div>
                     </div>
 
