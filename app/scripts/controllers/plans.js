@@ -7,7 +7,9 @@ angular.module('poddDashboardApp')
   Menu.setActiveMenu('scenario');
 })
 
-.controller('PlansCtrl', function ($scope, Menu, PlanReport, $modal, AuthorityView) {
+.controller('PlansCtrl', function ($scope, Menu, PlanReport, $modal, 
+  AuthorityView, uiGridUtils) {
+
   Menu.setActiveMenu('scenario');
 
   $scope.loading = false;
@@ -17,11 +19,33 @@ angular.module('poddDashboardApp')
   $scope.myAuthorities = [];
 
   $scope.currentPlanReport = null;
+
+  function exportPlanZone (planExport, plan, code, codeName) {
+    var header = false;
+    var planExport = [];
+    plan[code].forEach(function (item) {
+      planExport.push({
+        'ระดับ': !header? codeName: '',
+        'พื้นที่ที่ได้รับผลกระทบ': item.address || item.name
+      });
+      header = true;
+    });
+    return planExport;
+  }
+
   $scope.viewAreas = function (planReport) {
     $scope.currentPlanReport = planReport;
     $scope.currentPlanReport.log['red'] = $scope.getLevelAreas(planReport, 'red');
     $scope.currentPlanReport.log['yellow'] = $scope.getLevelAreas(planReport, 'yellow');
     $scope.currentPlanReport.log['green'] = $scope.getLevelAreas(planReport, 'green');
+
+    var planExport = [];
+    Array.prototype.push.apply(planExport, exportPlanZone(planExport, $scope.currentPlanReport.log.level_areas, 'red', 'โซนสีแดง')); 
+    Array.prototype.push.apply(planExport, exportPlanZone(planExport, $scope.currentPlanReport.log.level_areas, 'yellow', 'โซนสีเหลือง')); 
+    Array.prototype.push.apply(planExport, exportPlanZone(planExport, $scope.currentPlanReport.log.level_areas, 'green', 'โซนสีเขียว')); 
+
+    $scope.gridOptionsPlan.data = planExport;
+
   };
 
   $scope.viewResponseMap = function (planReport) {
@@ -77,6 +101,28 @@ angular.module('poddDashboardApp')
       }
     }
     return result;
+  };
+
+  $scope.gridOptionsPlan = {
+      enableSorting: false,
+      data: [],
+      columnDefs: [],
+      exporterLinkLabel: 'ดาวน์โหลดข้อมูลไฟล์ CSV',
+      exporterLinkTemplate: '<span><a class="btn btn-primary btn-sm" download="รายชื่ออาสาสมัครในโครงการผ่อดีดี.csv" href=\"data:text/csv;charset=UTF-8,CSV_CONTENT\">LINK_LABEL</a></span>',
+      onRegisterApi: function(gridApi){
+          $scope.gridApi = gridApi;
+      }
+  };
+
+
+  $scope.csvExport = function () {
+    var name = 'plan-'+ $scope.currentPlanReport.log.plan.name +'ของรายงาน ' + $scope.currentPlanReport.reportTypeName + 'หมายเลข #' + $scope.currentPlanReport.report + '.csv';
+    uiGridUtils.exportCsv($scope.gridApi.grid, name);
+  };
+
+  $scope.xlsxExport = function () {
+    var name = 'plan-'+ $scope.currentPlanReport.log.plan.name +'ของรายงาน ' + $scope.currentPlanReport.reportTypeName + 'หมายเลข #' + $scope.currentPlanReport.report + '.xlsx';
+    uiGridUtils.exportXlsx($scope.gridApi.grid, name);
   };
 
   function fetch(page) {

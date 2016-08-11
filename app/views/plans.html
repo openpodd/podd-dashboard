@@ -78,6 +78,11 @@
             </div>
             <div class="modal-body">
               <p>หมายเหตุ : พื้นที่ที่ได้รับผลกระทบ, <span class="area-highlight text-right">พื้นที่ที่รับผิดชอบ</span></p>
+              <div class="filter-action clearfix">
+                <a class="btn btn-primary" ng-click="csvExport()"><i class="fa fa-file-code-o fa-size-16 ico-front" aria-hidden="true"></i> ข้อมูลไฟล์ CSV</a>
+                <a class="btn btn-primary" ng-click="xlsxExport()"><i class="fa fa-file-excel-o fa-size-16 ico-front" aria-hidden="true"></i> ข้อมูลไฟล์ Excel</a>
+              </div>
+              
               <div ng-repeat="level in currentPlanReport.log.plan.levels">
                 <br/>
                 <div class="label-code">
@@ -101,6 +106,8 @@
             </div>
         </div>
       </div></div>
+
+      <div id="gridPlan" class="summary-grid-person grid-summary clear inline-table hide" ui-grid="gridOptionsPlan" ui-grid-exporter></div>
 
     </div></div>
   </div>
