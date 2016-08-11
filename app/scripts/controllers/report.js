@@ -248,6 +248,7 @@ angular.module('poddDashboardApp')
     $scope._viewResponseMap = function (planReport) {
       var scope = $scope.$new();
       scope.planReport = planReport;
+      scope.isShowMap = true;
 
       var modalInstance = $modal.open({
         templateUrl: 'views/plan-report.html',
