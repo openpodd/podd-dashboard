@@ -7,13 +7,14 @@ angular.module('poddDashboardApp')
   Menu.setActiveMenu('scenario');
 })
 
-.controller('PlansCtrl', function ($scope, Menu, PlanReport, $modal) {
+.controller('PlansCtrl', function ($scope, Menu, PlanReport, $modal, AuthorityView) {
   Menu.setActiveMenu('scenario');
 
   $scope.loading = false;
   $scope.page = 1;
   $scope.endPageList = false;
   $scope.planReports = [];
+  $scope.myAuthorities = [];
 
   $scope.currentPlanReport = null;
   $scope.viewAreas = function (planReport) {
@@ -47,6 +48,34 @@ angular.module('poddDashboardApp')
     return found;
   };
 
+  var checkZone = function (planReport, code, result) {
+    var areas = planReport.log.level_areas[code];
+    var answer = '';
+    areas.forEach(function (item) {
+      var address = item.address.split(' ');
+      for (var i = 0; i < address.length; i++) {
+        if ($scope.myAuthorities.indexOf(address[i]) !== -1) {
+          answer = result;
+          return;
+        }
+      }
+    });
+    return answer;
+  }
+    
+
+  $scope.myAreaZone = function (planReport) {
+    var result = checkZone(planReport, 'red', 'โซนสีแดง');
+    if (!result) {
+      result = checkZone(planReport, 'yellow', 'โซนสีเหลือง');
+    } else {
+      if (!result) {
+        result = checkZone(planReport, 'green', 'โซนสีเหลือง');
+      }
+    }
+    return result;
+  };
+
   function fetch(page) {
     if ($scope.loading) { return; }
     $scope.loading = true;
@@ -57,6 +86,13 @@ angular.module('poddDashboardApp')
       page: page,
       'page_size': 20
     };
+
+    AuthorityView.mine().$promise.then(function (resp) {
+      $scope.myAuthorities = [];
+      resp.forEach(function (item) {
+        $scope.myAuthorities.push(item.name);
+      });
+    });
 
     PlanReport.query(query).$promise
       .then(function (resp) {

@@ -71,6 +71,11 @@ angular.module('poddDashboardApp')
     return $resource(config.API_BASEPATH + '/authorities/?self=true', {}, {
         'list': {
             isArray: true,
+        },
+        'mine': {
+            url: config.API_BASEPATH + '/authorities/?mine=true',
+            method: 'GET',
+            isArray: true,
         }
     });
 })

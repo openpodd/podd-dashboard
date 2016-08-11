@@ -48,9 +48,13 @@
                       <div class="row">
                         <div class="col-md-12 list-item-main-section">
                           <br/>
-                          <p><strong>พื้นที่ของคุณได้รับผลกระทบ : <br/><span class="" am-time-ago="planReport.createdAt" tooltip="{{ planReport.createdAt | amCalendar }}"></span></strong></p>
+                          <div ng-class="{'hidden': !myAreaZone(planReport)}">
+                            <p><strong>พื้นที่ของคุณได้รับผลกระทบ : <br/><span >
+                              {{ myAreaZone(planReport) }}
+                            </span></strong></p>
 
-                          <hr/>
+                            <hr/>
+                          </div>
                       
                           <div class="list-item-meta-view-button">
                             <a ng-click="viewResponseMap(planReport)" class="view-button btn btn-primary">แจ้งเตือนผู้มีส่วนเกี่ยวข้อง</a>
