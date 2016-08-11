@@ -69,7 +69,8 @@
     }
 
     .subheading{
-      margin-top: 15px;
+      margin-top: 25px;
+      margin-bottom: 10px;
     }
   }
 
@@ -86,9 +87,10 @@
     // text-align: center;
     margin-bottom: 30px;
     .view-button {
-      width: 70%;
-      margin-top: 30px;
+      min-width: 190px;
+    //   margin-top: 30px;
       // font-size: 1.4em;
+      margin-bottom: 15px;
     }
   }
 
@@ -194,4 +196,10 @@
 
 #areaModal {
   z-index: 99999;
+}
+
+.area-modal {
+    .subheading {
+        margin-bottom: 0;
+    }
 }
