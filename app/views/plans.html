@@ -86,11 +86,10 @@
                 </div>
                 <div>
                 <table class="table table-striped table-bordered table-condensed">
-                    <tr>
-                        <td><div ng-repeat="area in getLevelAreas(currentPlanReport, level.code)">
+                    <tr ng-repeat="row in getCurrentLevelAreas(level.code)">
+                        <td ng-repeat="area in row" ng-if="area">
                           <span ng-class="{ 'area-highlight': area.isMine }"> {{ area.address || area.name }}</span>
-                        </div></td>
-                        <td></td>
+                        </td>
                     </tr>
                 </table>
                 </div>

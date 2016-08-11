@@ -19,6 +19,9 @@ angular.module('poddDashboardApp')
   $scope.currentPlanReport = null;
   $scope.viewAreas = function (planReport) {
     $scope.currentPlanReport = planReport;
+    $scope.currentPlanReport.log['red'] = $scope.getLevelAreas(planReport, 'red');
+    $scope.currentPlanReport.log['yellow'] = $scope.getLevelAreas(planReport, 'yellow');
+    $scope.currentPlanReport.log['green'] = $scope.getLevelAreas(planReport, 'green');
   };
 
   $scope.viewResponseMap = function (planReport) {
@@ -155,10 +158,21 @@ angular.module('poddDashboardApp')
   $scope.willShowExpandButton = function (planReport, code) {
     return planReport.log.level_areas[code].length > expandThreshold;
   };
+
   $scope.getLevelAreas = function (planReport, code) {
+    var results = [];
     var areas = planReport.log.level_areas[code];
+    for (var i = 0; i < areas.length; i+=2) {
+      var area1 = areas[i];
+      var area2 = ((i+1) < areas.length)? areas[i+1]: (areas.length >1)? {}: null;
+      results.push([area1, area2]);
+    }
+    return results;
+  };
+
+  $scope.getCurrentLevelAreas = function (code) {
+    var areas = $scope.currentPlanReport.log[code];
     return areas;
-   
   };
 
   $scope.loadMore = function () {
