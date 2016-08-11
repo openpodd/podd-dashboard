@@ -7,7 +7,7 @@ angular.module('poddDashboardApp')
   Menu.setActiveMenu('scenario');
 })
 
-.controller('PlansCtrl', function ($scope, Menu, PlanReport) {
+.controller('PlansCtrl', function ($scope, Menu, PlanReport, $modal) {
   Menu.setActiveMenu('scenario');
 
   $scope.loading = false;
@@ -18,7 +18,20 @@ angular.module('poddDashboardApp')
   $scope.currentPlanReport = null;
   $scope.viewAreas = function (planReport) {
     $scope.currentPlanReport = planReport;
-    console.log($scope.currentPlanReport);
+  };
+
+  $scope.viewResponseMap = function (planReport) {
+    var scope = $scope.$new();
+    scope.planReport = planReport;
+    scope.isShowMap = false;
+    scope.title = 'แจ้งเตือนผู้มีส่วนเกี่ยวข้อง'
+
+    var modalInstance = $modal.open({
+      templateUrl: 'views/plan-report.html',
+      scope: scope,
+      size: 'lg',
+      controller: 'PlanReportModalCtrl'
+    });
   };
 
   $scope.isMyAreas = function (planReport, code, area) {

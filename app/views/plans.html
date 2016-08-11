@@ -16,7 +16,9 @@
           <div class="col-md-12">
             <div class="plan-item">
               <div class="row">
-                <div class="col-md-5 list-item-main-section"></div>
+                <div class="col-md-5 list-item-main-section">
+                  <div response-map class="response-map response-map-300" plan-report="planReport" when-hover="whenHover($obj)"></div>
+                </div>
                 <div class="col-md-4 list-item-meta">
                   <div class="plan-list-item-left">
                     
@@ -51,7 +53,7 @@
                           <hr/>
                       
                           <div class="list-item-meta-view-button">
-                            <a ng-href="#/reports/{{ planReport.report }}" target="_blank" class="view-button btn btn-primary">แจ้งเตือนผู้มีส่วนเกี่ยวข้อง</a>
+                            <a ng-click="viewResponseMap(planReport)" class="view-button btn btn-primary">แจ้งเตือนผู้มีส่วนเกี่ยวข้อง</a>
                             <a data-toggle="modal" data-target="#areaModal" ng-click="viewAreas(planReport)" class="view-button btn btn-primary">พื้นที่ที่ได้รับผลกระทบ</a>
                           </div>
                         </div>
