@@ -122,6 +122,18 @@ angular.module('poddDashboardApp')
         $state.go('main.summaryperformanceperson', { month: $scope.month, areaId: areaId });
     };
 
+    function getDaysInMonth(month, year) {
+        var date = new Date(year, month, 1);
+        var days = [];
+        while (date.getMonth() === month) {
+            var formattedDate = moment(new Date(date)).format('DD-MM-YYYY');
+            days.push(formattedDate);
+            date.setDate(date.getDate() + 1);
+        }
+
+        return days;
+    }
+
     $scope._search = function () {
 
         console.log('Will search with query', $scope.query);
@@ -145,7 +157,9 @@ angular.module('poddDashboardApp')
         }
 
         $scope.query.subscribe = shared.subscribe;
-        
+        var dateInMonth = getDaysInMonth($scope.months.selectedMonth-1, $scope.months.selectedYear);
+        console.log(dateInMonth);
+
         SummaryPerformancePerson.query($scope.query).$promise.then(function (data) {
             var results = [];
             var daily = [];
@@ -162,16 +176,19 @@ angular.module('poddDashboardApp')
                     headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">ชื่อ</div>',
                     width:320 });
 
-                item.activeDates.forEach(function (_item) {
+                dateInMonth.forEach(function (_item) {
 
                     if(!header){
-                        showOptions.push({ field: _item.date, pinnedRight: true,
-                            headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">'+ _item.date.split('-')[0] +'</div>',
+                        showOptions.push({ field: _item, pinnedRight: true,
+                            headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">'+ _item.split('-')[0] +'</div>',
                             cellClass: 'cell-center',
                             width: 40 });
                     }
-
-                    reporters[_item.date] = _item.total;
+                    if (item.activeDates.indexOf(_item) > -1) {
+                        reporters[_item] = 'x';
+                    } else {
+                        reporters[_item] = ' ';
+                    }
                 });
 
 
