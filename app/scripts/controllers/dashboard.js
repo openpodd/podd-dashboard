@@ -7,7 +7,7 @@ angular.module('poddDashboardApp')
  * Show list of recent reports.
  */
 
-.controller('DashboardCtrl', function ($scope, Search, shared,
+.controller('DashboardCtrl', function ($scope, Search, shared, dashboard,
                                   AdministrationArea, ReportModal,
                                   SummaryReportVisualization, SummaryDashboardVisualization,
                                   SummaryPerformancePerson, Reports,
@@ -98,7 +98,7 @@ angular.module('poddDashboardApp')
 
   function locationChange() {
     var reportId = $location.search().reportId;
-    
+
     // check if the same state.
     if ($location.path() !== $state.$current.url.sourcePath) {
       return;
@@ -128,35 +128,100 @@ angular.module('poddDashboardApp')
   });
 
   locationChange();
-  
+
+  /* ------------------- INIT CACHE --------------------- */
+  var cached = lscache.get('dashboard');
+  var cacheTimeout = 60 * 6;
+  var useCache = true;
+
+  function setDataFromCache(cached) {
+    $scope.users = cached.newlyReporters;
+    $scope.positiveReports = cached.positiveReports;
+    $scope.performanceUsers = cached.performanceReporters;
+    $scope.administrationAreas = cached.contacts;
+    $scope.notificationTemplates = cached.notificationTemplates;
+  }
+
+  var dashboardQuery = {
+    page_size: 3,
+    month: moment().format('M/YYYY'),
+    subscribe: shared.subscribe,
+    tz: (new Date()).getTimezoneOffset() / -60,
+    lastWeek: true
+  };
+
+  // Independent from cache.
+  loadNegativeReports();
+
+  if (useCache) {
+    if (!cached || !cached.positiveReports) {
+      dashboard.getDashboardData(dashboardQuery).$promise
+        .then(function (data) {
+          lscache.set('dashboard', data, cacheTimeout);
+          cached = data;
+          setDataFromCache(cached);
+        })
+        .catch(function (err) {
+          // load data with legacy method.
+          loadVolunteersCount();
+          loadVolunteersList();
+          loadPositiveReports();
+          loadNegativeReports();
+          loadVolunteersPerformance();
+          loadContacts();
+          loadNotificationTemplates();
+        });
+    }
+    else {
+      setDataFromCache(cached);
+    }
+  }
+  else {
+    // load data with legacy method.
+    loadVolunteersCount();
+    loadVolunteersList();
+    loadPositiveReports();
+    loadNegativeReports();
+    loadVolunteersPerformance();
+    loadContacts();
+    loadNotificationTemplates();
+  }
+
   var params = {
       subscribe: shared.subscribe
   };
 
   $scope.lastWeek = true;
-  SummaryDashboardVisualization.get(params).$promise.then(function (data) {
+
+  function loadVolunteersCount() {
+    SummaryDashboardVisualization.get(params).$promise.then(function (data) {
       $scope.dashboard = data;
-  });
-
-
-  var negativeQuery = {
-    '__missing__': 'parent',
-    'q': 'negative:true AND testFlag:false',
-    'page_size': 5,
-    'tz': (new Date()).getTimezoneOffset() / -60
-  };
-
-  $scope.negativeReports = [];
-  $scope.loadingnegativeReports = true;
-  Search.query(negativeQuery).$promise
-    .then(function (resp) {
-      $scope.negativeReports = resp.results;
-      $scope.loadingnegativeReports = false;
-    })
-    .catch(function () {
-      $scope.loadingnegativeReports = false;
     });
+  }
 
+  function loadVolunteersList() {
+    var userQuery = {
+      'page': 1,
+      'page_size': 3,
+      'isVolunteer': true,
+      'subscribe': shared.subscribe,
+      'order': '-id'
+    };
+
+    $scope.users = [];
+    $scope.loadingUsers = true;
+
+    User.list(userQuery).$promise
+      .then(function (data) {
+        $scope.users = data
+        $scope.loadingUsers = false;
+      })
+      .catch(function () {
+        $scope.loadingUsers = false;
+      });
+  }
+
+  function loadPositiveReports() {
     var positiveQuery = {
       'q': 'type:0 AND date:[ * TO ' + moment().format('YYYY-MM-DD') +']',
       'page_size': 3,
@@ -165,6 +230,7 @@ angular.module('poddDashboardApp')
 
     $scope.positiveReports = [];
     $scope.loadingpositiveReports = true;
+
     Search.query(positiveQuery).$promise
       .then(function (resp) {
         $scope.positiveReports = resp.results;
@@ -173,92 +239,102 @@ angular.module('poddDashboardApp')
       .catch(function () {
         $scope.loadingpositiveReports = false;
       });
+  }
 
-      var userQuery = {
-          'page': 1,
-          'page_size': 3,
-          'isVolunteer': true,
-          'subscribe': shared.subscribe,
-          'order': '-id'
-      };
+  function loadNegativeReports() {
+    var negativeQuery = {
+      '__missing__': 'parent',
+      'q': 'negative:true AND testFlag:false',
+      'page_size': 5,
+      'tz': (new Date()).getTimezoneOffset() / -60
+    };
 
-      $scope.users = [];
-      $scope.loadingUsers = true;
-      User.list(userQuery).$promise.then(function (data) {
-          $scope.users = data
-          $scope.loadingUsers = false;
-      }).catch(function () {
-          $scope.loadingUsers = false;
+    $scope.negativeReports = [];
+    $scope.loadingnegativeReports = true;
+
+    Search.query(negativeQuery).$promise
+      .then(function (resp) {
+        $scope.negativeReports = resp.results;
+        $scope.loadingnegativeReports = false;
+      })
+      .catch(function () {
+        $scope.loadingnegativeReports = false;
       });
+  }
 
-      // $scope.getAvatarUrl = function (avatarUrl) {
-      //   if (avatarUrl == null) {
-      //     return '/images/avatar.png';
-      //   }
-      //   return avatarUrl;
-      // }
+  function loadVolunteersPerformance() {
+    var performanceUserQuery = {
+      'month': (moment().month() + 1) + '/' + moment().year(),
+      'subscribe': shared.subscribe,
+      'tz': (new Date()).getTimezoneOffset() / -60
+    };
 
-      var performanceUserQuery = {
-          'month': (moment().month() + 1) + '/' + moment().year(),
-          'subscribe': shared.subscribe,
-          'tz': (new Date()).getTimezoneOffset() / -60
-      };
+    $scope.performanceUsers = [];
+    $scope.loadingPerformanceUsers = true;
 
-      $scope.performanceUsers = [];
-      $scope.loadingPerformanceUsers = true;
-      SummaryPerformancePerson.query(performanceUserQuery).$promise.then(function (data) {
-          $scope.performanceUsers = data;
-          $scope.loadingPerformanceUsers = false;
-      }).catch(function () {
-          $scope.loadingPerformanceUsers = false;
+    SummaryPerformancePerson.query(performanceUserQuery).$promise
+      .then(function (data) {
+        $scope.performanceUsers = data;
+        $scope.loadingPerformanceUsers = false;
+      })
+      .catch(function () {
+        $scope.loadingPerformanceUsers = false;
       });
+  }
 
-      var administrationAreasQuery = {
-        keywords: ['ตำบล', 'บ้าน'],
-        page_size: 2,
-        page: 1,
-        name__startsWith: 'บ้าน',
-        subscribe: shared.subscribe
-      };
+  function loadContacts() {
+    var administrationAreasQuery = {
+      keywords: ['ตำบล', 'บ้าน'],
+      page_size: 2,
+      page: 1,
+      name__startsWith: 'บ้าน',
+      subscribe: shared.subscribe
+    };
 
-      $scope.administrationAreas = [];
-      $scope.loadingContacts = true;
-      AdministrationArea.contacts(administrationAreasQuery).$promise.then(function (resp) {
+    $scope.administrationAreas = [];
+    $scope.loadingContacts = true;
+
+    AdministrationArea.contacts(administrationAreasQuery).$promise
+      .then(function (resp) {
         $scope.administrationAreas = resp.results;
         $scope.loadingContacts = false;
+      })
+      .catch(function () {
+        $scope.loadingContacts = false;
       });
+  }
 
+  function loadNotificationTemplates() {
+    $scope.loadingNotification = true;
+    $scope.authority = null;
+    $scope.notificationTemplates = [];
 
-      $scope.loadingNotification = true;
-      $scope.authority = null;
-      $scope.notificationTemplates = [];
-
-      function getNotificationTemplate(authority) {
-          var params = {id: authority.id};
-          Authority.notificationTemplates(params).$promise.then(function (data) {
-              $scope.notificationTemplates = data;
-              $scope.loadingNotification = false;
-          }).catch(function () {
-              $scope.loadingNotification = false;
-          });
-      }
-
-      AuthorityView.list({'page_size': 1}).$promise.then(function (data) {
-          data.forEach(function (item) {
-              if($scope.authority !== null) {
-                  return;
-              }
-              $scope.authority = item;
-              getNotificationTemplate(item);
-          });
-      }).catch(function () {
-          $scope.loading = false;
-          $scope.error = true;
+    AuthorityView.list({'page_size': 1}).$promise
+      .then(function (data) {
+        $scope.authority = data.length && data[0];
+        getNotificationTemplate($scope.authority);
+      })
+      .catch(function () {
+        $scope.loading = false;
+        $scope.error = true;
       });
+  }
 
-      $scope.selectedTemplate = function(template) {
-          $scope.selectedTemplateContact = template;
-          $scope.newSelectedContact = template.contact.to;
-      };
+  function getNotificationTemplate(authority) {
+    var params = {id: authority.id};
+    Authority.notificationTemplates(params).$promise
+      .then(function (data) {
+        $scope.notificationTemplates = data;
+        $scope.loadingNotification = false;
+      })
+      .catch(function () {
+        $scope.loadingNotification = false;
+      });
+  }
+
+  $scope.selectedTemplate = function (template) {
+    $scope.selectedTemplateContact = template;
+    $scope.newSelectedContact = template.contact.to;
+  };
 
 });
