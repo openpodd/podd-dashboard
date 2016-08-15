@@ -161,7 +161,7 @@
                           <p class="small -mini">{{ area.name }}</p>
                           <a ng-if="canUpdateContact" class="pull-right" data-toggle="modal" data-target="#contactModal" ng-click="selectedArea(area)">แก้ไข</a>
                         </li>
-                        <li ng-show="!administrationAreas"><p class="small ">ไม่พบรายการ</p></li>
+                        <li ng-show="!administrationAreas || administrationAreas.length === 0"><p class="small ">ไม่พบรายการ</p></li>
                     </ul>
 
                     <h3 class="heading-list pull-left f-black">ผู้มีส่วนเกี่ยวข้องกรณีต่างๆ</h3>
