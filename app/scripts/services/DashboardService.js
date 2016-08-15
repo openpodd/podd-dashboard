@@ -23,6 +23,16 @@ angular.module('poddDashboardApp')
     return resource;
 })
 
+.factory('newDashboard', function ($resource) {
+    var resource = $resource(config.API_BASEPATH + '/pages/dashboard', {}, {
+        get: { 
+            isArray: false 
+        }
+    });
+
+    return resource;
+})
+
 .factory('streaming', function () {
     return io.connect(config.SOCKETIO_BASEPATH)
         .on('connect', function () {

@@ -19,7 +19,7 @@
                   <li><a href="#/map"><i class="fa fa-star green" aria-hidden="true"></i> แสดงรายงานแบบแผนที่</a></li>
                   <li><a href="#/summary/report-month"><i class="fa fa-star green" aria-hidden="true"></i> สรุปรายงานประจำเดือน</a></li>
                   <li><a href="#/user-list"><i class="fa fa-star green" aria-hidden="true"></i> คุณอยากรู้ว่าใครเป็นอาสาในพื้นที่บ้าง</a></li>
-                  <li><a href="#/summary/visualize"><i class="fa fa-star green" aria-hidden="true"></i> จำนวนรายงานอาสาแต่ละคน</a></li>
+                  <li><a href="#/summary/performance-person"><i class="fa fa-star green" aria-hidden="true"></i> จำนวนรายงานอาสาแต่ละคน</a></li>
                   <li><a href="#/contacts"><i class="fa fa-star green" aria-hidden="true"></i> แก้ไขรายชื่อผู้ติดต่อในหมู่บ้าน</a></li>
                   <li><a href="#/invitation-code-list"><i class="fa fa-star green" aria-hidden="true"></i> ดูรหัสพื้นที่ที่ใช้ในการสมัคร</a></li>
                   <li><a href="#/profile"><i class="fa fa-star green" aria-hidden="true"></i> เปลี่ยนรหัสผ่านใหม่</a></li>
@@ -161,7 +161,7 @@
                           <p class="small -mini">{{ area.name }}</p>
                           <a ng-if="canUpdateContact" class="pull-right" data-toggle="modal" data-target="#contactModal" ng-click="selectedArea(area)">แก้ไข</a>
                         </li>
-                        <li ng-show="administrationAreas.length === 0"><p class="small ">ไม่พบรายการ</p></li>
+                        <li ng-show="!administrationAreas"><p class="small ">ไม่พบรายการ</p></li>
                     </ul>
 
                     <h3 class="heading-list pull-left f-black">ผู้มีส่วนเกี่ยวข้องกรณีต่างๆ</h3>

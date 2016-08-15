@@ -12,6 +12,7 @@ angular.module('poddDashboardApp')
                                   SummaryReportVisualization, SummaryDashboardVisualization,
                                   SummaryPerformancePerson, Reports,
                                   Authority, AuthorityView, NotificationAuthorities,
+                                  newDashboard,
                                   User, Menu, $location, $state, $stateParams) {
   console.log('-> In DashboardCtrl');
 
@@ -23,15 +24,6 @@ angular.module('poddDashboardApp')
 
   $scope.canUpdateContact = Menu.hasPermissionOnMenu('view_dashboard_plan');
   $scope.canUpdateNotification = Menu.hasPermissionOnMenu('view_dashboard_users');
-
-  $scope.dashboard = {
-      users: 0,
-      positiveReports: 0,
-      negativeReports: 0
-  };
-
-  $scope.onlyGraph = true;
-  $scope.selected = 'day';
 
   $scope.activeReportId = null;
   $scope.onClickReport = function (reportId) {
@@ -128,16 +120,6 @@ angular.module('poddDashboardApp')
   });
 
   locationChange();
-  
-  var params = {
-      subscribe: shared.subscribe
-  };
-
-  $scope.lastWeek = true;
-  SummaryDashboardVisualization.get(params).$promise.then(function (data) {
-      $scope.dashboard = data;
-  });
-
 
   var negativeQuery = {
     '__missing__': 'parent',
@@ -157,104 +139,142 @@ angular.module('poddDashboardApp')
       $scope.loadingnegativeReports = false;
     });
 
-    var positiveQuery = {
-      'q': 'type:0 AND date:[ * TO ' + moment().format('YYYY-MM-DD') +']',
-      'page_size': 3,
-      'tz': (new Date()).getTimezoneOffset() / -60
+
+    $scope.dashboardQuery = {
+        users: 0,
+        positiveReports: 0,
+        negativeReports: 0
     };
 
-    $scope.positiveReports = [];
-    $scope.loadingpositiveReports = true;
-    Search.query(positiveQuery).$promise
-      .then(function (resp) {
-        $scope.positiveReports = resp.results;
+    var params = {
+        'month': (moment().month() + 1) + '/' + moment().year(),
+        'lastWeek': true,
+        'name__startsWith': 'บ้าน',
+        'keywords': ['ตำบล', 'บ้าน'],
+        'subscribe': shared.subscribe,
+        'page_size': 3,
+        'tz': (new Date()).getTimezoneOffset() / -60
+    };
+
+    $scope.onlyGraph = true;
+    $scope.selected = 'day';
+    $scope.lastWeek = true;
+
+    newDashboard.get(params).$promise.then(function (data) {
+        $scope.dashboard = data.visualization;
+        $scope.positiveReports = data.positiveReports;
+        $scope.users = data.newlyReporters;
+        $scope.performanceUsers = data.performanceReporters;
+        $scope.notificationTemplates = data.notificationTemplates;
+        $scope.administrationAreas = data.contacts;
+    })
+    .catch(function () {
         $scope.loadingpositiveReports = false;
-      })
-      .catch(function () {
-        $scope.loadingpositiveReports = false;
-      });
+        $scope.loadingNotification = false;
+        $scope.loadingUsers = false;
+        $scope.loadingPerformanceUsers = false;
+        $scope.loadingContacts = false;
+    });;
 
-      var userQuery = {
-          'page': 1,
-          'page_size': 3,
-          'isVolunteer': true,
-          'subscribe': shared.subscribe,
-          'order': '-id'
-      };
+    // var positiveQuery = {
+    //   'q': 'type:0 AND date:[ * TO ' + moment().format('YYYY-MM-DD') +']',
+    //   'page_size': 3,
+    //   'tz': (new Date()).getTimezoneOffset() / -60
+    // };
 
-      $scope.users = [];
-      $scope.loadingUsers = true;
-      User.list(userQuery).$promise.then(function (data) {
-          $scope.users = data
-          $scope.loadingUsers = false;
-      }).catch(function () {
-          $scope.loadingUsers = false;
-      });
+    // $scope.positiveReports = [];
+    // $scope.loadingpositiveReports = true;
+    // Search.query(positiveQuery).$promise
+    //   .then(function (resp) {
+    //     $scope.positiveReports = resp.results;
+    //     $scope.loadingpositiveReports = false;
+    //   })
+    //   .catch(function () {
+    //     $scope.loadingpositiveReports = false;
+    //   });
 
-      // $scope.getAvatarUrl = function (avatarUrl) {
-      //   if (avatarUrl == null) {
-      //     return '/images/avatar.png';
-      //   }
-      //   return avatarUrl;
+    //   var userQuery = {
+    //       'page': 1,
+    //       'page_size': 3,
+    //       'isVolunteer': true,
+    //       'subscribe': shared.subscribe,
+    //       'order': '-id'
+    //   };
+
+    //   $scope.users = [];
+    //   $scope.loadingUsers = true;
+    //   User.list(userQuery).$promise.then(function (data) {
+    //       $scope.users = data
+    //       $scope.loadingUsers = false;
+    //   }).catch(function () {
+    //       $scope.loadingUsers = false;
+    //   });
+
+    //   // $scope.getAvatarUrl = function (avatarUrl) {
+    //   //   if (avatarUrl == null) {
+    //   //     return '/images/avatar.png';
+    //   //   }
+    //   //   return avatarUrl;
+    //   // }
+
+      // var performanceUserQuery = {
+      //     'month': (moment().month() + 1) + '/' + moment().year(),
+      //     'subscribe': shared.subscribe,
+      //     'page_size': 3,
+      //     'tz': (new Date()).getTimezoneOffset() / -60
+      // };
+
+      // $scope.performanceUsers = [];
+      // $scope.loadingPerformanceUsers = true;
+      // SummaryPerformancePerson.query(performanceUserQuery).$promise.then(function (data) {
+      //     $scope.performanceUsers = data;
+      //     $scope.loadingPerformanceUsers = false;
+      // }).catch(function () {
+      //     $scope.loadingPerformanceUsers = false;
+      // });
+
+      // var administrationAreasQuery = {
+      //   keywords: ['ตำบล', 'บ้าน'],
+      //   page_size: 2,
+      //   page: 1,
+      //   name__startsWith: 'บ้าน',
+      //   subscribe: shared.subscribe
+      // };
+
+      // $scope.administrationAreas = [];
+      // $scope.loadingContacts = true;
+      // AdministrationArea.contacts(administrationAreasQuery).$promise.then(function (resp) {
+      //   $scope.administrationAreas = resp.results;
+      //   $scope.loadingContacts = false;
+      // });
+
+
+      // $scope.loadingNotification = true;
+      // $scope.authority = null;
+      // $scope.notificationTemplates = [];
+
+      // function getNotificationTemplate(authority) {
+      //     var params = {id: authority.id};
+      //     Authority.notificationTemplates(params).$promise.then(function (data) {
+      //         $scope.notificationTemplates = data;
+      //         $scope.loadingNotification = false;
+      //     }).catch(function () {
+      //         $scope.loadingNotification = false;
+      //     });
       // }
 
-      var performanceUserQuery = {
-          'month': (moment().month() + 1) + '/' + moment().year(),
-          'subscribe': shared.subscribe,
-          'tz': (new Date()).getTimezoneOffset() / -60
-      };
-
-      $scope.performanceUsers = [];
-      $scope.loadingPerformanceUsers = true;
-      SummaryPerformancePerson.query(performanceUserQuery).$promise.then(function (data) {
-          $scope.performanceUsers = data;
-          $scope.loadingPerformanceUsers = false;
-      }).catch(function () {
-          $scope.loadingPerformanceUsers = false;
-      });
-
-      var administrationAreasQuery = {
-        keywords: ['ตำบล', 'บ้าน'],
-        page_size: 2,
-        page: 1,
-        name__startsWith: 'บ้าน',
-        subscribe: shared.subscribe
-      };
-
-      $scope.administrationAreas = [];
-      $scope.loadingContacts = true;
-      AdministrationArea.contacts(administrationAreasQuery).$promise.then(function (resp) {
-        $scope.administrationAreas = resp.results;
-        $scope.loadingContacts = false;
-      });
-
-
-      $scope.loadingNotification = true;
-      $scope.authority = null;
-      $scope.notificationTemplates = [];
-
-      function getNotificationTemplate(authority) {
-          var params = {id: authority.id};
-          Authority.notificationTemplates(params).$promise.then(function (data) {
-              $scope.notificationTemplates = data;
-              $scope.loadingNotification = false;
-          }).catch(function () {
-              $scope.loadingNotification = false;
-          });
-      }
-
-      AuthorityView.list({'page_size': 1}).$promise.then(function (data) {
-          data.forEach(function (item) {
-              if($scope.authority !== null) {
-                  return;
-              }
-              $scope.authority = item;
-              getNotificationTemplate(item);
-          });
-      }).catch(function () {
-          $scope.loading = false;
-          $scope.error = true;
-      });
+      // AuthorityView.list({'page_size': 1}).$promise.then(function (data) {
+      //     data.forEach(function (item) {
+      //         if($scope.authority !== null) {
+      //             return;
+      //         }
+      //         $scope.authority = item;
+      //         getNotificationTemplate(item);
+      //     });
+      // }).catch(function () {
+      //     $scope.loading = false;
+      //     $scope.error = true;
+      // });
 
       $scope.selectedTemplate = function(template) {
           $scope.selectedTemplateContact = template;
