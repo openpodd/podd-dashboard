@@ -347,4 +347,7 @@ angular.module('poddDashboardApp')
     $scope.newSelectedContact = template.contact.to;
   };
 
+  $scope.onlyGraph = true;
+  $scope.selected = 'day';
+
 });
