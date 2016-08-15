@@ -43,33 +43,37 @@
                   <div class="col-md-3 col-sm-4">แจ้งเตือนไปยัง</div>
                   <div class="col-md-2 col-sm-2">คำสั่ง</div>
                 </div>
-                <div ng-repeat="template in notificationTemplates" class="ta-view-row row">
+                <div ng-repeat="(typeName, templates) in notificationTemplates| orderBy:'typeName' | groupBy: 'typeName'">
 
                   <!--<div class="ta-view-col col-md-1 col-sm-1 col-checkbox" data-th="เลือก">-->
                     <!--<input type="checkbox"/>-->
                   <!--</div>-->
 
-                  <div class="ta-view-col col-md-1 col-sm-1" data-th="รหัส">
-                    <span>#{{ template.id }} </span>
-                  </div>
-                
-                <div class="ta-view-col col-md-2 col-sm-5" data-th="รายการ">
-                    <span ng-bind="::template.typeName" ></span>
+                  <div ng-repeat="template in templates track by $index" class="ta-view-row row"  ng-class-odd="'odd'" ng-class-even="'even'">
+
+                      <div class="ta-view-col col-md-1 col-sm-1" data-th="รหัส">
+                        <span>#{{ template.id }}</span>
+                      </div>
+
+                      <div class="ta-view-col col-md-2 col-sm-5" data-th="รายการ">
+                        <span ng-if="$index==0" ng-bind="::template.typeName"></span>
+                      </div>
+
+                      <div class="ta-view-col col-md-4 col-sm-5" data-th="รายการ">
+                        <span ng-bind="::template.description" ></span>
+                      </div>
+
+                      <div class="ta-view-col col-md-3 col-sm-4" data-th="แจ้งเตือนไปยัง">
+                        <span class="" ng-bind-html="template.contact.to | renderTemplate | renderContact"></span>
+                      </div>
+
+                      <div class="ta-view-col ta-view-area col-md-2 col-sm-2" data-th="คำสั่ง">
+                        <a class="btn btn-primary btn-xs btn-edit ng-click-active" role="button" data-toggle="modal" data-target="#notificationContactModal" ng-click="selectedTemplate(template)">
+                          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> แก้ไข
+                        </a>
+                      </div>
                   </div>
 
-                  <div class="ta-view-col col-md-4 col-sm-5" data-th="รายการ">
-                    <span ng-bind="::template.description" ></span>
-                  </div>
-
-                  <div class="ta-view-col col-md-3 col-sm-4" data-th="แจ้งเตือนไปยัง">
-                    <span class="" ng-bind-html="template.contact.to | renderTemplate | renderContact"></span>
-                  </div>
-
-                  <div class="ta-view-col ta-view-area col-md-2 col-sm-2" data-th="คำสั่ง">
-                    <a class="btn btn-primary btn-xs btn-edit ng-click-active" role="button" data-toggle="modal" data-target="#notificationContactModal" ng-click="selectedTemplate(template)">
-                      <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> แก้ไข
-                    </a>
-                  </div>
                 </div>
               </div>
             </div>
