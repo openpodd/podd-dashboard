@@ -12,6 +12,7 @@ angular.module('poddDashboardApp')
                                   SummaryReportVisualization, SummaryDashboardVisualization,
                                   SummaryPerformancePerson, Reports,
                                   Authority, AuthorityView, NotificationAuthorities,
+                                  newDashboard,
                                   User, Menu, $location, $state, $stateParams) {
   console.log('-> In DashboardCtrl');
 
@@ -23,15 +24,6 @@ angular.module('poddDashboardApp')
 
   $scope.canUpdateContact = Menu.hasPermissionOnMenu('view_dashboard_plan');
   $scope.canUpdateNotification = Menu.hasPermissionOnMenu('view_dashboard_users');
-
-  $scope.dashboard = {
-      users: 0,
-      positiveReports: 0,
-      negativeReports: 0
-  };
-
-  $scope.onlyGraph = true;
-  $scope.selected = 'day';
 
   $scope.activeReportId = null;
   $scope.onClickReport = function (reportId) {
@@ -147,7 +139,9 @@ angular.module('poddDashboardApp')
     month: moment().format('M/YYYY'),
     subscribe: shared.subscribe,
     tz: (new Date()).getTimezoneOffset() / -60,
-    lastWeek: true
+    lastWeek: true,
+    name__startsWith: 'บ้าน',
+    keywords: ['ตำบล', 'บ้าน']
   };
 
   // Independent from cache.
@@ -155,6 +149,14 @@ angular.module('poddDashboardApp')
 
   if (useCache) {
     if (!cached || !cached.positiveReports) {
+
+      $scope.loadingpositiveReports = true;
+      $scope.loadingNotification = true;
+      $scope.loadingUsers = true;
+      $scope.loadingPerformanceUsers = true;
+      $scope.loadingContacts = true;
+      $scope.loadingUsers = true;
+
       dashboard.getDashboardData(dashboardQuery).$promise
         .then(function (data) {
           lscache.set('dashboard', data, cacheTimeout);
@@ -170,6 +172,14 @@ angular.module('poddDashboardApp')
           loadVolunteersPerformance();
           loadContacts();
           loadNotificationTemplates();
+        })
+        .finally(function () {
+          $scope.loadingpositiveReports = false;
+          $scope.loadingNotification = false;
+          $scope.loadingUsers = false;
+          $scope.loadingPerformanceUsers = false;
+          $scope.loadingContacts = false;
+          $scope.loadingUsers = false;
         });
     }
     else {
