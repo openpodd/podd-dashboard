@@ -17,6 +17,12 @@ angular.module('poddDashboardApp')
             method: 'GET',
             isArray: true,
             cache: true
+        },
+        getDashboardData: {
+            url: config.API_BASEPATH + '/pages/dashboard',
+            method: 'GET',
+            isArray: false,
+            cache: false
         }
     });
 

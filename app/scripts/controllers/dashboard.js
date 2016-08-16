@@ -7,7 +7,7 @@ angular.module('poddDashboardApp')
  * Show list of recent reports.
  */
 
-.controller('DashboardCtrl', function ($scope, Search, shared,
+.controller('DashboardCtrl', function ($scope, Search, shared, dashboard,
                                   AdministrationArea, ReportModal,
                                   SummaryReportVisualization, SummaryDashboardVisualization,
                                   SummaryPerformancePerson, Reports,
@@ -90,7 +90,7 @@ angular.module('poddDashboardApp')
 
   function locationChange() {
     var reportId = $location.search().reportId;
-    
+
     // check if the same state.
     if ($location.path() !== $state.$current.url.sourcePath) {
       return;
@@ -121,164 +121,233 @@ angular.module('poddDashboardApp')
 
   locationChange();
 
-  var negativeQuery = {
-    '__missing__': 'parent',
-    'q': 'negative:true AND testFlag:false',
-    'page_size': 5,
-    'tz': (new Date()).getTimezoneOffset() / -60
+  /* ------------------- INIT CACHE --------------------- */
+  var cached = lscache.get('dashboard');
+  var cacheTimeout = 60 * 6;
+  var useCache = true;
+
+  function setDataFromCache(cached) {
+    $scope.users = cached.newlyReporters;
+    $scope.positiveReports = cached.positiveReports;
+    $scope.performanceUsers = cached.performanceReporters;
+    $scope.administrationAreas = cached.contacts;
+    $scope.notificationTemplates = cached.notificationTemplates;
+  }
+
+  var dashboardQuery = {
+    page_size: 3,
+    month: moment().format('M/YYYY'),
+    subscribe: shared.subscribe,
+    tz: (new Date()).getTimezoneOffset() / -60,
+    lastWeek: true,
+    name__startsWith: 'บ้าน',
+    keywords: ['ตำบล', 'บ้าน']
   };
 
-  $scope.negativeReports = [];
-  $scope.loadingnegativeReports = true;
-  Search.query(negativeQuery).$promise
-    .then(function (resp) {
-      $scope.negativeReports = resp.results;
-      $scope.loadingnegativeReports = false;
-    })
-    .catch(function () {
-      $scope.loadingnegativeReports = false;
+  // Independent from cache.
+  loadNegativeReports();
+
+  if (useCache) {
+    if (!cached || !cached.positiveReports) {
+
+      $scope.loadingpositiveReports = true;
+      $scope.loadingNotification = true;
+      $scope.loadingUsers = true;
+      $scope.loadingPerformanceUsers = true;
+      $scope.loadingContacts = true;
+      $scope.loadingUsers = true;
+
+      dashboard.getDashboardData(dashboardQuery).$promise
+        .then(function (data) {
+          lscache.set('dashboard', data, cacheTimeout);
+          cached = data;
+          setDataFromCache(cached);
+        })
+        .catch(function (err) {
+          // load data with legacy method.
+          loadVolunteersCount();
+          loadVolunteersList();
+          loadPositiveReports();
+          loadNegativeReports();
+          loadVolunteersPerformance();
+          loadContacts();
+          loadNotificationTemplates();
+        })
+        .finally(function () {
+          $scope.loadingpositiveReports = false;
+          $scope.loadingNotification = false;
+          $scope.loadingUsers = false;
+          $scope.loadingPerformanceUsers = false;
+          $scope.loadingContacts = false;
+          $scope.loadingUsers = false;
+        });
+    }
+    else {
+      setDataFromCache(cached);
+    }
+  }
+  else {
+    // load data with legacy method.
+    loadVolunteersCount();
+    loadVolunteersList();
+    loadPositiveReports();
+    loadNegativeReports();
+    loadVolunteersPerformance();
+    loadContacts();
+    loadNotificationTemplates();
+  }
+
+  var params = {
+      subscribe: shared.subscribe
+  };
+
+  $scope.lastWeek = true;
+
+  function loadVolunteersCount() {
+    SummaryDashboardVisualization.get(params).$promise.then(function (data) {
+      $scope.dashboard = data;
     });
+  }
 
-
-    $scope.dashboardQuery = {
-        users: 0,
-        positiveReports: 0,
-        negativeReports: 0
+  function loadVolunteersList() {
+    var userQuery = {
+      'page': 1,
+      'page_size': 3,
+      'isVolunteer': true,
+      'subscribe': shared.subscribe,
+      'order': '-id'
     };
 
-    var params = {
-        'month': (moment().month() + 1) + '/' + moment().year(),
-        'lastWeek': true,
-        'name__startsWith': 'บ้าน',
-        'keywords': ['ตำบล', 'บ้าน'],
-        'subscribe': shared.subscribe,
-        'page_size': 3,
-        'tz': (new Date()).getTimezoneOffset() / -60
-    };
+    $scope.users = [];
+    $scope.loadingUsers = true;
 
-    $scope.onlyGraph = true;
-    $scope.selected = 'day';
-    $scope.lastWeek = true;
-
-    newDashboard.get(params).$promise.then(function (data) {
-        $scope.dashboard = data.visualization;
-        $scope.positiveReports = data.positiveReports;
-        $scope.users = data.newlyReporters;
-        $scope.performanceUsers = data.performanceReporters;
-        $scope.notificationTemplates = data.notificationTemplates;
-        $scope.administrationAreas = data.contacts;
-    })
-    .catch(function () {
-        $scope.loadingpositiveReports = false;
-        $scope.loadingNotification = false;
+    User.list(userQuery).$promise
+      .then(function (data) {
+        $scope.users = data
         $scope.loadingUsers = false;
+      })
+      .catch(function () {
+        $scope.loadingUsers = false;
+      });
+  }
+
+  function loadPositiveReports() {
+    var positiveQuery = {
+      'q': 'type:0 AND date:[ * TO ' + moment().format('YYYY-MM-DD') +']',
+      'page_size': 3,
+      'tz': (new Date()).getTimezoneOffset() / -60
+    };
+
+    $scope.positiveReports = [];
+    $scope.loadingpositiveReports = true;
+
+    Search.query(positiveQuery).$promise
+      .then(function (resp) {
+        $scope.positiveReports = resp.results;
+        $scope.loadingpositiveReports = false;
+      })
+      .catch(function () {
+        $scope.loadingpositiveReports = false;
+      });
+  }
+
+  function loadNegativeReports() {
+    var negativeQuery = {
+      '__missing__': 'parent',
+      'q': 'negative:true AND testFlag:false',
+      'page_size': 5,
+      'tz': (new Date()).getTimezoneOffset() / -60
+    };
+
+    $scope.negativeReports = [];
+    $scope.loadingnegativeReports = true;
+
+    Search.query(negativeQuery).$promise
+      .then(function (resp) {
+        $scope.negativeReports = resp.results;
+        $scope.loadingnegativeReports = false;
+      })
+      .catch(function () {
+        $scope.loadingnegativeReports = false;
+      });
+  }
+
+  function loadVolunteersPerformance() {
+    var performanceUserQuery = {
+      'month': (moment().month() + 1) + '/' + moment().year(),
+      'subscribe': shared.subscribe,
+      'tz': (new Date()).getTimezoneOffset() / -60
+    };
+
+    $scope.performanceUsers = [];
+    $scope.loadingPerformanceUsers = true;
+
+    SummaryPerformancePerson.query(performanceUserQuery).$promise
+      .then(function (data) {
+        $scope.performanceUsers = data;
         $scope.loadingPerformanceUsers = false;
+      })
+      .catch(function () {
+        $scope.loadingPerformanceUsers = false;
+      });
+  }
+
+  function loadContacts() {
+    var administrationAreasQuery = {
+      keywords: ['ตำบล', 'บ้าน'],
+      page_size: 2,
+      page: 1,
+      name__startsWith: 'บ้าน',
+      subscribe: shared.subscribe
+    };
+
+    $scope.administrationAreas = [];
+    $scope.loadingContacts = true;
+
+    AdministrationArea.contacts(administrationAreasQuery).$promise
+      .then(function (resp) {
+        $scope.administrationAreas = resp.results;
         $scope.loadingContacts = false;
-    });;
+      })
+      .catch(function () {
+        $scope.loadingContacts = false;
+      });
+  }
 
-    // var positiveQuery = {
-    //   'q': 'type:0 AND date:[ * TO ' + moment().format('YYYY-MM-DD') +']',
-    //   'page_size': 3,
-    //   'tz': (new Date()).getTimezoneOffset() / -60
-    // };
+  function loadNotificationTemplates() {
+    $scope.loadingNotification = true;
+    $scope.authority = null;
+    $scope.notificationTemplates = [];
 
-    // $scope.positiveReports = [];
-    // $scope.loadingpositiveReports = true;
-    // Search.query(positiveQuery).$promise
-    //   .then(function (resp) {
-    //     $scope.positiveReports = resp.results;
-    //     $scope.loadingpositiveReports = false;
-    //   })
-    //   .catch(function () {
-    //     $scope.loadingpositiveReports = false;
-    //   });
+    AuthorityView.list({'page_size': 1}).$promise
+      .then(function (data) {
+        $scope.authority = data.length && data[0];
+        getNotificationTemplate($scope.authority);
+      })
+      .catch(function () {
+        $scope.loading = false;
+        $scope.error = true;
+      });
+  }
 
-    //   var userQuery = {
-    //       'page': 1,
-    //       'page_size': 3,
-    //       'isVolunteer': true,
-    //       'subscribe': shared.subscribe,
-    //       'order': '-id'
-    //   };
+  function getNotificationTemplate(authority) {
+    var params = {id: authority.id};
+    Authority.notificationTemplates(params).$promise
+      .then(function (data) {
+        $scope.notificationTemplates = data;
+        $scope.loadingNotification = false;
+      })
+      .catch(function () {
+        $scope.loadingNotification = false;
+      });
+  }
 
-    //   $scope.users = [];
-    //   $scope.loadingUsers = true;
-    //   User.list(userQuery).$promise.then(function (data) {
-    //       $scope.users = data
-    //       $scope.loadingUsers = false;
-    //   }).catch(function () {
-    //       $scope.loadingUsers = false;
-    //   });
+  $scope.selectedTemplate = function (template) {
+    $scope.selectedTemplateContact = template;
+    $scope.newSelectedContact = template.contact.to;
+  };
 
-    //   // $scope.getAvatarUrl = function (avatarUrl) {
-    //   //   if (avatarUrl == null) {
-    //   //     return '/images/avatar.png';
-    //   //   }
-    //   //   return avatarUrl;
-    //   // }
-
-      // var performanceUserQuery = {
-      //     'month': (moment().month() + 1) + '/' + moment().year(),
-      //     'subscribe': shared.subscribe,
-      //     'page_size': 3,
-      //     'tz': (new Date()).getTimezoneOffset() / -60
-      // };
-
-      // $scope.performanceUsers = [];
-      // $scope.loadingPerformanceUsers = true;
-      // SummaryPerformancePerson.query(performanceUserQuery).$promise.then(function (data) {
-      //     $scope.performanceUsers = data;
-      //     $scope.loadingPerformanceUsers = false;
-      // }).catch(function () {
-      //     $scope.loadingPerformanceUsers = false;
-      // });
-
-      // var administrationAreasQuery = {
-      //   keywords: ['ตำบล', 'บ้าน'],
-      //   page_size: 2,
-      //   page: 1,
-      //   name__startsWith: 'บ้าน',
-      //   subscribe: shared.subscribe
-      // };
-
-      // $scope.administrationAreas = [];
-      // $scope.loadingContacts = true;
-      // AdministrationArea.contacts(administrationAreasQuery).$promise.then(function (resp) {
-      //   $scope.administrationAreas = resp.results;
-      //   $scope.loadingContacts = false;
-      // });
-
-
-      // $scope.loadingNotification = true;
-      // $scope.authority = null;
-      // $scope.notificationTemplates = [];
-
-      // function getNotificationTemplate(authority) {
-      //     var params = {id: authority.id};
-      //     Authority.notificationTemplates(params).$promise.then(function (data) {
-      //         $scope.notificationTemplates = data;
-      //         $scope.loadingNotification = false;
-      //     }).catch(function () {
-      //         $scope.loadingNotification = false;
-      //     });
-      // }
-
-      // AuthorityView.list({'page_size': 1}).$promise.then(function (data) {
-      //     data.forEach(function (item) {
-      //         if($scope.authority !== null) {
-      //             return;
-      //         }
-      //         $scope.authority = item;
-      //         getNotificationTemplate(item);
-      //     });
-      // }).catch(function () {
-      //     $scope.loading = false;
-      //     $scope.error = true;
-      // });
-
-      $scope.selectedTemplate = function(template) {
-          $scope.selectedTemplateContact = template;
-          $scope.newSelectedContact = template.contact.to;
-      };
+  $scope.onlyGraph = true;
+  $scope.selected = 'day';
 
 });
