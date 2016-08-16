@@ -127,6 +127,7 @@ angular.module('poddDashboardApp')
   var useCache = true;
 
   function setDataFromCache(cached) {
+    $scope.dashboard = cached.visualization;
     $scope.users = cached.newlyReporters;
     $scope.positiveReports = cached.positiveReports;
     $scope.performanceUsers = cached.performanceReporters;
