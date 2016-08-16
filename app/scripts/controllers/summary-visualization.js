@@ -123,7 +123,9 @@ angular.module('poddDashboardApp')
       }
 
       var cached = lscache.get('dashboard');
-      if (!cached || !cached.reportThisWeek) {
+      console.log(cached);
+
+      if ($scope.newOnly || !cached || !cached.reportThisWeek) {
         SummaryReportVisualization.query(params).$promise.then(function (json) {
           dataset = json;
           paint(dataset);
@@ -289,6 +291,7 @@ angular.module('poddDashboardApp')
         selectedYear: moment().year()
     };
 
+    $scope.newOnly = true;
     $scope.selected = 'month';
     $scope.dashboard = {
         users: 0,
