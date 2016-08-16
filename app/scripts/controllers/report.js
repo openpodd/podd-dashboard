@@ -259,7 +259,7 @@ angular.module('poddDashboardApp')
     };
 
     var user = storage.get('user');
-    $scope.isStaff = user.isStaff || user.isSupervisor;
+    $scope.isStaff = user && (user.isStaff || user.isSupervisor);
 
     $scope.publish = function (report) {
       showConfirm('คุณต้องการให้รายงานนี้แสดงในแอป ดูดีดี หรือไม่', function () {
