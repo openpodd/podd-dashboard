@@ -134,7 +134,7 @@ angular.module('poddDashboardApp')
     $scope.users = cached.newlyReporters;
     $scope.positiveReports = cached.positiveReports;
     $scope.performanceUsers = cached.performanceReporters;
-    $scope.administrationAreas = cached.contacts;
+    $scope.administrationAreas = cached.contacts.length > 2? cached.contacts.splice(0, 2): cached.contacts;
     $scope.notificationTemplates = cached.notificationTemplates;
   }
 
