@@ -14,7 +14,7 @@
           </div>
           <div class="sidebar-content">
               <p>เริ่มต้นการใช้งานคุณต้องการจะทำอะไร ?</p>
-              <ul class="sidebar-list">
+              <ul class="sidebar-list" ng-show="canUpdateContact">
                   <li><a href="#/home"><i class="fa fa-star green" aria-hidden="true"></i> ดูรายงานทั้งหมด</a></li>
                   <li><a href="#/map"><i class="fa fa-star green" aria-hidden="true"></i> แสดงแผนที่รายงาน</a></li>
                   <li><a href="#/summary/report-month"><i class="fa fa-star green" aria-hidden="true"></i> สรุปรายงานประจำเดือน</a></li>
@@ -24,6 +24,11 @@
                   <li><a href="#/invitation-code-list"><i class="fa fa-star green" aria-hidden="true"></i> รหัสพื้นที่ที่ใช้ในการลงทะเบียน</a></li>
                   <li><a href="#/profile"><i class="fa fa-star green" aria-hidden="true"></i> เปลี่ยนรหัสผ่านใหม่</a></li>
               </ul>
+              <ul class="sidebar-list" ng-hide="canUpdateContact">
+                <li><a href="#/home"><i class="fa fa-star green" aria-hidden="true"></i> ดูรายงานทั้งหมด</a></li>
+                <li><a href="#/map"><i class="fa fa-star green" aria-hidden="true"></i> แสดงแผนที่รายงาน</a></li>
+                <li><a href="#/profile"><i class="fa fa-star green" aria-hidden="true"></i> เปลี่ยนรหัสผ่านใหม่</a></li>
+            </ul>
           </div>
         </div>
       </div> <!-- /.col-sm-4 -->
