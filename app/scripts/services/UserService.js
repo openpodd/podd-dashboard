@@ -110,6 +110,7 @@ angular.module('poddDashboardApp')
             shared.summaryScenarioMode = false;
             $.removeCookie('token');
             storage.clearAll();
+            lscache.flush();
         },
 
         checkCookie: function () {
