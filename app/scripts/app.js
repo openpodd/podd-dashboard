@@ -156,6 +156,7 @@ angular
 
   .filter('htmlToPlainText', function () {
     return function (text) {
+      text = text.replace(/\n/g, '<br />');
       return htmlToPlainText(text);
     };
   })
