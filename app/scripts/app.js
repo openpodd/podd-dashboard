@@ -72,6 +72,7 @@ angular
     'angular.filter',
     // 'sbDateSelect',
     'pickadate',
+    'ngImgCrop',
   ])
 
   // override z-index of ui.bootstrap
