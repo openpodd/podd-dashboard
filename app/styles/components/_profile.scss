@@ -1,5 +1,18 @@
 .profile-wrapper {
+
+  img.profile-edit-img {
+    max-width: 150px;
+    cursor: pointer; 
+  }
+
   fieldset {
     margin-top: 30px;
   }
+}
+
+.crop-area {
+  background: #E4E4E4;
+  overflow: hidden;
+  width:500px;
+  height:350px;
 }

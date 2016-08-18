@@ -16,8 +16,10 @@ angular.module('poddDashboardApp')
 
     $scope.profile = User.profile();
 
+    $scope.beforeProfileImage = '';
     $scope.profile.$promise
         .then(function () {
+            $scope.beforeProfileImage = $scope.profile.avatarUrl;
             $scope.error = false;
         })
         .catch(function () {
@@ -89,4 +91,30 @@ angular.module('poddDashboardApp')
                 });
         }
     };
+
+    $scope.chooseImageFile = function() {
+        $('#fileInput').click();
+    }
+
+    $scope.selectedImage = null;
+    $scope.$watch('selectedImage', function (oldValue, newValue) {
+        // console.log($scope.selectedImage);
+        // if ($scope.selectedImage) {
+        //     $('#cropModal').modal('show');
+        // }
+    });
+
+    $scope._image = '';
+
+    var handleFileSelect = function(evt) {
+      var file = evt.currentTarget.files[0];
+      var reader = new FileReader();
+      reader.onload = function (evt) {
+        $scope.$apply(function($scope){
+          $scope._image = evt.target.result;
+        });
+      };
+      reader.readAsDataURL(file);
+    };
+    angular.element(document.querySelector('#fileInput')).on('change', handleFileSelect);
 });
