@@ -21,6 +21,25 @@ angular.module('poddDashboardApp')
             url: config.API_BASEPATH + '/users/profile/',
             method: 'GET'
         },
+        updateAvatar: {
+            url: config.API_BASEPATH + '/users/profile/upload/',
+            method: 'POST',
+            headers: {'Content-Type': undefined},
+            transformRequest: function(data) {
+                var formData = new FormData();
+                angular.forEach(data, function(value, key) {
+                    if(key === 'image') {
+                        if (data.image) {
+                            formData.append(key, data.image, 'image.png');
+                        }
+                    }else{
+                        formData.append(key, value);
+                    }
+                    console.log(key, value);
+                });
+                return formData;
+            },
+        },
         updatePassword: {
             url: config.API_BASEPATH + '/users/profile/password/',
             method: 'POST'

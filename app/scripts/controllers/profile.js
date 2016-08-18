@@ -96,25 +96,49 @@ angular.module('poddDashboardApp')
         $('#fileInput').click();
     }
 
-    $scope.selectedImage = null;
-    $scope.$watch('selectedImage', function (oldValue, newValue) {
-        // console.log($scope.selectedImage);
-        // if ($scope.selectedImage) {
-        //     $('#cropModal').modal('show');
-        // }
-    });
+    var dataURItoBlob = function(dataURI) {
+        var binary = atob(dataURI.split(',')[1]);
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+        var array = [];
+        for(var i = 0; i < binary.length; i++) {
+          array.push(binary.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], {type: mimeString});
+    };
+
+    $scope.submitProfileImage = function() {
+        var image = dataURItoBlob($scope.selectedImage);
+        var params = {
+            'image': image
+        }
+
+        User.updateAvatar(params).$promise.then(function () {
+            swal('สำเร็จ', 'ระบบได้ทำการเปลี่ยนแปลงรูปของคุณแล้ว', 'success');
+
+            $scope.profile.avatarUrl = $scope.selectedImage;
+            $scope._image = '';
+            $scope.selectedImage = '';
+            $('#cropModal').modal('hide');
+
+        }, function(error){
+            swal('เกิดข้อผิดพลาด', 'ไม่สามารถเปลี่ยนแปลงรูปได้', 'error');
+            $('#cropModal').modal('hide');
+        });
+       
+    }
 
     $scope._image = '';
-
+    $scope.selectedImage = '';
     var handleFileSelect = function(evt) {
-      var file = evt.currentTarget.files[0];
-      var reader = new FileReader();
-      reader.onload = function (evt) {
-        $scope.$apply(function($scope){
-          $scope._image = evt.target.result;
-        });
-      };
-      reader.readAsDataURL(file);
+        var file = evt.currentTarget.files[0];
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+            $scope.$apply(function($scope){
+               $scope._image = evt.target.result;
+               $('#cropModal').modal('show');
+            });
+        };
+        reader.readAsDataURL(file);
     };
     angular.element(document.querySelector('#fileInput')).on('change', handleFileSelect);
 });

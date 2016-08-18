@@ -95,11 +95,12 @@
       </div>
       <div class="modal-body">
           <div class="crop-area">
-            <img-crop image="_image" result-image="profile.avatarUrl"></img-crop>
+            <img-crop image="_image" result-image="selectedImage"></img-crop>
           </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="submitProfileImage()">Update</button>
       </div>
     </div>
 
