@@ -27,4 +27,14 @@ angular.module('poddDashboardApp')
             },
         }
     });
+})
+
+.factory('Comment', function ($resource) {
+    return $resource(config.API_BASEPATH + '/reportComments/:id', {
+        id: '@id'
+    }, { 
+        'update': {
+            method: 'PUT',
+        }
+    });
 });

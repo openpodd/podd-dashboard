@@ -3,7 +3,8 @@
 
 angular.module('poddDashboardApp')
 
-.controller('CommentsCtrl', function ($scope, Comments, User, streaming, FailRequest, shared, PlanReport, $modal) {
+.controller('CommentsCtrl', function ($scope, Comments, Comment,
+    User, streaming, FailRequest, shared, PlanReport, $modal) {
 
     console.log('init comment ctrl');
 
@@ -143,6 +144,39 @@ angular.module('poddDashboardApp')
         size: 'lg',
         controller: 'PlanReportModalCtrl'
       });
+    };
+
+    $scope.selectedComment = function (comment) {
+        $scope.commentSelected = comment;
+        $scope.commentBeforeChange = angular.copy(comment);
+    };
+
+    $scope.submitEditComment = function (comment) {
+        if ($scope.commentBeforeChange.message !== $scope.commentSelected.message) {
+            var params = {
+                'id': comment.id,
+                'reportId': comment.reportId,
+                'message': $scope.commentSelected.message
+            }
+
+            Comment.update(params).$promise.then(function () {
+                $scope.commentSelected = '';
+                $scope.commentBeforeChange = '';
+                comment.edit = false;
+
+            }, function(error){
+                swal('เกิดข้อผิดพลาด', 'ไม่สามารถแก้ไขข้อความได้', 'error');
+                resetEditComment();
+            });
+        } else {
+            $scope.commentSelected = '';
+            $scope.commentBeforeChange = '';
+            comment.edit = false;
+        }
+    };
+
+    $scope.resetEditComment = function () {
+        angular.copy($scope.commentBeforeChange, $scope.commentSelected);
     };
 
     streaming.on('report:comment:new', function (data) {
