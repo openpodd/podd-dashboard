@@ -20,6 +20,8 @@ angular.module('poddDashboardApp')
     $scope.profile.$promise
         .then(function () {
             $scope.beforeProfileImage = $scope.profile.avatarUrl;
+            $scope.username = $scope.profile.username;
+            $scope.myAuthority = $scope.profile.authority? $scope.profile.authority.name: '';
             $scope.error = false;
         })
         .catch(function () {
@@ -107,6 +109,7 @@ angular.module('poddDashboardApp')
     };
 
     $scope.submitProfileImage = function() {
+        
         var image = dataURItoBlob($scope.selectedImage);
         var params = {
             'image': image

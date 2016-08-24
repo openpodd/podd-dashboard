@@ -18,17 +18,26 @@
               <div class="profile-block panel panel-default">
                   <div class="panel-body">
                       <div class="profile-img text-center radius-100">
+                        <img ng-src="{{ profile | avatarUrl:'original' }}"
+                           ng-if="profile.avatarUrl"
+                           class="profile-edit-img radius-100" />
+                        <img src="images/avatar.png"
+                           ng-if="!profile.avatarUrl"
+                           class="radius-100" />
                         <input type="file" id="fileInput" class="hidden"/>
-                        <a ng-click="chooseImageFile()" >
-                          <img ng-src="{{ profile | avatarUrl:'original' }}"
-                             ng-if="profile.avatarUrl"
-                             class="profile-edit-img radius-100" />
-                          <img src="images/avatar.png"
-                             ng-if="!profile.avatarUrl"
-                             class="radius-100" />
+                      </div>
+                      <div class=" cell-center">
+                        <a ng-click="chooseImageFile()" class="btn btn-xs btn-default" >
+                         เปลี่ยนรูป
                         </a>
                       </div>
                       <h1 class="profile-name" ng-bind="profile | fullname">ฉัตรชัย ทุติยานนท์</h1>
+                      <h4 class="profile-name" ng-bind="myAuthority">จังหวัดเชียงใหม่</h4>
+                      <hr/>
+                      <div>
+                        <p> ชื่อผู้ใช้: {{ username }} </p>
+                      </div>
+                      <hr/>
                       <form class="profile-form" ng-submit="submit($event);">
                         <fieldset ng-disabled="submitting">
                           <legend>เปลี่ยนรหัสผ่าน</legend>
