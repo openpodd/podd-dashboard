@@ -4,6 +4,7 @@
     position: relative;
 }
 .comment-item{
+    overflow: hidden;
     padding: 15px 5px;
     border-bottom: 1px solid #e5e5e5 ;
 }
@@ -35,6 +36,25 @@
     padding-left: 55px;
     font-size: .75em;
     color: #A5A5A5;
+}
+.comment-edit-btn {
+    @extend .comment-meta;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+.comment-edit {
+    padding-left: 55px;
+
+    textarea {
+        margin-bottom: 5px;
+    }
+    .btn {
+        &:last-child {
+            margin: 0 5px 0 0;
+        }
+    }
 }
 
 /*--- FORM ---*/
@@ -103,11 +123,4 @@ mentio-menu {
         }
     }
 
-}
-
-.comment-edit {
-    // margin-bottom: 15px;
-    textarea {
-        margin-bottom: 5px;
-    }
 }

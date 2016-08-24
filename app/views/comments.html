@@ -46,23 +46,23 @@
       <li class="comment-item"
           blink="comment.isNew"
           ng-repeat="comment in comments | orderBy:'-createdAt' ">
-            
+
+          <img alt="avatar" class="pull-left avatar avatar-w4"
+               ng-if="comment.createdBy.avatarUrl"
+               ng-src="{{ comment.createdBy | avatarUrl:'thumbnail' }}">
+          <img src="images/avatar.png" alt="avatar" class="pull-left avatar avatar-w4"
+               ng-if="!comment.createdBy.avatarUrl">
+           
             <div ng-show="selectCommentId === comment.id && comment.edit" class="comment-edit">
               <textarea mention="" ng-model="commentSelected.message" class="form-control ng-pristine ng-valid ng-touched" rows="3"></textarea>
-              <a ng-click="resetEditComment();comment.edit = false" class="btn btn-default">ยกเลิก</a>
-              <a ng-click="submitEditComment(comment)" class="btn btn-primary pull-right">เสร็จสิ้น</a>
+              <a ng-click="resetEditComment();comment.edit = false" class="btn btn-xs btn-default pull-right">ยกเลิก</a>
+              <a ng-click="submitEditComment(comment)" class="btn btn-xs btn-primary pull-right">เสร็จสิ้น</a>
             </div>
 
             <div ng-hide="selectCommentId === comment.id && comment.edit" class="">
-              <img alt="avatar" class="pull-left avatar avatar-w4"
-                   ng-if="comment.createdBy.avatarUrl"
-                   ng-src="{{ comment.createdBy | avatarUrl:'thumbnail' }}">
-              <img src="images/avatar.png" alt="avatar" class="pull-left avatar avatar-w4"
-                   ng-if="!comment.createdBy.avatarUrl">
-              
-              <p ng-hide="selectCommentId === comment.id && comment.edit" class="comment-post" ng-bind-html="comment.message | htmlToPlainText | renderMention | renderTelephone | renderEmail | renderTag | renderReportTag | renderPlanReportTag"  ng-click="commentBodyClick($event)"></p>
+              <p class="comment-post" ng-bind-html="comment.message | htmlToPlainText | renderMention | renderTelephone | renderEmail | renderTag | renderReportTag | renderPlanReportTag"  ng-click="commentBodyClick($event)"></p>
 
-              <a ng-if="comment.canEdit" ng-click="selectedComment(comment);comment.edit = true" class="comment-meta pull-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> แก้ไขข้อความ</a>
+              <a ng-if="comment.canEdit" ng-click="selectedComment(comment);comment.edit = true" class="comment-edit-btn pull-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> แก้ไขข้อความ</a>
 
               <div class="comment-meta">
               <a href="{{ comment.fileUrl }}" target="_blank" ng-show="comment.fileUrl"><i class="fa fa-paperclip"></i> ดูไฟล์แนบ</a>
