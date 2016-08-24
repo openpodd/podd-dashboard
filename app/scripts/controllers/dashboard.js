@@ -145,7 +145,7 @@ angular.module('poddDashboardApp')
     tz: (new Date()).getTimezoneOffset() / -60,
     lastWeek: true,
     name__startsWith: 'บ้าน',
-    keywords: ['ตำบล', 'บ้าน']
+    keywords: []
   };
 
   // Independent from cache.
@@ -300,7 +300,7 @@ angular.module('poddDashboardApp')
 
   function loadContacts() {
     var administrationAreasQuery = {
-      keywords: ['ตำบล', 'บ้าน'],
+      keywords: [],
       page_size: 2,
       page: 1,
       name__startsWith: 'บ้าน',

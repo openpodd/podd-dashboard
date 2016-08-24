@@ -95,7 +95,7 @@ angular.module('poddDashboardApp')
   var pageSize = 10;
 
   $scope._query = {
-    keywords: ['ตำบล', 'บ้าน'],
+    keywords: [],
     page_size: pageSize,
     page: page,
     name__startsWith: 'บ้าน'
