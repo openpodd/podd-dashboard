@@ -95,7 +95,7 @@ angular.module('poddDashboardApp')
     };
 
     $scope.chooseImageFile = function() {
-        $('#fileInput').click();
+        document.getElementById('fileInput').click();
     }
 
     var dataURItoBlob = function(dataURI) {
@@ -109,7 +109,7 @@ angular.module('poddDashboardApp')
     };
 
     $scope.submitProfileImage = function() {
-        
+
         var image = dataURItoBlob($scope.selectedImage);
         var params = {
             'image': image
@@ -127,7 +127,7 @@ angular.module('poddDashboardApp')
             swal('เกิดข้อผิดพลาด', 'ไม่สามารถเปลี่ยนแปลงรูปได้', 'error');
             $('#cropModal').modal('hide');
         });
-       
+
     }
 
     $scope._image = '';
@@ -136,10 +136,10 @@ angular.module('poddDashboardApp')
         var file = evt.currentTarget.files[0];
         var reader = new FileReader();
         reader.onload = function (evt) {
-            $scope.$apply(function($scope){
+            // $scope.$apply(function($scope){
                $scope._image = evt.target.result;
                $('#cropModal').modal('show');
-            });
+            // });
         };
         reader.readAsDataURL(file);
     };

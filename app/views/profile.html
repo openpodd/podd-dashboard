@@ -24,9 +24,9 @@
                         <img src="images/avatar.png"
                            ng-if="!profile.avatarUrl"
                            class="radius-100" />
-                        <input type="file" id="fileInput" class="hidden"/>
                       </div>
                       <div class=" cell-center">
+                        <input type="file" id="fileInput" class="hidden"/>
                         <a ng-click="chooseImageFile()" class="btn btn-xs btn-default" >
                          เปลี่ยนรูป
                         </a>
@@ -35,7 +35,7 @@
                       <h4 class="profile-name" ng-bind="myAuthority">จังหวัดเชียงใหม่</h4>
                       <hr/>
                       <div>
-                        <p> ชื่อผู้ใช้: {{ username }} </p>
+                        <p> บัญชีผู้ใช้: {{ username }} </p>
                       </div>
                       <hr/>
                       <form class="profile-form" ng-submit="submit($event);">
