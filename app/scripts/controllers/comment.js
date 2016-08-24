@@ -146,7 +146,9 @@ angular.module('poddDashboardApp')
       });
     };
 
+    $scope.selectCommentId = -1;
     $scope.selectedComment = function (comment) {
+        $scope.selectCommentId = comment.id;
         $scope.commentSelected = comment;
         $scope.commentBeforeChange = angular.copy(comment);
     };
@@ -163,6 +165,7 @@ angular.module('poddDashboardApp')
                 $scope.commentSelected = '';
                 $scope.commentBeforeChange = '';
                 comment.edit = false;
+                $scope.selectCommentId = -1;
 
             }, function(error){
                 swal('เกิดข้อผิดพลาด', 'ไม่สามารถแก้ไขข้อความได้', 'error');
@@ -172,11 +175,13 @@ angular.module('poddDashboardApp')
             $scope.commentSelected = '';
             $scope.commentBeforeChange = '';
             comment.edit = false;
+            $scope.selectCommentId = -1;
         }
     };
 
     $scope.resetEditComment = function () {
         angular.copy($scope.commentBeforeChange, $scope.commentSelected);
+        $scope.selectCommentId = -1;
     };
 
     streaming.on('report:comment:new', function (data) {
