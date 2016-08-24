@@ -225,16 +225,16 @@
             </div>
           </div>
 
-          <div class="sidebar-block">
+          <div class="sidebar-block" ng-if="isStaff">
             <div class="sidebar-heading">
               <h2 class="sidebar-heading-text"><i class="fa fa-ellipsis-v fa-size-18"></i> อื่นๆ</h2>
             </div> <!-- sidebar-heading -->
             <div class="sidebar-content">
               <ul class="list">
-                <li ng-if="report.boundary">
+                <!-- <li ng-if="report.boundary">
                   <a ng-href="#/scenario?bottom={{ report.boundary.bottom }}&left={{ report.boundary.left }}&top={{ report.boundary.top }}&right={{ report.boundary.right }}">ดูเหตุการณ์ที่เกิดขึ้นบริเวณนี้</a>
-                </li>
-                <li ng-if="isStaff">
+                </li> -->
+                <li>
                   <a class="hoverable" ng-click="publish(report)" ng-if="!report.isCurated">
                     เพิ่มรายงานนี้ไปแสดงในแอป ดูดีดี
                   </a>
