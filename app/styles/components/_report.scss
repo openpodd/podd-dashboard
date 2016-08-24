@@ -821,6 +821,9 @@ $badge-bad: #FF6D69;
       white-space: nowrap;
       margin-bottom: 10px;
     }
+    .ui-select-choices {
+      background: #fff;
+    }
   }
   .btn-default{
     width: 100%;
@@ -876,6 +879,10 @@ $badge-bad: #FF6D69;
     position: relative !important;
 }
 
+// Report Status  History
+.podd-report-status {
+    background: #fff;
+}
 
 
 #gridPerformancePerson {
