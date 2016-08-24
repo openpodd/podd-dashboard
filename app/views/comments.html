@@ -52,11 +52,11 @@
                ng-src="{{ comment.createdBy | avatarUrl:'thumbnail' }}">
           <img src="images/avatar.png" alt="avatar" class="pull-left avatar avatar-w4"
                ng-if="!comment.createdBy.avatarUrl">
-           
+
             <div ng-show="selectCommentId === comment.id && comment.edit" class="comment-edit">
               <textarea mention="" ng-model="commentSelected.message" class="form-control ng-pristine ng-valid ng-touched" rows="3"></textarea>
-              <a ng-click="resetEditComment();comment.edit = false" class="btn btn-xs btn-default pull-right">ยกเลิก</a>
               <a ng-click="submitEditComment(comment)" class="btn btn-xs btn-primary pull-right">เสร็จสิ้น</a>
+              <a ng-click="resetEditComment();comment.edit = false" class="btn btn-xs btn-default pull-right">ยกเลิก</a>
             </div>
 
             <div ng-hide="selectCommentId === comment.id && comment.edit" class="">

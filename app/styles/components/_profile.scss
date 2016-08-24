@@ -2,7 +2,7 @@
 
   img.profile-edit-img {
     max-width: 100px;
-    cursor: pointer; 
+    cursor: pointer;
   }
 
   fieldset {
@@ -11,6 +11,7 @@
 }
 
 .crop-area {
+  margin: 0 auto;
   background: #E4E4E4;
   overflow: hidden;
   width: 350px;
