@@ -303,19 +303,20 @@ blockquote p {
   display: inline;
 }
 
-.l-section {
-    @include respond-to(phone){
-        top: 21px;
-    }
-}
+// .l-section {
+//     @include respond-to(phone){
+//         top: 21px;
+//     }
+// }
 .reports-list {
     @include respond-to(phone){
         top: 41px;
     }
 }
 .l-detail-section {
-    @include respond-to(phone){
-        top: 20px;
+    @include respond-to(tablet-portrait){
+        top: 50px;
+        border-left: 0;
     }
 }
 

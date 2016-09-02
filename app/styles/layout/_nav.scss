@@ -191,8 +191,8 @@ $nav-font-family: ThaiSansNeueRegular;
 
 // For title text on list
 .pd-nav-title{
-    padding: 5px 0;
     display: block;
+    padding: 5px 0;
     font: 22px / 20px $nav-font-family;
     line-height: 20px;
 
@@ -371,4 +371,60 @@ $notifi-item-read: #ececec;
     text-indent: -999em;
     background-color: red;
     border-radius: 10px;
+}
+
+
+//***************************
+// Nav Mobile
+//***************************
+.pd-mobile {
+    z-index: 9999;
+    border-color: $section-nav-bg;
+    background: $section-nav-bg;
+
+    .navbar-toggle,
+    .navbar-collapse {
+        border: none;
+    }
+    .navbar-brand {
+        font-size: 28px;
+        line-height: 25px;
+        font-family: ThaiSansNeueRegular;
+        color: $nav-item-color;
+    }
+    .logo-mobile {
+        float: left;
+        width: 30px;
+        margin: 0 10px 0 0;
+    }
+}
+.pd-nav-mobile {
+    a {
+        color: $nav-item-color !important;
+        font-size: 15px;
+    }
+    .fa {
+        width: 20px;
+        margin: 0 10px 0 0;
+        text-align: center;
+    }
+    .caret {
+        float: right;
+        margin: 11px 0 0;
+    }
+
+    // Child list
+    .open {
+        > a {
+            background: $section-nav-bg !important;
+        }
+        li > a {
+            padding-left: 50px !important;
+        }
+    }
+    // Nested UL Set
+    .dropdown-menu, .dropdown-menu a {
+        background: #3e3e3e !important;
+    }
+
 }
