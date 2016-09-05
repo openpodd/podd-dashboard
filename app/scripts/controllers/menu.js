@@ -4,7 +4,7 @@ angular.module('poddDashboardApp')
 
 .controller('MenuCtrl', function ($scope, $http, shared, $window, $location, $state, Menu, storage, Auth, Domain) {
     $scope.shared = shared;
-
+    $scope.open = false;
     $scope.$watch('shared.loggedIn', function (newValue) {
         $scope.isShowNav = newValue;
         $scope.domainMap = Domain.list();
@@ -38,7 +38,7 @@ angular.module('poddDashboardApp')
                 $window.location.reload();
             })
             .finally(function () {
-
+                $scope.open = !$scope.open;
             });
     };
 
@@ -47,6 +47,17 @@ angular.module('poddDashboardApp')
         if ($state.current.name === 'authority-dashboard') {
             $scope.isShowNav = false;
         }
+    });
+
+    $('#bs-example-navbar-collapse-1 a').click(function() {
+        var url = $(this).attr('href');
+        if (url && url !== '#') {
+            $('.navbar-toggle').trigger('click');
+        }
+    });
+
+    $scope.$watch('open', function (newValue) {
+        $('.navbar-toggle').trigger('click');
     });
 
 });
