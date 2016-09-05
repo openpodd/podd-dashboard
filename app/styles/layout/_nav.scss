@@ -391,6 +391,10 @@ $notifi-item-read: #ececec;
         line-height: 25px;
         font-family: ThaiSansNeueRegular;
         color: $nav-item-color;
+
+        &:hover {
+            color: $nav-item-color;
+        }
     }
     .logo-mobile {
         float: left;
