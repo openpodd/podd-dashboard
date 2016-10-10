@@ -181,17 +181,20 @@
               </div>
               <div class="sidebar-action">
                 <div class="priority-report" ng-if="!report.parent">
-                <div class="row">
-                  <div class="col-lg-7 col-md-6">
-                    <div report-state-form report="report" defer-change="1" submit="submitState" on-select="onStateSelect($state)" class="priority-report-state"></div>
-                  </div>
-                  <div class="col-lg-5 col-md-6">
-                    <button class="btn btn-default btn-changed" ng-disabled="!isStateChange()" ng-click="submitState(submitStateSuccess)">เปลี่ยนสถานะ</button>
-                  </div>
-                  </div>
+                    <div class="row">
+                        <div ng-if="report.canEdit">
+                            <div class="col-lg-7 col-md-6">
+                                <div report-state-form report="report" defer-change="1" submit="submitState" on-select="onStateSelect($state)" class="priority-report-state"></div>
+                            </div>
+                            <div class="col-lg-5 col-md-6">
+                                <button class="btn btn-default btn-changed" ng-disabled="!isStateChange()" ng-click="submitState(submitStateSuccess)">เปลี่ยนสถานะ</button>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
 
-                <div class="mark-as-test-wrapper text-muted clear-both">
+                <div ng-if="report.canEdit" class="mark-as-test-wrapper text-muted clear-both">
                   <small>
                     <strong>ตั้งค่า:</strong>
                     <u>
