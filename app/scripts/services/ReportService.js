@@ -77,8 +77,8 @@ angular.module('poddDashboardApp')
             method: 'GET',
             isArray: true,
         },
-        'all': {
-            url: config.API_BASEPATH + '/authorities/',
+        'inviteList': {
+            url: config.API_BASEPATH + '/authorities/?invite=true',
             method: 'GET',
             isArray: true,
         }
