@@ -76,6 +76,11 @@ angular.module('poddDashboardApp')
             url: config.API_BASEPATH + '/authorities/?mine=true',
             method: 'GET',
             isArray: true,
+        },
+        'all': {
+            url: config.API_BASEPATH + '/authorities/',
+            method: 'GET',
+            isArray: true,
         }
     });
 })

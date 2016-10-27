@@ -18,7 +18,7 @@ angular.module('poddDashboardApp')
     $scope.loading = true;
     $scope.error = false;
 
-    AuthorityView.list().$promise.then(function (data) {
+    AuthorityView.all().$promise.then(function (data) {
         $scope.authorities = data;
         $scope.loading = false;
     }).catch(function () {
