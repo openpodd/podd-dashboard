@@ -6,3 +6,5 @@ dist
 .idea/workspace.xml
 bower_components
 config.js
+.DS_Store
+yarn.lock
