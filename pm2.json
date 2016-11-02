@@ -1,10 +1,10 @@
 {
-  apps: [
+  "apps": [
     {
-      name: "podd-node-worker",
-      script: "./node_modules/.bin/grunt",
-      args: [ "serve" ],
-      watch: false
+      "name": "podd-node-worker",
+      "script": "./node_modules/.bin/grunt",
+      "args": [ "serve" ],
+      "watch": false
     }
   ]
 }
