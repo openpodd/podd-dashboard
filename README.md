@@ -18,3 +18,6 @@ Main dashboard for PODD project. Focus to make collaboration between stakeholder
 
 ## Run with PM2
 1. Use `pm2 start pm2.json`
+
+## Build
+Use `grunt build`
