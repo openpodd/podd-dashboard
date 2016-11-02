@@ -15,3 +15,6 @@ Main dashboard for PODD project. Focus to make collaboration between stakeholder
 4. Run `bower install`
 5. Copy configuration file at `app/scripts/config.js.sample` to `app/scripts/config.js` and modify at your need.
 6. Run `grunt serve`
+
+## Run with PM2
+1. Use `pm2 start pm2.json`
