@@ -3,7 +3,7 @@
 angular.module('poddDashboardApp')
 
 .controller('LoginCtrl', function ($scope, $http, shared, Auth, $state,
-                                   $rootScope, Menu, $timeout) {
+                                   $rootScope, Menu, $location) {
     $scope.username = '';
     $scope.password = '';
     $scope.shared = shared;
@@ -47,10 +47,19 @@ angular.module('poddDashboardApp')
             $.cookie('csrftoken', csrftoken);
             $.cookie('sessionid', sessionid);
 
+            var dest = $location.search().destination;
+
             if (err) {
                 $scope.invalidLogin = true;
             } else {
-                $state.go('dashboard');
+                if (dest) {
+                    var destPath = dest.slice(0, dest.indexOf(':'));
+                    var destHash = dest.slice(dest.indexOf(':') + 1);
+                    $location.url(destPath + '?' + destHash);
+                }
+                else {
+                    $state.go('dashboard');
+                }
             }
         });
     };

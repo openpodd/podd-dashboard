@@ -139,6 +139,22 @@ angular.module('poddDashboardApp')
         requireLogin: function ($scope) {
             var self = this;
 
+            function toKeyValue(obj) {
+                var parts = [];
+                jQuery.each(obj, function(key, value) {
+                    if (Array.isArray(value)) {
+                        forEach(value, function(arrayValue) {
+                            parts.push(encodeUriQuery(key, true) +
+                                (arrayValue === true ? '' : '=' + encodeUriQuery(arrayValue, true)));
+                        });
+                    } else {
+                        parts.push(encodeUriQuery(key, true) +
+                            (value === true ? '' : '=' + encodeUriQuery(value, true)));
+                    }
+                });
+                return parts.length ? parts.join('&') : '';
+            }
+
             function check() {
                 if (checking) {
                     return;
@@ -146,7 +162,9 @@ angular.module('poddDashboardApp')
 
                 checking = true;
                 self.verify().catch(function () {
+                    var destinationStr = $location.path() + ':' + toKeyValue($location.search());
                     $location.url('/login');
+                    $location.search({ destination: destinationStr });
                 }).finally(function () {
                     checking = false;
                 });
