@@ -171,7 +171,9 @@ angular
 
   .run(function ($location, Auth) {
       Auth.verify().catch(function () {
-          $location.url('/login');
+        var destinationStr = Auth.getLoginDestination($location);
+        $location.url('/login');
+        $location.search({ destination: destinationStr });
       });
   })
 

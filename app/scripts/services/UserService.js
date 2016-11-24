@@ -146,7 +146,9 @@ angular.module('poddDashboardApp')
 
                 checking = true;
                 self.verify().catch(function () {
+                    var destinationStr = self.getLoginDestination($location);
                     $location.url('/login');
+                    $location.search({ destination: destinationStr });
                 }).finally(function () {
                     checking = false;
                 });
@@ -164,6 +166,15 @@ angular.module('poddDashboardApp')
             $scope.$on('$destroy', function () {
                 $interval.cancel(promise);
             });
+        },
+
+        getLoginDestination: function ($location) {
+            if ($location.path() != '/login') {
+                return $location.path() + ':' + toKeyValue($location.search());
+            }
+            else {
+                return $location.search().destination;
+            }
         }
     };
 })
