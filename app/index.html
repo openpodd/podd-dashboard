@@ -188,7 +188,7 @@
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+      <button ng-show="shared.loggedIn" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -198,7 +198,7 @@
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-show="shared.loggedIn" >
       <ul class="pd-nav-mobile nav navbar-nav">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-globe" fa-size-22></i> ผ่อดีดี <span class="caret"></span></a>
@@ -213,7 +213,7 @@
         </li>
         <li><a href="#/dashboard"><i class="fa fa-tachometer fa-size-20"></i> แผงควบคุมระบบ</a></li>
         <li><a href="#/"><i class="fa fa-file-text-o fa-size-20"></i> รายงาน</a></li>
-        <li class="dropdown">
+        <li class="dropdown" >
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-map-marker fa-size-22"></i> แผนที่ <span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li><a href="#/map">แผนที่รายงาน</a></li>
@@ -222,7 +222,7 @@
         </li>
         <li><a href="#/filter"><i class="fa fa-search fa-size-18"></i> ค้นหา</a></li>
 
-        <li class="dropdown">
+        <li class="dropdown" ng-if="hasPermissionOnMenu('view_dashboard_summary_report')">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bar-chart fa-size-18"></i> สรุปรายงาน <span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li><a href="#/summary/visualize">สรุปรายงานในพื้นที่</a></li>
@@ -230,8 +230,8 @@
                 <li><a href="#/summary/performance-person">สรุปประสิทธิภาพการรายงานของอาสา</a></li>
             </ul>
         </li>
-        <li><a href="#/plans"><i class="fa fa-book fa-size-18"></i> แผนรับมือ</a></li>
-        <li class="dropdown">
+        <li ng-if="hasPermissionOnMenu('view_dashboard_plan')"><a href="#/plans"><i class="fa fa-book fa-size-18"></i> แผนรับมือ</a></li>
+        <li class="dropdown" ng-if="hasPermissionOnMenu('view_dashboard_users')">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-users fa-size-18"></i> ข้อมูลต่างๆ <span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li><a href="#/user-list">ข้อมูลอาสา</a></li>
@@ -242,7 +242,7 @@
             </ul>
         </li>
         <li><a href="#/profile"><i class="fa fa-cog fa-size-18"></i> บัญชีผู้ใช้</a></li>
-        <li><a href="#/login"><i class="fa fa-sign-out fa-size-18"></i> ออกจากระบบ</a></li>
+        <li><a href="#/login" ng-click="isShowNav=!isShowNav;logout();"><i class="fa fa-sign-out fa-size-18"></i> ออกจากระบบ</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
