@@ -378,7 +378,7 @@ angular.module('poddDashboardApp')
 
     function isBlacklisted(area) {
       var testString = area.address + area.name;
-      if (testString.match(/^(องค์การ|เทศบาล|อำเภอ|จังหวัด)/)) {
+      if (testString.match(/^(องค์การ|เทศบาลตำบล|อำเภอ|จังหวัด)/)) {
         return true;
       }
     }
@@ -399,6 +399,7 @@ angular.module('poddDashboardApp')
           redAreas[0].location.coordinates[1],
           redAreas[0].location.coordinates[0]
         ];
+
         init(center, $element[0]);
 
         redAreas.forEach(function (item) {
@@ -406,7 +407,9 @@ angular.module('poddDashboardApp')
             item.location.coordinates[1],
             item.location.coordinates[0]
           ];
+
           if (!isBlacklisted(item)) {
+            center = location;
             insertMarker(item, location, item.address || item.name, iconRed, $scope.whenHover);
           }
         });
