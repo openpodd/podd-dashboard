@@ -22,6 +22,10 @@
 }
 
 .pd-section-nav{
+    @include respond-to(phone){
+        margin-bottom: -20px;
+    }
+
     .pd-small-nav{
         @include respond-to(phone){
             display: block;
