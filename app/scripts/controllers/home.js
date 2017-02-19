@@ -353,8 +353,8 @@ angular.module('poddDashboardApp')
             item.timePeriod = moment(item.date).subtract(1, 'week').startOf('month');
           }
 
-          item.timePeriod = item.timePeriod.toDate();
-          item.timestamp = item.timePeriod.getTime();
+          // item.timePeriod = item.timePeriod.toDate();
+          // item.timestamp = item.timePeriod.getTime();
           item.isThisYear = $date.toDate() >= $scope.firstDayOfYear;
         });
 
