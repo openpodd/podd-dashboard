@@ -25,11 +25,6 @@
     @include respond-to(phone){
         margin-bottom: -20px;
     }
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> master
     .pd-small-nav{
         @include respond-to(phone){
             display: block;
