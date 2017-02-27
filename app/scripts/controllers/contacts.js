@@ -97,8 +97,8 @@ angular.module('poddDashboardApp')
   $scope._query = {
     keywords: [],
     page_size: pageSize,
-    page: page,
-    name__startsWith: 'บ้าน'
+    page: page
+    // name__startsWith: 'บ้าน'
   };
 
   $scope.canLoadMore = true;
