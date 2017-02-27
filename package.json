@@ -2,6 +2,7 @@
   "name": "podddashboard",
   "version": "0.0.0",
   "scripts": {
+    "start": "grunt serve",
     "test": "grunt test"
   },
   "dependencies": {

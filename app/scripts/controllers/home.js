@@ -330,7 +330,7 @@ angular.module('poddDashboardApp')
           var $last4Week = moment($thisWeek).subtract(4, 'week');
           var $date = moment(item.date);
 
-          if ($date > $thisWeek) {
+          if ($date >= $thisWeek) {
             item.timePeriod = moment(item.date);
           }
           // TODO: adjust to more readable relative date.
@@ -353,8 +353,8 @@ angular.module('poddDashboardApp')
             item.timePeriod = moment(item.date).subtract(1, 'week').startOf('month');
           }
 
-          item.timePeriod = item.timePeriod.toDate();
-          item.timestamp = item.timePeriod.getTime();
+          // item.timePeriod = item.timePeriod.toDate();
+          // item.timestamp = item.timePeriod.getTime();
           item.isThisYear = $date.toDate() >= $scope.firstDayOfYear;
         });
 

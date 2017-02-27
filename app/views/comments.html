@@ -67,6 +67,7 @@
               <div class="comment-meta">
               <a href="{{ comment.fileUrl }}" target="_blank" ng-show="comment.fileUrl"><i class="fa fa-paperclip"></i> ดูไฟล์แนบ</a>
               <span class="">เมื่อ <span am-time-ago="comment.createdAt"></span></span>
+              <span class="comment_createdAt" ng-bind="comment.createdAt | amDateFormat:'(วันddddที่ D MMMM YYYY เวลา HH:mm)'"></span>
               <span class="">โดย {{ comment.createdBy | fullname:comment.createdBy.username }}</span>
               </div>
             </div>
