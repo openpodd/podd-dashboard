@@ -897,3 +897,60 @@ $badge-bad: #FF6D69;
 .no-border-left {
     border-left: 0 !important;
 }
+
+
+.new-follow-up-reports,
+.follow-up-actions{
+  margin-bottom: 20px;
+
+  .report-followup-list {
+    margin-bottom: 10px;
+  }
+}
+
+.related-reports-modal {
+    position: fixed;
+    top: 80px;
+    right: 16px;
+    bottom: 16px;
+    width: 480px;
+    padding: 10px 20px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    overflow: auto;
+    z-index: 39999;
+
+    .selected {
+        border: 1px solid #ff5c5c;
+
+        .report-tick {
+          color: #4caf50;
+        }
+    }
+
+  .related-reports-id{
+    float: right;
+  }
+  .related-reports-summary {
+    margin-bottom: 10px;
+  }
+  .filter-result-desc {
+    text-overflow: '';
+    overflow: auto;
+
+    p {
+      text-overflow: '';
+      overflow: auto;
+    }
+  }
+
+  .report-detail,
+  .table{
+    margin-bottom: 0;
+  }
+
+  .row.selected {
+    background-color: #ffc;
+    border: 1px solid #666;
+  }
+}

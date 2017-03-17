@@ -56,6 +56,132 @@ angular.module('poddDashboardApp')
     function refresh(scope) {
         scope.reportFollowUpParent = null;
 
+        scope.selectedFollowUpReports = [];
+        scope.selectedCaseToFollow = null;
+        scope.selectSimilarReportsMode = 'follow-up'; // follow-up or choose-case
+
+        scope.similarReports = [];
+        scope.similarReportsLoading = false;
+        scope.submitting = false;
+        scope.showSimilarReportsFlag = false;
+
+        scope.showAddionalFollowUpReportsFlag = false;
+        scope.showAddionalFollowUpReports = function () {
+            scope.showAddionalFollowUpReportsFlag = true;
+            scope.showSimilarReports();
+        };
+
+        scope.hideAddionalFollowUpReports = function () {
+            scope.showAddionalFollowUpReportsFlag = false;
+            scope.onSelectFollowUpCancel();
+        };
+
+        scope.showSimilarReports = function (chooseCase) {
+            scope.showSimilarReportsFlag = true;
+            scope.selectSimilarReportsMode = chooseCase ? 'choose-case' : 'follow-up';
+
+            scope.similarReportsLoading = true;
+            Reports.similar({ reportId: scope.report.id }).$promise
+                .then(function (data) {
+                    scope.similarReports = data.filter(function (item) {
+                        return item.id != scope.report.id;
+                    });
+                })
+                .finally(function () {
+                    scope.similarReportsLoading = false;
+                });
+        };
+        scope.hideSimilarReports = function () {
+            scope.showSimilarReportsFlag = false;
+        };
+
+        scope.onClickSimilarReport = function (report){
+            if (scope.selectSimilarReportsMode == 'choose-case') {
+                if (scope.selectedCaseToFollow == report) {
+                    scope.selectedCaseToFollow = null;
+                    report.isSelected = false;
+                }
+                else {
+                    if (scope.selectedCaseToFollow) {
+                        scope.selectedCaseToFollow.isSelected = false;
+                    }
+                    scope.selectedCaseToFollow = report;
+                    report.isSelected = true;
+                }
+            }
+            else {
+                if (scope.selectedFollowUpReports.indexOf(report) < 0) {
+                    report.isSelected = true;
+                    scope.selectedFollowUpReports.push(report);
+                }
+                else {
+                    report.isSelected = false;
+                    scope.selectedFollowUpReports = scope.selectedFollowUpReports.filter(function (item) {
+                        return item.id !== report.id;
+                    });
+                }
+            }
+        };
+
+        scope.onSelectCaseSubmit = function () {
+            scope.submitting = true;
+
+            Reports.merge({ id: scope.selectedCaseToFollow.id, reportIds: [ scope.report.id ] }).$promise
+                .then(function (resp) {
+                    swal('สำเร็จ', 'บันทึก case ที่ follow แล้ว', 'info');
+                    scope.hideSimilarReports();
+                    scope.report.parent = scope.selectedCaseToFollow.id;
+                    refresh(scope);
+                })
+                .catch(function (err) {
+                    swal('เกิดข้อผิดพลาด', 'ไม่สามารถบันทึก case ที่ follow ได้', 'error');
+                })
+                .finally(function () {
+                    scope.submitting = false;
+                });
+        };
+
+        scope.onSelectCaseCancel = function () {
+            scope.selectedCaseToFollow = null;
+            scope.showSimilarReportsFlag = false;
+            scope.selectedFollowUpReports.forEach(function (item) {
+                item.isSelected = false;
+            });
+            scope.selectedFollowUpReports = [];
+        };
+
+        scope.onSelectFollowUpSubmit = function () {
+            scope.submitting = true;
+
+            var followUpReports = [];
+            scope.selectedFollowUpReports.forEach(function (item) {
+                followUpReports.push(item.id);
+            });
+
+            Reports.merge({ id: scope.report.id, reportIds: followUpReports }).$promise
+                .then(function (resp) {
+                    swal('สำเร็จ', 'บันทึกรายงานที่ให้ follow-up รายงานนี้แล้ว', 'info');
+                    scope.hideSimilarReports();
+                    refresh(scope);
+                })
+                .catch(function (err) {
+                    swal('เกิดข้อผิดพลาด', 'ไม่สามารถบันทึกรายงานที่ให้ follow-up รายงานนี้ได้ กรุณาตรวจสอบอีกครั้ง', 'error');
+                })
+                .finally(function () {
+                    scope.submitting = false;
+                });
+        };
+
+        scope.onSelectFollowUpCancel = function () {
+            scope.selectedCaseToFollow = null;
+            scope.showSimilarReportsFlag = false;
+            scope.showAddionalFollowUpReportsFlag = false;
+            scope.selectedFollowUpReports.forEach(function (item) {
+                item.isSelected = false;
+            });
+            scope.selectedFollowUpReports = [];
+        };
+
         if (scope.report) {
             Reports.followUp({ reportId: scope.report.id }).$promise.then(function (data) {
                 if (data.length) {

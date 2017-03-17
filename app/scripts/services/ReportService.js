@@ -150,6 +150,16 @@ angular.module('poddDashboardApp')
                 url: config.API_BASEPATH + '/reports/:reportId/follow',
                 method: 'POST'
             },
+            similar: {
+                url: config.API_BASEPATH + '/reports/:reportId/similar',
+                method: 'GET',
+                isArray: true
+            },
+            merge: {
+                url: config.API_BASEPATH + '/reports/:reportId/merge',
+                method: 'POST',
+                isArray: false
+            },
             tags: {
                 url: config.API_BASEPATH + '/reports/:reportId/tags',
                 method: 'POST'

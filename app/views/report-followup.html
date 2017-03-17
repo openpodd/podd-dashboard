@@ -7,6 +7,29 @@
 </div>
 
 <div ng-if="!reportFollowUpParent && items.length > 0" class="report-followup-parent">
+
+
+  <div class="new-follow-up-reports" ng-show="showAddionalFollowUpReportsFlag">
+    <p>รายงาน follow-up ที่เลือกใหม่</p>
+    <ul class="list-group report-followup-list">
+      <li class="" ng-repeat="item in selectedFollowUpReports">
+        [<small class="report-followup-date" ng-bind="item.date | amDateFormat:'วันddddที่ D MMMM YYYY เวลา HH:mm'">รายงานเมื่อ</small>] -
+        <a class="report-followup-title" ng-click="onClickReportFollowUp(item)">
+          รายงานหมายเลข #{{ item.id }}
+        </a>
+      </li>
+    </ul>
+
+    <div class="actions">
+      <button class="btn btn-primary" ng-click="onSelectFollowUpSubmit()">บันทึก</button>
+      <button class="btn" ng-click="hideAddionalFollowUpReports()">ยกเลิก</button>
+    </div>
+  </div>
+
+  <div class="follow-up-actions" ng-hide="showAddionalFollowUpReportsFlag">
+    <button class="btn btn-info" ng-click="showAddionalFollowUpReports()">เลือกรายงานที่ให้ follow-up รายงานนี้เพิ่ม</button>
+  </div>
+
   <p>รายงานที่ follow รายงานนี้ (Follow-up reports)</p>
   <ul class="list-group report-followup-list" ng-show="items">
     <li class="" ng-repeat="item in items">
@@ -18,4 +41,120 @@
   </ul>
 </div>
 
-<div class="report-followup-empty" ng-hide="items.length > 0">ไม่มีรายงานที่เกี่ยวข้อง</div>
+<div class="report-followup-empty" ng-hide="items.length > 0">
+  <div ng-hide="showSimilarReportsFlag">ไม่มีรายงานที่เกี่ยวข้อง</div>
+
+  <div class="follow-up-actions" ng-hide="showSimilarReportsFlag">
+    <button class="btn btn-warning" ng-click="showSimilarReports(true)">เลือก Case ที่ต้องการ follow</button>
+    <button class="btn btn-info" ng-click="showSimilarReports()">เลือกรายงานที่ให้ follow-up รายงานนี้</button>
+  </div>
+
+  <div class="selected-similar-reports" ng-if="showSimilarReportsFlag && selectSimilarReportsMode == 'follow-up'">
+    <div ng-show="selectedFollowUpReports.length > 0">
+      <p>รายงานที่ follow รายงานนี้ (Follow-up reports)</p>
+      <ul class="list-group report-followup-list">
+        <li class="" ng-repeat="item in selectedFollowUpReports">
+          [<small class="report-followup-date" ng-bind="item.date | amDateFormat:'วันddddที่ D MMMM YYYY เวลา HH:mm'">รายงานเมื่อ</small>] -
+          <a class="report-followup-title" ng-click="onClickReportFollowUp(item)">
+            รายงานหมายเลข #{{ item.id }}
+          </a>
+        </li>
+      </ul>
+
+      <div class="actions">
+        <button class="btn btn-primary" ng-click="onSelectFollowUpSubmit()">บันทึก</button>
+        <button class="btn" ng-click="onSelectFollowUpCancel()">ยกเลิก</button>
+      </div>
+    </div>
+
+    <div ng-if="selectedFollowUpReports.length == 0">
+      ยังไม่ได้เลือกรายงานที่จะให้ follow-up รายงานนี้
+
+      <div class="actions">
+        <button class="btn" ng-click="onSelectFollowUpCancel()">ยกเลิก</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="selected-similar-reports" ng-if="showSimilarReportsFlag && selectSimilarReportsMode == 'choose-case'">
+    <div ng-if="selectedCaseToFollow" class="report-followup-parent">
+      <p>Case ที่ follow</p>
+      <small>[เมื่อ <span ng-bind="selectedCaseToFollow.date | amDateFormat:'วันddddที่ D MMMM YYYY เวลา HH:mm'"></span>] - </small>
+      <span class="report-followup-title">
+        รายงานหมายเลข #{{ selectedCaseToFollow.id }}
+      </span>
+
+      <div class="actions">
+        <button class="btn btn-primary" ng-click="onSelectCaseSubmit()">บันทึก</button>
+        <button class="btn" ng-click="onSelectCaseCancel()">ยกเลิก</button>
+      </div>
+    </div>
+
+    <div ng-if="!selectedCaseToFollow">
+      ยังไม่ได้เลือก case ที่ต้องการ follow
+
+      <div class="actions">
+        <button class="btn" ng-click="onSelectCaseCancel()">ยกเลิก</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="related-reports-modal" ng-show="showSimilarReportsFlag">
+  <div class="ta-view"> <!-- List View -->
+    <div ng-repeat="item in similarReports " class="row ta-view-row"
+         ng-class="{ 'selected': item.isSelected }"
+         ng-click="onClickSimilarReport(item)">
+      <div class="related-reports-summary">
+        <span class="text-flag-follow-up" ng-if="item.parent" tooltip-placement="top" tooltip="รายงาน Follow-up">
+          <i class="fa fa-flag"></i>
+        </span>
+        <span class="text-flag-test-report" ng-if="item.testFlag" tooltip-placement="top" tooltip="รายงานทดสอบ">
+                  <i class="fa fa-flask"></i>
+                </span>
+
+        <span class="label label-default label-state-{{item.stateCode}}"
+              ng-bind="item.stateName" ng-if="item.stateName"></span>
+
+        <span ng-bind="::item.reportTypeName" class="filter-reporttype"></span>
+
+        <span class="fa fa-check report-tick" ng-if="item.isSelected"></span>
+        <span class="related-reports-id">Report ID: {{::item.id}}</span>
+
+        <div class="filter-result-area">
+          <i class="fa fa-map-marker"></i>
+          <span ng-bind="::item.administrationAreaAddress"></span>
+        </div>
+        <div class="filter-result-desc" ng-bind-html="::item.renderedOriginalFormData"></div>
+      </div>
+
+      <div class="col-xs-3 col-sm-2">
+        <img ng-src="{{ item.firstImageThumbnail }}" class="filter-thumb pull-right" />
+      </div>
+
+      <div class="report-detail">
+        <table class="table table-bordered table-striped" summary="Monthly savings for the Flintstones family">
+          <tr>
+            <td><strong>พื้นที่</strong></td>
+            <td>{{ item.administrationAreaAddress }}</td>
+          </tr>
+          <tr>
+            <td><strong>วันที่รายงาน</strong> </td>
+            <td>{{ item.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</td>
+          </tr>
+          <tr>
+            <td><strong>วันที่เกิดเหตุ</strong></td>
+            <td>{{ item.incidentDate | amDateFormat:'dddd D MMMM YYYY' }}</td>
+          </tr>
+          <tr>
+            <td><strong>ประเภทรายงาน</strong></td>
+            <td>{{ item.reportTypeName }}</td>
+          </tr>
+          <tr>
+            <td><strong>ผู้รายงาน</strong></td>
+            <td>{{ item.createdByName }}</td>
+          </tr>
+        </table>
+    </div><!-- /.filter-result-item -->
+  </div>
+</div>
