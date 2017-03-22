@@ -102,6 +102,11 @@
 
 <div class="related-reports-modal" ng-show="showSimilarReportsFlag">
   <div class="ta-view"> <!-- List View -->
+    <div ng-if="similarReports.length == 0">
+      ไม่มีรายงานในพื้นที่ในช่วงเวลาใกล้เคียงกัน
+      <button class="btn" ng-click="onSelectFollowUpCancel() && onSelectCaseCancel()">ปิด</button>
+    </div>
+
     <div ng-repeat="item in similarReports " class="row ta-view-row"
          ng-class="{ 'selected': item.isSelected }"
          ng-click="onClickSimilarReport(item)">
