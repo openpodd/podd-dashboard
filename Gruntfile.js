@@ -7,6 +7,8 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
+var config = require('config');
+
 module.exports = function (grunt) {
   var serveStatic = require('serve-static');
 
@@ -66,12 +68,7 @@ module.exports = function (grunt) {
 
     // The actual grunt server settings
     connect: {
-      options: {
-        port: 9000,
-        // Change this to '0.0.0.0' to access the server from outside.
-        hostname: '0.0.0.0',
-        livereload: 35729
-      },
+      options: config.get('grunt.connect.options'),
       livereload: {
         options: {
           open: true,
