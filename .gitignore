@@ -8,3 +8,4 @@ bower_components
 config.js
 .DS_Store
 yarn.lock
+/config/local.js
