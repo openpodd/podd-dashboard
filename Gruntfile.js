@@ -352,6 +352,12 @@ module.exports = function (grunt) {
     cdnify: {
       dist: {
         html: ['<%= yeoman.dist %>/*.html']
+        // files: [{
+        //     expand: true,
+        //     cwd: 'app',
+        //     src: '<%= yeoman.dist %>/*.html',
+        //     dest: 'dist'
+        // }]
       }
     },
 
@@ -489,12 +495,15 @@ module.exports = function (grunt) {
     'clean:dist',
     'wiredep',
     'useminPrepare',
-    'concurrent:dist',
+    // 'concurrent:dist',
+    'compass:dist',
+    'imagemin',
+    'svgmin',
     'autoprefixer',
     'concat',
     'ngAnnotate',
     'copy:dist',
-    'cdnify',
+    // 'cdnify',
     'cssmin',
     'uglify',
     'filerev',
