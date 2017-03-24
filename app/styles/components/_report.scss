@@ -954,3 +954,23 @@ $badge-bad: #FF6D69;
     border: 1px solid #666;
   }
 }
+
+.selected-similar-reports {
+  .actions {
+    margin-top: 10px;
+  }
+}
+
+.report-followup-empty {
+  .follow-up-actions {
+    margin-top: 10px;
+  }
+}
+
+.related-reports-modal {
+  box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.3);
+}
+
+.related-reports-modal .filter-thumb {
+  margin-bottom: 10px;
+}
