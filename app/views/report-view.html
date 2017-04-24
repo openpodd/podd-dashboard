@@ -107,7 +107,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="field in report.originalFormData">
+                      <tr ng-repeat="field in getViewableFormData()">
                         <td ng-bind="field.name"></td>
                         <td ng-bind="field.value"></td>
                       </tr>
