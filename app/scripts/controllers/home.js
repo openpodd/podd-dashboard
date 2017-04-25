@@ -423,7 +423,6 @@ angular.module('poddDashboardApp')
       $scope.viewReport(reportId);
     }
     if (!reportId) {
-      $scope.activeReportId = null;
       shared.reportWatchId = null;
       ReportModal.close();
     }
