@@ -51,7 +51,9 @@
     "ng-pickadate": "^0.3.0",
     "heatmap.js-amd": "*",
     "lscache": "^1.0.5",
-    "ng-img-crop": "ngImgCrop#^0.3.2"
+    "ng-img-crop": "ngImgCrop#^0.3.2",
+    "Leaflet.label": "^0.2.1",
+    "leaflet.locatecontrol": "^0.60.0"
   },
   "overrides": {
     "socket.io-client": {
@@ -64,6 +66,12 @@
         "dist/leaflet.markercluster.js",
         "dist/MarkerCluster.Default.css",
         "dist/MarkerCluster.css"
+      ]
+    },
+    "Leaflet.label": {
+      "main": [
+        "dist/leaflet.label.js",
+        "dist/leaflet.label.css"
       ]
     },
     "mapbox": {

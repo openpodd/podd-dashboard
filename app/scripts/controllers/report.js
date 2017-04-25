@@ -284,6 +284,82 @@ angular.module('poddDashboardApp')
             shared.reportWatchId = reportId;
         };
 
+        $scope.getCtMapArea = function () {
+            var returnItem;
+            $scope.report.originalFormData.forEach(function (item) {
+                if (item.name === 'ct_map_area') {
+                    returnItem = item;
+                    return true;
+                }
+            });
+            return returnItem && returnItem.value;
+        };
+
+        $scope.getCtDataRadius = function () {
+            var returnItem;
+            $scope.report.originalFormData.forEach(function (item) {
+                if (item.name === 'ct_data_radius') {
+                    returnItem = item;
+                    return true;
+                }
+            });
+            return returnItem && returnItem.value;
+        };
+
+        var $mapPopup = $('.report-map-popup');
+        var mapPopupLeafletMap;
+        var mapPopupDrawnItems = new L.FeatureGroup();
+
+        function addMapPopupMarker(location) {
+            L.marker(location, {
+                icon: L.AwesomeMarkers.icon({
+                    icon: '',
+                    markerColor: 'red'
+                })
+            }).addTo(mapPopupDrawnItems);
+        }
+
+        $scope.showMapPopup = function () {
+            $mapPopup.removeClass('hidden');
+
+            L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
+            var options = {
+                center: [18.781516724349704, 98.98681640625],
+                zoomLevel: 13
+            };
+            var controller;
+
+            if (!mapPopupLeafletMap) {
+                mapPopupLeafletMap = config.MAPBOX_MAP_ID ?
+                    L.mapbox.map('report-popup-map', config.MAPBOX_MAP_ID, options) :
+                    L.map('report-popup-map', options);
+                controller = L.control.scale({'metric': true, 'imperial': false});
+                controller.addTo(mapPopupLeafletMap);
+
+                L.control.locate().addTo(mapPopupLeafletMap);
+            }
+
+            mapPopupDrawnItems.clearLayers();
+
+            // report location.
+            var location = [
+                $scope.report.reportLocation.coordinates[1],
+                $scope.report.reportLocation.coordinates[0]
+            ];
+            addMapPopupMarker(location);
+
+            var loc = $scope.getCtMapArea();
+            if (loc) {
+                L.geoJson(loc).bindLabel('พื้นทีในรัศมี ' + $scope.getCtDataRadius().toString() + '  เมตร').addTo(mapPopupDrawnItems);
+            }
+            mapPopupDrawnItems.addTo(mapPopupLeafletMap);
+            mapPopupLeafletMap.fitBounds(mapPopupDrawnItems);
+        };
+
+        $scope.closeMapPopup = function () {
+            $mapPopup.addClass('hidden');
+        };
+
         var isInternalFormDataKey = function (key) {
             return key.match(/^ct_/);
         };
