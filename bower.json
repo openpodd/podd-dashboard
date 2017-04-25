@@ -80,7 +80,7 @@
     "heatmap.js-amd": {
       "main": [
         "build/heatmap.js",
-        "plugins/leaflet-heatmap.js"
+        "plugins/leaflet-heatmap/leaflet-heatmap.js"
       ]
     }
   },
