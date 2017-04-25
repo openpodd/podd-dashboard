@@ -379,11 +379,17 @@
   //   white-space: nowrap;
   // }
   .ta-view-info {
+    &.-show-overflow {
+      overflow: visible;
+    }
+
     .tooltip {
+      white-space: normal;
       max-width: 280px;
       .tooltip-inner {
         max-width: 280px;
         width: 280px;
+        font-size: 120%;
       }
     }
   }
