@@ -319,24 +319,33 @@ angular.module('poddDashboardApp')
             }).addTo(mapPopupDrawnItems);
         }
 
+        L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
+        var street = L.mapbox.tileLayer(config.MAPBOX_MAP_ID);
+        var satellite = L.mapbox.tileLayer('mapbox.satellite');
+        var baseLayers = {
+            'ถนน': street,
+            'ดาวเทียม': satellite
+        };
+
         $scope.showMapPopup = function () {
             $mapPopup.removeClass('hidden');
 
-            L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
             var options = {
                 center: [18.781516724349704, 98.98681640625],
+                zoomControl: false,
                 zoomLevel: 13
             };
-            var controller;
 
             if (!mapPopupLeafletMap) {
                 mapPopupLeafletMap = config.MAPBOX_MAP_ID ?
                     L.mapbox.map('report-popup-map', config.MAPBOX_MAP_ID, options) :
                     L.map('report-popup-map', options);
-                controller = L.control.scale({'metric': true, 'imperial': false});
-                controller.addTo(mapPopupLeafletMap);
 
+                L.control.layers(baseLayers, {}, { position: 'topleft', collapsed: false }).addTo(mapPopupLeafletMap);
+                L.control.zoom().addTo(mapPopupLeafletMap);
                 L.control.locate().addTo(mapPopupLeafletMap);
+
+                L.control.scale({'metric': true, 'imperial': false}).addTo(mapPopupLeafletMap);
             }
 
             mapPopupDrawnItems.clearLayers();
