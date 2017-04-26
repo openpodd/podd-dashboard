@@ -34,7 +34,7 @@
 
           <div ng-if="resultMode == 'list'" class="ta-view"> <!-- List View -->
             <div ng-repeat="report in reports" class="row ta-view-row"
-                 ng-class="{ 'active': report.id == activeReportId }"
+                 ng-class="{ 'active': report.id == lastActiveReportId }"
                  ng-click="onClickReport(report.id)">
               <div class="col-xs-12 col-sm-2">
                 <div class="filter-result-date">
@@ -89,7 +89,7 @@
               <div class="col-md-4 col-sm-4">พื้นที่</div>
             </div>
             <div ng-repeat="report in reports" class="ta-view-row row"
-                 ng-class="{ 'active': report.id == activeReportId }"
+                 ng-class="{ 'active': report.id == lastActiveReportId }"
                  ng-click="onClickReport(report.id)">
 
                 <div class="col-md-1 col-sm-1">

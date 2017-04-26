@@ -384,6 +384,7 @@ angular.module('poddDashboardApp')
     }
   };
 
+  $scope.lastActiveReportId = null;
   $scope.activeReportId = null;
   $scope.resultMode = 'table';
   $scope.lastPage = false;
@@ -418,11 +419,13 @@ angular.module('poddDashboardApp')
 
     reportId = parseInt(reportId);
     if (reportId && angular.isNumber(reportId) && reportId !== $scope.activeReportId) {
+      $scope.lastActiveReportId = reportId;
       $scope.activeReportId = reportId;
       shared.reportWatchId = reportId;
       $scope.viewReport(reportId);
     }
     if (!reportId) {
+      $scope.activeReportId = null;
       shared.reportWatchId = null;
       ReportModal.close();
     }
