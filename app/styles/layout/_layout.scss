@@ -206,9 +206,9 @@ $comment-section-bg: #333;
 }
 .l-detail-section{
     top: 0;
-    left: 0;
-    width: 100%;
-    border-left: 50px solid transparent;
+    left: 50px;
+    width: calc(100% - 50px);
+    // border-left: 50px solid transparent;
 
     color: #666;
     background-color: $detail-section-bg;
@@ -218,7 +218,7 @@ $comment-section-bg: #333;
     }
 
     .content{
-        padding: 20px 35px;
+        padding: 20px 20px;
     }
 
     @include respond-to(tablet-landscape-desktop){
@@ -267,10 +267,10 @@ $comment-section-bg: #333;
 }
 
 .content-wrapper-padding{
-    padding: 30px 50px 0;
+    padding: 30px 20px 0;
 
     @include respond-to(tablet-landscape-desktop){
-        padding: 20px 30px 0;
+        padding: 20px 20px 0;
     }
     @include respond-to(tablet-portrait){
         padding: 10px 10px 0;
@@ -316,7 +316,9 @@ blockquote p {
 .l-detail-section {
     @include respond-to(tablet-portrait){
         top: 50px;
+        left: 0;
         border-left: 0;
+        width: 100%;
     }
 }
 

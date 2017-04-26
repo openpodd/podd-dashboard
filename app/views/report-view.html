@@ -253,7 +253,7 @@
           <div class="sidebar-block -map">
             <div class="sidebar-heading">
               <h2 class="sidebar-heading-text"><i class="fa fa-map-marker fa-size-18"></i> แผนที่</h2>
-              <a class="pull-right hoverable" ng-click="showMapPopup()">ขยาย <span class="fa fa-search"></span></a>
+              <a class="pull-right hoverable" ng-click="showMapPopup()"><span class="fa fa-search"></span> ขยาย</a>
             </div> <!-- sidebar-heading -->
             <div class="sidebar-content">
               <div id="report-marker-map" class="report-view-map"></div>
@@ -336,15 +336,15 @@
 </div>
 
 <div class="report-map-popup hidden">
-  <div class="-overlay"></div>
+  <div class="-overlay popup-overlay"></div>
 
-  <div class="-inner">
-    <div class="header">
-      <div class="-title"><i class="fa fa-map-marker fa-size-18"></i> แผนที่</div>
+  <div class="-inner popup-inner">
+    <div class="header popup-header clearfix">
+      <div class="-title popup-title"><i class="fa fa-map-marker fa-size-18"></i> แผนที่</div>
       <button class="close pull-right" aria-hidden="true" ng-click="closeMapPopup()">×</button>
     </div>
 
-    <div class="-map-wrapper"><div class="-map" id="report-popup-map"></div></div>
+    <div class="-map-wrapper popup-map-wrapper"><div class="-map popup-map" id="report-popup-map"></div></div>
   </div>
 </div>
 
