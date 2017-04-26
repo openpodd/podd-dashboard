@@ -320,10 +320,8 @@ angular.module('poddDashboardApp')
         }
 
         L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
-        var street = L.mapbox.tileLayer(config.MAPBOX_MAP_ID);
         var satellite = L.mapbox.tileLayer('mapbox.satellite');
         var baseLayers = {
-            'ถนน': street,
             'ดาวเทียม': satellite
         };
 
@@ -341,7 +339,7 @@ angular.module('poddDashboardApp')
                     L.mapbox.map('report-popup-map', config.MAPBOX_MAP_ID, options) :
                     L.map('report-popup-map', options);
 
-                L.control.layers(baseLayers, {}, { position: 'topleft', collapsed: false }).addTo(mapPopupLeafletMap);
+                L.control.layers(null, baseLayers, { position: 'topleft', collapsed: false }).addTo(mapPopupLeafletMap);
                 L.control.zoom().addTo(mapPopupLeafletMap);
                 L.control.locate().addTo(mapPopupLeafletMap);
 
