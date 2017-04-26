@@ -279,12 +279,29 @@ angular.module('poddDashboardApp')
   }
 
   function updateFilterSettings(queryBuilder) {
+    var anyFilters = false;
     // test flag
     if ($scope.settings.includeTestFlag) {
+      anyFilters = true;
       queryBuilder.updateGroup('testFlag', 'negative:true OR testFlag:true');
       queryBuilder.delete('negative');
     }
-    else {
+
+    switch ($scope.settings.followReports) {
+      case 'only':
+        anyFilters = true;
+        queryBuilder.update('parent', '*');
+        break;
+      case 'exclude':
+        anyFilters = true;
+        queryBuilder.updateGroup('parent', 'parent:(NOT *)');
+        break;
+      default:
+        queryBuilder.delete('parent');
+        queryBuilder.updateGroup('parent', '');
+    }
+
+    if (!anyFilters) {
       queryBuilder.update('negative', true);
     }
   }

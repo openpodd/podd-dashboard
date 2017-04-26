@@ -257,9 +257,25 @@
   <div class="form-group">
     <h4 class="filter-heading"><i class="fa fa-cog"></i> ตั้งค่าการค้นหา</h4>
 
+    <h5><strong>รายงานติดตาม</strong></h5>
     <label class="weight-normal">
-      <input type="checkbox" ng-model="settings.includeTestFlag"> รวมรายงานทดสอบ
+      <input type="radio" name="follow-filter" ng-model="settings.followReports"> <strong>รวม</strong> รายงานติดตาม
     </label>
+    <br>
+    <label class="weight-normal">
+      <input type="radio" value="only" name="follow-filter" ng-model="settings.followReports"> <strong>เฉพาะ</strong> รายงานติดตาม
+    </label>
+    <br>
+    <label class="weight-normal">
+      <input type="radio" value="exclude" name="follow-filter" ng-model="settings.followReports"> <strong>ไม่รวม</strong> รายงานติดตาม
+    </label>
+
+    <div>
+      <br>
+      <label class="weight-normal">
+        <input type="checkbox" ng-model="settings.includeTestFlag"> แสดงรายงานทดสอบ
+      </label>
+    </div>
   </div>
   <!-- /test flag form -->
 
