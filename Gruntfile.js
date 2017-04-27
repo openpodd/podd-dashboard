@@ -169,6 +169,7 @@ module.exports = function (grunt) {
         src: ['<%= yeoman.app %>/index.html'],
         exclude: [
             /leaflet-src.js/,
+            /leaflet.awesome-markers.js/,
             /bootstrap.js/,
             /angulartics-adobe.js/,
             /angulartics-chartbeat.js/,
@@ -293,6 +294,14 @@ module.exports = function (grunt) {
     // },
     // concat: {
     //   dist: {}
+    // },
+
+    /* FOR DEBUG */
+    // uglify: {
+    //     options: {
+    //         beautify: true,
+    //         mangle: false
+    //     }
     // },
 
     imagemin: {
