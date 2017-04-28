@@ -360,6 +360,32 @@ angular.module('poddDashboardApp')
                 L.geoJson(loc).bindLabel('พื้นทีในรัศมี ' + $scope.getCtDataRadius().toString() + '  เมตร').addTo(mapPopupDrawnItems);
             }
             mapPopupDrawnItems.addTo(mapPopupLeafletMap);
+
+            // image location.
+            var imageCluster = L.markerClusterGroup();
+            $scope.report.images.forEach(function (item) {
+                if (!item.location || !item.location.latitude) {
+                    return;
+                }
+
+                var location = [
+                    item.location.latitude,
+                    item.location.longitude
+                ];
+
+                var icon = L.divIcon({
+                    html: '<div class="map-popup-image-marker"><img src="' + item.thumbnailUrl + '"></div>',
+                    className: 'map-popup-image-marker-divicon',
+                    iconSize: L.point(64, 64),
+                    iconAnchor: L.point(32, 32)
+                });
+                var marker = L.marker(location, { icon: icon, clickable: true });
+                marker.on('click', function () {
+                    $scope.viewReportImage(item);
+                });
+                marker.addTo(imageCluster);
+            });
+            imageCluster.addTo(mapPopupDrawnItems);
             mapPopupLeafletMap.fitBounds(mapPopupDrawnItems);
         };
 
