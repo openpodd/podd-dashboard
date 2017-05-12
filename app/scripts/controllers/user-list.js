@@ -50,11 +50,12 @@ angular.module('poddDashboardApp')
         return str;
     }
 
-    function refreshUsers() {
+    function loadMoreUsers() {
 
         var query = {
             'page': $scope.page,
             'page_size': $scope.pageSize,
+            'query': $scope.query
         };
 
         $scope.loading = true;
@@ -74,7 +75,12 @@ angular.module('poddDashboardApp')
         });
     }
 
-    refreshUsers();
+    loadMoreUsers();
+
+    $scope.refreshQuery = function () {
+        $scope.users = [];
+        loadMoreUsers();
+    };
 
     $scope.gridOptionsPerson = {
         enableSorting: false,
@@ -125,7 +131,7 @@ angular.module('poddDashboardApp')
                     uiGridUtils.exportXlsx($scope.gridApi.grid, filename + '.xlsx');
                   }
             }, 100);
-            
+
         }).catch(function () {});
     }
 
@@ -135,7 +141,7 @@ angular.module('poddDashboardApp')
         }
 
         $scope.page += 1;
-        refreshUsers();
+        loadMoreUsers();
 
     };
 
