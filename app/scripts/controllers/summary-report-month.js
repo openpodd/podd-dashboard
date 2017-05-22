@@ -11,7 +11,8 @@ angular.module('poddDashboardApp')
 
 .controller('SummaryReportMonthCtrl', function ($scope, SummaryReportMonth, dashboard, User,
     streaming, FailRequest, shared, $location, $state, $stateParams, $window, Menu,
-    cfpLoadingBar, dateRangePickerConfig, uiGridUtils, ReportTypes, Tag, ReportTags) {
+    cfpLoadingBar, dateRangePickerConfig, uiGridUtils, ReportTypes, Tag, ReportTags, 
+    SummaryAnalysis, storage) {
 
     console.log('init summary report month ctrl');
 
@@ -422,4 +423,50 @@ angular.module('poddDashboardApp')
     $scope.renderDate = function(date) {
         return moment(date).format('DD/MM/YYYY');
     };
+
+    function downloadInnerHtml(filename, elId, mimeType) {
+        var elHtml = document.getElementById(elId).innerHTML;
+
+        var link = document.createElement('a');
+        mimeType = mimeType || 'text/csv';
+
+        link.setAttribute('download', filename);
+        link.setAttribute('href', 'data:' + mimeType  +  ';charset=utf-8,' + encodeURIComponent(elHtml));
+        link.click(); 
+    }
+
+    $scope.isShowAnalysis = false;
+    
+    var user = storage.get('user');
+    var isStaff = user && (user.isStaff || user.isSupervisor);
+    $scope.isShowAnalysis = isStaff;
+
+    $scope.profile = User.profile();
+    $scope.profile.$promise
+        .then(function () {
+            $scope.isShowAnalysis = isStaff || $scope.profile.status === 'PODD';
+        })
+        .catch(function () {
+            // $scope.error = true;
+        });
+
+    $scope.exportAnalysisCSV = function() {
+        var dateFrom = moment($scope.dateRange.from).format('YYYY-MM-DD');
+        var dateTo = moment($scope.dateRange.to).format('YYYY-MM-DD');
+
+        var params = {
+            'dateStart': dateFrom,
+            'dateEnd': dateTo
+        };
+
+        SummaryAnalysis.get(params).$promise.then(function (data) {
+
+            document.getElementById('analysis').innerHTML = data.data;
+            downloadInnerHtml('result.csv', 'analysis','text/html');
+
+        });
+
+        return true;
+    };
+
 });

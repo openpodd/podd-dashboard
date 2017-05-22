@@ -82,6 +82,11 @@
                     </form>
                 </div> <!-- col-md-3 -->
                 <div class="col-md-9">
+                    <div class="export-buttons" ng-show="isShowAnalysis">
+                      <div id="analysis" style="display: none;"></div>
+                      <button class="btn btn btn-default btn-md" type="button" ng-click="exportAnalysisCSV();">ดาวน์โหลดข้อมูลสัตว์ป่วย/ตาย สำหรับใช้ในการวิเคราะห์ข้อมูล</button>
+                    </div>
+
                     <div ng-show="loading" loader-spinner></div>
                     <div class="loading-block" ng-show="error">เกิดข้อผิดพลาด</div>
                     <div class="loading-block" ng-show="empty">ไม่พบผลการค้นหาที่กำหนด</div>
@@ -117,6 +122,7 @@
                           <button class="btn btn-primary btn-sm" type="button" ng-click="csvExport();">ดาวน์โหลดข้อมูลไฟล์ CSV</button>
                           <button class="btn btn-primary btn-sm" type="button" ng-click="xlsxExport();">ดาวน์โหลดข้อมูลไฟล์ Excel</button>
                         </div>
+
                     </div>
                 </div> <!-- col-md-9 -->
             </div> <!-- row -->

@@ -2,6 +2,20 @@
 
 angular.module('poddDashboardApp')
 
+.factory('SummaryAnalysis', function ($resource) {
+    var resource = $resource(config.API_BASEPATH + '/analysis/export/', {}, {
+        get: {
+            isArray: false,
+            responseType: 'text',
+            transformResponse: function (data) {
+                return { data: data }; 
+            }
+        }
+    });
+
+    return resource;
+})
+
 .factory('SummaryReport', function ($resource) {
     var resource = $resource(config.API_BASEPATH + '/summary/areas/count-reports/', {}, {
         get: {

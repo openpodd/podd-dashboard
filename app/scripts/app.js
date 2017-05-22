@@ -132,7 +132,8 @@ angular
       /\/administrationArea\/contacts\/update/,
       /\/notifications\/test/,
       /\/notificationAuthorities/,
-      /\/users/
+      /\/users/,
+      /\/analysis\/export/
     ];
 
     function matchAPIUrls(url) {
@@ -147,7 +148,7 @@ angular
           if (config.url.slice(-1) !== '/') {
             config.url += '/';
           }
-          config.responseType = 'json';
+          config.responseType = config.responseType || 'json';
         }
 
         return config || $q.when(config);
