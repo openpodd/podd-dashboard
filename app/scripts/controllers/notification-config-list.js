@@ -63,7 +63,10 @@ angular.module('poddDashboardApp')
     function getNotificationTemplate(authority) {
         var params = {id: authority.id};
         Authority.notificationTemplates(params).$promise.then(function (data) {
-            $scope.notificationTemplates = data;
+            data.forEach(function (item) {
+                if ($scope.notificationTemplates.indexOf(item) === -1)
+                    $scope.notificationTemplates.push(item);
+            });
             $scope.loading = false;
         }).catch(function () {
             $scope.loading = false;
@@ -73,9 +76,9 @@ angular.module('poddDashboardApp')
 
     AuthorityView.list().$promise.then(function (data) {
         data.forEach(function (item) {
-            if($scope.authority !== null) {
-                return;
-            }
+            // if($scope.authority !== null) {
+            //     return;
+            // }
             getNotificationTemplate(item);
             $scope.authority = item;
         });
