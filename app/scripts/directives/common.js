@@ -501,7 +501,7 @@ angular.module('poddDashboardApp')
 
 .filter('renderTelephone', function () {
     return function (text) {
-        return text.replace(/\@\[tel:([\w\-\.]+)\]/g, '<span class="label label-telephone">tel:$1</span>');
+        return text.replace(/\@\[tel:(.*?)\]/g, '<span class="label label-telephone">tel:$1</span>');
     };
 })
 
