@@ -2,7 +2,7 @@
 
 angular.module('poddDashboardApp')
 
-.controller('MenuCtrl', function ($scope, $http, shared, $window, $location, $state, Menu, storage, Auth, Domain, DataReport) {
+.controller('MenuCtrl', function ($scope, $http, shared, $window, $location, $state, Menu, storage, Auth, Domain, AggregateReport) {
     $scope.shared = shared;
     $scope.open = false;
     $scope.$watch('shared.loggedIn', function (newValue) {
@@ -10,7 +10,7 @@ angular.module('poddDashboardApp')
         $scope.domainMap = Domain.list();
     });
 
-    $scope.dreports = DataReport.list();
+    $scope.dreports = AggregateReport.list();
 
     //$scope.domainMap = Domain.list();
 

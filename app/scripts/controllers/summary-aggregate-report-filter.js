@@ -5,10 +5,10 @@
 angular.module('poddDashboardApp')
 
 
-.controller('SummaryDataReportFilterCtrl', function($scope, $stateParams, DataReport) {
+.controller('SummaryAggregateReportFilterCtrl', function($scope, $stateParams, AggregateReport) {
     $scope.loading = false;
 
-    $scope.dataReport = DataReport.get({
+    $scope.aggregateReport = AggregateReport.get({
         id: $stateParams.id
     });
 
@@ -25,7 +25,7 @@ angular.module('poddDashboardApp')
         $scope.loading = true;
 
 
-        DataReport.run({
+        AggregateReport.run({
             id: $stateParams.id
         }, {
             dateStart: moment($scope.dateRange.from).format('YYYY-MM-DD'),
@@ -42,8 +42,8 @@ angular.module('poddDashboardApp')
     };
 })
 
-.controller('SummaryDataReportFilterModeCtrl', function (shared, Menu) {
+.controller('SummaryAggregateReportFilterModeCtrl', function (shared, Menu) {
     // console.log('why hereeeeee init summary performance person ctrl');
-    shared.summaryDataReportFilterMode = true;
+    shared.summaryAggregateReportFilterMode = true;
     Menu.setActiveMenu('summary');
 });

@@ -110,7 +110,7 @@ angular
       /\/reportTypes/,
       /\/reportStates/,
       /\/dashboard/,
-      /\/dataReports/,
+      /\/aggregateReports/,
       /\/administrationArea/,
       /\/mentions/,
       /\/mentions\/seen/,
@@ -250,10 +250,10 @@ angular
         templateUrl: 'views/summary-visualization.html',
         controller: 'SummaryVisualizationModeCtrl'
       })
-      .state('main.summarydatareportfilter', {
+      .state('main.summaryaggregatereportfilter', {
         url: '^/summary/data-report-filter/:id?name',
-        templateUrl: 'views/summary-data-report-filter.html',
-        controller: 'SummaryDataReportFilterModeCtrl'
+        templateUrl: 'views/summary-aggregate-report-filter.html',
+        controller: 'SummaryAggregateReportFilterModeCtrl'
       })
       .state('main.profile', {
         url: '^/profile',
