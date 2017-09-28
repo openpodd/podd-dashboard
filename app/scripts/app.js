@@ -92,6 +92,11 @@ angular
     $rootScope.shared = shared;
   })
 
+  .config(['$resourceProvider', function($resourceProvider) {
+    // Don't strip trailing slashes from calculated URLs
+    $resourceProvider.defaults.stripTrailingSlashes = false;
+  }])
+
   .config(function(cfpLoadingBarProvider, $animateProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
     $animateProvider.classNameFilter( /\banimated\b/ );
@@ -105,6 +110,7 @@ angular
       /\/reportTypes/,
       /\/reportStates/,
       /\/dashboard/,
+      /\/dataReports/,
       /\/administrationArea/,
       /\/mentions/,
       /\/mentions\/seen/,
@@ -243,6 +249,11 @@ angular
         url: '^/summary/visualize',
         templateUrl: 'views/summary-visualization.html',
         controller: 'SummaryVisualizationModeCtrl'
+      })
+      .state('main.summarydatareportfilter', {
+        url: '^/summary/data-report-filter/:id?name',
+        templateUrl: 'views/summary-data-report-filter.html',
+        controller: 'SummaryDataReportFilterModeCtrl'
       })
       .state('main.profile', {
         url: '^/profile',

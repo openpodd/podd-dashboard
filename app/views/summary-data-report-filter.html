@@ -1,0 +1,60 @@
+<div class="l-info-section l-section l-full-width l-theme-gray" ng-controller="SummaryDataReportFilterCtrl" ng-cloak>
+  <div class="l-detail-section l-section">
+    <div class="title clearfix">
+      <h2 class="pull-left"><i class="fa fa-bar-chart fa-size-22"></i>{{ dataReport.name }}</h2>
+      <!--  <i class="fa fa-times pull-right fa-size-18" ng-click="closeSummaryPerformancePerson();gotoMainPage();"></i> -->
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <form role="form" ng-submit="submit()">
+
+          <div class="row">
+            <div ng-show="loading" loader-spinner></div>
+          </div>
+
+          <div class="row">
+          <div class="col-md-12">
+
+            <div class="form-group filter-form-date">
+              <h4 class="filter-heading"><i class="fa fa-calendar"></i> ช่วงเวลา</h4>
+              <div class="row">
+                <div class="col-md-6">
+                  <small class="states-group-title">ตั้งแต่วันที่</small>
+                  <div>
+                    <input type="text" pick-a-date="dateRange.from" pick-a-date-options="{ selectYears: true }" class="form-pick-date" />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <small class="states-group-title">ถึงวันที่</small>
+                  <div>
+                    <input type="text" pick-a-date="dateRange.to" pick-a-date-options="{ selectYears: true }" class="form-pick-date" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+        </div> <!-- row -->
+
+        <div class="row">
+          <div class="col-md-2">
+
+
+            <div class="form-group">
+              <div class="input-group-btn">
+                <button ng-disabled="loading" class="btn btn-primary btn-full" type="submit" ><i class="fa fa-search fa-size-18"></i> ค้นหา</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        </form>
+
+      </div> <!-- content -->
+    </div> <!-- content-wrapper -->
+  </div>
+</div>

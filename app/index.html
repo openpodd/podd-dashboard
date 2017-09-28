@@ -230,6 +230,7 @@
                 <li><a href="#/summary/visualize">สรุปรายงานในพื้นที่</a></li>
                 <li><a href="#/summary/report-month">สรุปรายงานรายเดือน</a></li>
                 <li><a href="#/summary/performance-person">สรุปประสิทธิภาพการรายงานของอาสา</a></li>
+                <li ng-repeat="(key, value) in dreports"><a ng-href="#/summary/data-report-filter/{{value.id}}?name={{value.name}}">{{ value.name }}</a></li>
             </ul>
         </li>
         <li ng-if="hasPermissionOnMenu('view_dashboard_plan')"><a href="#/plans"><i class="fa fa-book fa-size-18"></i> แผนรับมือ</a></li>
@@ -315,6 +316,7 @@
                             <li><a href="#/summary/visualize">สรุปรายงานในพื้นที่</a></li>
                             <li><a ng-href="#/summary/report-month">สรุปรายงานรายเดือน</a></li>
                             <li><a href="#/summary/performance-person" >สรุปประสิทธิภาพการรายงานของอาสา</a></li>
+                            <li ng-repeat="(key, value) in dreports"><a ng-href="#/summary/data-report-filter/{{value.id}}?name={{value.name}}">{{ value.name }}</a></li>
                         </ul>
                     </div>
                 </li>
@@ -489,6 +491,7 @@
 <script src="scripts/services/PlanService.js"></script>
 <script src="scripts/services/NotificationService.js"></script>
 <script src="scripts/services/DomainService.js"></script>
+<script src="scripts/services/DataReportService.js"></script>
 <script src="scripts/controllers/home.js"></script>
 <script src="scripts/controllers/main.js"></script>
 <script src="scripts/controllers/main-report.js"></script>
@@ -516,6 +519,7 @@
 <script src="scripts/controllers/notification-config-list.js"></script>
 <script src="scripts/controllers/dashboard.js"></script>
 <script src="scripts/controllers/authority-dashboard.js"></script>
+<script src="scripts/controllers/summary-data-report-filter.js"></script>
 <!-- endbuild -->
 
  <script>
