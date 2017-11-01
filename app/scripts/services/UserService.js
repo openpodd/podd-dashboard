@@ -51,7 +51,11 @@ angular.module('poddDashboardApp')
         },
         create: {
             url: config.API_BASEPATH + '/users/',
-            method: 'POST',
+            method: 'POST'
+        },
+        delete : {
+            url: config.API_BASEPATH + '/users/:userId',
+            method: 'DELETE'
         }
     });
 })

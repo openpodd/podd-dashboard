@@ -216,6 +216,30 @@ angular.module('poddDashboardApp')
         angular.copy($scope.userBeforeChange, $scope.userSelected);
     };
 
+    $scope.deleteUser = function () {
+        var displayName = $scope.userSelected.name + ($scope.userSelected.name ? ' (' + $scope.userSelected.username + ')' : '');
+        swal({
+            title: 'โปรดยืนยันการลบ',
+            text: 'ต้องการลบผู้ใช้ ' + displayName + ' หรือไม่?',
+            type: 'error',
+            showCancelButton: true,
+            cancelButtonText: 'ยกเลิก'
+        }, function (isConfirm) {
+            swal('กำลังทำงาน', 'โปรดรอสักครู่', 'info');
+            if (isConfirm) {
+                User.delete({ userId: $scope.userSelected.id }).$promise
+                    .then(function () {
+                        swal('สำเร็จ', 'ลบบัญชีผู้ใช้ ' + displayName + ' แล้ว', 'success');
+                        $('#userModal').modal('hide');
+                        $scope.refreshQuery();
+                    })
+                    .catch(function () {
+                        swal('เกิดข้อผิดพลาด', 'ไม่สามารถลบบัญชีผู้ใช้ กรุณาลองใหม่อีกครั้ง', 'error');
+                    })
+            }
+        });
+    };
+
     $scope.csvExport = function () {
         exportUsers('csv');
     };
