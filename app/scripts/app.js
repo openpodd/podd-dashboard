@@ -176,11 +176,15 @@ angular
     };
   })
 
-  .run(function ($location, Auth) {
+  .run(function ($location, Auth, $rootScope, PoddLog) {
       Auth.verify().catch(function () {
         var destinationStr = Auth.getLoginDestination($location);
         $location.url('/login');
         $location.search({ destination: destinationStr });
+      });
+
+      $rootScope.$on('$locationChangeSuccess', function(e) {
+        PoddLog.dashboardView({ path: $location.url() })
       });
   })
 
