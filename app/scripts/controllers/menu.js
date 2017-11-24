@@ -8,9 +8,9 @@ angular.module('poddDashboardApp')
     $scope.$watch('shared.loggedIn', function (newValue) {
         $scope.isShowNav = newValue;
         $scope.domainMap = Domain.list();
+        $scope.dreports = AggregateReport.list();
     });
 
-    $scope.dreports = AggregateReport.list();
 
     //$scope.domainMap = Domain.list();
 
