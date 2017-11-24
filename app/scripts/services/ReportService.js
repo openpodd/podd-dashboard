@@ -169,6 +169,11 @@ angular.module('poddDashboardApp')
                 method: 'GET',
                 isArray: false
             },
+            insertAccomplishment: {
+                url: config.API_BASEPATH + '/reports/:reportId/accomplishment',
+                method: 'POST',
+                isArray: false
+            },
             saveAccomplishment: {
                 url: config.API_BASEPATH + '/reportAccomplishments/:id/',
                 method: 'PUT',

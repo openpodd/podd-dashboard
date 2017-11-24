@@ -22,7 +22,10 @@ angular.module('poddDashboardApp')
 
         $scope.userAlreadyClickImage = false;
         $scope.reportFlag = {};
-        $scope.accomplishmentEditMode = false;
+        $scope.modes = {
+            accomplishmentEdit: false
+        };
+        $scope.accomplishment = {}
 
         function reloadReportStatesLogs() {
             if ($scope.report) {
@@ -158,8 +161,12 @@ angular.module('poddDashboardApp')
         };
 
         $scope.saveAccomplishment = function () {
-            Reports.saveAccomplishment({id: $scope.accomplishment.id}, $scope.accomplishment).$promise
-                .then(function () {
+            $scope.accomplishment = $scope.accomplishment.id ?
+                Reports.saveAccomplishment({id: $scope.accomplishment.id}, $scope.accomplishment) :
+                Reports.insertAccomplishment({reportId: $scope.report.id}, $scope.accomplishment)
+
+            $scope.accomplishment.$promise
+                .then(function (resp) {
                     swal({
                         title: '',
                         type: 'success',
@@ -167,7 +174,7 @@ angular.module('poddDashboardApp')
                         confirmButtonText: 'ตกลง',
                         confirmButtonClass: 'btn-success'
                     });
-                    $scope.accomplishmentEditMode = false
+                    $scope.modes.accomplishmentEdit = false
                 })
                 .catch(function (err) {
                     $scope.showWarning(err);
