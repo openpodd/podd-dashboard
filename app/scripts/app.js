@@ -109,6 +109,7 @@ angular
       /\/reports/,
       /\/reportTypes/,
       /\/reportStates/,
+      /\/reportAccomplishments/,
       /\/dashboard/,
       /\/aggregateReports/,
       /\/administrationArea/,

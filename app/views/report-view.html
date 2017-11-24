@@ -228,6 +228,32 @@
             </div>
           </div>
 
+          <div class="sidebar-block">
+            <div class="sidebar-heading">
+              <h2 class="sidebar-heading-text">บันทึกข้อความผลสำเร็จ</h2>
+            </div>
+            <div class="sidebar-content" ng-show="accomplishmentEditMode ||!accomplishment.id">
+              <form role="form">
+                <div class="form-group">
+                  <label for="accomplishment-title-form">หัวข้อ</label>
+                  <input type="text" id="accomplishment-title-form" ng-model="accomplishment.title" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="accomplishment-description-form">คำบรรยาย</label>
+                  <textarea ng-model="accomplishment.description" id="accomplishment-description-form" rows="5" class="form-control"></textarea>
+                </div>
+                <button class="btn btn-default" type="button" ng-disabled="!accomplishment.title && !accomplishment.description" ng-click="saveAccomplishment()">บันทึก</button>
+              </form>
+            </div>
+            <div class="sidebar-content" ng-show="!accomplishmentEditMode && accomplishment.id">
+              <strong>{{ accomplishment.title }}</strong>
+              <p>
+                {{ accomplishment.description }}
+              </p>
+              <button class="btn btn-default" type="button" ng-click="accomplishmentEditMode=true">แก้ไข</button>
+            </div>
+          </div>
+
           <div class="sidebar-block" ng-if="isStaff">
             <div class="sidebar-heading">
               <h2 class="sidebar-heading-text"><i class="fa fa-ellipsis-v fa-size-18"></i> อื่นๆ</h2>

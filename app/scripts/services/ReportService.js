@@ -164,6 +164,16 @@ angular.module('poddDashboardApp')
                 url: config.API_BASEPATH + '/reports/:reportId/tags',
                 method: 'POST'
             },
+            getAccomplishment: {
+                url: config.API_BASEPATH + '/reports/:reportId/accomplishments',
+                method: 'GET',
+                isArray: false
+            },
+            saveAccomplishment: {
+                url: config.API_BASEPATH + '/reportAccomplishments/:id/',
+                method: 'PUT',
+                isArray: false
+            },
             saveState: {
                 url: config.API_BASEPATH + '/reports/:reportId/state',
                 method: 'POST'

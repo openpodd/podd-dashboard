@@ -22,6 +22,7 @@ angular.module('poddDashboardApp')
 
         $scope.userAlreadyClickImage = false;
         $scope.reportFlag = {};
+        $scope.accomplishmentEditMode = false;
 
         function reloadReportStatesLogs() {
             if ($scope.report) {
@@ -37,12 +38,26 @@ angular.module('poddDashboardApp')
             }
         }
 
+        function reloadReportAccomplishment() {
+            if ($scope.report) {
+                if ($scope.report.$promise) {
+                    $scope.report.$promise.then(function () {
+                        $scope.accomplishment = Reports.getAccomplishment({reportId: $scope.report.id});
+                    });
+                }
+                else {
+                    $scope.accomplishment = Reports.getAccomplishment({reportId: $scope.report.id});
+                }
+            }
+        }
+
         $scope.report = $scope.$parent.report;
         $scope.$watch('$parent.report', function (newValue) {
             $scope.report = newValue;
             if (newValue) {
                 reloadReportStatesLogs();
                 loadPlanReport();
+                reloadReportAccomplishment();
 
                 $timeout(function () {
                     addMarker($scope.report);
@@ -133,13 +148,30 @@ angular.module('poddDashboardApp')
                         type: 'success',
                         text: 'บันทึกเรียบร้อยแล้ว',
                         confirmButtonText: 'ตกลง',
-                        confirmButtonClass: 'btn-success',
+                        confirmButtonClass: 'btn-success'
                     });
                     $scope.tagsChanged = false;
                 })
                 .catch(function (err) {
                     $scope.showWarning(err);
                 });
+        };
+
+        $scope.saveAccomplishment = function () {
+            Reports.saveAccomplishment({id: $scope.accomplishment.id}, $scope.accomplishment).$promise
+                .then(function () {
+                    swal({
+                        title: '',
+                        type: 'success',
+                        text: 'บันทึกเรียบร้อยแล้ว',
+                        confirmButtonText: 'ตกลง',
+                        confirmButtonClass: 'btn-success'
+                    });
+                    $scope.accomplishmentEditMode = false
+                })
+                .catch(function (err) {
+                    $scope.showWarning(err);
+                })
         };
 
         $scope.showWarning = function (err) {
