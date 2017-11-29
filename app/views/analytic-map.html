@@ -1,2 +1,18 @@
-<div ng-hide="isLoggedIn" class="map-mask"></div>
-<div id="analytic-map" class="l-map"></div>
+<div class="analytic-map">
+  <div ng-hide="isLoggedIn" class="map-mask"></div>
+  <div id="analytic-map" class="l-map"></div>
+
+  <div class="preset-selector">
+    <form role="form">
+      <select name="preset" ng-model="selectedPresetCode" ng-change="fetchPreset()">
+        <option ng-value="preset.code" ng-repeat="preset in presets">{{preset.name}}</option>
+      </select>
+
+      <button class="btn btn-default _settings" ng-click="settingsVisible=!settingsVisible">Settings</button>
+    </form>
+
+    <div class="-settings" type="button" ng-show="settingsVisible">
+      Settings
+    </div>
+  </div>
+</div>

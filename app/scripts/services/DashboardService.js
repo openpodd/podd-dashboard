@@ -23,6 +23,10 @@ angular.module('poddDashboardApp')
             method: 'GET',
             isArray: false,
             cache: false
+        },
+        getViaProxy: {
+            url: config.API_BASEPATH + '/pages/fetch/',
+            method: 'GET'
         }
     });
 
@@ -31,8 +35,8 @@ angular.module('poddDashboardApp')
 
 .factory('newDashboard', function ($resource) {
     var resource = $resource(config.API_BASEPATH + '/pages/dashboard', {}, {
-        get: { 
-            isArray: false 
+        get: {
+            isArray: false
         }
     });
 

@@ -1,0 +1,25 @@
+.preset-selector {
+  position: relative;
+  top: 12px;
+  text-align: center;
+  background: #fff;
+  padding: 8px;
+  margin: 0 auto;
+  width: 50%;
+
+  select {
+    font-size: 2em;
+    margin-right: 12px;
+  }
+
+  .btn._settings {
+    margin: 0;
+    margin-left: 12px;
+  }
+
+  .-settings {
+    border: 1px solid #ccc;
+    margin: 24px 0;
+    padding: 8px;
+  }
+}
