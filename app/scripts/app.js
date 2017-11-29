@@ -220,6 +220,11 @@ angular
         template: '',
         controller: 'FilterModeCtrl'
       })
+      .state('analyticMap', {
+        url: '/analytic-map',
+        templateUrl: 'views/analytic-map.html',
+        controller: 'AnalyticMapCtrl'
+      })
       .state('scenario', {
         url: '/scenario?bottom&left&top&right&zoom&q',
         templateUrl: 'views/scenario.html',
