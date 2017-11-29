@@ -94,18 +94,17 @@ angular.module('poddDashboardApp')
     }])
 
     .factory('AnalyticMapRenderer', [function () {
-        function onEachFeature(feature, layer) {
-            if (feature.properties && feature.properties[config.popupPropertyName]) {
-                layer.bindPopup(feature.properties[config.popupPropertyName]);
-            }
-        }
         return function (type, config) {
             var func = {
                 'geojson': {
                     $render: function (data) {
                         return Promise.resolve(L.geoJson(data, {
                             style: config.style,
-                            onEachFeature: onEachFeature
+                            onEachFeature: function onEachFeature(feature, layer) {
+                                if (feature.properties && feature.properties[config.popupPropertyName]) {
+                                    layer.bindPopup(feature.properties[config.popupPropertyName]);
+                                }
+                            }
                         }));
                     }
                 },
