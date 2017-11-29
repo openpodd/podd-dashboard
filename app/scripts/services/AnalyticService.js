@@ -36,7 +36,7 @@ angular.module('poddDashboardApp')
                                     name: 'Restricted Area',
                                     code: 'restricted-area',
                                     type: 'geojson',
-                                    url: 'http://192.168.8.147:8081/map.geojson'
+                                    url: 'https://gist.githubusercontent.com/noomz/bc700fd532f727fe1513db369add2a3b/raw/fc3d05dcaf4c71b841080e602c59d70565f38f52/map.geojson'
                                 },
                                 {
                                     name: 'Report : Animal Sick/Death',
