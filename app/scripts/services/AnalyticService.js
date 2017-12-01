@@ -83,7 +83,7 @@ angular.module('poddDashboardApp')
                                         riseOnHover: true
                                     },
                                     filter: {
-                                        query: 'typeName:("นับลูกน้ำยุงลาย+(ธรรมชาติ)") AND found_containers > 0',
+                                        query: 'typeName:("นับลูกน้ำยุงลาย+(ธรรมชาติ)") AND negative:true AND found_containers:>0',
                                         since: '2017-10-01',
                                         to: '2017-12-01'
                                     }
