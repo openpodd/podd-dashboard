@@ -7,9 +7,9 @@
   margin: 0 auto;
   width: 50%;
   min-height: 50px;
-  overflow: auto;
   border-radius: 6px;
   box-shadow:0 1px 1px rgba(0,0,0,.23);
+  overflow: hidden;
 
   .color-preview {
     display: inline-block;
@@ -41,5 +41,16 @@
     padding: 8px;
     margin-top: 50px;
     border-top: 1px solid #ccc;
+    overflow: auto;
+  }
+}
+
+.analytic-map {
+  .backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 }

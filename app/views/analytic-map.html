@@ -2,6 +2,8 @@
   <div ng-hide="isLoggedIn" class="map-mask"></div>
   <div id="analytic-map" class="l-map"></div>
 
+  <div class="backdrop" ng-show="settingsVisible" ng-click="settingsVisible=false"></div>
+
   <div class="preset-selector" set-max-height="30">
     <form role="form" class="form form-inline _preset">
       <div class="form-group">
@@ -14,10 +16,10 @@
       <button class="btn btn-default _settings" ng-show="preset.code" ng-click="settingsVisible=!settingsVisible"><i class="fa fa-cog"></i></button>
     </form>
 
-    <div class="-settings" type="button" ng-show="settingsVisible">
+    <div class="-settings" set-max-height="30" type="button" ng-show="settingsVisible">
       <h4>Settings</h4>
 
-      <div ng-repeat="layer in preset.layers" class="-layers">
+      <div ng-repeat="layer in preset.layers" class="-layers-form">
         <div analytic-map-layer-form-geo-json
              ng-if="layer.type == 'geojson'"
              layer="layer"

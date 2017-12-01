@@ -30,19 +30,22 @@ angular.module('poddDashboardApp')
                                     style: {
                                         color: '#ff7800',
                                         'weight': 5,
-                                        'opacity': 0.65
+                                        'opacity': 0.65,
+                                        riseOnHover: true
                                     },
                                     url: 'https://analytic.cmonehealth.org/summary/geojson/cnx-authority.json'
                                 },
                                 {
-                                    name: 'ยิงพิกัด GPS ไข้เลือดออก',
+                                    name: 'ยิงพิกัด GPS ไข้เลือดออก เดือนตุลาคม',
                                     code: 'report-1',
                                     type: 'report',
                                     radius: 100,
                                     style: {
-                                        color: '#f00',
-                                        fillColor: '#f90',
-                                        weight: 1
+                                        color: '#1c9f12',
+                                        fillColor: '#fff702',
+                                        weight: 1,
+                                        opacity: 0.8,
+                                        riseOnHover: true
                                     },
                                     filter: {
                                         query: 'typeName:("ยิงพิกัด+GPS+ไข้เลือดออก")',
@@ -51,19 +54,38 @@ angular.module('poddDashboardApp')
                                     }
                                 },
                                 {
-                                    name: 'นับลูกน้ำยุงลาย (ธรรมชาติ)',
+                                    name: 'ยิงพิกัด GPS ไข้เลือดออก เดือนกันยายน',
                                     code: 'report-2',
+                                    type: 'report',
+                                    radius: 100,
+                                    style: {
+                                        color: '#f00',
+                                        fillColor: '#ff9642',
+                                        weight: 1,
+                                        opacity: 0.8,
+                                        riseOnHover: true
+                                    },
+                                    filter: {
+                                        query: 'typeName:("ยิงพิกัด+GPS+ไข้เลือดออก")',
+                                        since: '2017-09-01',
+                                        to: '2017-10-01'
+                                    }
+                                },
+                                {
+                                    name: 'นับลูกน้ำยุงลาย (ธรรมชาติ)',
+                                    code: 'report-3',
                                     type: 'report',
                                     radius: 300,
                                     style: {
                                         color: '#00f',
                                         fillColor: '#ccc',
-                                        weight: 1
+                                        weight: 1,
+                                        riseOnHover: true
                                     },
                                     filter: {
                                         query: 'typeName:("นับลูกน้ำยุงลาย+(ธรรมชาติ)") AND found_containers > 0',
                                         since: '2017-10-01',
-                                        to: '2017-11-01'
+                                        to: '2017-12-01'
                                     }
                                 }
                             ]

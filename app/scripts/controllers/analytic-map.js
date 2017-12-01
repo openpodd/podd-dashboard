@@ -73,9 +73,6 @@ angular.module('poddDashboardApp')
                 Promise.all(promises)
                     .then(function () {
                         fitBounds();
-                    })
-                    .catch(function () {
-                        fitBounds();
                     });
             };
 
