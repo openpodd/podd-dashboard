@@ -1,0 +1,91 @@
+<div class="analytic-form -geojson text-left well">
+  <h4>Reports</h4>
+
+  <form ng-submit="submit()" class="form form-horizontal" novalidate>
+    <div class="form-group">
+      <label class="control-label col-md-3">Name:</label>
+      <div class="col-md-9">
+        <input type="text" class="form-control" ng-model="layer.name">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Filter:</label>
+      <div class="col-md-9">
+        <input type="text" class="form-control" ng-model="layer.filter.query">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Color:</label>
+      <div class="col-md-9">
+        <div class="input-group">
+          <span class="input-group-addon">
+            <span class="color-preview" style="background:{{layer.style.color}}"></span>
+          </span>
+          <input type="text" class="form-control" ng-model="layer.style.color">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Fill Color:</label>
+      <div class="col-md-9">
+        <div class="input-group">
+          <span class="input-group-addon">
+            <span class="color-preview" style="background:{{layer.style.fillColor}}"></span>
+          </span>
+          <input type="text" class="form-control" ng-model="layer.style.fillColor">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Weight:</label>
+      <div class="col-md-9">
+        <input type="number" step="0.1" class="form-control" ng-model="layer.style.weight">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Opacity:</label>
+      <div class="col-md-9">
+        <input type="number" step="0.1" class="form-control" ng-model="layer.style.opacity">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Radius:</label>
+      <div class="col-md-9">
+        <input type="number" class="form-control" ng-model="layer.radius">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Period:</label>
+      <div class="col-md-9">
+        <div class="row">
+          <div class="col-md-6">
+            <small class="states-group-title">Since</small>
+            <div>
+              <input type="text" pick-a-date="layer.filter.since" pick-a-date-options="{ selectYears: true }" class="form-pick-date" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <small class="states-group-title">To</small>
+            <div>
+              <input type="text" pick-a-date="layer.filter.to" pick-a-date-options="{ selectYears: true }" class="form-pick-date" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-3 col-sm-9">
+        <button type="submit" class="btn btn-default">Apply</button>
+        <button type="button" class="btn" ng-click="removeLayer()">Remove Layer</button>
+      </div>
+    </div>
+  </form>
+</div>

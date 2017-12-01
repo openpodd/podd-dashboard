@@ -1,0 +1,59 @@
+<div class="analytic-form -geojson text-left well">
+  <h4>GeoJson</h4>
+
+  <form ng-submit="submit()" class="form form-horizontal" novalidate>
+    <div class="form-group">
+      <label class="control-label col-md-3">Name:</label>
+      <div class="col-md-9">
+        <input type="text" class="form-control" ng-model="layer.name">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Popup Property:</label>
+      <div class="col-md-9">
+        <input type="text" class="form-control" ng-model="layer.popupPropertyName" placeholder="Default is `name`">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">GeoJson URL:</label>
+      <div class="col-md-9">
+        <input type="text" class="form-control" ng-model="layer.url">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Color:</label>
+      <div class="col-md-9">
+        <div class="input-group">
+          <span class="input-group-addon">
+            <span class="color-preview" style="background:{{layer.style.color}}"></span>
+          </span>
+          <input type="text" class="form-control" ng-model="layer.style.color">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Weight:</label>
+      <div class="col-md-9">
+        <input type="number" step="0.1" class="form-control" ng-model="layer.style.weight">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Opacity:</label>
+      <div class="col-md-9">
+        <input type="number" step="0.1" class="form-control" ng-model="layer.style.opacity">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-3 col-sm-9">
+        <button type="submit" class="btn btn-default">Apply</button>
+        <button type="button" class="btn" ng-click="removeLayer()">Remove Layer</button>
+      </div>
+    </div>
+  </form>
+</div>

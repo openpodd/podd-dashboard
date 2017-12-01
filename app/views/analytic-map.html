@@ -2,17 +2,33 @@
   <div ng-hide="isLoggedIn" class="map-mask"></div>
   <div id="analytic-map" class="l-map"></div>
 
-  <div class="preset-selector">
-    <form role="form">
-      <select name="preset" ng-model="selectedPresetCode" ng-change="fetchPreset()">
-        <option ng-value="preset.code" ng-repeat="preset in presets">{{preset.name}}</option>
-      </select>
+  <div class="preset-selector" set-max-height="30">
+    <form role="form" class="form form-inline _preset">
+      <div class="form-group">
+        <label class="control-label">โปรดเลือก</label>
+        <select class="form-control" name="preset" ng-model="selectedPresetCode" ng-change="fetchPreset()">
+          <option ng-value="preset.code" ng-repeat="preset in presets">{{preset.name}}</option>
+        </select>
+      </div>
 
-      <button class="btn btn-default _settings" ng-click="settingsVisible=!settingsVisible">Settings</button>
+      <button class="btn btn-default _settings" ng-show="preset.code" ng-click="settingsVisible=!settingsVisible"><i class="fa fa-cog"></i></button>
     </form>
 
     <div class="-settings" type="button" ng-show="settingsVisible">
-      Settings
+      <h4>Settings</h4>
+
+      <div ng-repeat="layer in preset.layers" class="-layers">
+        <div analytic-map-layer-form-geo-json
+             ng-if="layer.type == 'geojson'"
+             layer="layer"
+             on-save="onSaveLayer($layer)"
+             on-remove="onRemoveLayer($layer)"></div>
+        <div analytic-map-layer-form-report
+             ng-if="layer.type == 'report'"
+             layer="layer"
+             on-save="onSaveLayer($layer)"
+             on-remove="onRemoveLayer($layer)"></div>
+      </div>
     </div>
   </div>
 </div>

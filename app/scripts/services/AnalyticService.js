@@ -6,19 +6,21 @@ angular.module('poddDashboardApp')
         // mock
         return {
             list: function () {
-                return [
-                    {
-                        name: 'Chiang Mai PODD Area',
-                        code: 'podd-cnx'
-                    }
-                ]
+                return {
+                    $promise: Promise.resolve([
+                        {
+                            name: 'ไข้เลือดออก และ แหล่งลูกน้ำ',
+                            code: 'dengue_breeding_site'
+                        }
+                    ])
+                };
             },
             get: function (query) {
                 switch (query.code) {
-                    case 'podd-cnx':
+                    case 'dengue_breeding_site':
                         return {
-                            name: 'PODD Chiang Mai Area',
-                            code: 'cnx-podd',
+                            name: 'ไข้เลือดออก และ แหล่งลูกน้ำ',
+                            code: 'dengue_breeding_site',
                             layers: [
                                 {
                                     name: 'Amphor',
@@ -33,19 +35,33 @@ angular.module('poddDashboardApp')
                                     url: 'https://analytic.cmonehealth.org/summary/geojson/cnx-authority.json'
                                 },
                                 {
-                                    name: 'Restricted Area',
-                                    code: 'restricted-area',
-                                    type: 'geojson',
-                                    url: 'https://gist.githubusercontent.com/noomz/bc700fd532f727fe1513db369add2a3b/raw/fc3d05dcaf4c71b841080e602c59d70565f38f52/map.geojson'
-                                },
-                                {
-                                    name: 'Report : Animal Sick/Death',
+                                    name: 'ยิงพิกัด GPS ไข้เลือดออก',
                                     code: 'report-1',
                                     type: 'report',
-                                    color: '#f00',
                                     radius: 100,
-                                    fillColor: '#f90',
+                                    style: {
+                                        color: '#f00',
+                                        fillColor: '#f90',
+                                        weight: 1
+                                    },
                                     filter: {
+                                        query: 'typeName:("ยิงพิกัด+GPS+ไข้เลือดออก")',
+                                        since: '2017-10-01',
+                                        to: '2017-11-01'
+                                    }
+                                },
+                                {
+                                    name: 'นับลูกน้ำยุงลาย (ธรรมชาติ)',
+                                    code: 'report-2',
+                                    type: 'report',
+                                    radius: 300,
+                                    style: {
+                                        color: '#00f',
+                                        fillColor: '#ccc',
+                                        weight: 1
+                                    },
+                                    filter: {
+                                        query: 'typeName:("นับลูกน้ำยุงลาย+(ธรรมชาติ)") AND found_containers > 0',
                                         since: '2017-10-01',
                                         to: '2017-11-01'
                                     }
@@ -74,7 +90,15 @@ angular.module('poddDashboardApp')
                 'report': function () {
                     return {
                         $data: function () {
-                            return Promise.resolve({}) // replace here.
+                            var since = metaLayer.filter.since ? moment(metaLayer.filter.since).format('YYYY-MM-DD') : '*';
+                            var to = metaLayer.filter.to ? moment(metaLayer.filter.to).format('YYYY-MM-DD') : '*';
+
+                            var query = {
+                                q: 'date:[' + since + ' TO ' + to + '] AND ' + metaLayer.filter.query,
+                                tz: (new Date()).getTimezoneOffset() / -60
+                            };
+
+                            return Search.query(query).$promise;
                         }
                     }
                 }
@@ -122,7 +146,7 @@ angular.module('poddDashboardApp')
                                 return;
                             }
 
-                            var layer = L.circle(loc, config.radius).bindPopup(item.formDataExplanation + '<br><br>Go to: <a target="_blank" href="#/home?reportId=' + item.id + '">Report #' + item.id + '</a>');
+                            var layer = L.circle(loc, config.radius, config.style).bindPopup(item.formDataExplanation + '<br><br>Go to: <a target="_blank" href="#/home?reportId=' + item.id + '">Report #' + item.id + '</a>');
                             layer.addTo(group);
                         });
 
