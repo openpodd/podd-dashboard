@@ -23,8 +23,8 @@ angular.module('poddDashboardApp')
                             code: 'dengue_breeding_site',
                             layers: [
                                 {
-                                    name: 'Amphor',
-                                    code: 'amphor',
+                                    name: 'พื้นที่ อปท.',
+                                    code: 'authority',
                                     type: 'geojson',
                                     popupPropertyName: 'name',
                                     style: {
@@ -36,7 +36,7 @@ angular.module('poddDashboardApp')
                                     url: 'https://analytic.cmonehealth.org/summary/geojson/cnx-authority.json'
                                 },
                                 {
-                                    name: 'ยิงพิกัด GPS ไข้เลือดออก เดือนตุลาคม',
+                                    name: 'ยิงพิกัด GPS ไข้เลือดออก',
                                     code: 'report-1',
                                     type: 'report',
                                     radius: 100,
@@ -51,24 +51,6 @@ angular.module('poddDashboardApp')
                                         query: 'typeName:("ยิงพิกัด+GPS+ไข้เลือดออก")',
                                         since: '2017-10-01',
                                         to: '2017-11-01'
-                                    }
-                                },
-                                {
-                                    name: 'ยิงพิกัด GPS ไข้เลือดออก เดือนกันยายน',
-                                    code: 'report-2',
-                                    type: 'report',
-                                    radius: 100,
-                                    style: {
-                                        color: '#f00',
-                                        fillColor: '#ff9642',
-                                        weight: 1,
-                                        opacity: 0.8,
-                                        riseOnHover: true
-                                    },
-                                    filter: {
-                                        query: 'typeName:("ยิงพิกัด+GPS+ไข้เลือดออก")',
-                                        since: '2017-09-01',
-                                        to: '2017-10-01'
                                     }
                                 },
                                 {
@@ -130,7 +112,21 @@ angular.module('poddDashboardApp')
         return function (layer) {
             return {
                 meta: {
-                    layer: layer
+                    layer: layer,
+                    layerName: function() {
+                        if (layer.type !== 'geojson') {
+                            var name = layer.name;
+                            if (layer.filter.since) {
+                                name = name + ' ' + moment(layer.filter.since).format('DD/MM/YYYY');
+                            }
+                            if (layer.filter.to) {
+                                name = ' - ' + name + ' ' + moment(layer.filter.to).format('DD/MM/YYYY');
+                            }
+                            return name;
+                        } else {
+                            return layer.name;
+                        }
+                    }
                 },
                 $data: function $data() {
                     return LayerDataProcessor(layer)().$data()

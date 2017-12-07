@@ -48,7 +48,7 @@ angular.module('poddDashboardApp')
                     return mapRenderer.$render(data).then(function (map) {
                         map.addTo($scope.layerGroups);
                         $scope.mapLayers[layer.code] = map;
-                        layerControl.addOverlay(map, layer.name);
+                        layerControl.addOverlay(map, dataLayer.meta.layerName());
                     });
                 });
             }
