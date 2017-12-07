@@ -14,6 +14,8 @@ angular.module('poddDashboardApp')
                 L.mapbox.map('analytic-map', config.MAPBOX_MAP_ID) :
                 L.map('analytic-map');
 
+            var layerControl = L.control.layers({}, {}, {position: 'topleft'}).addTo(leafletMap);
+
             var center = [18.7719015, 98.8864371],
                 zoomLevel = 11,
                 map = new Map(leafletMap.setView(center, zoomLevel));
@@ -37,6 +39,7 @@ angular.module('poddDashboardApp')
                         // remove first
                         var map = $scope.mapLayers[layer.code];
                         $scope.layerGroups.removeLayer(map);
+                        layerControl.removeLayer(map);
                     }
 
                     var mapRenderer = AnalyticMapRenderer(layer.type, layer);
@@ -45,6 +48,7 @@ angular.module('poddDashboardApp')
                     return mapRenderer.$render(data).then(function (map) {
                         map.addTo($scope.layerGroups);
                         $scope.mapLayers[layer.code] = map;
+                        layerControl.addOverlay(map, layer.name);
                     });
                 });
             }
@@ -72,7 +76,7 @@ angular.module('poddDashboardApp')
 
                 Promise.all(promises)
                     .then(function () {
-                        fitBounds();
+                        // fitBounds();
                     });
             };
 
@@ -86,6 +90,7 @@ angular.module('poddDashboardApp')
 
                 if ($scope.mapLayers[layer.code]) {
                     var map = $scope.mapLayers[layer.code];
+                    layerControl.removeLayer(map);
                     $scope.layerGroups.removeLayer(map);
                 }
 
@@ -97,6 +102,6 @@ angular.module('poddDashboardApp')
                 });
 
                 $scope.preset.layers = layers;
-            }
+            };
         }
     ]);
