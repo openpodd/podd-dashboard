@@ -9,18 +9,23 @@ angular.module('poddDashboardApp')
                 return {
                     $promise: Promise.resolve([
                         {
-                            name: 'ไข้เลือดออก และ แหล่งลูกน้ำ',
-                            code: 'dengue_breeding_site'
+                            name: 'ไข้เลือดออก',
+                            code: 'dengue'
                         }
                     ])
                 };
             },
             get: function (query) {
                 switch (query.code) {
-                    case 'dengue_breeding_site':
+                    case 'dengue':
+                        var now = moment();
+                        var firstCutoff = moment(now).subtract(1, 'weeks');
+                        var secondCutoff = moment(firstCutoff).subtract(1, 'weeks');
+                        var thirdCutoff = moment(thirdCutoff).subtract(6, 'weeks');
+                        console.log(now, firstCutoff, secondCutoff, thirdCutoff);
                         return {
-                            name: 'ไข้เลือดออก และ แหล่งลูกน้ำ',
-                            code: 'dengue_breeding_site',
+                            name: 'พิกัดไข้เลือดออก',
+                            code: 'dengue',
                             layers: [
                                 {
                                     name: 'พื้นที่ อปท.',
@@ -36,40 +41,63 @@ angular.module('poddDashboardApp')
                                     url: 'https://analytic.cmonehealth.org/summary/geojson/cnx-authority.json'
                                 },
                                 {
-                                    name: 'ยิงพิกัด GPS ไข้เลือดออก',
-                                    code: 'report-1',
+                                    name: 'ยิงพิกัด GPS ไข้เลือดออก อาทิตย์ล่าสุด',
+                                    code: 'dengue-1',
                                     type: 'report',
                                     radius: 100,
                                     style: {
-                                        color: '#1c9f12',
-                                        fillColor: '#fff702',
+                                        color: '#900C3F',
+                                        fillColor: '#900C3F',
                                         weight: 1,
-                                        opacity: 0.8,
+                                        opacity: 1,
                                         riseOnHover: true
                                     },
                                     filter: {
                                         query: 'typeName:("ยิงพิกัด+GPS+ไข้เลือดออก")',
-                                        since: '2017-10-01',
-                                        to: '2017-11-01'
+                                        dateColumn: 'incidentDate',
+                                        since: firstCutoff.format('YYYY-MM-DD') ,
+                                        to: now.format('YYYY-MM-DD' )
                                     }
                                 },
                                 {
-                                    name: 'นับลูกน้ำยุงลาย (ธรรมชาติ)',
-                                    code: 'report-3',
+                                    name: 'ยิงพิกัด GPS ไข้เลือดออก อาทิตย์ก่อนหน้า',
+                                    code: 'dengue-2',
                                     type: 'report',
-                                    radius: 300,
+                                    radius: 100,
                                     style: {
-                                        color: '#00f',
-                                        fillColor: '#ccc',
+                                        color: '#FF5733',
+                                        fillColor: '#FF5733',
                                         weight: 1,
+                                        opacity: 1,
                                         riseOnHover: true
                                     },
                                     filter: {
-                                        query: 'typeName:("นับลูกน้ำยุงลาย+(ธรรมชาติ)") AND negative:true AND found_containers:>0',
-                                        since: '2017-10-01',
-                                        to: '2017-12-01'
+                                        query: 'typeName:("ยิงพิกัด+GPS+ไข้เลือดออก")',
+                                        dateColumn: 'incidentDate',
+                                        since: secondCutoff.format('YYYY-MM-DD')  ,
+                                        to: moment(firstCutoff).subtract(1, 'days').format('YYYY-MM-DD')
                                     }
-                                }
+                                },
+                                {
+                                    name: 'ยิงพิกัด GPS ไข้เลือดออก 6 อาทิตย์ย้อนหลัง',
+                                    code: 'dengue-6',
+                                    type: 'report',
+                                    radius: 100,
+                                    style: {
+                                        color: '#FFC300',
+                                        fillColor: '#FFC300',
+                                        weight: 1,
+                                        opacity: 1,
+                                        riseOnHover: true
+                                    },
+                                    filter: {
+                                        query: 'typeName:("ยิงพิกัด+GPS+ไข้เลือดออก")',
+                                        dateColumn: 'incidentDate',
+                                        since: thirdCutoff.format('YYYY-MM-DD') ,
+                                        to: moment(secondCutoff).subtract(1, 'days').format('YYYY-MM-DD')
+                                    }
+                                },
+
                             ]
                         };
                 }
@@ -94,11 +122,14 @@ angular.module('poddDashboardApp')
                 'report': function () {
                     return {
                         $data: function () {
-                            var since = metaLayer.filter.since ? moment(metaLayer.filter.since).format('YYYY-MM-DD') : '*';
-                            var to = metaLayer.filter.to ? moment(metaLayer.filter.to).format('YYYY-MM-DD') : '*';
-
+                            var since = metaLayer.filter.since ? moment(metaLayer.filter.since).format('YYYY-MM-DD') + 'T00:00:00': '*';
+                            var to = metaLayer.filter.to ? moment(metaLayer.filter.to).format('YYYY-MM-DD') + 'T00:00:00' : '*';
+                            var dateColumn = 'date'
+                            if (metaLayer.filter.dateColumn) {
+                                dateColumn = metaLayer.filter.dateColumn
+                            }
                             var query = {
-                                q: 'date:[' + since + ' TO ' + to + '] AND ' + metaLayer.filter.query,
+                                q: dateColumn + ':[' + since + ' TO ' + to + '] AND ' + metaLayer.filter.query,
                                 tz: (new Date()).getTimezoneOffset() / -60
                             };
 

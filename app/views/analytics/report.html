@@ -82,6 +82,13 @@
     </div>
 
     <div class="form-group">
+      <label class="control-label col-md-3">Period Column:</label>
+      <div class="col-md-9">
+        <input type="text" class="form-control" ng-model="layer.filter.dateColumn">
+      </div>
+    </div>
+
+    <div class="form-group">
       <div class="col-sm-offset-3 col-sm-9">
         <button type="submit" class="btn btn-default">Apply</button>
         <button type="button" class="btn" ng-click="removeLayer()">Remove Layer</button>
