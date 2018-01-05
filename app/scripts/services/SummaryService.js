@@ -1,3 +1,5 @@
+/* global angular, config */
+
 'use strict';
 
 angular.module('poddDashboardApp')
@@ -8,7 +10,7 @@ angular.module('poddDashboardApp')
             isArray: false,
             responseType: 'text',
             transformResponse: function (data) {
-                return { data: data }; 
+                return { data: data };
             }
         }
     });
@@ -87,4 +89,15 @@ angular.module('poddDashboardApp')
     });
 
     return resource;
+})
+
+.factory('SummaryResultMonthly', function ($resource) {
+    var resource = $resource(config.API_BASEPATH + '/summary/monthly/', {}, {
+        get: {
+            isArray: true
+        }
+    });
+
+    return resource;
 });
+

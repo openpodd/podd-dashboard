@@ -250,6 +250,11 @@ angular
         templateUrl: 'views/summary-report-month.html',
         controller: 'SummaryReportMonthModeCtrl'
       })
+      .state('main.summaryresultmonthly', {
+        url: '^/summary/monthly',
+        templateUrl: 'views/summary-result-monthly.html',
+        controller: 'SummaryResultMonthlyModeCtrl'
+      })
       .state('main.summaryperformanceperson', {
         url: '^/summary/performance-person?month&areaId',
         templateUrl: 'views/summary-performance-person.html',

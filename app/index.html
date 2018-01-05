@@ -231,6 +231,7 @@
                 <li><a href="#/summary/visualize">สรุปรายงานในพื้นที่</a></li>
                 <li><a href="#/summary/report-month">สรุปรายงานรายเดือน</a></li>
                 <li><a href="#/summary/performance-person">สรุปประสิทธิภาพการรายงานของอาสา</a></li>
+                <li><a href="#/summary/monthly">รายงานผลการเฝ้าระวังรายเดือน</a></li>
                 <li ng-repeat="(key, value) in dreports"><a ng-href="#/summary/data-report-filter/{{value.id}}?name={{value.name}}">{{ value.name }}</a></li>
             </ul>
         </li>
@@ -318,6 +319,7 @@
                             <li><a href="#/summary/visualize">สรุปรายงานในพื้นที่</a></li>
                             <li><a ng-href="#/summary/report-month">สรุปรายงานรายเดือน</a></li>
                             <li><a href="#/summary/performance-person" >สรุปประสิทธิภาพการรายงานของอาสา</a></li>
+                            <li><a href="#/summary/monthly">รายงานผลการเฝ้าระวังรายเดือน</a></li>
                             <li ng-repeat="(key, value) in dreports"><a ng-href="#/summary/data-report-filter/{{value.id}}?name={{value.name}}">{{ value.name }}</a></li>
                         </ul>
                     </div>
@@ -526,6 +528,7 @@
 <script src="scripts/controllers/authority-dashboard.js"></script>
 <script src="scripts/controllers/summary-aggregate-report-filter.js"></script>
 <script src="scripts/controllers/analytic-map.js"></script>
+<script src="scripts/controllers/summary-result-monthly.js"></script>
 <!-- endbuild -->
 
  <script>
