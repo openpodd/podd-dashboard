@@ -13,16 +13,15 @@ angular.module('poddDashboardApp')
         var x = this.latLngToContainerPoint(latlng).x - offset[0];
         var y = this.latLngToContainerPoint(latlng).y - offset[1];
         var point = this.containerPointToLatLng([x, y]);
-
-        var zoomAround = function () {
-            self.setZoomAround(latlng, zoomLevel !== undefined ?
-                                            zoomLevel :
-                                            self.getZoom());
-        };
-
-        this.panTo(point);
-        this.once('moveend', zoomAround);
-
+        var zoomTo = zoomLevel !== undefined ?
+            zoomLevel :
+            self.getZoom()
+        this.panTo(point, {
+            duration: 0.25
+        });
+        setTimeout(function() {
+            self.setZoomAround(latlng, zoomTo);
+        }, 300);
         return this;
     };
 
@@ -132,7 +131,7 @@ angular.module('poddDashboardApp')
                 icon: self.getIconByStatus(item),
                 riseOnHover: true,
             });
-            
+
             if (village.positive !== 0 || village.negative !== 0) {
                 village.marker.addTo(self.villageMarkerLayer);
             }
@@ -168,9 +167,9 @@ angular.module('poddDashboardApp')
         items = items.forEach ? items : [ items ];
 
         items.forEach(function (item) {
-            
+
             var report = item;
-            var location; 
+            var location;
 
             report.id = report.id.replace('reports.report.', '');
 
@@ -195,7 +194,7 @@ angular.module('poddDashboardApp')
 
 
             report.marker.addTo(self.reportLocationMarkerLayer);
-        
+
         });
 
         if (items.length && !dontFitBound) {

@@ -10,9 +10,15 @@ angular.module('poddDashboardApp')
             Menu.setActiveMenu('map');
 
             L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
+            var mapboxStyle = config.MAPBOX_STYLE;
+
             var leafletMap = config.MAPBOX_MAP_ID ?
                 L.mapbox.map('analytic-map', config.MAPBOX_MAP_ID) :
                 L.map('analytic-map');
+
+            if (mapboxStyle) {
+                L.mapbox.styleLayer(mapboxStyle).addTo(leafletMap);
+            }
 
             var layerControl = L.control.layers({}, {}, {position: 'topleft'}).addTo(leafletMap);
 

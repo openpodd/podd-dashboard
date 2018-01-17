@@ -111,75 +111,11 @@ angular.module('poddDashboardApp')
     environment: L.divIcon(getReportCategoryIcon('environment')),
   };
 
-  var getGISLayer = function (typeName, iconName) {
-    return new L.WFS({
-      url: config.GIS_BASEPATH,
-      typeNS: 'poddgis_vet',
-      typeName: typeName,
-      geometryField: 'geom',
-      crs: L.CRS.EPSG4326
-    }, new L.Format.GeoJSON({
-      crs: L.CRS.EPSG4326,
-      pointToLayer: function (feature, latlng) {
-        var marker = L.marker(latlng, {
-          icon: icons[iconName],
-          riseOnHover: true
-        });
-
-        marker.bindPopup(
-          feature.properties.detail + ' ' +
-          feature.properties.local_gove + ' อำเภอ' +
-          feature.properties.amphoe
-        );
-
-        marker.on('mouseover', function () {
-          var self = this;
-          $scope.$apply(function () {
-            self.openPopup();
-          });
-        });
-
-        marker.on('mouseout', function () {
-          var self = this;
-          $scope.$apply(function () {
-            self.closePopup();
-          });
-        });
-
-        return marker;
-      }
-    }));
-  };
-
-
-
   $scope.layers = {
     report: {
       name: 'Reports',
       layer: new L.featureGroup().addTo(leafletMap),
       show: true
-    },
-    gis: {
-      pig: {
-        name: 'Pig Farm',
-        layer: getGISLayer('pig_farm', 'pig'),
-        show: false
-      },
-      cow: {
-        name: 'Cow & Buffalo Farm',
-        layer: getGISLayer('cowsandbuffalos_farm', 'cow'),
-        show: false
-      },
-      dog: {
-        name: 'Dog Farm',
-        layer: getGISLayer('dog_farm', 'dog'),
-        show: false
-      },
-      chicken: {
-        name: 'Chicken Farm',
-        layer: getGISLayer('poultry_farm', 'chicken'),
-        show: false
-      }
     },
     heatmap: {
       name: 'Heat Map',
@@ -231,21 +167,6 @@ angular.module('poddDashboardApp')
     }, 0);
   };
 
-  // TODO: this can cause:
-  // `TypeError: Cannot read property 'childNodes' of undefined`
-  // leafletMap.addControl(new LayersControl());
-  var removeGisLayer = function() {
-        leafletMap.removeLayer($scope.layers.gis.pig.layer);
-        leafletMap.removeLayer($scope.layers.gis.cow.layer);
-        leafletMap.removeLayer($scope.layers.gis.dog.layer);
-        leafletMap.removeLayer($scope.layers.gis.chicken.layer);
-
-        $scope.layers.gis.pig.show = false;
-        $scope.layers.gis.cow.show = false;
-        $scope.layers.gis.dog.show = false;
-        $scope.layers.gis.chicken.show = false;
-  };
-
   $scope.toggleLayer = function (layerDef, forceValue) {
     var nextValue = angular.isUndefined(forceValue) ?
                       !layerDef.show :
@@ -255,7 +176,6 @@ angular.module('poddDashboardApp')
       if (layerDef === $scope.layers.heatmap) {
         $scope.layers.report.layer.removeLayer(lastLayer);
         layerDef.layer.addTo(leafletMap);
-        removeGisLayer();
       }
 
       if (!$scope.layers.heatmap.show) {
