@@ -25,6 +25,13 @@ angular.module('poddDashboardApp')
   $scope.canUpdateContact = Menu.hasPermissionOnMenu('view_dashboard_plan');
   $scope.canUpdateNotification = Menu.hasPermissionOnMenu('view_dashboard_users');
 
+  $scope.getAvatarUrl = function (avatarUrl) {
+    if (avatarUrl === null || avatarUrl === undefined) {
+        return 'images/avatar.png';
+    }
+    return avatarUrl;
+  };
+
   $scope.activeReportId = null;
   $scope.onClickReport = function (reportId) {
     $location.search('reportId', reportId);
