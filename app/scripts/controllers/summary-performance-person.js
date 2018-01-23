@@ -15,9 +15,19 @@ angular.module('poddDashboardApp')
 
     console.log('init summary performance person ctrl');
 
+    var now = new Date();
+    var fromYear = 2014;
+    var toYear = now.getFullYear();
+    var yearRange = [];
+    (function () {
+        for (var i = fromYear; i <= toYear; i++) {
+            yearRange.push(i);
+        }
+    })();
+
     $scope.months = {
         months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-        years: [2016, 2015, 2014],
+        years: yearRange,
         selectedMonth: moment().month() + 1,
         selectedYear: moment().year()
     };
@@ -166,12 +176,12 @@ angular.module('poddDashboardApp')
 
             var showOptions = [];
             var header = false;
-            
+
             data.forEach(function (item) {
                 var reporters = {}
                 reporters['name'] = item.fullName;
 
-                if (!header) 
+                if (!header)
                     showOptions.push({ displayName: 'ชื่อ', field: 'name', pinnedLeft: true,
                     headerCellTemplate: '<div class="ui-grid-vertical-bar">&nbsp;</div><div class="ui-grid-cell-contents grid ng-scope pd-badge-cell">ชื่อ</div>',
                     width:320 });
@@ -217,7 +227,7 @@ angular.module('poddDashboardApp')
                 { displayName: 'ชื่ออาสา', field: 'fullName', headerCellClass: 'cell-center' },
                 { displayName: 'จำนวนวันรายงาน', field: 'numberOfActiveDays', cellClass: 'cell-center', headerCellClass: 'cell-center' },
                 { displayName: 'ระดับ', field: 'grade', cellClass: 'cell-center', headerCellClass: 'cell-center' },
-            
+
             ];
             $scope.gridOptionsPerson.data = results;
             $scope.gridOptionsDailyPerson.data = daily;
