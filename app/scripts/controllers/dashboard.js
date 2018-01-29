@@ -268,7 +268,7 @@ angular.module('poddDashboardApp')
     var negativeQuery = {
       '__missing__': 'parent',
       'q': 'negative:true AND testFlag:false',
-      'page_size': 5,
+      'page_size': 7,
       'tz': (new Date()).getTimezoneOffset() / -60
     };
 
