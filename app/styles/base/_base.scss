@@ -238,6 +238,7 @@ html, body{
     left: 0;
     margin: auto;
     width: 700px;
+    z-index: 100000;
 
     transition: all 0.3s ease;
     -webkit-transition: all 0.3s ease;
