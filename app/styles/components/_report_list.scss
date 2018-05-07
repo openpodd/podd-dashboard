@@ -146,6 +146,13 @@
   color: #fff;
   background-color: #2196f3;
 }
+.label-dodd-report {
+  background: url("../images/dodd.png");
+  background-size: contain;
+  width: 16px;
+  height: 16px;
+  background-repeat: no-repeat;
+}
 .label-test-report {
   color: #fff;
   background-color: #ccc;
@@ -247,6 +254,13 @@
 }
 .label-state-no-outbreak-identified {
   background-color: #369AD4;
+}
+
+.dodd-flag {
+  background: url("../images/dodd.png");
+  background-size: contain;
+  width: 16px;
+  height: 16px;
 }
 
 .text-flag-follow-up {
