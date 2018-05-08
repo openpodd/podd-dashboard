@@ -30,6 +30,7 @@ angular.module('poddDashboardApp')
       ReportModal.close();
     }
   });
+  $scope.reportStateName = ReportState.translateReportStateName;
 
   var queryBuilder = (function queryBuilder() {
     var defaultOperator = ' AND ';

@@ -52,7 +52,7 @@
                 </span>
 
                 <span class="label label-default label-state-{{report.stateCode}}"
-                       ng-bind="report.stateName" ng-if="report.stateName"></span>
+                       ng-bind="reportStateName(report.stateName)" ng-if="report.stateName"></span>
 
                 <span ng-bind="::report.reportTypeName" class="filter-reporttype"></span>
                 <div class="filter-result-area">
@@ -117,7 +117,7 @@
 
                 <div class="ta-view-col ta-view-state col-md-2 col-sm-2" data-th="สถานะ">
                   <span class="label label-default label-state-{{report.stateName | slug}}"
-                         ng-bind="report.stateName" ng-if="report.stateName"></span>
+                         ng-bind="reportStateName(report.stateName)" ng-if="report.stateName"></span>
                 </div>
                 <div class="ta-view-col ta-view-info -show-overflow col-md-1 col-sm-1 hidden-xs">
                   <span class="hoverable -help" tooltip-html-unsafe="{{ report.renderedOriginalFormData | htmlToPlainText }}">
@@ -201,7 +201,7 @@
          </span>
           <span class="badgex" ng-if="state.checked">
            <i class="fa fa-check-circle-o fa-size-14"></i>
-         </span> {{ state.name }}
+         </span> {{ reportStateName(state.name) }}
         </button>
       </div>
       <!-- /states-group-options -->

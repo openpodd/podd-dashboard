@@ -29,7 +29,7 @@ angular.module('poddDashboardApp')
 })
 
 .factory('ReportState', function ($resource) {
-    return $resource(config.API_BASEPATH + '/reportStates/:id', {
+    var resource = $resource(config.API_BASEPATH + '/reportStates/:id', {
         id: '@id'
     }, {
       'query': {
@@ -37,6 +37,29 @@ angular.module('poddDashboardApp')
           cache: true
       }
     });
+
+    var stateNames = {
+        'report': 'รายงาน',
+        'insignificant report': 'ไม่ใช่เหตุผิดปกติ',
+        'case': 'เหตุผิดปกติ',
+        'unsuspected outbreak': 'ยังไม่สงสัยเหตุระบาด',
+        'false report': 'ยังไม่สงสัยเหตุระบาด',
+        'suspected outbreak': 'สงสัยเหตุระบาด',
+        'suspect outbreak': 'สงสัยเหตุระบาด', // legacy typo
+        'no outbreak identified': 'ไม่ใช่เหตุระบาด',
+        'outbreak': 'เหตุระบาด',
+        'finish': 'ควบคุมเหตุระบาดเสร็จสิ้นแล้ว'
+    };
+    resource.translateReportStateName = function (name) {
+        var lowerName = name.toLowerCase();
+        var translated = stateNames[lowerName];
+        if (!translated) {
+            return name
+        }
+        return translated
+    };
+
+    return resource
 })
 
 .factory('Authority', function ($resource) {

@@ -17,7 +17,7 @@ angular.module('poddDashboardApp')
     })
 
     .controller('ReportViewCtrl', function ($scope, streaming, Flags, Lightbox,
-                                            $modal, Search, Reports, $state, Tag,
+                                            $modal, Search, Reports, ReportState, $state, Tag,
                                             PlanReport, storage, shared, $timeout) {
 
         $scope.userAlreadyClickImage = false;
@@ -26,6 +26,8 @@ angular.module('poddDashboardApp')
             accomplishmentEdit: false
         };
         $scope.accomplishment = {}
+
+        $scope.reportStateName = ReportState.translateReportStateName;
 
         function reloadReportStatesLogs() {
             if ($scope.report) {
