@@ -48,7 +48,7 @@ angular.module('poddDashboardApp')
         'suspect outbreak': 'สงสัยเหตุระบาด', // legacy typo
         'no outbreak identified': 'ไม่ใช่เหตุระบาด',
         'outbreak': 'เหตุระบาด',
-        'finish': 'ควบคุมเหตุระบาดเสร็จสิ้นแล้ว'
+        'finish': 'ควบคุมเหตุเสร็จสิ้นแล้ว'
     };
     resource.translateReportStateName = function (name) {
         var lowerName = name.toLowerCase();
