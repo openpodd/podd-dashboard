@@ -483,15 +483,6 @@ angular.module('poddDashboardApp')
                 data.originalFormData = tmpFormData;
             }
 
-            // QUICKFIX: inject village into data.
-            dashboard.getAdministrationAreas().$promise.then(function (areas) {
-                areas.forEach(function (item) {
-                    if (data.administrationAreaId === item.id) {
-                        data.village = item;
-                    }
-                });
-            });
-
             $scope.report = data;
         })
         .catch(function (err) {

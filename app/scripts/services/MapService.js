@@ -115,6 +115,7 @@ angular.module('poddDashboardApp')
         items = items.forEach ? items : [ items ];
 
         items.forEach(function (item) {
+
             var village = self.villages[item.id],
                 location = [
                   item.location.coordinates[1],
@@ -129,7 +130,7 @@ angular.module('poddDashboardApp')
 
             village.marker = L.marker(location, {
                 icon: self.getIconByStatus(item),
-                riseOnHover: true,
+                riseOnHover: true
             });
 
             if (village.positive !== 0 || village.negative !== 0) {

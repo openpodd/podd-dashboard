@@ -99,7 +99,6 @@
             <div class="report-infomation">
               <tabset ng-if="report" class="pd-tabs" justified="true" >
                 <tab heading="ข้อมูลแบบสอบถาม">
-                  {{ $parent.report }}
                   <table class="table pd-white-table">
                     <thead>
                       <tr>
@@ -337,7 +336,7 @@
             </tr>
             <tr>
               <td width="200">พื้นที่เกิดเหต</td>
-              <td>{{ $parent.report.village.address }}</td>
+              <td>{{ $parent.report.administrationAreaAddress }}</td>
             </tr>
             <tr>
               <td width="200">โดย</td>

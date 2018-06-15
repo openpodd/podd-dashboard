@@ -87,6 +87,7 @@ angular.module('poddDashboardApp')
 
         return Search.query(query).$promise.then(function (data) {
             console.log('Query result:', data);
+            $scope.loading = false;
 
             shared.filteredReports = data.results;
             data.results.forEach(function (item) {
@@ -96,55 +97,65 @@ angular.module('poddDashboardApp')
 
             // Do group by administrationAreaId
             var results = [],
-                matchedVillages = {};
+                villageLocations = {};
 
-            // Force to clear all village data. This is prevent further request
-            // by $resource caching.
-            var promise = dashboard.getAdministrationAreas().$promise;
+            data.results.forEach(function (item) {
+                var loc = villageLocations[ item.administrationAreaId ] = villageLocations[ item.administrationAreaId ] || {};
+                var key = '' + item.reportLocation[0] + ',' + item.reportLocation[1]
+                loc[key] = loc[key] ? loc[key] + 1 : 1;
+            });
 
-            promise.then(function (administrationAreas) {
-                $scope.loading = false;
-
-                if (administrationAreas) {
-                    shared.villages = {};
-                    administrationAreas.forEach(function (item) {
-                        shared.villages[ item.id ] = item;
-                        item.positive = 0;
-                        item.positiveCases = [];
-                        item.negative = 0;
-                        item.negativeCases = [];
-                    });
-                }
-
-                data.results.forEach(function (item) {
-                    var village = shared.villages[ item.administrationAreaId ];
-
-                    if (village) {
-                        if (! matchedVillages[ village.id ] ) {
-                            matchedVillages[ item.administrationAreaId ] = true;
-                            results.push(village);
-                        }
-
-                        if (item.negative) {
-                            village.negative += 1;
-                        }
-                        else {
-                            village.positive += 1;
-                        }
+            Object.keys(villageLocations).forEach(function (key1) {
+                var max = 0;
+                var winner = '';
+                Object.keys(villageLocations[key1]).forEach(function (key2) {
+                    var value = villageLocations[key1][key2];
+                    if (value > max) {
+                        winner = key2;
+                        max = value;
                     }
                 });
 
-                $scope.results = results;
-                shared.filterResults = results;
+                villageLocations[key1] = winner.split(',');
+            });
 
-                if (results.length === 0) {
-                    $scope.empty = true;
+            data.results.forEach(function (item) {
+                var village = shared.villages[ item.administrationAreaId ];
+
+                if (!village) {
+                    village = {
+                        id: item.administrationAreaId,
+                        address: item.administrationAreaAddress,
+                        location: {
+                            coordinates: villageLocations[item.administrationAreaId]
+                        },
+                        position: 0,
+                        positionCases: [],
+                        negative: 0,
+                        negativeCases: []
+                    };
+                    shared.villages[ item.administrationAreaId ] = village;
+                    results.push(village);
+                }
+
+                if (item.negative) {
+                    village.negative += 1;
                 }
                 else {
-                    $scope.empty = false;
-                    $scope.willShowResult = false;
+                    village.positive += 1;
                 }
             });
+
+            $scope.results = results;
+            shared.filterResults = results;
+
+            if (results.length === 0) {
+                $scope.empty = true;
+            }
+            else {
+                $scope.empty = false;
+                $scope.willShowResult = false;
+            }
 
         }).catch(function () {
             $scope.loading = false;
