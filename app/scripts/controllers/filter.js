@@ -100,8 +100,11 @@ angular.module('poddDashboardApp')
                 villageLocations = {};
 
             data.results.forEach(function (item) {
+                if (!item.reportLocation) {
+                    return;
+                }
                 var loc = villageLocations[ item.administrationAreaId ] = villageLocations[ item.administrationAreaId ] || {};
-                var key = '' + item.reportLocation[0] + ',' + item.reportLocation[1]
+                var key = '' + item.reportLocation[0] + ',' + item.reportLocation[1];
                 loc[key] = loc[key] ? loc[key] + 1 : 1;
             });
 
@@ -119,6 +122,8 @@ angular.module('poddDashboardApp')
                 villageLocations[key1] = winner.split(',');
             });
 
+            shared.villages = {};
+
             data.results.forEach(function (item) {
                 var village = shared.villages[ item.administrationAreaId ];
 
@@ -127,7 +132,7 @@ angular.module('poddDashboardApp')
                         id: item.administrationAreaId,
                         address: item.administrationAreaAddress,
                         location: {
-                            coordinates: villageLocations[item.administrationAreaId]
+                            coordinates: villageLocations[item.administrationAreaId] || []
                         },
                         position: 0,
                         positionCases: [],
@@ -135,7 +140,9 @@ angular.module('poddDashboardApp')
                         negativeCases: []
                     };
                     shared.villages[ item.administrationAreaId ] = village;
-                    results.push(village);
+                    if (item.negative) {
+                        results.push(village);
+                    }
                 }
 
                 if (item.negative) {
@@ -159,7 +166,6 @@ angular.module('poddDashboardApp')
 
         }).catch(function () {
             $scope.loading = false;
-
             $scope.error = true;
         });
     };

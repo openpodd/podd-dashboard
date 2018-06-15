@@ -51,10 +51,10 @@ angular.module('poddDashboardApp')
         'finish': 'ควบคุมเหตุเสร็จสิ้นแล้ว'
     };
     resource.translateReportStateName = function (name) {
-        var lowerName = name.toLowerCase();
+        var lowerName = (name || '').toLowerCase();
         var translated = stateNames[lowerName];
         if (!translated) {
-            return name
+            return name || '';
         }
         return translated
     };
