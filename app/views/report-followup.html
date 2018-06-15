@@ -1,5 +1,8 @@
 <div ng-if="reportFollowUpParent" class="report-followup-parent">
-  <p>Case ที่ follow</p>
+  <p>
+    <span ng-show="report.parentType!='DODD'">Case ที่ follow</span>
+    <span ng-show="report.parentType=='DODD'">รายงานดูดีดี</span>
+  </p>
   <small>[เมื่อ <span ng-bind="reportFollowUpParent.date | amDateFormat:'วันddddที่ D MMMM YYYY เวลา HH:mm'"></span>] - </small>
   <span ng-click="onClickReportFollowUp(reportFollowUpParent)" class="report-followup-title">
     รายงานหมายเลข #{{ reportFollowUpParent.id }}

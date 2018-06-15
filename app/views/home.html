@@ -43,15 +43,16 @@
                 </div>
               </div>
               <div class="col-xs-9 col-sm-8">
-                <span class="text-flag-follow-up" ng-if="report.parent" tooltip-placement="top" tooltip="รายงาน Follow-up">
-                  <i class="fa fa-flag"></i>
+                <span ng-if="report.parent" tooltip-placement="top" tooltip="รายงาน Follow-up">
+                  <i ng-if="report.parentType!='DODD'" class="fa fa-flag text-flag-follow-up"></i>
+                  <i ng-if="report.parentType=='DODD'" class="fa dodd-flag"></i>
                 </span>
                 <span class="text-flag-test-report" ng-if="report.testFlag" tooltip-placement="top" tooltip="รายงานทดสอบ">
                   <i class="fa fa-flask"></i>
                 </span>
 
                 <span class="label label-default label-state-{{report.stateCode}}"
-                       ng-bind="report.stateName" ng-if="report.stateName"></span>
+                       ng-bind="reportStateName(report.stateName)" ng-if="report.stateName"></span>
 
                 <span ng-bind="::report.reportTypeName" class="filter-reporttype"></span>
                 <div class="filter-result-area">
@@ -95,8 +96,9 @@
                 <div class="col-md-1 col-sm-1">
                   <div class="row">
                     <div class="col-md-6 col-sm-6">
-                      <span class="text-flag-follow-up" ng-if="report.parent" tooltip-placement="top" tooltip="รายงาน Follow-up">
-                        <i class="fa fa-flag"></i>
+                      <span ng-if="report.parent" tooltip-placement="top" tooltip="รายงาน Follow-up">
+                        <i ng-if="report.parentType!='DODD'" class="fa fa-flag text-flag-follow-up"></i>
+                        <i ng-if="report.parentType=='DODD'" class="fa dodd-flag"></i>
                       </span>
                     </div>
                     <div class="col-md-6 col-sm-6">
@@ -115,7 +117,7 @@
 
                 <div class="ta-view-col ta-view-state col-md-2 col-sm-2" data-th="สถานะ">
                   <span class="label label-default label-state-{{report.stateName | slug}}"
-                         ng-bind="report.stateName" ng-if="report.stateName"></span>
+                         ng-bind="reportStateName(report.stateName)" ng-if="report.stateName"></span>
                 </div>
                 <div class="ta-view-col ta-view-info -show-overflow col-md-1 col-sm-1 hidden-xs">
                   <span class="hoverable -help" tooltip-html-unsafe="{{ report.renderedOriginalFormData | htmlToPlainText }}">
@@ -199,7 +201,7 @@
          </span>
           <span class="badgex" ng-if="state.checked">
            <i class="fa fa-check-circle-o fa-size-14"></i>
-         </span> {{ state.name }}
+         </span> {{ reportStateName(state.name) }}
         </button>
       </div>
       <!-- /states-group-options -->

@@ -266,7 +266,7 @@ angular.module('poddDashboardApp')
 .directive('reportState', function (ReportState) {
     return {
         strict: 'A',
-        template: '<div>{{ state.name }}</div>',
+        template: '<div>{{ reportStateName(state.name) }}</div>',
         scope: {
             report: '='
         },
@@ -274,6 +274,7 @@ angular.module('poddDashboardApp')
             if (!$scope.report) {
                 return;
             }
+            $scope.reportStateName = ReportState.translateReportStateName;
 
             ReportState
                 .query({ reportType: $scope.report.reportTypeId }).$promise
@@ -344,8 +345,10 @@ angular.module('poddDashboardApp')
             onSelect: '&',
             disableDisallowStates: '='
         },
-        controller: function ($scope) {
+        controller: function ($scope, ReportState) {
             var report = $scope.report;
+
+            $scope.reportStateName = ReportState.translateReportStateName;
 
             $scope.$watch('report', function (newValue) {
                 report = newValue;

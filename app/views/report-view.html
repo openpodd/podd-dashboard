@@ -24,9 +24,9 @@
       <div class="row">
         <div class="col-sm-8" ng-show="report">
           <div class="report-section">
-            <span class="label label-default label-state label-follow-up" ng-show="report.parent">รายงานติดตาม</span>
-
-            <span class="label label-default label-state label-state-report" ng-hide="report.parent">สถานะ : {{ report.stateName }}</span>
+            <span class="label label-default label-state label-follow-up" ng-show="report.parent && report.parentType!='DODD'">รายงานติดตาม</span>
+            <span class="label label-default label-dodd-report" ng-show="report.parent && report.parentType=='DODD'">&nbsp;</span>
+            <span class="label label-default label-state label-state-report" ng-hide="report.parent">สถานะ : {{ reportStateName(report.stateName) }}</span>
 
             <span>ประเภท : {{ $parent.report.reportTypeName }}</span>
 
@@ -133,7 +133,7 @@
 
         <div class="col-sm-4" ng-show="report">
 
-          <div class="sidebar-block" ng-show="report.parent">
+          <div class="sidebar-block" ng-show="report.parent && report.parentType!='DODD'">
             <div class="sidebar-heading">
               <h2 class="sidebar-heading-text"><i class="fa fa-book fa-size-18"></i> ประวัติ</h2>
             </div> <!-- sidebar-heading -->
@@ -168,7 +168,7 @@
             <div class="sidebar-content">
               <ul class="history-log" ng-if="reportStatesLogs.length > 0">
                 <li ng-repeat="log in reportStatesLogs | orderBy:'-createdAt' ">
-                  Changed : {{ log.state.name }}
+                  Changed : {{ reportStateName(log.state.name) }}
                   <div class="history-log-name">
                     โดย {{ log.createdBy | fullname:log.username }} |
                     วันที่ {{ log.createdAt | amDateFormat:'D MMMM YYYY เวลา HH:mm' }}
@@ -253,7 +253,7 @@
             </div>
           </div>
 
-          <div class="sidebar-block" ng-if="isStaff">
+          <div class="sidebar-block" ng-if="isStaff && report.parentType!='DODD'">
             <div class="sidebar-heading">
               <h2 class="sidebar-heading-text"><i class="fa fa-ellipsis-v fa-size-18"></i> อื่นๆ</h2>
             </div> <!-- sidebar-heading -->
@@ -284,6 +284,16 @@
               <div id="report-marker-map" class="report-view-map"></div>
             </div> <!-- sidebar-content -->
           </div> <!-- sidebar-block -->
+
+
+          <div class="sidebar-block" ng-if="report.parentType=='DODD'">
+            <div class="sidebar-heading">
+              <h2 class="sidebar-heading-text"><i class="fa fa-comments fa-size-18"></i> ความคิดเห็นในดูดีดี</h2>
+            </div>
+            <div class="sidebar-content">
+              <div dodd-report-comments report-id="report.parent"></div>
+            </div>
+          </div>
 
           <div style="margin-bottom: 20px;">
             <button type="submit" class="btn btn-default"

@@ -2,10 +2,10 @@
   ng-model="states.current"
   search-enabled="false"
   on-select="proxyChange()">
-  <ui-select-match>{{ $select.selected.name }}</ui-select-match>
+  <ui-select-match>{{ reportStateName($select.selected.name) }}</ui-select-match>
   <ui-select-choices
     repeat="state in states.all"
     ui-disable-choice="disableDisallowStates && state.disable">
-    <span ng-bind-html="state.name | highlight:$select.search"></span>
+    <span ng-bind-html="reportStateName(state.name) | highlight:$select.search"></span>
   </ui-select-chioces>
 </ui-select>
