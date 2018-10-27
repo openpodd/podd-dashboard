@@ -28,7 +28,7 @@
             <span class="label label-default label-dodd-report" ng-show="report.parent && report.parentType=='DODD'">&nbsp;</span>
             <span class="label label-default label-state label-state-report" ng-hide="report.parent">สถานะ : {{ reportStateName(report.stateName) }}</span>
 
-            <span>ประเภท : {{ $parent.report.reportTypeName }}</span>
+            <span>ประเภท : {{ report.reportTypeName }}</span>
 
             <h1 class="report-title" ng-bind-html="report.renderedOriginalFormData"></h1>
 

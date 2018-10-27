@@ -473,6 +473,19 @@ angular.module('poddDashboardApp')
         data.originalFormData = tmpFormData;
       }
 
+      tmpFormData = []
+      if (data.formData && !data.formData.forEach) {
+        for (index in data.formData) {
+          if (data.formData.hasOwnProperty(index)) {
+            tmpFormData.push({
+              name: index,
+              value: data.formData[index]
+            });
+          }
+        }
+        data.formData = tmpFormData;
+      }
+
       $scope.report = data;
     })
     .catch(function (err) {

@@ -11,12 +11,78 @@ angular.module('poddDashboardApp')
                         {
                             name: 'ไข้เลือดออก',
                             code: 'dengue'
+                        },
+                        {
+                            name: 'ไข้เลือดออก รายปี',
+                            code: 'dengue-all'
                         }
                     ])
                 };
             },
             get: function (query) {
                 switch (query.code) {
+                    case 'dengue-all':
+                        var now = moment();
+                        var firstCutoff = moment().startOf('year');
+                        var secondCutoff = moment(firstCutoff).subtract(1, 'year');
+                        var thirdCutoff = moment(thirdCutoff).subtract(1, 'year');
+                        return {
+                            name: 'พิกัดไข้เลือดออก รายปี',
+                            code: 'dengue',
+                            layers: [
+                                {
+                                    name: 'พื้นที่ อปท.',
+                                    code: 'authority',
+                                    type: 'geojson',
+                                    popupPropertyName: 'name',
+                                    style: {
+                                        color: '#ff7800',
+                                        'weight': 5,
+                                        'opacity': 0.65,
+                                        riseOnHover: true
+                                    },
+                                    url: 'https://analytic.cmonehealth.org/summary/geojson/cnx-authority.json'
+                                },
+                                {
+                                    name: 'ยิงพิกัด GPS ไข้เลือดออก ปี ' + firstCutoff.year(),
+                                    code: 'dengue-1',
+                                    type: 'report',
+                                    radius: 100,
+                                    style: {
+                                        color: '#900C3F',
+                                        fillColor: '#900C3F',
+                                        weight: 1,
+                                        opacity: 1,
+                                        riseOnHover: true
+                                    },
+                                    filter: {
+                                        query: 'typeName:("ยิงพิกัด+GPS+ไข้เลือดออก")',
+                                        dateColumn: 'incidentDate',
+                                        since: firstCutoff.format('YYYY-MM-DD') ,
+                                        to: now.format('YYYY-MM-DD' )
+                                    }
+                                },
+                                {
+                                    name: 'ยิงพิกัด GPS ไข้เลือดออก ปี ' + secondCutoff.year(),
+                                    code: 'dengue-2',
+                                    type: 'report',
+                                    radius: 100,
+                                    style: {
+                                        color: '#FF5733',
+                                        fillColor: '#FF5733',
+                                        weight: 1,
+                                        opacity: 1,
+                                        riseOnHover: true
+                                    },
+                                    filter: {
+                                        query: 'typeName:("ยิงพิกัด+GPS+ไข้เลือดออก")',
+                                        dateColumn: 'incidentDate',
+                                        since: secondCutoff.format('YYYY-MM-DD')  ,
+                                        to: moment(firstCutoff).subtract(1, 'days').format('YYYY-MM-DD')
+                                    }
+                                }
+                            ]
+                        };
                     case 'dengue':
                         var now = moment();
                         var firstCutoff = moment(now).subtract(1, 'weeks');
