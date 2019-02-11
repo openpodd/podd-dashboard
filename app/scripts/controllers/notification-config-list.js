@@ -56,8 +56,9 @@ angular.module('poddDashboardApp')
     $scope.authorities = [];
     $scope.loading = true;
     $scope.error = false;
-    $scope.authority = null;
+    $scope.selectedAuthority = null;
     $scope.notificationTemplates = [];
+    $scope.showEmptySpace = true;
 
 
     function getNotificationTemplate(authority) {
@@ -68,6 +69,8 @@ angular.module('poddDashboardApp')
                     $scope.notificationTemplates.push(item);
             });
             $scope.loading = false;
+            $scope.selectedAuthority = authority;
+            $scope.showEmptySpace = false;
         }).catch(function () {
             $scope.loading = false;
             $scope.error = true;
@@ -79,10 +82,11 @@ angular.module('poddDashboardApp')
             // if($scope.authority !== null) {
             //     return;
             // }
-            getNotificationTemplate(item);
-            $scope.authority = item;
+            // getNotificationTemplate(item);
+            // $scope.authority = item;
         });
         $scope.authorities = data;
+        $scope.loading = false;
     }).catch(function () {
         $scope.loading = false;
         $scope.error = true;
@@ -91,6 +95,11 @@ angular.module('poddDashboardApp')
     $scope.selectedTemplate = function(template) {
         $scope.selectedTemplateContact = template;
         $scope.newSelectedContact = template.contact.to;
+    };
+
+    $scope.onSelect = function(selected) {
+        $scope.notificationTemplates = [];
+        getNotificationTemplate(selected);
     };
 
 });
