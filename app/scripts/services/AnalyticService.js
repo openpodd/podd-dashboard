@@ -15,6 +15,10 @@ angular.module('poddDashboardApp')
                         {
                             name: 'ไข้เลือดออก รายปี',
                             code: 'dengue-all'
+                        },
+                        {
+                            name: 'สำรวจประชากรสุนัข',
+                            code: 'dog-survey'
                         }
                     ])
                 };
@@ -83,12 +87,51 @@ angular.module('poddDashboardApp')
                                 }
                             ]
                         };
+                    case 'dog-survey':
+                        var now = moment();
+                        var firstCutoff = moment().startOf('year');
+                        var secondCutoff = moment(firstCutoff).endOf('year');
+                        return {
+                            name: 'สำรวจสุนัข รายปี',
+                            code: 'dog-survey',
+                            layers: [
+                                {
+                                    name: 'พื้นที่ อปท.',
+                                    code: 'authority',
+                                    type: 'geojson',
+                                    popupPropertyName: 'name',
+                                    style: {
+                                        color: '#ff7800',
+                                        'weight': 5,
+                                        'opacity': 0.65,
+                                        riseOnHover: true
+                                    },
+                                    url: 'https://analytic.cmonehealth.org/summary/geojson/cnx-authority.json'
+                                },
+                                {
+                                    name: 'สำรวจสุนัข ปี ' + firstCutoff.year(),
+                                    code: 'dog-1',
+                                    type: 'report',
+                                    radius: 100,
+                                    style: {
+                                        color: '#900C3F',
+                                        fillColor: '#900C3F',
+                                        weight: 1,
+                                        opacity: 1,
+                                        riseOnHover: true
+                                    },
+                                    filter: {
+                                        query: 'typeName:("ขึ้นทะเบียนเจ้าของสุนัข")',
+                                        dateColumn: 'incidentDate',
+                                        since: firstCutoff.format('YYYY-MM-DD') ,
+                                        to: secondCutoff.format('YYYY-MM-DD' )
+                                    }
+                                }
+                            ]
+                        };
                     case 'dengue':
                         var now = moment();
-                        var firstCutoff = moment(now).subtract(1, 'weeks');
-                        var secondCutoff = moment(firstCutoff).subtract(1, 'weeks');
-                        var thirdCutoff = moment(thirdCutoff).subtract(6, 'weeks');
-                        console.log(now, firstCutoff, secondCutoff, thirdCutoff);
+                        var firstCutoff = moment(now).subtract(8, 'weeks');
                         return {
                             name: 'พิกัดไข้เลือดออก',
                             code: 'dengue',
@@ -107,7 +150,7 @@ angular.module('poddDashboardApp')
                                     url: 'https://analytic.cmonehealth.org/summary/geojson/cnx-authority.json'
                                 },
                                 {
-                                    name: 'ยิงพิกัด GPS ไข้เลือดออก อาทิตย์ล่าสุด',
+                                    name: 'ยิงพิกัด GPS ไข้เลือดออก ย้อนหลัง 8 อาทิตย์',
                                     code: 'dengue-1',
                                     type: 'report',
                                     radius: 100,
@@ -126,7 +169,7 @@ angular.module('poddDashboardApp')
                                     }
                                 },
                                 {
-                                    name: 'ยิงพิกัด GPS ไข้เลือดออก อาทิตย์ก่อนหน้า',
+                                    name: 'ยิงพิกัด GPS ไข้เลือดออก ภายในปีนี้',
                                     code: 'dengue-2',
                                     type: 'report',
                                     radius: 100,
@@ -140,29 +183,10 @@ angular.module('poddDashboardApp')
                                     filter: {
                                         query: 'typeName:("ยิงพิกัด+GPS+ไข้เลือดออก")',
                                         dateColumn: 'incidentDate',
-                                        since: secondCutoff.format('YYYY-MM-DD')  ,
-                                        to: moment(firstCutoff).subtract(1, 'days').format('YYYY-MM-DD')
+                                        to: firstCutoff.subtract(1, 'seconds').format('YYYY-MM-DD')  ,
+                                        since: moment(firstCutoff).startOf('year').format('YYYY-MM-DD')
                                     }
-                                },
-                                {
-                                    name: 'ยิงพิกัด GPS ไข้เลือดออก 6 อาทิตย์ย้อนหลัง',
-                                    code: 'dengue-6',
-                                    type: 'report',
-                                    radius: 100,
-                                    style: {
-                                        color: '#FFC300',
-                                        fillColor: '#FFC300',
-                                        weight: 1,
-                                        opacity: 1,
-                                        riseOnHover: true
-                                    },
-                                    filter: {
-                                        query: 'typeName:("ยิงพิกัด+GPS+ไข้เลือดออก")',
-                                        dateColumn: 'incidentDate',
-                                        since: thirdCutoff.format('YYYY-MM-DD') ,
-                                        to: moment(secondCutoff).subtract(1, 'days').format('YYYY-MM-DD')
-                                    }
-                                },
+                                }
 
                             ]
                         };
