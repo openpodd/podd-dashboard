@@ -26,7 +26,7 @@
           <div class="report-section">
             <span class="label label-default label-state label-follow-up" ng-show="report.parent && report.parentType!='DODD'">รายงานติดตาม</span>
             <span class="label label-default label-dodd-report" ng-show="report.parent && report.parentType=='DODD'">&nbsp;</span>
-            <span class="label label-default label-state label-state-report" ng-hide="report.parent">สถานะ : {{ reportStateName(report.stateName) }}</span>
+            <span class="label label-default label-state label-state-{{report.stateCode}}" ng-hide="report.parent">สถานะ : {{ reportStateName(report.stateName) }}</span>
 
             <span>ประเภท : {{ report.reportTypeName }}</span>
 

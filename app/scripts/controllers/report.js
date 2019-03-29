@@ -369,10 +369,11 @@ angular.module('poddDashboardApp')
         $scope.showMapPopup = function () {
             $mapPopup.removeClass('hidden');
 
+
             var options = {
                 center: [18.781516724349704, 98.98681640625],
                 zoomControl: false,
-                zoomLevel: 13
+                zoomLevel: 10
             };
 
             if (!mapPopupLeafletMap) {
@@ -396,38 +397,45 @@ angular.module('poddDashboardApp')
             ];
             addMapPopupMarker(location);
 
-            var loc = $scope.getCtMapArea();
-            if (loc) {
-                L.geoJson(loc).bindLabel('พื้นทีในรัศมี ' + $scope.getCtDataRadius().toString() + '  เมตร').addTo(mapPopupDrawnItems);
-            }
-            mapPopupDrawnItems.addTo(mapPopupLeafletMap);
-
-            // image location.
-            var imageCluster = L.markerClusterGroup();
-            $scope.report.images.forEach(function (item) {
-                if (!item.location || !item.location.latitude) {
-                    return;
+            try {
+                var loc = $scope.getCtMapArea();
+                if (loc) {
+                    L.geoJson(loc).bindLabel('พื้นทีในรัศมี ' + $scope.getCtDataRadius().toString() + '  เมตร').addTo(mapPopupDrawnItems);
                 }
+                mapPopupDrawnItems.addTo(mapPopupLeafletMap);
 
-                var location = [
-                    item.location.latitude,
-                    item.location.longitude
-                ];
+                // image location.
+                var imageCluster = L.markerClusterGroup();
+                $scope.report.images.forEach(function (item) {
+                    if (!item.location || !item.location.latitude) {
+                        return;
+                    }
 
-                var icon = L.divIcon({
-                    html: '<div class="map-popup-image-marker"><img src="' + item.thumbnailUrl + '"></div>',
-                    className: 'map-popup-image-marker-divicon',
-                    iconSize: L.point(64, 64),
-                    iconAnchor: L.point(32, 32)
+                    var location = [
+                        item.location.latitude,
+                        item.location.longitude
+                    ];
+
+                    var icon = L.divIcon({
+                        html: '<div class="map-popup-image-marker"><img src="' + item.thumbnailUrl + '"></div>',
+                        className: 'map-popup-image-marker-divicon',
+                        iconSize: L.point(64, 64),
+                        iconAnchor: L.point(32, 32)
+                    });
+                    var marker = L.marker(location, { icon: icon, clickable: true });
+                    marker.on('click', function () {
+                        $scope.viewReportImage(item);
+                    });
+                    marker.addTo(imageCluster);
                 });
-                var marker = L.marker(location, { icon: icon, clickable: true });
-                marker.on('click', function () {
-                    $scope.viewReportImage(item);
-                });
-                marker.addTo(imageCluster);
-            });
-            imageCluster.addTo(mapPopupDrawnItems);
-            mapPopupLeafletMap.fitBounds(mapPopupDrawnItems);
+                imageCluster.addTo(mapPopupDrawnItems);
+
+            } catch (e) {
+                console.log(e);
+            }
+            mapPopupLeafletMap.setView(new L.LatLng(location[0], location[1]), 13);
+            mapPopupLeafletMap.fitBounds(mapPopupDrawnItems.getBounds());
+
         };
 
         $scope.closeMapPopup = function () {
