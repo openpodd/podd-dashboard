@@ -9,16 +9,25 @@ angular.module('poddDashboardApp')
 
             Menu.setActiveMenu('map');
 
-            L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
-            var mapboxStyle = config.MAPBOX_STYLE;
+            var leafletMap = null;
+            if (config.USE_GOOGLE_LAYER) {
+                leafletMap = L.map('analytic-map');
+                var ggl = new L.Google('ROADMAP'); // Possible types: SATELLITE, ROADMAP, HYBRID, TERRAIN
+                leafletMap.addLayer(ggl);
 
-            var leafletMap = config.MAPBOX_MAP_ID ?
-                L.mapbox.map('analytic-map', config.MAPBOX_MAP_ID) :
-                L.map('analytic-map');
+                // layerControl.addLayer(gsat);
+            } else {
+                L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
+                leafletMap = config.MAPBOX_MAP_ID ?
+                    L.mapbox.map('analytic-map', config.MAPBOX_MAP_ID) :
+                    L.map('analytic-map');
 
-            if (mapboxStyle) {
-                L.mapbox.styleLayer(mapboxStyle).addTo(leafletMap);
+                var mapboxStyle = config.MAPBOX_STYLE;
+                if (mapboxStyle) {
+                    L.mapbox.styleLayer(mapboxStyle).addTo(leafletMap);
+                }
             }
+
 
             var layerControl = L.control.layers({}, {}, {position: 'topleft'}).addTo(leafletMap);
 
@@ -34,6 +43,12 @@ angular.module('poddDashboardApp')
             $scope.layerGroups = new L.featureGroup().addTo(map.leaflet);
             $scope.mapRenderers = {};
             $scope.mapLayers = {};
+
+            if (config.USE_GOOGLE_LAYER) {
+                var hmap = new L.Google('HYBRID');
+                var hb = AnalyticMapDataLayer(hmap);
+                layerControl.addOverlay(hmap, 'ดาวเทียม');
+            }
 
             // functions
 

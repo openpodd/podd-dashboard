@@ -362,8 +362,9 @@ angular.module('poddDashboardApp')
 
         L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
         var satellite = L.mapbox.tileLayer('mapbox.satellite');
+
         var baseLayers = {
-            'ดาวเทียม': satellite
+            'ดาวเทียม': satellite,
         };
 
         $scope.showMapPopup = function () {
@@ -377,9 +378,20 @@ angular.module('poddDashboardApp')
             };
 
             if (!mapPopupLeafletMap) {
-                mapPopupLeafletMap = config.MAPBOX_MAP_ID ?
-                    L.mapbox.map('report-popup-map', config.MAPBOX_MAP_ID, options) :
-                    L.map('report-popup-map', options);
+
+                if (config.USE_GOOGLE_LAYER) {
+                    mapPopupLeafletMap = L.map('report-popup-map', options);
+                    var ggl = new L.Google('ROADMAP'); // Possible types: SATELLITE, ROADMAP, HYBRID, TERRAIN
+                    mapPopupLeafletMap.addLayer(ggl);
+
+                    var gsat = new L.Google('HYBRID');
+                    baseLayers['ดาวเทียม'] = gsat;
+                } else {
+                    mapPopupLeafletMap = config.MAPBOX_MAP_ID ?
+                        L.mapbox.map('report-popup-map', config.MAPBOX_MAP_ID, options) :
+                        L.map('report-popup-map', options);
+                }
+
 
                 L.control.layers(null, baseLayers, { position: 'topleft', collapsed: false }).addTo(mapPopupLeafletMap);
                 L.control.zoom().addTo(mapPopupLeafletMap);
@@ -433,9 +445,7 @@ angular.module('poddDashboardApp')
             } catch (e) {
                 console.log(e);
             }
-            mapPopupLeafletMap.setView(new L.LatLng(location[0], location[1]), 13);
-            mapPopupLeafletMap.fitBounds(mapPopupDrawnItems.getBounds());
-
+            mapPopupLeafletMap.setView(new L.LatLng(location[0], location[1]), 18);
         };
 
         $scope.closeMapPopup = function () {
