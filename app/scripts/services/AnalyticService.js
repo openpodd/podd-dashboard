@@ -131,7 +131,7 @@ angular.module('poddDashboardApp')
                         };
                     case 'dengue':
                         var now = moment();
-                        var firstCutoff = moment(now).subtract(8, 'weeks');
+                        var firstCutoff = moment(now).subtract(4, 'weeks');
                         return {
                             name: 'พิกัดไข้เลือดออก',
                             code: 'dengue',
@@ -150,13 +150,13 @@ angular.module('poddDashboardApp')
                                     url: 'https://analytic.cmonehealth.org/summary/geojson/cnx-authority.json'
                                 },
                                 {
-                                    name: 'ยิงพิกัด GPS ไข้เลือดออก ย้อนหลัง 8 อาทิตย์',
+                                    name: 'ยิงพิกัด GPS ไข้เลือดออก ย้อนหลัง 4 อาทิตย์',
                                     code: 'dengue-1',
                                     type: 'report',
                                     radius: 100,
                                     style: {
-                                        color: '#900C3F',
-                                        fillColor: '#900C3F',
+                                        color: '#FF3300',
+                                        fillColor: '#FF3300',
                                         weight: 1,
                                         opacity: 1,
                                         riseOnHover: true
@@ -174,8 +174,8 @@ angular.module('poddDashboardApp')
                                     type: 'report',
                                     radius: 100,
                                     style: {
-                                        color: '#FF5733',
-                                        fillColor: '#FF5733',
+                                        color: '#0066FF',
+                                        fillColor: '#0066FF',
                                         weight: 1,
                                         opacity: 1,
                                         riseOnHover: true
