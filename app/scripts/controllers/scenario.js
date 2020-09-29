@@ -64,9 +64,17 @@ angular.module('poddDashboardApp')
     zoomLevel: 8,
     zoomControl: false,
   };
-  var leafletMap = config.MAPBOX_MAP_ID ?
-                      L.mapbox.map('map', config.MAPBOX_MAP_ID, options) :
-                      L.map('map', options);
+  var leafletMap = null;
+  if (config.USE_GOOGLE_LAYER) {
+    leafletMap = L.map('map');
+    var ggl = new L.Google('ROADMAP'); // Possible types: SATELLITE, ROADMAP, HYBRID, TERRAIN
+    leafletMap.addLayer(ggl);
+  } else {
+    leafletMap = config.MAPBOX_MAP_ID ?
+        L.mapbox.map('map', config.MAPBOX_MAP_ID, options) :
+        L.map('map', options);
+  }
+
 
   // Zoom control.
   leafletMap.addControl(new L.control.zoom({

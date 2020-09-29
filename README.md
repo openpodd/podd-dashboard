@@ -6,6 +6,7 @@ Main dashboard for PODD project. Focus to make collaboration between stakeholder
 2. [Gruntjs](http://gruntjs.com/)
 2. [MongoDB](https://docs.mongodb.org/)
 3. [Redis](http://redis.io/)
+4. [Compass] gem install compass
 
 ## Run the dashboard
 1. Install `nvm`, then the latest node version by `nvm install node`.

@@ -483,11 +483,21 @@ angular.module('poddDashboardApp')
             };
 
             if (!leafletMap) {
-                leafletMap = config.MAPBOX_MAP_ID ?
-                    L.mapbox.map('report-marker-map', config.MAPBOX_MAP_ID, options) :
-                    L.map('report-marker-map', options);
-                var controller = L.control.scale({'metric': true, 'imperial': false, 'maxWidth': 200});
-                controller.addTo(leafletMap);
+
+                if (config.USE_GOOGLE_LAYER) {
+                    leafletMap = L.map('report-marker-map');
+                    var ggl = new L.Google('ROADMAP'); // Possible types: SATELLITE, ROADMAP, HYBRID, TERRAIN
+                    leafletMap.addLayer(ggl);
+
+                    // layerControl.addLayer(gsat);
+                } else {
+                    leafletMap = config.MAPBOX_MAP_ID ?
+                        L.mapbox.map('report-marker-map', config.MAPBOX_MAP_ID, options) :
+                        L.map('report-marker-map', options);
+
+                    var controller = L.control.scale({'metric': true, 'imperial': false, 'maxWidth': 200});
+                    controller.addTo(leafletMap);
+                }
             }
 
             drawnItems.clearLayers();
@@ -544,9 +554,18 @@ angular.module('poddDashboardApp')
                 attributionControl: false
             };
 
-            var leafletMap = config.MAPBOX_MAP_ID ?
-                L.mapbox.map('image-position-map', config.MAPBOX_MAP_ID, mapOptions) :
-                L.map('image-position-map', mapOptions);
+            var leafletMap = null;
+            if (config.USE_GOOGLE_LAYER) {
+                leafletMap = L.map('image-position-map');
+                var ggl = new L.Google('ROADMAP'); // Possible types: SATELLITE, ROADMAP, HYBRID, TERRAIN
+                leafletMap.addLayer(ggl);
+                // layerControl.addLayer(gsat);
+            } else {
+                leafletMap = config.MAPBOX_MAP_ID ?
+                    L.mapbox.map('image-position-map', config.MAPBOX_MAP_ID, mapOptions) :
+                    L.map('image-position-map', mapOptions);
+            }
+
 
             if (!map) {
                 map = new Map(leafletMap.setView(center, zoomLevel));

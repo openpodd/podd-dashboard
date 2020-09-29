@@ -39,11 +39,21 @@ angular.module('poddDashboardApp')
 
     Menu.setActiveMenu('map');
 
-    L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
+    var leafletMap = null;
+    if (config.USE_GOOGLE_LAYER) {
+        leafletMap = L.map('map');
+        var ggl = new L.Google('ROADMAP'); // Possible types: SATELLITE, ROADMAP, HYBRID, TERRAIN
+        leafletMap.addLayer(ggl);
 
-    var leafletMap = config.MAPBOX_MAP_ID ?
-                        L.mapbox.map('map', config.MAPBOX_MAP_ID) :
-                        L.map('map');
+        // layerControl.addLayer(gsat);
+    } else {
+        L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
+
+        leafletMap = config.MAPBOX_MAP_ID ?
+            L.mapbox.map('map', config.MAPBOX_MAP_ID) :
+            L.map('map');
+    }
+
 
     var center = [13.791177699, 100.58814079],
         zoomLevel = 15,
