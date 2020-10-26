@@ -60,7 +60,7 @@
             </div>
 
             <div ng-hide="selectCommentId === comment.id && comment.edit" class="">
-              <p class="comment-post" ng-bind-html="comment.message | htmlToPlainText | renderMention | renderTelephone | renderEmail | renderTag | renderReportTag | renderPlanReportTag"  ng-click="commentBodyClick($event)"></p>
+              <p class="comment-post" ng-bind-html="comment.message | htmlToPlainText | renderMention | renderTelephone | renderEmail | renderLine | renderTag | renderReportTag | renderPlanReportTag"  ng-click="commentBodyClick($event)"></p>
 
               <a ng-if="comment.canEdit" ng-click="selectedComment(comment);comment.edit = true" class="comment-edit-btn pull-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> แก้ไขข้อความ</a>
 

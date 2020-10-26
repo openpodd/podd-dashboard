@@ -511,6 +511,11 @@ angular.module('poddDashboardApp')
     };
 })
 
+.filter('renderLine', function () {
+    return function (text) {
+        return text.replace(/\@\[line:(.+)\]/g, '<span class="label label-email">Line: $1</span>');
+    };
+})
 
 .filter('renderTag', function () {
     return function (text) {
