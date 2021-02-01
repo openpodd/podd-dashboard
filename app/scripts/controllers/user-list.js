@@ -160,9 +160,9 @@ angular.module('poddDashboardApp')
     };
 
     $scope.submitUser = function () {
-        if (!$scope.userSelected.firstName && !$scope.userSelected.serialNumber &&
-            $scope.userSelected.authority) {
-            swal('เกิดข้อผิดพลาด', 'คุณกรอกข้อมูลไม่ครบถ้วน', 'error');
+        if (!$scope.userSelected.firstName || !$scope.userSelected.lastName ||
+            !$scope.userSelected.authority) {
+            swal('เกิดข้อผิดพลาด', 'คุณกรอกข้อมูลไม่ครบถ้วน \nกรุณาระบุ ชื่อ นามสกุล และหน่วยงาน', 'error');
             return;
         }
 
@@ -196,12 +196,16 @@ angular.module('poddDashboardApp')
                             swal('สำเร็จ', 'เพิ่มผู้ใช้งานสำเร็จ \nชื่อบัญชีผู้ใช้: ' + data.username + '\nรหัสผ่าน: ' + data.displayPassword, 'success');
                             $('#userModal').modal('hide');
                         }).catch(function () {
-                            swal('เกิดข้อผิดพลาด', 'เพิ่มผู้ใช้งานแล้ว แต่ไม่สามารถตั้งค่าผู้ใช้เป็นผู้ดูแลของสังกัดได้', 'error');
+                            swal('เกิดข้อผิดพลาด',
+                                'เพิ่มผู้ใช้งานแล้ว แต่ไม่สามารถตั้งค่าผู้ใช้เป็นผู้ดูแลของสังกัดได้' +
+                                '\nชื่อบัญชีผู้ใช้: ' + data.username + '\nรหัสผ่าน: ' + data.displayPassword, 'error');
+                            $('#userModal').modal('hide');
                             // $scope.resetUser();
                         });
                     }
                 }).catch(function () {
-                    swal('เกิดข้อผิดพลาด', 'ไม่สามารถเพิ่มผู้ใช้ได้', 'error');
+                    swal('เกิดข้อผิดพลาด', 'สร้างผู้ใช้สำเร็จ แต่ไม่สามารถเพิ่มผู้ใช้เข้าไปในหน่วยงานที่ระบุได้ ' + 'เพิ่มผู้ใช้งานสำเร็จ \nชื่อบัญชีผู้ใช้: ' + data.username + '\nรหัสผ่าน: ' + data.displayPassword, 'error');
+                    $('#userModal').modal('hide');
                     // $scope.resetUser();
                 });
 
