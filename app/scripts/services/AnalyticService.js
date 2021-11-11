@@ -19,12 +19,79 @@ angular.module('poddDashboardApp')
                         {
                             name: 'สำรวจประชากรสุนัข',
                             code: 'dog-survey'
+                        },
+                        {
+                            name: 'พิกัดรายงานผู้ป่วยยืนยัน',
+                            code: 'covid'
                         }
                     ])
                 };
             },
             get: function (query) {
                 switch (query.code) {
+                    case 'covid':
+                        var now = moment();
+                        var firstCutoff = moment().startOf('year');
+                        var threeDayCutoff = moment().subtract(3, 'days');
+                        return {
+                            name: "พิกัดรายงานผู้ป่วยยืนยัน",
+                            code: "covid",
+                            layers: [
+                                {
+                                    name: "พื้นที่ อปท.",
+                                    code: "authority",
+                                    type: "geojson",
+                                    popupPropertyName: "name",
+                                    style: {
+                                        color: "#ff7800",
+                                        weight: 5,
+                                        opacity: 0.65,
+                                        riseOnHover: true,
+                                    },
+                                    url: "https://analytic.cmonehealth.org/summary/geojson/cnx-authority.json",
+                                },
+                                {
+                                    name: "ย้อนหลัง 3 วัน",
+                                    code: "3daysbefore",
+                                    type: "report",
+                                    radius: 100,
+                                    style: {
+                                        color: "#FF5733",
+                                        fillColor: "#FF5733",
+                                        weight: 1,
+                                        opacity: 1,
+                                        riseOnHover: true,
+                                    },
+                                    filter: {
+                                        query: 'typeName:("เฝ้าระวังโรค COVID -19") and activity_close:"เป็นผู้ป่วยยืนยัน (ติดเชื้อ)"',
+                                        dateColumn: "incidentDate",
+                                        since: threeDayCutoff.format(
+                                            "YYYY-MM-DD"
+                                        ),
+                                        to: now.format("YYYY-MM-DD"),
+                                    },
+                                },
+                                {
+                                    name: "ปีที่ผ่านมา",
+                                    code: "thisyear",
+                                    type: "report",
+                                    radius: 100,
+                                    style: {
+                                        color: "#900C3F",
+                                        fillColor: "#900C3F",
+                                        weight: 1,
+                                        opacity: 1,
+                                        riseOnHover: true,
+                                    },
+                                    filter: {
+                                        query: 'typeName:("เฝ้าระวังโรค COVID -19") and activity_close:"เป็นผู้ป่วยยืนยัน (ติดเชื้อ)"',
+                                        dateColumn: "incidentDate",
+                                        since: firstCutoff.format("YYYY-MM-DD"),
+                                        to: now.format("YYYY-MM-DD"),
+                                    },
+                                },
+                            ],
+                        };
                     case 'dengue-all':
                         var now = moment();
                         var firstCutoff = moment().startOf('year');
