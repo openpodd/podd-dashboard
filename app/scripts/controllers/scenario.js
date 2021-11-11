@@ -9,7 +9,7 @@ angular.module('poddDashboardApp')
 })
 
 .controller('ScenarioCtrl', function ($scope, Menu, Reports, $compile, $interval,
-    $stateParams, $anchorScroll, $location, $state, $timeout, shared, $window) {
+    $stateParams, $anchorScroll, $location, $state, $timeout, shared, $window, storage) {
   Menu.setActiveMenu('map');
 
   $scope.query = $stateParams.q || '';
@@ -38,6 +38,10 @@ angular.module('poddDashboardApp')
   };
 
   L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
+  var user = storage.get('user');
+  $scope.latitude = user.domainLatitude || 18.781516724349704;
+  $scope.longitude = user.domainLongitude || 98.98681640625;
+
 
   var cfg = {
     // radius should be small ONLY if scaleRadius is true (or small radius is intended)
@@ -60,7 +64,7 @@ angular.module('poddDashboardApp')
   var heatmapLayer = new HeatmapOverlay(cfg);
 
   var options = {
-    center: [ 18.781516724349704, 98.98681640625 ],
+    center: [ $scope.latitude, $scope.longitude ],
     zoomLevel: 8,
     zoomControl: false,
   };

@@ -4,10 +4,14 @@
 
 angular.module('poddDashboardApp')
     .controller('AnalyticMapCtrl', [
-        '$scope', 'Menu', 'Map', 'AnalyticMap', 'AnalyticMapDataLayer', 'AnalyticMapRenderer',
-        function ($scope, Menu, Map, AnalyticMap, AnalyticMapDataLayer, AnalyticMapRenderer) {
+        '$scope', 'Menu', 'Map', 'AnalyticMap', 'AnalyticMapDataLayer', 'AnalyticMapRenderer', 'storage',
+        function ($scope, Menu, Map, AnalyticMap, AnalyticMapDataLayer, AnalyticMapRenderer, storage) {
 
             Menu.setActiveMenu('map');
+
+            var user = storage.get('user');
+            $scope.latitude = user.domainLatitude || 15.87;
+            $scope.longitude = user.domainLongitude || 100.9925;
 
             var leafletMap = null;
             if (config.USE_GOOGLE_LAYER) {
@@ -31,7 +35,7 @@ angular.module('poddDashboardApp')
 
             var layerControl = L.control.layers({}, {}, {position: 'topleft'}).addTo(leafletMap);
 
-            var center = [18.7719015, 98.8864371],
+            var center = [$scope.latitude, $scope.longitude],
                 zoomLevel = 11,
                 map = new Map(leafletMap.setView(center, zoomLevel));
 

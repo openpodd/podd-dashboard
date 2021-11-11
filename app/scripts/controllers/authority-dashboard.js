@@ -9,7 +9,7 @@ angular.module('poddDashboardApp')
 })
 
 .controller('AuthorityDashboardCtrl', function ($scope, Menu, AdministrationArea,
-      $state, $stateParams, $window, shared, SummaryAuthorityDashboard) {
+      $state, $stateParams, $window, shared, SummaryAuthorityDashboard, storage) {
 
     var params = {
       authority: $stateParams.authorityId,
@@ -25,6 +25,11 @@ angular.module('poddDashboardApp')
 
     $scope.authority = {};
 
+    var user = storage.get('user');
+    $scope.latitude = user.domainLatitude || 18.781516724349704;
+    $scope.longitude = user.domainLongitude || 98.98681640625;
+
+
     function addMarker(items, markerIcon) {
       var location = [
         item.reportLocation.coordinates[1],
@@ -38,16 +43,16 @@ angular.module('poddDashboardApp')
     }
 
     var options = {
-      center: [ 18.781516724349704, 98.98681640625 ],
+      center: [ $scope.latitude, $scope.longitude ],
       zoomLevel: 8,
     };
-    
+
     L.mapbox.accessToken = config.MAPBOX_ACCESS_TOKEN;
     var leafletMap = config.MAPBOX_MAP_ID ?
                     L.mapbox.map('map', config.MAPBOX_MAP_ID, options) :
                     L.map('map', options);
 
-    var drawnItems = new L.FeatureGroup();                
+    var drawnItems = new L.FeatureGroup();
     function addMarker(item, markerIcon) {
       var location = [
         item.location.coordinates[1] + (Math.floor(Math.random() * 10) + 1) / 100000,
@@ -94,7 +99,7 @@ angular.module('poddDashboardApp')
           icon: '',
           markerColor: 'red'
         });
-        
+
         addMarker(marker, yellowMarker);
       });
 
