@@ -11,7 +11,7 @@ angular.module('poddDashboardApp')
 
 .controller('SummaryReportMonthCtrl', function ($scope, SummaryReportMonth, dashboard, User,
     streaming, FailRequest, shared, $location, $state, $stateParams, $window, Menu,
-    cfpLoadingBar, dateRangePickerConfig, uiGridUtils, ReportTypes, Tag, ReportTags, 
+    cfpLoadingBar, dateRangePickerConfig, uiGridUtils, ReportTypes, Tag, ReportTags,
     SummaryAnalysis, storage) {
 
     console.log('init summary report month ctrl');
@@ -69,10 +69,12 @@ angular.module('poddDashboardApp')
         console.log( chooseTypes);
 
         data.forEach(function (item) {
-            if (chooseTypes.indexOf(item.id + '') !== -1) {
-                item.checked = true;
+            if (!item.isFollowAction) {
+                if (chooseTypes.indexOf(item.id + '') !== -1) {
+                    item.checked = true;
+                }
+                results.push(item);
             }
-            results.push(item);
         });
         $scope.types.all = results;
         $scope.types.selectedAll = true;
@@ -432,11 +434,11 @@ angular.module('poddDashboardApp')
 
         link.setAttribute('download', filename);
         link.setAttribute('href', 'data:' + mimeType  +  ';charset=utf-8,' + encodeURIComponent(elHtml));
-        link.click(); 
+        link.click();
     }
 
     $scope.isShowAnalysis = false;
-    
+
     var user = storage.get('user');
     var isStaff = user && (user.isStaff || user.isSupervisor);
     $scope.isShowAnalysis = isStaff;
