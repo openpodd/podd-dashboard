@@ -214,6 +214,7 @@
         </li>
         <li><a href="#/dashboard"><i class="fa fa-tachometer fa-size-20"></i> แผงควบคุมระบบ</a></li>
         <li><a href="#/"><i class="fa fa-file-text-o fa-size-20"></i> รายงาน</a></li>
+        <li><a href="#/home-local"><i class="fa fa-file-text-o fa-size-20"></i> รายงานในพื้นที่</a></li>
         <li class="dropdown" >
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-map-marker fa-size-22"></i> แผนที่ <span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -286,6 +287,12 @@
                   <a ng-href="#/" class="pd-nav-icon">
                   <i class="fa fa-file-text-o fa-size-20"></i>
                   <span class="pd-nav-text">รายงาน</span></a>
+                </li>
+                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('home-local') }"
+                    ng-click="setActiveMenu('home-local')">
+                  <a ng-href="#/home-local" class="pd-nav-icon">
+                  <i class="fa fa-file-text-o fa-size-20"></i>
+                  <span class="pd-nav-text">รายงานในพื้นที่</span></a>
                 </li>
                 <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('map') }"
                     ng-click="setActiveMenu('map')">
@@ -441,7 +448,7 @@
 <script src="bower_components/countUp.js/countUp.js"></script>
 <script src="bower_components/js-xlsx/dist/xlsx.js"></script>
 <script src="bower_components/waypoints/waypoints.js"></script>
-<script src="bower_components/SHA-1/sha1.js"></script>
+<script src="bower_components/SHA-1/dist/sha1.umd.js"></script>
 <script src="bower_components/angulartics/src/angulartics.js"></script>
 <script src="bower_components/angulartics/src/angulartics-ga.js"></script>
 <script src="bower_components/angularLocalStorage/dist/angularLocalStorage.min.js"></script>
@@ -500,6 +507,7 @@
 <script src="scripts/services/PoddLogService.js"></script>
 <script src="scripts/services/AnalyticService.js"></script>
 <script src="scripts/controllers/home.js"></script>
+<script src="scripts/controllers/home-local.js"></script>
 <script src="scripts/controllers/main.js"></script>
 <script src="scripts/controllers/main-report.js"></script>
 <script src="scripts/controllers/menu.js"></script>

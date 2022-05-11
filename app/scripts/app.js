@@ -205,6 +205,11 @@ angular
         controller: 'HomeCtrl',
         reloadOnSearch: false
       })
+      .state('home-local', {
+        url: '/home-local?reportId',
+        templateUrl: 'views/home-local.html',
+        controller: 'HomeLocalCtrl',
+      })
       .state('main', {
         url: '/map',
         templateUrl: 'views/main.html',
