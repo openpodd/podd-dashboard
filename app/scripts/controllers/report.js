@@ -183,6 +183,10 @@ angular.module('poddDashboardApp')
                 })
         };
 
+        $scope.printAccomplishment = function () {
+            console.log('print accomplishment');
+        }
+
         $scope.showWarning = function (err) {
             if (err.status === 403) {
                 swal({
