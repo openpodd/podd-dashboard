@@ -1,0 +1,94 @@
+.form-config-section {
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #eaeaea;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.civic-form {
+  font-size: 13pt;
+
+  .form-control {
+    font-size: 13pt;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    border-bottom: 1px dotted #ccc;
+    background: #efefef;
+    margin-top: 2px;
+  }
+
+  header {
+    .issue-no {
+      padding-top: 3em;
+    }
+    .seal {
+      text-align: center;
+      left: 30px;
+    }
+    .address {
+      padding-top: 3em;
+      text-align: right;
+    }
+  }
+
+  .date {
+    padding-top: 30px;
+  }
+
+  .subject,
+  .attendee {
+    padding-top: 20px;
+
+    .first {
+      padding-right: 20px;
+      padding-left: 15px;
+      float: left;
+    }
+  }
+
+  .content1,
+  .content2,
+  .content3 {
+    padding-left: 100px;
+    padding-top: 20px;
+  }
+
+  .sincere,
+  .signer {
+    text-align: center;
+    left: 40px;
+    position: relative;
+    margin-top: 70px;
+  }
+
+  .signer {
+    .signature {
+      padding-top: 50px;
+      padding-bottom: 10px;
+    }
+
+    .name,
+    .position1,
+    .position2 {
+      width: 40%;
+      margin: 0 auto;
+
+      input {
+        text-align: center;
+      }
+    }
+  }
+
+  .contact {
+    margin-top: 170px;
+    padding-left: 15px;
+
+    .name,
+    .contact1,
+    .contact2 {
+      width: 40%;
+    }
+  }
+}

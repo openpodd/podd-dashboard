@@ -369,13 +369,20 @@
                     <div ng-include src="'views/notification-list.html'"></div>
                 </li>
                 <li ng-show="shared.loggedIn" class="pd-nav-item" ng-cloak
-                    ng-class="{ 'active active-menu':isActiveMenu('profile') }">
+                    ng-class="{ 'active active-menu':isActiveMenu('profile') }"
+                    ng-click="setActiveMenu('profile')">
 
                   <a ng-href="#/profile" class="pd-nav-icon">
                   <i class="fa fa-cog fa-size-18"></i>
-                  <span class="pd-nav-text">บัญชีผู้ใช้</span></a>
-                </li>
+                  <span class="pd-nav-text">settings</span></a>
 
+                  <div class="pd-nav-submenu">
+                    <ul class="">
+                      <li><a href="#/profile">บัญชีผู้ใช้</a></li>
+                      <li><a href="#/form-config/civic">รูปแบบฟอร์มจดหมายแจ้งเหตุสาธารณะ</a></li>
+                    </ul>
+                  </div>
+                </li>
                 <li ng-show="shared.loggedIn" class="pd-nav-item" ng-cloak
                     ng-class="{ 'active active-menu':isActiveMenu('logout') }">
 
@@ -506,6 +513,7 @@
 <script src="scripts/services/AggregateReportService.js"></script>
 <script src="scripts/services/PoddLogService.js"></script>
 <script src="scripts/services/AnalyticService.js"></script>
+<script src="scripts/services/FormConfigService.js"></script>
 <script src="scripts/controllers/home.js"></script>
 <script src="scripts/controllers/home-local.js"></script>
 <script src="scripts/controllers/main.js"></script>
@@ -537,6 +545,7 @@
 <script src="scripts/controllers/summary-aggregate-report-filter.js"></script>
 <script src="scripts/controllers/analytic-map.js"></script>
 <script src="scripts/controllers/summary-result-monthly.js"></script>
+<script src="scripts/controllers/form-config.js"></script>
 <!-- endbuild -->
 
     <script src="https://raruto.github.io/cdn/leaflet-google/0.0.1/leaflet-google.js"></script>
