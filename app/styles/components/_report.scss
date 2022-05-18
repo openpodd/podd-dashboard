@@ -845,6 +845,18 @@ $badge-bad: #FF6D69;
 
 }
 
+.btn-print-accomplishment{
+  background-color: #509622;
+  color: #fff;
+  border: none;
+
+  &:hover{
+    background-color: #438616;
+    color: #fff;
+  }
+} 
+
+
 // Summary report month
 .filter-select {
     display: block;

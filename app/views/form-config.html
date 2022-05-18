@@ -1,0 +1,118 @@
+<div class="l-info-section l-section l-full-width l-theme-gray home">
+  <div class="l-detail-section l-section">
+    <div class="title clearfix">
+      <h2 class="pull-left">
+        <i class="fa fa-file-text-o pull-left fa-size-22"></i>รูปแบบฟอร์มจดหมาย
+      </h2>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="row">
+          <div class="col-sm-8 col-sm-offset-2">
+            <div
+              ng-if="formCode === 'civic'"
+              ng-include="'/fc/template/civic.html'"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/ng-template" id="/fc/template/civic.html">
+  <h4>แจ้งเหตุบริการสาธารณะ</h4>
+  <button class="btn btn-post" type="button" ng-click="save()">บันทึก</button>
+  <form class="form-config-section civic-form">
+    <header class="row">
+      <div class="col-sm-4 issue-no">ที่ พจ ๑๒๓๔๕๕๖/๗๘๙</div>
+      <div class="col-sm-3 seal"><img src="images/dodd.png" alt="logo" /></div>
+      <div class="col-sm-5 address">
+        <input
+          type="text"
+          ng-model="model.header_address1"
+          class="form-control"
+          placeholder="ชื่อสถานที่องค์กร"
+        />
+        <input
+          type="text"
+          ng-model="model.header_address2"
+          class="form-control"
+          placeholder="ที่ตั้งอำเภอ จังหวัด"
+        />
+      </div>
+    </header>
+    <div class="row date">
+      <div class="col-sm-6"></div>
+      <div class="col-sm-6">๑ มกราคม ๒๕๕๕</div>
+    </div>
+    <div class="row subject">
+      <div class="first">เรื่อง</div>
+      <div>หัวข้อ</div>
+    </div>
+    <div class="row attendee">
+      <div class="first">เรียน</div>
+      <div>ผู้รับ</div>
+    </div>
+    <div class="row content1">เนื้อหาที่ต้องการแจ้งให้ทราบ ....</div>
+    <div class="row content2">สรุปใจความสำคัญ</div>
+    <div class="row content3">จึงเรียนมาเพื่อทราบ</div>
+    <div class="row sincere">ขอแสดงความนับถือ</div>
+    <div class="row signer">
+      <div class="signature">
+        <img src="images/logo.png" alt="logo" />
+      </div>
+      <div class="name">
+        <input
+          type="text"
+          ng-model="model.sign_name"
+          class="form-control"
+          placeholder="(ชื่อ นามสกุล)"
+        />
+      </div>
+      <div class="position1">
+        <input
+          type="text"
+          ng-model="model.sign_position1"
+          class="form-control"
+          placeholder="ตำแหน่งหน้าที่ 1"
+        />
+      </div>
+      <div class="position2">
+        <input
+          type="text"
+          ng-model="model.sign_position2"
+          class="form-control"
+          placeholder="ตำแหน่งหน้าที่ 2"
+        />
+      </div>
+    </div>
+    <footer class="row contact">
+        <div class="name">
+          <input
+          type="text"
+          ng-model="model.footer_contact_line1"
+          class="form-control"
+          placeholder="ข้อมูลติดต่อ 1"
+        />
+        </div>
+        <div class="contact1">
+          <input
+          type="text"
+          ng-model="model.footer_contact_line2"
+          class="form-control"
+          placeholder="ข้อมูลติดต่อ 2"
+        />
+        </div>
+        <div class="contact2">
+          <input
+          type="text"
+          ng-model="model.footer_contact_line3"
+          class="form-control"
+          placeholder="ข้อมูลติดต่อ 3"
+        />
+        </div>
+    </footer>
+  </form>
+</script>

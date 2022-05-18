@@ -241,15 +241,26 @@
                   <label for="accomplishment-description-form">คำบรรยาย</label>
                   <textarea ng-model="accomplishment.description" id="accomplishment-description-form" rows="5" class="form-control"></textarea>
                 </div>
+                <div class="form-group">
+                  <label class="weight-normal">
+                    <input type="checkbox" ng-model="accomplishment.publicShowcase"> อนุญาต เหตุการณ์ความสำเร็จนี้ ต่อสาธารณะ (เว็บไซต์ อปท. และ ผ่อดีดี)
+                  </label>
+                </div>
                 <button class="btn btn-default" type="button" ng-disabled="!accomplishment.title && !accomplishment.description" ng-click="saveAccomplishment()">บันทึก</button>
               </form>
             </div>
-            <div class="sidebar-content" ng-show="!modes.accomplishmentEdit && accomplishment.id">
+            <div class="sidebar-content report-accomplishment" ng-show="!modes.accomplishmentEdit && accomplishment.id">
               <strong>{{ accomplishment.title }}</strong>
-              <p>
+              <p>                             
                 {{ accomplishment.description }}
               </p>
+              <div class="form-group">
+                <label class="weight-normal">
+                  <input type="checkbox" disabled="true" ng-model="accomplishment.publicShowcase"> อนุญาต เหตุการณ์ความสำเร็จนี้ ต่อสาธารณะ (เว็บไซต์ อปท. และ ผ่อดีดี)
+                </label>
+              </div>
               <button class="btn btn-default" type="button" ng-click="modes.accomplishmentEdit=true">แก้ไข</button>
+              <button class="pull-right btn btn-default btn-print-accomplishment" ng-click="printAccomplishment()">พิมพ์เอกสารความสำเร็จ</button>
             </div>
           </div>
 

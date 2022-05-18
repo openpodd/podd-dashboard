@@ -1,0 +1,190 @@
+<div class="l-info-section l-section l-full-width l-theme-gray home">
+  <div class="l-detail-section l-section">
+    <div class="title clearfix">
+      <h2 class="pull-left"><i class="fa fa-file-text-o pull-left fa-size-22"></i>รายการรายงานในพื้นที่</h2>
+    </div>
+
+    <div class="content-wrapper"><div class="content">
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="filter-form">
+          <div ng-include="'/inline/template/filter.html'"></div>
+        </div><!-- /.filter-form -->
+      </div> <!-- /.col-sm-4 -->
+
+      <div class="col-md-9">
+        <h2 class="subheading pull-left">ผลลัพธ์การค้นหา</h2>
+        <div class="filter-action pull-right">
+          <div class="btn-group filter-result-mode-switch" role="group">
+            <button type="button" class="btn btn-default btn-sm"
+                    ng-class="{ 'btn-primary': (resultMode == 'list') }"
+                    ng-click="resultMode = 'list'"><i class="fa fa-list"></i> รายการ</button>
+            <button type="button" class="btn btn-default btn-sm"
+                    ng-class="{ 'btn-primary': (resultMode == 'table') }"
+                    ng-click="resultMode = 'table'"><i class="fa fa-table"></i> ตาราง</button>
+          </div><!-- /result mode switch -->
+
+          <a ng-href="#/calendar" class="btn btn-default btn-sm">
+            <i class="fa fa-calendar"></i> ดูปฏิทินงาน
+          </a>
+        </div>
+
+        <div class="filter-progress-tab">
+          <tabset class="pd-tabs" justified="true" >
+            <tab heading="ยังไม่ได้ดำเนินการ" select="filterProgress(0)"></tab>
+            <tab heading="ระหว่างดำเนินการ" select="filterProgress(1)"></tab>
+            <tab heading="ดำเนินการเสร็จสิ้น" select="filterProgress(2)"></tab>
+          </tabset>
+        </div> <!-- filter-progress-tab -->
+
+        <div class="filter-result-container">
+
+          <div ng-if="resultMode == 'list'" class="ta-view"> <!-- List View -->
+            <div ng-repeat="report in reports" class="row ta-view-row"
+                 ng-class="{ 'active': report.id == lastActiveReportId }"
+                 ng-click="onClickReport(report.id)">
+              <div class="col-xs-12 col-sm-2">
+                <div class="filter-result-date">
+                  <span ng-bind="report.date | amDateFormat:'D MMM YY'"></span>
+                  <small class="new-line">เวลา {{report.date | amDateFormat:'HH:mm'}} น.</small>
+                </div>
+              </div>
+              <div class="col-xs-9 col-sm-8">
+                <span ng-if="report.parent" tooltip-placement="top" tooltip="รายงาน Follow-up">
+                  <i ng-if="report.parentType!='DODD'" class="fa fa-flag text-flag-follow-up"></i>
+                  <i ng-if="report.parentType=='DODD'" class="fa dodd-flag"></i>
+                </span>
+                <span class="text-flag-test-report" ng-if="report.testFlag" tooltip-placement="top" tooltip="รายงานทดสอบ">
+                  <i class="fa fa-flask"></i>
+                </span>
+
+                <span class="label label-default label-state-{{report.stateCode}}"
+                       ng-bind="reportStateName(report.stateName)" ng-if="report.stateName"></span>
+
+                <span ng-bind="::report.reportTypeName" class="filter-reporttype"></span>
+                <div class="filter-result-area">
+                  <i class="fa fa-map-marker"></i>
+                    <span ng-bind="::report.administrationAreaAddress"></span>
+                </div>
+                <div class="filter-result-desc" ng-bind-html="::report.renderedOriginalFormData"></div>
+              </div>
+
+              <div class="col-xs-3 col-sm-2">
+                <img ng-src="{{ report.firstImageThumbnail }}" class="filter-thumb pull-right" />
+              </div>
+            </div><!-- /.filter-result-item -->
+          </div>
+          <div ng-if="resultMode == 'table'" class="ta-view"> <!-- Table View -->
+            <div class="ta-view-header row hidden-xs">
+              <div class="col-md-1 col-sm-1">
+                <div class="row">
+                  <div class="col-md-6 col-sm-6" data-toggle="tooltip" data-placement="top" title="รายงานติดตาม">
+                    <span class="hoverable -help" tooltip-placement="top" tooltip="รายงาน Follow-up">
+                      <i class="fa fa-flag"></i>
+                    </span>
+                  </div>
+                  <div class="col-md-6 col-sm-6" data-toggle="tooltip" data-placement="top" title="รายงานทดสอบ">
+                    <span class="hoverable -help" tooltip-placement="top" tooltip="รายงานทดสอบ">
+                      <i class="fa fa-flask"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2 col-sm-2">วันที่</div>
+              <div class="col-md-2 col-sm-2">สถานะ</div>
+              <div class="hidden-xs">ข้อมูล</div>
+            </div>
+            <div ng-repeat="report in reports" class="ta-view-row row"
+                 ng-class="{ 'active': report.id == lastActiveReportId }"
+                 ng-click="onClickReport(report.id)">
+
+                <div class="col-md-1 col-sm-1">
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                      <span ng-if="report.parent" tooltip-placement="top" tooltip="รายงาน Follow-up">
+                        <i ng-if="report.parentType!='DODD'" class="fa fa-flag text-flag-follow-up"></i>
+                        <i ng-if="report.parentType=='DODD'" class="fa dodd-flag"></i>
+                      </span>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                      <span class="text-flag-test-report" ng-if="report.testFlag" tooltip-placement="top" tooltip="รายงานทดสอบ">
+                        <i class="fa fa-flask"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ta-view-col ta-view-date col-md-2 col-sm-2" data-th="วันที่">
+                  <span class="f-black" ng-if="report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM'"></span>
+                  <span class="f-black" ng-if="!report.isThisYear" ng-bind="report.date | amDateFormat:'D MMM YY'"></span>
+                  <small class="f-black">, {{report.date | amDateFormat:'HH:mm'}} น.</small>
+                </div>
+
+                <div class="ta-view-col ta-view-state col-md-2 col-sm-2" data-th="สถานะ">
+                  <span class="label label-default label-state-{{report.stateCode | slug}}"
+                         ng-bind="reportStateName(report.stateName)" ng-if="report.stateName"></span>
+                </div>
+                
+                <div class="ta-view-col ta-view-info -show-overflow hidden-xs">
+                  <span class="filter-result-desc" ng-bind-html="report.renderedOriginalFormData"></span>
+                </div>
+                <div class="ta-view-col ta-view-detail visible-xs-block col-sm-12" data-th="ข้อมูล">
+                  <div class="filter-result-desc" ng-bind-html="::report.renderedOriginalFormData"></div>
+                </div>
+
+            </div><!-- /.filter-result-item -->
+          </div>
+
+          <div class="filter-result-message" ng-show="error || isEmpty()">
+            <div class="filter-error alert alert-danger" role="alert" ng-show="error">
+                <strong>เกิดข้อผิดพลาด</strong> กรุณารอสักครู่แล้วลองใหม่อีกครั้ง
+            </div>
+
+            <div class="filter-empty alert alert-info" ng-show="isEmpty()">
+                <strong>ไม่พบผลการค้นหา</strong> กรุณาปรับการค้นหาใหม่ หรือ ลองกดค้นหาอีกครั้ง
+            </div>
+          </div><!-- /.filter-result-message -->
+        </div><!-- /.filter-result-container -->
+
+        <div class="loadmore" ng-cloak ng-show="!error && !isEmpty()">
+          <button class="btn btn-default center-block" type="button" ng-show="!lastPage" ng-click="::loadMore()" ng-disabled="loading">{{ loading ? 'กรุณารอสักครู่...' : 'เพิ่มเติม...' }} (หน้า {{page}} / {{totalPage}})</button>
+        </div><!-- /.loadmore -->
+
+      </div> <!-- /.col-sm-8 -->
+    </div>
+
+
+
+    </div></div>
+  </div>
+</div>
+
+<script type="text/ng-template" id="/inline/template/filter.html">
+<form class="form-horizontal" ng-submit="submit($event)">
+
+  <div class="form-group filter-form-date">
+    <h4 class="filter-heading"><i class="fa fa-calendar"></i> ช่วงเวลา</h4>
+    <div class="row">
+      <div class="col-md-6">
+        <small class="states-group-title">ตั้งแต่วันที่</small>
+        <div>
+          <input type="text" pick-a-date="dateRange.from" pick-a-date-options="{ selectYears: true }" class="form-pick-date" />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <small class="states-group-title">ถึงวันที่</small>
+        <div>
+          <input type="text" pick-a-date="dateRange.to" pick-a-date-options="{ selectYears: true }" class="form-pick-date" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /date range form -->
+
+  <button class="btn btn-primary btn-full" type="submit" ng-disabled="loading">
+    <i class="fa fa-search"></i> ค้นหา
+  </button>
+</form>
+</script>
+<div ng-include="'/views/report-view.html'" onload="initReportModal()"></div>
