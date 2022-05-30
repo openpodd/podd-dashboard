@@ -217,7 +217,8 @@ angular
       };
 
       $scope.printAccomplishment = function () {
-        console.log("print accomplishment");
+        var report_id = $scope.report.id;
+        window.open(config.API_BASEPATH + "/civic/report/" + report_id + "/", "_blank");
       };
 
       $scope.showWarning = function (err) {
