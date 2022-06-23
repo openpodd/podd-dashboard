@@ -5,7 +5,7 @@ angular
 
   .factory("FormConfig", function ($resource) {
     return $resource(
-      config.API_BASEPATH + "/:code/config/letter/",
+      config.API_BASEPATH + "/civicletterconfig/",
       { code: "@code", id: "@id" },
       {
         query: {
@@ -13,11 +13,11 @@ angular
           isArray: true,
         },
         create: {
-          url: config.API_BASEPATH + "/:code/config/letter/",
+          url: config.API_BASEPATH + "/civicletterconfig/",
           method: "POST",
         },
         update: {
-          url: config.API_BASEPATH + "/:code/config/letter/:id/",
+          url: config.API_BASEPATH + "/civicletterconfig/:id/",
           method: "PUT",
         },
       }

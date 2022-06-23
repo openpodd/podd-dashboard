@@ -221,6 +221,11 @@ angular
         window.open(config.API_BASEPATH + "/civic/report/" + report_id + "/", "_blank");
       };
 
+      $scope.printLetter = function () {
+        var report_id = $scope.report.id;
+        window.open(config.API_BASEPATH + "/civic/letter/" + report_id + "/", "_blank");
+      }
+
       $scope.showWarning = function (err) {
         if (err.status === 403) {
           swal({

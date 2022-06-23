@@ -251,7 +251,7 @@
             </div>
             <div class="sidebar-content report-accomplishment" ng-show="!modes.accomplishmentEdit && accomplishment.id">
               <strong>{{ accomplishment.title }}</strong>
-              <p>                             
+              <p>
                 {{ accomplishment.description }}
               </p>
               <div class="form-group">
@@ -309,6 +309,7 @@
           <div style="margin-bottom: 20px;">
             <button type="submit" class="btn btn-default"
                     ng-click="printDiv()"><i class="fa fa-print fa-size-18"></i> พิมพ์</button>
+            <button class="btn btn-default" ng-show="report.reportTypeCode=='civic'" ng-click="printLetter()"><i class="fa fa-print fa-size-18"></i> พิมพ์จดหมายงานบริการสาธารณะ</button>
           </div>
 
         </div>

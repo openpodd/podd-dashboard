@@ -64,6 +64,8 @@ angular
         to: null,
       };
 
+      $scope.settings = {};
+
       function concat(a, b) {
         b.forEach(function (item) {
           a.push(item);
@@ -106,6 +108,14 @@ angular
           ? moment($scope.dateRange.to).format("YYYY-MM-DD")
           : null;
         query.status = $scope.status;
+
+        query.tz = (new Date()).getTimezoneOffset() / -60;
+
+        if ($scope.settings.includeTestFlag) {
+          query.includeTestFlag = true;
+        } else {
+          query.includeTestFlag = null;
+        }
 
         load(query, needReset);
       }

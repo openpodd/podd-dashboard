@@ -1,7 +1,7 @@
 <div class="l-info-section l-section l-full-width l-theme-gray home">
   <div class="l-detail-section l-section">
     <div class="title clearfix">
-      <h2 class="pull-left"><i class="fa fa-file-text-o pull-left fa-size-22"></i>รายการแจ้งเหตุสาธารณะ</h2>
+      <h2 class="pull-left"><i class="fa fa-file-text-o pull-left fa-size-22"></i>รายการแจ้งเหตุงานบริการสาธารณะ</h2>
     </div>
 
     <div class="content-wrapper"><div class="content">
@@ -24,10 +24,6 @@
                     ng-class="{ 'btn-primary': (resultMode == 'table') }"
                     ng-click="resultMode = 'table'"><i class="fa fa-table"></i> ตาราง</button>
           </div><!-- /result mode switch -->
-
-          <a ng-href="#/calendar" class="btn btn-default btn-sm">
-            <i class="fa fa-calendar"></i> ดูปฏิทินงาน
-          </a>
         </div>
 
         <div class="filter-progress-tab">
@@ -178,9 +174,19 @@
           <input type="text" pick-a-date="dateRange.to" pick-a-date-options="{ selectYears: true }" class="form-pick-date" />
         </div>
       </div>
+
     </div>
   </div>
   <!-- /date range form -->
+  <div class="form-group">
+    <h4 class="filter-heading"><i class="fa fa-cog"></i> ตั้งค่าการค้นหา</h4>
+    <div>
+      <br>
+      <label class="weight-normal">
+        <input type="checkbox" ng-model="settings.includeTestFlag"> แสดงรายงานทดสอบ
+      </label>
+    </div>
+  </div>
 
   <button class="btn btn-primary btn-full" type="submit" ng-disabled="loading">
     <i class="fa fa-search"></i> ค้นหา
