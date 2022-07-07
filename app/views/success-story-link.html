@@ -1,0 +1,35 @@
+<div
+  class="l-info-section l-section l-full-width l-theme-gray home"
+  ng-controller="SuccessStoryLinkCtrl"
+>
+  <div class="l-detail-section l-section">
+    <div class="title clearfix">
+      <h2 class="pull-left">
+        <i class="fa fa-file-text-o pull-left fa-size-22"></i>Link
+        แสดงความสำเร็จ
+      </h2>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="row">
+          <h4 class="text-center">
+            Link สำหรับ <span ng-bind="myAuthorityName">จังหวัดเชียงใหม่</span>
+          </h4>
+          <p class="text-center" ng-bind="iframe"></p>
+
+          <div class="text-center">
+            <button
+              ng-show="readyToCopy"
+              type="button"
+              class="btn btn-primary"
+              ng-click="copyToClipboard()"
+            >
+              click to copy
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

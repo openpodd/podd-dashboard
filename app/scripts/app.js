@@ -337,6 +337,11 @@ angular
         url: "/form-config/:code",
         templateUrl: "views/form-config.html",
         controller: "FormConfigCtrl",
+      })
+      .state("success-story-link", {
+        url: "/success-story-link",
+        templateUrl: "views/success-story-link.html",
+        controller: "FormConfigCtrl",
       });
 
     $urlRouterProvider.otherwise("/home");

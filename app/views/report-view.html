@@ -335,10 +335,6 @@
               style="border: 0; margin-bottom: 20px; font-size: 14px;">
           <tbody>
             <tr>
-              <td width="200">สถานะรายงาน</td>
-              <td>{{ flag.current.color }}</td>
-            </tr>
-            <tr>
               <td width="200">วันที่รายงาน</td>
               <td>{{ $parent.report.date | amDateFormat:'dddd D MMMM YYYY HH:mm' }}</td>
             </tr>
@@ -357,7 +353,7 @@
               </td>
             </tr>
             <tr>
-              <td width="200">พื้นที่เกิดเหต</td>
+              <td width="200">พื้นที่เกิดเหตุ</td>
               <td>{{ $parent.report.administrationAreaAddress }}</td>
             </tr>
             <tr>
@@ -371,10 +367,6 @@
             <tr ng-show="$parent.report.createdByTelephone">
               <td width="200">เบอร์โทร</td>
               <td>{{ $parent.report.createdByTelephone }}</td>
-            </tr>
-            <tr ng-show="$parent.report.createdByProjectMobileNumber">
-              <td width="200">เบอร์โทรของโครงการ</td>
-              <td>{{ $parent.report.createdByProjectMobileNumber }}</td>
             </tr>
           </tbody>
         </table>

@@ -1,149 +1,273 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <style>body { margin: 0; }</style>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="bower_components/mapbox.js/mapbox.css" />
-    <link rel="stylesheet" href="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css" />
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <link
+      rel="stylesheet"
+      href="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/font-awesome/css/font-awesome.css"
+    />
     <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
-    <link rel="stylesheet" href="bower_components/bootstrap-sweetalert/lib/sweet-alert.css" />
-    <link rel="stylesheet" href="bower_components/jquery.atwho/dist/css/jquery.atwho.css" />
-    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.css" />
-    <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css" />
-    <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
+    <link
+      rel="stylesheet"
+      href="bower_components/bootstrap-sweetalert/lib/sweet-alert.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/jquery.atwho/dist/css/jquery.atwho.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/angular-loading-bar/build/loading-bar.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/bootstrap/dist/css/bootstrap.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/angular-ui-select/dist/select.css"
+    />
     <link rel="stylesheet" href="bower_components/c3/c3.css" />
-    <link rel="stylesheet" href="bower_components/angular-chart/css/angular-chart.css" />
-    <link rel="stylesheet" href="bower_components/perfect-scrollbar/src/perfect-scrollbar.css" />
-    <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css" />
-    <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.css" />
-    <link rel="stylesheet" href="bower_components/angular-circular-navigation/angular-circular-navigation.css" />
-    <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css" />
-    <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.css" />
-    <link rel="stylesheet" href="bower_components/pickadate/lib/themes/default.css" />
-    <link rel="stylesheet" href="bower_components/pickadate/lib/themes/default.date.css" />
-    <link rel="stylesheet" href="bower_components/pickadate/lib/themes/default.time.css" />
-    <link rel="stylesheet" href="bower_components/ng-img-crop/compile/minified/ng-img-crop.css" />
-    <link rel="stylesheet" href="bower_components/Leaflet.label/dist/leaflet.label.css" />
-    <link rel="stylesheet" href="bower_components/leaflet.locatecontrol/dist/L.Control.Locate.css" />
+    <link
+      rel="stylesheet"
+      href="bower_components/angular-chart/css/angular-chart.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/perfect-scrollbar/src/perfect-scrollbar.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/ng-tags-input/ng-tags-input.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/angular-ui-grid/ui-grid.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/angular-circular-navigation/angular-circular-navigation.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/leaflet.markercluster/dist/MarkerCluster.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/pickadate/lib/themes/default.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/pickadate/lib/themes/default.date.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/pickadate/lib/themes/default.time.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/ng-img-crop/compile/minified/ng-img-crop.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/Leaflet.label/dist/leaflet.label.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/leaflet.locatecontrol/dist/L.Control.Locate.css"
+    />
     <!-- endbower -->
     <!-- endbuild -->
-    <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css">
-    <link rel="stylesheet" href="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css">
-    <link rel="stylesheet" href="bower_components/week-picker/week-picker-view.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.bootstrap3.css">
+    <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
+    <link
+      rel="stylesheet"
+      href="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/week-picker/week-picker-view.css"
+    />
+    <link
+      rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.bootstrap3.css"
+    />
     <!-- build:css(.tmp) styles/main.css -->
-    <link id="main-style" rel="stylesheet" href="styles/app.css" media="print">
+    <link
+      id="main-style"
+      rel="stylesheet"
+      href="styles/app.css"
+      media="print"
+    />
     <!-- endbuild -->
     <style>
-    body{
-        background: -webkit-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* Chrome 10+, Saf5.1+ */
-        background:    -moz-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* FF3.6+ */
-        background:     -ms-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* IE10 */
-        background:      -o-linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* Opera 11.10+ */
-        background:         linear-gradient(90deg, #7474BF 10%, #348AC7 90%); /* W3C */
-    }
+      body {
+        background: -webkit-linear-gradient(
+          90deg,
+          #7474bf 10%,
+          #348ac7 90%
+        ); /* Chrome 10+, Saf5.1+ */
+        background: -moz-linear-gradient(
+          90deg,
+          #7474bf 10%,
+          #348ac7 90%
+        ); /* FF3.6+ */
+        background: -ms-linear-gradient(
+          90deg,
+          #7474bf 10%,
+          #348ac7 90%
+        ); /* IE10 */
+        background: -o-linear-gradient(
+          90deg,
+          #7474bf 10%,
+          #348ac7 90%
+        ); /* Opera 11.10+ */
+        background: linear-gradient(90deg, #7474bf 10%, #348ac7 90%); /* W3C */
+      }
 
-    @-webkit-keyframes heartbeat {
-      0% { transform: scale3d(1, 1, 1); }
-      50% { transform: scale3d(1.4, 1.4, 1.4); }
-      100% { transform: scale3d(1, 1, 1); }
-    }
-    @-moz-keyframes heartbeat {
-      0% { transform: scale3d(1, 1, 1); }
-      50% { transform: scale3d(1.4, 1.4, 1.4); }
-      100% { transform: scale3d(1, 1, 1); }
-    }
-    @-o-keyframes heartbeat {
-      0% { transform: scale3d(1, 1, 1); }
-      50% { transform: scale3d(1.4, 1.4, 1.4); }
-      100% { transform: scale3d(1, 1, 1); }
-    }
-    @keyframes heartbeat {
-      0% { transform: scale3d(1, 1, 1); }
-      50% { transform: scale3d(1.4, 1.4, 1.4); }
-      100% { transform: scale3d(1, 1, 1); }
-    }
-
-    .splash {
-      display: none;
-      font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-      font-size: 14px;
-      line-height: 1.42857;
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background-color: #fff;
-      margin: 0;
-      padding: 0;
-      z-index: 999999;
-    }
-    .splash[ng-cloak] {
-      display: block;
-    }
-    .splash .splash-content {
-      display: block;
-      position: absolute;
-      width: 50%;
-      height: 0;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      margin: auto;
-      text-align: center;
-      height: 180px;
-    }
-    .splash .splash-content p {
-      margin: 0 0 10px;
-      font-size: 2em;
-    }
-    .splash .splash-content .icon-heart {
-      margin-left: 20px;
-
-      transition: -moz-transform .7s;
-      transition: -webkit-transform .7s;
-      transition: -o-transform .7s;
-      transition: transform .7s;
-
-      -moz-animation: heartbeat .7s infinite;
-      -webkit-animation: heartbeat .7s infinite;
-      -o-animation: heartbeat .7s infinite;
-      animation: heartbeat .7s infinite;
-
-      vertical-align: middle;
-    }
-
-    @-webkit-keyframes load8 {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-    }
-    @keyframes load8 {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
+      @-webkit-keyframes heartbeat {
+        0% {
+          transform: scale3d(1, 1, 1);
         }
-    }
-    .splash .loader {
+        50% {
+          transform: scale3d(1.4, 1.4, 1.4);
+        }
+        100% {
+          transform: scale3d(1, 1, 1);
+        }
+      }
+      @-moz-keyframes heartbeat {
+        0% {
+          transform: scale3d(1, 1, 1);
+        }
+        50% {
+          transform: scale3d(1.4, 1.4, 1.4);
+        }
+        100% {
+          transform: scale3d(1, 1, 1);
+        }
+      }
+      @-o-keyframes heartbeat {
+        0% {
+          transform: scale3d(1, 1, 1);
+        }
+        50% {
+          transform: scale3d(1.4, 1.4, 1.4);
+        }
+        100% {
+          transform: scale3d(1, 1, 1);
+        }
+      }
+      @keyframes heartbeat {
+        0% {
+          transform: scale3d(1, 1, 1);
+        }
+        50% {
+          transform: scale3d(1.4, 1.4, 1.4);
+        }
+        100% {
+          transform: scale3d(1, 1, 1);
+        }
+      }
+
+      .splash {
+        display: none;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        line-height: 1.42857;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        margin: 0;
+        padding: 0;
+        z-index: 999999;
+      }
+      .splash[ng-cloak] {
+        display: block;
+      }
+      .splash .splash-content {
+        display: block;
+        position: absolute;
+        width: 50%;
+        height: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        text-align: center;
+        height: 180px;
+      }
+      .splash .splash-content p {
+        margin: 0 0 10px;
+        font-size: 2em;
+      }
+      .splash .splash-content .icon-heart {
+        margin-left: 20px;
+
+        transition: -moz-transform 0.7s;
+        transition: -webkit-transform 0.7s;
+        transition: -o-transform 0.7s;
+        transition: transform 0.7s;
+
+        -moz-animation: heartbeat 0.7s infinite;
+        -webkit-animation: heartbeat 0.7s infinite;
+        -o-animation: heartbeat 0.7s infinite;
+        animation: heartbeat 0.7s infinite;
+
+        vertical-align: middle;
+      }
+
+      @-webkit-keyframes load8 {
+        0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes load8 {
+        0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      .splash .loader {
         margin: 6em auto;
         font-size: 5px;
         position: relative;
@@ -154,410 +278,630 @@
         border-left: 1.1em solid #000;
         -webkit-animation: load8 1.1s infinite linear;
         animation: load8 1.1s infinite linear;
-    }
-    .splash .loader,
-    .splash .loader:after {
+      }
+      .splash .loader,
+      .splash .loader:after {
         border-radius: 50%;
         width: 10em;
         height: 10em;
-    }
-
+      }
     </style>
   </head>
   <body ng-app="poddDashboardApp" ng-class="{ 'page-login':!shared.loggedIn }">
     <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <p class="browsehappy">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="http://browsehappy.com/">upgrade your browser</a> to improve
+        your experience.
+      </p>
     <![endif]-->
 
-<div ng-cloak class="splash">
-  <div class="splash-content">
-    <p>กรุณารอสักครู่ </p>
-    <div class="loader">Loading...</div>
-</div>
+    <div ng-cloak class="splash">
+      <div class="splash-content">
+        <p>กรุณารอสักครู่</p>
+        <div class="loader">Loading...</div>
+      </div>
 
-  <script>
-  var linkTags = document.getElementsByTagName('link');
-  for (i=0; i < linkTags.length; i++) {
-      if (linkTags.item(i).getAttribute('media') === 'print') {
-          console.log('link-->', linkTags.item(i));
-          linkTags.item(i).setAttribute('media', 'screen');
-      }
-  }
-  </script>
-</div>
-<nav class="pd-mobile navbar navbar-default visible-xs" ng-controller="MenuCtrl">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button ng-show="shared.loggedIn" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#"><img src="images/logo-onehealth.svg" alt="" class="logo-mobile"/> ผ่อดีดี</a>
+      <script>
+        var linkTags = document.getElementsByTagName("link");
+        for (i = 0; i < linkTags.length; i++) {
+          if (linkTags.item(i).getAttribute("media") === "print") {
+            console.log("link-->", linkTags.item(i));
+            linkTags.item(i).setAttribute("media", "screen");
+          }
+        }
+      </script>
     </div>
+    <nav
+      class="pd-mobile navbar navbar-default visible-xs"
+      ng-controller="MenuCtrl"
+    >
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button
+            ng-show="shared.loggedIn"
+            type="button"
+            class="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#bs-example-navbar-collapse-1"
+            aria-expanded="false"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"
+            ><img src="images/logo-onehealth.svg" alt="" class="logo-mobile" />
+            ผ่อดีดี</a
+          >
+        </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-show="shared.loggedIn" >
-      <ul class="pd-nav-mobile nav navbar-nav">
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-globe" fa-size-22></i> ผ่อดีดี <span class="caret"></span></a>
-            <ul class="dropdown-menu" ng-show="domainMap.domains.length > 1">
-                <li ng-repeat="domain in domainMap.domains" ng-class="{active: domainMap.domain.id == domain.id}">
-                  <a ng-click=switchDomain(domain.id)>
-                    {{ domain.name }}
-                  </a>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div
+          class="collapse navbar-collapse"
+          id="bs-example-navbar-collapse-1"
+          ng-show="shared.loggedIn"
+        >
+          <ul class="pd-nav-mobile nav navbar-nav">
+            <li class="dropdown">
+              <a
+                href="#"
+                class="dropdown-toggle"
+                data-toggle="dropdown"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                ><i class="fa fa-globe" fa-size-22></i> ผ่อดีดี
+                <span class="caret"></span
+              ></a>
+              <ul class="dropdown-menu" ng-show="domainMap.domains.length > 1">
+                <li
+                  ng-repeat="domain in domainMap.domains"
+                  ng-class="{active: domainMap.domain.id == domain.id}"
+                >
+                  <a ng-click="switchDomain(domain.id)"> {{ domain.name }} </a>
                 </li>
-            </ul>
-
-        </li>
-        <li><a href="#/dashboard"><i class="fa fa-tachometer fa-size-20"></i> แผงควบคุมระบบ</a></li>
-        <li><a href="#/"><i class="fa fa-file-text-o fa-size-20"></i> รายงาน</a></li>
-        <li><a href="#/home-local"><i class="fa fa-file-audio-o fa-size-20"></i> แจ้งเหตุงานบริการสาธารณะ</a></li>
-        <li class="dropdown" >
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-map-marker fa-size-22"></i> แผนที่ <span class="caret"></span></a>
-            <ul class="dropdown-menu">
+              </ul>
+            </li>
+            <li>
+              <a href="#/dashboard"
+                ><i class="fa fa-tachometer fa-size-20"></i> แผงควบคุมระบบ</a
+              >
+            </li>
+            <li>
+              <a href="#/"
+                ><i class="fa fa-file-text-o fa-size-20"></i> รายงาน</a
+              >
+            </li>
+            <li>
+              <a href="#/home-local"
+                ><i class="fa fa-file-audio-o fa-size-20"></i>
+                แจ้งเหตุงานบริการสาธารณะ</a
+              >
+            </li>
+            <li class="dropdown">
+              <a
+                href="#"
+                class="dropdown-toggle"
+                data-toggle="dropdown"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                ><i class="fa fa-map-marker fa-size-22"></i> แผนที่
+                <span class="caret"></span
+              ></a>
+              <ul class="dropdown-menu">
                 <li><a href="#/map">แผนที่รายงาน</a></li>
                 <li><a href="#/scenario">แผนภาพข้อมูล</a></li>
                 <li><a href="#/analytic-map">วิเคราะห์ข้อมูลเชิงพื้นที่</a></li>
-            </ul>
-        </li>
-        <li><a href="#/filter"><i class="fa fa-search fa-size-18"></i> ค้นหา</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#/filter"
+                ><i class="fa fa-search fa-size-18"></i> ค้นหา</a
+              >
+            </li>
 
-        <li class="dropdown" ng-if="hasPermissionOnMenu('view_dashboard_summary_report')">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bar-chart fa-size-18"></i> สรุปรายงาน <span class="caret"></span></a>
-            <ul class="dropdown-menu">
+            <li
+              class="dropdown"
+              ng-if="hasPermissionOnMenu('view_dashboard_summary_report')"
+            >
+              <a
+                href="#"
+                class="dropdown-toggle"
+                data-toggle="dropdown"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                ><i class="fa fa-bar-chart fa-size-18"></i> สรุปรายงาน
+                <span class="caret"></span
+              ></a>
+              <ul class="dropdown-menu">
                 <li><a href="#/summary/visualize">สรุปรายงานในพื้นที่</a></li>
                 <li><a href="#/summary/report-month">สรุปรายงานรายเดือน</a></li>
-                <li><a href="#/summary/performance-person">สรุปประสิทธิภาพการรายงานของอาสา</a></li>
-                <li><a href="#/summary/monthly">รายงานผลการเฝ้าระวังรายเดือน</a></li>
-                <li ng-repeat="(key, value) in dreports"><a ng-href="#/summary/data-report-filter/{{value.id}}?name={{value.name}}">{{ value.name }}</a></li>
-            </ul>
-        </li>
-        <li ng-if="hasPermissionOnMenu('view_dashboard_plan')"><a href="#/plans"><i class="fa fa-book fa-size-18"></i> แผนรับมือ</a></li>
-        <li class="dropdown" ng-if="hasPermissionOnMenu('view_dashboard_users')">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-users fa-size-18"></i> ข้อมูลต่างๆ <span class="caret"></span></a>
-            <ul class="dropdown-menu">
+                <li>
+                  <a href="#/summary/performance-person"
+                    >สรุปประสิทธิภาพการรายงานของอาสา</a
+                  >
+                </li>
+                <li>
+                  <a href="#/summary/monthly">รายงานผลการเฝ้าระวังรายเดือน</a>
+                </li>
+                <li ng-repeat="(key, value) in dreports">
+                  <a
+                    ng-href="#/summary/data-report-filter/{{value.id}}?name={{value.name}}"
+                    >{{ value.name }}</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li ng-if="hasPermissionOnMenu('view_dashboard_plan')">
+              <a href="#/plans"
+                ><i class="fa fa-book fa-size-18"></i> แผนรับมือ</a
+              >
+            </li>
+            <li
+              class="dropdown"
+              ng-if="hasPermissionOnMenu('view_dashboard_users')"
+            >
+              <a
+                href="#"
+                class="dropdown-toggle"
+                data-toggle="dropdown"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                ><i class="fa fa-users fa-size-18"></i> ข้อมูลต่างๆ
+                <span class="caret"></span
+              ></a>
+              <ul class="dropdown-menu">
                 <li><a href="#/user-list">ข้อมูลอาสา</a></li>
                 <li><a href="#/invitation-code-list">รหัสพื้นที่</a></li>
                 <li><a href="#/contacts">รายชื่อติดต่อ</a></li>
-                <li><a href="#/notification-config-list">ผู้มีส่วนเกี่ยวข้อง</a></li>
+                <li>
+                  <a href="#/notification-config-list">ผู้มีส่วนเกี่ยวข้อง</a>
+                </li>
                 <li><a href="#/case-definitions-list">รูปแบบแจ้งเตือน</a></li>
-            </ul>
-        </li>
-        <li><a href="#/profile"><i class="fa fa-cog fa-size-18"></i> บัญชีผู้ใช้</a></li>
-        <li><a href="#/login" ng-click="isShowNav=!isShowNav;logout();"><i class="fa fa-sign-out fa-size-18"></i> ออกจากระบบ</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+              </ul>
+            </li>
+            <li>
+              <a href="#/profile"
+                ><i class="fa fa-cog fa-size-18"></i> บัญชีผู้ใช้</a
+              >
+            </li>
+            <li>
+              <a href="#/login" ng-click="isShowNav=!isShowNav;logout();"
+                ><i class="fa fa-sign-out fa-size-18"></i> ออกจากระบบ</a
+              >
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
 
-<div class="pd-section-nav" ng-controller="MenuCtrl">
-    <div class="pd-section-left hidden-xs" ng-show="shared.loggedIn" ng-cloak>
-    <div class="pd-small-nav" ng-click="isShowNav =! isShowNav">
-      <i class="fa fa-bars fa-size-18"></i>
-      <span>ผ่อดีดี</span>
-    </div>
+    <div class="pd-section-nav" ng-controller="MenuCtrl">
+      <div class="pd-section-left hidden-xs" ng-show="shared.loggedIn" ng-cloak>
+        <div class="pd-small-nav" ng-click="isShowNav =! isShowNav">
+          <i class="fa fa-bars fa-size-18"></i>
+          <span>ผ่อดีดี</span>
+        </div>
         <div ng-init="isShowNav = true"></div>
         <div class="pd-container" ng-show="isShowNav">
-           <!-- <img src="images/logo-onehealth.svg" alt="" class="logo hide-phone"/> -->
-            <ul class="pd-nav-list">
-                <li class="pd-nav-item">
-                  <a ng-href="#/" class="pd-nav-icon -logo">
-                  <img src="images/logo-onehealth.svg" alt=""/></a>
-                  <div class="pd-nav-submenu -micro" ng-show="domainMap.domains.length > 1">
-                      <ul class="">
-                          <li ng-repeat="domain in domainMap.domains" ng-class="{active: domainMap.domain.id == domain.id}">
-                            <a ng-click=switchDomain(domain.id)>
-                              {{ domain.name }}
-                            </a>
-                          </li>
-                      </ul>
-                  </div>
-                </li>
-                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('dashboard') }"
-                    ng-click="setActiveMenu('dashboard')">
-                  <a ng-href="#/dashboard" class="pd-nav-icon">
-                  <i class="fa fa-tachometer fa-size-20"></i>
-                  <span class="pd-nav-text">แผงควบคุมระบบ</span></a>
-                </li>
-                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('home') }"
-                    ng-click="setActiveMenu('home')">
-                  <a ng-href="#/" class="pd-nav-icon">
-                  <i class="fa fa-file-text-o fa-size-20"></i>
-                  <span class="pd-nav-text">รายงาน</span></a>
-                </li>
-                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('home-local') }"
-                    ng-click="setActiveMenu('home-local')">
-                  <a ng-href="#/home-local" class="pd-nav-icon">
-                  <i class="fa fa-file-audio-o fa-size-20"></i>
-                  <span class="pd-nav-text" style="width: 200px;">งานบริการสาธารณะ</span></a>
-                </li>
-                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('map') }"
-                    ng-click="setActiveMenu('map')">
-                  <a ng-href="#/map" ng-click="shared.filterMode = false; shared.summaryReportMode = false; shared.summaryReportMonthMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;" class="pd-nav-icon">
-                  <i class="fa fa-map-marker fa-size-22"></i>
-                  <span class="pd-nav-text">แผนที่</span></a>
+          <!-- <img src="images/logo-onehealth.svg" alt="" class="logo hide-phone"/> -->
+          <ul class="pd-nav-list">
+            <li class="pd-nav-item">
+              <a ng-href="#/" class="pd-nav-icon -logo">
+                <img src="images/logo-onehealth.svg" alt=""
+              /></a>
+              <div
+                class="pd-nav-submenu -micro"
+                ng-show="domainMap.domains.length > 1"
+              >
+                <ul class="">
+                  <li
+                    ng-repeat="domain in domainMap.domains"
+                    ng-class="{active: domainMap.domain.id == domain.id}"
+                  >
+                    <a ng-click="switchDomain(domain.id)">
+                      {{ domain.name }}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li
+              class="pd-nav-item"
+              ng-class="{ 'active active-menu':isActiveMenu('dashboard') }"
+              ng-click="setActiveMenu('dashboard')"
+            >
+              <a ng-href="#/dashboard" class="pd-nav-icon">
+                <i class="fa fa-tachometer fa-size-20"></i>
+                <span class="pd-nav-text">แผงควบคุมระบบ</span></a
+              >
+            </li>
+            <li
+              class="pd-nav-item"
+              ng-class="{ 'active active-menu':isActiveMenu('home') }"
+              ng-click="setActiveMenu('home')"
+            >
+              <a ng-href="#/" class="pd-nav-icon">
+                <i class="fa fa-file-text-o fa-size-20"></i>
+                <span class="pd-nav-text">รายงาน</span></a
+              >
+            </li>
+            <li
+              class="pd-nav-item"
+              ng-class="{ 'active active-menu':isActiveMenu('home-local') }"
+              ng-click="setActiveMenu('home-local')"
+            >
+              <a ng-href="#/home-local" class="pd-nav-icon">
+                <i class="fa fa-file-audio-o fa-size-20"></i>
+                <span class="pd-nav-text" style="width: 200px"
+                  >งานบริการสาธารณะ</span
+                ></a
+              >
+            </li>
+            <li
+              class="pd-nav-item"
+              ng-class="{ 'active active-menu':isActiveMenu('map') }"
+              ng-click="setActiveMenu('map')"
+            >
+              <a
+                ng-href="#/map"
+                ng-click="shared.filterMode = false; shared.summaryReportMode = false; shared.summaryReportMonthMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;"
+                class="pd-nav-icon"
+              >
+                <i class="fa fa-map-marker fa-size-22"></i>
+                <span class="pd-nav-text">แผนที่</span></a
+              >
 
-                  <div class="pd-nav-submenu -mini">
-                      <ul class="">
-                          <li><a ng-href="#/map">แผนที่รายงาน</a></li>
-                          <li><a ng-href="#/scenario">แผนภาพข้อมูล</a></li>
-                        <li><a href="#/analytic-map">วิเคราะห์ข้อมูลเชิงพื้นที่</a></li>
-                      </ul>
-                  </div>
-                </li>
-                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('filter') }">
-                  <a ng-href="#/filter" ng-click="shared.filterMode = true; shared.summaryReportMode = false; shared.summaryReportMonthMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;" class="pd-nav-icon">
-                  <i class="fa fa-search fa-size-18"></i>
-                  <span class="pd-nav-text">ค้นหา</span></a>
-                </li>
-                <li class="pd-nav-item" ng-class="{ 'active active-menu':isActiveMenu('summary') }"
-                    ng-click="setActiveMenu('summary')"
-                    ng-if="hasPermissionOnMenu('view_dashboard_summary_report')">
-                    <a ng-href="#/summary/visualize" class="pd-nav-icon">
-                    <i class="fa fa-bar-chart fa-size-18"></i>
-                    <span class="pd-nav-text">สรุปรายงาน</span></a>
+              <div class="pd-nav-submenu -mini">
+                <ul class="">
+                  <li><a ng-href="#/map">แผนที่รายงาน</a></li>
+                  <li><a ng-href="#/scenario">แผนภาพข้อมูล</a></li>
+                  <li>
+                    <a href="#/analytic-map">วิเคราะห์ข้อมูลเชิงพื้นที่</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li
+              class="pd-nav-item"
+              ng-class="{ 'active active-menu':isActiveMenu('filter') }"
+            >
+              <a
+                ng-href="#/filter"
+                ng-click="shared.filterMode = true; shared.summaryReportMode = false; shared.summaryReportMonthMode = false; shared.summaryPersonMode = false; shared.summaryPerformancePersonMode = false;"
+                class="pd-nav-icon"
+              >
+                <i class="fa fa-search fa-size-18"></i>
+                <span class="pd-nav-text">ค้นหา</span></a
+              >
+            </li>
+            <li
+              class="pd-nav-item"
+              ng-class="{ 'active active-menu':isActiveMenu('summary') }"
+              ng-click="setActiveMenu('summary')"
+              ng-if="hasPermissionOnMenu('view_dashboard_summary_report')"
+            >
+              <a ng-href="#/summary/visualize" class="pd-nav-icon">
+                <i class="fa fa-bar-chart fa-size-18"></i>
+                <span class="pd-nav-text">สรุปรายงาน</span></a
+              >
 
-                    <div class="pd-nav-submenu">
-                        <ul class="">
-                            <li><a href="#/summary/visualize">สรุปรายงานในพื้นที่</a></li>
-                            <li><a ng-href="#/summary/report-month">สรุปรายงานรายเดือน</a></li>
-                            <li><a href="#/summary/performance-person" >สรุปประสิทธิภาพการรายงานของอาสา</a></li>
-                            <li><a href="#/summary/monthly">รายงานผลการเฝ้าระวังรายเดือน</a></li>
-                            <li ng-repeat="(key, value) in dreports"><a ng-href="#/summary/data-report-filter/{{value.id}}?name={{value.name}}">{{ value.name }}</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="pd-nav-item" ng-cloak
-                    ng-class="{ 'active active-menu':isActiveMenu('scenario') }"
-                    ng-if="hasPermissionOnMenu('view_dashboard_plan')">
-                  <a ng-href="#/plans" class="pd-nav-icon">
-                  <i class="fa fa-book fa-size-18"></i>
-                  <span class="pd-nav-text">แผนรับมือ</span></a>
-                </li>
-                <li ng-hide="shared.loggedIn" class="pd-nav-item -divide" ng-cloak
-                    ng-class="{ 'active active-menu':isActiveMenu('login') }">
-                  <a ng-href="#/login" ng-click="isShowNav=!isShowNav" class="pd-nav-icon">
-                  <i class="fa fa-sign-in"></i>
-                  <span class="pd-nav-text">เข้าสู่ระบบ</span></a>
-                </li>
-                <li class="pd-nav-item" ng-cloak
-                    ng-class="{ 'active active-menu':isActiveMenu('users') }"
-                    ng-if="hasPermissionOnMenu('view_dashboard_users')">
+              <div class="pd-nav-submenu">
+                <ul class="">
+                  <li><a href="#/summary/visualize">สรุปรายงานในพื้นที่</a></li>
+                  <li>
+                    <a ng-href="#/summary/report-month">สรุปรายงานรายเดือน</a>
+                  </li>
+                  <li>
+                    <a href="#/summary/performance-person"
+                      >สรุปประสิทธิภาพการรายงานของอาสา</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#/summary/monthly">รายงานผลการเฝ้าระวังรายเดือน</a>
+                  </li>
+                  <li ng-repeat="(key, value) in dreports">
+                    <a
+                      ng-href="#/summary/data-report-filter/{{value.id}}?name={{value.name}}"
+                      >{{ value.name }}</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li
+              class="pd-nav-item"
+              ng-cloak
+              ng-class="{ 'active active-menu':isActiveMenu('scenario') }"
+              ng-if="hasPermissionOnMenu('view_dashboard_plan')"
+            >
+              <a ng-href="#/plans" class="pd-nav-icon">
+                <i class="fa fa-book fa-size-18"></i>
+                <span class="pd-nav-text">แผนรับมือ</span></a
+              >
+            </li>
+            <li
+              ng-hide="shared.loggedIn"
+              class="pd-nav-item -divide"
+              ng-cloak
+              ng-class="{ 'active active-menu':isActiveMenu('login') }"
+            >
+              <a
+                ng-href="#/login"
+                ng-click="isShowNav=!isShowNav"
+                class="pd-nav-icon"
+              >
+                <i class="fa fa-sign-in"></i>
+                <span class="pd-nav-text">เข้าสู่ระบบ</span></a
+              >
+            </li>
+            <li
+              class="pd-nav-item"
+              ng-cloak
+              ng-class="{ 'active active-menu':isActiveMenu('users') }"
+              ng-if="hasPermissionOnMenu('view_dashboard_users')"
+            >
+              <a ng-href="#/user-list" class="pd-nav-icon">
+                <i class="fa fa-users fa-size-18"></i>
+                <span class="pd-nav-text">จัดการผู้ใช้</span></a
+              >
 
-                  <a ng-href="#/user-list" class="pd-nav-icon">
-                  <i class="fa fa-users fa-size-18"></i>
-                  <span class="pd-nav-text">จัดการผู้ใช้</span></a>
+              <div class="pd-nav-submenu -mini">
+                <ul class="">
+                  <li><a ng-href="#/user-list">ข้อมูลอาสา</a></li>
+                  <li><a ng-href="#/invitation-code-list">รหัสพื้นที่</a></li>
+                  <li><a ng-href="#/contacts">รายชื่อติดต่อ</a></li>
+                  <li>
+                    <a ng-href="#/notification-config-list"
+                      >ผู้มีส่วนเกี่ยวข้อง</a
+                    >
+                  </li>
+                  <li>
+                    <a ng-href="#/case-definitions-list">รูปแบบแจ้งเตือน</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li ng-show="shared.loggedIn" class="pd-nav-item hide-phone">
+              <span class="icon-bell pd-nav-icon">
+                <i class="fa fa-bell fa-size-18"></i>
+                <span class="alert-dotted" ng-show="shared.unread > 0"
+                  >{{ shared.unread }}</span
+                >
+              </span>
+              <div ng-include src="'views/notification-list.html'"></div>
+            </li>
+            <li
+              ng-show="shared.loggedIn"
+              class="pd-nav-item"
+              ng-cloak
+              ng-class="{ 'active active-menu':isActiveMenu('profile') }"
+              ng-click="setActiveMenu('profile')"
+            >
+              <a ng-href="#/profile" class="pd-nav-icon">
+                <i class="fa fa-cog fa-size-18"></i>
+                <span class="pd-nav-text">settings</span></a
+              >
 
-                  <div class="pd-nav-submenu -mini">
-                      <ul class="">
-                          <li><a ng-href="#/user-list">ข้อมูลอาสา</a></li>
-                          <li><a ng-href="#/invitation-code-list">รหัสพื้นที่</a></li>
-                          <li><a ng-href="#/contacts">รายชื่อติดต่อ</a></li>
-                          <li><a ng-href="#/notification-config-list">ผู้มีส่วนเกี่ยวข้อง</a></li>
-                          <li><a ng-href="#/case-definitions-list">รูปแบบแจ้งเตือน</a></li>
-                      </ul>
-                  </div>
-                </li>
-                <li ng-show="shared.loggedIn" class="pd-nav-item hide-phone">
-                    <span class="icon-bell pd-nav-icon">
-                        <i class="fa fa-bell fa-size-18"></i>
-                        <span class="alert-dotted" ng-show="shared.unread > 0">{{ shared.unread }}</span>
-                    </span>
-                    <div ng-include src="'views/notification-list.html'"></div>
-                </li>
-                <li ng-show="shared.loggedIn" class="pd-nav-item" ng-cloak
-                    ng-class="{ 'active active-menu':isActiveMenu('profile') }"
-                    ng-click="setActiveMenu('profile')">
-
-                  <a ng-href="#/profile" class="pd-nav-icon">
-                  <i class="fa fa-cog fa-size-18"></i>
-                  <span class="pd-nav-text">settings</span></a>
-
-                  <div class="pd-nav-submenu">
-                    <ul class="">
-                      <li><a href="#/profile">บัญชีผู้ใช้</a></li>
-                      <li><a href="#/form-config/civic">รูปแบบฟอร์มจดหมายแจ้งเหตุสาธารณะ</a></li>
-                    </ul>
-                  </div>
-                </li>
-                <li ng-show="shared.loggedIn" class="pd-nav-item" ng-cloak
-                    ng-class="{ 'active active-menu':isActiveMenu('logout') }">
-
-                  <a ng-href="#/login" ng-click="isShowNav=!isShowNav;logout();" class="pd-nav-icon">
-                  <i class="fa fa-sign-out fa-size-18"></i>
-                  <span class="pd-nav-text">ออกจากระบบ </span></a>
-                </li>
-            </ul>
+              <div class="pd-nav-submenu">
+                <ul class="">
+                  <li><a href="#/profile">บัญชีผู้ใช้</a></li>
+                  <li>
+                    <a href="#/form-config/civic"
+                      >รูปแบบฟอร์มจดหมายแจ้งเหตุสาธารณะ</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#/success-story-link">Link แสดงความสำเร็จ</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li
+              ng-show="shared.loggedIn"
+              class="pd-nav-item"
+              ng-cloak
+              ng-class="{ 'active active-menu':isActiveMenu('logout') }"
+            >
+              <a
+                ng-href="#/login"
+                ng-click="isShowNav=!isShowNav;logout();"
+                class="pd-nav-icon"
+              >
+                <i class="fa fa-sign-out fa-size-18"></i>
+                <span class="pd-nav-text">ออกจากระบบ </span></a
+              >
+            </li>
+          </ul>
         </div>
+      </div>
+
+      <!--    <div class="pd-nav-toggle" ng-click="isShowNav=!isShowNav"><i class="fa fa-bars fa-size-24"></i></div>-->
     </div>
 
-<!--    <div class="pd-nav-toggle" ng-click="isShowNav=!isShowNav"><i class="fa fa-bars fa-size-24"></i></div>-->
-</div>
+    <div ui-view="" class="pd-main"></div>
 
-<div ui-view="" class="pd-main"></div>
+    <!-- build:js(.) scripts/oldieshim.js -->
+    <!--[if lt IE 9]>
+      <script src="bower_components/es5-shim/es5-shim.js"></script>
+      <script src="bower_components/json3/lib/json3.js"></script>
+    <![endif]-->
+    <!-- endbuild -->
 
-<!-- build:js(.) scripts/oldieshim.js -->
-<!--[if lt IE 9]>
-<script src="bower_components/es5-shim/es5-shim.js"></script>
-<script src="bower_components/json3/lib/json3.js"></script>
-<![endif]-->
-<!-- endbuild -->
+    <!-- build:js(.) scripts/vendor.js -->
+    <script src="bower_components/js-xlsx/jszip.js"></script>
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/json3/lib/json3.js"></script>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/alert.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/button.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/carousel.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/dropdown.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/modal.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/popover.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/mapbox.js/mapbox.js"></script>
+    <script src="bower_components/socket.io-client/socket.io.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/jquery-cookie/jquery.cookie.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular-moment/angular-moment.js"></script>
+    <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
+    <script src="bower_components/bootstrap-sweetalert/lib/sweet-alert.js"></script>
+    <script src="bower_components/Caret.js/src/jquery.caret.js"></script>
+    <script src="bower_components/jquery.atwho/dist/js/jquery.atwho.js"></script>
+    <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
+    <script src="bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/week-picker/week-picker.js"></script>
+    <script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="bower_components/angular-daterangepicker/js/angular-daterangepicker.js"></script>
+    <script src="bower_components/moment-range/lib/moment-range.js"></script>
+    <script src="bower_components/angular-ui-select/dist/select.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="bower_components/c3/c3.js"></script>
+    <script src="bower_components/angular-chart/angular-chart.js"></script>
+    <script src="bower_components/countUp.js/countUp.js"></script>
+    <script src="bower_components/js-xlsx/dist/xlsx.js"></script>
+    <script src="bower_components/waypoints/waypoints.js"></script>
+    <script src="bower_components/SHA-1/sha1.js"></script>
+    <script src="bower_components/angulartics/src/angulartics.js"></script>
+    <script src="bower_components/angulartics/src/angulartics-ga.js"></script>
+    <script src="bower_components/angularLocalStorage/dist/angularLocalStorage.min.js"></script>
+    <script src="bower_components/perfect-scrollbar/src/perfect-scrollbar.js"></script>
+    <script src="bower_components/angular-perfect-scrollbar/src/angular-perfect-scrollbar.js"></script>
+    <script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
+    <script src="bower_components/angular-ui-grid/ui-grid.js"></script>
+    <script src="bower_components/angular-circular-navigation/angular-circular-navigation.js"></script>
+    <script src="bower_components/Leaflet-WFST/dist/Leaflet-WFST.src.js"></script>
+    <script src="bower_components/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+    <script src="bower_components/angular-filter/dist/angular-filter.js"></script>
+    <script src="bower_components/angular-sb-date-select/src/sb-date-select.js"></script>
+    <script src="bower_components/pickadate/lib/picker.js"></script>
+    <script src="bower_components/pickadate/lib/picker.date.js"></script>
+    <script src="bower_components/pickadate/lib/picker.time.js"></script>
+    <script src="bower_components/ng-pickadate/ng-pickadate.js"></script>
+    <script src="bower_components/heatmap.js-amd/build/heatmap.js"></script>
+    <script src="bower_components/heatmap.js-amd/plugins/leaflet-heatmap/leaflet-heatmap.js"></script>
+    <script src="bower_components/lscache/lscache.min.js"></script>
+    <script src="bower_components/lscache/lscache.js"></script>
+    <script src="bower_components/ng-img-crop/compile/minified/ng-img-crop.js"></script>
+    <script src="bower_components/Leaflet.label/dist/leaflet.label.js"></script>
+    <script src="bower_components/leaflet.locatecontrol/src/L.Control.Locate.js"></script>
+    <!-- endbower -->
 
-<!-- build:js(.) scripts/vendor.js -->
-<script src="bower_components/js-xlsx/jszip.js"></script>
-<!-- bower:js -->
-<script src="bower_components/jquery/dist/jquery.js"></script>
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/json3/lib/json3.js"></script>
-<script src="bower_components/es5-shim/es5-shim.js"></script>
-<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js"></script>
-<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/alert.js"></script>
-<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/button.js"></script>
-<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/carousel.js"></script>
-<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js"></script>
-<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/dropdown.js"></script>
-<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js"></script>
-<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js"></script>
-<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js"></script>
-<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/modal.js"></script>
-<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js"></script>
-<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/popover.js"></script>
-<script src="bower_components/angular-resource/angular-resource.js"></script>
-<script src="bower_components/angular-cookies/angular-cookies.js"></script>
-<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-<script src="bower_components/angular-animate/angular-animate.js"></script>
-<script src="bower_components/angular-touch/angular-touch.js"></script>
-<script src="bower_components/angular-route/angular-route.js"></script>
-<script src="bower_components/mapbox.js/mapbox.js"></script>
-<script src="bower_components/socket.io-client/socket.io.js"></script>
-<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-<script src="bower_components/jquery-cookie/jquery.cookie.js"></script>
-<script src="bower_components/moment/moment.js"></script>
-<script src="bower_components/angular-moment/angular-moment.js"></script>
-<script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
-<script src="bower_components/bootstrap-sweetalert/lib/sweet-alert.js"></script>
-<script src="bower_components/Caret.js/src/jquery.caret.js"></script>
-<script src="bower_components/jquery.atwho/dist/js/jquery.atwho.js"></script>
-<script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
-<script src="bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.js"></script>
-<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-<script src="bower_components/week-picker/week-picker.js"></script>
-<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script src="bower_components/angular-daterangepicker/js/angular-daterangepicker.js"></script>
-<script src="bower_components/moment-range/lib/moment-range.js"></script>
-<script src="bower_components/angular-ui-select/dist/select.js"></script>
-<script src="bower_components/d3/d3.js"></script>
-<script src="bower_components/c3/c3.js"></script>
-<script src="bower_components/angular-chart/angular-chart.js"></script>
-<script src="bower_components/countUp.js/countUp.js"></script>
-<script src="bower_components/js-xlsx/dist/xlsx.js"></script>
-<script src="bower_components/waypoints/waypoints.js"></script>
-<script src="bower_components/SHA-1/sha1.js"></script>
-<script src="bower_components/angulartics/src/angulartics.js"></script>
-<script src="bower_components/angulartics/src/angulartics-ga.js"></script>
-<script src="bower_components/angularLocalStorage/dist/angularLocalStorage.min.js"></script>
-<script src="bower_components/perfect-scrollbar/src/perfect-scrollbar.js"></script>
-<script src="bower_components/angular-perfect-scrollbar/src/angular-perfect-scrollbar.js"></script>
-<script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
-<script src="bower_components/angular-ui-grid/ui-grid.js"></script>
-<script src="bower_components/angular-circular-navigation/angular-circular-navigation.js"></script>
-<script src="bower_components/Leaflet-WFST/dist/Leaflet-WFST.src.js"></script>
-<script src="bower_components/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
-<script src="bower_components/angular-filter/dist/angular-filter.js"></script>
-<script src="bower_components/angular-sb-date-select/src/sb-date-select.js"></script>
-<script src="bower_components/pickadate/lib/picker.js"></script>
-<script src="bower_components/pickadate/lib/picker.date.js"></script>
-<script src="bower_components/pickadate/lib/picker.time.js"></script>
-<script src="bower_components/ng-pickadate/ng-pickadate.js"></script>
-<script src="bower_components/heatmap.js-amd/build/heatmap.js"></script>
-<script src="bower_components/heatmap.js-amd/plugins/leaflet-heatmap/leaflet-heatmap.js"></script>
-<script src="bower_components/lscache/lscache.min.js"></script>
-<script src="bower_components/lscache/lscache.js"></script>
-<script src="bower_components/ng-img-crop/compile/minified/ng-img-crop.js"></script>
-<script src="bower_components/Leaflet.label/dist/leaflet.label.js"></script>
-<script src="bower_components/leaflet.locatecontrol/src/L.Control.Locate.js"></script>
-<!-- endbower -->
+    <script src="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
+    <script src="bower_components/moment/locale/th.js"></script>
+    <script src="bower_components/week-picker/week-picker.js"></script>
+    <!-- endbuild -->
 
-<script src="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
-<script src="bower_components/moment/locale/th.js"></script>
-<script src="bower_components/week-picker/week-picker.js"></script>
-<!-- endbuild -->
-
-<script src="scripts/config.js"></script>
-<!-- build:js({.tmp,app}) scripts/scripts.js -->
-<script src="scripts/fixed.js"></script>
-<script src="scripts/app.js"></script>
-<script src="scripts/directives/common.js"></script>
-<script src="scripts/directives/report.js"></script>
-<script src="scripts/directives/comment.js"></script>
-<script src="scripts/directives/analytic.js"></script>
-<script src="scripts/services/DashboardService.js"></script>
-<script src="scripts/services/MentionService.js"></script>
-<script src="scripts/services/ReportService.js"></script>
-<script src="scripts/services/CaseDefinitionService.js"></script>
-<script src="scripts/services/MapService.js"></script>
-<script src="scripts/services/CommentService.js"></script>
-<script src="scripts/services/UserService.js"></script>
-<script src="scripts/services/FilterService.js"></script>
-<script src="scripts/services/FlagService.js"></script>
-<script src="scripts/services/MenuService.js"></script>
-<script src="scripts/services/SummaryService.js"></script>
-<script src="scripts/services/TagService.js"></script>
-<script src="scripts/services/VisualizeService.js"></script>
-<script src="scripts/services/PlanService.js"></script>
-<script src="scripts/services/NotificationService.js"></script>
-<script src="scripts/services/DomainService.js"></script>
-<script src="scripts/services/AggregateReportService.js"></script>
-<script src="scripts/services/PoddLogService.js"></script>
-<script src="scripts/services/AnalyticService.js"></script>
-<script src="scripts/services/FormConfigService.js"></script>
-<script src="scripts/controllers/home.js"></script>
-<script src="scripts/controllers/home-local.js"></script>
-<script src="scripts/controllers/main.js"></script>
-<script src="scripts/controllers/main-report.js"></script>
-<script src="scripts/controllers/menu.js"></script>
-<script src="scripts/controllers/report.js"></script>
-<script src="scripts/controllers/case-definitions.js"></script>
-<script src="scripts/controllers/comment.js"></script>
-<script src="scripts/controllers/about.js"></script>
-<script src="scripts/controllers/filter.js"></script>
-<script src="scripts/controllers/scenario.js"></script>
-<script src="scripts/controllers/profile.js"></script>
-<script src="scripts/controllers/login.js"></script>
-<script src="scripts/controllers/notification.js"></script>
-<script src="scripts/controllers/summary-report.js"></script>
-<script src="scripts/controllers/summary-person.js"></script>
-<script src="scripts/controllers/summary-performance-person.js"></script>
-<script src="scripts/controllers/summary-report-month.js"></script>
-<script src="scripts/controllers/visualize.js"></script>
-<script src="scripts/controllers/plans.js"></script>
-<script src="scripts/controllers/calendar.js"></script>
-<script src="scripts/controllers/contacts.js"></script>
-<script src="scripts/controllers/user-list.js"></script>
-<script src="scripts/controllers/invitation-code-list.js"></script>
-<script src="scripts/controllers/summary-visualization.js"></script>
-<script src="scripts/controllers/notification-config-list.js"></script>
-<script src="scripts/controllers/dashboard.js"></script>
-<script src="scripts/controllers/authority-dashboard.js"></script>
-<script src="scripts/controllers/summary-aggregate-report-filter.js"></script>
-<script src="scripts/controllers/analytic-map.js"></script>
-<script src="scripts/controllers/summary-result-monthly.js"></script>
-<script src="scripts/controllers/form-config.js"></script>
-<!-- endbuild -->
+    <script src="scripts/config.js"></script>
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/fixed.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/directives/common.js"></script>
+    <script src="scripts/directives/report.js"></script>
+    <script src="scripts/directives/comment.js"></script>
+    <script src="scripts/directives/analytic.js"></script>
+    <script src="scripts/services/DashboardService.js"></script>
+    <script src="scripts/services/MentionService.js"></script>
+    <script src="scripts/services/ReportService.js"></script>
+    <script src="scripts/services/CaseDefinitionService.js"></script>
+    <script src="scripts/services/MapService.js"></script>
+    <script src="scripts/services/CommentService.js"></script>
+    <script src="scripts/services/UserService.js"></script>
+    <script src="scripts/services/FilterService.js"></script>
+    <script src="scripts/services/FlagService.js"></script>
+    <script src="scripts/services/MenuService.js"></script>
+    <script src="scripts/services/SummaryService.js"></script>
+    <script src="scripts/services/TagService.js"></script>
+    <script src="scripts/services/VisualizeService.js"></script>
+    <script src="scripts/services/PlanService.js"></script>
+    <script src="scripts/services/NotificationService.js"></script>
+    <script src="scripts/services/DomainService.js"></script>
+    <script src="scripts/services/AggregateReportService.js"></script>
+    <script src="scripts/services/PoddLogService.js"></script>
+    <script src="scripts/services/AnalyticService.js"></script>
+    <script src="scripts/services/FormConfigService.js"></script>
+    <script src="scripts/controllers/home.js"></script>
+    <script src="scripts/controllers/home-local.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/main-report.js"></script>
+    <script src="scripts/controllers/menu.js"></script>
+    <script src="scripts/controllers/report.js"></script>
+    <script src="scripts/controllers/case-definitions.js"></script>
+    <script src="scripts/controllers/comment.js"></script>
+    <script src="scripts/controllers/about.js"></script>
+    <script src="scripts/controllers/filter.js"></script>
+    <script src="scripts/controllers/scenario.js"></script>
+    <script src="scripts/controllers/profile.js"></script>
+    <script src="scripts/controllers/login.js"></script>
+    <script src="scripts/controllers/notification.js"></script>
+    <script src="scripts/controllers/summary-report.js"></script>
+    <script src="scripts/controllers/summary-person.js"></script>
+    <script src="scripts/controllers/summary-performance-person.js"></script>
+    <script src="scripts/controllers/summary-report-month.js"></script>
+    <script src="scripts/controllers/visualize.js"></script>
+    <script src="scripts/controllers/plans.js"></script>
+    <script src="scripts/controllers/calendar.js"></script>
+    <script src="scripts/controllers/contacts.js"></script>
+    <script src="scripts/controllers/user-list.js"></script>
+    <script src="scripts/controllers/invitation-code-list.js"></script>
+    <script src="scripts/controllers/summary-visualization.js"></script>
+    <script src="scripts/controllers/notification-config-list.js"></script>
+    <script src="scripts/controllers/dashboard.js"></script>
+    <script src="scripts/controllers/authority-dashboard.js"></script>
+    <script src="scripts/controllers/summary-aggregate-report-filter.js"></script>
+    <script src="scripts/controllers/analytic-map.js"></script>
+    <script src="scripts/controllers/summary-result-monthly.js"></script>
+    <script src="scripts/controllers/form-config.js"></script>
+    <script src="scripts/controllers/success-story-link.js"></script>
+    <!-- endbuild -->
 
     <script src="https://raruto.github.io/cdn/leaflet-google/0.0.1/leaflet-google.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-PhoZq7rJux8hz6dvXI2AMEuuwFRF5aE"></script>
- <script>
-   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <script>
+      (function (i, s, o, g, r, a, m) {
+        i["GoogleAnalyticsObject"] = r;
+        (i[r] =
+          i[r] ||
+          function () {
+            (i[r].q = i[r].q || []).push(arguments);
+          }),
+          (i[r].l = 1 * new Date());
+        (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m);
+      })(
+        window,
+        document,
+        "script",
+        "//www.google-analytics.com/analytics.js",
+        "ga"
+      );
 
-   ga('create', config.GA_TRACKING_ID);
-</script>
-
-</body>
+      ga("create", config.GA_TRACKING_ID);
+    </script>
+  </body>
 </html>

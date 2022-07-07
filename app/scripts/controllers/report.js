@@ -218,7 +218,7 @@ angular
 
       $scope.printAccomplishment = function () {
         var report_id = $scope.report.id;
-        window.open(config.API_BASEPATH + "/civic/report/" + report_id + "/", "_blank");
+        window.open(config.API_BASEPATH + "/civic/success_report/" + report_id + "/", "_blank");
       };
 
       $scope.printLetter = function () {
@@ -247,17 +247,21 @@ angular
       };
 
       $scope.printDiv = function () {
-        var printContents = $(".report-print").html();
-        var popupWin = window.open("", "_blank");
-        popupWin.document.open();
-        popupWin.document.write(
-          '<html><head><link rel="stylesheet" type="text/css" href="' +
+        if ($scope.report.reportTypeCode === 'civic') {
+          window.open(config.API_BASEPATH + "/civic/report/" + $scope.report.id + "/", "_blank");
+        } else {
+          var printContents = $(".report-print").html();
+          var popupWin = window.open("", "_blank");
+          popupWin.document.open();
+          popupWin.document.write(
+            '<html><head><link rel="stylesheet" type="text/css" href="' +
             window.location.origin +
             '/styles/app.css" /></head><body onload="window.print()">' +
             printContents +
             "</html>"
-        );
-        popupWin.document.close();
+          );
+          popupWin.document.close();
+        }
       };
 
       function showConfirm(text, confirm, cancel) {
