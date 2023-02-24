@@ -342,6 +342,11 @@ angular
         url: "/success-story-link",
         templateUrl: "views/success-story-link.html",
         controller: "FormConfigCtrl",
+      })
+      .state("ncd-report", {
+        url: "/ncd-report",
+        templateUrl: "views/ncd-report.html",
+        controller: "NcdReportCtrl",
       });
 
     $urlRouterProvider.otherwise("/home");

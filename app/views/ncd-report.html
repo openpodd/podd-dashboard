@@ -1,0 +1,133 @@
+<div
+  class="l-info-section l-section l-full-width l-theme-gray"
+  ng-controller="NcdReportCtrl"
+  ng-cloak
+>
+  <div class="l-detail-section l-section">
+    <div class="title clearfix">
+      <h2 class="pull-left">
+        <i class="fa fa-bar-chart fa-size-22"></i
+        >รายงานระบบเฝ้าระวังโรคหัวใจและหลอดเลือดสมอง
+      </h2>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="row">
+          <div class="col-md-6">
+
+            <h2 class="subheading">ข้อมูลทั้งหมด</h2>
+            <form role="form" style="margin-bottom: 3em">
+              <div class="form-group">
+                <div class="export-buttons">
+                  <button
+                    class="btn btn-primary btn-default"
+                    type="submit"
+                    ng-click="exportXlsxAllReport();"
+                  >
+                    ดาวน์โหลดข้อมูลไฟล์ Excel
+                  </button>
+                </div>
+              </div>
+            </form>
+            <!-- form: all -->
+            
+            <h2 class="subheading">ข้อมูลด้านสุขภาพ</h2>
+            <form role="form" style="margin-bottom: 3em">
+              <div class="form-group filter-form-date">
+                <h4 class="filter-heading">
+                  <i class="fa fa-calendar"></i> ช่วงเวลา
+                </h4>
+                <div class="row">
+                  <div class="col-md-6">
+                    <small class="states-group-title">ตั้งแต่วันที่</small>
+                    <div>
+                      <input
+                        type="text"
+                        pick-a-date="healthDateRange.from"
+                        pick-a-date-options="{ selectYears: true }"
+                        class="form-pick-date"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <small class="states-group-title">ถึงวันที่</small>
+                    <div>
+                      <input
+                        type="text"
+                        pick-a-date="healthDateRange.to"
+                        pick-a-date-options="{ selectYears: true }"
+                        class="form-pick-date"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="export-buttons">
+                  <button
+                    class="btn btn-primary btn-default"
+                    type="submit"
+                    ng-click="exportXlsxHealthReport();"
+                  >
+                    ดาวน์โหลดข้อมูลไฟล์ Excel
+                  </button>
+                </div>
+              </div>
+            </form>
+            <!-- form: health -->
+
+            <h2 class="subheading">ข้อมูลคัดกรองโรคหัวใจและหลอดเลือดสมอง</h2>
+            <form role="form">
+              <div class="form-group filter-form-date">
+                <h4 class="filter-heading">
+                  <i class="fa fa-calendar"></i> ช่วงเวลา
+                </h4>
+                <div class="row">
+                  <div class="col-md-6">
+                    <small class="states-group-title">ตั้งแต่วันที่</small>
+                    <div>
+                      <input
+                        type="text"
+                        pick-a-date="ncdDateRange.from"
+                        pick-a-date-options="{ selectYears: true }"
+                        class="form-pick-date"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <small class="states-group-title">ถึงวันที่</small>
+                    <div>
+                      <input
+                        type="text"
+                        pick-a-date="ncdDateRange.to"
+                        pick-a-date-options="{ selectYears: true }"
+                        class="form-pick-date"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="export-buttons">
+                  <button
+                    class="btn btn-primary btn-default"
+                    type="submit"
+                    ng-click="exportXlsxNcdReport();"
+                  >
+                    ดาวน์โหลดข้อมูลไฟล์ Excel
+                  </button>
+                </div>
+              </div>
+            </form>
+            <!-- form: ncd -->
+          </div>
+          <!-- col-md-6 -->
+        </div>
+        <!-- row -->
+      </div>
+      <!-- content -->
+    </div>
+    <!-- content wrapper -->
+  </div>
+</div>
