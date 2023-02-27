@@ -472,6 +472,14 @@
               >
             </li>
             <li>
+              <a href="#/ncd-report">
+                <i class="fa fa-heartbeat fa-size-18"></i> 
+                <span class="fa-size-14">
+                  รายงานระบบเฝ้าระวังโรคหัวใจและหลอดเลือดสมอง
+                </span>
+              </a>
+            </li>
+            <li>
               <a href="#/login" ng-click="isShowNav=!isShowNav;logout();"
                 ><i class="fa fa-sign-out fa-size-18"></i> ออกจากระบบ</a
               >
@@ -705,6 +713,16 @@
               </div>
             </li>
             <li
+              class="pd-nav-item"
+              ng-class="{ 'active active-menu':isActiveMenu('ncd-report') }"
+              ng-click="setActiveMenu('ncd-report')"
+            >
+              <a ng-href="#/ncd-report" class="pd-nav-icon">
+                <i class="fa fa-heartbeat fa-size-20"></i>
+                <span class="pd-nav-text" style="width:340px">รายงานระบบเฝ้าระวังโรคหัวใจและหลอดเลือดสมอง</span>
+              </a>
+            </li>
+            <li
               ng-show="shared.loggedIn"
               class="pd-nav-item"
               ng-cloak
@@ -876,6 +894,7 @@
     <script src="scripts/controllers/summary-result-monthly.js"></script>
     <script src="scripts/controllers/form-config.js"></script>
     <script src="scripts/controllers/success-story-link.js"></script>
+    <script src="scripts/controllers/ncd-report.js"></script>
     <!-- endbuild -->
 
     <script src="https://raruto.github.io/cdn/leaflet-google/0.0.1/leaflet-google.js"></script>
