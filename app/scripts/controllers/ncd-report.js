@@ -46,8 +46,12 @@ angular
 
     $scope.exportXlsxHealthReport = function () {
       $scope.loading = true;
-      var dateFrom = moment($scope.healthDateRange.from).format("YYYY-MM-DD");
-      var dateTo = moment($scope.healthDateRange.to).format("YYYY-MM-DD");
+      var dateFrom = moment($scope.healthDateRange.from)
+        .set({ hours: 0, minutes: 0, seconds: 0, milliseconds: 0 })
+        .toISOString();
+      var dateTo = moment($scope.healthDateRange.to)
+        .set({ hours: 23, minutes: 59, seconds: 59, milliseconds: 999 })
+        .toISOString();
 
       var params = {
         start: dateFrom,
@@ -74,8 +78,12 @@ angular
 
     $scope.exportXlsxNcdReport = function () {
       $scope.loading = true;
-      var dateFrom = moment($scope.ncdDateRange.from).format("YYYY-MM-DD");
-      var dateTo = moment($scope.ncdDateRange.to).format("YYYY-MM-DD");
+      var dateFrom = moment($scope.healthDateRange.from)
+        .set({ hours: 0, minutes: 0, seconds: 0, milliseconds: 0 })
+        .toISOString();
+      var dateTo = moment($scope.healthDateRange.to)
+        .set({ hours: 23, minutes: 59, seconds: 59, milliseconds: 999 })
+        .toISOString();
 
       var params = {
         start: dateFrom,
