@@ -15,15 +15,16 @@
       <div class="content">
         <div class="row">
           <div class="col-md-6">
-
             <h2 class="subheading">ข้อมูลทั้งหมด</h2>
             <form role="form" style="margin-bottom: 3em">
+              <div ng-show="loading" loader-spinner></div>
               <div class="form-group">
                 <div class="export-buttons">
                   <button
                     class="btn btn-primary btn-default"
                     type="submit"
                     ng-click="exportXlsxAllReport();"
+                    ng-disabled="loading"
                   >
                     ดาวน์โหลดข้อมูลไฟล์ Excel
                   </button>
@@ -31,7 +32,7 @@
               </div>
             </form>
             <!-- form: all -->
-            
+
             <h2 class="subheading">ข้อมูลด้านสุขภาพ</h2>
             <form role="form" style="margin-bottom: 3em">
               <div class="form-group filter-form-date">
@@ -69,6 +70,7 @@
                     class="btn btn-primary btn-default"
                     type="submit"
                     ng-click="exportXlsxHealthReport();"
+                    ng-disabled="loading"
                   >
                     ดาวน์โหลดข้อมูลไฟล์ Excel
                   </button>
@@ -114,6 +116,7 @@
                     class="btn btn-primary btn-default"
                     type="submit"
                     ng-click="exportXlsxNcdReport();"
+                    ng-disabled="loading"
                   >
                     ดาวน์โหลดข้อมูลไฟล์ Excel
                   </button>
