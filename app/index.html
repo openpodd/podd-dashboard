@@ -405,7 +405,7 @@
                 ><i class="fa fa-cog fa-size-18"></i> บัญชีผู้ใช้</a
               >
             </li>
-            <li>
+            <li ng-if="hasPermissionOnMenu('view_dashboard_summary_report')">
               <a href="#/ncd-report">
                 <i class="fa fa-heartbeat fa-size-18"></i>
                 <span class="fa-size-14">
@@ -650,6 +650,7 @@
               class="pd-nav-item"
               ng-class="{ 'active active-menu':isActiveMenu('ncd-report') }"
               ng-click="setActiveMenu('ncd-report')"
+              ng-if="hasPermissionOnMenu('view_dashboard_summary_report')"
             >
               <a ng-href="#/ncd-report" class="pd-nav-icon">
                 <i class="fa fa-heartbeat fa-size-20"></i>
