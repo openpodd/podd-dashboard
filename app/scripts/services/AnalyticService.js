@@ -18,7 +18,7 @@ angular.module('poddDashboardApp')
                         },
                         {
                             name: 'สำรวจประชากรสุนัข',
-                            code: 'dog-survey'
+                            code: 'dog-survey-all'
                         },
                         {
                             name: 'พิกัดรายงานผู้ป่วยยืนยัน',
@@ -129,8 +129,8 @@ angular.module('poddDashboardApp')
                                     filter: {
                                         query: 'typeName:("ยิงพิกัด+GPS+ไข้เลือดออก")',
                                         dateColumn: 'incidentDate',
-                                        since: firstCutoff.format('YYYY-MM-DD') ,
-                                        to: now.format('YYYY-MM-DD' )
+                                        since: firstCutoff.format('YYYY-MM-DD'),
+                                        to: now.format('YYYY-MM-DD')
                                     }
                                 },
                                 {
@@ -148,7 +148,7 @@ angular.module('poddDashboardApp')
                                     filter: {
                                         query: 'typeName:("ยิงพิกัด+GPS+ไข้เลือดออก")',
                                         dateColumn: 'incidentDate',
-                                        since: secondCutoff.format('YYYY-MM-DD')  ,
+                                        since: secondCutoff.format('YYYY-MM-DD'),
                                         to: moment(firstCutoff).subtract(1, 'days').format('YYYY-MM-DD')
                                     }
                                 }
@@ -190,8 +190,56 @@ angular.module('poddDashboardApp')
                                     filter: {
                                         query: 'typeName:("ขึ้นทะเบียนเจ้าของสุนัข")',
                                         dateColumn: 'incidentDate',
-                                        since: firstCutoff.format('YYYY-MM-DD') ,
-                                        to: secondCutoff.format('YYYY-MM-DD' )
+                                        since: firstCutoff.format('YYYY-MM-DD'),
+                                        to: secondCutoff.format('YYYY-MM-DD')
+                                    }
+                                }
+                            ]
+                        };
+                    case 'dog-survey-all':
+                        var now = moment();
+                        var firstCutoff = moment().startOf('year');
+                        var secondCutoff = moment(firstCutoff).endOf('year');
+                        return {
+                            name: 'สำรวจประชากรสัตว์',
+                            code: 'dog-survey-all',
+                            layers: [
+                                {
+                                    name: 'สำรวจประชากรสัตว์ ปี ' + firstCutoff.year(),
+                                    code: 'animal-1',
+                                    type: 'report',
+                                    radius: 100,
+                                    style: {
+                                        color: '#449d44',
+                                        fillColor: '#449d44',
+                                        weight: 1,
+                                        opacity: 1,
+                                        riseOnHover: true
+                                    },
+                                    filter: {
+                                        query: 'typeName:("ทะเบียนสัตว์มีเจ้าของ")',
+                                        dateColumn: 'incidentDate',
+                                        since: firstCutoff.format('YYYY-MM-DD'),
+                                        to: secondCutoff.format('YYYY-MM-DD')
+                                    }
+                                },
+                                {
+                                    name: 'สำรวจประชากรสัตว์ จรจัด ปี ' + firstCutoff.year(),
+                                    code: 'animal-2',
+                                    type: 'report',
+                                    radius: 100,
+                                    style: {
+                                        color: '#900C3F',
+                                        fillColor: '#900C3F',
+                                        weight: 1,
+                                        opacity: 1,
+                                        riseOnHover: true
+                                    },
+                                    filter: {
+                                        query: 'typeName:("ทะเบียนสัตว์ชุมชน/จรจัด")',
+                                        dateColumn: 'incidentDate',
+                                        since: firstCutoff.format('YYYY-MM-DD'),
+                                        to: secondCutoff.format('YYYY-MM-DD')
                                     }
                                 }
                             ]
@@ -231,8 +279,8 @@ angular.module('poddDashboardApp')
                                     filter: {
                                         query: 'typeName:("ยิงพิกัด+GPS+ไข้เลือดออก")',
                                         dateColumn: 'incidentDate',
-                                        since: firstCutoff.format('YYYY-MM-DD') ,
-                                        to: now.format('YYYY-MM-DD' )
+                                        since: firstCutoff.format('YYYY-MM-DD'),
+                                        to: now.format('YYYY-MM-DD')
                                     }
                                 },
                                 {
@@ -250,7 +298,7 @@ angular.module('poddDashboardApp')
                                     filter: {
                                         query: 'typeName:("ยิงพิกัด+GPS+ไข้เลือดออก")',
                                         dateColumn: 'incidentDate',
-                                        to: firstCutoff.subtract(1, 'seconds').format('YYYY-MM-DD')  ,
+                                        to: firstCutoff.subtract(1, 'seconds').format('YYYY-MM-DD'),
                                         since: moment(firstCutoff).startOf('year').format('YYYY-MM-DD')
                                     }
                                 }
@@ -272,14 +320,14 @@ angular.module('poddDashboardApp')
                 'geojson': function () {
                     return {
                         $data: function () {
-                            return dashboard.getViaProxy({url: metaLayer.url}).$promise
+                            return dashboard.getViaProxy({ url: metaLayer.url }).$promise
                         }
                     }
                 },
                 'report': function () {
                     return {
                         $data: function () {
-                            var since = metaLayer.filter.since ? moment(metaLayer.filter.since).format('YYYY-MM-DD') + 'T00:00:00': '*';
+                            var since = metaLayer.filter.since ? moment(metaLayer.filter.since).format('YYYY-MM-DD') + 'T00:00:00' : '*';
                             var to = metaLayer.filter.to ? moment(metaLayer.filter.to).format('YYYY-MM-DD') + 'T00:00:00' : '*';
                             var dateColumn = 'date'
                             if (metaLayer.filter.dateColumn) {
@@ -301,7 +349,7 @@ angular.module('poddDashboardApp')
             return {
                 meta: {
                     layer: layer,
-                    layerName: function() {
+                    layerName: function () {
                         if (layer.type !== 'geojson') {
                             var name = layer.name;
                             if (layer.filter.since) {
@@ -365,7 +413,7 @@ angular.module('poddDashboardApp')
                 return func;
             }
             else {
-                return function () {};
+                return function () { };
             }
         }
     }]);
