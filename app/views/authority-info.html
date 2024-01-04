@@ -1,0 +1,272 @@
+<div
+  class="summary-view l-info-section l-section l-full-width"
+  ng-controller="AuthorityInfoCtrl"
+  ng-cloak
+>
+  <div class="l-detail-section l-section">
+    <div class="title clearfix">
+      <h2 class="pull-left">
+        <i class="fa fa-user pull-left fa-size-22"></i>
+        ข้อมูลพื้นฐานประชากร
+      </h2>
+    </div>
+
+    <div class="content-wrapper content">
+      <div class="summary-wrapper profile-wrapper">
+        <div class="row">
+          <div
+            class="col-lg-offset-2 col-md-offset-2 col-sm-offset-1 col-lg-8 col-md-8 col-sm-10"
+          >
+            <div class="citizen-info-block panel panel-default">
+              <div class="panel-body">
+                <div ng-if="!authorityInfo">
+                  <p>อปท.ยังไม่มีข้อมูลพื้นฐาน</p>
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    ng-click="startNew()"
+                  >
+                    สร้างใหม่
+                  </button>
+                </div>
+                <form
+                  class="citizen-info-form"
+                  ng-submit="submit($event);"
+                  ng-if="authorityInfo"
+                >
+                  <div class="alert alert-danger" role="alert" ng-show="error">
+                    <span>เกิดข้อผิดพลาด กรุณาลองใหม่</span>
+                  </div>
+
+                  <div
+                    class="alert alert-success"
+                    role="alert"
+                    ng-show="success"
+                  >
+                    บันทึกเรียบร้อยแล้ว
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <div class="form-group">
+                        <label>จำนวนประชากรในพื้นที่</label>
+                        <input
+                          class="form-control"
+                          type="number"
+                          name="all"
+                          min="0"
+                          step="1"
+                          ng-model="authorityInfo.population"
+                        />
+                        <span class="suffix">คน</span>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <div class="form-group">
+                        <label>จำนวนผู้สูงอายุ</label>
+                        <input
+                          class="form-control"
+                          type="number"
+                          name="elder"
+                          min="0"
+                          step="1"
+                          ng-model="authorityInfo.population_elder"
+                        />
+                        <span class="suffix">คน</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <div class="form-group">
+                        <label>เพศ ชาย</label>
+                        <input
+                          class="form-control"
+                          type="number"
+                          name="male"
+                          min="0"
+                          step="1"
+                          ng-model="authorityInfo.population_male"
+                        />
+                        <span class="suffix">คน</span>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <div class="form-group">
+                        <label>หญิง</label>
+                        <input
+                          class="form-control"
+                          type="number"
+                          name="female"
+                          min="0"
+                          step="1"
+                          ng-model="authorityInfo.population_female"
+                        />
+                        <span class="suffix">คน</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <div class="form-group">
+                        <label>จำนวนครัวเรือน </label>
+                        <input
+                          class="form-control"
+                          type="number"
+                          name="house"
+                          min="0"
+                          step="1"
+                          ng-model="authorityInfo.num_households"
+                        />
+                        <span class="suffix">ครัวเรือน</span>
+                      </div>
+                      <div class="form-group">
+                        <label>จำนวนหมู่บ้าน/ชุมชน</label>
+                        <input
+                          class="form-control"
+                          type="number"
+                          name="village"
+                          min="0"
+                          step="1"
+                          ng-model="authorityInfo.num_villages"
+                        />
+                        <span class="suffix">
+                          <a
+                            class="hoverable -help"
+                            data-toggle="modal"
+                            data-target="#villageModal"
+                            tooltip="แก้ไขรายชื่อหมู่บ้าน"
+                          >
+                            <i class="fa fa-edit"></i>
+                          </a>
+                        </span>
+                      </div>
+                      <div class="form-group">
+                        <label>จำนวนประชากรสัตว์ สุนัข</label>
+                        <input
+                          class="form-control"
+                          type="number"
+                          name="dog"
+                          min="0"
+                          step="1"
+                          ng-model="authorityInfo.num_dogs"
+                        />
+                        <span class="suffix">ตัว</span>
+                      </div>
+                      <div class="form-group">
+                        <label>จำนวนประชากรสัตว์ แมว</label>
+                        <input
+                          class="form-control"
+                          type="number"
+                          name="cat"
+                          min="0"
+                          step="1"
+                          ng-model="authorityInfo.num_cats"
+                        />
+                        <span class="suffix">ตัว</span>
+                      </div>
+                      <div class="form-group">
+                        <label>ข้อมูลอัพเดทประจำปี</label>
+                        <input
+                          class="form-control"
+                          type="number"
+                          name="year"
+                          min="0"
+                          step="1"
+                          ng-model="authorityInfo.year"
+                        />
+                        <span class="suffix"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-action">
+                    <div class="">
+                      <button
+                        type="submit"
+                        class="btn btn-success"
+                        ng-disabled="submitting"
+                      >
+                        บันทึก
+                      </button>
+                    </div>
+                    <div class="note">
+                      *หมายเหตุ เพื่อใช้เป็นข้อมูลอ้างอิง ประมวลผล
+                      รายงานในพื้นที่ของท่าน
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- eof section -->
+
+  <!-- modal dialog -->
+  <div id="villageModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            &times;
+          </button>
+          <h4 class="modal-title">ข้อมูลหมู่บ้าน/ชุมชน</h4>
+        </div>
+        <div class="modal-body">
+          <p>
+            <button
+              type="button"
+              class="btn btn-default"
+              ng-click="addVillage()"
+            >
+              <i class="fa fa-plus"></i>
+              <span> เพิ่ม </span>
+            </button>
+          </p>
+          <div class="ta-view">
+            <div class="ta-view-header row hidden-xs">
+              <div class="col-md-1 col-sm-1"></div>
+              <div class="col-md-5 col-sm-5">หมู่ที่</div>
+              <div class="col-md-6 col-sm-6">ชื่อหมู่บ้าน</div>
+            </div>
+            <div
+              ng-repeat="village in authorityInfo.villages"
+              class="ta-view-row row"
+            >
+              <div class="ta-view-col col-md-1 col-sm-1">
+                <a
+                  class="hoverable"
+                  tooltip="ลบรายการนี้ออก"
+                  ng-click="removeVillage(village)"
+                >
+                  <i class="fa fa-close"></i>
+                </a>
+              </div>
+              <div class="ta-view-col col-md-5 col-sm-5" data-th="หมู่ที่">
+                <input
+                  class="form-control"
+                  type="text"
+                  name="name"
+                  ng-model="village.name"
+                />
+              </div>
+
+              <div class="ta-view-col col-md-6 col-sm-6" data-th="ชื่อหมู่บ้าน">
+                <input
+                  class="form-control"
+                  type="text"
+                  name="description"
+                  ng-model="village.description"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer"></div>
+      </div>
+    </div>
+  </div>
+  <!-- eof modal dialog -->
+</div>
