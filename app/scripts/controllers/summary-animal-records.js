@@ -18,9 +18,9 @@ angular
         .$promise.then(function (data) {
           $scope.loading = false;
           utils.downloadFile(
-            "animal-records.csv",
+            "animal_records.xls",
             data.data,
-            "text/csv"
+            "application/ms-excel"
           );
         })
         .catch(function () {
