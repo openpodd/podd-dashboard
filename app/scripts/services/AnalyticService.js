@@ -210,8 +210,8 @@ angular.module('poddDashboardApp')
                                     type: 'report',
                                     radius: 100,
                                     style: {
-                                        color: '#449d44',
-                                        fillColor: '#449d44',
+                                        color: '#EB78B9',
+                                        fillColor: '#EB78B9',
                                         weight: 1,
                                         opacity: 1,
                                         riseOnHover: true
@@ -229,8 +229,8 @@ angular.module('poddDashboardApp')
                                     type: 'report',
                                     radius: 100,
                                     style: {
-                                        color: '#900C3F',
-                                        fillColor: '#900C3F',
+                                        color: '#FF0000',
+                                        fillColor: '#FF0000',
                                         weight: 1,
                                         opacity: 1,
                                         riseOnHover: true
