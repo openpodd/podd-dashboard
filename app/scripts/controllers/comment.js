@@ -43,8 +43,7 @@ angular.module('poddDashboardApp')
 
     function clearFile(){
         $scope.file = '';
-        var fileUpload = $('.upload').val('').clone(true);
-        $('.upload').replaceWith(fileUpload);
+        $('.upload').val('');
     }
 
     $scope.$watch('$parent.report', function (newValue) {
@@ -111,6 +110,8 @@ angular.module('poddDashboardApp')
     $scope.file = '';
 
     $scope.onFileSelect = function($file) {
+        console.log("file selected")
+        $scope.file = '';
         $scope.file = $file;
     };
 
