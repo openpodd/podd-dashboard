@@ -118,3 +118,22 @@
   }
 
 }
+
+#animal-map {
+  // width: 100%;
+  left: 50px;
+  right: 0;
+  height: 100%;
+  position: absolute;
+  // transition: left .5s linear;
+
+  @include respond-to(phone){
+    left: 0;
+  }
+
+  .awesome-marker i {
+    font-size: 22px;
+    margin-top: 6px;
+  }
+
+}

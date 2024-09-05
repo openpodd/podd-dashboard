@@ -11,6 +11,11 @@ angular.module("poddDashboardApp")
                 transformResponse: function (data, headersGetter) {
                     return { data: data };
                 },
-            }
+            },
+            listOnMap: {
+                url: config.API_BASEPATH + "/animals/map/",
+                isArray: true,
+                cache: false
+            },
         });
     });

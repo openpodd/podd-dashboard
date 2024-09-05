@@ -146,6 +146,7 @@ angular
       /\/authorities/,
       /\/reportTags/,
       /\/caseDefinitions/,
+      /\/animals\/map/,
       /\/planReports/,
       /\/administrationArea\/contacts/,
       /\/administrationArea\/contacts\/update/,
@@ -227,6 +228,11 @@ angular
         url: "/map",
         templateUrl: "views/main.html",
         controller: "MainCtrl",
+      })
+      .state("animalMap", {
+        url: "/animal-map",
+        templateUrl: "views/animal-map.html",
+        controller: "AnimalMapCtrl",
       })
       .state("main.report", {
         url: "^/reports/{reportId:int}?confirmCase",
