@@ -1,4 +1,20 @@
 <div class="analytic-map">
     <div ng-hide="isLoggedIn" class="map-mask"></div>
     <div id="animal-map" class="l-map"></div>
+
+    <div class="preset-selector" set-max-height="30">
+        <form role="form" class="form form-inline _preset">
+            <div class="form-group">
+                <input type="checkbox" id="showNoRabies" ng-model="showNoRabies" ng-change="refreshMap()">
+                <label for="showNoRabies"> ไม่เคยฉีดวัคซีนพิษสุนัขบ้า</label>
+                <span></span>
+                <input type="checkbox" id="showNoSpay" ng-model="showNoSpay" ng-change="refreshMap()">
+                <label for="showNoSpay"> ยังไม่ทำหมัน</label>
+                <span></span>
+                <input type="checkbox" id="showDeath" ng-model="showDeath" ng-change="refreshMap()">
+                <label for="showDeath"> แสดงสัตว์ที่เสียชีวิต</label>
+            </div>
+        </form>
+    </div>
+
 </div>

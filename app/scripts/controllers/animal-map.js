@@ -11,6 +11,9 @@ angular.module('poddDashboardApp')
         var user = storage.get('user');
         $scope.latitude = user.domainLatitude || 15.87;
         $scope.longitude = user.domainLongitude || 100.9925;
+        $scope.showNoRabies = false;
+        $scope.showNoSpay = false;
+        $scope.showDeath = false;
 
         var leafletMap = null;
         if (config.USE_GOOGLE_LAYER) {
@@ -38,9 +41,27 @@ angular.module('poddDashboardApp')
 
         AnimalRecordService.listOnMap().$promise.then(function (resp) {
             $scope.animals = resp;
-            $scope.animals.forEach(function (animal) {
-                map.addAnimalMarker(animal);
-            });
+            $scope.refreshMap();
         });
+
+        $scope.refreshMap = function() {
+            console.log($scope.showNoRabies, $scope.showNoSpay);
+            map.clearAnimalMarkers();
+            $scope.animals.forEach(function (animal) {
+                var shouldDisplay = true;                
+                if ($scope.showNoRabies && animal.vaccine !== 'ไม่เคยฉีด') {
+                    shouldDisplay = false;
+                }
+                if ($scope.showNoSpay && animal.spay !== 'ยังไม่ทำหมัน') {
+                    shouldDisplay = false;
+                }
+                if (!$scope.showDeath && animal.death_updated_date) {
+                    shouldDisplay = false
+                }
+                if (shouldDisplay) {
+                    map.addAnimalMarker(animal);
+                }
+            });
+        }
     }
 ]);

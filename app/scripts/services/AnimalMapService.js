@@ -19,6 +19,9 @@ angular.module('poddDashboardApp')
             markerColor: 'red'
         });
     }
+    Map.prototype.clearAnimalMarkers = function () {
+        this.animalMarkerLayer.clearLayers();
+    }
 
     Map.prototype.addAnimalMarker = function (animal) {
 
