@@ -1,0 +1,103 @@
+<div class="summary-view l-info-section l-section l-full-width"
+     ng-controller="LineGroupNotifyCtrl"
+     ng-cloak>
+  <div class="l-detail-section l-section">
+
+    <div class="title clearfix">
+        <h2 class="pull-left"><i class="fa fa-users pull-left fa-size-22"></i>การแจ้งเตือนผ่านกลุ่ม Line</h2>
+    </div>
+
+    <div class="content-wrapper content">
+      <div class="summary-wrapper profile-wrapper">
+        <div class="row">
+          <div class="col-lg-12">
+            <h2 class="subheading">ตารางการแจ้งเตือน</h2>
+
+            <div class="filter-action clearfix">
+                <button type="button" class="btn btn-default hide">ลบรายการ</button>
+                <button type="button" class="btn pull-right btn-create" ng-class="{ 'btn-success btn-primary ': !isNumberOfGroupsReachLimit() }"
+                  ng-click="selectGroup(null)" ng-disabled="isNumberOfGroupsReachLimit()"
+                  >
+                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{ isNumberOfGroupsReachLimit() ? 'จำนวนกลุ่มเต็มแล้ว' : 'สร้างกลุ่ม' }}
+                </button>
+            </div>
+
+            <div class="filter-result-container">
+                <div class="ta-view -wide">
+                  <div class="ta-view-header row hidden-xs">
+                    <div class="col-md-2 col-sm-2">รหัสเข้าร่วมกลุ่ม</div>
+                    <div class="col-md-5 col-sm-2">หมายเหตุ</div>
+                    <div class="col-md-2 col-sm-2">เชื่อมกลุ่มแล้ว</div>
+                    <div class="col-md-2 col-sm-2">ยกเลิก</div>
+                    <div class="col-md-1 col-sm-2">คำสั่ง</div>
+                  </div>
+                  <div ng-repeat="group in groups" class="ta-view-row row">
+                      <div class="ta-view-col col-md-2 col-sm-2" data-th="รหัสเข้าร่วมกลุ่ม">
+                        <span> {{ group.invite_number }}</span>
+                      </div>
+                      <div class="ta-view-col col-md-5 col-sm-2" data-th="หมายเหตุ">
+                        <span> {{ group.remark }}</span>
+                      </div>
+                      <div class="ta-view-col col-md-2 col-sm-2" data-th="เชื่อมกลุ่มแล้ว">
+                        <i class="fa fa-check fa-size-14 green-zone" ng-if="group.group_linkded_at"></i>
+                      </div>
+                      <div class="ta-view-col col-md-2 col-sm-2" data-th="ยกเลิก">
+                        <i class="fa fa-close fa-size-14 text-danger" ng-if="group.is_cancelled"></i>
+                        <span class="text-danger"> {{ group.is_cancelled ? (group.cancelled_at | amDateFormat:'D MMM YY เวลา HH:mm น.') : '' }}</span>
+                      </div>
+                      <div class="ta-view-col ta-view-area col-md-1 col-sm-2" data-th="คำสั่ง">
+                        <a class="" ng-click="selectGroup(group)" data-toggle="modal" data-target="#groupModal">แก้ไข</a>
+                      </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="filter-result-message" ng-show="error">
+              <div class="filter-error alert alert-danger" role="alert" ng-show="error">
+                  <strong>เกิดข้อผิดพลาด</strong>
+              </div>
+            </div>
+            <div class="filter-empty alert alert-info" ng-show="!loading && groups.length == 0">
+                <strong>ไม่พบผลการค้นหา</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div id="groupModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">แก้ไขการแจ้งเตือนร่วมกลุ่ม {{ groupEditting.invite_number }}</h4>
+        </div>
+        <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="id_remark">หมายเหตุ</label>
+                <input id="id_remark" class="form-control" type="text" name="remark" ng-model="groupEditting.remark" />
+              </div>
+              <div ng-show="true">
+                <label>
+                  <input id="id_is_cancelled" type="checkbox" ng-model="groupEditting.is_cancelled"> ยกเลิกกลุ่ม
+                </label>
+              </div>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" ng-click="submitGroup()">ยืนยัน</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
