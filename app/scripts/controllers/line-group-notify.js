@@ -20,14 +20,17 @@ angular
 
       $scope.groups = [];
       $scope.loading = true;
-      $scope.page = 0;
-      $scope.pageSize = 20;
+      $scope.stats = [];
+      $scope.filter = {
+        ym: new Date(),
+      };
 
       $scope.groupSelected = {};
       $scope.groupEditting = {};
 
       function loadMoreGroups() {
         $scope.loading = true;
+        $scope.groupError = false;
 
         LineGroupNotify.list()
           .$promise.then(function (data) {
@@ -39,7 +42,7 @@ angular
           })
           .catch(function () {
             $scope.loading = false;
-            $scope.error = true;
+            $scope.groupError = true;
           });
       }
 
@@ -108,5 +111,27 @@ angular
             });
         }
       };
+
+      function searchStats() {
+        $scope.statError = false;
+
+        LineGroupNotify.stats({
+          year: $scope.filter.ym.getFullYear(),
+          month: $scope.filter.ym.getMonth() + 1,
+        })
+          .$promise.then(function (data) {
+            $scope.stats = data;
+          })
+          .catch(function () {
+            $scope.statError = true;
+          });
+      }
+
+      $scope.search = function search(event) {
+        event.preventDefault();
+        searchStats();
+      };
+
+      searchStats();
     }
   );

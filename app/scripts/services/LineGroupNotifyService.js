@@ -28,7 +28,7 @@ angular
           method: "POST",
         },
         update: {
-          // put only
+          // put body:
           // {
           //    "id": 1,
           //    "is_cancelled": true,
@@ -36,6 +36,18 @@ angular
           // }
           url: config.API_BASEPATH + "/lineMessageGroups/:messageGroupId",
           method: "PUT",
+        },
+        stats: {
+          // qurey params: year, month
+          // result
+          // [{
+          //     "invite-group": 1234,
+          //     "report-type": 'public-report',
+          //     "count": 10
+          // }]
+          url: config.API_BASEPATH + "/lineMessageGroupStats/count-stats/",
+          method: "GET",
+          isArray: true,
         },
       }
     );
