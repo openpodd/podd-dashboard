@@ -363,6 +363,11 @@ angular
         url: "/authority-info",
         templateUrl: "views/authority-info.html",
         controller: "AuthorityInfoModeCtrl",
+      })
+      .state("line-group-notify", {
+        url: "/line-group-notify",
+        templateUrl: "views/line-group-notify.html",
+        controller: "LineGroupNotifyCtrl",
       });
 
     $urlRouterProvider.otherwise("/home");
