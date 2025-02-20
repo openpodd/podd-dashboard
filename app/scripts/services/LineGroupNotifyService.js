@@ -41,9 +41,9 @@ angular
           // qurey params: year, month
           // result
           // [{
-          //     "invite-group": 1234,
-          //     "report-type": 'public-report',
-          //     "count": 10
+          //    invite_number: 1,
+          //    report_type_name: 'xxx',
+          //    number_of_messages: 1555
           // }]
           url: config.API_BASEPATH + "/lineMessageGroupStats/count-stats/",
           method: "GET",

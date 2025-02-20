@@ -139,9 +139,9 @@
       </thead>
       <tbody>
         <tr ng-repeat="item in stats">
-          <td ng-bind="item.invite-group"></td>
-          <td ng-bind="item.report-type"></td>
-          <td ng-bind="item.count"></td>
+          <td ng-bind="item.invite_number"></td>
+          <td ng-bind="item.report_type_name"></td>
+          <td>{{ item.number_of_messages.toLocaleString() }}</td>
         </tr>
       </tbody>
     </table>                
