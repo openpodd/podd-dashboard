@@ -28,6 +28,8 @@ angular
       $scope.groupSelected = {};
       $scope.groupEditting = {};
 
+      var MAX_ACTIVE_GROUPS = 3;
+
       function loadMoreGroups() {
         $scope.loading = true;
         $scope.groupError = false;
@@ -48,14 +50,21 @@ angular
 
       loadMoreGroups();
 
-      $scope.isNumberOfGroupsReachLimit = function () {
-        var limit = 3;
+      $scope.isNumberOfGroupsReachLimit = function (excludeId) {
+        return $scope.numberOfActiveGroups(excludeId) >= MAX_ACTIVE_GROUPS;
+      };
+
+      $scope.numberOfActiveGroups = function (excludeId) {
+        var activeGroupCount = 0;
         for (var i = 0; i < $scope.groups.length; i++) {
+          if ($scope.groups[i].id === excludeId) {
+            continue;
+          }
           if ($scope.groups[i].is_cancelled === false) {
-            limit--;
+            activeGroupCount++;
           }
         }
-        return limit <= 0;
+        return activeGroupCount;
       };
 
       $scope.selectGroup = function (group) {
@@ -82,7 +91,8 @@ angular
         if ($scope.groupEditting.id) {
           if (
             !$scope.groupEditting.is_cancelled &&
-            $scope.isNumberOfGroupsReachLimit()
+            $scope.numberOfActiveGroups($scope.groupEditting.id) >=
+              MAX_ACTIVE_GROUPS
           ) {
             swal(
               "เกิดข้อผิดพลาด",
