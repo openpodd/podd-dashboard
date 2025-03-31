@@ -28,7 +28,7 @@ angular
       $scope.groupSelected = {};
       $scope.groupEditting = {};
 
-      var MAX_ACTIVE_GROUPS = 3;
+      var MAX_ACTIVE_GROUPS = 10;
 
       function loadMoreGroups() {
         $scope.loading = true;
