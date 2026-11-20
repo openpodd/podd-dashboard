@@ -21,4 +21,4 @@ Main dashboard for PODD project. Focus to make collaboration between stakeholder
 1. Use `pm2 start pm2.json`
 
 ## Build
-Use `grunt build`
+Set `GOOGLE_MAPS_API_KEY` in a local `.env`, then run `npm run build` (or `grunt build`). Grunt inserts the key into the generated `dist/index.html`.

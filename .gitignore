@@ -9,5 +9,6 @@ config.js
 .DS_Store
 yarn.lock
 /config/local.js
+/.env
 /app/scripts/config.prod.js
 /app/scripts/config.local.js

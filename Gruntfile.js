@@ -23,6 +23,7 @@ module.exports = function (grunt) {
     app: require('./bower.json').appPath || 'app',
     dist: 'dist'
   };
+  var googleMapsApiKey;
 
   // Define the configuration for all the tasks
   grunt.initConfig({
@@ -500,7 +501,33 @@ module.exports = function (grunt) {
     'karma'
   ]);
 
+  grunt.registerTask('loadGoogleMapsKey', 'Read the Google Maps key from .env', function () {
+    var env = grunt.file.exists('.env') ? grunt.file.read('.env') : '';
+    var entry = env.match(/^[ \t]*GOOGLE_MAPS_API_KEY[ \t]*=[ \t]*(['"]?)([A-Za-z0-9_-]+)\1[ \t]*\r?$/m);
+
+    if (!entry) {
+      grunt.fail.fatal('Set GOOGLE_MAPS_API_KEY in .env before building.');
+    }
+
+    googleMapsApiKey = entry[2];
+  });
+
+  grunt.registerTask('applyGoogleMapsKey', 'Configure the generated Google Maps loader', function () {
+    var indexPath = appConfig.dist + '/index.html';
+    var html = grunt.file.read(indexPath);
+    var mapsScript = /(<script\b[^>]*\ssrc=["']https:\/\/maps\.googleapis\.com\/maps\/api\/js\?key=)[^&"'<>\s]+/g;
+
+    if (!googleMapsApiKey || (html.match(mapsScript) || []).length !== 1) {
+      grunt.fail.fatal('Expected a configured key and exactly one Google Maps loader in dist/index.html.');
+    }
+
+    grunt.file.write(indexPath, html.replace(mapsScript, function (script, prefix) {
+      return prefix + googleMapsApiKey;
+    }));
+  });
+
   grunt.registerTask('build', [
+    'loadGoogleMapsKey',
     'clean:dist',
     'wiredep',
     'useminPrepare',
@@ -512,6 +539,7 @@ module.exports = function (grunt) {
     'concat',
     'ngAnnotate',
     'copy:dist',
+    'applyGoogleMapsKey',
     // 'cdnify',
     'cssmin',
     'uglify',
